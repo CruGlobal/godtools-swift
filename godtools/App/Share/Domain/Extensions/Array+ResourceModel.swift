@@ -32,6 +32,10 @@ extension Array where Element == ResourceModel {
         }
     }
     
+    func sortedByDefaultOrder() -> [ResourceModel] {
+        return self.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
+    }
+    
     func sortedByPrimaryLanguageAvailable(languageSettingsService: LanguageSettingsService, dataDownloader: InitialDataDownloader) -> [ResourceModel] {
         guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return self }
         

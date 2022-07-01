@@ -32,6 +32,12 @@ class ResourcesCache {
         return sortedRealmResources.map({ResourceModel(realmResource: $0)})
     }
     
+    func getResourcesWithoutMetaToolVariants() -> [ResourceModel] {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        let resourcesWithoutVariants: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K == nil || %K == ''", #keyPath(RealmResource.metatoolId), #keyPath(RealmResource.metatoolId))))
+        return resourcesWithoutVariants.map { ResourceModel(realmResource: $0) }
+    }
+    
     func getResources(resourceIds: [String]) -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         var resources: [ResourceModel] = Array()
@@ -47,12 +53,31 @@ class ResourcesCache {
         return getSortedResources().filterForLessonTypes(andFilteredBy: additionalFilter)
     }
     
-    func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getSortedResources().filterForToolTypes(andFilteredBy: additionalFilter)
+    func getAllVisibleTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+        let defaultVariantAbbreviations = getMetaTools().map { $0.attrDefaultVariant }
+        let defaultVariants = getToolsWithAbbreviations(defaultVariantAbbreviations)
+        
+        let resourcesExcludingVariants = getResourcesWithoutMetaToolVariants()
+        
+        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
+        
+        return combinedResourcesAndDefaultVariants.filterForToolTypes(andFilteredBy: additionalFilter)
     }
     
-    func getAllVisibleTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getResources().filterForToolTypes(andFilteredBy: additionalFilter)
+    func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+        return getAllVisibleTools(andFilteredBy: additionalFilter).sortedByDefaultOrder()
+    }
+    
+    func getMetaTools() -> [ResourceModel] {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        let metaToolResources: [RealmResource] = Array(realm.objects(RealmResource.self).where { $0.resourceType == ResourceType.metaTool.rawValue })
+        return metaToolResources.map { ResourceModel(realmResource: $0) }
+    }
+    
+    func getToolsWithAbbreviations(_ abbreviatons: [String]) -> [ResourceModel] {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        let resources: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.abbreviation), abbreviatons)))
+        return resources.map { ResourceModel(realmResource: $0) }
     }
     
     func getResource(id: String) -> ResourceModel? {
