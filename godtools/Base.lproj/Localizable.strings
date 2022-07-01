@@ -10,6 +10,7 @@
 "toolSettings.languagesList.deleteLanguage.title" = "None";
 "toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
 "toolDetails.versions.title" = "Versions";
+"toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
 "toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
 "toolSettings.title" = "Tool Options";
 "toolSettings.option.shareLink.title" = "Share link";

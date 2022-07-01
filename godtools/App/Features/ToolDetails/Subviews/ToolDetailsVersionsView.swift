@@ -16,6 +16,11 @@ struct ToolDetailsVersionsView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
+            Text(viewModel.versionsMessage)
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .font(FontLibrary.sfProTextRegular.font(size: 16))
+                .padding(EdgeInsets(top: 0, leading: 30, bottom: 10, trailing: 30))
+            
             ForEach(viewModel.toolVersions) { toolVersion in
                                 
                 ToolDetailsVersionsCardView(
