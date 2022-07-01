@@ -13,6 +13,7 @@ struct ToolCardVerticalTextView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: BaseToolCardViewModel
+    let cardType: ToolCardType
     let cardWidth: CGFloat
     
     // MARK: - Body
@@ -22,7 +23,7 @@ struct ToolCardVerticalTextView: View {
             
             ToolCardTitleView(title: viewModel.title)
             
-            switch viewModel.cardType {
+            switch cardType {
             case .standard, .standardWithNavButtons:
                 ToolCardCategoryView(category: viewModel.category)
                 
@@ -46,7 +47,6 @@ struct ToolCardVerticalTextView_Previews: PreviewProvider {
         let cardType: ToolCardType = .squareWithNavButtons
         
         let viewModel = MockToolCardViewModel(
-            cardType: cardType,
             title: "Knowing God Personally",
             category: "Gospel Invitation",
             showParallelLanguage: true,
@@ -56,7 +56,7 @@ struct ToolCardVerticalTextView_Previews: PreviewProvider {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
         )
         
-        ToolCardVerticalTextView(viewModel: viewModel, cardWidth: cardType.isSquareLayout ? 200 : 375)
+        ToolCardVerticalTextView(viewModel: viewModel, cardType: cardType, cardWidth: cardType.isSquareLayout ? 200 : 375)
             .padding()
             .previewLayout(.sizeThatFits)
     }

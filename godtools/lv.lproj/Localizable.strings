@@ -1,14 +1,14 @@
 "toolSettings.languagesList.deleteLanguage.title" = "Nav";
-"toolSettings.chooseLanguage.toggleMessage" = "Pārslēgties starp divām dažādām valodām šajā rīkā.";
+"toolSettings.chooseLanguage.toggleMessage" = "Iespēja pārslēgties starp divām dažādām valodām šajā rīkā.";
 "toolDetails.versions.title" = "Rīka versijas";
 "toolDetails.learnToShareToolButton.title" = "Iemācīties koplietot šo rīku";
-"toolSettings.title" = "Rīka iestatījumi";
+"toolSettings.title" = "Rīka opcijas";
 "toolSettings.option.shareLink.title" = "Kopīgo saiti";
 "toolSettings.option.screenShare.title" = "Ekrāna koplietošana";
 "toolSettings.option.trainingTips.show.title" = "Apmācības padomi";
 "toolSettings.option.trainingTips.hide.title" = "Paslēpt padomus";
 "toolSettings.chooseLanguage.title" = "Paralēlā valoda";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralēli";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "paralēlā";
 "toolSettings.shareables.title" = "Saistītie attēli";
 "allTools.spotlight.title" = "Izmēģini rīku";
 "allTools.spotlight.description" = "Lūk, daži rīki, kas tev varētu patikt";

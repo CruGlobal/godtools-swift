@@ -49,7 +49,6 @@ class ToolCardsViewModel: ToolCardProvider {
     
     override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            cardType: .standard,
             resource: tool,
             dataDownloader: dataDownloader,
             deviceAttachmentBanners: deviceAttachmentBanners,

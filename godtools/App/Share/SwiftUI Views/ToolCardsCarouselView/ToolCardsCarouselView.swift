@@ -13,6 +13,7 @@ struct ToolCardsCarouselView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: ToolCardProvider
+    let cardType: ToolCardType
     let width: CGFloat
     let leadingTrailingPadding: CGFloat
     
@@ -52,6 +53,7 @@ struct ToolCardsCarouselView: View {
         
         ToolCardView(
             viewModel: viewModel.cardViewModel(for: tool),
+            cardType: cardType,
             cardWidth: width * Sizes.spotlightCardWidthMultiplier
         )
         .padding(.bottom, 12)
@@ -73,6 +75,6 @@ struct ToolCardsCarouselView_Previews: PreviewProvider {
             delegate: nil
         )
         
-        ToolCardsCarouselView(viewModel: viewModel, width: 375, leadingTrailingPadding: 20)
+        ToolCardsCarouselView(viewModel: viewModel, cardType: .squareWithNavButtons, width: 375, leadingTrailingPadding: 20)
     }
 }

@@ -37,7 +37,9 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
+    @Published var versionsMessage: String = ""
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
+    @Published var selectedToolVersion: ToolVersionDomainModel?
     
     init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
@@ -53,6 +55,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.bannerImageRepository = bannerImageRepository
         self.mediaType = ToolDetailsViewModel.getMediaType(resource: resource, dataDownloader: dataDownloader)
+        self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
         super.init()
         
@@ -61,6 +64,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         setupBinding()
         reloadLearnToShareToolButtonState()
         toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
+        selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
     }
     
     deinit {
@@ -267,11 +271,16 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
     }
     
+    func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
+        selectedToolVersion = toolVersion
+    }
+    
     func getToolVersionCardViewModel(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            bannerImageRepository: bannerImageRepository
+            bannerImageRepository: bannerImageRepository,
+            isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }
 }

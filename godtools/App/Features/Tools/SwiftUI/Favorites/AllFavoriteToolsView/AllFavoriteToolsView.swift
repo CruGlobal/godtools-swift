@@ -35,7 +35,7 @@ struct AllFavoriteToolsView: View {
                         .padding(.leading, leadingTrailingPadding)
                         .padding(.top, 40)
                     
-                    ToolCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+                    ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
                 }
                 .listRowInsets(EdgeInsets())
             } refreshHandler: {}

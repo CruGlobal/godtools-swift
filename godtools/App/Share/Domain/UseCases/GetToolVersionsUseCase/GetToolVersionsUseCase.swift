@@ -27,39 +27,43 @@ class GetToolVersionsUseCase {
     
     func getToolVersions(resourceId: String) -> [ToolVersionDomainModel] {
         
-        let variants: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
-        
-        guard !variants.isEmpty else {
+        guard let resource = resourcesCache.getResource(id: resourceId) else {
             return []
         }
         
-        return variants.map({
-            getToolVersion(resource: $0)
+        let resourceVersions: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
+        
+        guard !resourceVersions.isEmpty else {
+            return []
+        }
+        
+        return resourceVersions.map({
+            getToolVersion(resource: resource, resourceVersion: $0)
         })
     }
     
-    private func getToolVersion(resource: ResourceModel) -> ToolVersionDomainModel {
+    private func getToolVersion(resource: ResourceModel, resourceVersion: ResourceModel) -> ToolVersionDomainModel {
         
-        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resource)
+        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resourceVersion)
         let toolLanguagesIds: [String] = toolLanguages.map({$0.id})
                 
         let name: String
         let languageBundle: Bundle
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
             
-            name = resource.name
+            name = resourceVersion.name
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
@@ -92,15 +96,16 @@ class GetToolVersionsUseCase {
         }
                 
         return ToolVersionDomainModel(
-            id: resource.id,
-            bannerImageId: resource.attrBanner,
+            id: resourceVersion.id,
+            bannerImageId: resourceVersion.attrBanner,
             name: name,
-            description: resource.resourceDescription,
+            description: resourceVersion.resourceDescription,
             languages: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), toolLanguages.count),
             primaryLanguage: primaryLanguage,
             primaryLanguageIsSupported: supportsPrimaryLanguage,
             parallelLanguage: parallelLanguage,
-            parallelLanguageIsSupported: supportsParallelLanguage
+            parallelLanguageIsSupported: supportsParallelLanguage,
+            isDefaultVersion: resourceVersion.id == resource.defaultVariantId
         )
     }
 }
