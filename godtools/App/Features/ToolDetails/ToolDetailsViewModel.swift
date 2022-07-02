@@ -230,6 +230,11 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             }
         })
     }
+}
+
+// MARK: - Inputs
+
+extension ToolDetailsViewModel {
     
     func backButtonTapped() {
         
@@ -285,7 +290,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         selectedToolVersion = toolVersion
     }
     
-    func getToolVersionCardViewModel(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
+    func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,

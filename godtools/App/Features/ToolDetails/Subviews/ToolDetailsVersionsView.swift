@@ -24,7 +24,7 @@ struct ToolDetailsVersionsView: View {
             ForEach(viewModel.toolVersions) { toolVersion in
                                 
                 ToolDetailsVersionsCardView(
-                    viewModel: viewModel.getToolVersionCardViewModel(toolVersion: toolVersion)
+                    viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion)
                 )
                 .onTapGesture {
                     viewModel.toolVersionTapped(toolVersion: toolVersion)
