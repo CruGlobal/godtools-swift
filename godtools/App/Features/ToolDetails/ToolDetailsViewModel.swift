@@ -11,7 +11,6 @@ import SwiftUI
 
 class ToolDetailsViewModel: NSObject, ObservableObject {
     
-    private let resource: ResourceModel
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
@@ -59,15 +58,19 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         super.init()
         
         reloadToolDetails(resource: resource)
-        selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
         setupBinding()
-        toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+    }
+    
+    private var resource: ResourceModel {
+        didSet {
+            reloadToolDetails(resource: resource)
+        }
     }
     
     private var analyticsScreenName: String {
@@ -144,6 +147,12 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         reloadMedia(resource: resource)
         reloadFavorited(resourceId: resource.id)
         reloadLearnToShareToolButtonState(resourceId: resource.id)
+        
+        toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
+        
+        if selectedToolVersion == nil {
+            selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
+        }
     }
     
     private func reloadMedia(resource: ResourceModel) {
