@@ -31,7 +31,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         self.isSelected = isSelected
         name = toolVersion.name
         description = toolVersion.description
-        languages = toolVersion.languages
+        languages = toolVersion.numberOfLanguagesString
         primaryLanguageName = toolVersion.primaryLanguage
         primaryLanguageIsSupported = toolVersion.primaryLanguageIsSupported
         parallelLanguageName = toolVersion.parallelLanguage
