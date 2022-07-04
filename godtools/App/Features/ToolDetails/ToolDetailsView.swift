@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ToolDetailsView: View {
     
+    private static let headerViewId: String = "HeaderViewId"
+    
     private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
     
     @State private var selectedSegmentIndex: Int? = 0
@@ -28,42 +30,22 @@ struct ToolDetailsView: View {
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     
-                    VStack(alignment: .center, spacing: 0) {
-                                                
-                        ToolDetailsTitleHeaderView(viewModel: viewModel)
-                            .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                    if #available(iOS 14, *) {
                         
-                        ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
-                            .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                                            
-                        SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                        ScrollViewReader { scrollViewReader in
                             
-                            viewModel.segmentTapped(index: index)
-                        })
-                        .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                            getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
+                                
+                                scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
+                            }
+                        }
                     }
-                    .background(Rectangle()
-                        .fill(Color.white)
-                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
-                    )
-                    
-                    Rectangle()
-                        .frame(width: geometry.size.width, height: 20)
-                        .foregroundColor(.clear)
-                    
-                    switch viewModel.selectedSegment {
-                    
-                    case .about:
-                        ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
-                            .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                    
-                    case .versions:
-                        ToolDetailsVersionsView(viewModel: viewModel)
+                    else {
+                        
+                        getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
+                            
+                        }
                     }
-                    
-                    Rectangle()
-                        .frame(width: geometry.size.width, height: 20)
-                        .foregroundColor(.clear)
                 }
             }
         }
@@ -71,6 +53,48 @@ struct ToolDetailsView: View {
         .onAppear {
             viewModel.pageViewed()
         }
+    }
+    
+    @ViewBuilder
+    private func getScrollViewContent(geometry: GeometryProxy, contentWidth: CGFloat, toolVersionTappedClosure: @escaping (() -> Void)) -> some View {
+        
+       VStack(alignment: .center, spacing: 0) {
+                                    
+            ToolDetailsTitleHeaderView(viewModel: viewModel)
+                .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                .id(ToolDetailsView.headerViewId)
+            
+            ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
+                .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                                
+            SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                
+                viewModel.segmentTapped(index: index)
+            })
+            .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+        }
+        .background(Rectangle()
+            .fill(Color.white)
+            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+        )
+        
+        Rectangle()
+            .frame(width: geometry.size.width, height: 20)
+            .foregroundColor(.clear)
+        
+        switch viewModel.selectedSegment {
+        
+        case .about:
+            ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
+                .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+        
+        case .versions:
+            ToolDetailsVersionsView(viewModel: viewModel, toolVersionTappedClosure: toolVersionTappedClosure)
+        }
+        
+        Rectangle()
+            .frame(width: geometry.size.width, height: 20)
+            .foregroundColor(.clear)
     }
 }
 
