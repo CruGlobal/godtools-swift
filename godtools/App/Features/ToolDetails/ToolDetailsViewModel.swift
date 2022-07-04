@@ -20,8 +20,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
     private let bannerImageRepository: ResourceBannerImageRepository
-    private let segmentTypes: [ToolDetailsSegmentType] = [.about, .versions]
     
+    private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
     
     private weak var flowDelegate: FlowDelegate?
@@ -132,6 +132,13 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
+        
+        segmentTypes = [.about, .versions].filter({
+            if $0 == .versions && resource.metatoolId == nil {
+                return false
+            }
+            return true
+        })
         
         segments = segmentTypes.map({
             switch $0 {
