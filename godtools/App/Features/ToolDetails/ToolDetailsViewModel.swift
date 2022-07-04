@@ -22,6 +22,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let bannerImageRepository: ResourceBannerImageRepository
     private let segmentTypes: [ToolDetailsSegmentType] = [.about, .versions]
     
+    private var resource: ResourceModel
+    
     private weak var flowDelegate: FlowDelegate?
     
     @Published var mediaType: ToolDetailsMediaType = .empty
@@ -67,12 +69,6 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
-    private var resource: ResourceModel {
-        didSet {
-            reloadToolDetails(resource: resource)
-        }
-    }
-    
     private var analyticsScreenName: String {
         return resource.abbreviation + "-tool-info"
     }
@@ -101,6 +97,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     }
     
     private func reloadToolDetails(resource: ResourceModel) {
+        
+        self.resource = resource
         
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
 
@@ -148,7 +146,9 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         reloadFavorited(resourceId: resource.id)
         reloadLearnToShareToolButtonState(resourceId: resource.id)
         
-        toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
+        if let metatoolId = resource.metatoolId {
+            toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: metatoolId)
+        }
         
         if selectedToolVersion == nil {
             selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
@@ -287,7 +287,14 @@ extension ToolDetailsViewModel {
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
+        
+        guard let resource = dataDownloader.resourcesCache.getResource(id: toolVersion.id) else {
+            return
+        }
+        
         selectedToolVersion = toolVersion
+
+        reloadToolDetails(resource: resource)
     }
     
     func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
