@@ -28,12 +28,13 @@ struct AllFavoriteToolsView: View {
             let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
             
             BackwardCompatibleList(rootViewType: Self.self) {
-                VStack(alignment: .leading) {
+                Group {
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.leading, leadingTrailingPadding)
-                        .padding(.top, 40)
+                        .padding(.top, 30)
+                        .padding(.bottom, 15)
                     
                     ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
                 }
