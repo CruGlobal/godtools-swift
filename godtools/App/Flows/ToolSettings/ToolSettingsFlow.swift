@@ -215,12 +215,16 @@ class ToolSettingsFlow: Flow {
                 localizationServices: appDiContainer.localizationServices
             )
             
-            let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            let hostingView = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            hostingView.modalPresentationStyle = .fullScreen
             
-            reviewShareShareableModal = view
+            reviewShareShareableModal = hostingView
             
-            navigationController.present(view, animated: true, completion: nil)
+            navigationController.present(hostingView, animated: true, completion: nil)
             
+        case .closeTappedFromReviewShareShareable:
+            dismissReviewShareShareable()
+                                    
         case .shareImageTappedFromReviewShareShareable(let imageToShare):
             
             dismissReviewShareShareable(animated: true) { [weak self] in

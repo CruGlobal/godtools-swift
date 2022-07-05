@@ -25,4 +25,10 @@ class ReviewShareShareableHostingView: UIHostingController<ReviewShareShareableV
     private func setupLayout() {
         view.backgroundColor = .clear
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+    }
 }
