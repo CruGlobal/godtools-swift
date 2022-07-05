@@ -1,10 +1,19 @@
+"favorites.noTools.title" = "Nav iecienīto rīku, ko parādīt";
+"favorites.noTools.description" = "Nospiežot sirds ikonu, rīks tiks pievienots izlasei un būs pieejams bezsaistē.";
+"favorites.noTools.button" = "Skatīt rīkus";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Kopīgo attēlu";
+"favorites.pageTitle" = "Sveiki!";
+"favorites.favoriteLessons.title" = "Piedāvātā nodarbība";
+"favorites.favoriteTools.title" = "Tava rīku izlase";
+"favorites.favoriteTools.viewAll" = "Skatīt visus";
+"favorites.favoriteLessons.details" = "Apraksts";
 "toolSettings.languagesList.deleteLanguage.title" = "Nav";
 "toolSettings.chooseLanguage.toggleMessage" = "Iespēja pārslēgties starp divām dažādām valodām šajā rīkā.";
 "toolDetails.versions.title" = "Rīka versijas";
 "toolDetails.learnToShareToolButton.title" = "Iemācīties koplietot šo rīku";
-"toolSettings.title" = "Rīka opcijas";
-"toolSettings.option.shareLink.title" = "Kopīgo saiti";
-"toolSettings.option.screenShare.title" = "Ekrāna koplietošana";
+"toolSettings.title" = "Rīka iestatījumi";
+"toolSettings.option.shareLink.title" = "Kopīgot saiti";
+"toolSettings.option.screenShare.title" = "Kopīgot ekrānu";
 "toolSettings.option.trainingTips.show.title" = "Apmācības padomi";
 "toolSettings.option.trainingTips.hide.title" = "Paslēpt padomus";
 "toolSettings.chooseLanguage.title" = "Paralēlā valoda";
@@ -66,8 +75,8 @@
 "onboardingQuickStart.0.title" = "Vēlos iepazīt kristietību";
 "onboardingQuickStart.0.button.title" = "Lasi mūsu rakstus";
 "onboardingQuickStart.1.title" = "Vēlos uzzināt, kā veidot sarunas par Labo vēsti";
-"onboardingQuickStart.1.button.title" = "Izmēģini mūsu Nodarbības";
-"tool_offline_favorite_message" = "Padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to Izlasei.";
+"onboardingQuickStart.1.button.title" = "Izmēģini mūsu nodarbības";
+"tool_offline_favorite_message" = "Padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Sarunas uzsākšanai";
@@ -117,23 +126,23 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "open" = "Atvērt";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
-"add_to_favorites" = "Pievienot Izlasei";
+"add_to_favorites" = "Pievienot izlasei";
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
-"remove_from_favorites" = "Izņemt no Izlases";
+"remove_from_favorites" = "Izņemt no izlases";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to Izlasei.
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.
 ";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Izņemt no Izlases?";
+"remove_from_favorites_title" = "Izņemt no izlases?";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Vai tiešām vēlies izņemt \"%@\" no Izlases?";
+"remove_from_favorites_message" = "Vai tiešām vēlies izņemt \"%@\" no izlases?";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Labā vēsts";
@@ -157,7 +166,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "my_tools" = "Izlase";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Visi rīki";
+"find_tools" = "Rīki";
 
 "unavailable" = "Nav pieejams";
 
@@ -184,7 +193,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "account_login" = "Pieteikšanās kontā";
 
 // Tool Detail
-"about" = "Par rīku";
+"about" = "Par lietotni";
 "help" = "Biežāk uzdotie jautājumi";
 "contact_us" = "Sazinies ar mums";
 "preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
@@ -193,9 +202,9 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "terms_of_use" = "Lietošanas noteikumi";
 "privacy_policy" = "Privātuma politika";
 "copyright_info" = "Informācija par autortiesībām";
-"share_god_tools_share_sheet_text" = "Lejupielādē 'GodTools' lietotni: https://GodToolsApp.com/lv
+"share_god_tools_share_sheet_text" = "Lejupielādē 'GodTools' lietotni savā tālrunī: https://ej.uz/GodTools
 
-Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
+Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 
 // Add Tools
 "add_tools" = "Pievienot rīkus";
@@ -231,14 +240,14 @@ Tiešsaistes versija ir pieejama: https://KnowGod.com/lv";
 
 Turpināsim sarunu!
 
-Lietotni var lejupielādēt savā tālrunī no https://ej.uz/GodTools";
+Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 
 // Buttons
 "download" = "Lejupielādēt";
 "dismiss" = "Aizvērt";
 "done" = "Labi";
 "remove" = "Noņemt";
-"clear" = "Dzēst";
+"clear" = "Noņemt";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Atvērt rīku";
 
@@ -263,14 +272,14 @@ Lietotni var lejupielādēt savā tālrunī no https://ej.uz/GodTools";
 "general_about_4" = "Katra rīka beigās ir pievienotas saites uz citiem resursiem.";
 "tutorial.tutorialItem.1.message" = "Iepazīsties ar rīkiem. Iesakām sākt ar rīku \"Māci man pastāstīt par ticību\".
 
-Lai iegūtu vairāk informācijas, nospied pogu \"Par rīku\".";
+Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "general_about_5" = "Interneta pieslēgums ir nepieciešams, lai lejupielādētu jaunu rīku un/vai valodu. Pēc lejupielādes, tos var izmantot bezsaistē.";
 "tutorial.tutorialItem.2.title" = "Izmēģini";
 "general_about_6" = "Jautājumi? Ieteikumi? Lūgumi? Raksti mums uz godtools@agape.lv";
 "tutorial.tutorialItem.2.message" = "Iegūsti pieredzi, lietojot kādu no rīkiem sarunās.";
 "general_about_7" = "Šo rīku tīmekļa versijas ir pieejamas vietnē KnowGod.com/lv. Papildini savu tīmekļa vietni ar šo saiti!";
 "tutorial.tutorialItem.3.title" = "Šo pamācību vari atrast izvēlnē, kad vien tā ir nepieciešama.";
-"general_about_8" = "Lai uzzinātu vairāk, apmeklē GodToolsApp.com/lv";
+"general_about_8" = "Lai uzzinātu vairāk, apmeklē GodTools.lv";
 "tutorial.continueButton.title.continue" = "Turpināt";
 "general_about_9" = "Uzņemoties iniciatīvu dalīties ticībā, atceries, ka vienīgi Dievs pārliecina cilvēku. Parādi mīlestību ikvienam, uzklausot un cenšoties saprast.";
 "tutorial.continueButton.title.startUsingGodTools" = "Sākt lietot 'GodTools'";
@@ -293,7 +302,7 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Par rīku\".";
 "account.activity.title" = "Aktivitāte";
 
 // Language Name Strings
-"language_name_fa" = "Persiešu (Farsi)";
+"language_name_fa" = "persiešu (Farsi)";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";
