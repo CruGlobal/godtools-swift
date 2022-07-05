@@ -302,35 +302,34 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .onboardingFlowCompleted(let onboardingFlowCompletedState):
             
-            navigateToToolsMenu()
-                        
-            dismissOnboarding(animated: true) { [weak self] in
+            switch onboardingFlowCompletedState {
+            
+            case .readArticles:
+                   
+                navigateToToolsMenu()
                 
-                switch onboardingFlowCompletedState {
+                let toolDeepLink = ToolDeepLink(
+                    resourceAbbreviation: "es",
+                    primaryLanguageCodes: ["en"],
+                    parallelLanguageCodes: [],
+                    liveShareStream: nil,
+                    page: nil,
+                    pageId: nil
+                )
                 
-                case .readArticles:
-                                        
-                    let toolDeepLink = ToolDeepLink(
-                        resourceAbbreviation: "es",
-                        primaryLanguageCodes: ["en"],
-                        parallelLanguageCodes: [],
-                        liveShareStream: nil,
-                        page: nil,
-                        pageId: nil
-                    )
-                    
-                    self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-                    
-                case .tryLessons:
-                    self?.navigateToToolsMenu(startingPage: .lessons)
-                    
-                case .chooseTool:
-                    self?.navigateToToolsMenu(startingPage: .allTools)
-                    
-                default:
-                    self?.navigateToToolsMenu()
-                }
+                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                
+            case .tryLessons:
+                navigateToToolsMenu(startingPage: .lessons)
+                
+            case .chooseTool:
+                navigateToToolsMenu(startingPage: .allTools)
+                
+            default:
+                navigateToToolsMenu()
             }
+            
+            dismissOnboarding(animated: true)
                     
         case .openTutorialTappedFromTools:
             navigateToTutorial()
