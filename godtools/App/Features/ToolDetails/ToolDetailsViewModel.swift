@@ -11,7 +11,6 @@ import SwiftUI
 
 class ToolDetailsViewModel: NSObject, ObservableObject {
     
-    private let resource: ResourceModel
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
@@ -21,11 +20,13 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
     private let bannerImageRepository: ResourceBannerImageRepository
-    private let segmentTypes: [ToolDetailsSegmentType] = [.about, .versions]
+    
+    private var segmentTypes: [ToolDetailsSegmentType] = Array()
+    private var resource: ResourceModel
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var mediaType: ToolDetailsMediaType
+    @Published var mediaType: ToolDetailsMediaType = .empty
     @Published var name: String = ""
     @Published var totalViews: String = ""
     @Published var openToolButtonTitle: String = ""
@@ -54,17 +55,12 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.bannerImageRepository = bannerImageRepository
-        self.mediaType = ToolDetailsViewModel.getMediaType(resource: resource, dataDownloader: dataDownloader)
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
         super.init()
         
-        reloadToolDetails()
-        reloadFavorited()
+        reloadToolDetails(resource: resource)
         setupBinding()
-        reloadLearnToShareToolButtonState()
-        toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: resource.id)
-        selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
     }
     
     deinit {
@@ -89,94 +85,20 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited()
+                self?.reloadFavorited(resourceId: resourceId)
             }
         }
         
         favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited()
+                self?.reloadFavorited(resourceId: resourceId)
             }
         }
     }
     
-    private static func getMediaType(resource: ResourceModel, dataDownloader: InitialDataDownloader) -> ToolDetailsMediaType {
+    private func reloadToolDetails(resource: ResourceModel) {
         
-        let mediaType: ToolDetailsMediaType
-        
-        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            
-            let playsInFullScreen: Int = 0
-            let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
-            
-            mediaType = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
-        }
-        else if !resource.attrAboutBannerAnimation.isEmpty, let filePath = dataDownloader.attachmentsFileCache.getAttachmentFileUrl(attachmentId: resource.attrAboutBannerAnimation)?.path {
-            
-            let resource: AnimatedResource = .filepathJsonFile(filepath: filePath)
-            let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
-            
-            mediaType = .animation(viewModel: viewModel)
-        }
-        else if let uiImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) {
-            let image: Image = Image(uiImage: uiImage)
-            mediaType = .image(image: image)
-        }
-        else {
-            mediaType = .empty
-        }
-        
-        return mediaType
-    }
-    
-    private func reloadLearnToShareToolButtonState() {
-        
-        guard let primaryLanguage = languageSettingsService.primaryLanguage.value else {
-            return
-        }
-        
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: resource.id,
-            languageIds: [primaryLanguage.id],
-            resourcesCache: dataDownloader.resourcesCache,
-            languagesRepository: languagesRepository
-        )
-        
-        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
-            // download started, currently nothing will be shown while this downloads in the background. ~Levi
-        }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
-            DispatchQueue.main.async { [weak self] in
-                
-                let hidesLearnToShareToolButtonValue: Bool
-                
-                switch result {
-                case .success(let toolTranslations):
-                    
-                    if let primaryLanguageTranslationManifest = toolTranslations.languageTranslationManifests.first {
-                        
-                        hidesLearnToShareToolButtonValue = primaryLanguageTranslationManifest.manifest.tips.isEmpty
-                    }
-                    else {
-                        
-                        hidesLearnToShareToolButtonValue = true
-                    }
-                    
-                case .failure( _):
-                    
-                    hidesLearnToShareToolButtonValue = true
-                }
-                
-                self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
-            }
-        })
-    }
-    
-    private func reloadFavorited() {
-                
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
-    }
-    
-    private func reloadToolDetails() {
+        self.resource = resource
         
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
 
@@ -211,6 +133,13 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
         
+        segmentTypes = [.about, .versions].filter({
+            if $0 == .versions && resource.metatoolId == nil {
+                return false
+            }
+            return true
+        })
+        
         segments = segmentTypes.map({
             switch $0 {
             case .about:
@@ -219,7 +148,100 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
                 return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
             }
         })
+        
+        reloadMedia(resource: resource)
+        reloadFavorited(resourceId: resource.id)
+        reloadLearnToShareToolButtonState(resourceId: resource.id)
+        
+        if let metatoolId = resource.metatoolId {
+            toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: metatoolId)
+        }
+        
+        if selectedToolVersion == nil {
+            selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
+        }
     }
+    
+    private func reloadMedia(resource: ResourceModel) {
+        
+        let media: ToolDetailsMediaType
+        
+        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
+            
+            let playsInFullScreen: Int = 0
+            let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
+            
+            media = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
+        }
+        else if !resource.attrAboutBannerAnimation.isEmpty, let filePath = dataDownloader.attachmentsFileCache.getAttachmentFileUrl(attachmentId: resource.attrAboutBannerAnimation)?.path {
+            
+            let resource: AnimatedResource = .filepathJsonFile(filepath: filePath)
+            let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
+            
+            media = .animation(viewModel: viewModel)
+        }
+        else if let uiImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) {
+            let image: Image = Image(uiImage: uiImage)
+            media = .image(image: image)
+        }
+        else {
+            media = .empty
+        }
+        
+        mediaType = media
+    }
+    
+    private func reloadFavorited(resourceId: String) {
+                
+        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+    }
+    
+    private func reloadLearnToShareToolButtonState(resourceId: String) {
+        
+        guard let primaryLanguage = languageSettingsService.primaryLanguage.value else {
+            return
+        }
+        
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: resourceId,
+            languageIds: [primaryLanguage.id],
+            resourcesCache: dataDownloader.resourcesCache,
+            languagesRepository: languagesRepository
+        )
+        
+        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+            // download started, currently nothing will be shown while this downloads in the background. ~Levi
+        }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+            DispatchQueue.main.async { [weak self] in
+                
+                let hidesLearnToShareToolButtonValue: Bool
+                
+                switch result {
+                case .success(let toolTranslations):
+                    
+                    if let primaryLanguageTranslationManifest = toolTranslations.languageTranslationManifests.first {
+                        
+                        hidesLearnToShareToolButtonValue = primaryLanguageTranslationManifest.manifest.tips.isEmpty
+                    }
+                    else {
+                        
+                        hidesLearnToShareToolButtonValue = true
+                    }
+                    
+                case .failure( _):
+                    
+                    hidesLearnToShareToolButtonValue = true
+                }
+                
+                self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
+            }
+        })
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolDetailsViewModel {
     
     func backButtonTapped() {
         
@@ -272,10 +294,17 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
+        
+        guard let resource = dataDownloader.resourcesCache.getResource(id: toolVersion.id) else {
+            return
+        }
+        
         selectedToolVersion = toolVersion
+
+        reloadToolDetails(resource: resource)
     }
     
-    func getToolVersionCardViewModel(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
+    func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
