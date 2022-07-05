@@ -28,8 +28,9 @@ class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
         return UserDefaults.standard
     }
     
-    init(deviceLanguage: DeviceLanguageType) {
-        if deviceLanguage.isEnglish == false {
+    init(getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase) {
+        if getTutorialIsAvailableUseCase.getTutorialIsAvailable() == false {
+            
             disableOpenTutorialCallout()
         }
     }
