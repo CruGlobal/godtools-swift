@@ -14,7 +14,8 @@ struct ToolVersionDomainModel: Identifiable {
     let bannerImageId: String
     let name: String
     let description: String
-    let languages: String
+    let numberOfLanguages: Int
+    let numberOfLanguagesString: String
     let primaryLanguage: String?
     let primaryLanguageIsSupported: Bool
     let parallelLanguage: String?
