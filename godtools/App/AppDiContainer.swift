@@ -176,7 +176,7 @@ class AppDiContainer {
             snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                           
-        openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
+        openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache(deviceLanguage: deviceLanguage)
                            
         globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
         

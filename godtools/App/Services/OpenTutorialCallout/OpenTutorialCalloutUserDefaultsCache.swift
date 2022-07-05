@@ -28,6 +28,12 @@ class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
         return UserDefaults.standard
     }
     
+    init(deviceLanguage: DeviceLanguageType) {
+        if deviceLanguage.isEnglish == false {
+            disableOpenTutorialCallout()
+        }
+    }
+    
     func enableOpenTutorialCallout() {
         defaults.set(nil, forKey: keyOpenTutorialCalloutDisabled)
         defaults.synchronize()
