@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tutorial_tool.png",
+      "filename" : "onboard2-tools@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tutorial_tool@2x.png",
+      "filename" : "onboard2-tools@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tutorial_tool@3x.png",
+      "filename" : "onboard2-tools@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
