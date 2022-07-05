@@ -9,17 +9,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
-  cancel-previous:
-      name: Cancel Stale In-progress Builds
-      runs-on: ubuntu-latest
-      steps:
-        - name: Cancel Previous Runs
-          uses: styfle/cancel-workflow-action@0.9.1
-          with:
-            access_token: ${{ github.token }}
-  
+jobs:
   build:
     runs-on: macos-12
     env:
