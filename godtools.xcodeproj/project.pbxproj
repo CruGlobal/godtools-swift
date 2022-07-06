@@ -673,8 +673,6 @@
 		45AD1FEA25938A9800A096A0 /* InitialDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9325938A9800A096A0 /* InitialDataDownloader.swift */; };
 		45AD1FEB25938A9800A096A0 /* InitialDeviceResourcesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9425938A9800A096A0 /* InitialDeviceResourcesLoader.swift */; };
 		45AD1FEC25938A9800A096A0 /* InitialDataDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9525938A9800A096A0 /* InitialDataDownloaderError.swift */; };
-		45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9725938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift */; };
-		45AD1FEE25938A9800A096A0 /* OpenTutorialCalloutCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9825938A9800A096A0 /* OpenTutorialCalloutCacheType.swift */; };
 		45AD1FEF25938A9800A096A0 /* AttachmentsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9A25938A9800A096A0 /* AttachmentsDownloader.swift */; };
 		45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */; };
 		45AD1FF125938A9800A096A0 /* AttachmentsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */; };
@@ -1809,8 +1807,6 @@
 		45AD1E9325938A9800A096A0 /* InitialDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataDownloader.swift; sourceTree = "<group>"; };
 		45AD1E9425938A9800A096A0 /* InitialDeviceResourcesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDeviceResourcesLoader.swift; sourceTree = "<group>"; };
 		45AD1E9525938A9800A096A0 /* InitialDataDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataDownloaderError.swift; sourceTree = "<group>"; };
-		45AD1E9725938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialCalloutUserDefaultsCache.swift; sourceTree = "<group>"; };
-		45AD1E9825938A9800A096A0 /* OpenTutorialCalloutCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialCalloutCacheType.swift; sourceTree = "<group>"; };
 		45AD1E9A25938A9800A096A0 /* AttachmentsDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsDownloader.swift; sourceTree = "<group>"; };
 		45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAttachmentData.swift; sourceTree = "<group>"; };
 		45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsFileCache.swift; sourceTree = "<group>"; };
@@ -4811,7 +4807,6 @@
 				45D6D0282708B8FF0063C38A /* LessonEvaluation */,
 				45AD1EE125938A9800A096A0 /* Localization */,
 				D1C8FEBB2714E92E0071BD07 /* OnboardingTutorial */,
-				45AD1E9625938A9800A096A0 /* OpenTutorialCallout */,
 				45AD1E7325938A9800A096A0 /* RealmDatabase */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
 				45AD1E0125938A9700A096A0 /* Resources */,
@@ -5191,15 +5186,6 @@
 				45AD1E9225938A9800A096A0 /* LegacyRealmMigration.swift */,
 			);
 			path = InitialDataDownloader;
-			sourceTree = "<group>";
-		};
-		45AD1E9625938A9800A096A0 /* OpenTutorialCallout */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E9825938A9800A096A0 /* OpenTutorialCalloutCacheType.swift */,
-				45AD1E9725938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift */,
-			);
-			path = OpenTutorialCallout;
 			sourceTree = "<group>";
 		};
 		45AD1E9925938A9800A096A0 /* Attachments */ = {
@@ -7397,7 +7383,6 @@
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */,
 				457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */,
-				45AD1FED25938A9800A096A0 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
 				457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */,
 				45AD1B7325938A4F00A096A0 /* OnboardingTutorialItemsRepository.swift in Sources */,
 				45C93AE6261D310900592FFF /* ArticleAemRepository.swift in Sources */,
@@ -7506,7 +7491,6 @@
 				45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */,
 				45AD1F8325938A9800A096A0 /* FavoritedResourceModelType.swift in Sources */,
 				45F38D192833D59D009E3E15 /* LanguagesListItemView.swift in Sources */,
-				45AD1FEE25938A9800A096A0 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45AD1F9A25938A9800A096A0 /* RealmAttachment.swift in Sources */,
 				4581C59D285A5C7A0078425B /* ToolTrainingView.swift in Sources */,
