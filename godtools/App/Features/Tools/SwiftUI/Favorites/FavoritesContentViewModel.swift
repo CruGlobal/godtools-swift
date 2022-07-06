@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol FavoritesContentViewModelDelegate: AnyObject {
     func favoriteToolsViewGoToToolsTapped()
@@ -26,6 +27,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private weak var delegate: FavoritesContentViewModelDelegate?
     
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private var disableOptInOnboardingBannerSubscription: AnyCancellable?
         
     private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
         return LessonCardsViewModel(
@@ -113,6 +115,15 @@ extension FavoritesContentViewModel {
                 self?.setupTitle()
             }
         }
+        
+        disableOptInOnboardingBannerSubscription = UserDefaults.standard.publisher(for: \.optInOnboardingBannerDisabled)
+            .sink(receiveValue: { [weak self] optInOnboardingBannerDisabled in
+                guard let self = self else { return }
+                
+                DispatchQueue.main.async {
+                    self.hideTutorialBanner = optInOnboardingBannerDisabled
+                }
+            })
     }
     
     private func setupTitle() {
