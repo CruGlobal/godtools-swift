@@ -41,11 +41,11 @@ class MenuFlow: Flow {
             flowDelegate: self,
             config: appDiContainer.config,
             deviceLanguage: appDiContainer.deviceLanguage,
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             userAuthentication: appDiContainer.userAuthentication,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
-            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase()
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
         )
         let view = MenuView(viewModel: viewModel)
         

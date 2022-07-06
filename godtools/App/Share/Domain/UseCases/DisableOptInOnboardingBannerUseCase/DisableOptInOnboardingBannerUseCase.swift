@@ -11,7 +11,7 @@ import Foundation
 
 class DisableOptInOnboardingBannerUseCase {
     
-    let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
+    private let optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository
     
     init(optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository) {
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
