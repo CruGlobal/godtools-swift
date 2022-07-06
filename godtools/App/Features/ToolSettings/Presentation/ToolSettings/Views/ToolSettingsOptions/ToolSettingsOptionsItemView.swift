@@ -31,7 +31,7 @@ struct ToolSettingsOptionsItemView: View {
                     .foregroundColor(titleColorStyle.getColor())
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
             }
             .frame(
