@@ -326,6 +326,17 @@ class AppDiContainer {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
     
+    func getOpInOnboardingBannerVisibleUseCase() -> GetOptInOnboardingBannerVisibleUseCase {
+        return GetOptInOnboardingBannerVisibleUseCase(
+            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
+            optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
+        return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
         return ResourceBannerImageRepository(
             attachmentsFileCache: attachmentsFileCache,

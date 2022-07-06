@@ -17,8 +17,6 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private weak var flowDelegate: FlowDelegate?
@@ -31,11 +29,9 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate?, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
+    init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
         
         self.flowDelegate = flowDelegate
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
-        self.openTutorialCalloutCache = openTutorialCalloutCache
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.delegate = delegate

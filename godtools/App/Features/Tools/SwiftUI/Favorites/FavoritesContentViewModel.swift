@@ -24,10 +24,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
-    
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    
+        
     private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
         return LessonCardsViewModel(
             dataDownloader: dataDownloader,
@@ -56,7 +53,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getOptInOnboardingBannerVisibleUseCase: GetOptInOnboardingBannerVisibleUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -64,10 +61,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
-        self.openTutorialCalloutCache = openTutorialCalloutCache
         
-        hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
+        hideTutorialBanner = getOptInOnboardingBannerVisibleUseCase.getBannerIsVisible()
         
         super.init()
         
@@ -93,8 +88,6 @@ extension FavoritesContentViewModel {
     func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
         return OpenTutorialBannerViewModel(
             flowDelegate: flowDelegate,
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
-            openTutorialCalloutCache: openTutorialCalloutCache,
             localizationServices: localizationServices,
             analytics: analytics,
             delegate: self
@@ -130,7 +123,8 @@ extension FavoritesContentViewModel {
 extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     func closeBanner() {
         hideTutorialBanner = true
-        openTutorialCalloutCache.disableOpenTutorialCallout()
+//        openTutorialCalloutCache.disableOpenTutorialCallout()
+        // TODO: - disable banner
     }
     
     func openTutorial() {

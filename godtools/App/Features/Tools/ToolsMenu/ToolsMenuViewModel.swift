@@ -17,14 +17,13 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
+    private let getOptInOnboardingBannerVisibleUseCase: GetOptInOnboardingBannerVisibleUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerVisibleUseCase: GetOptInOnboardingBannerVisibleUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -34,8 +33,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
-        self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.getOptInOnboardingBannerVisibleUseCase = getOptInOnboardingBannerVisibleUseCase
         self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
@@ -65,8 +63,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
             analytics: analytics,
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
-            openTutorialCalloutCache: openTutorialCalloutCache
+            getOptInOnboardingBannerVisibleUseCase: getOptInOnboardingBannerVisibleUseCase
         )
     }
     
