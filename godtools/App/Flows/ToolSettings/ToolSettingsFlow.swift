@@ -215,8 +215,10 @@ class ToolSettingsFlow: Flow {
                 localizationServices: appDiContainer.localizationServices
             )
             
-            let hostingView = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
-            hostingView.modalPresentationStyle = .fullScreen
+            let view = ReviewShareShareableView(viewModel: viewModel)
+                        
+            let hostingView: UIHostingController<ReviewShareShareableView> = UIHostingController(rootView: view)
+            hostingView.view.backgroundColor = .white
             
             reviewShareShareableModal = hostingView
             
@@ -337,7 +339,6 @@ class ToolSettingsFlow: Flow {
         let view = LanguagesListView(viewModel: viewModel)
                 
         let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: view)
-        hostingView.modalPresentationStyle = .fullScreen
         hostingView.view.backgroundColor = .white
         
         navigationController.present(hostingView, animated: true)
