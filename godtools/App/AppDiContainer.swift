@@ -226,6 +226,10 @@ class AppDiContainer {
         return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
+    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
+        return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository())
+    }
+    
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
         return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
     }
@@ -326,8 +330,8 @@ class AppDiContainer {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
     
-    func getOpInOnboardingBannerVisibleUseCase() -> GetOptInOnboardingBannerVisibleUseCase {
-        return GetOptInOnboardingBannerVisibleUseCase(
+    func getOpInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
+        return GetOptInOnboardingBannerEnabledUseCase(
             getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
             optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository()
         )

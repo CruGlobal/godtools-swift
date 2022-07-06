@@ -10,7 +10,13 @@ import Foundation
 
 class OptInOnboardingBannerEnabledRepository {
     
+    let userDefaultKey = UserDefaultKeys.optInOnboardingBannerDisabled
+    
     func getBannerIsEnabled() -> Bool {
-        return UserDefaults.standard.bool(forKey: UserDefaultKeys.optInOnboardingBannerDisabled)
+        return UserDefaults.standard.bool(forKey: userDefaultKey) == false
+    }
+    
+    func disableBanner() {
+        UserDefaults.standard.set(true, forKey: userDefaultKey)
     }
 }

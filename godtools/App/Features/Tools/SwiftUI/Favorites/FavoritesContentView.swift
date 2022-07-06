@@ -82,7 +82,8 @@ struct FavoritesContentView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
-            getOptInOnboardingBannerVisibleUseCase: appDiContainer.getOpInOnboardingBannerVisibleUseCase()
+            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
         )
         
         FavoritesContentView(viewModel: viewModel)

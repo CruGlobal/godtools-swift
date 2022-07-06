@@ -1049,9 +1049,10 @@
 		D42B87CD2822F72D000B001D /* BaseToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B87CC2822F72D000B001D /* BaseToolCardViewModel.swift */; };
 		D42FEBD4286F80980002FAD9 /* DefaultVariantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD3286F80980002FAD9 /* DefaultVariantData.swift */; };
 		D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */; };
-		D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase.swift */; };
+		D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift */; };
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
 		D42FEBDC2876052D0002FAD9 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBDB2876052D0002FAD9 /* UserDefaultKeys.swift */; };
+		D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
 		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
@@ -2223,9 +2224,10 @@
 		D42B87CC2822F72D000B001D /* BaseToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolCardViewModel.swift; sourceTree = "<group>"; };
 		D42FEBD3286F80980002FAD9 /* DefaultVariantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVariantData.swift; sourceTree = "<group>"; };
 		D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingTutorialAvailableUseCase.swift; sourceTree = "<group>"; };
-		D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingBannerVisibleUseCase.swift; sourceTree = "<group>"; };
+		D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingBannerEnabledUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
 		D42FEBDB2876052D0002FAD9 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
+		D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableOptInOnboardingBannerUseCase.swift; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
 		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
@@ -6026,8 +6028,9 @@
 		45F88AFA2860BA8700C8027F /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D42FEBE2287617F70002FAD9 /* DisableOptInOnboardingBannerUseCase */,
 				4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */,
-				D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase */,
+				D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase */,
 				D42FEBDF28760A1C0002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
@@ -6514,12 +6517,12 @@
 			path = OptInOnboardingBannerEnabledRepository;
 			sourceTree = "<group>";
 		};
-		D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase */ = {
+		D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase */ = {
 			isa = PBXGroup;
 			children = (
-				D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase.swift */,
+				D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift */,
 			);
-			path = GetOptInOnboardingBannerVisibleUseCase;
+			path = GetOptInOnboardingBannerEnabledUseCase;
 			sourceTree = "<group>";
 		};
 		D42FEBDF28760A1C0002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase */ = {
@@ -6528,6 +6531,14 @@
 				D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */,
 			);
 			path = GetOptInOnboardingTutorialAvailableUseCase;
+			sourceTree = "<group>";
+		};
+		D42FEBE2287617F70002FAD9 /* DisableOptInOnboardingBannerUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */,
+			);
+			path = DisableOptInOnboardingBannerUseCase;
 			sourceTree = "<group>";
 		};
 		D44C692F280478FC0000B970 /* SwiftUI */ = {
@@ -7541,7 +7552,7 @@
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */,
 				451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */,
-				D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerVisibleUseCase.swift in Sources */,
+				D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */,
 				45CB9FFD261FB0BE0036BEB3 /* LessonListItemViewModel.swift in Sources */,
 				D45922E3286A376800904B87 /* LessonCardView.swift in Sources */,
 				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
@@ -7611,6 +7622,7 @@
 				4542F40A2810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
 				45558410269F2DA500C3FF14 /* MobileContentTextViewModelType.swift in Sources */,
 				D1E98EDF27974F0100D1B738 /* LessonEvaluationViewModel.swift in Sources */,
+				D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */,
 				45C93AF0261D310900592FFF /* ArticleAemDownloaderError.swift in Sources */,
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,

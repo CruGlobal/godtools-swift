@@ -17,13 +17,14 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
-    private let getOptInOnboardingBannerVisibleUseCase: GetOptInOnboardingBannerVisibleUseCase
+    private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerVisibleUseCase: GetOptInOnboardingBannerVisibleUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -33,7 +34,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
-        self.getOptInOnboardingBannerVisibleUseCase = getOptInOnboardingBannerVisibleUseCase
+        self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
@@ -63,7 +65,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
             analytics: analytics,
-            getOptInOnboardingBannerVisibleUseCase: getOptInOnboardingBannerVisibleUseCase
+            getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
+            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase
         )
     }
     
