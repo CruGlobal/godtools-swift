@@ -12,6 +12,8 @@ struct ToolDetailsVersionsView: View {
         
     @ObservedObject var viewModel: ToolDetailsViewModel
     
+    let toolVersionTappedClosure: (() -> Void)
+        
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -24,10 +26,11 @@ struct ToolDetailsVersionsView: View {
             ForEach(viewModel.toolVersions) { toolVersion in
                                 
                 ToolDetailsVersionsCardView(
-                    viewModel: viewModel.getToolVersionCardViewModel(toolVersion: toolVersion)
+                    viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion)
                 )
                 .onTapGesture {
                     viewModel.toolVersionTapped(toolVersion: toolVersion)
+                    toolVersionTappedClosure()
                 }
             }
         }
