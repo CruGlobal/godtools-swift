@@ -48,22 +48,26 @@ class GetToolVersionsUseCase {
         let toolLanguagesIds: [String] = toolLanguages.map({$0.id})
                 
         let name: String
+        let description: String
         let languageBundle: Bundle
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
+            description = primaryTranslation.translatedTagline
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
+            description = englishTranslation.translatedTagline
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
             
             name = resourceVersion.name
+            description = resource.resourceDescription
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
@@ -99,7 +103,7 @@ class GetToolVersionsUseCase {
             id: resourceVersion.id,
             bannerImageId: resourceVersion.attrBanner,
             name: name,
-            description: resourceVersion.resourceDescription,
+            description: description,
             numberOfLanguages: toolLanguages.count,
             numberOfLanguagesString: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), toolLanguages.count),
             primaryLanguage: primaryLanguage,
