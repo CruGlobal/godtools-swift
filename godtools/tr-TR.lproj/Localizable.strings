@@ -1,3 +1,31 @@
+"toolDetails.versions.message" = "Aşağıdan bu aracın farklı bir sürümünü seç. Her sürüm benzersiz bir tarza ve içeriğe sahip, böylece konuşman için en iyi olanı bulabilirsin. Aynı aracın birden fazla sürümünü favorilerine ekleyebilirsin.";
+"favorites.noTools.title" = "Gösterilecek favori araç yok";
+"favorites.noTools.description" = "Bir aracı favorilere eklemek ve çevrimdışı da kullanılabilir yapmak için kalp simgesine dokun.";
+"favorites.noTools.button" = "Araçlara Git";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Resim paylaş";
+"favorites.pageTitle" = "GodTools'a Hoş Geldin";
+"favorites.favoriteLessons.title" = "Öne çıkan ders";
+"favorites.favoriteTools.title" = "Favori araçların";
+"favorites.favoriteTools.viewAll" = "Tümünü görüntüle";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Yok";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Bu araçta iki farklı dil arasında geçiş yapabilirsin.";
+"toolDetails.versions.title" = "Sürümler";
+"toolDetails.learnToShareToolButton.title" = "Bu aracı paylaşmayı öğren";
+"toolSettings.title" = "Araç Seçenekleri";
+"toolSettings.option.shareLink.title" = "Bağlantı paylaş";
+"toolSettings.option.screenShare.title" = "Ekranını paylaş";
+"toolSettings.option.trainingTips.show.title" = "Eğitim ipuçları";
+"toolSettings.option.trainingTips.hide.title" = "İpuçlarını gizle";
+"toolSettings.chooseLanguage.title" = "Paralel Dil";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralel";
+"toolSettings.shareables.title" = "İlgili grafikler";
+"allTools.spotlight.title" = "Aracın Öne Çıkanları";
+"allTools.spotlight.description" = "İşte beğenebileceğini düşündüğümüz bazı araçlar";
+"allTools.categories.title" = "Kategoriler";
+"tool_menu_item.lessons" = "Dersler";
 "parallelLanguage.yesButton.title" = "Evet";
 "parallelLanguage.noButton.title" = "Hayır Teşekkürler";
 "parallelLanguage.selectButton.title" = "Seç";

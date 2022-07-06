@@ -1,3 +1,31 @@
+"toolDetails.versions.message" = "本ツールの他バージョンを下からお選びいただけます。各バージョンによって、スタイルやコンテンツが異なりますので、あなたの会話に最も適したバージョンを見つけてください。同じツールの複数のバージョンをお気に入りに表示させることも可能です。";
+"favorites.noTools.title" = "表示できるお気に入りのツールはありません";
+"favorites.noTools.description" = "ハートアイコンをタップしてツールをお気に入りに追加し、オフラインでも使用できるようにしましょう。";
+"favorites.noTools.button" = "ツールに移動";
+"toolSettings.shareImagePreview.shareImageButton.title" = "画像をシェア";
+"favorites.pageTitle" = "GodToolsへようこそ";
+"favorites.favoriteLessons.title" = "注目のレッスン";
+"favorites.favoriteTools.title" = "お気に入りのツール";
+"favorites.favoriteTools.viewAll" = "すべて表示 ";
+"favorites.favoriteLessons.details" = "詳細";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "なし";
+
+"toolSettings.chooseLanguage.toggleMessage" = "本ツール内で2つの言語を切り替えることができます。";
+"toolDetails.versions.title" = "バージョン";
+"toolDetails.learnToShareToolButton.title" = "このツールをシェアする方法を学ぶ";
+"toolSettings.title" = "ツールオプション";
+"toolSettings.option.shareLink.title" = "リンクをシェア";
+"toolSettings.option.screenShare.title" = "画面を共有する";
+"toolSettings.option.trainingTips.show.title" = "トレーニングのヒント";
+"toolSettings.option.trainingTips.hide.title" = "ヒントを非表示";
+"toolSettings.chooseLanguage.title" = "並列言語";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "並列";
+"toolSettings.shareables.title" = "関連する画像";
+"allTools.spotlight.title" = "注目のツール";
+"allTools.spotlight.description" = "あなたにおすすめのツールです";
+"allTools.categories.title" = "カテゴリー";
 "parallelLanguage.yesButton.title" = "はい";
 "parallelLanguage.noButton.title" = "いいえ、結構です";
 "parallelLanguage.getStartedButton.title" = "開始する";
@@ -28,7 +56,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "ミラーリング機能";
 "share_tool_screen_tutorial.mirrored_experience.message" = "お使いのスマートフォンでツールをスクロールすると、お友達の画面も同様に動作します。これにより、2つのデバイス上で同時にツールの使い方を見せることができます。";
 "share_tool_screen_tutorial.get_started.title" = "始める";
-"share_tool_screen_tutorial.get_started.message" = "リンクを1人またはそれ以上の人々に送信して、画面共有セッションを今すぐ開始しましょう。 この機能をご利用いただくためには、すべての参加者の使用デバイスにGodToolsアプリがダウンロードされている必要があります。";
+"share_tool_screen_tutorial.get_started.message" = "リンクを1人またはそれ以上の人々に送信して、画面共有セッションを今すぐ開始しましょう。";
 "share_tool_remote_link_message" = "こんにちは。画面共有を通してGodToolsを一緒に見てみましょう。リンクはこちらです: %@ このメッセージが後から届いた場合、リンクが使用できなくなっている場合があります。その場合は、またの機会に試しましょう。";
 "exit_tract_remote_share_session.message" = "遠隔共有セッションを今すぐ終了しますか？";
 "load_tool_remote_session.message" = "「画面共有」を開始しています…";
@@ -148,7 +176,9 @@
 "no" = "いいえ";
 
 // Tract - Sharing
-"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。もっと話しましょう！
+"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
+
+もっと話しましょう！
 
 アプリはこちらからダウンロードできます: https://godtoolsapp.com";
 

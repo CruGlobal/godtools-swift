@@ -1,3 +1,4 @@
+"toolDetails.versions.message" = "नीचे इस टूल का एक अलग संस्करण चुनें। हर संस्करण की अपनी विशिष्ट स्टाइल और सामग्री है ताकि आप वार्तालाप के लिए सबसे उपयुक्त को चुन सकें। आप एक ही टूल के कई संस्करण पसंदीदा में जोड़ सकते हैं।";
 "favorites.noTools.title" = "दिखाने के लिए कोई पसंदीदा टूल नहीं";
 "favorites.noTools.description" = "किसी टूल को पसंदीदा बनाने के लिए दिल के चिन्ह पर टैप करें और उसे ऑफ़लाइन भी इस्तेमाल करें।";
 "favorites.noTools.button" = "टूल्स पर जाएँ";
@@ -7,12 +8,16 @@
 "favorites.favoriteTools.title" = "आपके पसंदीदा टूल";
 "favorites.favoriteTools.viewAll" = "सभी देखें >";
 "favorites.favoriteLessons.details" = "विवरण";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "कोई नहीं";
+
 "toolSettings.chooseLanguage.toggleMessage" = "इस टूल द्वारा दो अलग-अलग भाषाओं के बीच स्विच करें।";
 "toolDetails.versions.title" = "संस्करण";
 "toolDetails.learnToShareToolButton.title" = "इस टूल को साझा करना सीखें";
 "toolSettings.title" = "टूल विकल्प";
 "toolSettings.option.shareLink.title" = "लिंक साझा करें";
+"toolSettings.option.screenShare.title" = "अपनी स्क्रीन साझा करें";
 "toolSettings.option.trainingTips.show.title" = "प्रशिक्षण सुझाव";
 "toolSettings.option.trainingTips.hide.title" = "सुझाव छिपाएँ";
 "toolSettings.chooseLanguage.title" = "समानंतर भाषा";

@@ -8,13 +8,16 @@
 "favorites.favoriteTools.title" = "Your favorite tools";
 "favorites.favoriteTools.viewAll" = "View all";
 "favorites.favoriteLessons.details" = "Details";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "None";
+
 "toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
 "toolDetails.versions.title" = "Versions";
 "toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
 "toolSettings.title" = "Tool Options";
 "toolSettings.option.shareLink.title" = "Share link";
-"toolSettings.option.screenShare.title" = "Screen share";
+"toolSettings.option.screenShare.title" = "Share screen";
 "toolSettings.option.trainingTips.show.title" = "Training tips";
 "toolSettings.option.trainingTips.hide.title" = "Hide tips";
 "toolSettings.chooseLanguage.title" = "Parallel Language";

@@ -1,3 +1,28 @@
+"toolDetails.versions.message" = "Chọn một phiên bản khác của công cụ này ở bên dưới. Mỗi phiên bản có các tính năng và nội dung riêng biệt nhằm phù hợp nhất cho cuộc trò chuyện của bạn. Bạn có thể đánh dấu yêu thích nhiều phiên bản khác nhau của cùng một công cụ.";
+"favorites.noTools.title" = "Không có công cụ yêu thích nào";
+"favorites.noTools.description" = "Bấm vào biểu tượng trái tim để đánh dấu công cụ yêu thích và sử dụng ngay cả khi không có internet.";
+"favorites.noTools.button" = "Đến kho Công cụ";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Gửi hình ảnh";
+"favorites.pageTitle" = "Chào mừng đến với GodTools";
+"favorites.favoriteLessons.title" = "Bài học đặc sắc";
+"favorites.favoriteTools.title" = "Công cụ yêu thích của bạn";
+"favorites.favoriteTools.viewAll" = "Xem tất cả";
+"favorites.favoriteLessons.details" = "Giới thiệu";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Không";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Chuyển đổi giữa 2 ngôn ngữ khác nhau trong công cụ này.";
+"toolDetails.versions.title" = "Phiên bản";
+"toolDetails.learnToShareToolButton.title" = "Học cách chia sẻ công cụ này";
+"toolSettings.title" = "Những lựa chọn";
+"toolSettings.option.shareLink.title" = "Chia sẻ đường link";
+"toolSettings.option.screenShare.title" = "Chia sẻ màn hình";
+"toolSettings.option.trainingTips.show.title" = "Gợi ý hướng dẫn";
+"toolSettings.option.trainingTips.hide.title" = "Ẩn phần gợi ý";
+"toolSettings.chooseLanguage.title" = "Ngôn ngữ song song";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Song song";
+"toolSettings.shareables.title" = "Hình ảnh tương ứng";
 "allTools.spotlight.title" = "Nổi bật công cụ";
 "allTools.spotlight.description" = "Có lẽ bạn sẽ thích một số công cụ này";
 "allTools.categories.title" = "Các mục";

@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "نسخه‌ای دیگر از این ابزار را در زیر انتخاب کنید. هر نسخه دارای محتوا و سبک منحصربه‌فردی است، بنابراین می‌توانید بهترین نسخه برای گفت‌وگوی خود را انتخاب کنید. می‌توانید چندین نسخه از یک ابزار را در موردعلاقه‌های خود قرار دهید.";
+"favorites.noTools.title" = "ابزار موردعلاقه‌ای برای نمایش وجود ندارد";
+"favorites.noTools.description" = "برای قرار دادن ابزار در موردعلاقه‌ها و در دسترس قرار دادن آفلاین آن، روی آیکون قلب ضربه بزنید.";
+"favorites.noTools.button" = "رفتن به ابزارها";
+"toolSettings.shareImagePreview.shareImageButton.title" = "اشتراک‌گذاری عکس";
+"favorites.pageTitle" = "به GodTools خوش آمدید";
+"favorites.favoriteLessons.title" = "درس منتخب";
+"favorites.favoriteTools.title" = "ابزارهای موردعلاقه شما";
+"favorites.favoriteTools.viewAll" = "مشاهدۀ همه";
+"favorites.favoriteLessons.details" = "جزئیات";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "هیچکدام";
+
+"toolSettings.chooseLanguage.toggleMessage" = "در این ابزار بین دو زبان جابه‌جا شوید.";
+"toolDetails.versions.title" = "نسخه‌ها";
+"toolDetails.learnToShareToolButton.title" = "یادگیری اشتراک‌گذاری این ابزار";
+"toolSettings.title" = "گزینه‌های ابزار";
+"toolSettings.option.shareLink.title" = "اشتراک‌گذاری یک پیوند";
+"toolSettings.option.screenShare.title" = "صفحه نمایش خود را به اشتراک بگذارید";
+"toolSettings.option.trainingTips.show.title" = "نکات آموزشی";
+"toolSettings.option.trainingTips.hide.title" = "پنهان‌کردن نکات";
+"toolSettings.chooseLanguage.title" = "زبان موازی";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "موازی";
+"toolSettings.shareables.title" = "گرافیک‌های مرتبط";
+"allTools.spotlight.title" = "ویژگی‌های مهم ابزار";
+"allTools.spotlight.description" = "ممکن است این ابزارها را بپسندید";
+"allTools.categories.title" = "دسته‌بندی‌ها";
+"tool_menu_item.lessons" = "درس‌ها";
 "parallelLanguage.yesButton.title" = "بله";
 "parallelLanguage.noButton.title" = "خیر، متشکرم";
 "parallelLanguage.getStartedButton.title" = "شروع کنید";

@@ -1,7 +1,63 @@
+"toolDetails.versions.message" = "请在下面选择此工具的不同版本。每个版本都有独特的风格和内容，所以你可以找到一个最适合你的对话。您可以喜欢同一工具的多个版本。";
+"favorites.noTools.title" = "没有最喜欢的工具来显示";
+"favorites.noTools.description" = "点击心形图标来收藏一个工具，并使其离线可用。";
+"favorites.noTools.button" = "去到工具包";
+"toolSettings.shareImagePreview.shareImageButton.title" = "分享图片";
+"favorites.pageTitle" = "欢迎来到Godtools信仰分享工具";
+"favorites.favoriteLessons.title" = "特色课程";
+"favorites.favoriteTools.title" = "你最喜欢的工具";
+"favorites.favoriteTools.viewAll" = "查看全部";
+"favorites.favoriteLessons.details" = "细节";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "没有";
+
+"toolSettings.chooseLanguage.toggleMessage" = "在这个工具中切换两种不同的语言。";
+"toolDetails.versions.title" = "版本";
+"toolDetails.learnToShareToolButton.title" = "学习分享工具";
+"toolSettings.title" = "工具选项";
+"toolSettings.option.shareLink.title" = "分享链接";
+"toolSettings.option.screenShare.title" = "分享你的屏幕";
+"toolSettings.option.trainingTips.show.title" = "培训提示";
+"toolSettings.option.trainingTips.hide.title" = "隐藏提示";
+"toolSettings.chooseLanguage.title" = "平行显示语言";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "同步 ";
+"toolSettings.shareables.title" = "相关图片";
+"allTools.spotlight.title" = "热门工具";
+"allTools.spotlight.description" = "这是我们觉得你可能喜欢的一些工具";
+"allTools.categories.title" = "分类";
+"training_tip_ask" = "提问";
+"training_tip_consider" = "考虑";
+"training_tip_prepare" = "准备";
+"training_tip_quote" = "引用";
+"training_tip_tip" = "提示";
+"start_training" = "开始培训";
+"close" = "关闭";
+"tool_menu_item.lessons" = "课程 ";
 "parallelLanguage.noButton.title" = "不了，谢谢";
+"parallelLanguage.selectButton.title" = "选择";
 "parallelLanguage.getStartedButton.title" = "开始体验";
 "parallelLanguage.selectLanguageButton.title" = "选择语言";
 "parellelLanguage.prompt" = "您想设置第二语言吗？";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.continueButton.title.closeTutorial" = "关闭教程";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.title" = "分享屏幕";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.message" = "你现在可以远程分享你的屏幕，这样当你使用工具讨论福音时，其他人可以跟随你。";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.title" = "课程 ";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.message" = "Godtools上的每一课，你都能学习到帮助你真实谈论上帝的东西";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.findTutorial.title" = "在你需要的时候，到菜单中随时查找本教程";
+
 "onboardingTutorial.beginButton.title" = "开始";
 "onboardingQuickStart.2.title" = "我想与他人分享福音";
 "onboardingQuickStart.2.button.title" = "选择我们的一个工具";
@@ -27,10 +83,14 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "镜像体验";
 "share_tool_screen_tutorial.mirrored_experience.message" = "当你在手机上滚动浏览这款工具时，你好友的屏幕将同步显示相同的内容。这样，你们就可以同时在2台设备上一起浏览工具。";
 "share_tool_screen_tutorial.get_started.title" = "开始体验";
-"share_tool_screen_tutorial.get_started.message" = "将链接发送给一个或多个，立即开始共享屏幕。 目前，此体验要求所有参与者在其设备上下载GodTools应用程序。";
+"share_tool_screen_tutorial.get_started.message" = "将链接发送给一个或多个人，立即开始共享屏幕。";
 "share_tool_remote_link_message" = "嗨，在GodTools中通过屏幕共享功能与我保持同步。这是链接：%@ 如果你之后才收到这条消息，这个链接可能已失效。我们可以换个时间再试一次。";
 "exit_tract_remote_share_session.message" = "立即退出远程共享会话？";
 "load_tool_remote_session.message" = "正在启动屏幕共享…";
+"lesson_evaluation.title" = "回顾";
+"lesson_evaluation.wasThisHelpful" = "这个课程对你有帮助吗？";
+"lesson_evaluation.shareFaith" = "对于开启一场属灵对话你感觉自己准备的程度如何？";
+"lesson_evaluation.sendButtonTitle" = "发送反馈";
 "onboardingTutorial.0.title" = "准备好了每一场对话";
 "onboardingTutorial.0.videoLink.title" = "观看视频";
 "onboardingTutorial.1.title" = "与任何人谈论神";

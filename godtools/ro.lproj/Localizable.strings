@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Alege o versiune diferită a instrumentului de mai jos. Fiecare versiune are un stil și un conținut unice pentru a le găsi pe cele care se potrivesc cel mai bine conversației tale. Poți adăuga la favorite mai multe versiuni ale aceluiași instrument.";
+"favorites.noTools.title" = "Niciun instrument preferat de afișat";
+"favorites.noTools.description" = "Atinge pictograma inimă pentru a adăuga la favorite un instrument și a-l face disponibil offline.";
+"favorites.noTools.button" = "Accesează Instrumentele";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Partajare imagine";
+"favorites.pageTitle" = "Bun venit la GodTools";
+"favorites.favoriteLessons.title" = "Lecție recomandată";
+"favorites.favoriteTools.title" = "Instrumentele tale preferate";
+"favorites.favoriteTools.viewAll" = "Vezi tot";
+"favorites.favoriteLessons.details" = "Detalii";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Niciuna";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Comută între două limbi diferite în acest instrument.";
+"toolDetails.versions.title" = "Versiuni";
+"toolDetails.learnToShareToolButton.title" = "Află cum să partajezi acest instrument";
+"toolSettings.title" = "Opțiuni de instrumente";
+"toolSettings.option.shareLink.title" = "Partajează un link";
+"toolSettings.option.screenShare.title" = "Partajează ecranul";
+"toolSettings.option.trainingTips.show.title" = "Recomandări de instruire";
+"toolSettings.option.trainingTips.hide.title" = "Ascunde recomandările";
+"toolSettings.chooseLanguage.title" = "Limbă secundară";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "secundară";
+"toolSettings.shareables.title" = "Grafice asociate";
+"allTools.spotlight.title" = "Recomandări de instrumente";
+"allTools.spotlight.description" = "Iată câteva instrumente care credem că îți vor plăcea";
+"allTools.categories.title" = "Categorii";
+"tool_menu_item.lessons" = "Lecții";
 "parallelLanguage.yesButton.title" = "Da";
 "parallelLanguage.noButton.title" = "Nu, mulțumesc";
 "parallelLanguage.getStartedButton.title" = "Să începem";
@@ -15,7 +44,7 @@
 "tool_offline_favorite_message" = "Un instrument va fi disponibil offline dacă apeși pictograma inimă, care îl adaugă la Favorite.";
 
 /* This is a category description of a tool that helps you start a conversation */
-"tool_category_conversation_starter" = "Ajutoare pentru inițierea conversațiilor";
+"tool_category_conversation_starter" = "Inițierea Conversațiilor";
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Creșterea în credință";
@@ -28,7 +57,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Experiență în oglindă";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Pe măsură ce derulezi instrumentul pe telefonul tău, ecranul prietenului tău va răspunde la fel. Acest lucru vă permite să folosiți un instrument împreună pe 2 dispozitive în același timp.";
 "share_tool_screen_tutorial.get_started.title" = "Să începem";
-"share_tool_screen_tutorial.get_started.message" = "Trimite linkul către una sau mai multe persoane pentru a începe o sesiune de partajare ecran acum. Această experiență impune ca toți participanții să aibă aplicația GodTools descărcată pe dispozitiv.";
+"share_tool_screen_tutorial.get_started.message" = "Trimite linkul către una sau mai multe persoane pentru a începe o sesiune de partajare ecran acum.";
 "share_tool_remote_link_message" = "Bună, urmează-mă în GodTools prin partajarea ecranului. Iată linkul: %@ Dacă nu primești acest mesaj până mai târziu, este posibil ca linkul să nu funcționeze. Poți încerca ulterior.";
 "exit_tract_remote_share_session.message" = "Părăsești sesiunea de partajare la distanță acum?";
 "load_tool_remote_session.message" = "Începe partajarea ecranului...";
@@ -146,7 +175,9 @@ Găsești versiunea online aici https://knowgod.com/";
 "no" = "Nu";
 
 // Tract - Sharing
-"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. Să discutăm mai multe!
+"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
+
+Să discutăm mai multe!
 
 Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
