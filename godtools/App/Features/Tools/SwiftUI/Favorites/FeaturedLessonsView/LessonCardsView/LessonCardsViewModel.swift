@@ -31,6 +31,8 @@ class LessonCardsViewModel: LessonCardProvider {
         
         super.init()
         
+        reloadLessonsFromCache()
+        
         setup()
     }
     

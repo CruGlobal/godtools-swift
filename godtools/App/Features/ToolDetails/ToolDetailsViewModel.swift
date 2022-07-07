@@ -16,6 +16,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
+    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
@@ -38,11 +39,13 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
+    @Published var availableLanguagesTitle: String = ""
+    @Published var availableLanguagesList: String = ""
     @Published var versionsMessage: String = ""
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -51,10 +54,12 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.getToolTranslationsUseCase = getToolTranslationsUseCase
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.bannerImageRepository = bannerImageRepository
+        self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
         super.init()
@@ -132,6 +137,10 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
+        
+        let resourceLanguages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
+        let resourceTranslatedLanguageNames: [String] = resourceLanguages.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0).name})
+        availableLanguagesList = resourceTranslatedLanguageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         segmentTypes = [.about, .versions].filter({
             if $0 == .versions && resource.metatoolId == nil {

@@ -44,7 +44,6 @@ class AppDiContainer {
     let languageTranslationsDownloader: LanguageTranslationsDownloader
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
-    let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let globalActivityServices: GlobalActivityServices
@@ -175,9 +174,7 @@ class AppDiContainer {
             firebaseAnalytics: FirebaseAnalytics(config: config, userAuthentication: userAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
-                                                          
-        openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
-                           
+                                                                                     
         globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
         
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
@@ -224,6 +221,10 @@ class AppDiContainer {
     
     func getDeepLinkingService() -> DeepLinkingServiceType {
         return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    }
+    
+    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
+        return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
     }
     
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
@@ -324,6 +325,21 @@ class AppDiContainer {
     
     func getOnboardingTutorialViewedCache() -> OnboardingTutorialViewedCacheType {
         return OnboardingTutorialViewedUserDefaultsCache()
+    }
+    
+    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
+        return OptInOnboardingBannerEnabledRepository()
+    }
+    
+    func getOpInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
+        return GetOptInOnboardingBannerEnabledUseCase(
+            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
+            optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
+        return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
     }
     
     func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
