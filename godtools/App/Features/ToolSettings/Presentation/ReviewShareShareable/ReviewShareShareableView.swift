@@ -22,6 +22,14 @@ struct ReviewShareShareableView: View {
                         
             VStack(alignment: .center, spacing: 0) {
                 
+                HStack {
+                    Spacer()
+                    CloseButton {
+                        viewModel.closeTapped()
+                    }
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                }
+                
                 Spacer()
                 
                 viewModel.imagePreview

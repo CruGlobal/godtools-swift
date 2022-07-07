@@ -158,7 +158,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         }
         
         if selectedToolVersion == nil {
-            selectedToolVersion = toolVersions.filter({$0.isDefaultVersion}).first
+            selectedToolVersion = toolVersions.filter({$0.id == resource.id}).first
         }
     }
     
