@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Виберіть іншу версію інструмента нижче. Кожна версія має унікальний стиль і контент, щоб ви могли знайти те, що найкраще підійде для вашої розмови. Ви можете вибрати кілька версій одного інструмента.";
+"favorites.noTools.title" = "Немає вибраних інструментів";
+"favorites.noTools.description" = "Торкніться значка серця, щоб додати інструмент у вибране й зробити його доступним у режимі офлайн.";
+"favorites.noTools.button" = "До інструментів";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Поширте зображення";
+"favorites.pageTitle" = "Вітаємо у GodTools";
+"favorites.favoriteLessons.title" = "Рекомендований урок";
+"favorites.favoriteTools.title" = "Ваші вибрані інструменти";
+"favorites.favoriteTools.viewAll" = "Переглянути все";
+"favorites.favoriteLessons.details" = "Відомості";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Нічого";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Перемикайтесь між двома мовами у цьому інструменті.";
+"toolDetails.versions.title" = "Версії";
+"toolDetails.learnToShareToolButton.title" = "Дізнайтесь, як поширити цей інструмент";
+"toolSettings.title" = "Параметри інструмента";
+"toolSettings.option.shareLink.title" = "Поширте посилання";
+"toolSettings.option.screenShare.title" = "Поділитися екраном";
+"toolSettings.option.trainingTips.show.title" = "Підказки з навчання";
+"toolSettings.option.trainingTips.hide.title" = "Приховати підказки";
+"toolSettings.chooseLanguage.title" = "Додаткова мова";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Додатково";
+"toolSettings.shareables.title" = "Пов'язані зображення";
+"allTools.spotlight.title" = "Огляд інструментів";
+"allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
+"allTools.categories.title" = "Категорії";
+"tool_menu_item.lessons" = "Уроки";
 "parallelLanguage.yesButton.title" = "Так";
 "parallelLanguage.noButton.title" = "Ні, дякую";
 "parallelLanguage.getStartedButton.title" = "Розпочати";
@@ -28,8 +57,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Функція віддзеркалення";
 "share_tool_screen_tutorial.mirrored_experience.message" = "На екрані вашого друга буде показуватися те, що ви переглядаєте в інструменті на вашому телефоні. Це дозволить зробити огляд інструменту одночасно на двох пристроях.";
 "share_tool_screen_tutorial.get_started.title" = "Розпочати";
-"share_tool_screen_tutorial.get_started.message" = "Відправте посилання людям, з якими ви хочете розпочати сеанс демонстрації екрану. Для участі в сеансі, необхідно, щоб в учасників була встановлена програма GodTools на їхніх пристроях.";
-"share_tool_remote_link_message" = "Вітаю! Зайдіть у програму GodTools, щоб бачити мій екран за посиланням: %@ Якщо ви пізно отримали це повідомлення, посилання може бути застарілим. Спробуймо іншим разом.";
+"share_tool_screen_tutorial.get_started.message" = "Відправте посилання людям, з якими ви хочете розпочати сеанс демонстрації екрану.";
+"share_tool_remote_link_message" = "Вітаю! Зайдіть у програму GodTools, щоб бачити мій екран за посиланням: %@ 
+
+Якщо ви пізно отримали це повідомлення, посилання може бути застарілим. Спробуймо іншим разом.";
 "exit_tract_remote_share_session.message" = "Закінчити віддалений сеанс демонстрації?";
 "load_tool_remote_session.message" = "Розпочинається демонстрація екрану...";
 "onboardingTutorial.0.title" = "Допомога в будь-якій розмові";
@@ -145,7 +176,9 @@
 "no" = "Ні";
 
 // Tract - Sharing
-"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. Поспілкуємось!
+"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
+
+Поспілкуємось!
 
 Програму можна завантажити тут: https://godtoolsapp.com";
 

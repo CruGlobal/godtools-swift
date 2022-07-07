@@ -1,8 +1,40 @@
+"toolDetails.versions.message" = "Kies hieronder een andere versie van deze tool. Elke versie heeft een unieke stijl en unieke content zodat je altijd een versie kunt vinden die bij je past. Je kunt meerdere versies van dezelfde tool aan je favorieten toevoegen.";
+"favorites.noTools.title" = "Geen favoriete tools";
+"favorites.noTools.description" = "Tik op het hartje om een tool toe te voegen zodat hij ook offline beschikbaar is.";
+"favorites.noTools.button" = "Naar Tools gaan";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Afbeelding delen";
+"favorites.pageTitle" = "Welkom bij GodTools";
+"favorites.favoriteLessons.title" = "Uitgelichte les";
+"favorites.favoriteTools.title" = "Je favoriete tools";
+"favorites.favoriteTools.viewAll" = "Alles bekijken";
+"favorites.favoriteLessons.details" = "Info";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Geen";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Schakelen tussen twee verschillende talen in deze tool.";
+"toolDetails.versions.title" = "Versies";
+"toolDetails.learnToShareToolButton.title" = "Leren om deze tool te delen";
+"toolSettings.title" = "Opties";
+"toolSettings.option.shareLink.title" = "Een koppeling delen";
+"toolSettings.option.screenShare.title" = "Deel je scherm";
+"toolSettings.option.trainingTips.show.title" = "Trainingstips";
+"toolSettings.option.trainingTips.hide.title" = "Tips verbergen";
+"toolSettings.chooseLanguage.title" = "Parallelle Taal";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Relevante afbeeldingen";
+"allTools.spotlight.title" = "Uitgelicht";
+"allTools.spotlight.description" = "Hier zijn wat tools die vast zullen bevallen";
+"allTools.categories.title" = "Categorieën";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nee, bedankt";
 "parallelLanguage.getStartedButton.title" = "Aan de slag";
 "parallelLanguage.selectLanguageButton.title" = "Selecteer een taal";
 "parellelLanguage.prompt" = "Wil je een tweede taal instellen?";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.title" = "Lessen";
+
 "onboardingTutorial.beginButton.title" = "Beginnen";
 "onboardingQuickStart.2.title" = "Ik wil het evangelie met iemand delen";
 "onboardingQuickStart.2.button.title" = "Kies een van onze programma's";
@@ -28,7 +60,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Gespiegelde ervaring";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Terwijl je met het hulpprogramma door je telefoon scrolt, reageert het scherm van je vriend op dezelfde manier. Op deze manier kun je op 2 apparaten tegelijkertijd door het programma gaan.";
 "share_tool_screen_tutorial.get_started.title" = "Aan de slag";
-"share_tool_screen_tutorial.get_started.message" = "Stuur de koppeling naar een of meer mensen om het delen van het scherm te starten. Voor deze ervaring moeten deelnemers momenteel de GodTools-app op hun apparaat hebben gedownload.";
+"share_tool_screen_tutorial.get_started.message" = "Stuur de koppeling naar een of meer mensen om het delen van het scherm te starten. ";
 "share_tool_remote_link_message" = "Hallo, lees met me mee in GodTools via een gedeeld scherm. Hier is de koppeling: %@ Als je dit bericht pas later ontvangt, kan het zijn dat de koppeling niet meer werkt. Dan proberen we het een andere keer gewoon opnieuw.";
 "exit_tract_remote_share_session.message" = "De deelsessie afsluiten?";
 "load_tool_remote_session.message" = "Scherm delen starten…";
@@ -146,7 +178,9 @@ Een onlineversie is te vinden op https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. Laten we verder praten!
+"tract_share_message" ="Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. 
+
+Laten we verder praten!
 
 De app is te downloaden vanaf https://godtoolsapp.com";
 

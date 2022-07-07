@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Επιλέξτε μια διαφορετική έκδοση αυτού του εργαλείου παρακάτω. Κάθε έκδοση διαθέτει μοναδικό στυλ και περιεχόμενο, ώστε να μπορείτε να βρείτε αυτό που είναι καλύτερο για τη συνομιλία σας. Μπορείτε να προτιμήσετε πολλές εκδόσεις του ίδιου εργαλείου.";
+"favorites.noTools.title" = "Δεν υπάρχουν αγαπημένα εργαλεία για εμφάνιση";
+"favorites.noTools.description" = "Πατήστε στο εικονίδιο της καρδιάς για να προτιμήσετε ένα εργαλείο και να το κάνετε διαθέσιμο εκτός σύνδεσης.";
+"favorites.noTools.button" = "Μεταβείτε στα Εργαλεία";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Κοινή χρήση εικόνας";
+"favorites.pageTitle" = "Καλώς ήλθατε στο GodTools";
+"favorites.favoriteLessons.title" = "Προτεινόμενο μάθημα";
+"favorites.favoriteTools.title" = "Τα αγαπημένα σας εργαλεία";
+"favorites.favoriteTools.viewAll" = "Προβολή όλων";
+"favorites.favoriteLessons.details" = "Λεπτομέρειες";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Κανένα";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Κάντε εναλλαγή μεταξύ δύο διαφορετικών γλωσσών σε αυτό το εργαλείο.";
+"toolDetails.versions.title" = "Εκδόσεις";
+"toolDetails.learnToShareToolButton.title" = "Μάθετε να μοιράζεστε αυτό το εργαλείο";
+"toolSettings.title" = "Επιλογές Εργαλείων";
+"toolSettings.option.shareLink.title" = "Μοιραστείτε έναν σύνδεσμο";
+"toolSettings.option.screenShare.title" = "Κοινοποίηση της οθόνης σας";
+"toolSettings.option.trainingTips.show.title" = "Συμβουλές εξάσκησης";
+"toolSettings.option.trainingTips.hide.title" = "Απόκρυψη συμβουλών";
+"toolSettings.chooseLanguage.title" = "Παράλληλη Γλώσσα";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Παράλληλη";
+"toolSettings.shareables.title" = "Συναφή γραφικά";
+"allTools.spotlight.title" = "Εργαλείο Spotlight";
+"allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
+"allTools.categories.title" = "Κατηγορίες";
+"tool_menu_item.lessons" = "Μαθήματα";
 "parallelLanguage.yesButton.title" = "Ναι";
 "parallelLanguage.noButton.title" = "Όχι ευχαριστώ";
 "parallelLanguage.getStartedButton.title" = "Αρχίστε";

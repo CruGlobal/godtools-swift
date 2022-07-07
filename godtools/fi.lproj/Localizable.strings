@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Vaihda tämän työkalun eri versioon. Jokaisella versiolla on oma tyylinsä ja sisältönsä, jotta voit löytää juuri omaan keskusteluusi sopivan. Voit merkitä useita saman työkalun versioita suosikeiksi.";
+"favorites.noTools.title" = "Ei näytettäviä suosikkityökaluja";
+"favorites.noTools.description" = "Napauta sydänkuvaketta merkitäksesi työkalun suosikiksi ja tuodaksesi sen käytettäväksi offline-tilassa.";
+"favorites.noTools.button" = "Siirry työkaluihin";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Jaa kuva";
+"favorites.pageTitle" = "Tervetuloa GodToolsiin";
+"favorites.favoriteLessons.title" = "Tämänkertainen oppitunti";
+"favorites.favoriteTools.title" = "Suosikkityökalusi";
+"favorites.favoriteTools.viewAll" = "Näytä kaikki";
+"favorites.favoriteLessons.details" = "Lisätietoja";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Ei mitään";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Voit siirtyä kielestä toiseen tässä työkalussa.";
+"toolDetails.versions.title" = "Versiot";
+"toolDetails.learnToShareToolButton.title" = "Opi jakamaan tämä työkalu";
+"toolSettings.title" = "Työkaluvaihtoehdot";
+"toolSettings.option.shareLink.title" = "Jaa linkki";
+"toolSettings.option.screenShare.title" = "Jaa näyttösi";
+"toolSettings.option.trainingTips.show.title" = "Harjoitteluvinkit";
+"toolSettings.option.trainingTips.hide.title" = "Piilota vinkit";
+"toolSettings.chooseLanguage.title" = "Rinnakkaiskieli";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Rinnakkainen";
+"toolSettings.shareables.title" = "Vastaavat grafiikat";
+"allTools.spotlight.title" = "Työkalujen valokeila";
+"allTools.spotlight.description" = "Tässä on työkaluja, joista saattaisit pitää";
+"allTools.categories.title" = "Kategoriat";
+"tool_menu_item.lessons" = "Oppitunnit";
 "parallelLanguage.yesButton.title" = "Kyllä";
 "parallelLanguage.noButton.title" = "Ei, kiitos";
 "parallelLanguage.getStartedButton.title" = "Aloittaminen";
@@ -19,10 +48,18 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Heijastettu käyttökokemus";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Liikkueassasi työkalussa puhelimellasi myös ystäväsi näyttö toimii samalla tavoin. Täten työkalun käyttöön voi perehdyttää kahdella laitteella yhtäaikaisesti.";
 "share_tool_screen_tutorial.get_started.title" = "Aloittaminen";
-"share_tool_screen_tutorial.get_started.message" = "Lähetä linkki vähintään yhdelle henkilölle aloittaaksesi näytönjaon. Tämän ominaisuuden käytön mahdollistamiseksi jokaisella osallistujalla on oltava GodTools-sovellus ladattuna laitteelleen.";
+"share_tool_screen_tutorial.get_started.message" = "Lähetä linkki vähintään yhdelle henkilölle aloittaaksesi näytönjaon.";
 "share_tool_remote_link_message" = "Hei, voit käyttää GodToolsia kanssani näytönjaon avulla. Tässä linkki: %@ Linkki voi yhä olla toiminnassa, vaikka saisitkin tämän viestin myöhemmin. Voimme yrittää uudelleen toisen kerran.";
 "exit_tract_remote_share_session.message" = "Haluatko poistua etäjaosta?";
 "load_tool_remote_session.message" = "Näytönjakoa käynnistetään…";
+"onboardingTutorial.0.title" = "Valmis jokaiseen keskusteluun";
+"onboardingTutorial.0.videoLink.title" = "Katso video";
+"onboardingTutorial.1.title" = "Keskustele Jumalasta kenen tahansa kanssa";
+"onboardingTutorial.1.message" = "GodTools auttaa käymään merkityksellisiä keskusteluja Jumalasta.";
+"onboardingTutorial.2.title" = "Valmistaudu merkityksellisiin hetkiin";
+"onboardingTutorial.2.message" = "Opettele tekemään uskoa koskevista keskusteluista luontainen osa elämääsi.";
+"onboardingTutorial.3.title" = "Auta muita löytämään Jeesus";
+"onboardingTutorial.3.message" = "GodTools on oppaasi, joka auttaa sinua kertomaan ilosanomaa selkeästi ja merkityksellisesti.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Koulutus";
@@ -89,6 +126,7 @@
 "share_a_story_with_us" = "Jaa meille tarina";
 "terms_of_use" = "Käyttöehdot";
 "privacy_policy" = "Tietosuojakäytäntö";
+"copyright_info" = "Tekijänoikeudet";
 "total_views" = "%d tarkastelua";
 "total_languages" = "%d kieltä";
 

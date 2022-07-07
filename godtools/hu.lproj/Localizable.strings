@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Válaszd ki alább az eszköz egy másik verzióját. Mindegyik változat egyedi stílusú és tartalmú, így megtalálhatod a beszélgetéshez legmegfelelőbbet. Ugyanannak az eszköznek több verzióját is kedvencévé teheted.";
+"favorites.noTools.title" = "Nincsenek megjelenítendő kedvenc eszközök";
+"favorites.noTools.description" = "Koppints a szív ikonra, ha kedvenc eszközödet szeretnéd offline elérhetővé tenni.";
+"favorites.noTools.button" = "Ugrás az eszközökhöz";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Kép megosztása";
+"favorites.pageTitle" = "Üdvözöl a GodTools";
+"favorites.favoriteLessons.title" = "Kiemelt lecke";
+"favorites.favoriteTools.title" = "Kedvenc eszközeid";
+"favorites.favoriteTools.viewAll" = "Összes megtekintése";
+"favorites.favoriteLessons.details" = "Részletek";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Egyik sem";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Ebben az eszközben két különböző nyelv között válthatsz.";
+"toolDetails.versions.title" = "Verziók";
+"toolDetails.learnToShareToolButton.title" = "Ismerd meg az eszközmegosztást";
+"toolSettings.title" = "Eszköz opciók";
+"toolSettings.option.shareLink.title" = "Hivatkozás megosztása";
+"toolSettings.option.screenShare.title" = "Képernyő megosztása";
+"toolSettings.option.trainingTips.show.title" = "Képzési tippek";
+"toolSettings.option.trainingTips.hide.title" = "Tippek elrejtése";
+"toolSettings.chooseLanguage.title" = "Párhuzamos nyelv";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Párhuzamos";
+"toolSettings.shareables.title" = "Kapcsolódó grafika";
+"allTools.spotlight.title" = "Eszköz reflektorfényben";
+"allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
+"allTools.categories.title" = "Kategóriák";
+"tool_menu_item.lessons" = "Szentleckék";
 "parallelLanguage.yesButton.title" = "Igen";
 "parallelLanguage.noButton.title" = "Köszönöm, nem";
 "parallelLanguage.getStartedButton.title" = "Első lépések";

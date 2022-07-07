@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Vælg en anden version af dette værktøj nedenfor. Hver version har unik stil og indhold, så du kan finde den, der passer bedst til din samtale. Du kan foretrække flere versioner af det samme værktøj.";
+"favorites.noTools.title" = "Ingen foretrukne værktøjer at vise";
+"favorites.noTools.description" = "Tryk på hjerteikonet for at angive et værktøj som favorit og gøre det tilgængeligt offline.";
+"favorites.noTools.button" = "Gå til Værktøjer";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Del billede";
+"favorites.pageTitle" = "Velkommen til GodTools";
+"favorites.favoriteLessons.title" = "Udvalgt lektion";
+"favorites.favoriteTools.title" = "Dit yndlingsværktøj";
+"favorites.favoriteTools.viewAll" = "Vis alle";
+"favorites.favoriteLessons.details" = "Detaljer";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Ingen";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Skift mellem to forskellige sprog i dette værktøj.";
+"toolDetails.versions.title" = "Versioner";
+"toolDetails.learnToShareToolButton.title" = "Lær at dele dette værktøj";
+"toolSettings.title" = "Værktøjsindstillinger";
+"toolSettings.option.shareLink.title" = "Del et link";
+"toolSettings.option.screenShare.title" = "Del din skærm";
+"toolSettings.option.trainingTips.show.title" = "Træningstip";
+"toolSettings.option.trainingTips.hide.title" = "Skjul tip";
+"toolSettings.chooseLanguage.title" = "Parallelt sprog";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Relateret grafik";
+"allTools.spotlight.title" = "Fremhævede værktøjer";
+"allTools.spotlight.description" = "Her er nogle værktøjer, vi troede, du kunne lide";
+"allTools.categories.title" = "Kategorier";
+"tool_menu_item.lessons" = "Lektioner";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nej tak";
 "parallelLanguage.getStartedButton.title" = "Kom i gang";
@@ -29,7 +58,9 @@
 "share_tool_screen_tutorial.mirrored_experience.message" = "Mens du ruller frem i værktøjet på din telefon, vises det samme på din vens skærm. Dette giver dig mulighed for at gennemgå et værktøj sammen på 2 enheder på samme tidspunkt.";
 "share_tool_screen_tutorial.get_started.title" = "Kom godt i gang";
 "share_tool_screen_tutorial.get_started.message" = "Send linket til en eller flere personer for at starte en skærmdelingssession nu. Denne oplevelse kræver i øjeblikket, at alle deltagere har downloadet GodTools-appen på deres enheder.";
-"share_tool_remote_link_message" = "Hej! Følg mig i GodTools via skærmdeling. Her er linket: %@ Hvis du først modtager denne besked senere, virker linket muligvis ikke. Vi kan prøve igen på et andet tidspunkt.";
+"share_tool_remote_link_message" = "Hej! Følg mig i GodTools via skærmdeling. Her er linket: %@ 
+
+Hvis du først modtager denne besked senere, virker linket muligvis ikke. Vi kan prøve igen på et andet tidspunkt.";
 "exit_tract_remote_share_session.message" = "Afslut fjerndelingssessionen nu?";
 "load_tool_remote_session.message" = "Starter skærmdeling...";
 "onboardingTutorial.0.title" = "Klar til enhver samtale";

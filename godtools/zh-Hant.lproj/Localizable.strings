@@ -1,4 +1,34 @@
+"toolDetails.versions.message" = "在下方選擇此工具的不同版本。每個版本都具有獨特功能與內容，以便您能找到最適合您對話的版本。您能將相同工具的多種版本設為您的最愛。";
+"favorites.noTools.title" = "無可顯示的最愛工具";
+"favorites.noTools.description" = "點擊心型圖示將工具設為您的最愛，並將它設定成可離線使用。";
+"favorites.noTools.button" = "前往工具";
+"toolSettings.shareImagePreview.shareImageButton.title" = "分享圖片";
+"favorites.pageTitle" = "歡迎使用 GodTools";
+"favorites.favoriteLessons.title" = "精選課程";
+"favorites.favoriteTools.title" = "您最愛的工具";
+"favorites.favoriteTools.viewAll" = "檢視全部 >";
+"favorites.favoriteLessons.details" = "詳細資料";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "沒有";
+
+"toolSettings.chooseLanguage.toggleMessage" = "在此工具中切換兩種不同的語言。";
+"toolDetails.versions.title" = "版本";
+"toolDetails.learnToShareToolButton.title" = "學習分享此工具";
+"toolSettings.title" = "工具選項";
+"toolSettings.option.shareLink.title" = "分享連結";
+"toolSettings.option.screenShare.title" = "分享你的螢幕";
+"toolSettings.option.trainingTips.show.title" = "訓練提示";
+"toolSettings.option.trainingTips.hide.title" = "隱藏提示";
+"toolSettings.chooseLanguage.title" = "平行語言";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "同步";
+"toolSettings.shareables.title" = "相關圖形";
+"allTools.spotlight.title" = "工具精選";
+"allTools.spotlight.description" = "以下是我們認為您可能會喜歡的一些工具";
+"allTools.categories.title" = "類別";
+"parallelLanguage.yesButton.title" = "是";
 "parallelLanguage.noButton.title" = "不用了，謝謝";
+"parallelLanguage.selectButton.title" = "选择";
 "parallelLanguage.getStartedButton.title" = "開始使用";
 "parallelLanguage.selectLanguageButton.title" = "選擇語言";
 "parellelLanguage.prompt" = "您想要設定次要語言嗎？";
@@ -27,7 +57,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "鏡像體驗";
 "share_tool_screen_tutorial.mirrored_experience.message" = "當你在手機上捲動工具時，好友的螢幕畫面也會隨之捲動。因此，你們可以同時在 2 個裝置上一起瀏覽工具。";
 "share_tool_screen_tutorial.get_started.title" = "開始使用";
-"share_tool_screen_tutorial.get_started.message" = "將連結傳送給一人或多人，以立即開始螢幕分享會。 目前此體驗需要所有參加者在裝置中下載 GodsTools 應用程式才能進行。";
+"share_tool_screen_tutorial.get_started.message" = "將連結傳送給一人或多人，以立即開始螢幕分享會.";
 "share_tool_remote_link_message" = "你好，歡迎與我一同在 GodTools 中參加螢幕分享會。連結為：%@ 如果你稍後才收到此訊息，該連結可能已經失效。我們可以改天再試一次。";
 "exit_tract_remote_share_session.message" = "確定要現在離開遠端分享會？";
 "load_tool_remote_session.message" = "正在開始進行螢幕分享……";
