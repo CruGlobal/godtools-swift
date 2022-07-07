@@ -1,3 +1,28 @@
+"toolSettings.languagesAvailable.title" = "ภาษาที่พร้อมใช้งาน";
+"toolDetails.versions.message" = "เลือกเครื่องมือนี้ในเวอร์ชันอื่นด้านล่าง แต่ละเวอร์ชันมีสไตล์และเนื้อหาที่เป็นเอกลักษณ์ คุณจึงสามารถค้นหาเวอร์ชันที่เหมาะกับการสนทนาของคุณได้มากที่สุด คุณสามารถตั้งเป็นรายการโปรดได้หลายเวอร์ชันสำหรับเครื่องมือเดียว";
+"favorites.noTools.title" = "ไม่มีเครื่องมือโปรดที่จะแสดง";
+"favorites.noTools.description" = "แตะที่ไอคอนรูปหัวใจเพื่อตั้งเป็นเครื่องมือโปรดและตั้งค่าให้ใช้งานแบบออฟไลน์ได้";
+"favorites.noTools.button" = "ไปที่เครื่องมือ";
+"toolSettings.shareImagePreview.shareImageButton.title" = "แชร์รูปภาพ";
+"favorites.pageTitle" = "ยินดีต้อนรับสู่ GodTools";
+"favorites.favoriteLessons.title" = "บทเรียนแนะนำ";
+"favorites.favoriteTools.title" = "เครื่องมือโปรดของคุณ";
+"favorites.favoriteTools.viewAll" = "ดูทั้งหมด";
+"toolSettings.chooseLanguage.toggleMessage" = "สลับไปมาระหว่างสองภาษาในเครื่องมือนี้";
+"toolDetails.versions.title" = "เวอร์ชัน";
+"toolDetails.learnToShareToolButton.title" = "เรียนรู้ที่จะแชร์เครื่องมือนี้";
+"toolSettings.title" = "ตัวเลือกเครื่องมือ";
+"toolSettings.option.shareLink.title" = "แชร์ลิงค์";
+"toolSettings.option.screenShare.title" = "แชร์หน้าจอของคุณ";
+"toolSettings.option.trainingTips.show.title" = "เคล็ดลับการฝึก";
+"toolSettings.option.trainingTips.hide.title" = "ซ่อนเคล็ดลับ";
+"toolSettings.chooseLanguage.title" = "ภาษาพาราเลล";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "พาราเลล";
+"toolSettings.shareables.title" = "กราฟิกที่เกี่ยวข้อง";
+"allTools.spotlight.title" = "เครื่องมือโดดเด่น";
+"allTools.spotlight.description" = "นี่คือเครื่องมือที่เราคิดว่าคุณอาจชอบ";
+"allTools.categories.title" = "หมวดหมู่";
+"tool_menu_item.lessons" = "บทเรียน";
 "parallelLanguage.yesButton.title" = "ใช่";
 "parallelLanguage.noButton.title" = "ไม่ ขอบคุณ";
 "parallelLanguage.getStartedButton.title" = "เริ่มต้นใช้งาน";
@@ -28,8 +53,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "การสะท้อนหน้าจอ (Mirror)";
 "share_tool_screen_tutorial.mirrored_experience.message" = "เมื่อคุณเลื่อนเครื่องมือขึ้นลงบนโทรศัพท์ หน้าจอของเพื่อนจะตอบสนองในลักษณะเดียวกัน สิ่งนี้ช่วยให้คุณสามารถดูเครื่องมือพร้อมกันบนอุปกรณ์ 2 เครื่องในเวลาเดียวกัน";
 "share_tool_screen_tutorial.get_started.title" = "เริ่มต้นใช้งาน";
-"share_tool_screen_tutorial.get_started.message" = "ส่งลิงก์ไปยังบุคคลตั้งแต่หนึ่งคนขึ้นไปเพื่อเริ่มเซสชันการแชร์หน้าจอทันที ปัจจุบันประสบการณ์นี้กำหนดให้ผู้เข้าร่วมทุกคนต้องดาวน์โหลดแอป GodTools บนอุปกรณ์ของตน";
-"share_tool_remote_link_message" = "สวัสดี ติดตามไปกับฉันใน GodTools ผ่านการแชร์หน้าจอ นี่คือลิงค์: %@ หากคุณไม่ได้รับข้อความนี้หลังจากผ่านไปสักพัก ลิงก์อาจยังใช้งานไม่ได้ เราสามารถลองอีกครั้งในภายหลัง";
+"share_tool_screen_tutorial.get_started.message" = "ส่งลิงก์ไปยังบุคคลตั้งแต่หนึ่งคนขึ้นไปเพื่อเริ่มเซสชันการแชร์หน้าจอทันที ปัจจุบัน";
+"share_tool_remote_link_message" = "สวัสดี ติดตามไปกับฉันใน GodTools ผ่านการแชร์หน้าจอ นี่คือลิงค์: %@ 
+
+หากคุณไม่ได้รับข้อความนี้หลังจากผ่านไปสักพัก ลิงก์อาจยังใช้งานไม่ได้ เราสามารถลองอีกครั้งในภายหลัง";
 "exit_tract_remote_share_session.message" = "ออกจากเซสชันการแชร์ทางไกลตอนนี้หรือไม่";
 "load_tool_remote_session.message" = "กำลังเริ่มการแชร์หน้าจอ...";
 "onboardingTutorial.0.title" = "พร้อมสำหรับทุกการสนทนา";

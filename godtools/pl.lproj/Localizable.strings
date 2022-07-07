@@ -1,3 +1,4 @@
+"toolSettings.languagesAvailable.title" = "Dostępne języki";
 "toolDetails.versions.message" = "Poniżej możesz wybrać inną wersję tego narzędzia. Każda wersja charakteryzuje się unikalnym stylem i zawartością, więc możesz znaleźć tę, która najlepiej nadaje się do Twojej rozmowy. Możesz polubić wiele wersji tego samego narzędzia.";
 "favorites.noTools.title" = "Brak ulubionych narzędzi do wyświetlenia";
 "favorites.noTools.description" = "Stuknij ikonę serca, aby polubić narzędzie i umożliwić korzystanie z niego w trybie offline.";
@@ -176,7 +177,9 @@ Wersję online można znaleźć na https://knowgod.com/";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. Bądźmy w kontakcie!
+"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. 
+
+Bądźmy w kontakcie!
 
 Możesz pobrać tę aplikację z https://godtoolsapp.com";
 

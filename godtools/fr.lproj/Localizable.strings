@@ -1,3 +1,4 @@
+"toolSettings.languagesAvailable.title" = "Langues disponibles";
 "toolDetails.versions.message" = "Choisissez une version différente de cet outil ci-dessous. Chaque version présente un style et un contenu uniques, ce qui vous permet de trouver celle qui convient le mieux à votre conversation. Vous pouvez préférer plusieurs versions d'un même outil.";
 "favorites.noTools.title" = "Pas d'outils favoris à afficher";
 "favorites.noTools.description" = "Tapez sur l'icône en forme de cœur pour favoriser un outil et le rendre disponible hors ligne.";
