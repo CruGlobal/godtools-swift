@@ -48,8 +48,6 @@ struct OpenTutorialBannerView_Previews: PreviewProvider {
         
         let viewModel = OpenTutorialBannerViewModel(
             flowDelegate: MockFlowDelegate(),
-            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             delegate: nil

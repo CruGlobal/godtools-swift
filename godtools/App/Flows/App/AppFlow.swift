@@ -487,8 +487,8 @@ extension AppFlow {
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
-            getTutorialIsAvailableUseCase: appDiContainer.getTutorialIsAvailableUseCase(),
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             fontService: appDiContainer.getFontService()
         )
         

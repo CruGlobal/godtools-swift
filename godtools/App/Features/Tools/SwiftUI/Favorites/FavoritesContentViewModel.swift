@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol FavoritesContentViewModelDelegate: AnyObject {
     func favoriteToolsViewGoToToolsTapped()
@@ -25,9 +26,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
     
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private var disableOptInOnboardingBannerSubscription: AnyCancellable?
+        
     private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
         return LessonCardsViewModel(
             dataDownloader: dataDownloader,
@@ -56,7 +57,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -64,10 +65,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
-        self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         
-        hideTutorialBanner = openTutorialCalloutCache.openTutorialCalloutDisabled
+        hideTutorialBanner = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled() == false
         
         super.init()
         
@@ -93,8 +93,6 @@ extension FavoritesContentViewModel {
     func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
         return OpenTutorialBannerViewModel(
             flowDelegate: flowDelegate,
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase,
-            openTutorialCalloutCache: openTutorialCalloutCache,
             localizationServices: localizationServices,
             analytics: analytics,
             delegate: self
@@ -117,6 +115,15 @@ extension FavoritesContentViewModel {
                 self?.setupTitle()
             }
         }
+        
+        disableOptInOnboardingBannerSubscription = UserDefaults.standard.publisher(for: \.optInOnboardingBannerDisabled)
+            .sink(receiveValue: { [weak self] optInOnboardingBannerDisabled in
+                guard let self = self else { return }
+                
+                DispatchQueue.main.async {
+                    self.hideTutorialBanner = optInOnboardingBannerDisabled
+                }
+            })
     }
     
     private func setupTitle() {
@@ -130,7 +137,7 @@ extension FavoritesContentViewModel {
 extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     func closeBanner() {
         hideTutorialBanner = true
-        openTutorialCalloutCache.disableOpenTutorialCallout()
+        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
     }
     
     func openTutorial() {

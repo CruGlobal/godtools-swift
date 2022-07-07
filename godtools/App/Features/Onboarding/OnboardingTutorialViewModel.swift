@@ -10,13 +10,11 @@ import Foundation
 
 class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let viewBuilder: CustomViewBuilderType
     private let localizationServices: LocalizationServices
         
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
-        self.openTutorialCalloutCache = openTutorialCalloutCache
         self.viewBuilder = customViewBuilder
         self.localizationServices = localizationServices
         

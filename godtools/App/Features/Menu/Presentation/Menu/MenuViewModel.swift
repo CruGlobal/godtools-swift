@@ -12,12 +12,12 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private let config: ConfigType
     private let deviceLanguage: DeviceLanguageType
-    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     private let userAuthentication: UserAuthenticationType
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
+    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -25,16 +25,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, deviceLanguage: DeviceLanguageType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, deviceLanguage: DeviceLanguageType, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.config = config
         self.deviceLanguage = deviceLanguage
-        self.openTutorialCalloutCache = openTutorialCalloutCache
         self.userAuthentication = userAuthentication
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
+        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         
         navDoneButtonTitle = localizationServices.stringForMainBundle(key: "done")
         
@@ -91,7 +91,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         let isAuthorized: Bool = userAuthentication.isAuthenticated
         let accountCreationIsSupported: Bool = supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
-        let tutorialIsAvailable: Bool = getTutorialIsAvailableUseCase.getTutorialIsAvailable()
+        let tutorialIsAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()
         
         var sections: [MenuSection] = Array()
         sections.append(.general)
@@ -187,7 +187,7 @@ extension MenuViewModel {
     }
     
     func tutorialTapped() {
-        openTutorialCalloutCache.disableOpenTutorialCallout()
+        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
     }
     
