@@ -1,7 +1,36 @@
+"toolDetails.versions.message" = "Выберите другую версию инструмента ниже. Каждая версия отличается уникальным стилем и содержанием, поэтому вы можете найти ту, которая лучше всего подойдёт для вашего разговора. Вы можете добавить в избранное несколько версий одного инструмента.";
+"favorites.noTools.title" = "Нет избранных инструментов";
+"favorites.noTools.description" = "Нажмите на значок сердца, чтобы добавить инструмент в избранное и сделать его доступным в режиме офлайн.";
+"favorites.noTools.button" = "К инструментам";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Поделитесь изображением";
+"favorites.pageTitle" = "Добро пожаловать в GodTools";
+"favorites.favoriteLessons.title" = "Рекомендуемый урок";
+"favorites.favoriteTools.title" = "Ваши избранные инструменты";
+"favorites.favoriteTools.viewAll" = "Просмотреть всё";
+"favorites.favoriteLessons.details" = "Сведения";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Нет";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Переключайтесь между двумя языками в этом инструменте.";
+"toolDetails.versions.title" = "Версии";
+"toolDetails.learnToShareToolButton.title" = "Научитесь делиться этим инструментом с другими";
+"toolSettings.title" = "Параметры инструмента";
+"toolSettings.option.shareLink.title" = "Поделитесь ссылкой";
+"toolSettings.option.screenShare.title" = "Покажите свой экран";
+"toolSettings.option.trainingTips.show.title" = "Подсказки по обучению";
+"toolSettings.option.trainingTips.hide.title" = "Скрыть подсказки";
+"toolSettings.chooseLanguage.title" = "Параллельный язык";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Дополнительно";
+"toolSettings.shareables.title" = "Связанные изображения";
+"allTools.spotlight.title" = "Обзор инструментов";
+"allTools.spotlight.description" = "Вам могут понравиться эти инструменты";
+"allTools.categories.title" = "Категории";
 "training_tip_ask" = "Задать вопрос";
 "training_tip_consider" = "Подумайте";
 "training_tip_prepare" = "Подготовьтесь";
 "training_tip_tip" = "Подсказка";
+"tool_menu_item.lessons" = "Уроки";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Нет, спасибо";
 "parallelLanguage.getStartedButton.title" = "Начать";
@@ -24,7 +53,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Зеркальный интерфейс";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Когда вы будете пролистывать инструмент на своем телефоне, на экране вашего друга будет происходить то же самое. Это позволит вам изучать инструмент вместе на 2 устройствах одновременно.";
 "share_tool_screen_tutorial.get_started.title" = "Начать";
-"share_tool_screen_tutorial.get_started.message" = "Отправьте ссылку хотя бы одному человеку, чтобы запустить сеанс трансляции экрана. Для данного интерфейса требуется, чтобы на устройствах всех участников было установлено приложение GodTools.";
+"share_tool_screen_tutorial.get_started.message" = "Отправьте ссылку хотя бы одному человеку, чтобы запустить сеанс трансляции экрана.";
 "share_tool_remote_link_message" = "Привет, чтобы запустилась функция трансляции экрана, пройдите по ссылке: %@
 
 Если это сообщение придет слишком поздно, ссылка может уже не работать. Мы можем попробовать еще раз в другое время.";

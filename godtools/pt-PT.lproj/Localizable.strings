@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Escolhe uma versão diferente desta ferramenta abaixo. Cada versão tem um estilo e conteúdos únicos para que possas encontrar a versão que mais se adequa à tua conversa. Podes marcar várias versões da mesma ferramenta como favoritas.";
+"favorites.noTools.title" = "Nenhuma ferramenta favorita a apresentar";
+"favorites.noTools.description" = "Toca no ícone de coração para marcar uma ferramenta como favorita e permitir que fique disponível offline.";
+"favorites.noTools.button" = "Ir para as ferramentas";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Partilhar imagem";
+"favorites.pageTitle" = "Bem-vindo(a) ao GodTools";
+"favorites.favoriteLessons.title" = "Sessão em destaque";
+"favorites.favoriteTools.title" = "As tuas ferramentas favoritas";
+"favorites.favoriteTools.viewAll" = "Ver tudo";
+"favorites.favoriteLessons.details" = "Detalhes";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Nenhum";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Alterna entre dois idiomas diferentes nesta ferramenta.";
+"toolDetails.versions.title" = "Versões";
+"toolDetails.learnToShareToolButton.title" = "Aprende a partilhar esta ferramenta";
+"toolSettings.title" = "Opções da ferramenta";
+"toolSettings.option.shareLink.title" = "Partilhar ligação";
+"toolSettings.option.screenShare.title" = "Partilha o teu ecrã";
+"toolSettings.option.trainingTips.show.title" = "Dicas de formação";
+"toolSettings.option.trainingTips.hide.title" = "Ocultar dicas";
+"toolSettings.chooseLanguage.title" = "Idioma paralelo";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelo";
+"toolSettings.shareables.title" = "Gráficos relacionados";
+"allTools.spotlight.title" = "Destaque de ferramentas";
+"allTools.spotlight.description" = "Pensamos que vais gostar destas ferramentas";
+"allTools.categories.title" = "Categorias";
+"tool_menu_item.lessons" = "Sessões";
 "parallelLanguage.yesButton.title" = "Sim";
 "parallelLanguage.noButton.title" = "Não, obrigado";
 "parallelLanguage.getStartedButton.title" = "Começar";
@@ -28,7 +57,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Experiência espelhada";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Quando navegas na ferramenta no teu telemóvel, o ecrã do teu amigo fará o mesmo. Isto permite que naveguem na ferramenta juntos, em dois dispositivos em simultâneo.";
 "share_tool_screen_tutorial.get_started.title" = "Começar";
-"share_tool_screen_tutorial.get_started.message" = "Envia a ligação para uma ou mais pessoas para iniciar agora uma sessão de partilha de ecrã. Atualmente, esta experiência requer que todos os participantes tenham transferido a aplicação GodTools para os respetivos dispositivos.";
+"share_tool_screen_tutorial.get_started.message" = "Envia a ligação para uma ou mais pessoas para iniciar agora uma sessão de partilha de ecrã. ";
 "share_tool_remote_link_message" = "Olá. Acompanha-me na GodTools através da partilha de ecrã. Aqui está a ligação: %@ Se receberes esta mensagem demasiado tarde, a ligação poderá não estar a funcionar. Podemos tentar novamente noutra altura.";
 "exit_tract_remote_share_session.message" = "Pretendes sair da sessão de partilha remota agora?";
 "load_tool_remote_session.message" = "A iniciar a partilha de ecrã…";
