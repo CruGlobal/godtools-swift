@@ -1,3 +1,4 @@
+"toolSettings.languagesAvailable.title" = "Mevcut diller";
 "toolDetails.versions.message" = "Aşağıdan bu aracın farklı bir sürümünü seç. Her sürüm benzersiz bir tarza ve içeriğe sahip, böylece konuşman için en iyi olanı bulabilirsin. Aynı aracın birden fazla sürümünü favorilerine ekleyebilirsin.";
 "favorites.noTools.title" = "Gösterilecek favori araç yok";
 "favorites.noTools.description" = "Bir aracı favorilere eklemek ve çevrimdışı da kullanılabilir yapmak için kalp simgesine dokun.";
@@ -57,7 +58,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Yansıtmalı deneyim";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Aracı telefonunda kaydırırken arkadaşının ekranı da aynı biçimde tepki verir. Bu, aynı anda 2 cihazda bir aracın özellikleri üzerinden geçmene olanak tanır.";
 "share_tool_screen_tutorial.get_started.title" = "Başlayın";
-"share_tool_screen_tutorial.get_started.message" = "Şimdi bir ekran paylaşma oturumu başlatmak için bağlantıyı bir veya daha fazla kişiye gönder. Bu deneyim, şu anda tüm katılımcıların GodTools uygulamasını cihazlarına indirmiş olmalarını gerektirir.";
+"share_tool_screen_tutorial.get_started.message" = "Şimdi bir ekran paylaşma oturumu başlatmak için bağlantıyı bir veya daha fazla kişiye gönder.";
 "share_tool_remote_link_message" = "Merhaba, ekran paylaşımıyla GodTools'da benim yaptıklarımı takip et. İşte bağlantı burada: %@ Bu mesajı kısa süre içinde almazsan, bağlantı hâlâ çalışmıyor olabilir. Başka bir zaman bunu yeniden deneyebiliriz.";
 "exit_tract_remote_share_session.message" = "Uzaktan paylaşım oturumundan şimdi çıkılsın mı?";
 "load_tool_remote_session.message" = "Ekran Paylaşma Başlatılıyor...";
@@ -175,7 +176,9 @@
 "no" = "Hayır";
 
 // Tract - Sharing
-"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. Daha çok konuşalım!
+"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. 
+
+Daha çok konuşalım!
 
 Uygulama http://godtoolsapp.com adresinden indirilebilir";
 

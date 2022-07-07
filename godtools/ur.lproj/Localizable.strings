@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "زبانیں دستیاب ہیں";
+"toolDetails.versions.message" = "ذیل میں اس ٹول کا ایک مختلف ورژن منتخب کریں۔ ہر ورژن میں منفرد انداز اور مواد ہوتا ہے تاکہ آپ اپنی گفتگو کے لیے سب سے بہتر تلاش کر سکیں۔ آپ ایک ہی ٹول کے متعدد ورژن پسند کر سکتے ہیں۔";
+"favorites.noTools.title" = "ڈسپلے کرنے کے لیے کوئی پسندیدہ ٹولز نہیں";
+"favorites.noTools.description" = "کسی ٹول کو پسندیدہ بنانے کے لیے دل والے آئیکن پر ٹیپ کریں اور اسے آف لائن دستیاب کرائیں۔";
+"favorites.noTools.button" = "ٹولز پر جائیں";
+"toolSettings.shareImagePreview.shareImageButton.title" = "تصویر ساجھا کریں";
+"favorites.pageTitle" = "GodTools میں خوش آمدید";
+"favorites.favoriteLessons.title" = "نمایاں سبق";
+"favorites.favoriteTools.title" = "آپ کے پسندیدہ ٹولز";
+"favorites.favoriteTools.viewAll" = "سب دیکھیں";
+"favorites.favoriteLessons.details" = "تفصیلات";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "کوئی بھی نہیں";
+
+"toolSettings.chooseLanguage.toggleMessage" = "اس ٹول میں دو مختلف زبانوں کے درمیان ٹوگل کریں۔";
+"toolDetails.versions.title" = "ورژنز";
+"toolDetails.learnToShareToolButton.title" = "اس ٹول کو شیئر کرنا سیکھیں";
+"toolSettings.title" = "ٹول کے اختیارات";
+"toolSettings.option.shareLink.title" = "ایک لنک شیئر کریں";
+"toolSettings.option.screenShare.title" = "اپنی اسکرین کا اشتراک کریں";
+"toolSettings.option.trainingTips.show.title" = "تربیت کی تجاویز";
+"toolSettings.option.trainingTips.hide.title" = "تجاویز پوشیدہ رکھیں";
+"toolSettings.chooseLanguage.title" = "متوازی زبان";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "متوازی";
+"toolSettings.shareables.title" = "متعلقہ گرافکس";
+"allTools.spotlight.title" = "ٹول سپاٹ لائٹ";
+"allTools.spotlight.description" = "یہاں کچھ ٹولز ہیں ہم نے سوچا کہ شاید آپ پسند کریًر";
+"allTools.categories.title" = "زمرے";
+"tool_menu_item.lessons" = "اسباق";
 "parallelLanguage.yesButton.title" = "جی ہاں";
 "parallelLanguage.noButton.title" = "نہیں، شکریہ";
 "parallelLanguage.getStartedButton.title" = "شروعات";
@@ -28,7 +58,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "عکسی تجربہ";
 "share_tool_screen_tutorial.mirrored_experience.message" = "جب آپ اپنے فون پر ٹول کو سکرول کرتے ہیں تو آپ کے دوست کی سکرین بھی اسی طرح ردعمل ظاہر کرے گی۔ یہ آپ کو ایک ہی وقت میں 2 آلات پر ایک ٹول میں سے اکٹھے گزرنے کی سہولت دیتا ہے۔";
 "share_tool_screen_tutorial.get_started.title" = "شروع کریں";
-"share_tool_screen_tutorial.get_started.message" = "ابھی سکرین شیئرنگ سیشن شروع کرنے کے لیے ایک یا زیادہ افراد کو ربط ارسال کریں۔ اس وقت اس تجربے کے لیے ضروری ہے کہ تمام شرکاء کے پاس اپنے آلے میں GodTools ایپ ڈاؤن لوڈ کی گئی ہو۔";
+"share_tool_screen_tutorial.get_started.message" = "ابھی سکرین شیئرنگ سیشن شروع کرنے کے لیے ایک یا زیادہ افراد کو ربط ارسال کریں۔ ";
 "share_tool_remote_link_message" = "ہیلو، GodTools میں سکرین شیئرنگ کے ذریعے میری پیروی کریں۔ ربط یہ رہا: %@ اگر آپ کو دیر تک یہ پیغام موصول نہیں ہوتا تو شاید ربط بھی کام نہ کرتا ہو۔ ہم کسی اور وقت دوبارہ کوشش کر سکتے ہیں۔";
 "exit_tract_remote_share_session.message" = "ابھی ریموٹ سکرین شیئرنگ سیشن سے نکلیں؟";
 "load_tool_remote_session.message" = "سکرین شیئرنگ شروع ہو رہی ہے۔۔۔";

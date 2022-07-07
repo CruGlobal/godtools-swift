@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Доступни језици";
+"toolDetails.versions.message" = "Одаберите другу верзију овог алата у наставку. Свака верзија има јединствен стил и садржај тако да можете пронаћи ону која је најбоља за ваш разговор. Можете фаворизовати више верзија истог алата.";
+"favorites.noTools.title" = "Нема омиљених алата за приказ";
+"favorites.noTools.description" = "Додирните икону срца да бисте фаворизирали алат и учинили га доступним ван мреже.";
+"favorites.noTools.button" = "Иди у алате";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Подели слику";
+"favorites.pageTitle" = "Добродошли у GodTools";
+"favorites.favoriteLessons.title" = "Истакнута лекција";
+"favorites.favoriteTools.title" = "Ваши омиљени алати";
+"favorites.favoriteTools.viewAll" = "Прикажи све";
+"favorites.favoriteLessons.details" = "Детаљи";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Ниједно";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Пребаците се између два различита језика у овој алатки.";
+"toolDetails.versions.title" = "Верзије";
+"toolDetails.learnToShareToolButton.title" = "Сазнајте како да користиш овај алат";
+"toolSettings.title" = "Опције алата";
+"toolSettings.option.shareLink.title" = "Подели везу";
+"toolSettings.option.screenShare.title" = "Подели екран";
+"toolSettings.option.trainingTips.show.title" = "Савети за обуку";
+"toolSettings.option.trainingTips.hide.title" = "Сакриј савете";
+"toolSettings.chooseLanguage.title" = "Паралелни језик";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Паралелни";
+"toolSettings.shareables.title" = "Повезане графике";
+"allTools.spotlight.title" = "Издвојени алат";
+"allTools.spotlight.description" = "Ево неких алата који би вам се могли свидети";
+"allTools.categories.title" = "Категорије";
+"tool_menu_item.lessons" = "Лекције";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Не хвала";
 "parallelLanguage.getStartedButton.title" = "Започни";
@@ -28,8 +58,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Искуство пресликавања";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Док померате алатку на свом телефону, екран вашег пријатеља ће реаговати на исти начин. Ово вам омогућава да истовремено заједно пређете преко алатке на 2 уређаја.";
 "share_tool_screen_tutorial.get_started.title" = "Започни";
-"share_tool_screen_tutorial.get_started.message" = "Пошаљите везу једној или више особа да бисте одмах започели сесију дељења екрана. Ово искуство тренутно захтева од свих учесника да преузму апликацију GodTools на своје уређаје.";
-"share_tool_remote_link_message" = "Здраво, пратите заједно са мном у апликацији GodTools преко дељења екрана. Ево везе: %@ Ако ову поруку не примите до касније, веза можда неће радити. Можемо да пробамо поново други пут.";
+"share_tool_screen_tutorial.get_started.message" = "Пошаљите везу једној или више особа да бисте одмах започели сесију дељења екрана.";
+"share_tool_remote_link_message" = "Здраво, пратите заједно са мном у апликацији GodTools преко дељења екрана. Ево везе: %@ 
+
+Ако ову поруку не примите до касније, веза можда неће радити. Можемо да пробамо поново други пут.";
 "exit_tract_remote_share_session.message" = "Изађите из сесије даљинског дељења одмах?";
 "load_tool_remote_session.message" = "Почетак дељења екрана...";
 "onboardingTutorial.0.title" = "Спремни за сваки разговор";
@@ -144,7 +176,9 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. Хајде да разговарамо више!
+"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
+
+Хајде да разговарамо више!
 
 Апликација се може преузети са https://godtoolsapp.com";
 

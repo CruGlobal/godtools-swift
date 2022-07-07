@@ -1,3 +1,5 @@
+"toolSettings.languagesAvailable.title" = "Bahasa yang tersedia";
+"toolDetails.versions.message" = "Pilih versi lain dari sarana ini di bawah. Setiap versi menampilkan gaya dan konten yang unik sehingga Anda dapat menemukan yang terbaik untuk percakapan Anda. Anda dapat memfavoritkan beberapa versi dari sarana yang sama.";
 "favorites.noTools.title" = "Tidak ada sarana favorit untuk ditampilkan";
 "favorites.noTools.description" = "Sentuh ikon untuk menjadikan sarana favorit dan menyediakannya offline. ";
 "favorites.noTools.button" = "Ke Sarana-sarana";
@@ -7,11 +9,16 @@
 "favorites.favoriteTools.title" = "Sarana favorit Anda";
 "favorites.favoriteTools.viewAll" = "Lihat semua";
 "favorites.favoriteLessons.details" = "Detail";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Tidak ada";
+
 "toolSettings.chooseLanguage.toggleMessage" = "Sandingkan dua bahasa pada sarana ini";
 "toolDetails.versions.title" = "Versi";
 "toolDetails.learnToShareToolButton.title" = "Belajar membagikan sarana ini";
 "toolSettings.title" = "Pilihan Sarana";
 "toolSettings.option.shareLink.title" = "Bagikan tautan";
+"toolSettings.option.screenShare.title" = "Bagikan layar Saudara";
 "toolSettings.option.trainingTips.show.title" = "Saran-saran latihan";
 "toolSettings.option.trainingTips.hide.title" = "Sembunyikan saran";
 "toolSettings.chooseLanguage.title" = "Bahasa Paralel";
@@ -53,10 +60,20 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman yang dicerminkan";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Saat Saudara scrool sarana di ponsel Saudara, layar teman Saudara akan menanggapi dengan cara yang sama. Ini memungkinkan Saudara untuk berjalan melalui sarana bersama di 2 perangkat sekaligus.";
 "share_tool_screen_tutorial.get_started.title" = "Mari Mulai";
-"share_tool_screen_tutorial.get_started.message" = "Kirim tautan ke satu atau lebih orang untuk memulai sesi berbagi layar sekarang. Pengalaman ini saat ini mengharuskan semua peserta untuk mengunduh aplikasi GodTools di perangkat mereka.";
-"share_tool_remote_link_message" = "Hai, Ikut bersama saya di GodTools melalui berbagi layar. Inilah tautannya: %@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum berfungsi. Kita dapat mencoba lagi di lain waktu.";
+"share_tool_screen_tutorial.get_started.message" = "Kirim tautan ke satu atau lebih orang untuk memulai sesi berbagi layar sekarang. ";
+"share_tool_remote_link_message" = "Hai, Ikut bersama saya di GodTools melalui berbagi layar. Inilah tautannya: %@ 
+
+Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum berfungsi. Kita dapat mencoba lagi di lain waktu.";
 "exit_tract_remote_share_session.message" = "Keluar dari sesi berbagi jarak jauh sekarang?";
 "load_tool_remote_session.message" = "Memulai Berbagi Layar...";
+"learn_to_share_tool.learn_to_share.title" = "Belajar bagaimana membagikan sarana ini dengan orang lain.";
+"learn_to_share_tool.learn_to_share.message" = "Berlatihlah menggunakan tips sebanyak yang Anda butuhkan untuk merasa percaya diri membagikan alat ini kepada orang lain.";
+"learn_to_share_tool.tips_light_the_way.message" = "Pada layar tertentu, Anda akan melihat berbagai ikon. Tekan ikon untuk menampilkan tip yang akan membantu Anda berbicara tentang konten layar.";
+"learn_to_share_tool.light_up_the_tips.title" = "Buka tips";
+"lesson_evaluation.title" = "Melihat kembali";
+"lesson_evaluation.wasThisHelpful" = "Apakah pelajaran ini membantu Anda?";
+"lesson_evaluation.shareFaith" = "Seberapa siap Anda untuk memulai percakapan rohani?";
+"lesson_evaluation.sendButtonTitle" = "Kirim tanggapan";
 "onboardingTutorial.0.title" = "Siap untuk setiap percakapan";
 "onboardingTutorial.0.videoLink.title" = "Tonton Video";
 "onboardingTutorial.1.title" = "Bicara dengan Tuhan tentang siapa pun";
@@ -182,7 +199,9 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. Mari kita bicarakan lebih lanjut!
+"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
+
+Mari kita bicarakan lebih lanjut!
 
 Aplikasi dapat diunduh dari https://godtoolsapp.com";
 

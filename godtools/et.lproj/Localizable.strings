@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Saadaval keeled";
+"toolDetails.versions.message" = "Vali allpool tööriista erinev versioon. Igal versioonil on ainulaadne stiil ja sisu, et leiaksid oma vestluse jaoks sobivaima. Saad lemmikuks märkida tööriista mitu versiooni.";
+"favorites.noTools.title" = "Lemmiktööriistu pole";
+"favorites.noTools.description" = "Puuduta südameikooni, et tööriist lemmikuks märkida ja väljaspool võrku kättesaadavaks teha.";
+"favorites.noTools.button" = "Mine tööriistade juurde";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Jaga pilti";
+"favorites.pageTitle" = "Tere tulemast rakendusse GodTools";
+"favorites.favoriteLessons.title" = "Soovitatud koolitus";
+"favorites.favoriteTools.title" = "Su lemmiktööriistad";
+"favorites.favoriteTools.viewAll" = "Kuva kõik";
+"favorites.favoriteLessons.details" = "Teave";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Mitte ühtki";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Selles tööriistas saab kasutada kahte keelt";
+"toolDetails.versions.title" = "Versioonid";
+"toolDetails.learnToShareToolButton.title" = "Õpi seda tööriista jagama";
+"toolSettings.title" = "Tööriistade suvandid";
+"toolSettings.option.shareLink.title" = "Jaga linki";
+"toolSettings.option.screenShare.title" = "Jaga ekraani";
+"toolSettings.option.trainingTips.show.title" = "Koolitusnõu";
+"toolSettings.option.trainingTips.hide.title" = "Peida nõuanded";
+"toolSettings.chooseLanguage.title" = "Teine keel";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Teine";
+"toolSettings.shareables.title" = "Seotud pildid";
+"allTools.spotlight.title" = "Esiletõstetud tööriistad";
+"allTools.spotlight.description" = "Siit leiad mõned tööriistad, mis sulle meeldida võiksid.";
+"allTools.categories.title" = "Liigid";
+"tool_menu_item.lessons" = "Koolitus";
 "parallelLanguage.yesButton.title" = "Jah";
 "parallelLanguage.noButton.title" = "Ei, aitäh";
 "parallelLanguage.getStartedButton.title" = "Alustamine";
@@ -20,7 +50,9 @@
 "share_tool_screen_tutorial.mirrored_experience.message" = "Kui kerid oma telefonis tööriista kuva, näeb seda ka su sõber. Nii saad tööriistaga tutvuda korraga 2 seadmel.";
 "share_tool_screen_tutorial.get_started.title" = "Alustamine";
 "share_tool_screen_tutorial.get_started.message" = "Saada link ühele või mitmele inimesele, et kohe ekraanikuva jagamist alustada.";
-"share_tool_remote_link_message" = "Hei! Jälgi mind rakenduses GoodTools, jagades minuga ekraanikuva. Kasuta seda linki: %@ Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni teine kord uuesti proovida.";
+"share_tool_remote_link_message" = "Hei! Jälgi mind rakenduses GoodTools, jagades minuga ekraanikuva. Kasuta seda linki: %@ 
+
+Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni teine kord uuesti proovida.";
 "exit_tract_remote_share_session.message" = "Kas lõpetada ekraanikuva kaugjagamine kohe?";
 "load_tool_remote_session.message" = "Ekraanikuva jagamise alustamine...";
 

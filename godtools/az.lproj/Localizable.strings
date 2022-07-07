@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Mövcud dillər";
+"toolDetails.versions.message" = "Bu alətin fərqli versiyasını aşağıdan seçin. Söhbətinizə ən uyğun olanını seçə bilməyiniz üçün hər versiyanın özünəməxsus stili və məzmunu var. Sİz eyni alətin bir neçə versiyasını sevimliləriniz arasına əlavə edə bilərsiniz.";
+"favorites.noTools.title" = "Göstərməyə sevimli alət yoxdur";
+"favorites.noTools.description" = "Aləti sevimli etmək və oflayn rejimdə istifadə etmək üçün ürək işarəsinə basın.";
+"favorites.noTools.button" = "Alətlərə keç";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Şəkli paylaş";
+"favorites.pageTitle" = "GodTools-a xoş gəlmisiniz";
+"favorites.favoriteLessons.title" = "Seçilmiş dərs";
+"favorites.favoriteTools.title" = "Sevimli alətləriniz";
+"favorites.favoriteTools.viewAll" = "Hamısına bax";
+"favorites.favoriteLessons.details" = "Təfsilatlar";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Heç biri";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Bu alətdə iki müxtəlif dil arasında dəyiş.";
+"toolDetails.versions.title" = "Versiyalar";
+"toolDetails.learnToShareToolButton.title" = "Bu aləti paylaşmağı öyrən";
+"toolSettings.title" = "Alət seçimləri";
+"toolSettings.option.shareLink.title" = "Keçidi paylaş";
+"toolSettings.option.screenShare.title" = "Ekranınızı paylaşın";
+"toolSettings.option.trainingTips.show.title" = "Təlim ipucları";
+"toolSettings.option.trainingTips.hide.title" = "İpuclarını gizlət";
+"toolSettings.chooseLanguage.title" = "Paralel dil";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralel";
+"toolSettings.shareables.title" = "Əlaqəli qrafiklər";
+"allTools.spotlight.title" = "Alət haqqında önəmli məlumatlar";
+"allTools.spotlight.description" = "Xoşunuza gələcəyini düşündüyümüz bəzi alətlər";
+"allTools.categories.title" = "Kateqoriyalar";
+"tool_menu_item.lessons" = "Dərslər";
 "tool_offline_favorite_message" = "Ürək düyməsinə toxunmaqla aləti sevimlilərinizə əlavə edib ondan oflayn rejimdə istifadə edin.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -14,10 +44,20 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Əks olunan təcrübə";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Aləti telefonunuzda sürüşdürdükdə dostunuzum ekranı da eyni reaksiyanı verəcək. Bu, sizə eyni vaxtda iki cihazda aləti birgə nəzərdən keçirməyə imkan verir.";
 "share_tool_screen_tutorial.get_started.title" = "Başla";
-"share_tool_screen_tutorial.get_started.message" = "Ekran paylaşma sessiyasını indi başlatmaq üçün keçidi bir və ya daha çox nəfərə göndər. Bu təcrübə hal-hazırda bütün iştirakçıların cihazlarında yüklənmiş GodTools tətbiqinin olmasını tələb edir.";
-"share_tool_remote_link_message" = "Salam. Ektan paylaşma vasitəsilə GodTools-da məni izləyin. Keçid: %@ Son anadək bu mesajı almasanız, daha sonra keçid işləməyə bilər. Başqa vaxt təkrar cəhd edə bilərik.";
+"share_tool_screen_tutorial.get_started.message" = "Ekran paylaşma sessiyasını indi başlatmaq üçün keçidi bir və ya daha çox nəfərə göndər. ";
+"share_tool_remote_link_message" = "Salam. Ektan paylaşma vasitəsilə GodTools-da məni izləyin. Keçid: %@ 
+
+Son anadək bu mesajı almasanız, daha sonra keçid işləməyə bilər. Başqa vaxt təkrar cəhd edə bilərik.";
 "exit_tract_remote_share_session.message" = "Uzaq paylaşma sessiyasından indi çıxılsın?";
 "load_tool_remote_session.message" = "Ekran paylaşma başladılır...";
+"onboardingTutorial.0.title" = "Hər söhbət üçün hazırdır";
+"onboardingTutorial.0.videoLink.title" = "Video izlə";
+"onboardingTutorial.1.title" = "İstənilən şəxslə Tanrı haqqında danış";
+"onboardingTutorial.1.message" = "GodTools Tanrı haqqında mənalı söhbətlər etməyə kömək edir.";
+"onboardingTutorial.2.title" = "Önəmli anlara hazırlaş";
+"onboardingTutorial.2.message" = "İnanclar haqqında danışmağı həyatınızın ayrılmaz hissəsinə çevirməyi öyrənin.";
+"onboardingTutorial.3.title" = "Başqalarına İsanı kəşf etməyə kömək et";
+"onboardingTutorial.3.message" = "GodTools İncilin aydın və müvafiq qaydada çatdırılması üçün sizin bələdçinizdir.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Təlim";

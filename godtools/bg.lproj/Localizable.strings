@@ -1,6 +1,36 @@
+"toolSettings.languagesAvailable.title" = "Достъпни езици";
+"toolDetails.versions.message" = "Изберете различна версия на приложението долу. Всяка версия има различен стил и съдържание, за да откриете най-подходящата за вашия разговор. Можете да имате повече от една любима версия на приложението.";
+"favorites.noTools.title" = "Няма любими приложения";
+"favorites.noTools.description" = "Докоснете иконката сърце, за да запазите приложение в любими, и да е достъпно офлайн.";
+"favorites.noTools.button" = "Отидете в приложения";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Споделяне на изображение";
+"favorites.pageTitle" = "Добре дошли в GodTools";
+"favorites.favoriteLessons.title" = "Препоръчан урок";
+"favorites.favoriteTools.title" = "Вашите любими уроци";
+"favorites.favoriteTools.viewAll" = "Виждане на всички";
+"favorites.favoriteLessons.details" = "Подробности";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Няма";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Превключвайте между два езика с помощта на това приложение.";
+"toolDetails.versions.title" = "Версии";
+"toolDetails.learnToShareToolButton.title" = "Научете как да споделяте това приложение";
+"toolSettings.title" = "Възможности на приложението";
+"toolSettings.option.shareLink.title" = "Споделете връзка";
+"toolSettings.option.screenShare.title" = "Сподели екрана си";
+"toolSettings.option.trainingTips.show.title" = "Съвети за тренировки";
+"toolSettings.option.trainingTips.hide.title" = "Скриване на съвети";
+"toolSettings.chooseLanguage.title" = "Успореден език";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Още един";
+"toolSettings.shareables.title" = "Свързани изображения";
+"allTools.spotlight.title" = "Осветяване на приложения";
+"allTools.spotlight.description" = "Ето някои приложения, които мислим, че ще ви харесат";
+"allTools.categories.title" = "Категории";
 "training_tip_ask" = "Задай въпрос";
 "training_tip_consider" = "Обмисли";
 "close" = "Затвори";
+"tool_menu_item.lessons" = "Уроци";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Не, благодаря";
 "parallelLanguage.getStartedButton.title" = "Започнете";
@@ -31,8 +61,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Огледално преживяване";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Когато превърташ екрана на приложението на смартфона си, същото ще се случва и на екрана на другия човек. Това позволява да използваш приложение на 2 устройства едновременно.";
 "share_tool_screen_tutorial.get_started.title" = "Започнете";
-"share_tool_screen_tutorial.get_started.message" = "Изпрати връзката до един или повече хора, за да започнеш сесия за отдалечено споделяне сега. За това е нужно всички участници да имат приложението GodTools на техните устройства.";
-"share_tool_remote_link_message" = "Здравей, последвай ме в GodTools чрез споделяне на екрана. Ето връзката: %@ Ако получиш това съобщение твърде късно, връзката може вече да не работи. Можем да опитаме пак друг път.";
+"share_tool_screen_tutorial.get_started.message" = "Изпрати връзката до един или повече хора, за да започнеш сесия за отдалечено споделяне сега.";
+"share_tool_remote_link_message" = "Здравей, последвай ме в GodTools чрез споделяне на екрана. Ето връзката: %@ 
+
+Ако получиш това съобщение твърде късно, връзката може вече да не работи. Можем да опитаме пак друг път.";
 "exit_tract_remote_share_session.message" = "Искаш ли да прекратиш сесията за отдалечено споделяне сега?";
 "load_tool_remote_session.message" = "Започва споделяне на екрана...";
 "onboardingTutorial.0.title" = "Готово за всеки разговор";
@@ -151,7 +183,9 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. Да поговорим още!
+"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. 
+
+Да поговорим още!
 
 Приложението може да бъде изтеглено от https://godtoolsapp.com";
 
