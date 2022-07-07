@@ -16,15 +16,40 @@ struct ToolDetailsAboutView: View {
     
     var body: some View {
         
-        TextWithLinks(
-            text: viewModel.aboutDetails,
-            textColor: ColorPalette.gtGrey.uiColor,
-            font: FontLibrary.sfProTextRegular.uiFont(size: 16),
-            lineSpacing: 3,
-            width: width,
-            didInteractWithUrlClosure: { (url: URL) in
-                viewModel.urlTapped(url: url)
-            }
-        )
+        VStack(alignment: .leading, spacing: 0) {
+            
+            TextWithLinks(
+                text: viewModel.aboutDetails,
+                textColor: ColorPalette.gtGrey.uiColor,
+                font: FontLibrary.sfProTextRegular.uiFont(size: 16),
+                lineSpacing: 3,
+                width: width,
+                didInteractWithUrlClosure: { (url: URL) in
+                    viewModel.urlTapped(url: url)
+                }
+            )
+            
+            Rectangle()
+                .frame(height: 20)
+                .foregroundColor(.clear)
+            
+            Text(viewModel.availableLanguagesTitle)
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .font(FontLibrary.sfProTextSemibold.font(size: 17))
+            
+            Rectangle()
+                .frame(height: 10)
+                .foregroundColor(.clear)
+            
+            SeparatorView()
+            
+            Rectangle()
+                .frame(height: 10)
+                .foregroundColor(.clear)
+            
+            Text(viewModel.availableLanguagesList)
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .font(FontLibrary.sfProTextRegular.font(size: 16))
+        }
     }
 }

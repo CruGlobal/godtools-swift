@@ -23,6 +23,7 @@
 "toolSettings.chooseLanguage.title" = "Parallel Language";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
+"toolSettings.languagesAvailable.title" = "Languages available";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
 "allTools.categories.title" = "Categories";
