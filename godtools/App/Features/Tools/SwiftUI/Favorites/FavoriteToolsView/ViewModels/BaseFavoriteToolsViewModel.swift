@@ -41,6 +41,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         
         super.init()
         
+        reloadFavoritedResourcesFromCache()
         setupBinding()
         setText()
     }
