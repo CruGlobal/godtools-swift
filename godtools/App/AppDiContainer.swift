@@ -224,7 +224,7 @@ class AppDiContainer {
     }
     
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
-        return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository())
+        return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
     }
     
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
@@ -327,10 +327,14 @@ class AppDiContainer {
         return OnboardingTutorialViewedUserDefaultsCache()
     }
     
+    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
+        return OptInOnboardingBannerEnabledRepository()
+    }
+    
     func getOpInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
         return GetOptInOnboardingBannerEnabledUseCase(
             getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
-            optInOnboardingBannerEnabledRepository: OptInOnboardingBannerEnabledRepository()
+            optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository()
         )
     }
     
