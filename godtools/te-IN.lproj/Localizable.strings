@@ -1,9 +1,38 @@
+"toolDetails.versions.message" = "దిగువన ఉన్న ఈ సాధనం యొక్క వేరొక వర్షన్‌ను ఎంచుకోండి. ప్రతి వర్షన్‌ ప్రత్యేక శైలి మరియు కంటెంట్‌ను కలిగి ఉంటుంది కాబట్టి మీరు మీ సంభాషణకు ఉత్తమమైనదాన్ని కనుగొనవచ్చు. మీరు ఒకే సాధనం యొక్క బహుళ వర్షన్‌లను ఇష్టపడవచ్చు.";
+"favorites.noTools.title" = "ప్రదర్శించడానికి ఇష్టమైన సాధనాలు లేవు";
+"favorites.noTools.description" = "సాధనంను ఇష్టపడటానికి మరియు దానిని ఆఫ్‌లైన్‌లో అందుబాటులో ఉంచడానికి గుండె చిహ్నంపై తట్టండి.";
+"favorites.noTools.button" = "సాధనాలకు వెళ్లండి";
+"toolSettings.shareImagePreview.shareImageButton.title" = "చిత్రాన్ని పంచుకోండి";
+"favorites.pageTitle" = "GodTools కి స్వాగతం";
+"favorites.favoriteLessons.title" = "ఫీచర్ చేయబడిన పాఠం";
+"favorites.favoriteTools.title" = "మీకు ఇష్టమైన సాధనాలు";
+"favorites.favoriteTools.viewAll" = "అన్నీ వీక్షించండి";
+"favorites.favoriteLessons.details" = "వివరాలు";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "ఏదీ కాదు";
+
+"toolSettings.chooseLanguage.toggleMessage" = "ఈ సాధనంలో రెండు వేర్వేరు భాషల మధ్య టోగుల్ చేయండి.";
+"toolDetails.versions.title" = "వర్షన్స్";
+"toolDetails.learnToShareToolButton.title" = "ఈ సాధనాన్ని భాగస్వామ్యం చేయడం నేర్చుకోండి";
+"toolSettings.title" = "సాధనం ఎంపికలు";
+"toolSettings.option.shareLink.title" = "లింకును పంచండి";
+"toolSettings.option.screenShare.title" = "మీ స్క్రీన్ పంచుకోండి";
+"toolSettings.option.trainingTips.show.title" = "శిక్షణ చిట్కాలు";
+"toolSettings.option.trainingTips.hide.title" = "చిట్కాలను దాయండి";
+"toolSettings.chooseLanguage.title" = "సమాంతర భాషలు ";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "సమాంతర";
+"toolSettings.shareables.title" = "సంబంధిత గ్రాఫిక్స్";
+"allTools.spotlight.title" = "సాధనం స్పాట్‌లైట్";
+"allTools.spotlight.description" = "మీరు ఇష్టపడతారని మేము భావించిన కొన్ని సాధనాలు ఇక్కడ ఉన్నాయి";
+"allTools.categories.title" = "వర్గాలు";
 "training_tip_ask" = "అడగండి";
 "training_tip_consider" = "పరిగణించండి";
 "training_tip_prepare" = "సిద్ధం";
 "training_tip_quote" = "కోట్";
 "training_tip_tip" = "చిట్కా";
 "close" = "దగ్గరగా";
+"tool_menu_item.lessons" = "పాఠాలు";
 "parallelLanguage.yesButton.title" = "అవును";
 "parallelLanguage.noButton.title" = "వద్దు ధన్యవాదములు";
 "parallelLanguage.getStartedButton.title" = "ప్రారంభించడానికి";
@@ -35,7 +64,9 @@
 "share_tool_screen_tutorial.mirrored_experience.message" = "మీ ఫోనుపై పరికరంను మీరు స్క్రోల్ చేసినప్పుడు, మీ స్నేహితుని స్క్రీన్ అదే విధంగా ప్రతిస్పందిస్తుంది. ఒకే సమయంలో 2 పరికరాలపై కలిసి పరికరం గుండా నిడిచేందుకు ఇది మీకు అనుమతిస్తుంది.";
 "share_tool_screen_tutorial.get_started.title" = "ప్రారంభించడానికి";
 "share_tool_screen_tutorial.get_started.message" = "స్క్రీన్ షేరింగ్ సెషన్‌ను ప్రారంభించడానికి లింక్‌ను ఒకటి లేదా అంతకంటే ఎక్కువ మందికి పంపండి.";
-"share_tool_remote_link_message" = "హాయ్, స్క్రీన్ పంచుకోవడం ద్వారా GodTools లో నాతో పాటు అనుసరించండి. లింక్ ఇక్కడ ఉన్నది: %@ ఇంకనూ తరువాత ఈ సందేశమును ఒకవేళ మీరు అందుకోకుంటే, లింక్ ఇంకనూ పనిచేయక పోవచ్చు. మరొక సమయంలో మనము మళ్ళీ ప్రయత్నించవచ్చు.";
+"share_tool_remote_link_message" = "హాయ్, స్క్రీన్ పంచుకోవడం ద్వారా GodTools లో నాతో పాటు అనుసరించండి. లింక్ ఇక్కడ ఉన్నది: %@ 
+
+ఇంకనూ తరువాత ఈ సందేశమును ఒకవేళ మీరు అందుకోకుంటే, లింక్ ఇంకనూ పనిచేయక పోవచ్చు. మరొక సమయంలో మనము మళ్ళీ ప్రయత్నించవచ్చు.";
 "exit_tract_remote_share_session.message" = "ఇప్పుడే సుదూర పంచుకునే సెషన్ నుండి నిష్క్రమించేదా?";
 "load_tool_remote_session.message" = "స్క్రీన్ పంచుకోవడంను ప్రారంభిస్తున్నా…";
 "onboardingTutorial.0.title" = "ప్రతి సంభాషణ కోసం సిద్ధం";
@@ -154,7 +185,9 @@
 "no" = "కాదు";
 
 // Tract - Sharing
-"tract_share_message" ="ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. మరింత మాట్లాడదాము! 
+"tract_share_message" ="ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. 
+
+మరింత మాట్లాడదాము! 
 
 ఆప్ https://godtoolsapp.com నుంచి డౌన్‌లోడ్ చేసుకోబడవచ్చు";
 

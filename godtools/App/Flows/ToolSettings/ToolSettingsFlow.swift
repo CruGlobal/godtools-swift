@@ -215,12 +215,18 @@ class ToolSettingsFlow: Flow {
                 localizationServices: appDiContainer.localizationServices
             )
             
-            let view = ReviewShareShareableHostingView(view: ReviewShareShareableView(viewModel: viewModel))
+            let view = ReviewShareShareableView(viewModel: viewModel)
+                        
+            let hostingView: UIHostingController<ReviewShareShareableView> = UIHostingController(rootView: view)
+            hostingView.view.backgroundColor = .white
             
-            reviewShareShareableModal = view
+            reviewShareShareableModal = hostingView
             
-            navigationController.present(view, animated: true, completion: nil)
+            navigationController.present(hostingView, animated: true, completion: nil)
             
+        case .closeTappedFromReviewShareShareable:
+            dismissReviewShareShareable()
+                                    
         case .shareImageTappedFromReviewShareShareable(let imageToShare):
             
             dismissReviewShareShareable(animated: true) { [weak self] in
@@ -333,7 +339,6 @@ class ToolSettingsFlow: Flow {
         let view = LanguagesListView(viewModel: viewModel)
                 
         let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: view)
-        hostingView.modalPresentationStyle = .fullScreen
         hostingView.view.backgroundColor = .white
         
         navigationController.present(hostingView, animated: true)

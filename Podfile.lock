@@ -15,7 +15,6 @@ PODS:
     - FMDB (~> 2.6)
   - SSZipArchive (2.4.3)
   - Starscream (4.0.4)
-  - TTTAttributedLabel (2.0.0)
   - youtube-ios-player-helper (1.0.4)
 
 DEPENDENCIES:
@@ -26,7 +25,6 @@ DEPENDENCIES:
   - SnowplowTracker (~> 1.3)
   - SSZipArchive (~> 2.4.0)
   - Starscream (~> 4.0.0)
-  - TTTAttributedLabel (~> 2.0.0)
   - youtube-ios-player-helper (~> 1.0.3)
 
 SPEC REPOS:
@@ -40,7 +38,6 @@ SPEC REPOS:
     - SnowplowTracker
     - SSZipArchive
     - Starscream
-    - TTTAttributedLabel
     - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
@@ -52,9 +49,8 @@ SPEC CHECKSUMS:
   SnowplowTracker: c393b26c456142ad5a78f4e4d771c71cb194f06c
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
-  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: b2d7042134fe8c5cb420583f590ea8e56295f465
+PODFILE CHECKSUM: b42ca5e394d6c2a80a58713c88837bd3b2a5e9d2
 
 COCOAPODS: 1.11.3

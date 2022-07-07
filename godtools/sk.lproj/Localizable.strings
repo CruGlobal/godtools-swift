@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Nižšie si môžete vybrať inú verziu tohto nástroja. Každá verzia má jedinečný štýl a obsah, takže si môžete nájsť tú, ktorá je pre vašu konverzáciu najlepšia. Ako obľúbené si môžete nastaviť viaceré verzie rovnakého nástroja.";
+"favorites.noTools.title" = "Žiadne obľúbené nástroje na zobrazenie";
+"favorites.noTools.description" = "Ťuknutím na ikonu srdiečka označíte nástroj ako obľúbený a sprístupníte ho offline.";
+"favorites.noTools.button" = "Prejsť na nástroje";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Zdieľať obrázok";
+"favorites.pageTitle" = "Víta vás aplikácia GodTools";
+"favorites.favoriteLessons.title" = "Odporúčaná lekcia";
+"favorites.favoriteTools.title" = "Vaše obľúbené nástroje";
+"favorites.favoriteTools.viewAll" = "Zobraziť všetko";
+"favorites.favoriteLessons.details" = "Podrobnosti";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Žiadny";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Prepínajte sa v tomto nástroji medzi dvoma jazykmi.";
+"toolDetails.versions.title" = "Verzie";
+"toolDetails.learnToShareToolButton.title" = "Naučte sa zdieľať tento nástroj";
+"toolSettings.title" = "Možnosti nástrojov";
+"toolSettings.option.shareLink.title" = "Zdieľajte odkaz";
+"toolSettings.option.screenShare.title" = "Zdieľať vašu obrazovku";
+"toolSettings.option.trainingTips.show.title" = "Tipy k školeniam";
+"toolSettings.option.trainingTips.hide.title" = "Skryť tipy";
+"toolSettings.chooseLanguage.title" = "Vedľajší jazyk";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Vedľajší";
+"toolSettings.shareables.title" = "Súvisiaca grafika";
+"allTools.spotlight.title" = "Výber nástrojov";
+"allTools.spotlight.description" = "Tu nájdete niektoré nástroje, o ktorých sa domnievame, že by sa vám mohli páčiť";
+"allTools.categories.title" = "Kategórie";
+"tool_menu_item.lessons" = "Lekcie";
 "parallelLanguage.yesButton.title" = "Áno";
 "parallelLanguage.noButton.title" = "Nie, ďakujem";
 "parallelLanguage.getStartedButton.title" = "Začať";
@@ -28,8 +57,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Zrkadlové zobrazenie";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Počas prechádzania nástroja v telefóne bude kamarátov telefón reagovať rovnako. To vám umožní spoločne prechádzať nástrojom na 2 zariadeniach naraz.";
 "share_tool_screen_tutorial.get_started.title" = "Začať";
-"share_tool_screen_tutorial.get_started.message" = "Pošli odkaz jednému alebo viacerým ľuďom a spusti reláciu zdieľania obrazovky. Všetci účastníci si na to musia do zariadenia stiahnuť aplikáciu GodTools.";
-"share_tool_remote_link_message" = "Ahoj, sleduj ma v GodTools cez zdieľanú obrazovku. Tu je odkaz: %@ Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. Môžeme to znovu skúsiť inokedy.";
+"share_tool_screen_tutorial.get_started.message" = "Pošli odkaz jednému alebo viacerým ľuďom a spusti reláciu zdieľania obrazovky.";
+"share_tool_remote_link_message" = "Ahoj, sleduj ma v GodTools cez zdieľanú obrazovku. Tu je odkaz: %@ 
+
+Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. Môžeme to znovu skúsiť inokedy.";
 "exit_tract_remote_share_session.message" = "Ukončiť reláciu zdieľania na diaľku?";
 "load_tool_remote_session.message" = "Začína sa zdieľanie obrazovky...";
 

@@ -1,3 +1,4 @@
+"toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
 "favorites.noTools.title" = "No favorite tools to display";
 "favorites.noTools.description" = "Tap on the heart icon to favorite a tool and make it available offline.";
 "favorites.noTools.button" = "Go to Tools";
@@ -7,18 +8,22 @@
 "favorites.favoriteTools.title" = "Your favorite tools";
 "favorites.favoriteTools.viewAll" = "View all";
 "favorites.favoriteLessons.details" = "Details";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "None";
+
 "toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
 "toolDetails.versions.title" = "Versions";
 "toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
 "toolSettings.title" = "Tool Options";
 "toolSettings.option.shareLink.title" = "Share link";
-"toolSettings.option.screenShare.title" = "Screen share";
+"toolSettings.option.screenShare.title" = "Share screen";
 "toolSettings.option.trainingTips.show.title" = "Training tips";
 "toolSettings.option.trainingTips.hide.title" = "Hide tips";
 "toolSettings.chooseLanguage.title" = "Parallel Language";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
+"toolSettings.languagesAvailable.title" = "Languages available";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
 "allTools.categories.title" = "Categories";

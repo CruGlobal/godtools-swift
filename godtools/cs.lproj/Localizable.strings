@@ -1,3 +1,31 @@
+"toolDetails.versions.message" = "Níže si vyberte jinou verzi tohoto nástroje. Každá verze se vyznačuje jedinečným stylem a obsahem, takže si můžete vybrat tu, která je pro vaši konverzaci nejvhodnější. Můžete si oblíbit více verzí stejného nástroje.";
+"favorites.noTools.title" = "Žádné oblíbené nástroje k zobrazení";
+"favorites.noTools.description" = "Klepnutím na ikonu srdíčka si nástroj oblíbíte a zpřístupníte jej v režimu offline.";
+"favorites.noTools.button" = "Přejít na nástroje";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Sdílet obrázek";
+"favorites.pageTitle" = "Vítejte v GodTools";
+"favorites.favoriteLessons.title" = "Doporučená lekce";
+"favorites.favoriteTools.title" = "Vaše oblíbené nástroje";
+"favorites.favoriteTools.viewAll" = "Zobrazit všechny";
+"favorites.favoriteLessons.details" = "Podrobnosti";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Žádný";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Přepnout mezi dvěma různými jazyky v tomto nástroji.";
+"toolDetails.versions.title" = "Verze";
+"toolSettings.title" = "Možnosti nástroje";
+"toolSettings.option.shareLink.title" = "Sdílet odkaz";
+"toolSettings.option.screenShare.title" = "Sdílet obrazovku";
+"toolSettings.option.trainingTips.show.title" = "Školicí tipy";
+"toolSettings.option.trainingTips.hide.title" = "Skrýt tipy";
+"toolSettings.chooseLanguage.title" = "Paralelní jazyk";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelní";
+"toolSettings.shareables.title" = "Související grafika";
+"allTools.spotlight.title" = "Upoutávka na nástroj";
+"allTools.spotlight.description" = "Tady jsou nějaké nástroje, o kterých jsme si mysleli, že by vás mohly zaujmout";
+"allTools.categories.title" = "Kategorie";
+"tool_menu_item.lessons" = "Lekce";
 "parallelLanguage.yesButton.title" = "Ano";
 "parallelLanguage.noButton.title" = "Ne, děkuji";
 "parallelLanguage.getStartedButton.title" = "Začít";

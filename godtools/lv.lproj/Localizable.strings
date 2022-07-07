@@ -1,3 +1,4 @@
+"toolDetails.versions.message" = "Tālāk vari izvēlēties citu šī rīka versiju. Katrai versijai ir unikāls stils un saturs, lai tu varētu atrast savai sarunai vispiemērotāko. Vari pievienot izlasei vairākas viena un tā paša rīka versijas.";
 "favorites.noTools.title" = "Nav iecienīto rīku, ko parādīt";
 "favorites.noTools.description" = "Nospiežot sirds ikonu, rīks tiks pievienots izlasei un būs pieejams bezsaistē.";
 "favorites.noTools.button" = "Skatīt rīkus";
@@ -7,7 +8,10 @@
 "favorites.favoriteTools.title" = "Tava rīku izlase";
 "favorites.favoriteTools.viewAll" = "Skatīt visus";
 "favorites.favoriteLessons.details" = "Apraksts";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Nav";
+
 "toolSettings.chooseLanguage.toggleMessage" = "Iespēja pārslēgties starp divām dažādām valodām šajā rīkā.";
 "toolDetails.versions.title" = "Rīka versijas";
 "toolDetails.learnToShareToolButton.title" = "Iemācīties koplietot šo rīku";
@@ -92,9 +96,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga lietošana";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku savā tālrunī, tava drauga ekrānā notiks tas pats. Šī funkcija ļauj vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";
 "share_tool_screen_tutorial.get_started.title" = "Sākt";
-"share_tool_screen_tutorial.get_started.message" = "Lai sāktu ekrāna koplietošanu, nosūti saiti vienam vai vairākiem cilvēkiem.
-
-Šīs funkcijas darbībai ir nepieciešams, lai visu dalībnieku ierīcēs būtu uzinstalēta lietotne 'GodTools'.";
+"share_tool_screen_tutorial.get_started.message" = "Lai sāktu ekrāna koplietošanu, nosūti saiti vienam vai vairākiem cilvēkiem.";
 "share_tool_remote_link_message" = "Sveiki! Pievienojies man lietotnē 'GodTools', izmantojot ekrāna koplietošanas funkciju. Lūk, saite: %@
 
 Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs varam vēlreiz pamēģināt kādu citu reizi.";

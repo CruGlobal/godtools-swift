@@ -1,13 +1,73 @@
+"toolDetails.versions.message" = "Choisissez une version différente de cet outil ci-dessous. Chaque version présente un style et un contenu uniques, ce qui vous permet de trouver celle qui convient le mieux à votre conversation. Vous pouvez préférer plusieurs versions d'un même outil.";
+"favorites.noTools.title" = "Pas d'outils favoris à afficher";
+"favorites.noTools.description" = "Tapez sur l'icône en forme de cœur pour favoriser un outil et le rendre disponible hors ligne.";
+"favorites.noTools.button" = "Aller aux outils";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Partager l'image";
+"favorites.pageTitle" = "Bienvenue sur GodTools";
+"favorites.favoriteLessons.title" = "Leçon en cours";
+"favorites.favoriteTools.title" = "Vos outils préférés";
+"favorites.favoriteTools.viewAll" = "Voir tous les";
+"favorites.favoriteLessons.details" = "À propos";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Aucun";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Cet outil permet de basculer entre deux langues différentes.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Apprendre à partager cet outil";
+"toolSettings.title" = "Options de l'outil";
+"toolSettings.option.shareLink.title" = "Partager lien";
+"toolSettings.option.screenShare.title" = "Partagez votre écran";
+"toolSettings.option.trainingTips.show.title" = "Conseils de formation";
+"toolSettings.option.trainingTips.hide.title" = "Cacher des astuces";
+"toolSettings.chooseLanguage.title" = "Langue secondaire";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "secondaire";
+"toolSettings.shareables.title" = "Graphiques connexes";
+"allTools.spotlight.title" = "Pleins feux sur les outils";
+"allTools.spotlight.description" = "Voici quelques outils qui pourraient vous intéresser";
+"allTools.categories.title" = "Catégories";
 "training_tip_ask" = "Demandez";
 "training_tip_consider" = "Considérez";
 "training_tip_prepare" = "Préparez";
 "training_tip_quote" = "Citation";
 "training_tip_tip" = "Conseil";
+"start_training" = "Début de la formation";
+"close" = "Terminé";
+"tool_menu_item.lessons" = "Leçons";
 "parallelLanguage.yesButton.title" = "Oui";
 "parallelLanguage.noButton.title" = "Non, merci";
+"parallelLanguage.selectButton.title" = "Sélectionnez";
 "parallelLanguage.getStartedButton.title" = "Commencer";
 "parallelLanguage.selectLanguageButton.title" = "Sélectionner une langue";
 "parellelLanguage.prompt" = "Souhaitez-vous définir une deuxième langue ?";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.title" = "OUTILS";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.tool.message" = "Chaque outil est conçu pour une étape différente de la conversation - avant, pendant ou après.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.title" = "Conseils pour les outils";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.toolTip.message" = "Les conseils de GodTools vous guident lorsque vous aidez quelqu'un à comprendre l'Évangile et à rencontrer Jésus.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.title" = "Partage d'écran";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.screenShare.message" = "Vous pouvez désormais partager votre écran à distance afin que l'autre personne puisse suivre l'utilisation d'un outil pour discuter de l'Évangile.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.title" = "Leçons";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.lesson.message" = "Dans chaque leçon GodTools, vous apprenez quelque chose qui vous aidera à avoir de vraies conversations sur Dieu.";
+
+/* Tutorial phrase, do not translate unless asked to do so. */
+"tutorial.findTutorial.title" = "Ce tutoriel peut être consulté à nouveau depuis le menu";
+
 "onboardingTutorial.beginButton.title" = "Commencez";
 "onboardingQuickStart.2.title" = "Je souhaite partager l'Évangile avec quelqu'un";
 "onboardingQuickStart.2.button.title" = "Choisissez l'un de nos outils";
@@ -33,10 +93,19 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Expérience en miroir";
 "share_tool_screen_tutorial.mirrored_experience.message" = "En faisant défiler l'outil sur votre téléphone, l'écran de votre ami se comporte de la même manière. Ce comportement vous permet de naviguer simultanément dans un outil ensemble sur 2 appareils.";
 "share_tool_screen_tutorial.get_started.title" = "Commencer";
-"share_tool_screen_tutorial.get_started.message" = "Envoyez le lien à une ou plusieurs personnes pour commencer une session de partage d'écran maintenant. Pour bénéficier de cette expérience, tous les participants doivent avoir téléchargé l'application GodTools sur leur appareil.";
+"share_tool_screen_tutorial.get_started.message" = "Envoyez le lien à une ou plusieurs personnes pour commencer une session de partage d'écran maintenant. ";
 "share_tool_remote_link_message" = "Bonjour, suivez-moi sur GodTools via le partage d'écran. Voici le lien : %@ Si vous recevez ce message avec du retard, le lien pourrait ne plus fonctionner. Nous réessaierons à une autre occasion.";
 "exit_tract_remote_share_session.message" = "Quitter la session de partage à distance maintenant ?";
 "load_tool_remote_session.message" = "Lancement du partage d'écran...";
+"learn_to_share_tool.learn_to_share.title" = "Apprenez à partager cet outil avec n'importe qui";
+"learn_to_share_tool.learn_to_share.message" = "Entraînez-vous à utiliser autant de conseils que nécessaire pour vous sentir en confiance et partager cet outil avec d'autres personnes.";
+"learn_to_share_tool.tips_light_the_way.title" = "Des conseils pour éclairer le chemin";
+"learn_to_share_tool.tips_light_the_way.message" = "Sur certains écrans, vous verrez une variété d'icônes. Appuyez sur l'icône pour révéler une astuce qui vous aidera à parler du contenu de l'écran.";
+"learn_to_share_tool.light_up_the_tips.title" = "Illuminez les conseils";
+"lesson_evaluation.title" = "Consulter";
+"lesson_evaluation.wasThisHelpful" = "Cette leçon vous a-t-elle été utile ?";
+"lesson_evaluation.shareFaith" = "Dans quelle mesure vous sentez-vous prêt à entamer une conversation spirituelle ?";
+"lesson_evaluation.sendButtonTitle" = "Envoyez vos commentaires";
 "onboardingTutorial.0.title" = "Prête pour toutes les conversations";
 "onboardingTutorial.0.videoLink.title" = "Regarder la vidéo";
 "onboardingTutorial.1.title" = "Parlez de Dieu avec n'importe qui";

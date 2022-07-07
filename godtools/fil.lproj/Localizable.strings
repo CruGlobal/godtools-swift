@@ -1,3 +1,32 @@
+"toolDetails.versions.message" = "Pumili ng ibang bersyon ng tool na ito sa ibaba. Ang bawat bersyon ay nagpi-feature ng natatanging istilo at content para mahanap mo ang pinakamaganda para sa iyong pag-uusap. Puwede mong gawing paborito ang maraming bersyon ng parehong tool.";
+"favorites.noTools.title" = "Walang ipapakitang mga paboritong tool";
+"favorites.noTools.description" = "I-tap sa icon ng puso para gawing paborito ang tool at gawin itong available offline.";
+"favorites.noTools.button" = "Pumunta sa Mga Tool";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Ibahagi ang larawan";
+"favorites.pageTitle" = "Welcome sa GodTools";
+"favorites.favoriteLessons.title" = "Naka-feature na lesson";
+"favorites.favoriteTools.title" = "Ang iyong mga paboritong tool";
+"favorites.favoriteTools.viewAll" = "Tingnan lahat";
+"favorites.favoriteLessons.details" = "Mga Detalye";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Wala";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Mag-toggle sa pagitan ng dalawang magkaibang wika sa tool na ito.";
+"toolDetails.versions.title" = "Mga Bersyon";
+"toolDetails.learnToShareToolButton.title" = "Alamin kung paano ibahagi ang tool na ito";
+"toolSettings.title" = "Mga Opsyon ng Tool";
+"toolSettings.option.shareLink.title" = "Magbahagi ng link";
+"toolSettings.option.screenShare.title" = "Ibahagi ang iyong screen";
+"toolSettings.option.trainingTips.show.title" = "Mga payo sa training";
+"toolSettings.option.trainingTips.hide.title" = "Itago ang mga tip";
+"toolSettings.chooseLanguage.title" = "Parallel na Wika";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Mga nauugnay na graphics";
+"allTools.spotlight.title" = "Tool Spotlight";
+"allTools.spotlight.description" = "Narito ang ilang tool na sa tingin namin ay baka magustuhan mo";
+"allTools.categories.title" = "Mga Kategorya";
+"tool_menu_item.lessons" = "Mga Lesson";
 "parallelLanguage.yesButton.title" = "Oo";
 "parallelLanguage.noButton.title" = "Hindi, Salamat";
 "parallelLanguage.getStartedButton.title" = "Magsimula";
@@ -28,8 +57,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Parehong karanasan";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Habang ini-scroll mo ang tool sa iyong telepono, tutugon ang screen ng kaibigan mo sa parehong paraan. Bibigyang-daan ka nito para sabay ninyong masiyasat ang tool sa 2 device.";
 "share_tool_screen_tutorial.get_started.title" = "Magsimula";
-"share_tool_screen_tutorial.get_started.message" = "Ipadala ang link sa isa o higit pang tao para simulan ngayon ang session ng pagbabahagi ng screen. Ang karanasang ito ay kasalukuyang kinakailangan ang lahat ng kalahok na mag-download ng GodTools app sa kanilang device.";
-"share_tool_remote_link_message" = "Hi, sumabay sa akin sa GodTools sa pamamagitan ng pagbabahagi ng screen. Narito ang link: %@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi pa rin gumana ang link. Puwede nating subukan ulit sa ibang oras.";
+"share_tool_screen_tutorial.get_started.message" = "Ipadala ang link sa isa o higit pang tao para simulan ngayon ang session ng pagbabahagi ng screen.";
+"share_tool_remote_link_message" = "Hi, sumabay sa akin sa GodTools sa pamamagitan ng pagbabahagi ng screen. Narito ang link: %@ 
+
+Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi pa rin gumana ang link. Puwede nating subukan ulit sa ibang oras.";
 "exit_tract_remote_share_session.message" = "Umalis na sa session ng remote na pagbabahagi?";
 "load_tool_remote_session.message" = "Sinisimulan ang Pagbabahagi ng Screen…";
 "onboardingTutorial.0.title" = "Handa para sa araw-araw na pag-uusap";
@@ -145,7 +176,9 @@ Makikita ang online na bersyon sa https://knowgod.com/";
 "no" = "Hindi";
 
 // Tract - Sharing
-"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. Mag-usap pa tayo!
+"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. 
+
+Mag-usap pa tayo!
 
 Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 
