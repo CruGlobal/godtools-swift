@@ -1,3 +1,4 @@
+"toolSettings.languagesAvailable.title" = "Elérhető nyelvek";
 "toolDetails.versions.message" = "Válaszd ki alább az eszköz egy másik verzióját. Mindegyik változat egyedi stílusú és tartalmú, így megtalálhatod a beszélgetéshez legmegfelelőbbet. Ugyanannak az eszköznek több verzióját is kedvencévé teheted.";
 "favorites.noTools.title" = "Nincsenek megjelenítendő kedvenc eszközök";
 "favorites.noTools.description" = "Koppints a szív ikonra, ha kedvenc eszközödet szeretnéd offline elérhetővé tenni.";
@@ -57,7 +58,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored-élmény";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Miközben az eszközt görgeted a telefonodon, az ismerősöd ugyanilyen módon reagál. Ez lehetővé teszi, hogy 2 készüléken egyidejűleg közösen végigjárjátok az eszközt.";
 "share_tool_screen_tutorial.get_started.title" = "Első lépések";
-"share_tool_screen_tutorial.get_started.message" = "Küldd el a hivatkozást egy-két embernek, hogy elindíthass egy képernyőmegosztó munkamenetet. Ennek az élménynek jelenleg előfeltétele minden résztvevőnél a GodTools app letöltése saját eszközére.";
+"share_tool_screen_tutorial.get_started.message" = "Küldd el a hivatkozást egy-két embernek, hogy elindíthass egy képernyőmegosztó munkamenetet.";
 "share_tool_remote_link_message" = "Szia! Gyere, tarts velem a GodTools világába képernyőmegosztáson keresztül. A hivatkozás: %@ Ha csak később kapod meg ezt az üzenetet, lehet, hogy a hivatkozás még nem működik. Egy későbbi alkalommal újra próbálkozhatunk.";
 "exit_tract_remote_share_session.message" = "Kilép most a távmegosztási munkamenetből?";
 "load_tool_remote_session.message" = "Képernyőmegosztás indítása...";
@@ -175,7 +176,9 @@ A https://knowgod.com/ címen egy online verzió található";
 "no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. Beszélgessünk még!
+"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
+
+Beszélgessünk még!
 
 Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 

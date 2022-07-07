@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Tale beskikbaar";
+"toolDetails.versions.message" = "Kies ’n ander weergawe van die gereedskap hieronder. Elke weergawe beskik oor ’n unieke styl en inhoud sodat jy die een kan vind wat die beste vir jou gesprek is. Jy kan gunsteling veelvuldige weergawes van dieselfde gereedskap vind.";
+"favorites.noTools.title" = "Geen gunsteling-gereedskap om te vertoon nie";
+"favorites.noTools.description" = "Tik op die hart-ikoon om dit ’n gunsteling gereedskap te maak wat vanlyn af beskikbaar is.";
+"favorites.noTools.button" = "Gaan na Gereedskap";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Deel beeld";
+"favorites.pageTitle" = "Welkom by GodTools";
+"favorites.favoriteLessons.title" = "Les in die kollig";
+"favorites.favoriteTools.title" = "Jou gunsteling-gereedskap";
+"favorites.favoriteTools.viewAll" = "Besigtig almal";
+"favorites.favoriteLessons.details" = "Besonderhede";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Geen";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Wissel tussen twee verskillende tale in hierdie gereedskap.";
+"toolDetails.versions.title" = "Weergawes";
+"toolDetails.learnToShareToolButton.title" = "Leer hoe om hierdie gereedskap te deel";
+"toolSettings.title" = "Gereedskap-opsies";
+"toolSettings.option.shareLink.title" = "Deel 'n skakel";
+"toolSettings.option.screenShare.title" = "Deel jou skerm";
+"toolSettings.option.trainingTips.show.title" = "Opleidingswenke";
+"toolSettings.option.trainingTips.hide.title" = "Vesteek wenke";
+"toolSettings.chooseLanguage.title" = "Parallelle taal";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Verwante grafika";
+"allTools.spotlight.title" = "Gereedskap in die kollig";
+"allTools.spotlight.description" = "Hier is van die gereedskap wat ons dink jy van sal hou";
+"allTools.categories.title" = "Kategorieë";
+"tool_menu_item.lessons" = "Lesse";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nee dankie";
 "parallelLanguage.getStartedButton.title" = "Kom ons begin";
@@ -17,8 +47,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Weerkaatsde ondervinding";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Terwyl jy die werkstuk op jou foon blaai, sal jou vriend se foon op dieselfde manier reageer. Dit laat jou toe om die werkstuk saam op 2 toestelle op dieselfde tyd te verken.";
 "share_tool_screen_tutorial.get_started.title" = "Kom ons begin";
-"share_tool_screen_tutorial.get_started.message" = "Stuur die skakel na een of meer mense om nou 'n skermdeelsessie te begin. Hierdie ondervinding vereis tans dat alle deelnemers die GodTools-toep op hulle toestel aflaai.";
-"share_tool_remote_link_message" = "Haai, volg saam met my in GodTools via skermdeling. Hier is die skakel: %@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie werk nie. Ons kan later weer probeer.";
+"share_tool_screen_tutorial.get_started.message" = "Stuur die skakel na een of meer mense om nou 'n skermdeelsessie te begin.";
+"share_tool_remote_link_message" = "Haai, volg saam met my in GodTools via skermdeling. Hier is die skakel: %@ 
+
+As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie werk nie. Ons kan later weer probeer.";
 "exit_tract_remote_share_session.message" = "Wil jy nou die afstanddeelsessie verlaat?";
 "load_tool_remote_session.message" = "Begin van skermdeling...";
 
@@ -126,7 +158,10 @@ https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ Kom ons gesels nog!
+"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
+
+Kom ons gesels nog!
+
 Hierdie toep kan afgelaai word vanaf 
 https://godtoolsapp.com";
 

@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Langues disponibles";
+"toolDetails.versions.message" = "Choisissez une autre version de cet outil ci-dessous. Chaque version met en avant un style et du contenu uniques vous permettant de trouver celui qui correspond le mieux à votre conversation. Vous pouvez ajouter plusieurs versions du même outil à vos favoris.";
+"favorites.noTools.title" = "Aucun outil favori à afficher";
+"favorites.noTools.description" = "Touchez l'icône de cœur pour ajouter un outil à vos favoris et le rendre disponible hors ligne.";
+"favorites.noTools.button" = "Accéder aux outils";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Partager l'image";
+"favorites.pageTitle" = "Bienvenue dans GodTools";
+"favorites.favoriteLessons.title" = "Cours mis en avant";
+"favorites.favoriteTools.title" = "Vos outils préférés";
+"favorites.favoriteTools.viewAll" = "Tout afficher";
+"favorites.favoriteLessons.details" = "Détails";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Aucun";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Basculez entre deux langues différentes dans cet outil.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Apprendre à partager cet outil";
+"toolSettings.title" = "Options de l'outil";
+"toolSettings.option.shareLink.title" = "Partagez un lien";
+"toolSettings.option.screenShare.title" = "Partagez votre écran";
+"toolSettings.option.trainingTips.show.title" = "Astuces de formation";
+"toolSettings.option.trainingTips.hide.title" = "Cacher les astuces";
+"toolSettings.chooseLanguage.title" = "Langue parallèle";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallèle";
+"toolSettings.shareables.title" = "Images liées";
+"allTools.spotlight.title" = "Outils mis en avant";
+"allTools.spotlight.description" = "Voici quelques outils qui seraient à votre goût";
+"allTools.categories.title" = "Catégories";
+"tool_menu_item.lessons" = "Cours";
 "parallelLanguage.yesButton.title" = "Oui";
 "parallelLanguage.noButton.title" = "Non merci";
 "parallelLanguage.getStartedButton.title" = "Commencer";
@@ -28,8 +58,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Expérience miroir";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Lorsque vous faites défiler l'outil sur votre téléphone, l'écran de votre ami fera la même chose. Ceci vous permet d'explorer un outil ensemble sur 2 appareils à la fois.";
 "share_tool_screen_tutorial.get_started.title" = "Commencer";
-"share_tool_screen_tutorial.get_started.message" = "Envoyez le lien à une personne ou plus pour débuter une session de partage d'écran maintenant. Cette expérience nécessite présentement que tous les participants aient l'application GodTools sur leur appareil.";
-"share_tool_remote_link_message" = "Bonjour, suivez-moi avec GodTools via le partage d'écran. Voici le lien : %@ Si vous recevez ce message plus tard, le lien pourrait ne pas fonctionner. Nous pouvons réessayer à un autre moment.";
+"share_tool_screen_tutorial.get_started.message" = "Envoyez le lien à une personne ou plus pour débuter une session de partage d'écran maintenant.";
+"share_tool_remote_link_message" = "Bonjour, suivez-moi avec GodTools via le partage d'écran. Voici le lien : %@ 
+
+Si vous recevez ce message plus tard, le lien pourrait ne pas fonctionner. Nous pouvons réessayer à un autre moment.";
 "exit_tract_remote_share_session.message" = "Quitter la session de partage à distance maintenant ?";
 "load_tool_remote_session.message" = "Début du partage d'écran...";
 "onboardingTutorial.0.title" = "Prêt pour la conversation";
@@ -146,7 +178,9 @@ Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
 "no" = "Non";
 
 // Tract - Sharing
-"tract_share_message" ="Ce lien vous mènera vers la version web de la dernière page que nous avons regardée ensemble aujourd'hui : %@. Parlons un peu plus !
+"tract_share_message" ="Ce lien vous mènera vers la version web de la dernière page que nous avons regardée ensemble aujourd'hui : %@. 
+
+Parlons un peu plus !
 
 L'application est téléchargeable sur https://godtoolsapp.com";
 

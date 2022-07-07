@@ -1,3 +1,4 @@
+"toolSettings.languagesAvailable.title" = "Tilgængelige sprog";
 "toolDetails.versions.message" = "Vælg en anden version af dette værktøj nedenfor. Hver version har unik stil og indhold, så du kan finde den, der passer bedst til din samtale. Du kan foretrække flere versioner af det samme værktøj.";
 "favorites.noTools.title" = "Ingen foretrukne værktøjer at vise";
 "favorites.noTools.description" = "Tryk på hjerteikonet for at angive et værktøj som favorit og gøre det tilgængeligt offline.";
@@ -57,7 +58,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Spejlet oplevelse";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Mens du ruller frem i værktøjet på din telefon, vises det samme på din vens skærm. Dette giver dig mulighed for at gennemgå et værktøj sammen på 2 enheder på samme tidspunkt.";
 "share_tool_screen_tutorial.get_started.title" = "Kom godt i gang";
-"share_tool_screen_tutorial.get_started.message" = "Send linket til en eller flere personer for at starte en skærmdelingssession nu. Denne oplevelse kræver i øjeblikket, at alle deltagere har downloadet GodTools-appen på deres enheder.";
+"share_tool_screen_tutorial.get_started.message" = "Send linket til en eller flere personer for at starte en skærmdelingssession nu.";
 "share_tool_remote_link_message" = "Hej! Følg mig i GodTools via skærmdeling. Her er linket: %@ 
 
 Hvis du først modtager denne besked senere, virker linket muligvis ikke. Vi kan prøve igen på et andet tidspunkt.";
@@ -177,7 +178,9 @@ Du kan finde en onlineversion på https://knowgod.com/";
 "no" = "Nej";
 
 // Tract - Sharing
-"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. Lad os tale noget mere sammen!
+"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. 
+
+Lad os tale noget mere sammen!
 
 Appen kan downloades fra https://godtoolsapp.com";
 

@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Bahasa tersedia";
+"toolDetails.versions.message" = "Pilih versi yang berbeza untuk alat ini di bawah. Setiap versi menampilkan gaya dan kandungan yang unik agar anda dapat menemui versi yang paling sesuai untuk perbualan anda. Anda boleh menjadikan alat yang sama dalam pelbagai versi sebagai kegemaran.";
+"favorites.noTools.title" = "Tiada alat kegemaran untuk dipaparkan";
+"favorites.noTools.description" = "Ketik ikon hati untuk menjadikan suatu alat kegemaran dan tersedia semasa luar talian.";
+"favorites.noTools.button" = "Pergi ke Alat";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Kongsi imej";
+"favorites.pageTitle" = "Selamat datang ke GodTools";
+"favorites.favoriteLessons.title" = "Pengajaran ditampilkan";
+"favorites.favoriteTools.title" = "Alat kegemaran anda";
+"favorites.favoriteTools.viewAll" = "Lihat semua";
+"favorites.favoriteLessons.details" = "Butiran";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Tiada";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Togol antara dua bahasa yang berbeza dalam alat ini.";
+"toolDetails.versions.title" = "Versi";
+"toolDetails.learnToShareToolButton.title" = "Belajar untuk berkongsi alat ini";
+"toolSettings.title" = "Pilihan Alat";
+"toolSettings.option.shareLink.title" = "Kongsi pautan";
+"toolSettings.option.screenShare.title" = "Kongsi paparan anda";
+"toolSettings.option.trainingTips.show.title" = "Tip latihan";
+"toolSettings.option.trainingTips.hide.title" = "Sorok petua";
+"toolSettings.chooseLanguage.title" = "Bahasa Selari";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Selari";
+"toolSettings.shareables.title" = "Grafik berkaitan";
+"allTools.spotlight.title" = "Tumpuan Alat";
+"allTools.spotlight.description" = "Di sini adalah beberapa alat yang anda mungkin berminat";
+"allTools.categories.title" = "Kategori";
+"tool_menu_item.lessons" = "Pengajaran";
 "parallelLanguage.yesButton.title" = "Ya";
 "parallelLanguage.noButton.title" = "Tidak, terima kasih";
 "parallelLanguage.getStartedButton.title" = "Mulakan";
@@ -29,8 +59,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman dicerminkan";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Apabila anda menatal alat pada telefon anda, skrin rakan anda akan bertindak balas dengan cara yang sama. Ini membolehkan anda menggunakan alat bersama pada 2 peranti secara serentak.";
 "share_tool_screen_tutorial.get_started.title" = "Bermula";
-"share_tool_screen_tutorial.get_started.message" = "Hantar pautan kepada seorang atau lebih untuk memulakan sesi perkongsian skrin sekarang. Buat masa ini, pengalaman ini memerlukan semua peserta memuat turun aplikasi GodTools pada peranti mereka.";
-"share_tool_remote_link_message" = "Hai, ikut saya dalam GodTools melalui perkongsian skrin. Ini pautannya: %@ Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih belum berfungsi. Kita boleh mencuba sekali lagi pada lain kali.";
+"share_tool_screen_tutorial.get_started.message" = "Hantar pautan kepada seorang atau lebih untuk memulakan sesi perkongsian skrin sekarang.";
+"share_tool_remote_link_message" = "Hai, ikut saya dalam GodTools melalui perkongsian skrin. Ini pautannya: %@ 
+
+Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih belum berfungsi. Kita boleh mencuba sekali lagi pada lain kali.";
 "exit_tract_remote_share_session.message" = "Keluar daripada sesi perkongsian jauh sekarang?";
 "load_tool_remote_session.message" = "Memulakan Perkongsian Skrin...";
 "onboardingTutorial.0.title" = "Bersedia untuk setiap perbualan";

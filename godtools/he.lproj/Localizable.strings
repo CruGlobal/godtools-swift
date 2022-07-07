@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "שפות זמינות";
+"toolDetails.versions.message" = "בחר גרסה אחרת של הכלי הזה למטה. כל גרסה כוללת סגנון ותוכן ייחודי כך שתוכל למצוא את הגרסה המתאימה ביותר לשיחה שלך. אתה יכול להוסיף גרסאות מרובות של אותו כלי למועדפים.";
+"favorites.noTools.title" = "אין כלים מועדפים לתצוגה";
+"favorites.noTools.description" = "לחץ על סמל הלב כדי להוסיף למועדפים את הכלי ולהפוך אותו לזמין במצב לא מקוון.";
+"favorites.noTools.button" = "עבור אל כלים";
+"toolSettings.shareImagePreview.shareImageButton.title" = "שתף תמונה";
+"favorites.pageTitle" = "ברוכים הבאים ל-GodTools";
+"favorites.favoriteLessons.title" = "שיעור מומלץ";
+"favorites.favoriteTools.title" = "הכלים המועדפים שלך";
+"favorites.favoriteTools.viewAll" = "הצג הכל";
+"favorites.favoriteLessons.details" = "פרטים";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "אף אחד";
+
+"toolSettings.chooseLanguage.toggleMessage" = "החלף בין שתי שפות שונות בכלי זה.";
+"toolDetails.versions.title" = "גרסאות";
+"toolDetails.learnToShareToolButton.title" = "למד לשתף את הכלי הזה";
+"toolSettings.title" = "הגדרות כלים";
+"toolSettings.option.shareLink.title" = "שתף קישור";
+"toolSettings.option.screenShare.title" = "שתף את המסך שלך";
+"toolSettings.option.trainingTips.show.title" = "טיפים להדרכה";
+"toolSettings.option.trainingTips.hide.title" = "הסתר טיפים";
+"toolSettings.chooseLanguage.title" = "שפה מקבילה";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "מקביל";
+"toolSettings.shareables.title" = "גרפיקה מקושרת";
+"allTools.spotlight.title" = "הדגשת כלי";
+"allTools.spotlight.description" = "הנה כמה כלים שחשבנו שאולי תאהב";
+"allTools.categories.title" = "קטגוריות";
+"tool_menu_item.lessons" = "שיעורים";
 "parallelLanguage.yesButton.title" = "כן";
 "parallelLanguage.noButton.title" = "לא תודה";
 "parallelLanguage.getStartedButton.title" = "בואו נתחיל";
@@ -28,7 +58,7 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "חוויה משותפת";
 "share_tool_screen_tutorial.mirrored_experience.message" = "כאשר אתה גולל את הכלי בטלפון, המסך של חברך יגיב באותה צורה. זה מאפשר לכם לעבור על הכלי יחד בשני מכשירים בו זמנית.";
 "share_tool_screen_tutorial.get_started.title" = "בואו נתחיל";
-"share_tool_screen_tutorial.get_started.message" = "שלח את הקישור לאדם אחד או יותר כדי להתחיל את שיתוף המסך עכשיו. ניסיון זה מחייב כרגע מכל המשתתפים להוריד את האפליקציה GodTools למכשיר שלהם.";
+"share_tool_screen_tutorial.get_started.message" = "שלח את הקישור לאדם אחד או יותר כדי להתחיל את שיתוף המסך עכשיו.  ";
 "share_tool_remote_link_message" = "היי, הצטרף אלי ב-GodTools באמצעות שיתוף מסך. הנה הקישור: %@ אם לא תקבל הודעה זו עד מאוחר יותר, ייתכן שהקישור כבר לא יעבוד. אנחנו יכולים לנסות שוב בזמן אחר.";
 "exit_tract_remote_share_session.message" = "לצאת מהשיתוף מרחוק עכשיו?";
 "load_tool_remote_session.message" = "מתחיל שיתוף מסך...";

@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Galimos kalbos";
+"toolDetails.versions.message" = "Apačioje pasirinkite kitą šio įrankio versiją. Kiekviena versija turi unikalų stilių ir turinį, taigi, galėsite rasti jūsų pokalbiui tinkamiausią. Galite pasirinkti kelias mėgstamiausias to paties įrankio versijas.";
+"favorites.noTools.title" = "Nėra jokių mėgstamiausių įrankių";
+"favorites.noTools.description" = "Spustelėkite širdelės piktogramą, kad priskirtumėte įrankį prie mėgstamiausių ir jis būtų pasiekiamas neprisijungus.";
+"favorites.noTools.button" = "Atidaryti įrankius";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Bendrinti nuotrauką";
+"favorites.pageTitle" = "Jus sveikina „GodTools“";
+"favorites.favoriteLessons.title" = "Atrinkta pamoka";
+"favorites.favoriteTools.title" = "Jūsų mėgstamiausi įrankiai";
+"favorites.favoriteTools.viewAll" = "Peržiūrėti visus";
+"favorites.favoriteLessons.details" = "Duomenys";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Joks";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Šiame įrankyje galite įjungti dvi skirtingas kalbas.";
+"toolDetails.versions.title" = "Versijos";
+"toolDetails.learnToShareToolButton.title" = "Išmokite bendrinti šį įrankį";
+"toolSettings.title" = "Siūlomi įrankiai";
+"toolSettings.option.shareLink.title" = "Bendrinti nuorodą";
+"toolSettings.option.screenShare.title" = "Dalytis savo puslapiu";
+"toolSettings.option.trainingTips.show.title" = "Mokymo patarimai";
+"toolSettings.option.trainingTips.hide.title" = "Slėpti patarimus";
+"toolSettings.chooseLanguage.title" = "Paralelinė kalba";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelinė";
+"toolSettings.shareables.title" = "Susijusi grafika";
+"allTools.spotlight.title" = "Rekomenduojami įrankiai";
+"allTools.spotlight.description" = "Čia pateikiami kai kurie įrankiai, kurie mūsų manymu, jums gali patikti.";
+"allTools.categories.title" = "Kategorijos";
+"tool_menu_item.lessons" = "Pamokos";
 "parallelLanguage.yesButton.title" = "Taip";
 "parallelLanguage.noButton.title" = "Ne, ačiū";
 "parallelLanguage.getStartedButton.title" = "Pradėkite";
@@ -28,8 +58,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Veidrodinė patirtis";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Jums slenkant įrankiu savo telefone, jūsų draugo ekranas reaguos taip pat. Šitaip galėsite kartu apžvelgti įrankį 2 įrenginiuose vienu metu.";
 "share_tool_screen_tutorial.get_started.title" = "Pradėti";
-"share_tool_screen_tutorial.get_started.message" = "Nusiųskite nuorodą vienam ar daugiau žmonių, kad pradėtumėte ekranų bedrinimo sesiją jau dabar. Šiuo metu šiai patirčiai reikalinga, kad visi dalyviai savo įrenginyje turėtų atsisiuntę programėlę „GodTools“.";
-"share_tool_remote_link_message" = "Sveiki, sekite kartu su manimi „GodTools“ su ekranų bendrinimu. Štai nuoroda: %@ Jei negausite šio pranešimo kurį laiką, nuoroda gali nebeveikti. Galime pabandyti dar kartą vėliau.";
+"share_tool_screen_tutorial.get_started.message" = "Nusiųskite nuorodą vienam ar daugiau žmonių, kad pradėtumėte ekranų bedrinimo sesiją jau dabar.";
+"share_tool_remote_link_message" = "Sveiki, sekite kartu su manimi „GodTools“ su ekranų bendrinimu. Štai nuoroda: %@ 
+
+Jei negausite šio pranešimo kurį laiką, nuoroda gali nebeveikti. Galime pabandyti dar kartą vėliau.";
 "exit_tract_remote_share_session.message" = "Ar išjungti nuotolinio bendrinimo sesiją dabar?";
 "load_tool_remote_session.message" = "Įjungiamas Ekranų bendrinimas...";
 "onboardingTutorial.0.title" = "Pasirengę kiekvienam pokalbiui";
@@ -144,7 +176,9 @@ Internetinę versiją galima rasti adresu https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. Pakalbėkime daugiau!
+"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. 
+
+Pakalbėkime daugiau!
 
 Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 

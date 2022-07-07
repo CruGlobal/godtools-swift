@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "ພາສາທີ່ນຳໃຊ້ໄດ້";
+"toolDetails.versions.message" = "ເລືອກເວີຊັ່ນອື່ນຂອງເຄື່ອງມືທີ່ຢູ່ຂ້າງລຸ່ມນີ້. ແຕ່ລະເວີຊັ່ນມີຮູບແບບ ແລະ ເນື້ອໃນທີ່ເປັນເອກະລັກ ສະນັ້ນ ທ່ານຈິ່ງສາມາດຄົ້ນຫາເວີຊັ່ນທີ່ເຫັນວ່າເໝາະສົມກັບການສົນທະນາຂອງຕົນໄດ້ຫຼາຍທີ່ສຸດ. ທ່ານຍັງສາມາດຕັ້ງເປັນລາຍການທີ່ມັກໄດ້ຫຼາຍເວີຊັ່ນຂອງເຄື່ອງມືດຽວກັນໄດ້.";
+"favorites.noTools.title" = "ບໍ່ມີເຄື່ອງມືທີ່ມັກໃນລາຍການສະແດງ";
+"favorites.noTools.description" = "ແຕະທີ່ໄອຄອນຮູບຫົວໃຈ ເພື່ອຕັ້ງເປັນລາຍການເຄື່ອງມືທີ່ມັກ ແລະ ເຮັດໃຫ້ສາມາດໃຊ້ງານແບບອອຟລາຍໄດ້.";
+"favorites.noTools.button" = "ໄປທີ່ເຄື່ອງມື";
+"toolSettings.shareImagePreview.shareImageButton.title" = "ແບ່ງປັນຮູບພາບ";
+"favorites.pageTitle" = "ຍິນດີຕ້ອນຮັບສູ່ GodTools";
+"favorites.favoriteLessons.title" = "ບົດຮຽນທີ່ໄດ້ແນະນຳ";
+"favorites.favoriteTools.title" = "ເຄື່ອງມືທີ່ທ່ານມັກ";
+"favorites.favoriteTools.viewAll" = "ເບິ່ງທັງໝົດ";
+"favorites.favoriteLessons.details" = "ລາຍລະອຽດ";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "ບໍ່ເລີຍ";
+
+"toolSettings.chooseLanguage.toggleMessage" = "ສະຫຼັບລະຫວ່າງສອງພາສາທີ່ແຕກຕ່າງກັນໃນເຄື່ອງມື.";
+"toolDetails.versions.title" = "ເວີຊັ່ນ";
+"toolDetails.learnToShareToolButton.title" = "ຮຽນຮູ້ໃນການແບ່ງປັນເຄື່ອງມື";
+"toolSettings.title" = "ຕົວເລືອກເຄື່ອງມື";
+"toolSettings.option.shareLink.title" = "ແບ່ງປັນລິ້ງ";
+"toolSettings.option.screenShare.title" = "ແບ່ງປັນໜ້າຈໍຂອງທ່ານ";
+"toolSettings.option.trainingTips.show.title" = "ເຄັດລັບການຝຶກອົບຮົມ";
+"toolSettings.option.trainingTips.hide.title" = "ເຊື່ອງເຄັດລັບ";
+"toolSettings.chooseLanguage.title" = "ພາສາທີ່ໄປຄູ່ກັນ";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "ຄູ່ຂະໜານ";
+"toolSettings.shareables.title" = "ກຣາຟິກທີ່ກ່ຽວຂ້ອງ";
+"allTools.spotlight.title" = "ເຄື່ອງມືສະປອດໄລທ໌";
+"allTools.spotlight.description" = "ນີ້ແມ່ນເຄື່ອງມືບາງຢ່າງທີ່ພວກເຮົາຄິດວ່າທ່ານອາດຈະມັກ";
+"allTools.categories.title" = "ໝວດໝູ່";
+"tool_menu_item.lessons" = "ບົດຮຽນ";
 "onboardingTutorial.beginButton.title" = "ເລີ່ມ";
 "onboardingQuickStart.2.title" = "ຂ້ອຍຕ້ອງການແບ່ງປັນຂ່າວປະເສີດກັບຄົນອື່ນ";
 "onboardingQuickStart.2.button.title" = "ເລືອກເຄື່ອງມືໃດໜຶ່ງຂອງພວກເຮົາ";
@@ -23,8 +53,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "ປະສົບການທີ່ຖືກສະທ້ອນກັບ";
 "share_tool_screen_tutorial.mirrored_experience.message" = "ໃນຂະນະທີ່ທ່ານເລື່ອນເຄື່ອງມືຢູ່ໂທລະສັບຂອງທ່ານ, ໜ້າຈໍຂອງໝູ່ຂອງທ່ານກໍຈະຕອບສະໜອງໃນທາງດຽວກັນ. ສິ່ງນີ້ເຮັດໃຫ້ທ່ານເບິ່ງຜ່ານເຄື່ອງມືພ້ອມກັນຢູ່ອຸປະກອນ 2 ເຄື່ອງໃນເວລາດຽວກັນ.";
 "share_tool_screen_tutorial.get_started.title" = "ເລີ່ມເລີຍ";
-"share_tool_screen_tutorial.get_started.message" = "ສົ່ງລິ້ງໄປຫາໜຶ່ງຄົນ ຫຼື ຫຼາຍກວ່າໜຶ່ງຄົນເພື່ອເລີ່ມເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້. ຄົນເຂົ້າຮ່ວມທຸກຄົນຕ້ອງໄດ້ດາວໂຫຼດແອັບ GodTools ໃສ່ອຸປະກອນຂອງພວກເຂົາເພື່ອໄດ້ຮັບປະສົບການໃນປັດຈຸບັນນີ້.";
-"share_tool_remote_link_message" = "ສະບາຍດີ, ຕິດຕາມຂ້ອຍໃນ GodTools ຜ່ານການແບ່ງປັນໜ້າຈໍ. ນີ້ແມ່ນລິ້ງ: %@ ຖ້າທ່ານບໍ່ໄດ້ຮັບຂໍ້ຄວາມນີ້ຈົນຮອດພາຍຫຼັງ, ລິ້ງອາດຈະຍັງໃຊ້ບໍ່ໄດ້. ພວກເຮົາສາມາດລອງໃໝ່ອີກຄັ້ງໃນເວລາອື່ນ.";
+"share_tool_screen_tutorial.get_started.message" = "ສົ່ງລິ້ງໄປຫາໜຶ່ງຄົນ ຫຼື ຫຼາຍກວ່າໜຶ່ງຄົນເພື່ອເລີ່ມເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້.";
+"share_tool_remote_link_message" = "ສະບາຍດີ, ຕິດຕາມຂ້ອຍໃນ GodTools ຜ່ານການແບ່ງປັນໜ້າຈໍ. ນີ້ແມ່ນລິ້ງ: %@ 
+
+ຖ້າທ່ານບໍ່ໄດ້ຮັບຂໍ້ຄວາມນີ້ຈົນຮອດພາຍຫຼັງ, ລິ້ງອາດຈະຍັງໃຊ້ບໍ່ໄດ້. ພວກເຮົາສາມາດລອງໃໝ່ອີກຄັ້ງໃນເວລາອື່ນ.";
 "exit_tract_remote_share_session.message" = "ອອກຈາກເຊດຊັນແບ່ງປັນທາງໄກດຽວນີ້ບໍ?";
 "load_tool_remote_session.message" = "ເລີ່ມແບ່ງປັນໜ້າຈໍ...";
 "onboardingTutorial.0.title" = "ພ້ອມສໍາລັບການສົນທະນາທັງໝົດ";

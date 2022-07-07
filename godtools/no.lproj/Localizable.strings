@@ -1,3 +1,33 @@
+"toolSettings.languagesAvailable.title" = "Tilgjengelige språk";
+"toolDetails.versions.message" = "Velg en annen versjon av verktøyet nedenfor. Hver versjon har sin egen unike stil og innhold, slik at du kan finne den som best passer samtalen din. Du kan lagre flere verktøyversjoner som favoritt.";
+"favorites.noTools.title" = "Ingen favorittverktøy å vise";
+"favorites.noTools.description" = "Trykk på hjerteikonet for å lagre verktøyet som favoritt og gjøre det tilgjengelig i frakoblet modus.";
+"favorites.noTools.button" = "Gå til verktøy";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Del bildet";
+"favorites.pageTitle" = "Velkommen til GodTools";
+"favorites.favoriteLessons.title" = "Framhevet leksjon";
+"favorites.favoriteTools.title" = "Favorittverktøyene dine";
+"favorites.favoriteTools.viewAll" = "Vis alle";
+"favorites.favoriteLessons.details" = "Detaljer";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Ingen";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Bytt mellom to ulike språk i verktøyet.";
+"toolDetails.versions.title" = "Versjoner";
+"toolDetails.learnToShareToolButton.title" = "Lær å dele verktøyet";
+"toolSettings.title" = "Verktøyinnstillinger";
+"toolSettings.option.shareLink.title" = "Del en kobling";
+"toolSettings.option.screenShare.title" = "Del skjermen din";
+"toolSettings.option.trainingTips.show.title" = "Opplæringstips";
+"toolSettings.option.trainingTips.hide.title" = "Skjul tips";
+"toolSettings.chooseLanguage.title" = "Parallellspråk";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallell";
+"toolSettings.shareables.title" = "Relaterte grafikker";
+"allTools.spotlight.title" = "Framhevede verktøy";
+"allTools.spotlight.description" = "Her er noen verktøy vi tror du vil like";
+"allTools.categories.title" = "Kategorier";
+"tool_menu_item.lessons" = "Leksjoner";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nei takk";
 "parallelLanguage.getStartedButton.title" = "Kom i gang";
@@ -28,8 +58,10 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "Speilet opplevelse";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Når du blar gjennom verktøyet på telefonen din, vil skjermen til vennen reagere på samme måte. Dette lar deg gå gjennom et verktøy sammen på 2 enheter samtidig.";
 "share_tool_screen_tutorial.get_started.title" = "Kom i gang";
-"share_tool_screen_tutorial.get_started.message" = "Send koblingen til én eller flere personer for å starte en skjermdelingsøkt nå. For å gjøre dette (for øyeblikket) må alle deltakerne ha lastet ned GodTools-appen på enheten deres.";
-"share_tool_remote_link_message" = "Hei, følg med meg i GodTools via skjermdeling. Her er lenken: %@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke virker. Vi kan prøve igjen på et annet tidspunkt.";
+"share_tool_screen_tutorial.get_started.message" = "Send koblingen til én eller flere personer for å starte en skjermdelingsøkt nå.";
+"share_tool_remote_link_message" = "Hei, følg med meg i GodTools via skjermdeling. Her er lenken: %@ 
+
+Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke virker. Vi kan prøve igjen på et annet tidspunkt.";
 "exit_tract_remote_share_session.message" = "Vil du avslutte den eksterne delingsøkten nå?";
 "load_tool_remote_session.message" = "Start skjermdeling …";
 "onboardingTutorial.0.title" = "Klar for enhver samtale";
@@ -146,7 +178,9 @@ Du finner en nettversjon på https://knowgod.com/";
 "no" = "Nei";
 
 // Tract - Sharing
-"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. La oss snakke mer!
+"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. 
+
+La oss snakke mer!
 
 Appen kan lastes ned på https://godtoolsapp.com";
 
