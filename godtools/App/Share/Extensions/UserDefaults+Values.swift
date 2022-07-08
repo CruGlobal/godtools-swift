@@ -17,6 +17,7 @@ extension UserDefaults {
         
         set {
             set(newValue, forKey: UserDefaultKeys.optInOnboardingBannerDisabled)
+            synchronize()
         }
     }
 }
