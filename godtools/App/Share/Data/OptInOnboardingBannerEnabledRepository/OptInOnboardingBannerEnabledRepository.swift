@@ -7,16 +7,24 @@
 //
 
 import Foundation
+import Combine
 
 class OptInOnboardingBannerEnabledRepository {
+        
+    private let cache: OptInOnboardingBannerEnabledCache
     
-    let userDefaultKey = UserDefaultKeys.optInOnboardingBannerDisabled
-    
-    func getBannerIsEnabled() -> Bool {
-        return UserDefaults.standard.optInOnboardingBannerDisabled == false
+    init(cache: OptInOnboardingBannerEnabledCache) {
+        
+        self.cache = cache
     }
     
-    func disableBanner() {
-        UserDefaults.standard.optInOnboardingBannerDisabled = true
+    func getEnabled() -> NSObject.KeyValueObservingPublisher<OptInOnboardingBannerEnabledCache, Bool> {
+        
+        return cache.getEnabled()
+    }
+    
+    func storeEnabled(enabled: Bool) {
+        
+        cache.storeEnabled(enabled: enabled)
     }
 }

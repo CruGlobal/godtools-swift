@@ -18,6 +18,6 @@ class DisableOptInOnboardingBannerUseCase {
     }
     
     func disableOptInOnboardingBanner() {
-        optInOnboardingBannerEnabledRepository.disableBanner()
+        optInOnboardingBannerEnabledRepository.storeEnabled(enabled: false)
     }
 }

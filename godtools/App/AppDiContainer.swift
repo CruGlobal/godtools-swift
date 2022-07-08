@@ -328,7 +328,9 @@ class AppDiContainer {
     }
     
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
-        return OptInOnboardingBannerEnabledRepository()
+        return OptInOnboardingBannerEnabledRepository(
+            cache: OptInOnboardingBannerEnabledCache()
+        )
     }
     
     func getOpInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
