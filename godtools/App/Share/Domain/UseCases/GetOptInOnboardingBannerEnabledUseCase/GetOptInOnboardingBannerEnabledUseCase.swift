@@ -19,18 +19,16 @@ class GetOptInOnboardingBannerEnabledUseCase {
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
-    
-    private func getTutorialAvailable() -> AnyPublisher<Bool, Never> {
-        
-        return Just(getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()).eraseToAnyPublisher()
-    }
         
     func getBannerIsEnabled() -> AnyPublisher<Bool, Never> {
-        
+                
         return Publishers
-            .CombineLatest(getTutorialAvailable(), optInOnboardingBannerEnabledRepository.getEnabled())
-            .allSatisfy { tutorialAvailable, bannerEnabled in
-                return tutorialAvailable && bannerEnabled
+            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable(), optInOnboardingBannerEnabledRepository.getEnabled())
+            .map { (tutorialAvailable: Bool, bannerEnabled: Bool?) in
+                
+                let bannerIsEnabledByDefault: Bool = true
+                
+                return tutorialAvailable && (bannerEnabled ?? bannerIsEnabledByDefault)
             }
             .eraseToAnyPublisher()
     }

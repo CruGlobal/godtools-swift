@@ -329,7 +329,7 @@ class AppDiContainer {
     
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
-            cache: OptInOnboardingBannerEnabledCache()
+            cache: OptInOnboardingBannerEnabledCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
         )
     }
     

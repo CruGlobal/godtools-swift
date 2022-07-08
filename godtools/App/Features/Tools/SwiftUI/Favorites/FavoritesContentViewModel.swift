@@ -51,10 +51,10 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var lessonsLoading = false
-    @Published var toolsLoading = false
+    @Published var lessonsLoading: Bool = false
+    @Published var toolsLoading: Bool = false
     @Published var pageTitle: String = ""
-    @Published var hideTutorialBanner = true
+    @Published var hideTutorialBanner: Bool = true
 
     // MARK: - Init
     
@@ -70,7 +70,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         
         super.init()
-        
+                
+        disableOptInOnboardingBannerSubscription = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
+            .sink(receiveValue: { [weak self] (isEnabled: Bool) in
+                self?.hideTutorialBanner = !isEnabled
+         })
+                        
         setup()
     }
     
@@ -115,13 +120,6 @@ extension FavoritesContentViewModel {
                 self?.setupTitle()
             }
         }
-        
-        disableOptInOnboardingBannerSubscription = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
-            .sink(receiveValue: { [weak self] (isEnabled: Bool) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.hideTutorialBanner = !isEnabled
-                }
-            })
     }
     
     private func setupTitle() {
@@ -134,7 +132,6 @@ extension FavoritesContentViewModel {
 
 extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     func closeBanner() {
-        hideTutorialBanner = true
         disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
     }
     

@@ -9,22 +9,24 @@
 import Foundation
 import Combine
 
-class OptInOnboardingBannerEnabledCache: UserDefaults {
+class OptInOnboardingBannerEnabledCache {
     
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache
     private let enabledCacheKey: String = "keyOpenTutorialCalloutDisabled"
     
-    @objc private var isEnabled: Bool {
-        return bool(forKey: enabledCacheKey)
+    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+        
+        self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
     
-    func getEnabled() -> NSObject.KeyValueObservingPublisher<OptInOnboardingBannerEnabledCache, Bool> {
+    func getEnabled() -> Bool? {
         
-        return publisher(for: \.isEnabled)
+        return sharedUserDefaultsCache.getValue(key: enabledCacheKey) as? Bool
     }
     
     func storeEnabled(enabled: Bool) {
         
-        super.set(enabled, forKey: enabledCacheKey)
-        super.synchronize()
+        sharedUserDefaultsCache.cache(value: enabled, forKey: enabledCacheKey)
+        sharedUserDefaultsCache.commitChanges()
     }
 }
