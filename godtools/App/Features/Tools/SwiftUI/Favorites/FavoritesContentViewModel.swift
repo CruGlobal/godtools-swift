@@ -26,6 +26,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
     
+    private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private var disableOptInOnboardingBannerSubscription: AnyCancellable?
         
@@ -53,7 +54,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     @Published var lessonsLoading = false
     @Published var toolsLoading = false
     @Published var pageTitle: String = ""
-    @Published var hideTutorialBanner: Bool
+    @Published var hideTutorialBanner = true
 
     // MARK: - Init
     
@@ -65,9 +66,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        
-        hideTutorialBanner = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled() == false
         
         super.init()
         
@@ -107,6 +107,7 @@ extension FavoritesContentViewModel {
     private func setup() {
         setupBinding()
         setupTitle()
+        showOrHideTutorialBanner()
     }
     
     private func setupBinding() {
@@ -117,11 +118,11 @@ extension FavoritesContentViewModel {
         }
         
         disableOptInOnboardingBannerSubscription = UserDefaults.standard.publisher(for: \.optInOnboardingBannerDisabled)
-            .sink(receiveValue: { [weak self] optInOnboardingBannerDisabled in
+            .sink(receiveValue: { [weak self] _ in
                 guard let self = self else { return }
                 
                 DispatchQueue.main.async {
-                    self.hideTutorialBanner = optInOnboardingBannerDisabled
+                    self.showOrHideTutorialBanner()
                 }
             })
     }
@@ -129,6 +130,10 @@ extension FavoritesContentViewModel {
     private func setupTitle() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         pageTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.pageTitle")
+    }
+    
+    private func showOrHideTutorialBanner() {
+        hideTutorialBanner = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled() == false
     }
 }
 
