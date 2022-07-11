@@ -26,6 +26,7 @@ struct ToolDetailsAboutView: View {
                 width: width,
                 didInteractWithUrlClosure: { (url: URL) in
                     viewModel.urlTapped(url: url)
+                    return true
                 }
             )
             

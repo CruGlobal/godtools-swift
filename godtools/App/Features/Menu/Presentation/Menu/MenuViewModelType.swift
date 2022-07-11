@@ -32,4 +32,5 @@ protocol MenuViewModelType {
     func termsOfUseTapped()
     func privacyPolicyTapped()
     func copyrightInfoTapped()
+    func deleteAccountTapped()
 }
