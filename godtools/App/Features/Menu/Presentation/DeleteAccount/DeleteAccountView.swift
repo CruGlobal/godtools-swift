@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     
-    private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+    private let contentInsets: EdgeInsets = EdgeInsets(top: 40, leading: 30, bottom: 0, trailing: 30)
     
     @ObservedObject var viewModel: DeleteAccountViewModel
     
@@ -18,20 +18,25 @@ struct DeleteAccountView: View {
         
         GeometryReader { geometry in
             
-            VStack{
+            VStack(alignment: .leading, spacing: 0) {
+                
+                Rectangle()
+                    .frame(height: contentInsets.top)
+                    .foregroundColor(.clear)
                 
                 TextWithLinks(
                     text: viewModel.deleteOktaAccountInstructions,
                     textColor: ColorPalette.gtGrey.uiColor,
                     font: FontLibrary.sfProTextRegular.uiFont(size: 18),
                     lineSpacing: 2,
-                    width: geometry.size.width,
+                    width: geometry.size.width - contentInsets.leading - contentInsets.trailing,
                     didInteractWithUrlClosure: { (url: URL) in
                         
                         print("did interact with url: \(url.absoluteString)")
                     }
                 )
             }
+            .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
         }
     }
 }
