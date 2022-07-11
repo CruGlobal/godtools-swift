@@ -9,9 +9,12 @@
 import Foundation
 
 class DeleteAccountViewModel: ObservableObject {
-    
-    init() {
         
+    private weak var flowDelegate: FlowDelegate?
+    
+    init(flowDelegate: FlowDelegate) {
+        
+        self.flowDelegate = flowDelegate
     }
 }
 
@@ -19,4 +22,8 @@ class DeleteAccountViewModel: ObservableObject {
 
 extension DeleteAccountViewModel {
     
+    func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromDeleteAccount)
+    }
 }

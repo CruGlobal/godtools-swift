@@ -103,6 +103,9 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case deleteAccountTappedFromMenu
     
+    // delete account
+    case backTappedFromDeleteAccount
+    
     // language settings
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings

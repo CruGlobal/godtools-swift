@@ -201,13 +201,19 @@ class MenuFlow: Flow {
             
         case .deleteAccountTappedFromMenu:
             
-            let viewModel = DeleteAccountViewModel()
+            let viewModel = DeleteAccountViewModel(
+                flowDelegate: self
+            )
             
             let view = DeleteAccountView(viewModel: viewModel)
             
-            let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
-            
+            let hostingView = DeleteAccountHostingView(view: view)
+                        
             navigationController.pushViewController(hostingView, animated: true)
+            
+        case .backTappedFromDeleteAccount:
+            
+            navigationController.popViewController(animated: true)
                         
         default:
             break

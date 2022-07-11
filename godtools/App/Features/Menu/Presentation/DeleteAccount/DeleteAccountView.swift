@@ -24,7 +24,9 @@ struct DeleteAccountView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        let viewModel = DeleteAccountViewModel()
+        let viewModel = DeleteAccountViewModel(
+            flowDelegate: MockFlowDelegate()
+        )
         
         return DeleteAccountView(viewModel: viewModel)
     }
