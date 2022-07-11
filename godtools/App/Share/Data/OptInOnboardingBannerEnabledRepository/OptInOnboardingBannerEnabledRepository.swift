@@ -20,12 +20,12 @@ class OptInOnboardingBannerEnabledRepository {
         
         self.cache = cache
         self.publishers = OptInOnboardingBannerEnabledRepository.sharedPublishers
+        
+        publishers.enabled.value = cache.getEnabled()
     }
     
     func getEnabled() -> AnyPublisher<Bool?, Never> {
-        
-        publishers.enabled.send(cache.getEnabled())
-        
+                
         return publishers.enabled.eraseToAnyPublisher()
     }
     
