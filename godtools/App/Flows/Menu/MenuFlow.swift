@@ -221,7 +221,7 @@ class MenuFlow: Flow {
             let viewModel = MailViewModel(
                 toRecipients: ["help@cru.org"],
                 subject: "Please delete my account",
-                message: "I have created an account on the GodToolsapp and I would like to request that you delete my Okta account.",
+                message: "I have created an account on the GodTools app and I would like to request that you delete my Okta account.",
                 isHtml: false,
                 finishedSendingMailHandler: finishedSendingMail
             )
