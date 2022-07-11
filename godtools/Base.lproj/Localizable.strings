@@ -337,4 +337,5 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
 
 // DeleteAccount
+"deleteAccount.navTitle" = "Delete Account";
 "deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org";

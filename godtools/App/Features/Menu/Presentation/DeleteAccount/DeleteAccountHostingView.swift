@@ -26,6 +26,8 @@ class DeleteAccountHostingView: UIHostingController<DeleteAccountView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        title = viewModel.navTitle
         
         _ = addDefaultNavBackItem(target: self, action: #selector(navigationBackButtonTapped))
     }
