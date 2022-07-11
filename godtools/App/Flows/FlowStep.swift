@@ -101,6 +101,11 @@ enum FlowStep {
     case termsOfUseTappedFromMenu
     case privacyPolicyTappedFromMenu
     case copyrightInfoTappedFromMenu
+    case deleteAccountTappedFromMenu
+    
+    // delete account
+    case backTappedFromDeleteAccount
+    case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
     
     // language settings
     case choosePrimaryLanguageTappedFromLanguageSettings

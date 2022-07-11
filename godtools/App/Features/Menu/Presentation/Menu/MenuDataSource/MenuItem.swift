@@ -14,6 +14,7 @@ enum MenuItem {
     case about
     case help
     case contactUs
+    case deleteAccount
     case logout
     case login
     case createAccount

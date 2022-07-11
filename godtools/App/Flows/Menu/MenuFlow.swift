@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import SwiftUI
 
 class MenuFlow: Flow {
     
@@ -137,9 +138,7 @@ class MenuFlow: Flow {
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 
-                let view = MailView(viewModel: viewModel)
-                
-                navigationController.present(view, animated: true, completion: nil)
+                navigateToNativeMailApp(viewModel: viewModel)
             }
             else {
                 let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
@@ -169,9 +168,7 @@ class MenuFlow: Flow {
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 
-                let view = MailView(viewModel: viewModel)
-                
-                navigationController.present(view, animated: true, completion: nil)
+                navigateToNativeMailApp(viewModel: viewModel)                
             }
             else {
                 
@@ -197,6 +194,39 @@ class MenuFlow: Flow {
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
             
             navigateToWebContentView(webContent: copyrightInfoWebContent)
+            
+        case .deleteAccountTappedFromMenu:
+            
+            let viewModel = DeleteAccountViewModel(
+                flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices
+            )
+            
+            let view = DeleteAccountView(viewModel: viewModel)
+            
+            let hostingView = DeleteAccountHostingView(view: view)
+                        
+            navigationController.pushViewController(hostingView, animated: true)
+            
+        case .backTappedFromDeleteAccount:
+            
+            navigationController.popViewController(animated: true)
+            
+        case .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount:
+            
+            let finishedSendingMail = CallbackHandler { [weak self] in
+                self?.navigationController.dismiss(animated: true, completion: nil)
+            }
+            
+            let viewModel = MailViewModel(
+                toRecipients: ["help@cru.org"],
+                subject: "Please delete my account",
+                message: "I have created an account on the GodTools app and I would like to request that you delete my Okta account.",
+                isHtml: false,
+                finishedSendingMailHandler: finishedSendingMail
+            )
+            
+            navigateToNativeMailApp(viewModel: viewModel)
                         
         default:
             break
