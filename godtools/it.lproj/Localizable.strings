@@ -27,6 +27,7 @@
 "allTools.spotlight.title" = "Strumenti in primo piano";
 "allTools.spotlight.description" = "Ecco alcuni strumenti che potrebbero interessarti";
 "allTools.categories.title" = "Categorie";
+"tool_menu_item.lessons" = "Lezioni";
 "parallelLanguage.yesButton.title" = "Sì";
 "parallelLanguage.noButton.title" = "No, grazie";
 "parallelLanguage.getStartedButton.title" = "Per iniziare";

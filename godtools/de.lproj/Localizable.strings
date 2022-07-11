@@ -23,6 +23,7 @@
 "allTools.spotlight.title" = "Tool-Highlights";
 "allTools.spotlight.description" = "Hier sind einige Tools, die dir gefallen könnten.";
 "allTools.categories.title" = "Kategorien";
+"tool_menu_item.lessons" = "Lektionen";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nein danke";
 "parallelLanguage.getStartedButton.title" = "Erste Schritte";

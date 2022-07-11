@@ -27,6 +27,7 @@
 "allTools.spotlight.title" = "注目のツール";
 "allTools.spotlight.description" = "あなたにおすすめのツールです";
 "allTools.categories.title" = "カテゴリー";
+"tool_menu_item.lessons" = "レッスン";
 "parallelLanguage.yesButton.title" = "はい";
 "parallelLanguage.noButton.title" = "いいえ、結構です";
 "parallelLanguage.getStartedButton.title" = "開始する";
