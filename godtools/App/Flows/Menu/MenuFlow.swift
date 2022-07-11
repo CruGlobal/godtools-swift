@@ -138,9 +138,7 @@ class MenuFlow: Flow {
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 
-                let view = MailView(viewModel: viewModel)
-                
-                navigationController.present(view, animated: true, completion: nil)
+                navigateToNativeMailApp(viewModel: viewModel)
             }
             else {
                 let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
@@ -170,9 +168,7 @@ class MenuFlow: Flow {
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 
-                let view = MailView(viewModel: viewModel)
-                
-                navigationController.present(view, animated: true, completion: nil)
+                navigateToNativeMailApp(viewModel: viewModel)                
             }
             else {
                 
@@ -230,9 +226,7 @@ class MenuFlow: Flow {
                 finishedSendingMailHandler: finishedSendingMail
             )
             
-            let view = MailView(viewModel: viewModel)
-            
-            navigationController.present(view, animated: true)
+            navigateToNativeMailApp(viewModel: viewModel)
                         
         default:
             break

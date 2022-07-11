@@ -83,6 +83,7 @@
 		45127A24287C994D00CC21C4 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A23287C994D00CC21C4 /* DeleteAccountView.swift */; };
 		45127A26287C998800CC21C4 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A25287C998800CC21C4 /* DeleteAccountViewModel.swift */; };
 		45127A28287C9C4300CC21C4 /* DeleteAccountHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A27287C9C4300CC21C4 /* DeleteAccountHostingView.swift */; };
+		45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */; };
 		4513C2E8270467F400614F79 /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E7270467F400614F79 /* SetupParallelLanguageView.swift */; };
 		4513C2EA2704681300614F79 /* SetupParallelLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */; };
 		4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */; };
@@ -1220,6 +1221,7 @@
 		45127A23287C994D00CC21C4 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		45127A25287C998800CC21C4 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		45127A27287C9C4300CC21C4 /* DeleteAccountHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountHostingView.swift; sourceTree = "<group>"; };
+		45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentNativeMailApp.swift"; sourceTree = "<group>"; };
 		4513C2E7270467F400614F79 /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
 		4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModel.swift; sourceTree = "<group>"; };
 		4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModelType.swift; sourceTree = "<group>"; };
@@ -4619,6 +4621,7 @@
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
+				45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
 				45AD188C25938A4E00A096A0 /* FlowStep.swift */,
 				D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */,
@@ -8023,6 +8026,7 @@
 				45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
+				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
 				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
 				45AD1F8A25938A9800A096A0 /* TranslationModelType.swift in Sources */,
