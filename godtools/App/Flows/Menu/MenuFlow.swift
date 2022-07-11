@@ -215,6 +215,9 @@ class MenuFlow: Flow {
         case .backTappedFromDeleteAccount:
             
             navigationController.popViewController(animated: true)
+            
+        case .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount:
+            break
                         
         default:
             break

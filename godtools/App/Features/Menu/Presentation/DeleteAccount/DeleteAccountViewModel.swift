@@ -32,4 +32,9 @@ extension DeleteAccountViewModel {
         
         flowDelegate?.navigate(step: .backTappedFromDeleteAccount)
     }
+    
+    func emailHelpDeskToDeleteOktaAccountTapped() {
+        
+        flowDelegate?.navigate(step: .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount)
+    }
 }

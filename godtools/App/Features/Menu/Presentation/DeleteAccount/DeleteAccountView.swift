@@ -32,7 +32,9 @@ struct DeleteAccountView: View {
                     width: geometry.size.width - contentInsets.leading - contentInsets.trailing,
                     didInteractWithUrlClosure: { (url: URL) in
                         
-                        print("did interact with url: \(url.absoluteString)")
+                        viewModel.emailHelpDeskToDeleteOktaAccountTapped()
+                        
+                        return false
                     }
                 )
             }
