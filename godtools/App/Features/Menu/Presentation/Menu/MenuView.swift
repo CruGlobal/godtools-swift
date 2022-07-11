@@ -146,6 +146,9 @@ extension MenuView: UITableViewDelegate {
         
         case .contactUs:
             viewModel.contactUsTapped()
+            
+        case .deleteAccount:
+            viewModel.deleteAccountTapped()
         
         case .logout:
             viewModel.logoutTapped(fromViewController: self)

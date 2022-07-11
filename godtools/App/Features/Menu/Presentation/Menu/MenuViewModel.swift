@@ -123,10 +123,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
             case .account:
                 
                 if isAuthorized {
-                    items = [.myAccount, .logout]
+                    items = [.myAccount, .logout, .deleteAccount]
                 }
                 else {
-                    items = [.createAccount, .login]
+                    items = [.createAccount, .login, .deleteAccount]
                 }
                 
             case .share:
@@ -246,6 +246,10 @@ extension MenuViewModel {
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
     }
+    
+    func deleteAccountTapped() {
+        
+    }
 }
 
 extension MenuViewModel {
@@ -292,6 +296,9 @@ extension MenuViewModel {
             
         case .contactUs:
             localizedKey = "contact_us"
+            
+        case .deleteAccount:
+            localizedKey = "menu.deleteAccount"
             
         case .logout:
             localizedKey = "logout"
