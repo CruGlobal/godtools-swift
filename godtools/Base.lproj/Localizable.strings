@@ -335,3 +335,6 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+// DeleteAccount
+"deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org";

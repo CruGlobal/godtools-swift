@@ -12,9 +12,13 @@ class DeleteAccountViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
-    init(flowDelegate: FlowDelegate) {
+    @Published var deleteOktaAccountInstructions: String = ""
+    
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        
+        deleteOktaAccountInstructions = localizationServices.stringForMainBundle(key: "deleteAccount.deleteOktaAccountInstructions")
     }
 }
 

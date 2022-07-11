@@ -202,7 +202,8 @@ class MenuFlow: Flow {
         case .deleteAccountTappedFromMenu:
             
             let viewModel = DeleteAccountViewModel(
-                flowDelegate: self
+                flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices
             )
             
             let view = DeleteAccountView(viewModel: viewModel)
