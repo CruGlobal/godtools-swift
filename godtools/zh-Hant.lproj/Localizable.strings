@@ -27,6 +27,7 @@
 "allTools.spotlight.title" = "工具精選";
 "allTools.spotlight.description" = "以下是我們認為您可能會喜歡的一些工具";
 "allTools.categories.title" = "類別";
+"tool_menu_item.lessons" = "課程";
 "parallelLanguage.yesButton.title" = "是";
 "parallelLanguage.noButton.title" = "不用了，謝謝";
 "parallelLanguage.selectButton.title" = "选择";
