@@ -193,6 +193,7 @@ If you don't receive this message until later, the link may not still work. We c
 "language_settings" = "Language Settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
+"menu.deleteAccount" = "Delete Account";
 
 // Login
 "login" = "Login";
