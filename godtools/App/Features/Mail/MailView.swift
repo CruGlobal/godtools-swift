@@ -32,19 +32,16 @@ class MailView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        if viewModel.canSendViaMailApp {
-            
-            mailComposeViewController.setToRecipients(viewModel.toRecipients)
-            mailComposeViewController.setSubject(viewModel.subject)
-            mailComposeViewController.setMessageBody(viewModel.message, isHTML: viewModel.isHtml)
-            mailComposeViewController.mailComposeDelegate = self
-            
-            addChild(mailComposeViewController)
-            view.addSubview(mailComposeViewController.view)
-            mailComposeViewController.didMove(toParent: self)
-            
-            mailComposeViewController.view.frame = view.bounds
-        }
+        mailComposeViewController.setToRecipients(viewModel.toRecipients)
+        mailComposeViewController.setSubject(viewModel.subject)
+        mailComposeViewController.setMessageBody(viewModel.message, isHTML: viewModel.isHtml)
+        mailComposeViewController.mailComposeDelegate = self
+        
+        addChild(mailComposeViewController)
+        view.addSubview(mailComposeViewController.view)
+        mailComposeViewController.didMove(toParent: self)
+        
+        mailComposeViewController.view.frame = view.bounds
     }
 }
 
