@@ -72,6 +72,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         super.init()
                 
         disableOptInOnboardingBannerSubscription = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (isEnabled: Bool) in
                 self?.hideTutorialBanner = !isEnabled
          })
