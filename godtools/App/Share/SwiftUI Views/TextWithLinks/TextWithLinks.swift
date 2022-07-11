@@ -17,9 +17,9 @@ struct TextWithLinks: UIViewRepresentable {
     private let lineSpacing: CGFloat?
     private let width: CGFloat
     private let linkTextColor: UIColor
-    private let didInteractWithUrlClosure: ((_ url: URL) -> Void)
+    private let didInteractWithUrlClosure: ((_ url: URL) -> Bool)
         
-    init(text: String, textColor: UIColor, font: UIFont?, lineSpacing: CGFloat?, width: CGFloat, linkTextColor: UIColor = .systemBlue, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Void)) {
+    init(text: String, textColor: UIColor, font: UIFont?, lineSpacing: CGFloat?, width: CGFloat, linkTextColor: UIColor = .systemBlue, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
         
         self.text = text
         self.textColor = textColor
