@@ -217,7 +217,22 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount:
-            break
+            
+            let finishedSendingMail = CallbackHandler { [weak self] in
+                self?.navigationController.dismiss(animated: true, completion: nil)
+            }
+            
+            let viewModel = MailViewModel(
+                toRecipients: ["help@cru.org"],
+                subject: "Please delete my account",
+                message: "I have created an account on the GodToolsapp and I would like to request that you delete my Okta account.",
+                isHtml: false,
+                finishedSendingMailHandler: finishedSendingMail
+            )
+            
+            let view = MailView(viewModel: viewModel)
+            
+            navigationController.present(view, animated: true)
                         
         default:
             break
