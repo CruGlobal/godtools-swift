@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import SwiftUI
 
 class MenuFlow: Flow {
     
@@ -197,6 +198,16 @@ class MenuFlow: Flow {
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
             
             navigateToWebContentView(webContent: copyrightInfoWebContent)
+            
+        case .deleteAccountTappedFromMenu:
+            
+            let viewModel = DeleteAccountViewModel()
+            
+            let view = DeleteAccountView(viewModel: viewModel)
+            
+            let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
+            
+            navigationController.pushViewController(hostingView, animated: true)
                         
         default:
             break

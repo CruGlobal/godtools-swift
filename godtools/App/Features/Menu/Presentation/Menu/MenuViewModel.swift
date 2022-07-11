@@ -248,7 +248,7 @@ extension MenuViewModel {
     }
     
     func deleteAccountTapped() {
-        
+        flowDelegate?.navigate(step: .deleteAccountTappedFromMenu)
     }
 }
 
