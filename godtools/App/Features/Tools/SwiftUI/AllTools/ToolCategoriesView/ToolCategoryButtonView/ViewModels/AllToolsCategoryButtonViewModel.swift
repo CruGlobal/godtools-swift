@@ -10,11 +10,14 @@ import Foundation
 
 class AllToolsCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
     
-    init(selectedAttrCategory: String?) {
+    init(selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
+        
+        let bundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        let translatedAllToolsText = localizationServices.stringForBundle(bundle: bundle, key: "find_tools")
         
         let buttonState = ToolCategoryButtonState(category: nil, selectedCategory: selectedAttrCategory)
         
-        super.init(categoryText: "All Tools", buttonState: buttonState)
+        super.init(categoryText: translatedAllToolsText, buttonState: buttonState)
     }
     
     override func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {

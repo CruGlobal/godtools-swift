@@ -128,7 +128,7 @@ extension ToolCategoriesViewModel {
             }
         }
             
-        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory)
+        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
 
         let categoryButtonVMs = uniqueCategories.map { category in
                 
