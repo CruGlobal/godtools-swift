@@ -12,14 +12,14 @@ class AllToolsCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
     
     init(selectedAttrCategory: String?) {
         
-        let buttonState: ToolCategoryButtonState = selectedAttrCategory == nil ? .selected : .notSelected
+        let buttonState = ToolCategoryButtonState(category: nil, selectedCategory: selectedAttrCategory)
         
         super.init(categoryText: "All Tools", buttonState: buttonState)
     }
     
     override func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
         
-        let buttonState: ToolCategoryButtonState = selectedAttrCategory == nil ? .selected : .greyedOut
+        let buttonState = ToolCategoryButtonState(category: nil, selectedCategory: selectedAttrCategory)
         
         setButtonState(buttonState)
     }

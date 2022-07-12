@@ -39,9 +39,6 @@ extension BaseToolCategoryButtonViewModel {
     func setButtonState(_ state: ToolCategoryButtonState) {
         
         switch state {
-        case .notSelected:
-            showBorder = false
-            greyOutText = false
             
         case .selected:
             showBorder = true
