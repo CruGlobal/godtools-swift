@@ -9,13 +9,49 @@
 import SwiftUI
 
 struct LessonsListContentView: View {
+    
+    // MARK: - Properties
+    
+    @ObservedObject var viewModel: LessonsListContentViewModel
+    
+    // MARK: - Constants
+    
+    private enum Sizes {
+        static let paddingMultiplier: CGFloat = 15/375
+    }
+    
+    // MARK: - Body
+    
     var body: some View {
-        Text("Lessons List Goes Here")
+        
+        GeometryReader { geo in
+            let width = geo.size.width
+            let leadingTrailingPadding = width * Sizes.paddingMultiplier
+            
+            BackwardCompatibleList(rootViewType: Self.self) {
+                
+                LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+                
+            } refreshHandler: {
+                // TODO
+            }
+        }
+        
     }
 }
 
 struct LessonsListContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LessonsListContentView()
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let viewModel = LessonsListContentViewModel(
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            delegate: nil
+        )
+        
+        LessonsListContentView(viewModel: viewModel)
     }
 }
