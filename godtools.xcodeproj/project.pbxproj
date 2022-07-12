@@ -80,7 +80,10 @@
 		4511D248286CB9D200276174 /* ResourceBannerImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D246286CB9D200276174 /* ResourceBannerImageRepository.swift */; };
 		4511D249286CB9D200276174 /* BundleResourceBannerImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D247286CB9D200276174 /* BundleResourceBannerImages.swift */; };
 		4511D24B286CBA0100276174 /* LanguageSupportedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511D24A286CBA0100276174 /* LanguageSupportedText.swift */; };
-		4513C2E8270467F400614F79 /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E7270467F400614F79 /* SetupParallelLanguageView.swift */; };
+		45127A24287C994D00CC21C4 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A23287C994D00CC21C4 /* DeleteAccountView.swift */; };
+		45127A26287C998800CC21C4 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A25287C998800CC21C4 /* DeleteAccountViewModel.swift */; };
+		45127A28287C9C4300CC21C4 /* DeleteAccountHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A27287C9C4300CC21C4 /* DeleteAccountHostingView.swift */; };
+		45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */; };
 		4513C2EA2704681300614F79 /* SetupParallelLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */; };
 		4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */; };
 		4513C2EE2704683400614F79 /* SetupParallelLanguageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4513C2ED2704683400614F79 /* SetupParallelLanguageView.xib */; };
@@ -125,6 +128,7 @@
 		451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2624AD968A00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png */; };
 		45218E9F285A7A1100915546 /* ReviewShareShareableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218E9E285A7A1100915546 /* ReviewShareShareableView.swift */; };
 		45218EA1285A7A5300915546 /* ReviewShareShareableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */; };
+		452F4784287CE28000871A3B /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452F4783287CE28000871A3B /* SetupParallelLanguageView.swift */; };
 		4531C7F22866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4531C7F12866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift */; };
 		453235B827BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453235B727BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift */; };
 		45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F19285CF8B40078D932 /* SegmentControl.swift */; };
@@ -345,6 +349,7 @@
 		457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739E727A0955000999270 /* MobileContentViewWidth.swift */; };
 		457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739EA27A0984200999270 /* MobileContentFlowRow.swift */; };
 		457739ED27A0985A00999270 /* MobileContentFlowRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739EC27A0985A00999270 /* MobileContentFlowRowItem.swift */; };
+		4577F8792878CC48004F9262 /* OptInOnboardingBannerEnabledRepositoryPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4577F8782878CC48004F9262 /* OptInOnboardingBannerEnabledRepositoryPublishers.swift */; };
 		4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578176E279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift */; };
 		4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
 		4578783527C41C50004552D5 /* BackgroundImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578783327C41C50004552D5 /* BackgroundImageModel.swift */; };
@@ -387,8 +392,8 @@
 		4596757028611CE40028B5A3 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F88B012860BA8700C8027F /* TutorialSupportedLanguages.swift */; };
 		4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */; };
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
-		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
 		459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */; };
 		45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */; };
@@ -799,15 +804,15 @@
 		45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
 		45B116C22625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B116C12625FC6D007A7127 /* LanguageDirection+SemanticContentAttribute.swift */; };
 		45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 45B248572734676F00B7AD5E /* AppsFlyerLib */; };
-		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45B9875D283BFE5300E1DA7F /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9874B283BFE5300E1DA7F /* DownloadedTranslationResult.swift */; };
 		45B9875E283BFE5300E1DA7F /* TranslationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9874C283BFE5300E1DA7F /* TranslationDownloader.swift */; };
@@ -902,6 +907,7 @@
 		45D6D02F2708B8FF0063C38A /* LessonEvaluationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D02B2708B8FF0063C38A /* LessonEvaluationRepository.swift */; };
 		45D6D0302708B8FF0063C38A /* LessonEvaluationRealmCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D6D02C2708B8FF0063C38A /* LessonEvaluationRealmCache.swift */; };
 		45D95CCE271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */; };
+		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC227457856006A59E4 /* TutorialAssetContent.swift */; };
 		45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC527457A14006A59E4 /* AnimatedView.swift */; };
@@ -1048,9 +1054,7 @@
 		D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */; };
 		D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift */; };
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
-		D42FEBDC2876052D0002FAD9 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBDB2876052D0002FAD9 /* UserDefaultKeys.swift */; };
 		D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */; };
-		D42FEBE42876241C0002FAD9 /* UserDefaults+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBE32876241C0002FAD9 /* UserDefaults+Values.swift */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
 		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
@@ -1214,7 +1218,10 @@
 		4511D246286CB9D200276174 /* ResourceBannerImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceBannerImageRepository.swift; sourceTree = "<group>"; };
 		4511D247286CB9D200276174 /* BundleResourceBannerImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleResourceBannerImages.swift; sourceTree = "<group>"; };
 		4511D24A286CBA0100276174 /* LanguageSupportedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSupportedText.swift; sourceTree = "<group>"; };
-		4513C2E7270467F400614F79 /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
+		45127A23287C994D00CC21C4 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
+		45127A25287C998800CC21C4 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
+		45127A27287C9C4300CC21C4 /* DeleteAccountHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountHostingView.swift; sourceTree = "<group>"; };
+		45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentNativeMailApp.swift"; sourceTree = "<group>"; };
 		4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModel.swift; sourceTree = "<group>"; };
 		4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageViewModelType.swift; sourceTree = "<group>"; };
 		4513C2ED2704683400614F79 /* SetupParallelLanguageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetupParallelLanguageView.xib; sourceTree = "<group>"; };
@@ -1260,6 +1267,7 @@
 		45218E9E285A7A1100915546 /* ReviewShareShareableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableView.swift; sourceTree = "<group>"; };
 		45218EA0285A7A5300915546 /* ReviewShareShareableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewShareShareableViewModel.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
+		452F4783287CE28000871A3B /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
 		4531C7F12866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickLinksEnabledUseCase.swift; sourceTree = "<group>"; };
 		453235B727BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarTitleType.swift; sourceTree = "<group>"; };
 		45325F19285CF8B40078D932 /* SegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
@@ -1486,6 +1494,7 @@
 		457739E727A0955000999270 /* MobileContentViewWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewWidth.swift; sourceTree = "<group>"; };
 		457739EA27A0984200999270 /* MobileContentFlowRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowRow.swift; sourceTree = "<group>"; };
 		457739EC27A0985A00999270 /* MobileContentFlowRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowRowItem.swift; sourceTree = "<group>"; };
+		4577F8782878CC48004F9262 /* OptInOnboardingBannerEnabledRepositoryPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepositoryPublishers.swift; sourceTree = "<group>"; };
 		4578176E279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventurePageViewFactory.swift; sourceTree = "<group>"; };
 		4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignment.swift; sourceTree = "<group>"; };
 		4578783327C41C50004552D5 /* BackgroundImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageModel.swift; sourceTree = "<group>"; };
@@ -2017,6 +2026,7 @@
 		45D6D02B2708B8FF0063C38A /* LessonEvaluationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationRepository.swift; sourceTree = "<group>"; };
 		45D6D02C2708B8FF0063C38A /* LessonEvaluationRealmCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationRealmCache.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEventAnalyticsTracking.swift; sourceTree = "<group>"; };
+		45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledCache.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2221,9 +2231,7 @@
 		D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingTutorialAvailableUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD72876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingBannerEnabledUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
-		D42FEBDB2876052D0002FAD9 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableOptInOnboardingBannerUseCase.swift; sourceTree = "<group>"; };
-		D42FEBE32876241C0002FAD9 /* UserDefaults+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Values.swift"; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
 		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
@@ -2505,6 +2513,7 @@
 		450E44372756B61900D4311E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				45127A22287C994400CC21C4 /* DeleteAccount */,
 				450E44382756B66300D4311E /* Menu */,
 			);
 			path = Presentation;
@@ -2656,6 +2665,16 @@
 				4511D246286CB9D200276174 /* ResourceBannerImageRepository.swift */,
 			);
 			path = ResourceBannerImageRepository;
+			sourceTree = "<group>";
+		};
+		45127A22287C994400CC21C4 /* DeleteAccount */ = {
+			isa = PBXGroup;
+			children = (
+				45127A27287C9C4300CC21C4 /* DeleteAccountHostingView.swift */,
+				45127A23287C994D00CC21C4 /* DeleteAccountView.swift */,
+				45127A25287C998800CC21C4 /* DeleteAccountViewModel.swift */,
+			);
+			path = DeleteAccount;
 			sourceTree = "<group>";
 		};
 		4513C2E6270467E600614F79 /* LessonEvaluation */ = {
@@ -4602,6 +4621,7 @@
 				45AD188E25938A4E00A096A0 /* AppRootController.swift */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
+				45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
 				45AD188C25938A4E00A096A0 /* FlowStep.swift */,
 				D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */,
@@ -4629,7 +4649,6 @@
 				45AD189A25938A4E00A096A0 /* FontLibrary.swift */,
 				45AD18BC25938A4E00A096A0 /* ImageCatalog.swift */,
 				45325F2F285CF90D0078D932 /* Strings.swift */,
-				D42FEBDB2876052D0002FAD9 /* UserDefaultKeys.swift */,
 				45BF6EBD27050D26003596A4 /* AnimationTransitions */,
 				45AD207125938B6A00A096A0 /* Common */,
 				4511D244286CB9D200276174 /* Data */,
@@ -4678,7 +4697,6 @@
 				45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */,
 				45AD18B525938A4E00A096A0 /* UIViewController+NavBackItem.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+NavItem.swift */,
-				D42FEBE32876241C0002FAD9 /* UserDefaults+Values.swift */,
 				D44C693A2804B8050000B970 /* View+CustomModifiers.swift */,
 			);
 			path = Extensions;
@@ -6418,7 +6436,7 @@
 		D1D1753E2797428F00330BBE /* SetupParallel */ = {
 			isa = PBXGroup;
 			children = (
-				4513C2E7270467F400614F79 /* SetupParallelLanguageView.swift */,
+				452F4783287CE28000871A3B /* SetupParallelLanguageView.swift */,
 				4513C2ED2704683400614F79 /* SetupParallelLanguageView.xib */,
 				4513C2E92704681300614F79 /* SetupParallelLanguageViewModel.swift */,
 				4513C2EB2704681F00614F79 /* SetupParallelLanguageViewModelType.swift */,
@@ -6499,6 +6517,8 @@
 			isa = PBXGroup;
 			children = (
 				D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */,
+				4577F8782878CC48004F9262 /* OptInOnboardingBannerEnabledRepositoryPublishers.swift */,
+				45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */,
 			);
 			path = OptInOnboardingBannerEnabledRepository;
 			sourceTree = "<group>";
@@ -6987,13 +7007,13 @@
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
-				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */,
-				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */,
-				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
-				459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios.git" */,
-				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */,
-				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */,
-				45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */,
+				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
+				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
+				45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -7062,7 +7082,7 @@
 				D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */,
 				D1330728273ABFF20058450B /* OnboardingQuickStartCell.xib in Resources */,
 				45CB9FF8261FB0BE0036BEB3 /* LessonsListView.xib in Resources */,
-				45B6482925E593110098BAF1 /* BuildFile in Resources */,
+				45B6482925E593110098BAF1 /* (null) in Resources */,
 				451EBE2E24AD968B00C4D6DD /* 1958f6ba22b659adfc7eb43dcfac7cc5cfe192df45437355aa99a8752192ed92.jpg in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
@@ -7141,7 +7161,7 @@
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
 				451EBE3D24AD968B00C4D6DD /* e961f409d06308e87deb9ed9166264c7c732d9dc24e70f886944636308810d6e.png in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
-				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
+				45B6480A25E581660098BAF1 /* (null) in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
 				457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */,
 				45CB9FFF261FB0BE0036BEB3 /* LessonListItemView.xib in Resources */,
@@ -7317,7 +7337,7 @@
 				455583CF269F2DA500C3FF14 /* MobileContentFormView.swift in Sources */,
 				D45922BF2864EBD400904B87 /* AllFavoriteToolsHostingView.swift in Sources */,
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
-				459C56D225FF954F00F15967 /* BuildFile in Sources */,
+				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45AD1B6225938A4F00A096A0 /* GlobalActivityCell.swift in Sources */,
 				45A93C71286DE4BA00090E01 /* ToolDetailsTitleHeaderView.swift in Sources */,
 				450E441627565D1C00D4311E /* GetTutorialUseCase.swift in Sources */,
@@ -7334,7 +7354,7 @@
 				45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */,
 				45AE975D27C97A9500C2CB33 /* Tip+MobileContentRenderableModel.swift in Sources */,
 				45C93AE0261D310900592FFF /* ArticleAemCacheArchivedObject.swift in Sources */,
-				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
+				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
 				455582E8269F2C1000C3FF14 /* TrainingPageViewModelType.swift in Sources */,
 				4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
@@ -7366,7 +7386,7 @@
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
-				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
+				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				45FB160F27DBDDB60009DF8E /* LanguageSettingsFlow.swift in Sources */,
 				45AD1F9925938A9800A096A0 /* RealmResource.swift in Sources */,
@@ -7448,9 +7468,10 @@
 				456431CF284ACC0900846720 /* ToolTranslationsToDownload.swift in Sources */,
 				45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
+				45127A24287C994D00CC21C4 /* DeleteAccountView.swift in Sources */,
 				4505C694282B4A0B0047951D /* ToolsMenuToolbarItemViewModel.swift in Sources */,
 				45AD1FD325938A9800A096A0 /* HTMLDocument+ResourceUrls.swift in Sources */,
-				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
+				45B6482025E58EE70098BAF1 /* (null) in Sources */,
 				4505C68B282B4A0B0047951D /* ToolsMenuPageType.swift in Sources */,
 				45C93AF7261D310900592FFF /* CategoryArticleUUID.swift in Sources */,
 				D420DA2B28295E5E0035ABCB /* ToolCardsView.swift in Sources */,
@@ -7459,6 +7480,7 @@
 				45AD1B2525938A4F00A096A0 /* AboutViewModelType.swift in Sources */,
 				4581C582285A5BDD0078425B /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */,
 				D44F3AB6283BC5030008390D /* ToolCategoryButtonState.swift in Sources */,
+				452F4784287CE28000871A3B /* SetupParallelLanguageView.swift in Sources */,
 				4505C695282B4A0B0047951D /* ToolsMenuToolbarView.swift in Sources */,
 				D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */,
 				4581C59C285A5C7A0078425B /* ToolTrainingViewModelType.swift in Sources */,
@@ -7492,7 +7514,6 @@
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
-				D42FEBE42876241C0002FAD9 /* UserDefaults+Values.swift in Sources */,
 				45AD1F8B25938A9800A096A0 /* AttachmentModelType.swift in Sources */,
 				455583F6269F2DA500C3FF14 /* MobileContentImageViewModelType.swift in Sources */,
 				45A93C75286DE4BA00090E01 /* ToolDetailsVersionsCardView.swift in Sources */,
@@ -7541,7 +7562,7 @@
 				45AD1B0525938A4E00A096A0 /* ArticlesErrorMessage.swift in Sources */,
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
 				45AD1F9025938A9800A096A0 /* TranslationModel.swift in Sources */,
-				45B6480925E581660098BAF1 /* BuildFile in Sources */,
+				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45F38D352833EEAA009E3E15 /* RealmLanguagesCache.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
@@ -7713,7 +7734,7 @@
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
 				45AD1AF225938A4E00A096A0 /* HelpWebContent.swift in Sources */,
-				459C56D325FF954F00F15967 /* BuildFile in Sources */,
+				459C56D325FF954F00F15967 /* (null) in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
 				45D6D02F2708B8FF0063C38A /* LessonEvaluationRepository.swift in Sources */,
 				450E44462756B66300D4311E /* MenuViewModel.swift in Sources */,
@@ -7763,7 +7784,7 @@
 				455583DC269F2DA500C3FF14 /* MobileContentAccordionViewModelType.swift in Sources */,
 				45AD1AF925938A4E00A096A0 /* MailView.swift in Sources */,
 				45AD1B9625938A4F00A096A0 /* ToolNavBarView.swift in Sources */,
-				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
+				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				45C61DD9280905F40058946F /* DeepLinkingManifest.swift in Sources */,
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,
@@ -7802,7 +7823,7 @@
 				4566A3BA27A5C3BE003EAA39 /* MobileContentCardCollectionPageItemViewModel.swift in Sources */,
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
 				4581C59A285A5C7A0078425B /* ToolTrainingViewModel.swift in Sources */,
-				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
+				45B6480C25E581660098BAF1 /* (null) in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */,
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
@@ -7873,6 +7894,7 @@
 				45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */,
 				D42600CC282BFBC400E7A520 /* ResourceCardBannerImageView.swift in Sources */,
 				45AD1F9225938A9800A096A0 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
+				45127A26287C998800CC21C4 /* DeleteAccountViewModel.swift in Sources */,
 				45AE975327C97A9500C2CB33 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				45428A7B26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
@@ -7910,7 +7932,7 @@
 				45C93AFA261D310900592FFF /* RealmCategoryArticlesCache.swift in Sources */,
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
-				45B6482825E593110098BAF1 /* BuildFile in Sources */,
+				45B6482825E593110098BAF1 /* (null) in Sources */,
 				45C93AE2261D310900592FFF /* ArticleAemCacheObject.swift in Sources */,
 				45558327269F2C7B00C3FF14 /* ToolPageCardViewModelType.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentAnalyticsEvent.swift in Sources */,
@@ -7919,6 +7941,7 @@
 				45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */,
 				451A175D2757B1FF00D35D78 /* MenuDataSource.swift in Sources */,
 				45558402269F2DA500C3FF14 /* MobileContentBackgroundImageView.swift in Sources */,
+				45127A28287C9C4300CC21C4 /* DeleteAccountHostingView.swift in Sources */,
 				D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */,
 				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
 				4515E9BF284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift in Sources */,
@@ -7931,6 +7954,7 @@
 				45AD1AEB25938A4E00A096A0 /* WebContentViewModelType.swift in Sources */,
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				450EE36C283FC28D0025C8EC /* ShareToolViewModel.swift in Sources */,
+				45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */,
 				454E7397286219C000432E39 /* MetatoolData.swift in Sources */,
 				45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */,
 				45AD223C2593C90000A096A0 /* CrashReportingType.swift in Sources */,
@@ -7963,7 +7987,6 @@
 				4505C698282B4D940047951D /* AllToolsView.swift in Sources */,
 				45D6D02E2708B8FF0063C38A /* RealmLessonEvaluation.swift in Sources */,
 				45AD1B2F25938A4F00A096A0 /* ChooseLanguageViewModel.swift in Sources */,
-				D42FEBDC2876052D0002FAD9 /* UserDefaultKeys.swift in Sources */,
 				45CB9FF9261FB0BE0036BEB3 /* LessonsListViewType.swift in Sources */,
 				45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */,
 				4561C40F27C6891600C4A367 /* MobileContentAccordionSectionView.swift in Sources */,
@@ -8003,6 +8026,7 @@
 				45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
+				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
 				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
 				45AD1F8A25938A9800A096A0 /* TranslationModelType.swift in Sources */,
@@ -8010,8 +8034,6 @@
 				45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */,
 				D45922E7286A405A00904B87 /* BaseLessonCardViewModel.swift in Sources */,
 				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
-				4513C2E8270467F400614F79 /* SetupParallelLanguageView.swift in Sources */,
-				4513C2E8270467F400614F79 /* SetupParallelLanguageView.swift in Sources */,
 				4575083B279A40BD00943197 /* ChooseYourOwnAdventureViewModelType.swift in Sources */,
 				45CBA015261FB0E30036BEB3 /* LessonViewModel.swift in Sources */,
 				45750837279A409300943197 /* ChooseYourOwnAdventureView.swift in Sources */,
@@ -8083,6 +8105,7 @@
 				45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */,
 				456FBE0727A492F80033FBCB /* HorizontallyCenteredCollectionViewPanDirection.swift in Sources */,
 				45AE973E27C97A9400C2CB33 /* MultiplatformModals.swift in Sources */,
+				4577F8792878CC48004F9262 /* OptInOnboardingBannerEnabledRepositoryPublishers.swift in Sources */,
 				4578783527C41C50004552D5 /* BackgroundImageModel.swift in Sources */,
 				45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */,
 				45B9875D283BFE5300E1DA7F /* DownloadedTranslationResult.swift in Sources */,
@@ -9341,7 +9364,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios.git" */ = {
+		459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/okta-authentication-ios.git";
 			requirement = {
@@ -9349,7 +9372,7 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */ = {
+		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
 			requirement = {
@@ -9357,7 +9380,7 @@
 				minimumVersion = 6.4.0;
 			};
 		};
-		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */ = {
+		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleanalytics/google-tag-manager-ios-sdk.git";
 			requirement = {
@@ -9365,7 +9388,7 @@
 				minimumVersion = 7.4.0;
 			};
 		};
-		45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -9373,7 +9396,7 @@
 				minimumVersion = 8.9.0;
 			};
 		};
-		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */ = {
+		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
@@ -9381,7 +9404,7 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
+		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -9389,7 +9412,7 @@
 				minimumVersion = 3.2.0;
 			};
 		};
-		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */ = {
+		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
@@ -9402,52 +9425,52 @@
 /* Begin XCSwiftPackageProductDependency section */
 		459C93A327581B23006207D2 /* OktaAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios.git" */;
+			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */;
 			productName = OktaAuthentication;
 		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */;
+			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
 			productName = AppsFlyerLib;
 		};
 		45CDFB4C281730FA00AC4F2E /* GoogleTagManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */;
+			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
 			productName = GoogleTagManager;
 		};
 		45CDFB4F2817324B00AC4F2E /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
 		45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		45CDFB5528173FE400AC4F2E /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseInAppMessaging-Beta";
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */;
+			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */;
 			productName = RequestOperation;
 		};
 		45E39EDB27457E0C006A59E4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 		45EDBCEF27359CD70099495B /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
 		};
 		45EDBCF127359CD70099495B /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

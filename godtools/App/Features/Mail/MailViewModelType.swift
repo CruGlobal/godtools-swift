@@ -15,7 +15,6 @@ protocol MailViewModelType {
     var subject: String { get }
     var message: String { get }
     var isHtml: Bool { get }
-    var canSendViaMailApp: Bool { get }
     
     func finishedSendingMail(result: MFMailComposeResult, error: Error?)
 }

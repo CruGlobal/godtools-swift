@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetOptInOnboardingBannerEnabledUseCase {
     
@@ -19,9 +20,16 @@ class GetOptInOnboardingBannerEnabledUseCase {
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
         
-    func getBannerIsEnabled() -> Bool {
-        
-        return getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable() &&
-                optInOnboardingBannerEnabledRepository.getBannerIsEnabled()
+    func getBannerIsEnabled() -> AnyPublisher<Bool, Never> {
+                
+        return Publishers
+            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable(), optInOnboardingBannerEnabledRepository.getEnabled())
+            .map { (tutorialAvailable: Bool, bannerEnabled: Bool?) in
+                
+                let bannerIsEnabledByDefault: Bool = true
+                
+                return tutorialAvailable && (bannerEnabled ?? bannerIsEnabledByDefault)
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetOptInOnboardingTutorialAvailableUseCase {
     
@@ -20,5 +21,11 @@ class GetOptInOnboardingTutorialAvailableUseCase {
     func getOptInOnboardingTutorialIsAvailable() -> Bool {
         
         return deviceLanguage.isEnglish
+    }
+    
+    func getOptInOnboardingTutorialIsAvailable() -> AnyPublisher<Bool, Never> {
+        
+        return Just(getOptInOnboardingTutorialIsAvailable())
+            .eraseToAnyPublisher()
     }
 }

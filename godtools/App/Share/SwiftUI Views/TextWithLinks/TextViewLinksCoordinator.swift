@@ -11,9 +11,9 @@ import UIKit
 class TextViewLinksCoordinator: NSObject, UITextViewDelegate {
     
     private let textWithLinks: TextWithLinks
-    private let didInteractWithUrlClosure: ((_ url: URL) -> Void)
+    private let didInteractWithUrlClosure: ((_ url: URL) -> Bool)
     
-    init(textWithLinks: TextWithLinks, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Void)) {
+    init(textWithLinks: TextWithLinks, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
         
         self.textWithLinks = textWithLinks
         self.didInteractWithUrlClosure = didInteractWithUrlClosure
@@ -23,8 +23,6 @@ class TextViewLinksCoordinator: NSObject, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
                 
-        didInteractWithUrlClosure(URL)
-        
-        return true
+        return didInteractWithUrlClosure(URL)
     }
 }

@@ -27,6 +27,7 @@
 "allTools.spotlight.title" = "Uitgelicht";
 "allTools.spotlight.description" = "Hier zijn wat tools die vast zullen bevallen";
 "allTools.categories.title" = "Categorieën";
+"tool_menu_item.lessons" = "Lessen";
 "parallelLanguage.yesButton.title" = "Ja";
 "parallelLanguage.noButton.title" = "Nee, bedankt";
 "parallelLanguage.getStartedButton.title" = "Aan de slag";
