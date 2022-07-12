@@ -7,8 +7,7 @@ GodTools
 
 ### Requirements
 
-- Xcode 13.3.1+
-- Minimum iOS 13
+- Xcode 13.4.1
 - Bundler
 - Cocoapods
 - Fastlane
@@ -72,13 +71,20 @@ App/Share/SwiftUI Views
 
 ###### Views
 
+Responsibilities:
+- Rendering logic.
+- Animation logic.
+- Observe ViewModel output.  In SwiftUI this is a combination of @ObservedObject and @Published properties.
+- Send user inputs to the ViewModel (button tap, entering text input, etc.).
+
+File Naming and Organization:
 - All newly created views should be created in SwiftUI.
 - Views should have only 1 ViewModel.
-- Subviews that are static and help make up a View can point to the same ViewModel.
-- Subviews that are dynamic and help make up a View, such as views in collections (lists, stacks, etc.) should have an associated ViewModel and only 1 ViewModel.
+- Subviews that are static and help make up a screen (View) can point to the parent screen (View) ViewModel or they can have their own ViewModel.
+- Subviews that are dynamic such as views in collections (lists, stacks, etc.) should have there own ViewModel and only 1 ViewModel.
 
 ###### ViewModels
-
+- TODO
 
 ##### Domain Layer
 - TODO
