@@ -48,7 +48,7 @@ struct FavoritesContentView: View {
                             .padding(.top, 12)
                             .padding(.bottom, 15)
                         
-                        LessonCardsView(viewModel: viewModel.lessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                        LessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             .padding(.bottom, 10)
                         

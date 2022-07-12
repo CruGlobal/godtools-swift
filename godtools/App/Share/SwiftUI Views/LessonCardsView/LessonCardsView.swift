@@ -44,7 +44,7 @@ struct LessonCardsView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = LessonCardsViewModel(
+        let viewModel = FeaturedLessonCardsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,

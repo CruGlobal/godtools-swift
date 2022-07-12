@@ -1,5 +1,5 @@
 //
-//  LessonCardsViewModel.swift
+//  FeaturedLessonCardsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/28/22.
@@ -12,7 +12,7 @@ protocol LessonCardsViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
 }
 
-class LessonCardsViewModel: LessonCardProvider {
+class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
@@ -56,7 +56,7 @@ class LessonCardsViewModel: LessonCardProvider {
 
 // MARK: - Private
 
-extension LessonCardsViewModel {
+extension FeaturedLessonCardsViewModel {
     
     private func setup() {
         setupTitle()

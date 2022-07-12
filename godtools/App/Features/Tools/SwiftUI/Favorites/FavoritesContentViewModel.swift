@@ -30,8 +30,8 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private var disableOptInOnboardingBannerSubscription: AnyCancellable?
         
-    private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
-        return LessonCardsViewModel(
+    private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
+        return FeaturedLessonCardsViewModel(
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
