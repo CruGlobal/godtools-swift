@@ -39,7 +39,7 @@ class ArticleDeepLinkFlow: Flow {
                 localizationServices: appDiContainer.localizationServices
             )
             
-            let view = LoadingView(viewModel: viewModel)
+            let view = LoadingArticleView(viewModel: viewModel)
             
             sharedNavigationController.present(view, animated: true, completion: nil)
         }
