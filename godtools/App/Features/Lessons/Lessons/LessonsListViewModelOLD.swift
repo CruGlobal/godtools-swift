@@ -8,7 +8,9 @@
 
 import Foundation
 
-class LessonsListViewModel: NSObject {
+// TODO: - delete this eventually since it's the old viewmodel
+
+class LessonsListViewModelOLD: NSObject {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService

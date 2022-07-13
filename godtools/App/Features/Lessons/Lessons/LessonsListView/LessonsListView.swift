@@ -1,5 +1,5 @@
 //
-//  FeaturedLessonCardsView.swift
+//  LessonsListView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/13/22.
@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-struct FeaturedLessonCardsView: View {
+struct LessonsListView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: FeaturedLessonCardsViewModel
+    @ObservedObject var viewModel: LessonsListViewModel
     let width: CGFloat
     let leadingPadding: CGFloat
     
@@ -26,24 +26,25 @@ struct FeaturedLessonCardsView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, leadingPadding)
+                .padding(.bottom, 7)
             
             LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingPadding)
         }
     }
 }
 
-struct FeaturedLessonCardsView_Previews: PreviewProvider {
+struct LessonsListView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = FeaturedLessonCardsViewModel(
+        let viewModel = LessonsListViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             delegate: nil
         )
         
-        FeaturedLessonCardsView(viewModel: viewModel, width: 350, leadingPadding: 20)
+        LessonsListView(viewModel: viewModel, width: 350, leadingPadding: 20)
     }
 }

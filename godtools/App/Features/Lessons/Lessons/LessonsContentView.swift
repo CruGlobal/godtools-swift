@@ -12,7 +12,7 @@ struct LessonsContentView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: LessonsListContentViewModel
+    @ObservedObject var viewModel: LessonsContentViewModel
     
     // MARK: - Constants
     
@@ -30,7 +30,7 @@ struct LessonsContentView: View {
             
             BackwardCompatibleList(rootViewType: Self.self) {
                 
-                LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+                LessonsListView(viewModel: viewModel.lessonsListViewModel, width: width, leadingPadding: leadingTrailingPadding)
                     .listRowInsets(EdgeInsets())
                 
             } refreshHandler: {
@@ -46,11 +46,10 @@ struct LessonsContentView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = LessonsListContentViewModel(
+        let viewModel = LessonsContentViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            delegate: nil
+            localizationServices: appDiContainer.localizationServices
         )
         
         LessonsContentView(viewModel: viewModel)
