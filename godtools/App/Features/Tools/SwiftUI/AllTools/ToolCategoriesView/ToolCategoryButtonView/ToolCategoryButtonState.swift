@@ -9,15 +9,10 @@
 import Foundation
 
 enum ToolCategoryButtonState {
-    case notSelected
     case selected
     case greyedOut
     
-    init(category: String, selectedCategory: String?) {
-        guard let selectedCategory = selectedCategory else {
-            self = .notSelected
-            return
-        }
+    init(category: String?, selectedCategory: String?) {
 
         if selectedCategory == category {
             self = .selected

@@ -30,12 +30,10 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
         
         super.init(categoryText: translatedCategory, buttonState: buttonState)                
     }
-}
 
-// MARK: - Public
-
-extension ToolCategoryButtonViewModel {
-    func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
+    // MARK: - Overrides
+    
+    override func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
         let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
         
         setButtonState(buttonState)
