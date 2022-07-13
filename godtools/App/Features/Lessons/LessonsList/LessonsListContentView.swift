@@ -1,5 +1,5 @@
 //
-//  LessonsListContentView.swift
+//  LessonsContentView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/12/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct LessonsListContentView: View {
+struct LessonsContentView: View {
     
     // MARK: - Properties
     
@@ -41,7 +41,7 @@ struct LessonsListContentView: View {
     }
 }
 
-struct LessonsListContentView_Previews: PreviewProvider {
+struct LessonsContentView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -53,6 +53,6 @@ struct LessonsListContentView_Previews: PreviewProvider {
             delegate: nil
         )
         
-        LessonsListContentView(viewModel: viewModel)
+        LessonsContentView(viewModel: viewModel)
     }
 }

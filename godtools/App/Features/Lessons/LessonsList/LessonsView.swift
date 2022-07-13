@@ -1,5 +1,5 @@
 //
-//  LessonsListView.swift
+//  LessonsView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/5/21.
@@ -9,11 +9,11 @@
 import UIKit
 import SwiftUI
 
-class LessonsListView: UIHostingController<LessonsListContentView>, ToolsMenuPageView {
+class LessonsView: UIHostingController<LessonsContentView>, ToolsMenuPageView {
     
-    private let contentView: LessonsListContentView
+    private let contentView: LessonsContentView
     
-    required init(contentView: LessonsListContentView) {
+    required init(contentView: LessonsContentView) {
         
         self.contentView = contentView
         
