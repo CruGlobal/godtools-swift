@@ -42,6 +42,14 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     }
 }
 
+// MARK: - Public
+
+extension LessonsContentViewModel {
+    func refreshData() {
+        dataDownloader.downloadInitialData()
+    }
+}
+
 // MARK: - LessonCardsViewModelDelegate
 
 extension LessonsContentViewModel: LessonCardsViewModelDelegate {

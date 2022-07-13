@@ -40,7 +40,7 @@ struct LessonsContentView: View {
                         .listRowInsets(EdgeInsets())
                     
                 } refreshHandler: {
-                    // TODO
+                    viewModel.refreshData()
                 }
             }
         }
