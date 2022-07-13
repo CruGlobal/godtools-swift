@@ -14,12 +14,6 @@ struct LessonsContentView: View {
     
     @ObservedObject var viewModel: LessonsContentViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let paddingMultiplier: CGFloat = 15/375
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -32,7 +26,7 @@ struct LessonsContentView: View {
             
             GeometryReader { geo in
                 let width = geo.size.width
-                let leadingTrailingPadding = width * Sizes.paddingMultiplier
+                let leadingTrailingPadding = StandardLeadingTrailingMargin.getMargin(for: width)
                 
                 BackwardCompatibleList(rootViewType: Self.self) {
                     
