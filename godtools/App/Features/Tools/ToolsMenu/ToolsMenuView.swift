@@ -153,7 +153,8 @@ class ToolsMenuView: UIViewController {
             return favoritedToolsView
         
         case .lessons:
-            return LessonsListView(viewModel: viewModel.lessonsWillAppear())
+            return LessonsListView(contentView: LessonsListContentView(viewModel: viewModel.lessonsWillAppear()))
+            
         }
     }
     

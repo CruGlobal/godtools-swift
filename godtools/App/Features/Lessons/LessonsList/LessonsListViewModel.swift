@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonsListViewModel: NSObject, LessonsListViewModelType {
+class LessonsListViewModel: NSObject {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService

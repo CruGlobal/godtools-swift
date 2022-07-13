@@ -47,12 +47,12 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return flowDelegate
     }
     
-    func lessonsWillAppear() -> LessonsListViewModelType {
-        return LessonsListViewModel(
-            flowDelegate: getFlowDelegate(),
+    func lessonsWillAppear() -> LessonsListContentViewModel {
+        return LessonsListContentViewModel(
             dataDownloader: initialDataDownloader,
             languageSettingsService: languageSettingsService,
-            analytics: analytics
+            localizationServices: localizationServices,
+            delegate: nil
         )
     }
     

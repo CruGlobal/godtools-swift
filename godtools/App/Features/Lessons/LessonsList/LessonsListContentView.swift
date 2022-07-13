@@ -31,6 +31,7 @@ struct LessonsListContentView: View {
             BackwardCompatibleList(rootViewType: Self.self) {
                 
                 LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
+                    .listRowInsets(EdgeInsets())
                 
             } refreshHandler: {
                 // TODO

@@ -7,118 +7,29 @@
 //
 
 import UIKit
+import SwiftUI
 
-class LessonsListView: UIViewController, ToolsMenuPageView {
+class LessonsListView: UIHostingController<LessonsListContentView>, ToolsMenuPageView {
     
-    private let viewModel: LessonsListViewModelType
-    private let refreshControl: UIRefreshControl = UIRefreshControl()
-          
-    @IBOutlet weak private var lessonsTableView: UITableView!
-    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
+    private let contentView: LessonsListContentView
     
-    required init(viewModel: LessonsListViewModelType) {
-        self.viewModel = viewModel
-        super.init(nibName: String(describing: LessonsListView.self), bundle: nil)
+    required init(contentView: LessonsListContentView) {
+        
+        self.contentView = contentView
+        
+        super.init(rootView: contentView)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("view didload: \(type(of: self))")
-        
-        setupLayout()
-        setupBinding()
-        
-        lessonsTableView.delegate = self
-        lessonsTableView.dataSource = self
-        
-        lessonsTableView.addSubview(refreshControl)
-        refreshControl.addTarget(
-            self,
-            action: #selector(handleRefreshLessons),
-            for: .valueChanged
-        )
-    }
-    
-    private func setupLayout() {
-        
-        // lessonsTableView
-        lessonsTableView.register(
-            UINib(nibName: LessonListItemView.nibName, bundle: nil),
-            forCellReuseIdentifier: LessonListItemView.reuseIdentifier
-        )
-        lessonsTableView.rowHeight = UITableView.automaticDimension
-        lessonsTableView.separatorStyle = .none
-    }
-    
-    private func setupBinding() {
-        
-        viewModel.numberOfLessons.addObserver(self) { [weak self] (numberOfLessons: Int) in
-            self?.lessonsTableView.reloadData()
-        }
-        
-        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
-            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
-        }
-        
-        viewModel.didEndRefreshing.addObserver(self) { [ weak self] in
-            self?.refreshControl.endRefreshing()
-        }
-    }
-    
-    @objc func handleRefreshLessons() {
-        viewModel.refreshLessons()
     }
     
     func pageViewed() {
         
-        viewModel.pageViewed()
+        // TODO
     }
     
     func scrollToTop(animated: Bool) {
-        
-        guard lessonsTableView != nil else {
-            return
-        }
-        
-        lessonsTableView.setContentOffset(.zero, animated: animated)
-    }
-}
-
-// MARK: - UITableViewDelegate, UITableViewDataSource
-
-extension LessonsListView: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfLessons.value
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        viewModel.lessonTapped(index: indexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell: LessonListItemView = lessonsTableView.dequeueReusableCell(
-            withIdentifier: LessonListItemView.reuseIdentifier,
-            for: indexPath) as! LessonListItemView
-        
-        let cellViewModel: LessonListItemViewModelType = viewModel.lessonWillAppear(index: indexPath.row)
-        
-        cell.configure(viewModel: cellViewModel)
-        
-        return cell
+        // TODO: Implementing this method because this View implements ToolsMenuPageView protocol.  This method will need to go away when GT-1545 is implemented. (https://jira.cru.org/browse/GT-1545)  ~Levi
     }
 }
