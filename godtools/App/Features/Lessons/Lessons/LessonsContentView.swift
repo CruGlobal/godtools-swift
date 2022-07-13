@@ -24,20 +24,26 @@ struct LessonsContentView: View {
     
     var body: some View {
         
-        GeometryReader { geo in
-            let width = geo.size.width
-            let leadingTrailingPadding = width * Sizes.paddingMultiplier
+        if viewModel.isLoading {
             
-            BackwardCompatibleList(rootViewType: Self.self) {
+            ActivityIndicator(style: .medium, isAnimating: .constant(true))
+            
+        } else {
+            
+            GeometryReader { geo in
+                let width = geo.size.width
+                let leadingTrailingPadding = width * Sizes.paddingMultiplier
                 
-                LessonsListView(viewModel: viewModel.lessonsListViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                    .listRowInsets(EdgeInsets())
-                
-            } refreshHandler: {
-                // TODO
+                BackwardCompatibleList(rootViewType: Self.self) {
+                    
+                    LessonsListView(viewModel: viewModel.lessonsListViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                        .listRowInsets(EdgeInsets())
+                    
+                } refreshHandler: {
+                    // TODO
+                }
             }
         }
-        
     }
 }
 
@@ -50,7 +56,8 @@ struct LessonsContentView_Previews: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.localizationServices,
+            analytics: appDiContainer.analytics
         )
         
         LessonsContentView(viewModel: viewModel)

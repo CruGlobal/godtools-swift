@@ -52,7 +52,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            analytics: analytics
         )
     }
     

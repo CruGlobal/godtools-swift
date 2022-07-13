@@ -25,8 +25,7 @@ class LessonsView: UIHostingController<LessonsContentView>, ToolsMenuPageView {
     }
     
     func pageViewed() {
-        
-        // TODO
+        contentView.viewModel.pageViewed()
     }
     
     func scrollToTop(animated: Bool) {

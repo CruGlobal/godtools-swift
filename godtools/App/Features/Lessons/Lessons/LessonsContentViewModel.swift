@@ -16,6 +16,7 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let analytics: AnalyticsContainer
     
     private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
         return LessonsListViewModel(
@@ -26,25 +27,55 @@ class LessonsContentViewModel: NSObject, ObservableObject {
         )
     }()
     
+    // MARK: - Published
+    
+    @Published var isLoading: Bool = false
+    
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.analytics = analytics
     }
-    
 }
 
 // MARK: - LessonCardsViewModelDelegate
 
 extension LessonsContentViewModel: LessonCardsViewModelDelegate {
     func lessonsAreLoading(_ isLoading: Bool) {
-        // TODO
+        self.isLoading = isLoading
     }
     
     func lessonCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(resource: resource))
+    }
+}
+
+// MARK: - Analytics
+
+extension LessonsContentViewModel {
+    
+    var analyticsScreenName: String {
+        return "Lessons"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+    
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
+        
+        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     }
 }
