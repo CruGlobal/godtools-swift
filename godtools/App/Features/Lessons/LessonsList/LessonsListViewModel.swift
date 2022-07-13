@@ -121,17 +121,6 @@ class LessonsListViewModel: NSObject {
         numberOfLessons.accept(value: lessons.count)
     }
     
-    func lessonWillAppear(index: Int) -> LessonListItemViewModelType {
-        
-        let resource: ResourceModel = lessons[index]
-        
-        return LessonListItemViewModel(
-            resource: resource,
-            dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService
-        )
-    }
-    
     func lessonTapped(index: Int) {
         
         let resource: ResourceModel = lessons[index]
