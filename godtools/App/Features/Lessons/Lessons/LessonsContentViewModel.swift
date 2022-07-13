@@ -12,6 +12,7 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
+    private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
@@ -27,11 +28,11 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices) {
+        self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        
     }
     
 }
@@ -44,6 +45,6 @@ extension LessonsContentViewModel: LessonCardsViewModelDelegate {
     }
     
     func lessonCardTapped(resource: ResourceModel) {
-        // TODO
+        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(resource: resource))
     }
 }

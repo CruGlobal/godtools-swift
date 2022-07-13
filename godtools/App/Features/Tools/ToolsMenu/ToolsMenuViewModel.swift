@@ -49,6 +49,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     func lessonsWillAppear() -> LessonsContentViewModel {
         return LessonsContentViewModel(
+            flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices

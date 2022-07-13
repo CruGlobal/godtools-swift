@@ -47,6 +47,7 @@ struct LessonsContentView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = LessonsContentViewModel(
+            flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices
