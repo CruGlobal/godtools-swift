@@ -1,18 +1,18 @@
 //
-//  LessonCardsView.swift
+//  FeaturedLessonCardsView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 6/28/22.
+//  Created by Rachael Skeath on 7/13/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct LessonCardsView: View {
+struct FeaturedLessonCardsView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: LessonCardProvider
+    @ObservedObject var viewModel: FeaturedLessonCardsViewModel
     let width: CGFloat
     let leadingPadding: CGFloat
     
@@ -20,19 +20,19 @@ struct LessonCardsView: View {
     
     var body: some View {
         
-        ForEach(viewModel.lessons) { lesson in
+        VStack(alignment: .leading, spacing: 7) {
             
-            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
-                .listRowInsets(EdgeInsets())
-                .contentShape(Rectangle())
-                .padding([.top, .bottom], 8)
-                .padding([.leading, .trailing], leadingPadding)
+            Text(viewModel.sectionTitle)
+                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .padding(.leading, leadingPadding)
             
+            LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingPadding)
         }
     }
 }
 
-struct LessonCardsView_Previews: PreviewProvider {
+struct FeaturedLessonCardsView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -44,6 +44,6 @@ struct LessonCardsView_Previews: PreviewProvider {
             delegate: nil
         )
         
-        LessonCardsView(viewModel: viewModel, width: 375, leadingPadding: 0)
+        FeaturedLessonCardsView(viewModel: viewModel, width: 350, leadingPadding: 20)
     }
 }

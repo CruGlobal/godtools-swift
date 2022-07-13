@@ -21,6 +21,10 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     private let localizationServices: LocalizationServices
     private weak var delegate: LessonCardsViewModelDelegate?
     
+    // MARK: - Published
+    
+    @Published var sectionTitle: String = ""
+    
     // MARK: - Init
     
     init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
