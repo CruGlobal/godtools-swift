@@ -158,6 +158,10 @@ extension ToolNavigationFlow {
                 toolTranslations: toolTranslations
             )
             
+        case .metaTool:
+            // NOTE: Navigation is not needed here because MetaTools are not visible in the app (All Tools).
+            break
+            
         case .unknown:
             navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
         }
