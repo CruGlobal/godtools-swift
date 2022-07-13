@@ -20,6 +20,7 @@ class LessonsListViewModel: LessonCardProvider {
     // MARK: - Published
     
     @Published var sectionTitle: String = ""
+    @Published var subtitle: String = ""
     
     // MARK: - Init
     
@@ -65,7 +66,8 @@ extension LessonsListViewModel {
     
     private func setupTitle() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
     }
     
     private func setupBinding() {

@@ -21,12 +21,19 @@ struct LessonsListView: View {
     var body: some View {
         
         Group {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(viewModel.sectionTitle)
+                    .font(FontLibrary.sfProTextRegular.font(size: 22))
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                
+                Text(viewModel.subtitle)
+                    .font(FontLibrary.sfProTextRegular.font(size: 12))
+                    .foregroundColor(ColorPalette.gtGrey.color)
+            }
+            .padding(.top, 24)
+            .padding(.bottom, 7)
+            .padding([.leading, .trailing], leadingPadding)
             
-            Text(viewModel.sectionTitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.leading, leadingPadding)
-                .padding(.bottom, 7)
             
             LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingPadding)
         }
