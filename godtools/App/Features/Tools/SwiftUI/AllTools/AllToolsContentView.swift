@@ -44,13 +44,6 @@ struct AllToolsContentView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.pageViewed()
-        }
-    }
-    
-    func pageViewed() {
-        viewModel.pageViewed()
     }
 }
 
