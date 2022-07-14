@@ -34,15 +34,23 @@ struct LessonCardView: View {
                 
                 ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
-                Text(viewModel.title)
-                    .font(FontLibrary.sfProTextBold.font(size: 17))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .lineSpacing(2)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 12)
-                    .padding(.bottom, 20)
-                    .padding([.leading, .trailing], Sizes.leadingPadding)
-                    .frame(width: cardWidth, alignment: .topLeading)
+                VStack(alignment: .leading, spacing: 4) {
+                    
+                    Text(viewModel.title)
+                        .font(FontLibrary.sfProTextBold.font(size: 17))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .lineSpacing(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    HStack {
+                        Spacer()
+                        ResourceCardParallelLanguageView(languageName: viewModel.parallelLanguageText)
+                    }
+                }
+                .padding(.top, 12)
+                .padding(.bottom, 20)
+                .padding([.leading, .trailing], Sizes.leadingPadding)
+                .frame(width: cardWidth, alignment: .topLeading)
             }
             
         }

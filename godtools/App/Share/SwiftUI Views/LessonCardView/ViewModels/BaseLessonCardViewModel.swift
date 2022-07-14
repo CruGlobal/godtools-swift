@@ -13,6 +13,7 @@ class BaseLessonCardViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var title: String = ""
+    @Published var parallelLanguageText: String = ""
     @Published var bannerImage: Image?
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0

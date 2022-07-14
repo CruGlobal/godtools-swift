@@ -17,6 +17,7 @@ class MockLessonCardViewModel: BaseLessonCardViewModel {
         super.init()
         
         self.title = title
+        self.parallelLanguageText = "parallel language"
         
         if showBannerImage {
             bannerImage = Image.from(uiImage: deviceAttachmentBanners.getDeviceBanner(resourceId: "2"))
