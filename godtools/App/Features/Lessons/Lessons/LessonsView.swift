@@ -27,8 +27,4 @@ class LessonsView: UIHostingController<LessonsContentView>, ToolsMenuPageView {
     func pageViewed() {
         contentView.viewModel.pageViewed()
     }
-    
-    func scrollToTop(animated: Bool) {
-        // TODO: Implementing this method because this View implements ToolsMenuPageView protocol.  This method will need to go away when GT-1545 is implemented. (https://jira.cru.org/browse/GT-1545)  ~Levi
-    }
 }
