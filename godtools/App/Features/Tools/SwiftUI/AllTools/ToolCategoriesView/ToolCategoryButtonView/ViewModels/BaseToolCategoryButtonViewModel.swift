@@ -26,17 +26,19 @@ class BaseToolCategoryButtonViewModel: ObservableObject {
         
         setButtonState(buttonState)
     }
+    
+    // MARK: - For Override
+    
+    func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {}
 }
 
 // MARK: - Public
 
 extension BaseToolCategoryButtonViewModel {
+    
     func setButtonState(_ state: ToolCategoryButtonState) {
         
         switch state {
-        case .notSelected:
-            showBorder = false
-            greyOutText = false
             
         case .selected:
             showBorder = true
