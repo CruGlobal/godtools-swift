@@ -74,12 +74,11 @@ File Naming and Organization:
 ##### ViewModels
 - TODO
 
-##### Domain Layer
+#### Domain Layer
 - TODO
 
-##### Data Layer
+#### Data Layer
 - TODO
 
-##### Coordinator
+#### Coordinator
 - TODO
-
