@@ -31,7 +31,6 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType
-    let crashReporting: CrashReportingType
     let userAuthentication: UserAuthenticationType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
@@ -59,9 +58,7 @@ class AppDiContainer {
     required init(appDeepLinkingService: DeepLinkingServiceType) {
         
         config = AppConfig()
-        
-        crashReporting = FirebaseCrashlyticsService()
-        
+                
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
