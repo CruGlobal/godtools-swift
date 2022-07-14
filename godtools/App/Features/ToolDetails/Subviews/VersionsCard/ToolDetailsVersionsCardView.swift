@@ -13,6 +13,8 @@ struct ToolDetailsVersionsCardView: View {
     private let bannerHeight: CGFloat = 87
     
     @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
+    
+    let width: CGFloat
         
     var body: some View {
         
@@ -26,13 +28,13 @@ struct ToolDetailsVersionsCardView: View {
                     bannerImage
                         .resizable()
                         .scaledToFill()
-                        .frame(height: bannerHeight)
+                        .frame(width: width, height: bannerHeight)
                         .clipped()
                 }
                 else {
                     Rectangle()
                         .fill(ColorPalette.gtLightestGrey.color)
-                        .frame(height: bannerHeight)
+                        .frame(width: width, height: bannerHeight)
                 }
                 
                 HStack(alignment: .top, spacing: 0) {
@@ -88,7 +90,6 @@ struct ToolDetailsVersionsCardView: View {
         }
         .cornerRadius(6)
         .shadow(color: Color.black.opacity(0.3), radius: 4, x: 1, y: 1)
-        .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
     }
 }
 
@@ -118,6 +119,6 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
             isSelected: false
         )
         
-        ToolDetailsVersionsCardView(viewModel: viewModel)
+        ToolDetailsVersionsCardView(viewModel: viewModel, width: 320)
     }
 }
