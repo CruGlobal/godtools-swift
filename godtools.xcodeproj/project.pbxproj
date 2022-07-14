@@ -1038,7 +1038,7 @@
 		D41B38B3287F59F100BD5899 /* StandardLeadingTrailingMargin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B2287F59F100BD5899 /* StandardLeadingTrailingMargin.swift */; };
 		D420DA2B28295E5E0035ABCB /* ToolCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */; };
 		D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */; };
-		D42600C8282BFA1200E7A520 /* ToolCardParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */; };
+		D42600C8282BFA1200E7A520 /* ResourceCardParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ResourceCardParallelLanguageView.swift */; };
 		D42600CA282BFA7900E7A520 /* ResourceCardProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C9282BFA7900E7A520 /* ResourceCardProgressView.swift */; };
 		D42600CC282BFBC400E7A520 /* ResourceCardBannerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600CB282BFBC400E7A520 /* ResourceCardBannerImageView.swift */; };
 		D42600D1282C007500E7A520 /* ToolCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600D0282C007500E7A520 /* ToolCardTitleView.swift */; };
@@ -2212,7 +2212,7 @@
 		D41B38B2287F59F100BD5899 /* StandardLeadingTrailingMargin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLeadingTrailingMargin.swift; sourceTree = "<group>"; };
 		D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardsView.swift; sourceTree = "<group>"; };
 		D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSpotlightView.swift; sourceTree = "<group>"; };
-		D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardParallelLanguageView.swift; sourceTree = "<group>"; };
+		D42600C7282BFA1200E7A520 /* ResourceCardParallelLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCardParallelLanguageView.swift; sourceTree = "<group>"; };
 		D42600C9282BFA7900E7A520 /* ResourceCardProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCardProgressView.swift; sourceTree = "<group>"; };
 		D42600CB282BFBC400E7A520 /* ResourceCardBannerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCardBannerImageView.swift; sourceTree = "<group>"; };
 		D42600D0282C007500E7A520 /* ToolCardTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardTitleView.swift; sourceTree = "<group>"; };
@@ -6443,7 +6443,6 @@
 				D42600D2282C00FE00E7A520 /* ToolCardCategoryView.swift */,
 				D42600D6282C028E00E7A520 /* ToolCardFavoritedView.swift */,
 				D45922C92865368100904B87 /* ToolCardNavButtonView.swift */,
-				D42600C7282BFA1200E7A520 /* ToolCardParallelLanguageView.swift */,
 				D42600D0282C007500E7A520 /* ToolCardTitleView.swift */,
 				D45922C72865346500904B87 /* ToolCardVerticalTextView.swift */,
 			);
@@ -6706,6 +6705,7 @@
 			isa = PBXGroup;
 			children = (
 				D42600CB282BFBC400E7A520 /* ResourceCardBannerImageView.swift */,
+				D42600C7282BFA1200E7A520 /* ResourceCardParallelLanguageView.swift */,
 				D42600C9282BFA7900E7A520 /* ResourceCardProgressView.swift */,
 			);
 			path = "ResourceCard Subviews";
@@ -8178,7 +8178,7 @@
 				D44F3AE128625B130008390D /* FavoritesContentViewModel.swift in Sources */,
 				D42600D5282C01B500E7A520 /* RoundedCardBackgroundView.swift in Sources */,
 				45677759287DB02B0044AEB2 /* TermsOfUseWebContent.swift in Sources */,
-				D42600C8282BFA1200E7A520 /* ToolCardParallelLanguageView.swift in Sources */,
+				D42600C8282BFA1200E7A520 /* ResourceCardParallelLanguageView.swift in Sources */,
 				456431DF284ACC8700846720 /* ArticleCategory.swift in Sources */,
 				4567783F287DC3780044AEB2 /* ArticleCellViewModelType.swift in Sources */,
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,

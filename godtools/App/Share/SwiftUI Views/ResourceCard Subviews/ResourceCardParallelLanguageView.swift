@@ -1,5 +1,5 @@
 //
-//  ToolCardParallelLanguageView.swift
+//  ResourceCardParallelLanguageView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/11/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ToolCardParallelLanguageView: View {
+struct ResourceCardParallelLanguageView: View {
     let languageName: String
     
     var body: some View {
@@ -18,9 +18,9 @@ struct ToolCardParallelLanguageView: View {
     }
 }
 
-struct ToolCardParallelLanguageView_Previews: PreviewProvider {
+struct ResourceCardParallelLanguageView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolCardParallelLanguageView(languageName: "Arabic (Bahrain) ✓")
+        ResourceCardParallelLanguageView(languageName: "Arabic (Bahrain) ✓")
             .previewLayout(.sizeThatFits)
     }
 }

@@ -73,7 +73,7 @@ struct ToolCardView: View {
                         
                         if cardType.isStandardLayout {
                             
-                            ToolCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                            ResourceCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
                                 .padding(.top, 4)
                                 .padding(.trailing, 14)
                         }
