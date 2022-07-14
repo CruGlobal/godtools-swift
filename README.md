@@ -63,7 +63,7 @@ Responsibilities:
 - Rendering logic.
 - Animation logic.
 - Observe ViewModel output.  In SwiftUI this is a combination of @ObservedObject and @Published properties.
-- Send user inputs to the ViewModel (button tap, entering text input, etc.).
+- Send inputs to the ViewModel (button tap, entering text input, etc.).
 
 File Naming and Organization:
 - All newly created views should be created in SwiftUI.
