@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol LessonsListViewModelDelegate: LessonCardDelegate {
+    func lessonsAreLoading(_ isLoading: Bool)
+}
+
 class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Properties
@@ -15,7 +19,7 @@ class LessonsListViewModel: LessonCardProvider {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: LessonCardsViewModelDelegate?
+    private weak var delegate: LessonsListViewModelDelegate?
     
     // MARK: - Published
     
@@ -24,7 +28,7 @@ class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices

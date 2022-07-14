@@ -39,6 +39,8 @@ class LessonsContentViewModel: NSObject, ObservableObject {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.analytics = analytics
+        
+        super.init()
     }
 }
 
@@ -50,9 +52,9 @@ extension LessonsContentViewModel {
     }
 }
 
-// MARK: - LessonCardsViewModelDelegate
+// MARK: - LessonsListViewModelDelegate
 
-extension LessonsContentViewModel: LessonCardsViewModelDelegate {
+extension LessonsContentViewModel: LessonsListViewModelDelegate {
     func lessonsAreLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
     }
@@ -81,9 +83,7 @@ extension LessonsContentViewModel {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
-        
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
-        
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     }
 }

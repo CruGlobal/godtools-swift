@@ -143,9 +143,9 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     }
 }
 
-// MARK: - LessonCardsViewModelDelegate
+// MARK: - FeaturedLessonCardsViewModelDelegate
 
-extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
+extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
     func lessonsAreLoading(_ isLoading: Bool) {
         lessonsLoading = isLoading
     }

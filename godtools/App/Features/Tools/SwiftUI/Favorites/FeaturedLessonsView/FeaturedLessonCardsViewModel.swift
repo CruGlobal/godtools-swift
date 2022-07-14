@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LessonCardsViewModelDelegate: LessonCardDelegate {
+protocol FeaturedLessonCardsViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
 }
 
@@ -19,7 +19,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: LessonCardsViewModelDelegate?
+    private weak var delegate: FeaturedLessonCardsViewModelDelegate?
     
     // MARK: - Published
     
@@ -27,7 +27,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FeaturedLessonCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
