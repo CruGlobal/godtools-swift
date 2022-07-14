@@ -90,7 +90,11 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private func reloadMenuDataSource() {
         
         let isAuthorized: Bool = userAuthentication.isAuthenticated
-        let accountCreationIsSupported: Bool = supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
+        
+        // TODO: Disabling the account section in the menu by hardcoding to false.
+        // This is until we can provide a suitable option to delete an account due to Apple guideline. See GT-1700. ~Levi
+        let accountCreationIsSupported: Bool = false//supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
+       
         let tutorialIsAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()
         
         var sections: [MenuSection] = Array()

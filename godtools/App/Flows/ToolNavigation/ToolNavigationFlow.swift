@@ -159,7 +159,7 @@ extension ToolNavigationFlow {
             )
             
         case .metaTool:
-            // TODO: Complete in GT-1418. ~Levi
+            // NOTE: Navigation is not needed here because MetaTools are not visible in the app (All Tools).
             break
             
         case .unknown:

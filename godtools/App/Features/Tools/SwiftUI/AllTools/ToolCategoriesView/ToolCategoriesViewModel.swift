@@ -25,7 +25,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var categoryTitleText: String = ""
-    @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
+    @Published var buttonViewModels = [BaseToolCategoryButtonViewModel]()
     @Published var selectedCategory: String?
     
     // MARK: - Init
@@ -53,12 +53,29 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
 
 extension ToolCategoriesViewModel {
     
-    func categoryTapped(_ category: String) {
-        if category == selectedCategory {
+    func categoryTapped(with buttonViewModel: BaseToolCategoryButtonViewModel) {
+        
+        switch buttonViewModel {
+            
+        case is AllToolsCategoryButtonViewModel:
+            
             selectedCategory = nil
-        } else {
-            selectedCategory = category
+            
+        case let categoryButtonViewModel as ToolCategoryButtonViewModel:
+            
+            let category = categoryButtonViewModel.attrCategory
+            if category == selectedCategory {
+                selectedCategory = nil
+            } else {
+                selectedCategory = category
+            }
+            
+        default:
+            
+            assertionFailure("Unhandled category button view model type")
+            return
         }
+        
         
         buttonViewModels.forEach { $0.updateStateWithSelectedCategory(selectedCategory) }
         
@@ -110,11 +127,15 @@ extension ToolCategoriesViewModel {
                 uniqueCategories.append(category)
             }
         }
-        
-        buttonViewModels = uniqueCategories.map { category in
+            
+        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+
+        let categoryButtonVMs = uniqueCategories.map { category in
                 
             return ToolCategoryButtonViewModel(attrCategory: category, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
         }
+        
+        buttonViewModels = [allToolsButtonVM] + categoryButtonVMs
     }
     
     private func setTitleText() {

@@ -34,7 +34,7 @@ struct ToolCategoriesView: View {
                         
                         ToolCategoryButtonView(viewModel: buttonViewModel)
                             .onTapGesture {
-                                viewModel.categoryTapped(buttonViewModel.attrCategory)
+                                viewModel.categoryTapped(with: buttonViewModel)
                             }
                         
                     } else {

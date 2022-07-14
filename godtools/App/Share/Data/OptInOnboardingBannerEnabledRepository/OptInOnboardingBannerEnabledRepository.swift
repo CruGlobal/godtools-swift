@@ -7,16 +7,32 @@
 //
 
 import Foundation
+import Combine
 
 class OptInOnboardingBannerEnabledRepository {
+        
+    private static let sharedPublishers: OptInOnboardingBannerEnabledRepositoryPublishers = OptInOnboardingBannerEnabledRepositoryPublishers()
     
-    let userDefaultKey = UserDefaultKeys.optInOnboardingBannerDisabled
+    private let cache: OptInOnboardingBannerEnabledCache
+    private let publishers: OptInOnboardingBannerEnabledRepositoryPublishers
     
-    func getBannerIsEnabled() -> Bool {
-        return UserDefaults.standard.optInOnboardingBannerDisabled == false
+    init(cache: OptInOnboardingBannerEnabledCache) {
+        
+        self.cache = cache
+        self.publishers = OptInOnboardingBannerEnabledRepository.sharedPublishers
+        
+        publishers.enabled.value = cache.getEnabled()
     }
     
-    func disableBanner() {
-        UserDefaults.standard.optInOnboardingBannerDisabled = true
+    func getEnabled() -> AnyPublisher<Bool?, Never> {
+                
+        return publishers.enabled.eraseToAnyPublisher()
+    }
+    
+    func storeEnabled(enabled: Bool) {
+        
+        cache.storeEnabled(enabled: enabled)
+        
+        publishers.enabled.send(enabled)
     }
 }
