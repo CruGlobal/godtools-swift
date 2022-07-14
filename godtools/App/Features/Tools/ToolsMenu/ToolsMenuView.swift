@@ -117,27 +117,6 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    func reset(toolbarItem: ToolsMenuPageType, animated: Bool) {
-        
-        // TODO: Need to implement GT-1545 before Cru22 and before merging iOS 13 branch. ~Levi
-        // https://jira.cru.org/browse/GT-1545
-        
-        guard didLayoutSubviews else {
-            startingPage = toolbarItem
-            return
-        }
-        
-        guard self.view != nil else {
-            return
-        }
-        
-        pages[.lessons]?.scrollToTop(animated: false)
-        pages[.favoritedTools]?.scrollToTop(animated: false)
-        pages[.allTools]?.scrollToTop(animated: false)
-                
-        navigateToPage(pageType: toolbarItem, animated: animated)
-    }
-    
     private func getNewPageViewInstance(pageType: ToolsMenuPageType) -> ToolsMenuPageView {
         
         switch pageType {
