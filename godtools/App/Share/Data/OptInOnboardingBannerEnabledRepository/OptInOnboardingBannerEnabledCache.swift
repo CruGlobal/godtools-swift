@@ -11,22 +11,34 @@ import Combine
 
 class OptInOnboardingBannerEnabledCache {
     
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
-    private let enabledCacheKey: String = "keyOpenTutorialCalloutDisabled"
-    
-    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    func getEnabled() -> AnyPublisher<Bool, Never> {
         
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
-    }
-    
-    func getEnabled() -> Bool? {
-        
-        return sharedUserDefaultsCache.getValue(key: enabledCacheKey) as? Bool
+        return UserDefaults.standard.publisher(for: \.enabled)
+            .eraseToAnyPublisher()
     }
     
     func storeEnabled(enabled: Bool) {
         
-        sharedUserDefaultsCache.cache(value: enabled, forKey: enabledCacheKey)
-        sharedUserDefaultsCache.commitChanges()
+        UserDefaults.standard.enabled = enabled
+    }
+}
+
+private extension UserDefaults {
+    
+    private static let enabledCacheKey: String = "keyOpenTutorialCalloutDisabled"
+    
+    @objc dynamic var enabled: Bool {
+        get {
+            
+            if UserDefaults.standard.object(forKey: UserDefaults.enabledCacheKey) as? Bool == nil {
+                return true
+            }
+            
+            return UserDefaults.standard.bool(forKey: UserDefaults.enabledCacheKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaults.enabledCacheKey)
+            UserDefaults.standard.synchronize()
+        }
     }
 }

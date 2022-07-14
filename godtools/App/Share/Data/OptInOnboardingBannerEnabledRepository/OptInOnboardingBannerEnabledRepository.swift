@@ -11,28 +11,20 @@ import Combine
 
 class OptInOnboardingBannerEnabledRepository {
         
-    private static let sharedPublishers: OptInOnboardingBannerEnabledRepositoryPublishers = OptInOnboardingBannerEnabledRepositoryPublishers()
-    
     private let cache: OptInOnboardingBannerEnabledCache
-    private let publishers: OptInOnboardingBannerEnabledRepositoryPublishers
     
     init(cache: OptInOnboardingBannerEnabledCache) {
         
         self.cache = cache
-        self.publishers = OptInOnboardingBannerEnabledRepository.sharedPublishers
-        
-        publishers.enabled.value = cache.getEnabled()
     }
     
-    func getEnabled() -> AnyPublisher<Bool?, Never> {
-                
-        return publishers.enabled.eraseToAnyPublisher()
+    func getEnabled() -> AnyPublisher<Bool, Never> {
+
+        return cache.getEnabled()
     }
     
     func storeEnabled(enabled: Bool) {
         
         cache.storeEnabled(enabled: enabled)
-        
-        publishers.enabled.send(enabled)
     }
 }
