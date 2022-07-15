@@ -18,7 +18,7 @@ struct AllToolsList: View {
     // MARK: - Body
     
     var body: some View {
-        let leadingTrailingPadding = StandardLeadingTrailingMargin.getMargin(for: width)
+        let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
         
         Group {
             

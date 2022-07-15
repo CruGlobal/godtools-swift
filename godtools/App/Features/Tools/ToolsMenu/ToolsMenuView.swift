@@ -302,3 +302,14 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
         navigateToPage(pageType: .allTools, animated: true)
     }
 }
+
+// MARK: - Static
+
+extension ToolsMenuView {
+    
+    private static let marginMultiplier: CGFloat = 15/375
+    
+    static func getMargin(for width: CGFloat) -> CGFloat {
+        return width * marginMultiplier
+    }
+}
