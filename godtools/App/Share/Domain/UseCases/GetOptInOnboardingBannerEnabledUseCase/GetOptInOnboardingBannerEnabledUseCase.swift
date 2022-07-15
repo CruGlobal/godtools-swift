@@ -24,11 +24,9 @@ class GetOptInOnboardingBannerEnabledUseCase {
                 
         return Publishers
             .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable(), optInOnboardingBannerEnabledRepository.getEnabled())
-            .map { (tutorialAvailable: Bool, bannerEnabled: Bool?) in
-                
-                let bannerIsEnabledByDefault: Bool = true
-                
-                return tutorialAvailable && (bannerEnabled ?? bannerIsEnabledByDefault)
+            .map { (tutorialAvailable: Bool, bannerEnabled: Bool) in
+                                
+                return tutorialAvailable && bannerEnabled
             }
             .eraseToAnyPublisher()
     }
