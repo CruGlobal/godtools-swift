@@ -30,15 +30,15 @@ private extension UserDefaults {
     @objc dynamic var enabled: Bool {
         get {
             
-            if UserDefaults.standard.object(forKey: UserDefaults.enabledCacheKey) as? Bool == nil {
+            if object(forKey: UserDefaults.enabledCacheKey) as? Bool == nil {
                 return true
             }
             
-            return UserDefaults.standard.bool(forKey: UserDefaults.enabledCacheKey)
+            return bool(forKey: UserDefaults.enabledCacheKey)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaults.enabledCacheKey)
-            UserDefaults.standard.synchronize()
+            set(newValue, forKey: UserDefaults.enabledCacheKey)
+            synchronize()
         }
     }
 }
