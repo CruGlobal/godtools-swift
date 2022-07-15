@@ -17,6 +17,8 @@ GodTools
 
 #### Architecture
 
+![alt text](ReadMeAssets/clean_architecture.png)
+
 - [Presentation Layer](#presentation-layer)
 - [Domain Layer](#domain-layer)
 - [Data Layer](#data-layer)
