@@ -11,15 +11,17 @@ import Combine
 
 class OptInOnboardingBannerEnabledCache {
     
+    private let userDefaults: UserDefaults = UserDefaults.standard
+    
     func getEnabled() -> AnyPublisher<Bool, Never> {
         
-        return UserDefaults.standard.publisher(for: \.enabled)
+        return userDefaults.publisher(for: \.enabled)
             .eraseToAnyPublisher()
     }
     
     func storeEnabled(enabled: Bool) {
         
-        UserDefaults.standard.enabled = enabled
+        userDefaults.enabled = enabled
     }
 }
 
