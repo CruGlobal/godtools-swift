@@ -59,10 +59,13 @@ App/Share/SwiftUI Views
 
 ##### Views
 
+Views are what a user visually sees and interacts with.
+
 Responsibilities:
 - Rendering logic.
 - Animation logic.
-- Observe ViewModel output.  In SwiftUI this is a combination of @ObservedObject and @Published properties.
+- Owns a ViewModel.
+- Observes ViewModel output.  In SwiftUI this is a combination of @ObservedObject and @Published properties.
 - Send inputs to the ViewModel (button tap, entering text input, etc.).
 
 File Naming and Organization:
@@ -72,13 +75,40 @@ File Naming and Organization:
 - Subviews that are dynamic such as views in collections (lists, stacks, etc.) should have there own ViewModel and only 1 ViewModel.
 
 ##### ViewModels
-- TODO
+
+ViewModels are considered a view representation.  They're the data backing of a view.
+
+Responsibilities:
+- Provides data outputs to the View which the View can observe and react to.
+- Each data output connects to a UseCase (Domain Layer) which computes data.  Computing can also happen directly in the ViewModel although UseCases are preferred.
 
 #### Domain Layer
-- TODO
+
+The domain layer is responsible for the business rules of the application and is broken up into Use Cases.  The benefits of the domain layer include:
+- It avoids code duplication.
+- It improves readability in ViewModels that use domain layer use cases.
+- It improves testability of the app.
+- It avoids large ViewModels by allowing you to split responsibilities.
+
+
+##### Use Cases
+
+Use cases make up the domain layer.  Use cases should be responsible for a single task and named to reflect that task.  For example: AuthenticateUserUseCase, GetSpotlightToolsUseCase.
+
+Responsibilities:
+
+- Operates on the data layer classes and other use cases to perform a single task and applies the business rules.
+
+File Naming and Organization:
+- Use cases should be stored in Share/Domain/UseCases folder.
+- Each UseCase should have it's own folder named the same as the use case.  
+- If a UseCase provides a domain model, that model should be included in the same folder as the use case and suffixed with DomainModel.  For example, if the GetAllToolsUseCase were to provide tools, the domain model could be ToolDomainModel.
+
 
 #### Data Layer
 - TODO
 
 #### Coordinator
 - TODO
+
+
