@@ -32,7 +32,7 @@ struct FavoritesContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    let leadingTrailingPadding = StandardLeadingTrailingMargin.getMargin(for: width)
+                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
