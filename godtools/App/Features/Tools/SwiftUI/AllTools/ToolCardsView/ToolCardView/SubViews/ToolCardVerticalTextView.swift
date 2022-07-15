@@ -29,11 +29,11 @@ struct ToolCardVerticalTextView: View {
                 
             case .square:
                 Spacer(minLength: 0)
-                ResourceCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                ResourceCardLanguageView(languageName: viewModel.parallelLanguageName)
                 
             case .squareWithNavButtons:
                 ToolCardCategoryView(category: viewModel.category)
-                ResourceCardParallelLanguageView(languageName: viewModel.parallelLanguageName)
+                ResourceCardLanguageView(languageName: viewModel.parallelLanguageName)
                     .padding(.top, 2)
             }
         }

@@ -81,21 +81,26 @@ extension LessonCardViewModel {
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let titleValue: String
+        let translationIsAvailable: Bool
         
         if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
+            translationIsAvailable = true
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             titleValue = englishTranslation.translatedName
+            translationIsAvailable = false
         }
         else {
             
             titleValue = resource.resourceDescription
+            translationIsAvailable = false
         }
         
         title = titleValue
+        translationAvailableText = translationIsAvailable ? "Translation is Available" : "Translation is Not Available"
     }
     
     private func reloadBannerImage() {

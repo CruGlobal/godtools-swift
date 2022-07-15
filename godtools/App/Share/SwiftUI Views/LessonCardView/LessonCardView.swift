@@ -44,7 +44,7 @@ struct LessonCardView: View {
                     
                     HStack {
                         Spacer()
-                        ResourceCardParallelLanguageView(languageName: viewModel.parallelLanguageText)
+                        ResourceCardLanguageView(languageName: viewModel.translationAvailableText)
                     }
                 }
                 .padding(.top, 12)
