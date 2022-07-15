@@ -91,7 +91,7 @@ The domain layer is responsible for the business rules of the application and is
 - It avoids large ViewModels by allowing you to split responsibilities.
 
 
-##### Use Cases
+##### - Use Cases
 
 Use cases make up the domain layer.  Use cases should be responsible for a single task and named to reflect that task.  For example: AuthenticateUserUseCase, GetSpotlightToolsUseCase.
 
@@ -106,9 +106,21 @@ File Naming and Organization:
 
 
 #### Data Layer
-- TODO
+
+The data layer is responsible for data retrieval, data storage, and other data connectivity such as sending analytics, communicating to remote databases, web sockets, etc.
+
+Typical data storage can include a remote database, disk cache (CoreData, Realm, UserDefaults, NSFileManager), app bundle (.json, .txt, .png, .jpg, etc.), and even hardcoded data in a swift file.
+
+##### - Repositories
+
+Repositories are a pattern that GodTools is shifting towards in the data layer and is responsible for encapsulating data storage types.
+
+A Repository has the following responsibilities:
+
+- Provides data retrieving and data storage.
+- Encapsulates data storage types (remote, disk, bundle, hardcoded).
+
+
 
 #### Coordinator
 - TODO
-
-
