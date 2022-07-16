@@ -16,7 +16,7 @@ class FileCache {
     let rootDirectory: String
     let errorDomain: String
     
-    required init(rootDirectory: String) {
+    init(rootDirectory: String) {
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
     }

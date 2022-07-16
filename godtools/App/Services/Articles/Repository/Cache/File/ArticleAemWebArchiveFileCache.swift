@@ -12,15 +12,11 @@ class ArticleAemWebArchiveFileCache: FileCache {
     
     private static let rootDirectoryName: String = "articles"
     
-    required init() {
+    init() {
                 
         super.init(rootDirectory: ArticleAemWebArchiveFileCache.rootDirectoryName)
         
         deleteLegacyArticlesDirectory()
-    }
-    
-    required init(rootDirectory: String) {
-        fatalError("ArticleAemWebArchiveFileCache: init(rootDirectory: should not be used.  Instead, use init() to initialize with the correct rootDirectory.")
     }
     
     private func deleteLegacyArticlesDirectory() {
