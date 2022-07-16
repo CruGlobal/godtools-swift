@@ -21,6 +21,17 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         self.errorDomain = "\(type(of: self))"
     }
     
+    func getIsDirectory(url: URL) -> Bool {
+        
+        var isDirectory: ObjCBool = false
+        
+        if fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory){
+            return isDirectory.boolValue
+        }
+        
+        return false
+    }
+    
     func getUserDocumentsDirectory() -> Result<URL, Error> {
         
         do {
@@ -66,26 +77,28 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         switch getDirectory(location: location) {
         
         case .success(let directoryUrl):
-            
-            if !fileManager.fileExists(atPath: directoryUrl.path) {
-                
-                do {
-                    try fileManager.createDirectory(
-                        at: directoryUrl,
-                        withIntermediateDirectories: true,
-                        attributes: nil
-                    )
-                    return .success(directoryUrl)
-                }
-                catch let error {
-                    return .failure(error)
-                }
-            }
-            else {
-                return .success(directoryUrl)
-            }
+            return createDirectoryIfNotExists(directoryUrl: directoryUrl)
             
         case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func createDirectoryIfNotExists(directoryUrl: URL) -> Result<URL, Error> {
+        
+        guard !fileManager.fileExists(atPath: directoryUrl.path) else {
+            return .success(directoryUrl)
+        }
+        
+        do {
+            try fileManager.createDirectory(
+                at: directoryUrl,
+                withIntermediateDirectories: true,
+                attributes: nil
+            )
+            return .success(directoryUrl)
+        }
+        catch let error {
             return .failure(error)
         }
     }
@@ -211,5 +224,63 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         catch let error {
             return error
         }
+    }
+    
+    func moveContentsOfDirectory(directory: URL, toDirectory: URL) -> Error? {
+        
+        do {
+            let contents: [String] = try fileManager.contentsOfDirectory(atPath: directory.path)
+            for item in contents {
+                do {
+                    try fileManager.moveItem(atPath: directory.appendingPathComponent(item).path, toPath: toDirectory.appendingPathComponent(item).path)
+                }
+                catch let error {
+                    return error
+                }
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
+    }
+    
+    func moveChildDirectoryContentsIntoParent(parentDirectory: URL) -> Error? {
+       
+        // check if the contents is a single directory and if it is, move contents of this directory up a level into the parent directory
+        
+        do {
+            
+            let contentsOfParentDirectory: [String] = try fileManager.contentsOfDirectory(atPath: parentDirectory.path)
+            
+            guard contentsOfParentDirectory.count == 1 else {
+                return nil
+            }
+            
+            let childDirectory: URL = parentDirectory.appendingPathComponent(contentsOfParentDirectory[0])
+            
+            guard getIsDirectory(url: childDirectory) else {
+                return nil
+            }
+            
+            if let moveItemsError = moveContentsOfDirectory(directory: childDirectory, toDirectory: parentDirectory) {
+                return moveItemsError
+            }
+            
+            // delete directory since contents were moved
+            do {
+               try fileManager.removeItem(at: childDirectory)
+            }
+            catch let error {
+                return error
+            }
+        }
+        catch let error {
+            
+            return error
+        }
+        
+        return nil
     }
 }
