@@ -12,7 +12,7 @@ protocol FileCacheLocationType {
     
     var directory: String { get }
     var filename: String { get }
-    var fileExtension: String? { get }
+    var filePathExtension: String? { get }
 }
 
 extension FileCacheLocationType {
@@ -23,12 +23,14 @@ extension FileCacheLocationType {
 
     var fileUrl: URL? {
         
-        var fileUrl: URL? = directoryUrl?.appendingPathComponent(filename)
-        
-        if let fileExtension = fileExtension {
-            fileUrl = fileUrl?.appendingPathExtension(fileExtension)
+        guard let fileUrl = directoryUrl?.appendingPathComponent(filename) else {
+            return nil
         }
         
-        return fileUrl
+        guard let filePathExtension = filePathExtension else {
+            return fileUrl
+        }
+        
+        return fileUrl.appendingPathExtension(filePathExtension)
     }
 }

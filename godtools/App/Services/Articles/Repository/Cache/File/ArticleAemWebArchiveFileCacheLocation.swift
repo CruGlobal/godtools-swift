@@ -12,11 +12,11 @@ struct ArticleAemWebArchiveFileCacheLocation: FileCacheLocationType {
     
     let directory: String = "webarchives"
     let filename: String
-    let fileExtension: String?
+    let filePathExtension: String?
     
     init(filename: String) {
         
         self.filename = filename
-        self.fileExtension = "webarchive"
+        self.filePathExtension = "webarchive"
     }
 }
