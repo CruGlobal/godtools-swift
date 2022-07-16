@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
 
 class FileCache<CacheLocation: FileCacheLocationType> {
     
@@ -129,6 +131,32 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         switch getFile(location: location) {
         case .success(let url):
             return .success(fileManager.contents(atPath: url.path))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getUIImage(location: CacheLocation) -> Result<UIImage?, Error> {
+        
+        switch getData(location: location) {
+        case .success(let data):
+            guard let data = data else {
+                return .success(nil)
+            }
+            return .success(UIImage(data: data))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getImage(location: CacheLocation) -> Result<Image?, Error> {
+        
+        switch getUIImage(location: location) {
+        case .success(let uiImage):
+            guard let uiImage = uiImage else {
+                return .success(nil)
+            }
+            return .success(Image(uiImage: uiImage))
         case .failure(let error):
             return .failure(error)
         }
