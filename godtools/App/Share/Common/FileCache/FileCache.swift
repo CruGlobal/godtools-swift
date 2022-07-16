@@ -150,7 +150,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func cache(location: CacheLocation, data: Data) -> Result<URL, Error> {
+    func storeFile(location: CacheLocation, data: Data) -> Result<URL, Error> {
         
         switch createDirectoryIfNotExists(location: location) {
         case .success( _):
