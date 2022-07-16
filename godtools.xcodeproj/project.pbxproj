@@ -734,7 +734,6 @@
 		45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A225938CF100A096A0 /* ConfigType.swift */; };
 		45AD20A625938CF100A096A0 /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A325938CF100A096A0 /* AppBuild.swift */; };
 		45AD20A725938CF100A096A0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A425938CF100A096A0 /* AppConfig.swift */; };
-		45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */; };
 		45AD20B225938EE500A096A0 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20AF25938EE500A096A0 /* FileCache.swift */; };
 		45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20B825938F1A00A096A0 /* ObservableValue.swift */; };
 		45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20B925938F1A00A096A0 /* SignalValue.swift */; };
@@ -923,6 +922,7 @@
 		45E8FAA82882FD4B00D7D569 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */; };
 		45E8FAA92882FD4B00D7D569 /* SHA256FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */; };
 		45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */; };
+		45E8FAAD2883040B00D7D569 /* FileCache+SSZipArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
@@ -1868,7 +1868,6 @@
 		45AD20A225938CF100A096A0 /* ConfigType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigType.swift; sourceTree = "<group>"; };
 		45AD20A325938CF100A096A0 /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45AD20A425938CF100A096A0 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
-		45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocationType.swift; sourceTree = "<group>"; };
 		45AD20AF25938EE500A096A0 /* FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		45AD20B825938F1A00A096A0 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		45AD20B925938F1A00A096A0 /* SignalValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalValue.swift; sourceTree = "<group>"; };
@@ -2042,6 +2041,7 @@
 		45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
 		45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModel.swift; sourceTree = "<group>"; };
 		45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocation.swift; sourceTree = "<group>"; };
+		45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileCache+SSZipArchive.swift"; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F38D292833EC35009E3E15 /* LanguageTranslationsDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTranslationsDownloader.swift; sourceTree = "<group>"; };
@@ -5436,8 +5436,8 @@
 			isa = PBXGroup;
 			children = (
 				45AD20AF25938EE500A096A0 /* FileCache.swift */,
+				45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */,
 				45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */,
-				45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */,
 			);
 			path = FileCache;
 			sourceTree = "<group>";
@@ -7934,7 +7934,6 @@
 				45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */,
 				4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */,
 				45B98769283BFE5300E1DA7F /* TranslationsFileCacheError.swift in Sources */,
-				45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */,
 				4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */,
 				45FB160B27DBDDB60009DF8E /* OnboardingFlow.swift in Sources */,
 				455583D6269F2DA500C3FF14 /* MobileContentTabsViewModel.swift in Sources */,
@@ -8014,6 +8013,7 @@
 				D42FEBD4286F80980002FAD9 /* DefaultVariantData.swift in Sources */,
 				4531C7F22866202E001C8C00 /* GetOnboardingQuickLinksEnabledUseCase.swift in Sources */,
 				D44F3ABE283D18A70008390D /* SeparatorView.swift in Sources */,
+				45E8FAAD2883040B00D7D569 /* FileCache+SSZipArchive.swift in Sources */,
 				45AD1B9425938A4F00A096A0 /* ToolViewModel.swift in Sources */,
 				450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */,
 				45AE974327C97A9400C2CB33 /* TractPage+MobileContentRenderableModel.swift in Sources */,
