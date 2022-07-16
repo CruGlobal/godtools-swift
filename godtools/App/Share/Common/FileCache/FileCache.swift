@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-class FileCache<CacheLocation: FileCacheLocationType> {
+class FileCache {
     
     let fileManager: FileManager = FileManager.default
     let rootDirectory: String
@@ -58,7 +58,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getDirectory(location: CacheLocation) -> Result<URL, Error> {
+    func getDirectory(location: FileCacheLocation) -> Result<URL, Error> {
         
         guard let directoryUrl = location.directoryUrl else {
             return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Directory url can't be null."]))
@@ -72,7 +72,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    private func createDirectoryIfNotExists(location: CacheLocation) -> Result<URL, Error> {
+    private func createDirectoryIfNotExists(location: FileCacheLocation) -> Result<URL, Error> {
         
         switch getDirectory(location: location) {
         
@@ -103,7 +103,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getFileExists(location: CacheLocation) -> Result<Bool, Error> {
+    func getFileExists(location: FileCacheLocation) -> Result<Bool, Error> {
         
         switch getFile(location: location) {
         case .success(let url):
@@ -113,7 +113,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getFile(location: CacheLocation) -> Result<URL, Error> {
+    func getFile(location: FileCacheLocation) -> Result<URL, Error> {
         
         guard let fileUrl = location.fileUrl else {
             return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "File url can't be null."]))
@@ -127,7 +127,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getData(location: CacheLocation) -> Result<Data?, Error> {
+    func getData(location: FileCacheLocation) -> Result<Data?, Error> {
         
         switch getFile(location: location) {
         case .success(let url):
@@ -137,7 +137,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getUIImage(location: CacheLocation) -> Result<UIImage?, Error> {
+    func getUIImage(location: FileCacheLocation) -> Result<UIImage?, Error> {
         
         switch getData(location: location) {
         case .success(let data):
@@ -150,7 +150,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func getImage(location: CacheLocation) -> Result<Image?, Error> {
+    func getImage(location: FileCacheLocation) -> Result<Image?, Error> {
         
         switch getUIImage(location: location) {
         case .success(let uiImage):
@@ -163,7 +163,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func storeFile(location: CacheLocation, data: Data) -> Result<URL, Error> {
+    func storeFile(location: FileCacheLocation, data: Data) -> Result<URL, Error> {
         
         switch createDirectoryIfNotExists(location: location) {
         case .success( _):
@@ -195,7 +195,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func removeDirectory(location: CacheLocation) -> Error? {
+    func removeDirectory(location: FileCacheLocation) -> Error? {
         
         switch getDirectory(location: location) {
         case .success(let directoryUrl):
@@ -205,7 +205,7 @@ class FileCache<CacheLocation: FileCacheLocationType> {
         }
     }
     
-    func removeFile(location: CacheLocation) -> Error? {
+    func removeFile(location: FileCacheLocation) -> Error? {
         
         switch getFile(location: location) {
         case .success(let fileUrl):

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemWebArchiveFileCache: FileCache<ArticleAemWebArchiveFileCacheLocation> {
+class ArticleAemWebArchiveFileCache: FileCache {
     
     private static let rootDirectoryName: String = "articles"
     
