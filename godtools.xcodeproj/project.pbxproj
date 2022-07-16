@@ -740,7 +740,6 @@
 		45AD20A525938CF100A096A0 /* ConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A225938CF100A096A0 /* ConfigType.swift */; };
 		45AD20A625938CF100A096A0 /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A325938CF100A096A0 /* AppBuild.swift */; };
 		45AD20A725938CF100A096A0 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20A425938CF100A096A0 /* AppConfig.swift */; };
-		45AD20B025938EE500A096A0 /* FileCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20AD25938EE500A096A0 /* FileCacheType.swift */; };
 		45AD20B125938EE500A096A0 /* FileCacheLocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */; };
 		45AD20B225938EE500A096A0 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20AF25938EE500A096A0 /* FileCache.swift */; };
 		45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20B825938F1A00A096A0 /* ObservableValue.swift */; };
@@ -1874,7 +1873,6 @@
 		45AD20A225938CF100A096A0 /* ConfigType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigType.swift; sourceTree = "<group>"; };
 		45AD20A325938CF100A096A0 /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45AD20A425938CF100A096A0 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
-		45AD20AD25938EE500A096A0 /* FileCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheType.swift; sourceTree = "<group>"; };
 		45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocationType.swift; sourceTree = "<group>"; };
 		45AD20AF25938EE500A096A0 /* FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		45AD20B825938F1A00A096A0 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
@@ -5457,7 +5455,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD20AF25938EE500A096A0 /* FileCache.swift */,
-				45AD20AD25938EE500A096A0 /* FileCacheType.swift */,
 				45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */,
 			);
 			path = FileCache;
@@ -8099,7 +8096,6 @@
 				45AD200025938A9800A096A0 /* ViewsService.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
 				D45922D42867973B00904B87 /* BannerView.swift in Sources */,
-				45AD20B025938EE500A096A0 /* FileCacheType.swift in Sources */,
 				45677862287DC5C90044AEB2 /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45AE975427C97A9500C2CB33 /* ContentPage+MobileContentRenderableModel.swift in Sources */,
 				D44F3AB8283BC5470008390D /* ToolCategoriesView.swift in Sources */,

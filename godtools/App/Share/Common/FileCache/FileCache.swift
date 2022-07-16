@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
+class FileCache<CacheLocation: FileCacheLocationType> {
     
     let fileManager: FileManager = FileManager.default
     let rootDirectory: String
