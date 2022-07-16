@@ -922,6 +922,7 @@
 		45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */; };
 		45E8FAA82882FD4B00D7D569 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */; };
 		45E8FAA92882FD4B00D7D569 /* SHA256FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */; };
+		45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EDBCF027359CD70099495B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCEF27359CD70099495B /* Realm */; };
@@ -2040,6 +2041,7 @@
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
 		45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
 		45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModel.swift; sourceTree = "<group>"; };
+		45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocation.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F38D292833EC35009E3E15 /* LanguageTranslationsDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTranslationsDownloader.swift; sourceTree = "<group>"; };
@@ -5434,6 +5436,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD20AF25938EE500A096A0 /* FileCache.swift */,
+				45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */,
 				45AD20AE25938EE500A096A0 /* FileCacheLocationType.swift */,
 			);
 			path = FileCache;
@@ -7799,6 +7802,7 @@
 				4567788D287DC6D40044AEB2 /* ChooseLanguageViewModel.swift in Sources */,
 				D1D5691A2706364200BBE2A6 /* OnboardingTutorialIntroView.swift in Sources */,
 				D1330718273979380058450B /* OnboardingQuickStartView.swift in Sources */,
+				45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */,
 				456777EC287DB42C0044AEB2 /* ToolSettingsShareablesView.swift in Sources */,
 				D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */,
 				456777BC287DB3770044AEB2 /* ShareToolScreenTutorialViewModelType.swift in Sources */,
