@@ -34,21 +34,21 @@ struct LessonCardView: View {
                 
                 ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 9) {
                     
                     Text(viewModel.title)
                         .font(FontLibrary.sfProTextBold.font(size: 17))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .lineSpacing(2)
                         .fixedSize(horizontal: false, vertical: true)
+                        .padding(.trailing, 41)
                     
                     HStack {
                         Spacer()
                         ResourceCardLanguageView(languageName: viewModel.translationAvailableText)
                     }
                 }
-                .padding(.top, 12)
-                .padding(.bottom, 20)
+                .padding([.top, .bottom], 15)
                 .padding([.leading, .trailing], Sizes.leadingPadding)
                 .frame(width: cardWidth, alignment: .topLeading)
             }
@@ -68,6 +68,6 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let viewModel = MockLessonCardViewModel()
         
-        LessonCardView(viewModel: viewModel, cardWidth: 375)
+        LessonCardView(viewModel: viewModel, cardWidth: 345)
     }
 }
