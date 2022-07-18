@@ -59,9 +59,9 @@ class FileCache {
     }
     
     func getDirectory(location: FileCacheLocation) -> Result<URL, Error> {
-        
+                
         guard let directoryUrl = location.directoryUrl else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Directory url can't be null."]))
+            return getRootDirectory()
         }
         
         switch getRootDirectory() {
@@ -78,7 +78,6 @@ class FileCache {
         
         case .success(let directoryUrl):
             return createDirectoryIfNotExists(directoryUrl: directoryUrl)
-            
         case .failure(let error):
             return .failure(error)
         }
@@ -116,7 +115,7 @@ class FileCache {
     func getFile(location: FileCacheLocation) -> Result<URL, Error> {
         
         guard let fileUrl = location.fileUrl else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "File url can't be null."]))
+            return .failure(NSError.errorWithDescription(description: "Found nil fileUrl on FileCacheLocation with relativeUrlString: \(location.relativeUrlString)"))
         }
         
         switch getRootDirectory() {

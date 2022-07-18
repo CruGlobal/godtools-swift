@@ -84,12 +84,12 @@ extension FileCache {
             guard let data = fileManager.contents(atPath: tempFileUrl.path) else {
                 continue
             }
-                        
-            let location: FileCacheLocation = FileCacheLocation(
-                directory: directory.path,
-                filename: fileUrl.path,
-                filePathExtension: fileUrl.pathExtension
-            )
+            
+            // TODO: Is this path relative to the file cache? ~Levi
+            let relativeUrlString: String = fileUrl.path
+            
+            let location: FileCacheLocation = FileCacheLocation(relativeUrlString: relativeUrlString)
+                    
             
             switch storeFile(location: location, data: data) {
             case .success( _):

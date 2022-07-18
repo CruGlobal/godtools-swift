@@ -10,31 +10,33 @@ import Foundation
 
 class FileCacheLocation {
     
-    let directory: String
-    let filename: String
-    let filePathExtension: String?
-    
-    init(directory: String, filename: String, filePathExtension: String) {
+    let relativeUrlString: String
         
-        self.directory = directory
-        self.filename = filename
-        self.filePathExtension = filePathExtension
+    init(relativeUrlString: String) {
+        
+        self.relativeUrlString = relativeUrlString
     }
     
     var directoryUrl: URL? {
-        return URL(string: directory)
-    }
 
-    var fileUrl: URL? {
-        
-        guard let fileUrl = directoryUrl?.appendingPathComponent(filename) else {
+        guard let fileUrl = self.fileUrl, fileUrl.pathComponents.count > 1 else {
             return nil
         }
-        
-        guard let filePathExtension = filePathExtension else {
-            return fileUrl
+
+        guard let lastPathComponent = fileUrl.pathComponents.last, !lastPathComponent.isEmpty else {
+            return nil
         }
+            
+        let directoryPath: String = fileUrl.absoluteString.replacingOccurrences(of: "/" + lastPathComponent, with: "")
         
-        return fileUrl.appendingPathExtension(filePathExtension)
+        return URL(string: directoryPath)
+    }
+    
+    var fileUrl: URL? {
+        return URL(string: relativeUrlString)
+    }
+    
+    var filenameWithPathExtension: String? {
+        return fileUrl?.lastPathComponent
     }
 }
