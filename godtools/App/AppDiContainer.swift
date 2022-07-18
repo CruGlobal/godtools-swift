@@ -12,7 +12,7 @@ import OktaAuthentication
 class AppDiContainer {
         
     private let legacyRealmMigration: LegacyRealmMigration
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache() // TODO: Make private. ~Levi
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
@@ -30,8 +30,7 @@ class AppDiContainer {
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let config: ConfigType
-    let crashReporting: CrashReportingType
+    let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
@@ -57,16 +56,10 @@ class AppDiContainer {
     let firebaseInAppMessaging: FirebaseInAppMessagingType
         
     required init(appDeepLinkingService: DeepLinkingServiceType) {
-        
-        config = AppConfig()
-        
-        crashReporting = FirebaseCrashlyticsService()
-        
+                        
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
-        realmDatabase = RealmDatabase()
-
         languagesApi = MobileContentLanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
@@ -329,7 +322,7 @@ class AppDiContainer {
     
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
-            cache: OptInOnboardingBannerEnabledCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+            cache: OptInOnboardingBannerEnabledCache()
         )
     }
     
