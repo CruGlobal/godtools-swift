@@ -32,6 +32,7 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase(resource: tool, localizationServices: localizationServices),
             delegate: self
         )
     }

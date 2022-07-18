@@ -65,6 +65,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase(resource: tool, localizationServices: localizationServices),
             delegate: toolCardViewModelDelegate
         )
     }

@@ -56,6 +56,7 @@ class ToolSpotlightViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase(resource: tool, localizationServices: localizationServices),
             delegate: delegate
         )
     }

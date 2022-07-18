@@ -26,6 +26,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: ToolCardViewModelDelegate?
     
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -35,7 +36,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate?) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
@@ -43,6 +44,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -210,18 +212,16 @@ extension ToolCardViewModel {
     
     private func reloadParallelLanguageName() {
         let parallelLanguage = languageSettingsService.parallelLanguage.value
-        parallelLanguageName = getLanguageName(language: parallelLanguage)
-    }
-    
-    private func getLanguageName(language: LanguageModel?) -> String {
         
-        if let language = language {
+        let getLanguageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(language: parallelLanguage)
+        
+        if getLanguageAvailability.isAvailable {
             
-            if resource.supportsLanguage(languageId: language.id) {
-               
-                return LanguageViewModel(language: language, localizationServices: localizationServices).translatedLanguageNameWithCheckmark
-            }
+            parallelLanguageName = getLanguageAvailability.string
+            
+        } else {
+            
+            parallelLanguageName = ""
         }
-        return ""
     }
 }
