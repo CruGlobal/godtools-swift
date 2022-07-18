@@ -100,7 +100,7 @@ extension LessonCardViewModel {
         
         title = titleValue
         
-        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(language: primaryLanguage)
+        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: resource, language: primaryLanguage)
         translationAvailableText = languageAvailability.string
     }
     

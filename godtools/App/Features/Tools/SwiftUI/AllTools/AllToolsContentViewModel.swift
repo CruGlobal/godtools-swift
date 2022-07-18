@@ -21,6 +21,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
         
     private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
         ToolSpotlightViewModel(
@@ -29,6 +30,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -47,6 +49,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -58,7 +61,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -68,6 +71,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         
         super.init()
     }

@@ -10,31 +10,32 @@ import Foundation
 
 class GetLanguageAvailabilityStringUseCase {
     
-    let resource: ResourceModel
     let localizationServices: LocalizationServices
     
-    init(resource: ResourceModel, localizationServices: LocalizationServices) {
-        self.resource = resource
+    let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
+    
+    init(localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
         self.localizationServices = localizationServices
+        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
     }
     
-    func getLanguageAvailability(language: LanguageModel?) -> (isAvailable: Bool, string: String) {
+    func getLanguageAvailability(for resource: ResourceModel, language: LanguageModel?) -> (isAvailable: Bool, string: String) {
         guard let language = language else {
             return (false, "")
         }
         
-        let languageViewModel = LanguageViewModel(language: language, localizationServices: localizationServices)
+        let translatedLanguageName = getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
         
         if resource.supportsLanguage(languageId: language.id) {
             
-            let string = languageViewModel.translatedLanguageName + " ✓"
+            let string = translatedLanguageName + " ✓"
             return (true, string)
             
         } else {
             
             let notAvailableString = String.localizedStringWithFormat(
                 localizationServices.stringForMainBundle(key: "lessonCard.languageNotAvailable"),
-                languageViewModel.translatedLanguageName
+                translatedLanguageName
             )
             let stringWithX = notAvailableString + " ✕"
             

@@ -240,6 +240,13 @@ class AppDiContainer {
         return GoogleAdwordsAnalytics(config: config)
     }
     
+    func getLanguageAvailabilityStringUseCase() -> GetLanguageAvailabilityStringUseCase {
+        return GetLanguageAvailabilityStringUseCase(
+            localizationServices: localizationServices,
+            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         return LanguagesRepository(cache: languagesCache)
     }

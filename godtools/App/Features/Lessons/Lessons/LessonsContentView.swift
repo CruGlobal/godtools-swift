@@ -51,7 +51,8 @@ struct LessonsContentView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase()
         )
         
         LessonsContentView(viewModel: viewModel)
