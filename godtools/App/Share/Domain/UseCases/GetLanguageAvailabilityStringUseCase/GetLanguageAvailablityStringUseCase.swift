@@ -32,8 +32,13 @@ class GetLanguageAvailabilityStringUseCase {
             
         } else {
             
-            let string = "Not available in " + languageViewModel.translatedLanguageName + " ✕"
-            return (false, string)
+            let notAvailableString = String.localizedStringWithFormat(
+                localizationServices.stringForMainBundle(key: "lessonCard.languageNotAvailable"),
+                languageViewModel.translatedLanguageName
+            )
+            let stringWithX = notAvailableString + " ✕"
+            
+            return (false, stringWithX)
         }
     }
 }
