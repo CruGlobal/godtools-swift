@@ -27,7 +27,7 @@ class GetLanguageAvailabilityStringUseCase {
         
         if resource.supportsLanguage(languageId: language.id) {
             
-            let string = "✓ " + languageViewModel.translatedLanguageName
+            let string = languageViewModel.translatedLanguageName + " ✓"
             return (true, string)
             
         } else {

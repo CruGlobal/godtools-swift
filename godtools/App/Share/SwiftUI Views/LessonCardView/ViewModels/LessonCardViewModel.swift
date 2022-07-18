@@ -19,6 +19,7 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     let resource: ResourceModel
     let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: LessonCardDelegate?
 
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -28,10 +29,11 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, delegate: LessonCardDelegate?) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -81,26 +83,25 @@ extension LessonCardViewModel {
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let titleValue: String
-        let translationIsAvailable: Bool
+        let primaryLanguage = languageSettingsService.primaryLanguage.value
         
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
-            translationIsAvailable = true
         }
         else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
             
             titleValue = englishTranslation.translatedName
-            translationIsAvailable = false
         }
         else {
             
             titleValue = resource.resourceDescription
-            translationIsAvailable = false
         }
         
         title = titleValue
-        translationAvailableText = translationIsAvailable ? "Translation is Available" : "Translation is Not Available"
+        
+        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(language: primaryLanguage)
+        translationAvailableText = languageAvailability.string
     }
     
     private func reloadBannerImage() {

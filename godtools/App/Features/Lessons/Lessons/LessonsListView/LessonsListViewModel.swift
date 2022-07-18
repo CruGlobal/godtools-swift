@@ -54,6 +54,7 @@ class LessonsListViewModel: LessonCardProvider {
             resource: lesson,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
+            getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase(resource: lesson, localizationServices: localizationServices),
             delegate: delegate
         )
     }
