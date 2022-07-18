@@ -1,29 +1,34 @@
 //
-//  LessonCardsViewModel.swift
+//  LessonsListViewModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 6/28/22.
+//  Created by Rachael Skeath on 7/12/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol LessonCardsViewModelDelegate: LessonCardDelegate {
+protocol LessonsListViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
 }
 
-class LessonCardsViewModel: LessonCardProvider {
+class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: LessonCardsViewModelDelegate?
+    private weak var delegate: LessonsListViewModelDelegate?
+    
+    // MARK: - Published
+    
+    @Published var sectionTitle: String = ""
+    @Published var subtitle: String = ""
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
@@ -56,7 +61,7 @@ class LessonCardsViewModel: LessonCardProvider {
 
 // MARK: - Private
 
-extension LessonCardsViewModel {
+extension LessonsListViewModel {
     
     private func setup() {
         setupTitle()
@@ -65,7 +70,8 @@ extension LessonCardsViewModel {
     
     private func setupTitle() {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
     }
     
     private func setupBinding() {
@@ -96,6 +102,7 @@ extension LessonCardsViewModel {
     }
     
     private func reloadLessonsFromCache() {
-        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted(andFilteredBy: { $0.attrSpotlight })
+        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted()
     }
 }
+

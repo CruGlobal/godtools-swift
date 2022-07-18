@@ -14,12 +14,6 @@ struct FavoritesContentView: View {
     
     @ObservedObject var viewModel: FavoritesContentViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 15/375
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -38,7 +32,7 @@ struct FavoritesContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
@@ -48,7 +42,7 @@ struct FavoritesContentView: View {
                             .padding(.top, 12)
                             .padding(.bottom, 15)
                         
-                        LessonCardsView(viewModel: viewModel.lessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                             .padding(.bottom, 10)
                         

@@ -14,17 +14,11 @@ struct AllToolsList: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     let width: CGFloat
-        
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 15/375
-    }
     
     // MARK: - Body
     
     var body: some View {
-        let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+        let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
         
         Group {
             
