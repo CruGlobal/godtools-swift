@@ -11,7 +11,6 @@ import Foundation
 class GetLanguageAvailabilityStringUseCase {
     
     let localizationServices: LocalizationServices
-    
     let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
     init(localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
