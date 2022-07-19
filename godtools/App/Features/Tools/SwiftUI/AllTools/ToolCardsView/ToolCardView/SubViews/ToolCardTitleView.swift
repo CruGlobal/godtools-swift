@@ -16,6 +16,7 @@ struct ToolCardTitleView: View {
         Text(title)
             .font(FontLibrary.sfProTextBold.font(size: 18))
             .foregroundColor(ColorPalette.gtGrey.color)
+            .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)
     }
 }
