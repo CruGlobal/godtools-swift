@@ -15,6 +15,7 @@ struct ResourceCardLanguageView: View {
         Text(languageName)
             .font(FontLibrary.sfProTextRegular.font(size: 12))
             .foregroundColor(ColorPalette.gtLightGrey.color)
+            .lineLimit(1)
     }
 }
 
