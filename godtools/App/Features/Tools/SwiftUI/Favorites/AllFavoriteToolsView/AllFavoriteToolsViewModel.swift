@@ -13,11 +13,13 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     // MARK: - Properties
     
     private weak var flowDelegate: FlowDelegate?
+    private let analytics: AnalyticsContainer
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, flowDelegate: FlowDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
+        self.analytics = analytics
         
         super.init(dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, delegate: nil, toolCardViewModelDelegate: nil)
     }
@@ -69,6 +71,7 @@ extension AllFavoriteToolsViewModel {
 extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     func toolCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+        trackFavoritedToolTappedAnalytics()
     }
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
@@ -84,5 +87,50 @@ extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     
     func openToolButtonTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+        trackOpenFavoritedToolButtonAnalytics()
     }
 }
+
+// MARK: - Analytics
+
+extension AllFavoriteToolsViewModel {
+    var analyticsScreenName: String {
+        return "All Favorites"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "home"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
+        
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+    }
+    
+    func trackFavoritedToolTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
+            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
+        ))
+    }
+    
+    func trackOpenFavoritedToolButtonAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpened,
+            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.toolOpened: 1]
+        ))
+    }
+}
+

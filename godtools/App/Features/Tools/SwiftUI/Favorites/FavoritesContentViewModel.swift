@@ -212,8 +212,6 @@ extension FavoritesContentViewModel {
         return ""
     }
     
-    private 
-    
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))

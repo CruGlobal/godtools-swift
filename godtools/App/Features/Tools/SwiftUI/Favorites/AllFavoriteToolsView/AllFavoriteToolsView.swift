@@ -36,6 +36,9 @@ struct AllFavoriteToolsView: View {
                 .listRowInsets(EdgeInsets())
             } refreshHandler: {}
         }
+        .onAppear(
+            viewModel.pageViewed()
+        )
     }
 }
 
@@ -51,7 +54,8 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
-            flowDelegate: nil
+            flowDelegate: nil,
+            analytics: appDiContainer.analytics
         )
         
         AllFavoriteToolsView(viewModel: viewModel)
