@@ -53,6 +53,11 @@ class ResourcesSHA256FileCache {
         return fileCache.getImage(location: location)
     }
     
+    @available(*, deprecated) // This should be removed once AttachmentsFileCache is removed and that logic placed in this class. ~Levi
+    func storeFile(location: FileCacheLocation, fileData: Data) -> Result<URL, Error> {
+        return fileCache.storeFile(location: location, data: fileData)
+    }
+    
     @available(*, deprecated) // This can be removed after removing TranslationsFileCache in place of TranslationsRepository in GT-1448. ~Levi
     func decompressZipFileAndStoreFileContents(zipFileData: Data) -> Result<[FileCacheLocation], Error> {
         

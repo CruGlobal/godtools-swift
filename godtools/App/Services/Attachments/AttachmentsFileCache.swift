@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+@available(*, deprecated) // TODO: This should be removed and logic for cacheing attachment files should be moved into ResourcesSHA256FileCache. ~Levi
 class AttachmentsFileCache {
     
     typealias AttachmentId = String
@@ -24,9 +25,6 @@ class AttachmentsFileCache {
     
     func getAttachmentBanner(attachmentId: String) -> UIImage? {
         
-        // TODO: Fix in GT-1448. ~Levi
-        
-        /*
         let realm: Realm = realmDatabase.mainThreadRealm
         let sha256FileCacheRef: ResourcesSHA256FileCache = sha256FileCache
                 
@@ -36,22 +34,19 @@ class AttachmentsFileCache {
             
             let sha256FileLocation: SHA256FileLocation = attachment.sha256FileLocation
                             
-            switch sha256FileCacheRef.getImage(location: sha256FileLocation) {
+            switch sha256FileCacheRef.getUIImage(location: sha256FileLocation) {
             case .success(let cachedImage):
                 return cachedImage
             case .failure( _):
                 break
             }
-        }*/
+        }
         
         return nil
     }
     
     func getAttachmentFileUrl(attachmentId: String) -> URL? {
-              
-        // TODO: Fix in GT-1448. ~Levi
-        
-        /*
+                        
         guard let attachment = realmDatabase.mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId) else {
             return nil
         }
@@ -61,42 +56,39 @@ class AttachmentsFileCache {
             return url
         case .failure( _):
             return nil
-        }*/
-        
-        return nil
+        }
     }
     
     func attachmentExists(location: SHA256FileLocation) -> Bool {
         
-        // TODO: Fix in GT-1448. ~Levi
-        
-        /*
-        switch sha256FileCache.fileExists(location: location) {
+        switch sha256FileCache.getFileExists(location: location) {
         case .success(let fileExists):
             return fileExists
         case .failure(let error):
             assertionFailure(error.localizedDescription)
             return false
-        }*/
-        
-        return false
+        }
     }
     
     func cacheAttachmentFile(attachmentFile: AttachmentFile, fileData: Data, complete: @escaping ((_ error: Error?) -> Void)) {
         
-        // TODO: Fix in GT-1448. ~Levi
-        
-        /*
         let location: SHA256FileLocation = attachmentFile.location
         
-        let cacheError: Error? = sha256FileCache.cacheSHA256File(location: location, fileData: fileData)
+        let cacheError: Error?
+        
+        switch sha256FileCache.storeFile(location: location, fileData: fileData) {
+        case .success( _):
+            cacheError = nil
+        case .failure(let error):
+            cacheError = error
+        }
         
         if let cacheError = cacheError {
             complete(cacheError)
         }
         else {
             addAttachmentReferencesIfNeeded(attachmentFile: attachmentFile, complete: complete)
-        }*/
+        }
     }
     
     func addAttachmentReferencesIfNeeded(attachmentFile: AttachmentFile, complete: @escaping ((_ error: Error?) -> Void)) {
@@ -154,3 +146,4 @@ class AttachmentsFileCache {
         }// end realmDatabase.background
     }
 }
+
