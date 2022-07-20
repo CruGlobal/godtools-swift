@@ -18,7 +18,6 @@ class TranslationsRepository {
     private let api: MobileContentTranslationsApi
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
-    private let fallsBackToZipFileDownloading: Bool = true // TODO: This will eventually be removed. ~Levi
     
     init(api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
         
@@ -196,10 +195,6 @@ extension TranslationsRepository {
                 .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-    }
-    
-    private func downloadAndCacheTranslationZipFileIfNeeded(translationId: String) {
-        
     }
     
     private func downloadAndCacheTranslationZipFileFromRemote(translationId: String) -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error> {

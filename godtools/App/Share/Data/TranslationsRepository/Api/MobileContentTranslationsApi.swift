@@ -73,9 +73,8 @@ class MobileContentTranslationsApi {
             }
             .eraseToAnyPublisher()
     }
-    
-    // TODO: These methods below can be removed in GT-1448. ~Levi
-    
+        
+    @available(*, deprecated) // This can be removed after removing TranslationDownload in place of TranslationsRepository following GT-1448. ~Levi
     func getTranslationZipFileDataOperation(translationId: String) -> RequestOperation {
         
         let urlRequest = getTranslationZipFileRequest(translationId: translationId)
@@ -87,6 +86,7 @@ class MobileContentTranslationsApi {
         return operation
     }
     
+    @available(*, deprecated) // This can be removed after removing TranslationDownload in place of TranslationsRepository following GT-1448. ~Levi
     func getTranslationZipFileData(translationId: String, completion: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let translationZipDataOperation = getTranslationZipFileDataOperation(translationId: translationId)
@@ -110,6 +110,7 @@ class MobileContentTranslationsApi {
         return queue
     }
     
+    @available(*, deprecated) // This can be removed after removing TranslationDownload in place of TranslationsRepository following GT-1448. ~Levi
     func getTranslationsZipFileData(translationIds: [String], didDownloadTranslation: @escaping ((_ translationId: String, _ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void), completion: @escaping (() -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
