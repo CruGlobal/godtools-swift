@@ -152,6 +152,7 @@ extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
     
     func lessonCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
+        trackFeaturedLessonTappedAnalytics()
     }
 }
 
@@ -207,6 +208,10 @@ extension FavoritesContentViewModel {
         return ""
     }
     
+    private var featuredLessonTapSiteSection: String {
+        "Featured"
+    }
+    
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
@@ -214,6 +219,10 @@ extension FavoritesContentViewModel {
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
         
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
+    }
+    
+    func trackFeaturedLessonTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.lessonOpenTapped, siteSection: featuredLessonTapSiteSection, siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]))
     }
     
     func trackToolTappedAnalytics() {
