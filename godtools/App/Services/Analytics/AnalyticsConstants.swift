@@ -86,4 +86,10 @@ struct AnalyticsConstants {
         static let viewedMyToolsAction = "iam_mytools"
         static let viewedToolsAction = "iam_tools"
     }
+    
+    struct SiteSections {
+        static let favorited = "Favorited"
+        static let featured = "Featured"
+        static let spotlight = "Spotlight"
+    }
 }
