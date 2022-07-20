@@ -15,6 +15,7 @@ struct AnalyticsConstants {
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let exitLink = "cru.mobileexitlink"
         static let grMasterPersonID = "cru.grmpid"
+        static let lessonOpenTapped = "cru.lesson_open_tap"
         static let loggedInStatus = "cru.loggedinstatus"
         static let previousScreenName = "cru.previousscreenname"
         static let screenName = "cru.screenname"
@@ -68,6 +69,7 @@ struct AnalyticsConstants {
     
     struct ActionNames {
         static let aboutToolOpened = "About Tool Open Button"
+        static let lessonOpenTapped = "Lesson Open Tap"
         static let parallelLanguageToggled = "Parallel Language Toggled"
         static let shareIconEngaged = "Share Icon Engaged"
         static let shareScreenEngaged = "Share Screen Engaged"
