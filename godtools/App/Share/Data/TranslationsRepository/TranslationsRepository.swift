@@ -44,18 +44,45 @@ extension TranslationsRepository {
     private func downloadAndCacheTranslationFiles(translationId: String) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return getTranslationManifestFileName(translationId: translationId)
-            .flatMap({ manifestFileName -> AnyPublisher<[DownloadAndCacheTranslationFileResponse], Error> in
+            .flatMap({ manifestFileName -> AnyPublisher<(manifestName: String, fileResponses: [DownloadAndCacheTranslationFileResponse]), Error> in
                 
                 return self.downloadAndCacheTranslationManifestAndRelatedFilesIfNeeded(translationId: translationId)
-            })
-            .flatMap({ responses -> AnyPublisher<TranslationFilesDataModel, Error> in
-
-                let failedResponseHttpStatusCodes: [Int] = responses.compactMap({$0.urlResponseObject?.httpStatusCode}).filter({$0 >= 400})
-                
-                
-                
-                return Just(TranslationFilesDataModel(translationId: "", manifestFileName: "", fileCacheLocations: [])).setFailureType(to: Error.self)
+                    .map { fileResponses in
+                        return (manifestFileName, fileResponses)
+                    }
                     .eraseToAnyPublisher()
+            })
+            .flatMap({ data -> AnyPublisher<TranslationFilesDataModel, Error> in
+
+                let failedResponseHttpStatusCodes: [Int] = data.fileResponses.compactMap({$0.urlResponseObject?.httpStatusCode}).filter({$0 >= 400})
+                let failedToDownloadRelatedFile: Bool = failedResponseHttpStatusCodes.count > 0
+                
+                if !failedToDownloadRelatedFile {
+                    
+                    let translationFilesDataModel = TranslationFilesDataModel(
+                        translationId: translationId,
+                        manifestFileName: data.manifestName,
+                        fileCacheLocations: data.fileResponses.compactMap({$0.fileCacheLocation})
+                    )
+                    
+                    return Just(translationFilesDataModel).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    
+                    return self.downloadAndCacheTranslationZipFileFromRemote(translationId: translationId)
+                        .map { zipFileResponse in
+                            
+                            let translationFilesDataModel = TranslationFilesDataModel(
+                                translationId: translationId,
+                                manifestFileName: data.manifestName,
+                                fileCacheLocations: zipFileResponse.fileCacheLocations
+                            )
+                            
+                            return translationFilesDataModel
+                        }
+                        .eraseToAnyPublisher()
+                }
             })
             .eraseToAnyPublisher()
     }
@@ -175,11 +202,10 @@ extension TranslationsRepository {
         
     }
     
-    /*
     private func downloadAndCacheTranslationZipFileFromRemote(translationId: String) -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error> {
         
         return api.getTranslationZipFile(translationId: translationId)
-            .flatMap({ urlResponseObject -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error>
+            .flatMap({ urlResponseObject -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error> in
                     
                 let httpStatusSuccess: Bool = urlResponseObject.httpStatusCode == 200
                 
@@ -191,9 +217,12 @@ extension TranslationsRepository {
                         .eraseToAnyPublisher()
                 }
                 
-                
-                
+                return self.resourcesFileCache.storeTranslationZipFile(translationId: translationId, zipFileData: urlResponseObject.data)
+                    .map { fileCacheLocations in
+                        return DownloadAndCacheTranslationZipFileResponse(fileCacheLocations: fileCacheLocations, urlResponseObject: urlResponseObject)
+                    }
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-    }*/
+    }
 }

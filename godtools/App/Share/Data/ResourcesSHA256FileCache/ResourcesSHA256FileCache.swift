@@ -96,28 +96,41 @@ class ResourcesSHA256FileCache {
         
         let location = FileCacheLocation(relativeUrlString: fileName)
         
-        return Future() { [weak self] promise in
-            
-            self?.createStoredFileRelationshipsToTranslation(translationId: translationId, fileCacheLocations: [location]) { [weak self] (error: Error?) in
+        return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [location])
+            .flatMap({ fileCacheLocations -> AnyPublisher<URL, Error> in
                 
-                guard let weakSelf = self else {
-                    return
-                }
+                return self.fileCache.storeFilePublisher(location: location, data: fileData)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in
+                return Just(location).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func storeTranslationZipFile(translationId: String, zipFileData: Data) -> AnyPublisher<[FileCacheLocation], Error> {
+        
+        return fileCache.decompressZipFileAndStoreFileContentsPublisher(zipFileData: zipFileData)
+            .flatMap({ fileCacheLocations -> AnyPublisher<[FileCacheLocation], Error> in
+                
+                return self.createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: fileCacheLocations)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func createStoredFileRelationshipsToTranslationPublisher(translationId: String, fileCacheLocations: [FileCacheLocation]) -> AnyPublisher<[FileCacheLocation], Error> {
+        
+        return Future() { promise in
+            
+            self.createStoredFileRelationshipsToTranslation(translationId: translationId, fileCacheLocations: fileCacheLocations) { (error: Error?) in
                 
                 if let error = error {
-                    
                     promise(.failure(error))
                 }
                 else {
-                                        
-                    switch weakSelf.fileCache.storeFile(location: location, data: fileData) {
-                    
-                    case .success( _):
-                        promise(.success(location))
-                    
-                    case .failure(let fileCacheError):
-                        promise(.failure(fileCacheError))
-                    }
+                    promise(.success(fileCacheLocations))
                 }
             }
         }

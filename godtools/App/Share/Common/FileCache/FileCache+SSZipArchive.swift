@@ -8,6 +8,7 @@
 
 import Foundation
 import SSZipArchive
+import Combine
 
 extension FileCache {
     
@@ -20,6 +21,20 @@ extension FileCache {
         
         case .failure(let error):
             return .failure(error)
+        }
+    }
+    
+    func decompressZipFileAndStoreFileContentsPublisher(zipFileData: Data) -> AnyPublisher<[FileCacheLocation], Error> {
+        
+        switch decompressZipFileAndStoreFileContents(zipFileData: zipFileData) {
+        
+        case .success(let fileCacheLocations):
+            return Just(fileCacheLocations).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        
+        case .failure(let error):
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
     }
     

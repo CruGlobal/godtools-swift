@@ -34,4 +34,16 @@ extension FileCache {
                 .eraseToAnyPublisher()
         }
     }
+    
+    func storeFilePublisher(location: FileCacheLocation, data: Data) -> AnyPublisher<URL, Error> {
+        
+        switch storeFile(location: location, data: data) {
+        case .success(let url):
+            return Just(url).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        case .failure(let error):
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+    }
 }
