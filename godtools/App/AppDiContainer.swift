@@ -388,9 +388,10 @@ class AppDiContainer {
     func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
         return GetToolTranslationsUseCase(
             initialDataDownloader: initialDataDownloader,
-            translationsRepository: getTranslationsRepository(),
+            translationDownloader: translationDownloader,
             resourcesCache: initialDataDownloader.resourcesCache,
             languagesRepository: getLanguagesRepository(),
+            translationsFileCache: translationsFileCache,
             mobileContentParser: getMobileContentParser(),
             languageSettingsService: languageSettingsService
         )

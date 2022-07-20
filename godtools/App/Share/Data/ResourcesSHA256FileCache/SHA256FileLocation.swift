@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct SHA256FileLocation {
+@available(*, deprecated) // This should be removed in place of ResourcesSHA256FileCache now pointing to a FileCache following work in GT-1448. ~Levi
+class SHA256FileLocation: FileCacheLocation {
     
     private static let supportedExtensions: [String] = ["png", "jpg", "xml", "txt", "zip", "json"]
     
@@ -25,6 +26,8 @@ struct SHA256FileLocation {
             self.sha256 = sha256
             self.pathExtension = ""
         }
+        
+        super.init(relativeUrlString: sha256)
     }
     
     init(sha256WithPathExtension: String) {
@@ -37,34 +40,32 @@ struct SHA256FileLocation {
             if isValidPathExtension {
                 self.sha256 = file.path.replacingOccurrences(of: ".\(pathExtension)", with: "")
                 self.pathExtension = pathExtension
+                
+                super.init(relativeUrlString: sha256 + "." + pathExtension)
             }
             else if file.path.contains(pathExtension) {
                 self.sha256 = file.path.replacingOccurrences(of: ".\(pathExtension)", with: "")
                 self.pathExtension = ""
+                
+                super.init(relativeUrlString: sha256)
             }
             else {
                 self.sha256 = file.path
                 self.pathExtension = ""
+                
+                super.init(relativeUrlString: sha256)
             }
         }
         else {
             self.sha256 = ""
             self.pathExtension = ""
+            
+            super.init(relativeUrlString: "")
         }
     }
     
     private static func isValidPathExtension(pathExtension: String) -> Bool {
         return !pathExtension.isEmpty && !pathExtension.contains(" ") && SHA256FileLocation.supportedExtensions.contains(pathExtension)
-    }
-    
-    var fileUrl: URL? {
-        
-        if SHA256FileLocation.isValidPathExtension(pathExtension: pathExtension) {
-            return URL(string: sha256)?.appendingPathExtension(pathExtension)
-        }
-        else {
-           return URL(string: sha256)
-        }
     }
     
     var sha256WithPathExtension: String {

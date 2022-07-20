@@ -9,6 +9,7 @@
 import Foundation
 import SSZipArchive
 
+@available(*, deprecated) // This should be removed in place of ResourcesSHA256FileCache now pointing to a FileCache following work in GT-1448. ~Levi
 class SHA256FilesCache {
     
     private let fileManager: FileManager = FileManager.default

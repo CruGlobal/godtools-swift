@@ -53,41 +53,10 @@ class ResourcesSHA256FileCache {
         return fileCache.getImage(location: location)
     }
     
-    func getTranslationManifest(manifestName: String) -> Result<Data?, Error> {
+    @available(*, deprecated) // This can be removed after removing TranslationsFileCache in place of TranslationsRepository in GT-1448. ~Levi
+    func decompressZipFileAndStoreFileContents(zipFileData: Data) -> Result<[FileCacheLocation], Error> {
         
-        let location = FileCacheLocation(relativeUrlString: manifestName)
-        
-        return fileCache.getData(location: location)
-    }
-    
-    func getTranslationManifest(manifestName: String) -> AnyPublisher<Data?, Error> {
-        
-        let location = FileCacheLocation(relativeUrlString: manifestName)
-        
-        switch fileCache.getData(location: location) {
-        case .success(let data):
-            return Just(data).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        case .failure(let error):
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    func getTranslationManifest(translationId: String) -> Data? {
-        
-        guard let translation = realmDatabase.mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
-            return nil
-        }
-        
-        let location = FileCacheLocation(relativeUrlString: translation.manifestName)
-        
-        switch fileCache.getData(location: location) {
-        case .success(let data):
-            return data
-        case .failure( _):
-            return nil
-        }
+        return fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
     }
     
     // MARK: - Translation Files

@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
+@available(*, deprecated) // This should be removed in place of TranslationsRepository and ResourcesSHA256FileCache following GT-1448. ~Levi
 class TranslationsFileCache {
         
     private let realmDatabase: RealmDatabase
@@ -20,6 +20,24 @@ class TranslationsFileCache {
         self.realmDatabase = realmDatabase
         self.sha256FileCache = sha256FileCache
     }
+    
+    func getFile(location: SHA256FileLocation) -> Result<URL, Error> {
+        return sha256FileCache.getFile(location: location)
+    }
+    
+    func getUIImage(location: SHA256FileLocation) -> UIImage? {
+        
+        switch sha256FileCache.getUIImage(location: location) {
+        case .success(let uiImage):
+            return uiImage
+        case .failure( _):
+            return nil
+        }
+    }
+    
+    func getData(location: SHA256FileLocation) -> Result<Data?, Error> {
+        return sha256FileCache.getData(location: location)
+    }
         
     func getTranslation(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
@@ -28,9 +46,6 @@ class TranslationsFileCache {
     
     func getTranslations(translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
         
-        // TODO: Fix in GT-1448. ~Levi
-        
-        /*
         let realm: Realm = realmDatabase.mainThreadRealm
         
         var results: [Result<TranslationManifestData, TranslationsFileCacheError>] = Array()
@@ -79,9 +94,7 @@ class TranslationsFileCache {
             results.append(result)
         }
         
-        return results*/
-        
-        return []
+        return results
     }
     
     // MARK: - Caching Translation ZipFile Data
@@ -109,21 +122,18 @@ class TranslationsFileCache {
             let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.cacheTranslationZipData(
                 realm: realm,
                 translationId: translationId,
-                zipData: zipData
+                zipFileData: zipData
             )
             
             complete(result)
         }
     }
     
-    func cacheTranslationZipData(realm: Realm, translationId: String, zipData: Data) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+    func cacheTranslationZipData(realm: Realm, translationId: String, zipFileData: Data) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
-        // TODO: Fix in GT-1448. ~Levi
+        let sha256FileCache: ResourcesSHA256FileCache = self.sha256FileCache
         
-        /*
-        let sha256FileCache: SHA256FilesCache = self.sha256FileCache
-        
-        let result: Result<[SHA256FileLocation], Error> = sha256FileCache.decompressZipFileAndCacheSHA256FileContents(zipData: zipData)
+        let result: Result<[FileCacheLocation], Error> = sha256FileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
             
         switch result {
         
@@ -141,7 +151,7 @@ class TranslationsFileCache {
 
                     for location in cachedSHA256FileLocations {
                                             
-                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.sha256WithPathExtension) {
+                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.relativeUrlString) {
                             
                             if !existingRealmSHA256File.translations.contains(translation) {
                                 existingRealmSHA256File.translations.append(translation)
@@ -150,7 +160,7 @@ class TranslationsFileCache {
                         }
                         else {
                             let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                            newRealmSHA256File.sha256WithPathExtension = location.sha256WithPathExtension
+                            newRealmSHA256File.sha256WithPathExtension = location.relativeUrlString
                             newRealmSHA256File.translations.append(translation)
                             realm.add(newRealmSHA256File, update: .all)
                             realmSHA256Files.append(newRealmSHA256File)
@@ -203,9 +213,7 @@ class TranslationsFileCache {
                         
         case .failure(let error):
             return .failure(.sha256FileCacheError(error: error))
-        }*/
-        
-        return .failure(.translationDoesNotExistInCache)
+        }
     }
     
     // MARK: - Deleting Translation ZipFiles
@@ -279,3 +287,4 @@ class TranslationsFileCache {
         return nil
     }
 }
+
