@@ -19,12 +19,13 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let analytics: AnalyticsContainer
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -36,6 +37,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.analytics = analytics
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
@@ -53,7 +55,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             dataDownloader: initialDataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            analytics: analytics
+            analytics: analytics,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
         )
     }
     
@@ -67,7 +70,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             favoritedResourcesCache: favoritedResourcesCache,
             analytics: analytics,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
-            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase
+            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
         )
     }
     
@@ -80,7 +84,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
             favoritingToolMessageCache: favoritingToolMessageCache,
-            analytics: analytics
+            analytics: analytics,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
         )
     }
     

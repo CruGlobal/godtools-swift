@@ -17,12 +17,13 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     
     private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
         return LessonsListViewModel(
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
+            localizationServices: localizationServices, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -33,12 +34,13 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         
         super.init()
     }

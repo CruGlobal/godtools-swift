@@ -19,6 +19,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: FeaturedLessonCardsViewModelDelegate?
     
     // MARK: - Published
@@ -27,10 +28,11 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: FeaturedLessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: FeaturedLessonCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -53,6 +55,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
             resource: lesson,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: delegate
         )
     }

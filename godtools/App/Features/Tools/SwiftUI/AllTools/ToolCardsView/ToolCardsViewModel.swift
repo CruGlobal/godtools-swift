@@ -21,18 +21,20 @@ class ToolCardsViewModel: ToolCardProvider {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: ToolCardsViewModelDelegate?
     
     private var categoryFilterValue: String?
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, delegate: ToolCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -55,6 +57,7 @@ class ToolCardsViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: delegate
         )
     }

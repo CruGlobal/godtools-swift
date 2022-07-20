@@ -63,7 +63,8 @@ struct AllToolsContentView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase()
         )
         
         AllToolsContentView(viewModel: viewModel)
