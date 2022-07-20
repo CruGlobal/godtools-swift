@@ -43,6 +43,7 @@ struct ToolCategoriesView: View {
                 }
                 .padding([.leading, .trailing], leadingPadding)
                 .padding([.top, .bottom], 8)
+                .frame(height: 179) // TODO: - this is necessary to fix a layout issue on iOS 13.4.  Can be removed when we stop supporting 13.
             }
             .fixedSize(horizontal: false, vertical: true)
         }
