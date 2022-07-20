@@ -1,5 +1,5 @@
 //
-//  TranslationFileManifestParser.swift
+//  ParseTranslationManifestForRelatedFiles.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/18/22.
@@ -10,64 +10,57 @@ import Foundation
 import GodToolsToolParser
 import Combine
 
-class TranslationFileManifestParser {
+class ParseTranslationManifestForRelatedFiles {
     
     private let resourcesFileCache: ResourcesSHA256FileCache
-    private let iOSManifestParser: IosManifestParser
+    private let parser: IosManifestParser
     
     init(resourcesFileCache: ResourcesSHA256FileCache) {
               
         self.resourcesFileCache = resourcesFileCache
-        
-        let parserFactory = TranslationFileManifestParserFactory(resourcesFileCache: resourcesFileCache)
-                
-        iOSManifestParser = IosManifestParser(
-            parserFactory: parserFactory,
+        self.parser = IosManifestParser(
+            parserFactory: TranslationFileManifestParserFactory(resourcesFileCache: resourcesFileCache),
             defaultConfig: ParserConfig(supportedFeatures: [], supportedDeviceTypes: [], parsePages: false, parseTips: false)
         )
     }
     
-    func parseManifest(manifestName: String) -> Result<Manifest, Error> {
+    func parseManifestForRelatedFiles(manifestName: String) -> Result<[String], Error> {
         
         switch resourcesFileCache.getFileExists(location: FileCacheLocation(relativeUrlString: manifestName)) {
+        
         case .success(let fileExists):
+            
             guard fileExists else {
                 let error: Error = NSError.errorWithDescription(description: "Failed to parse manifest because manifest does not exist in the resources file cache.")
                 return .failure(error)
             }
+            
         case .failure(let error):
             return .failure(error)
         }
-        
-        let result = iOSManifestParser.parseManifestBlocking(fileName: manifestName)
-        
-        if let resultData = result as? ParserResult.Data {
-            return .success(resultData.manifest)
-        }
-        else {
+    
+        guard let resultData = parser.parseManifestBlocking(fileName: manifestName) as? ParserResult.Data else {
+            
             let error: Error = NSError.errorWithDescription(description: "Failed to parse tool manifest.")
             return .failure(error)
         }
+        
+        let manifest: Manifest = resultData.manifest
+        
+        return .success(Array(manifest.relatedFiles))
     }
     
-    func parseManifestPublisher(manifestName: String) -> AnyPublisher<Manifest, Error> {
+    func parseManifestForRelatedFilesPublisher(manifestName: String) -> AnyPublisher<[String], Error> {
         
-        switch parseManifest(manifestName: manifestName) {
-        case .success(let manifest):
-            return Just(manifest).setFailureType(to: Error.self)
+        switch parseManifestForRelatedFiles(manifestName: manifestName) {
+        
+        case .success(let relatedFiles):
+            return Just(relatedFiles).setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
+        
         case .failure(let error):
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
-    }
-    
-    func parseManifestRelatedFilesPublisher(manifestName: String) -> AnyPublisher<[String], Error> {
-        
-        return parseManifestPublisher(manifestName: manifestName)
-            .map {
-                return Array($0.relatedFiles)
-            }
-            .eraseToAnyPublisher()
     }
 }

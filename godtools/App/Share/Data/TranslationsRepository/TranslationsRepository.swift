@@ -111,9 +111,9 @@ extension TranslationsRepository {
                            
                 fileCacheLocations.append(manifestFileCacheLocation)
                 
-                let parser = TranslationFileManifestParser(resourcesFileCache: self.resourcesFileCache)
+                let parser = ParseTranslationManifestForRelatedFiles(resourcesFileCache: self.resourcesFileCache)
                 
-                return parser.parseManifestRelatedFilesPublisher(manifestName: manifestFileCacheLocation.relativeUrlString)
+                return parser.parseManifestForRelatedFilesPublisher(manifestName: manifestFileCacheLocation.relativeUrlString)
             })
             .flatMap({ relatedFileNames -> AnyPublisher<[FileCacheLocation], Error> in
                 
