@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+// TODO: Remove in GT-1448. ~Levi
 class TranslationsFileCache {
         
     private let realmDatabase: RealmDatabase
@@ -19,24 +20,6 @@ class TranslationsFileCache {
         self.realmDatabase = realmDatabase
         self.sha256FileCache = sha256FileCache
     }
-    
-    func getFile(location: SHA256FileLocation) -> Result<URL, Error> {
-        return sha256FileCache.getFile(location: location)
-    }
-    
-    func getImage(location: SHA256FileLocation) -> UIImage? {
-        
-        switch sha256FileCache.getImage(location: location) {
-        case .success(let image):
-            return image
-        case .failure( _):
-            return nil
-        }
-    }
-    
-    func getData(location: SHA256FileLocation) -> Result<Data?, Error> {
-        return sha256FileCache.getData(location: location)
-    }
         
     func getTranslation(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
@@ -45,6 +28,9 @@ class TranslationsFileCache {
     
     func getTranslations(translationIds: [String]) -> [Result<TranslationManifestData, TranslationsFileCacheError>] {
         
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         let realm: Realm = realmDatabase.mainThreadRealm
         
         var results: [Result<TranslationManifestData, TranslationsFileCacheError>] = Array()
@@ -93,7 +79,9 @@ class TranslationsFileCache {
             results.append(result)
         }
         
-        return results
+        return results*/
+        
+        return []
     }
     
     // MARK: - Caching Translation ZipFile Data
@@ -130,6 +118,9 @@ class TranslationsFileCache {
     
     func cacheTranslationZipData(realm: Realm, translationId: String, zipData: Data) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         let sha256FileCache: SHA256FilesCache = self.sha256FileCache
         
         let result: Result<[SHA256FileLocation], Error> = sha256FileCache.decompressZipFileAndCacheSHA256FileContents(zipData: zipData)
@@ -212,7 +203,9 @@ class TranslationsFileCache {
                         
         case .failure(let error):
             return .failure(.sha256FileCacheError(error: error))
-        }
+        }*/
+        
+        return .failure(.translationDoesNotExistInCache)
     }
     
     // MARK: - Deleting Translation ZipFiles

@@ -7,29 +7,30 @@
 //
 
 import Foundation
+import Combine
 
 class GetToolTranslationsUseCase: NSObject {
     
     typealias TranslationId = String
     
     private let initialDataDownloader: InitialDataDownloader
-    private let translationDownloader: TranslationDownloader
+    private let translationsRepository: TranslationsRepository
     private let resourcesCache: ResourcesCache
     private let languagesRepository: LanguagesRepository
-    private let translationsFileCache: TranslationsFileCache
     private let mobileContentParser: MobileContentParser
     private let languageSettingsService: LanguageSettingsService
     
     private var didInitiateDownloadStartedClosure: Bool = false
     private var downloadTranslationsReceipt: DownloadTranslationsReceipt?
     
-    init(initialDataDownloader: InitialDataDownloader, translationDownloader: TranslationDownloader, resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, translationsFileCache: TranslationsFileCache, mobileContentParser: MobileContentParser, languageSettingsService: LanguageSettingsService) {
+    private var downloadingTranslations: AnyCancellable?
+    
+    init(initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, mobileContentParser: MobileContentParser, languageSettingsService: LanguageSettingsService) {
         
         self.initialDataDownloader = initialDataDownloader
-        self.translationDownloader = translationDownloader
+        self.translationsRepository = translationsRepository
         self.resourcesCache = resourcesCache
         self.languagesRepository = languagesRepository
-        self.translationsFileCache = translationsFileCache
         self.mobileContentParser = mobileContentParser
         self.languageSettingsService = languageSettingsService
         
@@ -120,6 +121,11 @@ class GetToolTranslationsUseCase: NSObject {
             
             initiateDownloadStartedClosure(downloadStarted: downloadStarted)
             
+            // TODO: Implement in GT-1448. ~Levi
+            
+            downloadTranslationsFromRemoteDatabase(translationIds: downloadTranslationsNeeded)
+            
+            /*
             downloadTranslationsFromRemoteDatabase(translationIds: downloadTranslationsNeeded) { [weak self] in
                 DispatchQueue.main.async { [weak self] in
                     
@@ -129,7 +135,7 @@ class GetToolTranslationsUseCase: NSObject {
                         downloadFinished: downloadFinished
                     )
                 }
-            }
+            }*/
         }
         else if fetchedToolTranslations.count > 0 {
             
@@ -155,7 +161,7 @@ extension GetToolTranslationsUseCase {
         
         for toolTranslation in toolTranslations {
             
-            switch mobileContentParser.parse(translationManifestData: toolTranslation.translationManifestData) {
+            switch mobileContentParser.parse(translationManifestFileName: toolTranslation.manifestFileName) {
             
             case .success(let manifest):
                 
@@ -200,22 +206,24 @@ extension GetToolTranslationsUseCase {
         initialDataDownloader.didDownloadAndCacheResources.removeObserver(self)
     }
     
-    private func downloadTranslationsFromRemoteDatabase(translationIds: [String], completion: @escaping (() -> Void)) {
-                                       
-        destroyDownloadTranslationsReceipt()
+    private func downloadTranslationsFromRemoteDatabase(translationIds: [String]) {
+           
+        print("Implement...")
         
-        downloadTranslationsReceipt = translationDownloader.downloadAndCacheTranslationManifests(translationIds: translationIds)
-        
-        downloadTranslationsReceipt?.completedSignal.addObserver(self, onObserve: { [weak self] in
-            
-            guard let weakSelf = self else {
-                return
+        downloadingTranslations = translationsRepository.downloadAnCacheTranslationFiles(translationIds: translationIds)
+            .sink { error in
+                print("ERROR: \(error)")
+            } receiveValue: { (files: [TranslationFilesDataModel]) in
+                
+                print("did download and cache files: \(files)")
+                
+                for file in files {
+                    
+                    print("translationId: \(file.translationId)")
+                    print("  manifest: \(file.manifestFileName)")
+                    print("  fileCacheLocations: \(file.fileCacheLocations)")
+                }
             }
-            
-            weakSelf.downloadTranslationsReceipt?.completedSignal.removeObserver(weakSelf)
-            
-            completion()
-        })
     }
     
     private func destroyDownloadTranslationsReceipt() {
@@ -281,24 +289,30 @@ extension GetToolTranslationsUseCase {
     
     private func getTranslationManifest(resource: ResourceModel, language: LanguageModel, languageTranslation: TranslationModel, toolTranslations: inout [ToolTranslationData], translationIdsNeededDownloading: inout [String]) {
         
-        let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslation(translationId: languageTranslation.id)
+        let translationId: String = languageTranslation.id
         
-        switch translationManifestResult {
-            
-        case .success(let translationManifestData):
+        // TODO: Uncomment code below after testing. GT-1448. ~Levi
+        // for now just say translationIdsNeededDownloading
+        translationIdsNeededDownloading.append(translationId)
+        
+        /*
+        
+        if let translation = translationsRepository.getTranslation(translationId: translationId),  let manifestData = translationsRepository.getTranslationManifest(translationId: translationId) {
             
             let toolTranslation = ToolTranslationData(
                 resource: resource,
                 language: language,
                 translation: languageTranslation,
-                translationManifestData: translationManifestData
+                manifestFileName: translation.manifestName,
+                manifestData: manifestData
             )
             
             toolTranslations.append(toolTranslation)
-            
-        case .failure( _):
-            translationIdsNeededDownloading.append(languageTranslation.id)
         }
+        else {
+            
+            translationIdsNeededDownloading.append(translationId)
+        }*/
     }
     
     private func fetchFirstSupportedLanguageForResource(resource: ResourceModel, languageCodes: [String]) -> LanguageModel? {

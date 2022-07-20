@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove in GT-1448. ~Levi
 class DownloadedTranslationResult {
     
     let translationId: String

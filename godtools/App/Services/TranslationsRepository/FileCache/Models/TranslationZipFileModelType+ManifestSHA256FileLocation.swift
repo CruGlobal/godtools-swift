@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove in GT-1448. ~Levi
 extension TranslationZipFileModelType {
     var manifestSHA256FileLocation: SHA256FileLocation {
         if translationManifestFilename.contains(".xml") {

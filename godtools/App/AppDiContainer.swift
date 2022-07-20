@@ -13,7 +13,7 @@ class AppDiContainer {
         
     private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase
-    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
+    private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
     private let resourcesApi: ResourcesApiType
@@ -66,6 +66,8 @@ class AppDiContainer {
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
         realmDatabase = RealmDatabase()
+        
+        resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
 
         languagesApi = MobileContentLanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
@@ -81,11 +83,11 @@ class AppDiContainer {
         
         languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
         
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
                 
         translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
-        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
            
@@ -113,7 +115,7 @@ class AppDiContainer {
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
-            resourcesSHA256FileCache: resourcesSHA256FileCache,
+            resourcesSHA256FileCache: resourcesFileCache,
             favoritedResourcesCache: favoritedResourcesCache,
             downloadedLanguagesCache: downloadedLanguagesCache
         )
@@ -268,7 +270,7 @@ class AppDiContainer {
     }
     
     func getManifestResourcesCache() -> ManifestResourcesCache {
-        return ManifestResourcesCache(translationsFileCache: translationsFileCache)
+        return ManifestResourcesCache(resourcesFileCache: resourcesFileCache)
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
@@ -280,7 +282,7 @@ class AppDiContainer {
     }
     
     func getMobileContentParser() -> MobileContentParser {
-        return MobileContentParser(translationsFileCache: translationsFileCache)
+        return MobileContentParser(resourcesFileCache: resourcesFileCache)
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
@@ -386,10 +388,9 @@ class AppDiContainer {
     func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
         return GetToolTranslationsUseCase(
             initialDataDownloader: initialDataDownloader,
-            translationDownloader: translationDownloader,
+            translationsRepository: getTranslationsRepository(),
             resourcesCache: initialDataDownloader.resourcesCache,
             languagesRepository: getLanguagesRepository(),
-            translationsFileCache: translationsFileCache,
             mobileContentParser: getMobileContentParser(),
             languageSettingsService: languageSettingsService
         )
@@ -433,6 +434,14 @@ class AppDiContainer {
         return GetTranslatedLanguageUseCase(
             languagesRepository: getLanguagesRepository(),
             localizationServices: localizationServices
+        )
+    }
+    
+    func getTranslationsRepository() -> TranslationsRepository {
+        return TranslationsRepository(
+            api: translationsApi,
+            cache: RealmTranslationsCache(realmDatabase: realmDatabase),
+            resourcesFileCache: resourcesFileCache
         )
     }
     

@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 
+// TODO: Remove in GT-1448. ~Levi
 class RealmTranslationZipFile: Object, TranslationZipFileModelType {
     
     @objc dynamic var translationId: String = ""

@@ -24,6 +24,9 @@ class AttachmentsFileCache {
     
     func getAttachmentBanner(attachmentId: String) -> UIImage? {
         
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         let realm: Realm = realmDatabase.mainThreadRealm
         let sha256FileCacheRef: ResourcesSHA256FileCache = sha256FileCache
                 
@@ -39,13 +42,16 @@ class AttachmentsFileCache {
             case .failure( _):
                 break
             }
-        }
+        }*/
         
         return nil
     }
     
     func getAttachmentFileUrl(attachmentId: String) -> URL? {
-                        
+              
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         guard let attachment = realmDatabase.mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId) else {
             return nil
         }
@@ -55,22 +61,32 @@ class AttachmentsFileCache {
             return url
         case .failure( _):
             return nil
-        }
+        }*/
+        
+        return nil
     }
     
     func attachmentExists(location: SHA256FileLocation) -> Bool {
         
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         switch sha256FileCache.fileExists(location: location) {
         case .success(let fileExists):
             return fileExists
         case .failure(let error):
             assertionFailure(error.localizedDescription)
             return false
-        }
+        }*/
+        
+        return false
     }
     
     func cacheAttachmentFile(attachmentFile: AttachmentFile, fileData: Data, complete: @escaping ((_ error: Error?) -> Void)) {
         
+        // TODO: Fix in GT-1448. ~Levi
+        
+        /*
         let location: SHA256FileLocation = attachmentFile.location
         
         let cacheError: Error? = sha256FileCache.cacheSHA256File(location: location, fileData: fileData)
@@ -80,7 +96,7 @@ class AttachmentsFileCache {
         }
         else {
             addAttachmentReferencesIfNeeded(attachmentFile: attachmentFile, complete: complete)
-        }
+        }*/
     }
     
     func addAttachmentReferencesIfNeeded(attachmentFile: AttachmentFile, complete: @escaping ((_ error: Error?) -> Void)) {

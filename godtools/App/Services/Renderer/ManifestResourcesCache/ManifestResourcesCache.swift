@@ -11,22 +11,20 @@ import GodToolsToolParser
 
 class ManifestResourcesCache {
     
-    private let translationsFileCache: TranslationsFileCache
-    
-    required init(translationsFileCache: TranslationsFileCache) {
+    private let resourcesFileCache: ResourcesSHA256FileCache
         
-        self.translationsFileCache = translationsFileCache
+    init(resourcesFileCache: ResourcesSHA256FileCache) {
+        
+        self.resourcesFileCache = resourcesFileCache
     }
     
-    private func getSHA256FileLocation(resource: Resource) -> SHA256FileLocation? {
+    private func getSHA256FileLocation(resource: Resource) -> FileCacheLocation? {
         
         guard let localName = resource.localName else {
             return nil
         }
         
-        let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: localName)
-        
-        return location
+        return FileCacheLocation(relativeUrlString: localName)
     }
     
     func getFile(resource: Resource) -> Result<URL, Error> {
@@ -35,30 +33,20 @@ class ManifestResourcesCache {
             return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to find file."]))
         }
         
-        return translationsFileCache.getFile(location: location)
+        return resourcesFileCache.getFile(location: location)
     }
     
-    func getImageFromManifestResources(resource: Resource) -> UIImage? {
+    func getUIImage(resource: Resource) -> UIImage? {
         
         guard let location = getSHA256FileLocation(resource: resource) else {
             return nil
         }
         
-        let imageData: Data?
-        
-        switch translationsFileCache.getData(location: location) {
-            
-        case .success(let data):
-            imageData = data
+        switch resourcesFileCache.getUIImage(location: location) {
+        case .success(let uiImage):
+            return uiImage
         case .failure( _):
-            imageData = nil
+            return nil
         }
-        
-        if let imageData = imageData, let image = UIImage(data: imageData) {
-                                        
-            return image
-        }
-        
-        return nil
     }
 }

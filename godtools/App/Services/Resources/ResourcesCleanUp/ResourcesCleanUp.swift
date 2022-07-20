@@ -59,11 +59,12 @@ class ResourcesCleanUp {
         print("   total realm translation zip files: \(realm.objects(RealmTranslationZipFile.self).count)")
         print("   total realm sha256 resource files: \(realm.objects(RealmSHA256File.self).count)")
         
+        /*
         switch resourcesSHA256FileCache.getContentsOfRootDirectory() {
         case .success(let contents):
             print("   total resources files count: \(contents.count)")
         case .failure(let error):
             print("   fetch resources contents error: \(error)")
-        }
+        }*/
     }
 }

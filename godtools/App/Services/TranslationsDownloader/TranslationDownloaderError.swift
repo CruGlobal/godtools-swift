@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 
+// TODO: Remove in GT-1448. ~Levi
 enum TranslationDownloaderError: Error {
     
     case failedToCacheTranslation(error: TranslationsFileCacheError)

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove in GT-1448. ~Levi
 enum TranslationsFileCacheError: Error {
     
     case cacheError(error: Error)
