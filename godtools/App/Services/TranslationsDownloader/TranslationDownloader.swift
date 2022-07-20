@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import RequestOperation
 
-// TODO: Remove in GT-1448. ~Levi
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class TranslationDownloader: NSObject {
     
     typealias TranslationId = String
@@ -18,8 +18,9 @@ class TranslationDownloader: NSObject {
     private let realmDatabase: RealmDatabase
     private let resourcesCache: ResourcesCache
     private let translationsApi: MobileContentTranslationsApi
-    private let translationsFileCache: TranslationsFileCache
-            
+        
+    let translationsFileCache: TranslationsFileCache
+    
     required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, translationsApi: MobileContentTranslationsApi, translationsFileCache: TranslationsFileCache) {
         
         self.realmDatabase = realmDatabase
@@ -106,11 +107,6 @@ class TranslationDownloader: NSObject {
     
     func downloadAndCacheTranslationManifests(realm: Realm, translationIds: [String]) -> DownloadTranslationsReceipt? {
         
-        // TODO: This is getting replaced with TranslationsRepository. ~Levi
-        
-        return nil
-        /*
-        
         guard !translationIds.isEmpty else {
             return nil
         }
@@ -133,7 +129,7 @@ class TranslationDownloader: NSObject {
                 continue
             }
             
-            let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
+            let operation: RequestOperation = translationsApi.getTranslationZipFileDataOperation(translationId: translationId)
                     
             operations.append(operation)
             
@@ -167,7 +163,7 @@ class TranslationDownloader: NSObject {
         }
         else {
             return nil
-        }*/
+        }
     }
     
     private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ downloadError: TranslationDownloaderError?) -> Void)) {
@@ -204,3 +200,4 @@ class TranslationDownloader: NSObject {
         }
     }
 }
+

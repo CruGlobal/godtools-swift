@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-// TODO: Remove in GT-1448. ~Levi
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class TranslationsFileCache {
         
     private let realmDatabase: RealmDatabase

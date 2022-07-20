@@ -174,4 +174,26 @@ extension TranslationsRepository {
     private func downloadAndCacheTranslationZipFileIfNeeded(translationId: String) {
         
     }
+    
+    /*
+    private func downloadAndCacheTranslationZipFileFromRemote(translationId: String) -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error> {
+        
+        return api.getTranslationZipFile(translationId: translationId)
+            .flatMap({ urlResponseObject -> AnyPublisher<DownloadAndCacheTranslationZipFileResponse, Error>
+                    
+                let httpStatusSuccess: Bool = urlResponseObject.httpStatusCode == 200
+                
+                guard httpStatusSuccess else {
+                    
+                    let response = DownloadAndCacheTranslationZipFileResponse(fileCacheLocations: [], urlResponseObject: urlResponseObject)
+                    
+                    return Just(response).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                
+                
+            })
+            .eraseToAnyPublisher()
+    }*/
 }
