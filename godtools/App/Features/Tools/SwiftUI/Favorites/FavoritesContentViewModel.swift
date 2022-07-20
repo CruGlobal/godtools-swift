@@ -176,7 +176,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     }
     
     func toolCardTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
+        trackFavoritedToolTappedAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
@@ -192,7 +192,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     }
     
     func openToolButtonTapped(resource: ResourceModel) {
-        trackOpenToolButtonAnalytics()
+        trackOpenFavoritedToolButtonAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
 }
@@ -212,9 +212,7 @@ extension FavoritesContentViewModel {
         return ""
     }
     
-    private var featuredLessonTapSiteSection: String {
-        "Featured"
-    }
+    private 
     
     func pageViewed() {
         
@@ -226,14 +224,35 @@ extension FavoritesContentViewModel {
     }
     
     func trackFeaturedLessonTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.lessonOpenTapped, siteSection: featuredLessonTapSiteSection, siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+            siteSection: AnalyticsConstants.SiteSections.featured,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]
+        ))
     }
     
-    func trackToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
+    func trackFavoritedToolTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
+            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
+        ))
     }
     
-    func trackOpenToolButtonAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpened, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpened: 1]))
+    func trackOpenFavoritedToolButtonAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpened,
+            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.toolOpened: 1]
+        ))
     }
 }
