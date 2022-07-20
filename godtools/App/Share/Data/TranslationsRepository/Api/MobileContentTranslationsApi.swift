@@ -36,23 +36,11 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<Data?, Error> {
+    func getTranslationFile(fileName: String) -> AnyPublisher<URLResponseObject, Error> {
         
         return session.dataTaskPublisher(for: getTranslationFileRequest(fileName: fileName))
             .map {
-                
-                let responseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard let httpStatusCode = responseObject.httpStatusCode else {
-                    return nil
-                }
-                
-                if httpStatusCode >= 200 && httpStatusCode < 300 {
-                    return responseObject.data
-                }
-                else {
-                    return nil
-                }
+                return URLResponseObject(data: $0.data, urlResponse: $0.response)
             }
             .mapError {
                 return $0 as Error

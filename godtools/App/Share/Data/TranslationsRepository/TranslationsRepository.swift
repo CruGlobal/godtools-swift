@@ -44,17 +44,17 @@ extension TranslationsRepository {
     private func downloadAndCacheTranslationFiles(translationId: String) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return getTranslationManifestFileName(translationId: translationId)
-            .flatMap({ manifestFileName -> AnyPublisher<TranslationFilesDataModel, Error> in
+            .flatMap({ manifestFileName -> AnyPublisher<[DownloadAndCacheTranslationFileResponse], Error> in
                 
                 return self.downloadAndCacheTranslationManifestAndRelatedFilesIfNeeded(translationId: translationId)
-                    .map {
-                        
-                        return TranslationFilesDataModel(
-                            translationId: translationId,
-                            manifestFileName: manifestFileName,
-                            fileCacheLocations: $0
-                        )
-                    }
+            })
+            .flatMap({ responses -> AnyPublisher<TranslationFilesDataModel, Error> in
+
+                let failedResponseHttpStatusCodes: [Int] = responses.compactMap({$0.urlResponseObject?.httpStatusCode}).filter({$0 >= 400})
+                
+                
+                
+                return Just(TranslationFilesDataModel(translationId: "", manifestFileName: "", fileCacheLocations: [])).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -74,49 +74,30 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getTranslationManifestFromCacheElseRemote(translationId: String) -> AnyPublisher<Data?, Error> {
+    private func downloadAndCacheTranslationManifestAndRelatedFilesIfNeeded(translationId: String) -> AnyPublisher<[DownloadAndCacheTranslationFileResponse], Error> {
+        
+        var downloadAndCacheTranslationFileResponses: [DownloadAndCacheTranslationFileResponse] = Array()
         
         return getTranslationManifestFileName(translationId: translationId)
-            .flatMap {
-                self.getTranslationManifestFromCacheElseRemote(manifestName: $0)
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func getTranslationManifestFromCacheElseRemote(manifestName: String) -> AnyPublisher<Data?, Error> {
-        
-        return resourcesFileCache.getTranslationManifest(manifestName: manifestName)
-            .flatMap ({ data -> AnyPublisher<Data?, Error> in
-                if let data = data {
-                    return Just(data).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                else {
-                    return self.api.getTranslationFile(fileName: manifestName)
-                }
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    private func downloadAndCacheTranslationManifestAndRelatedFilesIfNeeded(translationId: String) -> AnyPublisher<[FileCacheLocation], Error> {
-        
-        var fileCacheLocations: [FileCacheLocation] = Array()
-        
-        return getTranslationManifestFileName(translationId: translationId)
-            .flatMap({ manifestFileName -> AnyPublisher<FileCacheLocation, Error> in
+            .flatMap({ manifestFileName -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> in
                 
                 return self.downloadAndCacheTranslationFileIfNeeded(translationId: translationId, fileName: manifestFileName)
             })
-            .flatMap({ manifestFileCacheLocation -> AnyPublisher<[ManifestRelatedFileName], Error> in
-                           
-                fileCacheLocations.append(manifestFileCacheLocation)
+            .flatMap({ getManifestTranslationFileResponse -> AnyPublisher<[ManifestRelatedFileName], Error> in
+                       
+                downloadAndCacheTranslationFileResponses.append(getManifestTranslationFileResponse)
+                
+                guard let manifestFileCacheLocation = getManifestTranslationFileResponse.fileCacheLocation else {
+                    return Just([]).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
                 
                 let parser = ParseTranslationManifestForRelatedFiles(resourcesFileCache: self.resourcesFileCache)
                 
                 return parser.parseManifestForRelatedFilesPublisher(manifestName: manifestFileCacheLocation.relativeUrlString)
             })
-            .flatMap({ relatedFileNames -> AnyPublisher<[FileCacheLocation], Error> in
-                
+            .flatMap({ relatedFileNames -> AnyPublisher<[DownloadAndCacheTranslationFileResponse], Error> in
+            
                 return Publishers.MergeMany(
                     relatedFileNames.map({
                         self.downloadAndCacheTranslationFileIfNeeded(translationId: translationId, fileName: $0)
@@ -125,46 +106,67 @@ extension TranslationsRepository {
                 .collect()
                 .eraseToAnyPublisher()
             })
-            .flatMap({ relatedFileCacheLocations -> AnyPublisher<[FileCacheLocation], Error> in
+            .flatMap({ getRelatedFileResponses -> AnyPublisher<[DownloadAndCacheTranslationFileResponse], Error> in
                 
-                fileCacheLocations.append(contentsOf: relatedFileCacheLocations)
+                downloadAndCacheTranslationFileResponses.append(contentsOf: getRelatedFileResponses)
                 
-                return Just(fileCacheLocations).setFailureType(to: Error.self)
+                return Just(downloadAndCacheTranslationFileResponses).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheTranslationFileIfNeeded(translationId: String, fileName: String) -> AnyPublisher<FileCacheLocation, Error> {
+    private func downloadAndCacheTranslationFileIfNeeded(translationId: String, fileName: String) -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> {
         
         let location = FileCacheLocation(relativeUrlString: fileName)
         
         return resourcesFileCache.getDataPublisher(location: location)
-            .flatMap({ data -> AnyPublisher<FileCacheLocation, Error> in
+            .flatMap({ cachedFileData -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> in
                 
-                let fileIsCached: Bool = data != nil
+                let fileIsCached: Bool = cachedFileData != nil
                 
                 guard !fileIsCached else {
-                    return Just(location).setFailureType(to: Error.self)
+                    
+                    let response = DownloadAndCacheTranslationFileResponse(fileCacheLocation: location, urlResponseObject: nil)
+                    
+                    return Just(response).setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 }
                 
-                return self.api.getTranslationFile(fileName: fileName)
-                    .flatMap({ data -> AnyPublisher<FileCacheLocation, Error> in
-                        
-                        guard let data = data else {
-                            let error = NSError.errorWithDescription(description: "Failed to fetch file data from remote.")
-                            return Fail(error: error)
-                                .eraseToAnyPublisher()
-                        }
-                        
-                        return self.resourcesFileCache.storeTranslationFile(
-                            translationId: translationId,
-                            fileName: fileName,
-                            fileData: data
-                        )
-                    })
+                return self.downloadAndCacheTranslationFileFromRemote(translationId: translationId, fileName: fileName)
                     .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func downloadAndCacheTranslationFileFromRemote(translationId: String, fileName: String) -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> {
+        
+        return api.getTranslationFile(fileName: fileName)
+            .flatMap({ urlResponseObject -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> in
+                                    
+                let httpStatusSuccess: Bool = urlResponseObject.httpStatusCode == 200
+                
+                guard httpStatusSuccess else {
+                    
+                    let response = DownloadAndCacheTranslationFileResponse(fileCacheLocation: nil, urlResponseObject: urlResponseObject)
+                    
+                    return Just(response).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                return self.resourcesFileCache.storeTranslationFile(
+                    translationId: translationId,
+                    fileName: fileName,
+                    fileData: urlResponseObject.data
+                )
+                .flatMap({ fileCacheLocation -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> in
+                    
+                    let response = DownloadAndCacheTranslationFileResponse(fileCacheLocation: fileCacheLocation, urlResponseObject: urlResponseObject)
+                    
+                    return Just(response).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                })
+                .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
