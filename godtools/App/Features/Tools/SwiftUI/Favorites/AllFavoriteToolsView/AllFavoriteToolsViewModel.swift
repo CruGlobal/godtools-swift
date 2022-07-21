@@ -115,7 +115,7 @@ extension AllFavoriteToolsViewModel {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
-            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
             data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
@@ -126,7 +126,7 @@ extension AllFavoriteToolsViewModel {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
             data: [AnalyticsConstants.Keys.toolOpened: 1]

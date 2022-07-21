@@ -23,6 +23,7 @@ struct AnalyticsConstants {
         static let shareAction = "cru.shareiconengaged"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
+        static let source = "cru.source"
         static let ssoguid = "cru.ssoguid"
         static let snowplowid = "cru.snowplowid"
         static let toggleAction = "cru.toggleswitch"
@@ -87,7 +88,7 @@ struct AnalyticsConstants {
         static let viewedToolsAction = "iam_tools"
     }
     
-    struct SiteSections {
+    struct Sources {
         static let favorited = "Favorited"
         static let featured = "Featured"
         static let spotlight = "Spotlight"

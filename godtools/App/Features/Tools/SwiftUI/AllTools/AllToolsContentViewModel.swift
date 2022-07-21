@@ -179,15 +179,18 @@ extension AllToolsContentViewModel {
             
     private func trackToolTappedAnalytics(isSpotlight: Bool) {
         
-        let siteSection = isSpotlight ? AnalyticsConstants.SiteSections.spotlight : ""
+        var data: [String: Any] = [AnalyticsConstants.Keys.toolOpenTapped: 1]
+        if isSpotlight {
+            data[AnalyticsConstants.Keys.source] = AnalyticsConstants.Sources.spotlight
+        }
         
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
-            siteSection: siteSection,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
+            data: data
         ))
     }
 }

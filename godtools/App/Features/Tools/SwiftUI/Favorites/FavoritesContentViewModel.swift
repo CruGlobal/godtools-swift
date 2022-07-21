@@ -225,10 +225,13 @@ extension FavoritesContentViewModel {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-            siteSection: AnalyticsConstants.SiteSections.featured,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]
+            data: [
+                    AnalyticsConstants.Keys.lessonOpenTapped: 1,
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured
+                  ]
         ))
     }
     
@@ -236,7 +239,7 @@ extension FavoritesContentViewModel {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
-            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
             data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
@@ -247,7 +250,7 @@ extension FavoritesContentViewModel {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: AnalyticsConstants.SiteSections.favorited,
+            siteSection: "",
             siteSubSection: "",
             url: nil,
             data: [AnalyticsConstants.Keys.toolOpened: 1]
