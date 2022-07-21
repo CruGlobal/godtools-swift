@@ -1,36 +1,36 @@
 //
-//  ToolSpotlightViewModel.swift
+//  LessonsListViewModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 5/12/22.
+//  Created by Rachael Skeath on 7/12/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-class ToolSpotlightViewModel: ToolCardProvider {
+protocol LessonsListViewModelDelegate: LessonCardDelegate {
+    func lessonsAreLoading(_ isLoading: Bool)
+}
+
+class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
-    private let deviceAttachmentBanners: DeviceAttachmentBanners
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
-    private weak var delegate: ToolCardViewModelDelegate?
+    private weak var delegate: LessonsListViewModelDelegate?
     
     // MARK: - Published
     
-    @Published var spotlightTitle: String = ""
-    @Published var spotlightSubtitle: String = ""
+    @Published var sectionTitle: String = ""
+    @Published var subtitle: String = ""
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
-        self.deviceAttachmentBanners = deviceAttachmentBanners
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
@@ -38,8 +38,9 @@ class ToolSpotlightViewModel: ToolCardProvider {
         
         super.init()
         
-        setTitleText()
-        setupBinding()
+        reloadLessonsFromCache()
+        
+        setup()
     }
     
     deinit {
@@ -50,14 +51,11 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
-        return ToolCardViewModel(
-            resource: tool,
+    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+        return LessonCardViewModel(
+            resource: lesson,
             dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: delegate
         )
@@ -66,42 +64,48 @@ class ToolSpotlightViewModel: ToolCardProvider {
 
 // MARK: - Private
 
-extension ToolSpotlightViewModel {
+extension LessonsListViewModel {
+    
+    private func setup() {
+        setupTitle()
+        setupBinding()
+    }
+    
+    private func setupTitle() {
+        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
+    }
     
     private func setupBinding() {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
+                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
                 if cachedResourcesAvailable {
-                    self.reloadResourcesFromCache()
+                    self?.reloadLessonsFromCache()
                 }
             }
         }
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
+                self?.delegate?.lessonsAreLoading(false)
                 if error == nil {
-                    self?.reloadResourcesFromCache()
+                    self?.reloadLessonsFromCache()
                 }
             }
         }
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.setTitleText()
+                self?.setupTitle()
             }
         }
     }
     
-    private func reloadResourcesFromCache() {
-        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
-    }
-    
-    private func setTitleText() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        spotlightTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.title")
-        spotlightSubtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.description")
+    private func reloadLessonsFromCache() {
+        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted()
     }
 }
+

@@ -1,5 +1,5 @@
 //
-//  LessonCardsViewModel.swift
+//  FeaturedLessonCardsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/28/22.
@@ -8,25 +8,31 @@
 
 import Foundation
 
-protocol LessonCardsViewModelDelegate: LessonCardDelegate {
+protocol FeaturedLessonCardsViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
 }
 
-class LessonCardsViewModel: LessonCardProvider {
+class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: LessonCardsViewModelDelegate?
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private weak var delegate: FeaturedLessonCardsViewModelDelegate?
+    
+    // MARK: - Published
+    
+    @Published var sectionTitle: String = ""
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: LessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: FeaturedLessonCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -49,6 +55,7 @@ class LessonCardsViewModel: LessonCardProvider {
             resource: lesson,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: delegate
         )
     }
@@ -56,7 +63,7 @@ class LessonCardsViewModel: LessonCardProvider {
 
 // MARK: - Private
 
-extension LessonCardsViewModel {
+extension FeaturedLessonCardsViewModel {
     
     private func setup() {
         setupTitle()

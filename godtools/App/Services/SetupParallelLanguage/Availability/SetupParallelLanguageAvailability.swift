@@ -11,9 +11,9 @@ import Foundation
 class SetupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType {
     
     private let setupParallelLanguageViewedCache: SetupParallelLanguageViewedCacheType
-    private let isNewUserCache: IsNewUserCacheType
+    private let isNewUserCache: IsNewUserDefaultsCache
     
-    required init(setupParallelLanguageViewedCache: SetupParallelLanguageViewedCacheType, isNewUserCache: IsNewUserCacheType) {
+    required init(setupParallelLanguageViewedCache: SetupParallelLanguageViewedCacheType, isNewUserCache: IsNewUserDefaultsCache) {
                 
         self.setupParallelLanguageViewedCache = setupParallelLanguageViewedCache
         self.isNewUserCache = isNewUserCache

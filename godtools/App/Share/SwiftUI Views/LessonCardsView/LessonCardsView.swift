@@ -20,21 +20,14 @@ struct LessonCardsView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 7) {
-            Text(viewModel.sectionTitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.leading, leadingPadding)
+        ForEach(viewModel.lessons) { lesson in
             
-            ForEach(viewModel.lessons) { lesson in
-                
-                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
-                    .listRowInsets(EdgeInsets())
-                    .contentShape(Rectangle())
-                    .padding([.top, .bottom], 8)
-                    .padding([.leading, .trailing], leadingPadding)
-                
-            }
+            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
+                .listRowInsets(EdgeInsets())
+                .contentShape(Rectangle())
+                .padding([.top, .bottom], 8)
+                .padding([.leading, .trailing], leadingPadding)
+            
         }
     }
 }
@@ -44,10 +37,11 @@ struct LessonCardsView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = LessonCardsViewModel(
+        let viewModel = FeaturedLessonCardsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             delegate: nil
         )
         

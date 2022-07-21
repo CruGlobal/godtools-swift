@@ -14,18 +14,13 @@ struct AllFavoriteToolsView: View {
     
     @ObservedObject var viewModel: AllFavoriteToolsViewModel
     
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 15/375
-    }
-    
     // MARK: - Body
+    
     var body: some View {
         
         GeometryReader { geo in
             let width = geo.size.width
-            let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+            let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
             
             BackwardCompatibleList(rootViewType: Self.self) {
                 Group {
@@ -55,6 +50,7 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             flowDelegate: nil
         )
         

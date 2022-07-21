@@ -29,12 +29,14 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private var disableOptInOnboardingBannerSubscription: AnyCancellable?
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
         
-    private(set) lazy var lessonCardsViewModel: LessonCardsViewModel = {
-        return LessonCardsViewModel(
+    private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
+        return FeaturedLessonCardsViewModel(
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -45,6 +47,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -58,7 +61,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -68,6 +71,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.analytics = analytics
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         
         super.init()
                 
@@ -143,9 +147,9 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     }
 }
 
-// MARK: - LessonCardsViewModelDelegate
+// MARK: - FeaturedLessonCardsViewModelDelegate
 
-extension FavoritesContentViewModel: LessonCardsViewModelDelegate {
+extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
     func lessonsAreLoading(_ isLoading: Bool) {
         lessonsLoading = isLoading
     }
