@@ -18,7 +18,7 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
  
     // MARK: - Constants
     
-    private let maxNumberCardsShown = 3
+    private let maxNumberCardsShown = 5
     
     // MARK: - Properties
     
