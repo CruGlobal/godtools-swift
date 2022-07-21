@@ -36,9 +36,9 @@ struct AllFavoriteToolsView: View {
                 .listRowInsets(EdgeInsets())
             } refreshHandler: {}
         }
-        .onAppear(
+        .onAppear {
             viewModel.pageViewed()
-        )
+        }
     }
 }
 

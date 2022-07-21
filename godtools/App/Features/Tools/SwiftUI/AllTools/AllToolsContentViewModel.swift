@@ -91,6 +91,20 @@ extension AllToolsContentViewModel {
     }
 }
 
+// MARK: - Private
+
+extension AllToolsContentViewModel {
+    
+    private func handleToolCardTapped(resource: ResourceModel, isSpotlight: Bool) {
+        trackToolTappedAnalytics(isSpotlight: isSpotlight)
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+    }
+    
+    private func handleToolFavoriteButtonTapped(resource: ResourceModel) {
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+    }
+}
+
 // MARK: - FavoritingToolBannerViewModelDelegate
 
 extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
@@ -113,13 +127,13 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 // MARK: - ToolCardsViewModelDelegate
 
 extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
+    
     func toolCardTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+        handleToolCardTapped(resource: resource, isSpotlight: false)
     }
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+        handleToolFavoriteButtonTapped(resource: resource)
     }
     
     func toolsAreLoading(_ isLoading: Bool) {
@@ -128,6 +142,18 @@ extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
     
     func toolDetailsButtonTapped(resource: ResourceModel) {}
     func openToolButtonTapped(resource: ResourceModel) {}
+}
+
+// MARK: - ToolSpotlightViewModelDelegate
+
+extension AllToolsContentViewModel: ToolSpotlightViewModelDelegate {
+    func spotlightToolCardTapped(resource: ResourceModel) {
+        handleToolCardTapped(resource: resource, isSpotlight: true)
+    }
+    
+    func spotlightToolFavoriteButtonTapped(resource: ResourceModel) {
+        handleToolFavoriteButtonTapped(resource: resource)
+    }
 }
 
 // MARK: - Analytics
@@ -151,7 +177,17 @@ extension AllToolsContentViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
             
-    private func trackToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
+    private func trackToolTappedAnalytics(isSpotlight: Bool) {
+        
+        let siteSection = isSpotlight ? AnalyticsConstants.SiteSections.spotlight : ""
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
+            siteSection: siteSection,
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
+        ))
     }
 }
