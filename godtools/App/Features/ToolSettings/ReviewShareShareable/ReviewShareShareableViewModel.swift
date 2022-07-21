@@ -38,5 +38,17 @@ class ReviewShareShareableViewModel: ObservableObject {
     func shareImageTapped() {
         
         flowDelegate?.navigate(step: .shareImageTappedFromReviewShareShareable(shareImage: imageToShare))
+        trackShareImageTappedAnalytics()
+    }
+    
+    func trackShareImageTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: "",
+            actionName: AnalyticsConstants.ActionNames.shareShareable,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.shareableId: imageId ?? ""]
+        ))
     }
 }
