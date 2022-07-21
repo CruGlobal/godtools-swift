@@ -89,8 +89,7 @@ struct AnalyticsConstants {
     }
     
     struct Sources {
-        static let favorited = "Favorited"
-        static let featured = "Featured"
-        static let spotlight = "Spotlight"
+        static let featured = "featured"
+        static let spotlight = "spotlight"
     }
 }

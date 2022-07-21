@@ -92,6 +92,13 @@ extension LessonsContentViewModel {
     
     func trackLessonTappedAnalytics() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.lessonOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]))
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]
+        ))
     }
 }
