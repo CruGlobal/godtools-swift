@@ -207,11 +207,13 @@ class ToolSettingsFlow: Flow {
             
             swapToolPrimaryAndParallelLanguage()
             
-        case .shareableTappedFromToolSettings(let imageToShare):
+        case .shareableTappedFromToolSettings(let imageToShare, let shareableImageId):
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
+                analytics: appDiContainer.analytics,
                 imageToShare: imageToShare,
+                imageId: shareableImageId,
                 localizationServices: appDiContainer.localizationServices
             )
             
