@@ -221,7 +221,7 @@ extension FavoritesContentViewModel {
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
-    func trackFeaturedLessonTappedAnalytics() {
+    private func trackFeaturedLessonTappedAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
@@ -235,7 +235,7 @@ extension FavoritesContentViewModel {
         ))
     }
     
-    func trackFavoritedToolTappedAnalytics() {
+    private func trackFavoritedToolTappedAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
@@ -246,7 +246,7 @@ extension FavoritesContentViewModel {
         ))
     }
     
-    func trackOpenFavoritedToolButtonAnalytics() {
+    private func trackOpenFavoritedToolButtonAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
