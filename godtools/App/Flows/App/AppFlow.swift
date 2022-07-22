@@ -667,7 +667,8 @@ extension AppFlow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
-            flowDelegate: self
+            flowDelegate: self,
+            analytics: appDiContainer.analytics
         )
         
         let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))
