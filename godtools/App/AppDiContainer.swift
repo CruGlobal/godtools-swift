@@ -314,7 +314,7 @@ class AppDiContainer {
     }
     
     func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
-        return GetOnboardingQuickLinksEnabledUseCase(deviceLanguage: deviceLanguage)
+        return GetOnboardingQuickLinksEnabledUseCase(getDeviceLanguageCodeUseCase: getDeviceLanguageCodeUseCase())
     }
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {

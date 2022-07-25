@@ -1041,6 +1041,7 @@
 		D41B38B1287F151100BD5899 /* LessonsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B0287F151100BD5899 /* LessonsListView.swift */; };
 		D41B38B52885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift */; };
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageCodeUseCase.swift */; };
+		D41B38BF288F2ED200BD5899 /* LanguageCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BE288F2ED200BD5899 /* LanguageCodes.swift */; };
 		D420DA2B28295E5E0035ABCB /* ToolCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */; };
 		D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */; };
 		D42600C8282BFA1200E7A520 /* ResourceCardLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ResourceCardLanguageView.swift */; };
@@ -2219,6 +2220,7 @@
 		D41B38B0287F151100BD5899 /* LessonsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListView.swift; sourceTree = "<group>"; };
 		D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageAvailablityStringUseCase.swift; sourceTree = "<group>"; };
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageCodeUseCase.swift; sourceTree = "<group>"; };
+		D41B38BE288F2ED200BD5899 /* LanguageCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCodes.swift; sourceTree = "<group>"; };
 		D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardsView.swift; sourceTree = "<group>"; };
 		D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSpotlightView.swift; sourceTree = "<group>"; };
 		D42600C7282BFA1200E7A520 /* ResourceCardLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCardLanguageView.swift; sourceTree = "<group>"; };
@@ -4641,6 +4643,7 @@
 				45AD22A02593CE8900A096A0 /* ColorPalette.swift */,
 				45AD189A25938A4E00A096A0 /* FontLibrary.swift */,
 				45AD18BC25938A4E00A096A0 /* ImageCatalog.swift */,
+				D41B38BE288F2ED200BD5899 /* LanguageCodes.swift */,
 				45325F2F285CF90D0078D932 /* Strings.swift */,
 				45BF6EBD27050D26003596A4 /* AnimationTransitions */,
 				45AD207125938B6A00A096A0 /* Common */,
@@ -7289,6 +7292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D41B38BF288F2ED200BD5899 /* LanguageCodes.swift in Sources */,
 				45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */,
 				45AD1F7525938A9800A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */,
 				D41B38BD288F2C7200BD5899 /* GetDeviceLanguageCodeUseCase.swift in Sources */,
