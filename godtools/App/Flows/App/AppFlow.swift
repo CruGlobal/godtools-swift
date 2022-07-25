@@ -310,9 +310,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToToolsMenu()
                 
+                let deviceLanguageCode = appDiContainer.getDeviceLanguageCodeUseCase().getDeviceLanguageCode()
+                
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
-                    primaryLanguageCodes: ["en"],
+                    primaryLanguageCodes: [deviceLanguageCode],
                     parallelLanguageCodes: [],
                     liveShareStream: nil,
                     page: nil,

@@ -218,6 +218,10 @@ class AppDiContainer {
         return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
+    func getDeviceLanguageCodeUseCase() -> GetDeviceLanguageCodeUseCase {
+        return GetDeviceLanguageCodeUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
     }
