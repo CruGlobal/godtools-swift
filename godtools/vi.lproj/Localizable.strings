@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Không có sẵn trong %@";
+
+"tool_menu_item.tools" = "Công cụ";
+"lessons.pageTitle" = "Bài học dành cho bạn";
+"lessons.pageSubtitle" = "Những ý tưởng thiết thực giúp xây dựng mối quan hệ và bắt đầu cuộc trò chuyện đầy ý nghĩa.";
 "toolSettings.languagesAvailable.title" = "Những ngôn ngữ sẵn có";
 "toolDetails.versions.message" = "Chọn một phiên bản khác của công cụ này ở bên dưới. Mỗi phiên bản có các tính năng và nội dung riêng biệt nhằm phù hợp nhất cho cuộc trò chuyện của bạn. Bạn có thể đánh dấu yêu thích nhiều phiên bản khác nhau của cùng một công cụ.";
 "favorites.noTools.title" = "Không có công cụ yêu thích nào";
@@ -42,34 +48,34 @@
 "parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
 "parellelLanguage.prompt" = "Bạn có muốn thiết lập ngôn ngữ thứ hai không?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Đóng hướng dẫn";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "Công cụ";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Mỗi công cụ sẽ thích hợp với từng mức độ của cuộc trò chuyện - trước, trong và sau.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.title" = "Gợi ý";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.message" = "Các gợi ý của God Tools sẽ hướng dẫn để bạn có thể giúp người khác hiểu về Phúc Âm và biết Chúa Giê-xu.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "Chia sẻ màn hình";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "Bây giờ bạn có thể chia sẻ màn hình từ xa và người kia có thể cùng theo dõi trong lúc bạn sử dụng một công cụ để chia sẻ Phúc Âm.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Bài học";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "Trong mỗi bài học, bạn sẽ học cách giúp bạn có thể trò chuyện nói về Chúa.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Bạn có thể tìm thấy phần hướng dẫn trong mục lục bất cứ lúc nào.";
 
 "onboardingTutorial.beginButton.title" = "Bắt đầu";

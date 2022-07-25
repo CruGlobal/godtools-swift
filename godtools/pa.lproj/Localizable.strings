@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "%@ ਵਿੱਚ ਉਪਲਬਧ ਨਹੀਂ ਹੈ";
+
+"tool_menu_item.tools" = "ਟੂਲ";
+"lessons.pageTitle" = "ਤੁਹਾਡੇ ਲਈ ਬਣਾਏ ਗਏ ਸਬਕ";
+"lessons.pageSubtitle" = "ਰਿਸ਼ਤੇ ਬਣਾਉਣ ਅਤੇ ਅਰਥਪੂਰਨ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਵਿਹਾਰਕ ਵਿਚਾਰ।";
 "toolSettings.languagesAvailable.title" = "ਉਪਲਬਧ ਭਾਸ਼ਾਵਾਂ";
 "toolDetails.versions.message" = "ਹੇਠਾਂ ਇਸ ਟੂਲ ਦਾ ਇੱਕ ਵੱਖਰਾ ਸੰਸਕਰਣ ਚੁਣੋ। ਹਰੇਕ ਸੰਸਕਰਣ ਵਿੱਚ ਵਿਲੱਖਣ ਸ਼ੈਲੀ ਅਤੇ ਸਮੱਗਰੀ ਸ਼ਾਮਲ ਹੈ ਤਾਂ ਜੋ ਤੁਸੀਂ ਉਹ ਲੱਭ ਸਕੋ ਜੋ ਤੁਹਾਡੀ ਗੱਲਬਾਤ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਹੈ। ਤੁਸੀਂ ਇੱਕੋ ਟੂਲ ਦੇ ਕਈ ਸੰਸਕਰਣਾਂ ਨੂੰ ਮਨਪਸੰਦ ਕਰ ਸਕਦੇ ਹੋ।";
 "favorites.noTools.title" = "ਪ੍ਰਦਰਸ਼ਿਤ ਕਰਨ ਲਈ ਕੋਈ ਮਨਪਸੰਦ ਟੂਲ ਨਹੀਂ ਹਨ";
@@ -176,7 +182,9 @@
 "no" = "ਨਹੀਂ";
 
 // Tract - Sharing
-"tract_share_message" ="ਇਹ ਲਿੰਕ ਤੁਹਾਨੂੰ ਉਹ ਸਫ਼ੇ ਦੇ ਵੈਬਸਾਈਟ ਅਨੁਵਾਦ 'ਤੇ ਲੈ ਜਾਵੇਗਾ ਜਿਸ ਨੂੰ ਅਸੀਂ ਅੱਜ ਆਖਰ ਵਿੱਚ ਇਕੱਠੇ ਦੇਖ ਰਹੇ ਸਾਂ : %@. ਆਓ ਹੋਰ ਗੱਲ ਕਰੀਏ!
+"tract_share_message" ="ਇਹ ਲਿੰਕ ਤੁਹਾਨੂੰ ਉਹ ਸਫ਼ੇ ਦੇ ਵੈਬਸਾਈਟ ਅਨੁਵਾਦ 'ਤੇ ਲੈ ਜਾਵੇਗਾ ਜਿਸ ਨੂੰ ਅਸੀਂ ਅੱਜ ਆਖਰ ਵਿੱਚ ਇਕੱਠੇ ਦੇਖ ਰਹੇ ਸਾਂ : %@.
+
+ ਆਓ ਹੋਰ ਗੱਲ ਕਰੀਏ!
 
 ਐਪ ਨੂੰ https://godtoolsapp.com ਤੋਂ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ";
 
