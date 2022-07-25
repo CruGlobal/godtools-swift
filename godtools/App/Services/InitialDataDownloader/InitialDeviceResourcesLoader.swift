@@ -12,7 +12,6 @@ import RealmSwift
 class InitialDeviceResourcesLoader {
     
     private let realmDatabase: RealmDatabase
-    private let legacyRealmMigration: LegacyRealmMigration
     private let attachmentsFileCache: AttachmentsFileCache
     private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
@@ -21,10 +20,9 @@ class InitialDeviceResourcesLoader {
     private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
-        self.legacyRealmMigration = legacyRealmMigration
         self.attachmentsFileCache = attachmentsFileCache
         self.translationsFileCache = translationsFileCache
         self.realmResourcesCache = realmResourcesCache
@@ -210,28 +208,16 @@ class InitialDeviceResourcesLoader {
     
     private func setupInitialFavoritedResourcesAndLanguage(complete: @escaping (() -> Void)) {
                 
-        let realmDatabase: RealmDatabase = self.realmDatabase
-        let legacyRealmMigration: LegacyRealmMigration = self.legacyRealmMigration
-        
-        legacyRealmMigration.migrateLegacyRealm { [weak self] (didMigrateLegacyRealm: Bool) in
+        realmDatabase.background { [weak self] (realm: Realm) in
             
-            guard !didMigrateLegacyRealm else {
-                complete()
-                return
-            }
-                        
-            // legacy realm was not migrated so setup data from initial device resources
-            realmDatabase.background { [weak self] (realm: Realm) in
-                
-                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "2") //satisfied
-                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "1") //knowing god personally
-                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "4") //fourlaws
-                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
-                
-                self?.choosePrimaryLanguageIfNeeded(realm: realm)
-                
-                complete()
-            }
+            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "2") //satisfied
+            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "1") //knowing god personally
+            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "4") //fourlaws
+            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
+            
+            self?.choosePrimaryLanguageIfNeeded(realm: realm)
+            
+            complete()
         }
     }
     
