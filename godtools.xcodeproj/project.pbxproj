@@ -71,10 +71,6 @@
 		451EBE3024AD968B00C4D6DD /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1724AD968A00C4D6DD /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg */; };
 		451EBE3124AD968B00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1824AD968A00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg */; };
 		451EBE3224AD968B00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1924AD968A00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg */; };
-		451EBE3324AD968B00C4D6DD /* 2351.zip in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1B24AD968A00C4D6DD /* 2351.zip */; };
-		451EBE3424AD968B00C4D6DD /* 2615.zip in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1C24AD968A00C4D6DD /* 2615.zip */; };
-		451EBE3524AD968B00C4D6DD /* 2776.zip in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1D24AD968A00C4D6DD /* 2776.zip */; };
-		451EBE3624AD968B00C4D6DD /* 2767.zip in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE1E24AD968A00C4D6DD /* 2767.zip */; };
 		451EBE3724AD968B00C4D6DD /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2024AD968A00C4D6DD /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.jpg */; };
 		451EBE3824AD968B00C4D6DD /* 298732618f6a220d016b5493508c038a8c821780ea699627d03d4a6035d3f6bb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2124AD968A00C4D6DD /* 298732618f6a220d016b5493508c038a8c821780ea699627d03d4a6035d3f6bb.jpg */; };
 		451EBE3924AD968B00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 451EBE2224AD968A00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg */; };
@@ -1209,10 +1205,6 @@
 		451EBE1724AD968A00C4D6DD /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.jpg; sourceTree = "<group>"; };
 		451EBE1824AD968A00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg; sourceTree = "<group>"; };
 		451EBE1924AD968A00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg; sourceTree = "<group>"; };
-		451EBE1B24AD968A00C4D6DD /* 2351.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 2351.zip; sourceTree = "<group>"; };
-		451EBE1C24AD968A00C4D6DD /* 2615.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 2615.zip; sourceTree = "<group>"; };
-		451EBE1D24AD968A00C4D6DD /* 2776.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 2776.zip; sourceTree = "<group>"; };
-		451EBE1E24AD968A00C4D6DD /* 2767.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 2767.zip; sourceTree = "<group>"; };
 		451EBE2024AD968A00C4D6DD /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.jpg; sourceTree = "<group>"; };
 		451EBE2124AD968A00C4D6DD /* 298732618f6a220d016b5493508c038a8c821780ea699627d03d4a6035d3f6bb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 298732618f6a220d016b5493508c038a8c821780ea699627d03d4a6035d3f6bb.jpg; sourceTree = "<group>"; };
 		451EBE2224AD968A00C4D6DD /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.jpg; sourceTree = "<group>"; };
@@ -2616,7 +2608,6 @@
 			children = (
 				451EBE1F24AD968A00C4D6DD /* attachment_about_banners */,
 				451EBE0F24AD968A00C4D6DD /* attachment_banners */,
-				451EBE1A24AD968A00C4D6DD /* english_translations */,
 				4503BEFD2821B7D800629692 /* languages.json */,
 				4503BEFC2821B7D800629692 /* resources.json */,
 			);
@@ -2638,17 +2629,6 @@
 				451EBE1924AD968A00C4D6DD /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.jpg */,
 			);
 			path = attachment_banners;
-			sourceTree = "<group>";
-		};
-		451EBE1A24AD968A00C4D6DD /* english_translations */ = {
-			isa = PBXGroup;
-			children = (
-				451EBE1B24AD968A00C4D6DD /* 2351.zip */,
-				451EBE1C24AD968A00C4D6DD /* 2615.zip */,
-				451EBE1D24AD968A00C4D6DD /* 2776.zip */,
-				451EBE1E24AD968A00C4D6DD /* 2767.zip */,
-			);
-			path = english_translations;
 			sourceTree = "<group>";
 		};
 		451EBE1F24AD968A00C4D6DD /* attachment_about_banners */ = {
@@ -7030,7 +7010,6 @@
 				D188EA8227146AB000B10ABA /* onboarding_dog.json in Resources */,
 				4561C41127C6891600C4A367 /* MobileContentAccordionSectionView.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
-				451EBE3324AD968B00C4D6DD /* 2351.zip in Resources */,
 				4505C68C282B4A0B0047951D /* ToolsMenuView.xib in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				45AD1BE225938A4F00A096A0 /* ProgressView.xib in Resources */,
@@ -7039,7 +7018,6 @@
 				45677891287DC6D40044AEB2 /* ChooseLanguageCell.xib in Resources */,
 				45AD1AAB25938A4E00A096A0 /* TutorialCell.xib in Resources */,
 				451EBE3A24AD968B00C4D6DD /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.jpg in Resources */,
-				451EBE3624AD968B00C4D6DD /* 2767.zip in Resources */,
 				4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */,
 				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				45677853287DC5750044AEB2 /* AccountView.xib in Resources */,
@@ -7103,13 +7081,11 @@
 				451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */,
-				451EBE3424AD968B00C4D6DD /* 2615.zip in Resources */,
 				4567788C287DC6D40044AEB2 /* LanguageSettingsView.xib in Resources */,
 				451EBE3124AD968B00C4D6DD /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.jpg in Resources */,
 				D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */,
 				D1D56916270502B200BBE2A6 /* TutorialPagerView.xib in Resources */,
 				D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */,
-				451EBE3524AD968B00C4D6DD /* 2776.zip in Resources */,
 				45AD1BD625938A4F00A096A0 /* PageNavigationCollectionView.xib in Resources */,
 				45AD1B2125938A4F00A096A0 /* LearnToShareToolCell.xib in Resources */,
 				4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */,
