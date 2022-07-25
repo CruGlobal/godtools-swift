@@ -16,7 +16,7 @@ class ReviewShareShareableViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private let analytics: AnalyticsContainer
     
-    let shareableImageModel: ShareableImageModel
+    private let shareableImageModel: ShareableImageModel
     let imagePreview: Image
     let shareImageButtonTitle: String
     
@@ -41,7 +41,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         trackShareImageTappedAnalytics()
     }
     
-    func trackShareImageTappedAnalytics() {
+    private func trackShareImageTappedAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareShareable,
