@@ -45,6 +45,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
+            getShareableImageUseCase: appDiContainer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,
@@ -207,13 +208,12 @@ class ToolSettingsFlow: Flow {
             
             swapToolPrimaryAndParallelLanguage()
             
-        case .shareableTappedFromToolSettings(let imageToShare, let shareableImageId):
+        case .shareableTappedFromToolSettings(let shareableImageModel):
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
                 analytics: appDiContainer.analytics,
-                imageToShare: imageToShare,
-                imageId: shareableImageId,
+                shareableImageModel: shareableImageModel,
                 localizationServices: appDiContainer.localizationServices
             )
             
