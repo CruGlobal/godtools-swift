@@ -241,7 +241,6 @@
 		4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */; };
 		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
-		4557EB262886F87A00F18DA3 /* FileCache+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4557EB252886F87A00F18DA3 /* FileCache+Combine.swift */; };
 		45585BCF2687BB8F00A21D12 /* ToolDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45585BCA2687BB8F00A21D12 /* ToolDeepLinkParser.swift */; };
 		45585BD02687BB8F00A21D12 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45585BCC2687BB8F00A21D12 /* ArticleDeepLinkParser.swift */; };
 		45585BD12687BB8F00A21D12 /* LessonDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45585BCE2687BB8F00A21D12 /* LessonDeepLinkParser.swift */; };
@@ -1385,7 +1384,6 @@
 		4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
 		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
-		4557EB252886F87A00F18DA3 /* FileCache+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileCache+Combine.swift"; sourceTree = "<group>"; };
 		45585BCA2687BB8F00A21D12 /* ToolDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkParser.swift; sourceTree = "<group>"; };
 		45585BCC2687BB8F00A21D12 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
 		45585BCE2687BB8F00A21D12 /* LessonDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonDeepLinkParser.swift; sourceTree = "<group>"; };
@@ -5424,7 +5422,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD20AF25938EE500A096A0 /* FileCache.swift */,
-				4557EB252886F87A00F18DA3 /* FileCache+Combine.swift */,
 				45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */,
 				45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */,
 			);
@@ -7976,7 +7973,6 @@
 				4567788B287DC6D40044AEB2 /* LanguageSettingsViewModelType.swift in Sources */,
 				45AD1BDA25938A4F00A096A0 /* AlertMessageViewModelType.swift in Sources */,
 				4542F408281086480016C254 /* DeepLinkAppsFlyerParserType.swift in Sources */,
-				4557EB262886F87A00F18DA3 /* FileCache+Combine.swift in Sources */,
 				45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */,
 				45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */,
 				D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */,

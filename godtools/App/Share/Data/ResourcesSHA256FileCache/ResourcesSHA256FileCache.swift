@@ -29,20 +29,12 @@ class ResourcesSHA256FileCache {
         return fileCache.getFileExists(location: location)
     }
     
-    func getFileExistsPublisher(location: FileCacheLocation) -> AnyPublisher<Bool, Error> {
-        return fileCache.getFileExistsPublisher(location: location)
-    }
-    
     func getFile(location: FileCacheLocation) -> Result<URL, Error> {
         return fileCache.getFile(location: location)
     }
     
     func getData(location: FileCacheLocation) -> Result<Data?, Error> {
         return fileCache.getData(location: location)
-    }
-    
-    func getDataPublisher(location: FileCacheLocation) -> AnyPublisher<Data?, Error> {
-        return fileCache.getDataPublisher(location: location)
     }
     
     func getUIImage(location: FileCacheLocation) -> Result<UIImage?, Error> {
@@ -73,7 +65,7 @@ class ResourcesSHA256FileCache {
         return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [location])
             .flatMap({ fileCacheLocations -> AnyPublisher<URL, Error> in
                 
-                return self.fileCache.storeFilePublisher(location: location, data: fileData)
+                return self.fileCache.storeFile(location: location, data: fileData).publisher
                     .eraseToAnyPublisher()
             })
             .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in

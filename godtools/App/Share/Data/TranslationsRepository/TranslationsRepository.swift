@@ -146,7 +146,7 @@ extension TranslationsRepository {
         
         let location = FileCacheLocation(relativeUrlString: fileName)
         
-        return resourcesFileCache.getDataPublisher(location: location)
+        return resourcesFileCache.getData(location: location).publisher
             .flatMap({ cachedFileData -> AnyPublisher<DownloadAndCacheTranslationFileResponse, Error> in
                 
                 let fileIsCached: Bool = cachedFileData != nil
