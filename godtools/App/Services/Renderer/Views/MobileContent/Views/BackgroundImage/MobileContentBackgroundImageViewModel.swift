@@ -23,7 +23,7 @@ class MobileContentBackgroundImageViewModel {
         self.manifestResourcesCache = manifestResourcesCache
         self.languageDirection = languageDirection
         
-        if let backgroundImage = manifestResourcesCache.getImageFromManifestResources(resource: backgroundImageModel.backgroundImageResource) {
+        if let backgroundImage = manifestResourcesCache.getUIImage(resource: backgroundImageModel.backgroundImageResource) {
             self.backgroundImage = backgroundImage
         }
         else {

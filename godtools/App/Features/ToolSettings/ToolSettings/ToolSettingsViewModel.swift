@@ -156,7 +156,7 @@ class ToolSettingsViewModel: ObservableObject {
         let manifestResourcesCache: ManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
         let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
         
-        guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
+        guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getUIImage(resource: resource) else {
             return
         }
         

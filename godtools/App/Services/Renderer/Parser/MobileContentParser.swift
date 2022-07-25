@@ -13,7 +13,7 @@ class MobileContentParser {
                 
     private let iOSManifestParser: IosManifestParser
     
-    required init(translationsFileCache: TranslationsFileCache) {
+    required init(resourcesFileCache: ResourcesSHA256FileCache) {
                         
         let enabledFeatures: [String] = [
             ParserConfigKt.FEATURE_ANIMATION,
@@ -21,14 +21,17 @@ class MobileContentParser {
             ParserConfigKt.FEATURE_FLOW,
             ParserConfigKt.FEATURE_MULTISELECT
         ]
+        
         let config = ParserConfig().withSupportedFeatures(features: Set(enabledFeatures))
         
-        iOSManifestParser = IosManifestParser(parserFactory: MobileContentMultiplatformParserFactory(translationsFileCache: translationsFileCache), defaultConfig: config)
+        let parserFactory: MobileContentMultiplatformParserFactory = MobileContentMultiplatformParserFactory(resourcesFileCache: resourcesFileCache)
+        
+        iOSManifestParser = IosManifestParser(parserFactory: parserFactory, defaultConfig: config)
     }
     
-    func parse(translationManifestData: TranslationManifestData) -> Result<Manifest, Error> {
+    func parse(translationManifestFileName: String) -> Result<Manifest, Error> {
         
-        let result = iOSManifestParser.parseManifestBlocking(fileName: translationManifestData.translationZipFile.translationManifestFilename)
+        let result = iOSManifestParser.parseManifestBlocking(fileName: translationManifestFileName)
         
         if let resultData = result as? ParserResult.Data {
             return .success(resultData.manifest)
