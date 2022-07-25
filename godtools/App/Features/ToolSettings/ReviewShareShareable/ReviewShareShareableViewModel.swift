@@ -45,7 +45,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareShareable,
-            siteSection: "",
+            siteSection: shareableImageModel.toolAbbreviation ?? "",
             siteSubSection: "",
             url: nil,
             data: [AnalyticsConstants.Keys.shareableId: shareableImageModel.imageId ?? ""]
