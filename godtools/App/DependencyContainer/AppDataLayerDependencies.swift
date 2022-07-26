@@ -21,11 +21,24 @@ class AppDataLayerDependencies {
         return AppConfig()
     }
     
+    func getAttachmentsRepository() -> AttachmentsRepository {
+        
+        return AttachmentsRepository(
+            api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         
         return LanguagesRepository(
             api: MobileContentLanguagesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmLanguagesCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    private func getResourcesFileCache() -> ResourcesSHA256FileCache {
+        return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
 }

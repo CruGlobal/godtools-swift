@@ -128,7 +128,7 @@ class RealmResourcesCache {
             for attachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                 
                 let realmAttachment = RealmAttachment()
-                realmAttachment.mapFrom(model: attachment)
+                realmAttachment.mapFrom(model: attachment, shouldIgnoreMappingPrimaryKey: false)
                 
                 if let resourceId = attachment.resource?.id {
                     realmAttachment.resource = realmResourcesDictionary[resourceId]

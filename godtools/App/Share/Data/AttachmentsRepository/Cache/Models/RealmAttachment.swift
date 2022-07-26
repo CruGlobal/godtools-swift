@@ -24,11 +24,14 @@ class RealmAttachment: Object, AttachmentModelType {
         return "id"
     }
     
-    func mapFrom(model: AttachmentModel) {
+    func mapFrom(model: AttachmentModel, shouldIgnoreMappingPrimaryKey: Bool) {
+        
+        if !shouldIgnoreMappingPrimaryKey {
+            id = model.id
+        }
         
         file = model.file
         fileFilename = model.fileFilename
-        id = model.id
         isZipped = model.isZipped
         sha256 = model.sha256
         type = model.type
