@@ -26,7 +26,7 @@ extension ToolNavigationFlow {
             toolDeepLink: toolDeepLink,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
             dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService
         )
         
@@ -67,7 +67,7 @@ extension ToolNavigationFlow {
             resourceId: resourceId,
             languageIds: languageIds,
             resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(

@@ -16,4 +16,16 @@ class AppDataLayerDependencies {
     init() {
         
     }
+    
+    func getAppConfig() -> AppConfig {
+        return AppConfig()
+    }
+    
+    func getLanguagesRepository() -> LanguagesRepository {
+        
+        return LanguagesRepository(
+            api: MobileContentLanguagesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmLanguagesCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
 }

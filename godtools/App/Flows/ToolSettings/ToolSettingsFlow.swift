@@ -383,7 +383,7 @@ class ToolSettingsFlow: Flow {
     
     private func setToolLanguages(languageIds: [String]) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.getLanguagesRepository()
+        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,

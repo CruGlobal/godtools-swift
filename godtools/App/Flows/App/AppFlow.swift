@@ -692,7 +692,7 @@ extension AppFlow {
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
             bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
             
@@ -810,7 +810,7 @@ extension AppFlow {
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()

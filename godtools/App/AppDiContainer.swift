@@ -54,13 +54,19 @@ class AppDiContainer {
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
     let firebaseInAppMessaging: FirebaseInAppMessagingType
+    
+    let dataLayer: AppDataLayerDependencies
+    let domainLayer: AppDomainLayerDependencies
         
     required init(appDeepLinkingService: DeepLinkingServiceType) {
                         
+        dataLayer = AppDataLayerDependencies()
+        domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
+        
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
-        languagesApi = MobileContentLanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        languagesApi = MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession())
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
@@ -140,7 +146,7 @@ class AppDiContainer {
         
         // TODO: Remove LanguagesRepository(cache: languagesCache) allocation here and use getLanguagesRepository().  This will be possible when no longer storing references in AppDiContainer. ~Levi
         languageSettingsService = LanguageSettingsService(
-            languagesRepository: LanguagesRepository(cache: languagesCache),
+            languagesRepository: LanguagesRepository(api: MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession()), cache: RealmLanguagesCache(realmDatabase: realmDatabase)),
             languageSettingsCache: languageSettingsCache
         )
         
@@ -247,10 +253,6 @@ class AppDiContainer {
             localizationServices: localizationServices,
             getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
         )
-    }
-    
-    func getLanguagesRepository() -> LanguagesRepository {
-        return LanguagesRepository(cache: languagesCache)
     }
     
     func getLearnToShareToolItemsProvider() -> LearnToShareToolItemsProviderType {
@@ -370,7 +372,7 @@ class AppDiContainer {
     
     func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
         return GetToolLanguagesUseCase(
-            languagesRepository: getLanguagesRepository(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: localizationServices
         )
     }
@@ -390,7 +392,7 @@ class AppDiContainer {
             initialDataDownloader: initialDataDownloader,
             translationDownloader: translationDownloader,
             resourcesCache: initialDataDownloader.resourcesCache,
-            languagesRepository: getLanguagesRepository(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
             translationsFileCache: translationsFileCache,
             mobileContentParser: getMobileContentParser(),
             languageSettingsService: languageSettingsService
@@ -433,7 +435,7 @@ class AppDiContainer {
     
     func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
         return GetTranslatedLanguageUseCase(
-            languagesRepository: getLanguagesRepository(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: localizationServices
         )
     }
