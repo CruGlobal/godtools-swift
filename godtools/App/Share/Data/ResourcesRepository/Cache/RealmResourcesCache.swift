@@ -13,15 +13,20 @@ import Combine
 class RealmResourcesCache {
     
     private let realmDatabase: RealmDatabase
-    private let resourcesChangedNotificationName = Notification.Name("resourcesCache.notification.resourcesChanged")
+    private let resourcesSync: RealmResourcesCacheSync
         
     init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
+        self.resourcesSync = RealmResourcesCacheSync(realmDatabase: realmDatabase)
     }
     
-    func getResourcesChangedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: resourcesChangedNotificationName)
+    var numberOfResources: Int {
+        return realmDatabase.mainThreadRealm.objects(RealmResource.self).count
+    }
+    
+    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
+        return resourcesSync.getResourcesSyncedPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -91,65 +96,8 @@ class RealmResourcesCache {
         return TranslationModel(realmTranslation: realmTranslation)
     }
     
-    func storeResources(resources: [ResourceModel], deletesNonExisting: Bool) -> AnyPublisher<[ResourceModel], Error> {
+    func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
-        return Future() { promise in
-
-            self.realmDatabase.background { (realm: Realm) in
-                
-                var resourcesToRemove: [RealmResource] = Array(realm.objects(RealmResource.self))
-                var writeError: Error?
-                
-                do {
-                    
-                    try realm.write {
-                        
-                        for resource in resources {
-                            
-                            if let index = resourcesToRemove.firstIndex(where: {$0.id == resource.id}) {
-                                resourcesToRemove.remove(at: index)
-                            }
-   
-                            if let existingResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resource.id) {
-                                
-                                existingResource.mapFrom(model: resource, shouldIgnoreMappingPrimaryKey: true)
-                            }
-                            else {
-                                
-                                let newResource: RealmResource = RealmResource()
-                                newResource.mapFrom(model: resource, shouldIgnoreMappingPrimaryKey: false)
-                                realm.add(newResource)
-                            }
-                        }
-                        
-                        if deletesNonExisting {
-                            realm.delete(resourcesToRemove)
-                        }
-                        
-                        writeError = nil
-                    }
-                }
-                catch let error {
-                    
-                    writeError = error
-                }
-                
-                if let writeError = writeError {
-                    
-                    promise(.failure(writeError))
-                }
-                else {
-                    
-                    NotificationCenter.default.post(
-                        name: self.resourcesChangedNotificationName,
-                        object: resources,
-                        userInfo: nil
-                    )
-                                        
-                    promise(.success(resources))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
     }
 }
