@@ -27,9 +27,12 @@ class RealmTranslation: Object, TranslationModelType {
         return "id"
     }
     
-    func mapFrom(model: TranslationModel) {
+    func mapFrom(model: TranslationModel, shouldIgnoreMappingPrimaryKey: Bool) {
         
-        id = model.id
+        if !shouldIgnoreMappingPrimaryKey {
+            id = model.id
+        }
+        
         isPublished = model.isPublished
         manifestName = model.manifestName
         translatedDescription = model.translatedDescription
@@ -40,7 +43,7 @@ class RealmTranslation: Object, TranslationModelType {
         
         if let modelResouce = model.resource {
             resource = RealmResource()
-            resource?.mapFrom(model: modelResouce)
+            resource?.mapFrom(model: modelResouce, shouldIgnoreMappingPrimaryKey: false)
         }
         else {
             resource = nil
