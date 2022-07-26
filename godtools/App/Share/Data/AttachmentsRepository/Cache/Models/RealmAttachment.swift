@@ -38,7 +38,7 @@ class RealmAttachment: Object, AttachmentModelType {
         
         if let modelResouce = model.resource {
             resource = RealmResource()
-            resource?.mapFrom(model: modelResouce)
+            resource?.mapFrom(model: modelResouce, shouldIgnoreMappingPrimaryKey: false)
         }
         else {
             resource = nil
