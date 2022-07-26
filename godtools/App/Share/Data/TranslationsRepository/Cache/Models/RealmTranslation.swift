@@ -48,7 +48,7 @@ class RealmTranslation: Object, TranslationModelType {
         
         if let modelLanguage = model.language {
             language = RealmLanguage()
-            language?.mapFrom(model: modelLanguage)
+            language?.mapFrom(model: modelLanguage, shouldIgnoreMappingPrimaryKey: false)
         }
         else {
             language = nil

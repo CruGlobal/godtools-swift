@@ -53,7 +53,7 @@ class RealmResourcesCache {
             for language in languages {
                 
                 let realmLanguage: RealmLanguage = RealmLanguage()
-                realmLanguage.mapFrom(model: language)
+                realmLanguage.mapFrom(model: language, shouldIgnoreMappingPrimaryKey: false)
                 realmLanguagesDictionary[realmLanguage.id] = realmLanguage
                 realmObjectsToCache.append(realmLanguage)
                 
