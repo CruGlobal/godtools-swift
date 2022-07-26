@@ -154,38 +154,6 @@ class InitialDeviceResourcesLoader {
         })
     }
     
-    private func processTranslationId(translationId: String, complete: @escaping (() -> Void)) {
-        
-        if let zipData = getTranslationZipData(filename: translationId) {
-            
-            translationsFileCache.cacheTranslationZipData(translationId: translationId, zipData: zipData) { (result: Result<TranslationManifestData, TranslationsFileCacheError>) in
-                
-                switch result {
-                case .success( _):
-                    break
-                case .failure(let fileCacheError):
-                    switch fileCacheError {
-                    case .cacheError(let error):
-                        print(" cache error: \(error)")
-                    case .getManifestDataError(let error):
-                        print(" get manifest error: \(error)")
-                    case .sha256FileCacheError(let error):
-                        print(" sha256 cache error: \(error)")
-                    case .translationDoesNotExistInCache:
-                        print(" translation does not exist in cache")
-                    case .translationManifestDoesNotExistInFileCache:
-                        print("  translation manifest does not exist in file cache")
-                    }
-                    assertionFailure("error cacheing translation zip")
-                }
-                complete()
-            }
-        }
-        else {
-            complete()
-        }
-    }
-    
     private func getTranslationZipData(filename: String) -> Data? {
         
         if let filePath = Bundle.main.path(forResource: filename, ofType: "zip") {
