@@ -10,9 +10,9 @@ import Foundation
 
 enum LanguageCodes {
     
-    static let English = "en"
-    static let French = "fr"
-    static let Latvian = "lv"
-    static let Vietnamese = "vi"
+    static let english = "en"
+    static let french = "fr"
+    static let latvian = "lv"
+    static let vietnamese = "vi"
     
 }
