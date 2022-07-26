@@ -1,3 +1,8 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "%@ではご利用いただけません";
+
+"lessons.pageTitle" = "あなた専用のレッスン";
+"lessons.pageSubtitle" = "信頼関係を築き、意義のある会話を始めるための実践的なアイデアです。";
 "toolSettings.languagesAvailable.title" = "利用可能な言語";
 "toolDetails.versions.message" = "本ツールの他バージョンを下からお選びいただけます。各バージョンによって、スタイルやコンテンツが異なりますので、あなたの会話に最も適したバージョンを見つけてください。同じツールの複数のバージョンをお気に入りに表示させることも可能です。";
 "favorites.noTools.title" = "表示できるお気に入りのツールはありません";

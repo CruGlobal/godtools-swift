@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Niet beschikbaar in het %@";
+
+"tool_menu_item.tools" = "Hulpmiddelen";
+"lessons.pageTitle" = "Speciaal voor jou";
+"lessons.pageSubtitle" = "Praktische ideeën om relaties te ontwikkelen en zinvolle gesprekken te voeren.";
 "toolSettings.languagesAvailable.title" = "Beschikbare talen";
 "toolDetails.versions.message" = "Kies hieronder een andere versie van deze tool. Elke versie heeft een unieke stijl en unieke content zodat je altijd een versie kunt vinden die bij je past. Je kunt meerdere versies van dezelfde tool aan je favorieten toevoegen.";
 "favorites.noTools.title" = "Geen favoriete tools";
@@ -34,7 +40,7 @@
 "parallelLanguage.selectLanguageButton.title" = "Selecteer een taal";
 "parellelLanguage.prompt" = "Wil je een tweede taal instellen?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Lessen";
 
 "onboardingTutorial.beginButton.title" = "Beginnen";
