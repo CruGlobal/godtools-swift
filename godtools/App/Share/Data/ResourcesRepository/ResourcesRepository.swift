@@ -54,7 +54,7 @@ class ResourcesRepository {
         return cache.getResourceLanguageTranslation(resourceId: resourceId, languageCode: languageCode)
     }
     
-    func downloadAndCacheResourcesPlusLatestAttachmentsAndTranslations() -> AnyPublisher<[ResourceModel], Error> {
+    func downloadAndCacheResourcesPlusLatestAttachmentsAndLatestTranslations() -> AnyPublisher<[ResourceModel], Error> {
         
         return self.api.getResourcesPlusLatestTranslationsAndAttachments()
             .mapError {
@@ -62,7 +62,7 @@ class ResourcesRepository {
             }
             .flatMap({ resourcesPlusLatestTranslationsAndAttachments -> AnyPublisher<[ResourceModel], Error> in
                 
-                return self.storeResourcesPlusLatestAttachmentsAndTranslations(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
+                return self.storeResourcesPlusLatestAttachmentsAndLatestTranslations(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
             })
             .eraseToAnyPublisher()
     }
@@ -70,7 +70,7 @@ class ResourcesRepository {
 
 extension ResourcesRepository {
     
-    private func storeResourcesPlusLatestAttachmentsAndTranslations(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[ResourceModel], Error> {
+    private func storeResourcesPlusLatestAttachmentsAndLatestTranslations(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[ResourceModel], Error> {
         
         return self.translationsRepository.storeTranslations(translations: resourcesPlusLatestTranslationsAndAttachments.translations, deletesNonExisting: true)
             .flatMap({ translations -> AnyPublisher<[AttachmentModel], Error> in
