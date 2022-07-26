@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "به %@ در دسترس نیست";
+
+"tool_menu_item.tools" = "تمام ابزار";
+"lessons.pageTitle" = "درس‌های مناسب شما";
+"lessons.pageSubtitle" = "ایده‌های عملی برای ایجاد روابط و شروع گفت‌وگوهای معنادار.";
 "toolSettings.languagesAvailable.title" = "زبان‌های موجود";
 "toolDetails.versions.message" = "نسخه‌ای دیگر از این ابزار را در زیر انتخاب کنید. هر نسخه دارای محتوا و سبک منحصربه‌فردی است، بنابراین می‌توانید بهترین نسخه برای گفت‌وگوی خود را انتخاب کنید. می‌توانید چندین نسخه از یک ابزار را در موردعلاقه‌های خود قرار دهید.";
 "favorites.noTools.title" = "ابزار موردعلاقه‌ای برای نمایش وجود ندارد";

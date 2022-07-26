@@ -368,6 +368,10 @@ class AppDiContainer {
         return SetupParallelLanguageViewedUserDefaultsCache()
     }
     
+    func getShareableImageUseCase() -> GetShareableImageUseCase {
+        return GetShareableImageUseCase()
+    }
+    
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }

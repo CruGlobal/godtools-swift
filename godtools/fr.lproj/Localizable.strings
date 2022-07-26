@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Non disponible en %@";
+
+"tool_menu_item.tools" = "Outils";
+"lessons.pageTitle" = "Des leçons faites pour vous";
+"lessons.pageSubtitle" = "Des idées pratiques pour nouer des relations et entamer des conversations significatives.";
 "toolSettings.languagesAvailable.title" = "Langues disponibles";
 "toolDetails.versions.message" = "Choisissez une version différente de cet outil ci-dessous. Chaque version présente un style et un contenu uniques, ce qui vous permet de trouver celle qui convient le mieux à votre conversation. Vous pouvez préférer plusieurs versions d'un même outil.";
 "favorites.noTools.title" = "Pas d'outils favoris à afficher";
@@ -42,31 +48,31 @@
 "parallelLanguage.selectLanguageButton.title" = "Sélectionner une langue";
 "parellelLanguage.prompt" = "Souhaitez-vous définir une deuxième langue ?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "OUTILS";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Chaque outil est conçu pour une étape différente de la conversation - avant, pendant ou après.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.title" = "Conseils pour les outils";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.message" = "Les conseils de GodTools vous guident lorsque vous aidez quelqu'un à comprendre l'Évangile et à rencontrer Jésus.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "Partage d'écran";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "Vous pouvez désormais partager votre écran à distance afin que l'autre personne puisse suivre l'utilisation d'un outil pour discuter de l'Évangile.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Leçons";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "Dans chaque leçon GodTools, vous apprenez quelque chose qui vous aidera à avoir de vraies conversations sur Dieu.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Ce tutoriel peut être consulté à nouveau depuis le menu";
 
 "onboardingTutorial.beginButton.title" = "Commencez";
@@ -103,6 +109,7 @@
 "learn_to_share_tool.tips_light_the_way.title" = "Des conseils pour éclairer le chemin";
 "learn_to_share_tool.tips_light_the_way.message" = "Sur certains écrans, vous verrez une variété d'icônes. Appuyez sur l'icône pour révéler une astuce qui vous aidera à parler du contenu de l'écran.";
 "learn_to_share_tool.light_up_the_tips.title" = "Illuminez les conseils";
+"learn_to_share_tool.light_up_the_tips.message" = "Lorsqu'un conseil s'allume, vous avez terminé la formation en question. Il n'est pas nécessaire d'utiliser chaque conseil dans chaque conversation.";
 "lesson_evaluation.title" = "Consulter";
 "lesson_evaluation.wasThisHelpful" = "Cette leçon vous a-t-elle été utile ?";
 "lesson_evaluation.shareFaith" = "Dans quelle mesure vous sentez-vous prêt à entamer une conversation spirituelle ?";
