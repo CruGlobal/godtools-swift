@@ -15,6 +15,7 @@ class RealmAttachment: Object, AttachmentModelType {
     @objc dynamic var fileFilename: String = ""
     @objc dynamic var id: String = ""
     @objc dynamic var isZipped: Bool = false
+    @objc dynamic var resourceId: String?
     @objc dynamic var sha256: String = ""
     @objc dynamic var type: String = ""
     
@@ -24,24 +25,14 @@ class RealmAttachment: Object, AttachmentModelType {
         return "id"
     }
     
-    func mapFrom(model: AttachmentModel, shouldIgnoreMappingPrimaryKey: Bool) {
-        
-        if !shouldIgnoreMappingPrimaryKey {
-            id = model.id
-        }
-        
+    func mapFrom(model: AttachmentModel) {
+
         file = model.file
         fileFilename = model.fileFilename
+        id = model.id
         isZipped = model.isZipped
+        resourceId = model.resourceId
         sha256 = model.sha256
         type = model.type
-        
-        if let modelResouce = model.resource {
-            resource = RealmResource()
-            resource?.mapFrom(model: modelResouce, shouldIgnoreMappingPrimaryKey: false)
-        }
-        else {
-            resource = nil
-        }
     }
 }

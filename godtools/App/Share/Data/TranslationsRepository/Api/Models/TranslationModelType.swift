@@ -15,7 +15,9 @@ protocol TranslationModelType {
     
     var id: String { get }
     var isPublished: Bool { get }
+    var languageId: String? { get }
     var manifestName: String { get }
+    var resourceId: String? { get }
     var translatedDescription: String { get }
     var translatedName: String { get }
     var translatedTagline: String { get }

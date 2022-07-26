@@ -26,11 +26,6 @@ class AttachmentsRepository {
         
         return cache.getAttachment(id: id)
     }
-    
-    func storeAttachments(attachments: [AttachmentModel], deletesNonExisting: Bool) -> AnyPublisher<[AttachmentModel], Error> {
-        
-        return cache.storeAttachments(attachments: attachments, deletesNonExisting: true)
-    }
 }
 
 extension AttachmentsRepository {

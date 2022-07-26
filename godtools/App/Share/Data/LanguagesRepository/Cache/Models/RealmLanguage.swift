@@ -21,14 +21,11 @@ class RealmLanguage: Object, LanguageModelType {
         return "id"
     }
     
-    func mapFrom(model: LanguageModel, shouldIgnoreMappingPrimaryKey: Bool) {
-        
-        if !shouldIgnoreMappingPrimaryKey {
-            id = model.id
-        }
+    func mapFrom(model: LanguageModel) {
         
         code = model.code
         direction = model.direction
+        id = model.id
         name = model.name
         type = model.type
     }

@@ -20,8 +20,12 @@ class LanguagesRepository {
         self.cache = cache
     }
     
-    func getLanguagesChangedPublisher() -> NotificationCenter.Publisher {
-        return cache.getLanguagesChangedPublisher()
+    var numberOfLanguages: Int {
+        return cache.numberOfLanguages
+    }
+    
+    func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
+        return cache.getLanguagesSyncedPublisher()
     }
     
     func getLanguage(id: String) -> LanguageModel? {
@@ -40,17 +44,35 @@ class LanguagesRepository {
         return cache.getLanguages()
     }
     
-    func downloadAndCacheLanguages() -> AnyPublisher<[LanguageModel], Error> {
+    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+        
+        return getLanguagesFromRemote()
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
+                
+                return self.cache.syncLanguages(languages: languages)
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+        
+        return LanguagesJsonFileCache().getLanguages().publisher
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
+                
+                return self.cache.syncLanguages(languages: languages)
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+extension LanguagesRepository {
+    
+    private func getLanguagesFromRemote() -> AnyPublisher<[LanguageModel], Error> {
         
         return self.api.getLanguages()
             .mapError{
                 $0 as Error
             }
-            .flatMap({ languages -> AnyPublisher<[LanguageModel], Error> in
-                    
-                return self.cache.storeLanguages(languages: languages, deletesNonExisting: true)
-                    .eraseToAnyPublisher()
-            })
             .eraseToAnyPublisher()
     }
 }
