@@ -275,13 +275,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             if state == .userClosedTractToLessonsList {
-                toolsMenuInNavigationStack?.reset(toolbarItem: .lessons, animated: false)
+                
+                navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true)
             }
-        
-            if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+            else if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+               
                 navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
             }
             else {
+                
                 _ = navigationController.popViewController(animated: true)
             }
             
@@ -489,6 +491,7 @@ extension AppFlow {
             analytics: appDiContainer.analytics,
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             fontService: appDiContainer.getFontService()
         )
         
@@ -500,7 +503,7 @@ extension AppFlow {
         return toolsMenuView
     }
     
-    private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
         let toolsMenu: ToolsMenuView = getToolsMenu(startingPage: startingPage)
         
@@ -517,7 +520,7 @@ extension AppFlow {
         tractFlow = nil
         articleFlow = nil
                                 
-        navigationController.popToRootViewController(animated: false)
+        navigationController.popToRootViewController(animated: animatePopToToolsMenu)
         
         navigationController.dismissPresented(
             animated: animateDismissingPresentedView,
@@ -663,7 +666,9 @@ extension AppFlow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            flowDelegate: self
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            flowDelegate: self,
+            analytics: appDiContainer.analytics
         )
         
         let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))

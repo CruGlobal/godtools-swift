@@ -14,17 +14,11 @@ struct AllToolsList: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     let width: CGFloat
-        
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let toolsPaddingMultiplier: CGFloat = 15/375
-    }
     
     // MARK: - Body
     
     var body: some View {
-        let leadingTrailingPadding = width * Sizes.toolsPaddingMultiplier
+        let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
         
         Group {
             
@@ -62,7 +56,8 @@ struct AllToolsList_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase()
         )
         
         GeometryReader { geo in

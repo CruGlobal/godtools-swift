@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol ToolSpotlightViewModelDelegate: AnyObject {
+    func spotlightToolCardTapped(resource: ResourceModel)
+    func spotlightToolFavoriteButtonTapped(resource: ResourceModel)
+}
+
 class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Properties
@@ -17,7 +22,8 @@ class ToolSpotlightViewModel: ToolCardProvider {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private weak var delegate: ToolCardViewModelDelegate?
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private weak var delegate: ToolSpotlightViewModelDelegate?
     
     // MARK: - Published
     
@@ -26,12 +32,13 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolSpotlightViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
         super.init()
@@ -56,7 +63,8 @@ class ToolSpotlightViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            delegate: delegate
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            delegate: self
         )
     }
 }
@@ -101,4 +109,19 @@ extension ToolSpotlightViewModel {
         spotlightTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.title")
         spotlightSubtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.spotlight.description")
     }
+}
+
+// MARK: - ToolCardViewModelDelegate
+
+extension ToolSpotlightViewModel: ToolCardViewModelDelegate {
+    func toolCardTapped(resource: ResourceModel) {
+        delegate?.spotlightToolCardTapped(resource: resource)
+    }
+    
+    func toolFavoriteButtonTapped(resource: ResourceModel) {
+        delegate?.spotlightToolFavoriteButtonTapped(resource: resource)
+    }
+    
+    func toolDetailsButtonTapped(resource: ResourceModel) {}
+    func openToolButtonTapped(resource: ResourceModel) {}
 }

@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "%@ dili seçeneği yok";
+
+"tool_menu_item.tools" = "Araçlar";
+"lessons.pageTitle" = "Senin için hazırlanmış dersler";
+"lessons.pageSubtitle" = "İlişkiler kurmak ve anlamlı konuşmalar başlatmak için pratik fikirler.";
 "toolSettings.languagesAvailable.title" = "Mevcut diller";
 "toolDetails.versions.message" = "Aşağıdan bu aracın farklı bir sürümünü seç. Her sürüm benzersiz bir tarza ve içeriğe sahip, böylece konuşman için en iyi olanı bulabilirsin. Aynı aracın birden fazla sürümünü favorilerine ekleyebilirsin.";
 "favorites.noTools.title" = "Gösterilecek favori araç yok";

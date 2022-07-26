@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 enum TranslationDownloaderError: Error {
     
     case failedToCacheTranslation(error: TranslationsFileCacheError)

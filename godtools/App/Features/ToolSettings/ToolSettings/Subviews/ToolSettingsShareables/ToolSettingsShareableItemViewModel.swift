@@ -26,7 +26,7 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
             
             self.title = shareableImage.description_?.text ?? ""
             
-            if let resource = shareableImage.resource, let cachedImage = manifestResourcesCache.getImageFromManifestResources(resource: resource) {
+            if let resource = shareableImage.resource, let cachedImage = manifestResourcesCache.getUIImage(resource: resource) {
                 
                 self.image = Image(uiImage: cachedImage)
             }

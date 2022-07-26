@@ -8,7 +8,7 @@
 
 import Foundation
 
-class IsNewUserDefaultsCache: IsNewUserCacheType {
+class IsNewUserDefaultsCache {
     
     private let sharedUserDefaultsCache: SharedUserDefaultsCache
     

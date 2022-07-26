@@ -117,27 +117,6 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    func reset(toolbarItem: ToolsMenuPageType, animated: Bool) {
-        
-        // TODO: Need to implement GT-1545 before Cru22 and before merging iOS 13 branch. ~Levi
-        // https://jira.cru.org/browse/GT-1545
-        
-        guard didLayoutSubviews else {
-            startingPage = toolbarItem
-            return
-        }
-        
-        guard self.view != nil else {
-            return
-        }
-        
-        pages[.lessons]?.scrollToTop(animated: false)
-        pages[.favoritedTools]?.scrollToTop(animated: false)
-        pages[.allTools]?.scrollToTop(animated: false)
-                
-        navigateToPage(pageType: toolbarItem, animated: animated)
-    }
-    
     private func getNewPageViewInstance(pageType: ToolsMenuPageType) -> ToolsMenuPageView {
         
         switch pageType {
@@ -153,7 +132,8 @@ class ToolsMenuView: UIViewController {
             return favoritedToolsView
         
         case .lessons:
-            return LessonsListView(viewModel: viewModel.lessonsWillAppear())
+            return LessonsView(contentView: LessonsContentView(viewModel: viewModel.lessonsWillAppear()))
+            
         }
     }
     
@@ -320,5 +300,16 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     func toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
         navigateToPage(pageType: .allTools, animated: true)
+    }
+}
+
+// MARK: - Static
+
+extension ToolsMenuView {
+    
+    private static let marginMultiplier: CGFloat = 15/375
+    
+    static func getMargin(for width: CGFloat) -> CGFloat {
+        return width * marginMultiplier
     }
 }

@@ -21,6 +21,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
         
     private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
         ToolSpotlightViewModel(
@@ -29,6 +30,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -47,6 +49,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritedResourcesCache: favoritedResourcesCache,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )
     }()
@@ -58,7 +61,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
@@ -68,6 +71,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         
         super.init()
     }
@@ -84,6 +88,20 @@ extension AllToolsContentViewModel {
     
     func refreshTools() {
         dataDownloader.downloadInitialData()
+    }
+}
+
+// MARK: - Private
+
+extension AllToolsContentViewModel {
+    
+    private func handleToolCardTapped(resource: ResourceModel, isSpotlight: Bool) {
+        trackToolTappedAnalytics(isSpotlight: isSpotlight)
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+    }
+    
+    private func handleToolFavoriteButtonTapped(resource: ResourceModel) {
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
 }
 
@@ -109,13 +127,13 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 // MARK: - ToolCardsViewModelDelegate
 
 extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
+    
     func toolCardTapped(resource: ResourceModel) {
-        trackToolTappedAnalytics()
-        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+        handleToolCardTapped(resource: resource, isSpotlight: false)
     }
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+        handleToolFavoriteButtonTapped(resource: resource)
     }
     
     func toolsAreLoading(_ isLoading: Bool) {
@@ -124,6 +142,18 @@ extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
     
     func toolDetailsButtonTapped(resource: ResourceModel) {}
     func openToolButtonTapped(resource: ResourceModel) {}
+}
+
+// MARK: - ToolSpotlightViewModelDelegate
+
+extension AllToolsContentViewModel: ToolSpotlightViewModelDelegate {
+    func spotlightToolCardTapped(resource: ResourceModel) {
+        handleToolCardTapped(resource: resource, isSpotlight: true)
+    }
+    
+    func spotlightToolFavoriteButtonTapped(resource: ResourceModel) {
+        handleToolFavoriteButtonTapped(resource: resource)
+    }
 }
 
 // MARK: - Analytics
@@ -147,7 +177,20 @@ extension AllToolsContentViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
             
-    private func trackToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.toolOpenTapped, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.toolOpenTapped: 1]))
+    private func trackToolTappedAnalytics(isSpotlight: Bool) {
+        
+        var data: [String: Any] = [AnalyticsConstants.Keys.toolOpenTapped: 1]
+        if isSpotlight {
+            data[AnalyticsConstants.Keys.source] = AnalyticsConstants.Sources.spotlight
+        }
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: data
+        ))
     }
 }

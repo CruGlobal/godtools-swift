@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Ikke tilgængelig i %@";
+
+"tool_menu_item.tools" = "Værktøjer";
+"lessons.pageTitle" = "Lektioner lavet til dig";
+"lessons.pageSubtitle" = "Praktiske ideer til at opbygge relationer og starte meningsfulde samtaler.";
 "toolSettings.languagesAvailable.title" = "Tilgængelige sprog";
 "toolDetails.versions.message" = "Vælg en anden version af dette værktøj nedenfor. Hver version har unik stil og indhold, så du kan finde den, der passer bedst til din samtale. Du kan foretrække flere versioner af det samme værktøj.";
 "favorites.noTools.title" = "Ingen foretrukne værktøjer at vise";

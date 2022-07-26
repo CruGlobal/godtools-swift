@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct ArticleAemWebArchiveFileCacheLocation: FileCacheLocationType {
+class ArticleAemWebArchiveFileCacheLocation: FileCacheLocation {
     
-    let directory: String = "webarchives"
-    let filename: String
-    let fileExtension: String?
+    private static let directoryName: String = "webarchives"
+    private static let filePathExtension: String = "webarchive"
     
     init(filename: String) {
         
-        self.filename = filename
-        self.fileExtension = "webarchive"
+        let relativeUrlString: String = ArticleAemWebArchiveFileCacheLocation.directoryName + "/" + filename + "." + ArticleAemWebArchiveFileCacheLocation.filePathExtension
+        
+        super.init(relativeUrlString: relativeUrlString)
     }
 }
