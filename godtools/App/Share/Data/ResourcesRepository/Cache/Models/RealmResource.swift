@@ -41,7 +41,11 @@ class RealmResource: Object, ResourceModelType {
         return "id"
     }
     
-    func mapFrom(model: ResourceModel) {
+    func mapFrom(model: ResourceModel, shouldIgnoreMappingPrimaryKey: Bool) {
+        
+        if !shouldIgnoreMappingPrimaryKey {
+            id = model.id
+        }
         
         abbreviation = model.abbreviation
         attrAboutBannerAnimation = model.attrAboutBannerAnimation
@@ -52,7 +56,6 @@ class RealmResource: Object, ResourceModelType {
         attrDefaultOrder = model.attrDefaultOrder
         attrSpotlight = model.attrSpotlight
         defaultVariantId = model.defaultVariantId
-        id = model.id
         isHidden = model.isHidden
         manifest = model.manifest
         metatoolId = model.metatoolId
