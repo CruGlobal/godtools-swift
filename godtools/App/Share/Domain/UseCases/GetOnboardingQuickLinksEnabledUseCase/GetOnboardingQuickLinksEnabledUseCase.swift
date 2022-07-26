@@ -10,18 +10,18 @@ import Foundation
 
 class GetOnboardingQuickLinksEnabledUseCase {
     
-    private let getDeviceLanguageCodeUseCase: GetDeviceLanguageCodeUseCase
+    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     
-    init(getDeviceLanguageCodeUseCase: GetDeviceLanguageCodeUseCase) {
+    init(getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
         
-        self.getDeviceLanguageCodeUseCase = getDeviceLanguageCodeUseCase
+        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
     }
     
     func getQuickLinksEnabled() -> Bool {
         
         let supportedLanguageCodes: [String] = [LanguageCodes.english, LanguageCodes.french, LanguageCodes.latvian, LanguageCodes.vietnamese]
         
-        let languageCode = getDeviceLanguageCodeUseCase.getDeviceLanguageCode()
+        let languageCode = getDeviceLanguageUseCase.getDeviceLanguage().languageCode
         
         return supportedLanguageCodes.contains(languageCode)
     }

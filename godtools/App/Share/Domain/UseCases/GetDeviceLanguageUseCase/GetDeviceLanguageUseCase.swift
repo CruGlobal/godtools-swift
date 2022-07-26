@@ -1,5 +1,5 @@
 //
-//  GetDeviceLanguageCodeUseCase.swift
+//  GetDeviceLanguageUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/25/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetDeviceLanguageCodeUseCase {
+class GetDeviceLanguageUseCase {
     
     private let deviceLanguage: DeviceLanguageType
     
@@ -17,10 +17,12 @@ class GetDeviceLanguageCodeUseCase {
         self.deviceLanguage = deviceLanguage
     }
     
-    func getDeviceLanguageCode() -> String {
+    func getDeviceLanguage() -> DeviceLanguageDomainModel {
         
         let deviceLocale: Locale = deviceLanguage.preferredLocalizationLocale ?? deviceLanguage.locale
         
-        return (deviceLocale.languageCode ?? deviceLocale.identifier).lowercased()
+        let languageCode = (deviceLocale.languageCode ?? deviceLocale.identifier).lowercased()
+        
+        return DeviceLanguageDomainModel(languageCode: languageCode)
     }
 }
