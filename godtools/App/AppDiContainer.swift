@@ -69,7 +69,7 @@ class AppDiContainer {
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
-        translationsApi = MobileContentTranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        translationsApi = MobileContentTranslationsApi(config: config, ignoreCacheSession: IgnoreCacheSession())
         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                                 

@@ -41,4 +41,24 @@ class AppDataLayerDependencies {
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
+    
+    func getResourcesRepository() -> ResourcesRepository {
+        
+        return ResourcesRepository(
+            api: MobileContentResourcesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmResourcesCache(realmDatabase: sharedRealmDatabase),
+            attachmentsRepository: getAttachmentsRepository(),
+            translationsRepository: getTranslationsRepository(),
+            languagesRepository: getLanguagesRepository()
+        )
+    }
+    
+    func getTranslationsRepository() -> TranslationsRepository {
+        
+        return TranslationsRepository(
+            api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
+            resourcesFileCache: getResourcesFileCache()
+        )
+    }
 }
