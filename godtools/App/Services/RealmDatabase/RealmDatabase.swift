@@ -14,7 +14,7 @@ class RealmDatabase {
     private static let config: Realm.Configuration = RealmDatabase.createConfig
     private static let schemaVersion: UInt64 = 9
     
-    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)
+    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     
     let mainThreadRealm: Realm
     
