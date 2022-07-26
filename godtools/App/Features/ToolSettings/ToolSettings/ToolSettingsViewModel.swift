@@ -158,8 +158,8 @@ class ToolSettingsViewModel: ObservableObject {
         let manifestResourcesCache: ManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
         let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
         
-        guard let shareableImageModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else { return }
+        guard let shareableImageDomainModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else { return }
         
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareableImageModel: shareableImageModel))
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareableImageDomainModel: shareableImageDomainModel))
     }
 }

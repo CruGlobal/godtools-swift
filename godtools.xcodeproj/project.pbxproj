@@ -1033,7 +1033,7 @@
 		D41B38B1287F151100BD5899 /* LessonsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B0287F151100BD5899 /* LessonsListView.swift */; };
 		D41B38B52885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift */; };
 		D41B38B8288EDA1F00BD5899 /* GetShareableImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B7288EDA1F00BD5899 /* GetShareableImageUseCase.swift */; };
-		D41B38BB288EDA7A00BD5899 /* ShareableImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BA288EDA7A00BD5899 /* ShareableImageModel.swift */; };
+		D41B38BB288EDA7A00BD5899 /* ShareableImageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BA288EDA7A00BD5899 /* ShareableImageDomainModel.swift */; };
 		D420DA2B28295E5E0035ABCB /* ToolCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */; };
 		D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */; };
 		D42600C8282BFA1200E7A520 /* ResourceCardLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42600C7282BFA1200E7A520 /* ResourceCardLanguageView.swift */; };
@@ -2204,7 +2204,7 @@
 		D41B38B0287F151100BD5899 /* LessonsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListView.swift; sourceTree = "<group>"; };
 		D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityStringUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageAvailablityStringUseCase.swift; sourceTree = "<group>"; };
 		D41B38B7288EDA1F00BD5899 /* GetShareableImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageUseCase.swift; sourceTree = "<group>"; };
-		D41B38BA288EDA7A00BD5899 /* ShareableImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareableImageModel.swift; sourceTree = "<group>"; };
+		D41B38BA288EDA7A00BD5899 /* ShareableImageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareableImageDomainModel.swift; sourceTree = "<group>"; };
 		D420DA2A28295E5E0035ABCB /* ToolCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardsView.swift; sourceTree = "<group>"; };
 		D420DA2C282AEE9C0035ABCB /* ToolSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSpotlightView.swift; sourceTree = "<group>"; };
 		D42600C7282BFA1200E7A520 /* ResourceCardLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCardLanguageView.swift; sourceTree = "<group>"; };
@@ -6422,7 +6422,7 @@
 			isa = PBXGroup;
 			children = (
 				D41B38B7288EDA1F00BD5899 /* GetShareableImageUseCase.swift */,
-				D41B38BA288EDA7A00BD5899 /* ShareableImageModel.swift */,
+				D41B38BA288EDA7A00BD5899 /* ShareableImageDomainModel.swift */,
 			);
 			path = GetShareableImageUseCase;
 			sourceTree = "<group>";
@@ -7867,7 +7867,7 @@
 				D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */,
 				45677772287DB1DB0044AEB2 /* TutorialViewModelType.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
-				D41B38BB288EDA7A00BD5899 /* ShareableImageModel.swift in Sources */,
+				D41B38BB288EDA7A00BD5899 /* ShareableImageDomainModel.swift in Sources */,
 				D42600D1282C007500E7A520 /* ToolCardTitleView.swift in Sources */,
 				456777E8287DB42C0044AEB2 /* ToolSettingsOptionsView.swift in Sources */,
 				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ShareableImageModel.swift
+//  ShareableImageDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/25/22.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ShareableImageModel {
+struct ShareableImageDomainModel {
     
     let image: UIImage
     let imageId: String?

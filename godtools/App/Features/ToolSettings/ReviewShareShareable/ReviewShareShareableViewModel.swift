@@ -16,16 +16,16 @@ class ReviewShareShareableViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private let analytics: AnalyticsContainer
     
-    private let shareableImageModel: ShareableImageModel
+    private let shareableImageDomainModel: ShareableImageDomainModel
     let imagePreview: Image
     let shareImageButtonTitle: String
     
-    init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, shareableImageModel: ShareableImageModel, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, shareableImageDomainModel: ShareableImageDomainModel, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
-        self.shareableImageModel = shareableImageModel
-        self.imageToShare = shareableImageModel.image
+        self.shareableImageDomainModel = shareableImageDomainModel
+        self.imageToShare = shareableImageDomainModel.image
         self.imagePreview = Image(uiImage: imageToShare)
         self.shareImageButtonTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareImagePreview.shareImageButton.title")
     }
@@ -45,10 +45,10 @@ class ReviewShareShareableViewModel: ObservableObject {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareShareable,
-            siteSection: shareableImageModel.toolAbbreviation ?? "",
+            siteSection: shareableImageDomainModel.toolAbbreviation ?? "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.shareableId: shareableImageModel.imageId ?? ""]
+            data: [AnalyticsConstants.Keys.shareableId: shareableImageDomainModel.imageId ?? ""]
         ))
     }
 }
