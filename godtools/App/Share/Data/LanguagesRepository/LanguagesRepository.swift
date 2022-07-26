@@ -20,6 +20,10 @@ class LanguagesRepository {
         self.cache = cache
     }
     
+    var numberOfLanguages: Int {
+        return cache.numberOfLanguages
+    }
+    
     func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
         return cache.getLanguagesSyncedPublisher()
     }
@@ -40,9 +44,19 @@ class LanguagesRepository {
         return cache.getLanguages()
     }
     
-    func syncLanguages() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
         return getLanguagesFromRemote()
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
+                
+                return self.cache.syncLanguages(languages: languages)
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+        
+        return LanguagesJsonFileCache().getLanguages().publisher
             .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)

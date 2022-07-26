@@ -20,6 +20,10 @@ class RealmLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
+    var numberOfLanguages: Int {
+        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self).count
+    }
+    
     func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
         NotificationCenter.default.publisher(for: languagesSyncedNotificationName)
     }
