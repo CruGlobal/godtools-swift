@@ -11,7 +11,6 @@ import OktaAuthentication
 
 class AppDiContainer {
         
-    private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
@@ -99,15 +98,7 @@ class AppDiContainer {
             downloadedLanguagesCache: downloadedLanguagesCache,
             translationDownloader: translationDownloader
         )
-        
-        legacyRealmMigration = LegacyRealmMigration(
-            realmDatabase: realmDatabase,
-            languageSettingsCache: languageSettingsCache,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            failedFollowUpsCache: failedFollowUpsCache
-        )
-        
+                
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
@@ -118,7 +109,6 @@ class AppDiContainer {
         
         initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
             realmDatabase: realmDatabase,
-            legacyRealmMigration: legacyRealmMigration,
             attachmentsFileCache: attachmentsFileCache,
             translationsFileCache: translationsFileCache,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
@@ -361,6 +351,10 @@ class AppDiContainer {
     
     func getSetupParallelLanguageViewedCache() -> SetupParallelLanguageViewedCacheType {
         return SetupParallelLanguageViewedUserDefaultsCache()
+    }
+    
+    func getShareableImageUseCase() -> GetShareableImageUseCase {
+        return GetShareableImageUseCase()
     }
     
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {

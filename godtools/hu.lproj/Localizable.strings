@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nem elérhető itt: %@";
+
+"tool_menu_item.tools" = "Eszköz";
+"lessons.pageTitle" = "Neked szóló szentleckék";
+"lessons.pageSubtitle" = "Gyakorlati ötletek a kapcsolatépítéshez és az értelmes beszélgetések megkezdéséhez.";
 "toolSettings.languagesAvailable.title" = "Elérhető nyelvek";
 "toolDetails.versions.message" = "Válaszd ki alább az eszköz egy másik verzióját. Mindegyik változat egyedi stílusú és tartalmú, így megtalálhatod a beszélgetéshez legmegfelelőbbet. Ugyanannak az eszköznek több verzióját is kedvencévé teheted.";
 "favorites.noTools.title" = "Nincsenek megjelenítendő kedvenc eszközök";

@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "语版本不可用 %@";
+
+"tool_menu_item.tools" = "工具";
+"lessons.pageTitle" = "为你制定的课程";
+"lessons.pageSubtitle" = "建立关系，开启有意义对话的实用点子";
 "toolSettings.languagesAvailable.title" = "可用语言";
 "toolDetails.versions.message" = "请在下面选择此工具的不同版本。每个版本都有独特的风格和内容，所以你可以找到一个最适合你的对话。您可以喜欢同一工具的多个版本。";
 "favorites.noTools.title" = "没有最喜欢的工具来显示";
@@ -41,22 +47,22 @@
 "parallelLanguage.selectLanguageButton.title" = "选择语言";
 "parellelLanguage.prompt" = "您想设置第二语言吗？";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "关闭教程";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "分享屏幕";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "你现在可以远程分享你的屏幕，这样当你使用工具讨论福音时，其他人可以跟随你。";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "课程 ";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "Godtools上的每一课，你都能学习到帮助你真实谈论上帝的东西";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "在你需要的时候，到菜单中随时查找本教程";
 
 "onboardingTutorial.beginButton.title" = "开始";

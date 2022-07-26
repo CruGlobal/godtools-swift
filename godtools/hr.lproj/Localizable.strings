@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nije dosutpno u %@";
+
+"tool_menu_item.tools" = "Alati";
+"lessons.pageTitle" = "Lekcije osmišljene baš za vas";
+"lessons.pageSubtitle" = "Praktične ideje kako izgraditi odnos i započeti smislene razgovore.";
 "toolSettings.languagesAvailable.title" = "Dostupni jezici";
 "toolDetails.versions.message" = "U nastavku odaberite drugu verziju ovog alata. Svaka verzija ima jedinstven stil i sadržaj tako da možete pronaći onu koja je najbolja za vaš razgovor. Više verzija istog alata može biti vaš favorit.";
 "favorites.noTools.title" = "Nema omiljenih alata za prikaz";
