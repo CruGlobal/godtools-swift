@@ -40,6 +40,7 @@ struct LessonCardView: View {
                         .font(FontLibrary.sfProTextBold.font(size: 17))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .lineSpacing(2)
+                        .lineLimit(3)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.trailing, 41)
                     
@@ -66,7 +67,7 @@ struct LessonCardView: View {
 struct LessonCardView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = MockLessonCardViewModel()
+        let viewModel = MockLessonCardViewModel(title: "a really really really really long title goes here to see how the lines wrap")
         
         LessonCardView(viewModel: viewModel, cardWidth: 345)
     }

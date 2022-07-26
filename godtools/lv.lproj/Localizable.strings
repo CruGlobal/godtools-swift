@@ -1,3 +1,14 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nav pieejams %@ valodā";
+
+"menu.deleteAccount" = "Dzēst kontu";
+"alert.mailAppUnavailable.title" = "E-pasta lietotne nav pieejama";
+"alert.mailAppUnavailable.message" = "Vietējā e-pasta lietotne šajā ierīcē nav konfigurēta vai nav pieejama.";
+"deleteAccount.navTitle" = "Dzēst kontu";
+"deleteAccount.deleteOktaAccountInstructions" = "Ja esi reģistrējis kontu 'GodTools' lietotnē, vari pieprasīt dzēst savu 'Okta' kontu, nosūtot e-pastu uz help@cru.org";
+"tool_menu_item.tools" = "Rīki";
+"lessons.pageTitle" = "Nodarbības, kas pielāgotas tev";
+"lessons.pageSubtitle" = "Praktiskas idejas attiecību veidošanai un nozīmīgu sarunu uzsākšanai.";
 "toolSettings.languagesAvailable.title" = "Atbalstītās valodas";
 "toolDetails.versions.message" = "Tālāk vari izvēlēties citu šī rīka versiju. Katrai versijai ir unikāls stils un saturs, lai tu varētu atrast savai sarunai vispiemērotāko. Vari pievienot izlasei vairākas viena un tā paša rīka versijas.";
 "favorites.noTools.title" = "Nav iecienīto rīku, ko parādīt";
@@ -5,13 +16,13 @@
 "favorites.noTools.button" = "Skatīt rīkus";
 "toolSettings.shareImagePreview.shareImageButton.title" = "Kopīgo attēlu";
 "favorites.pageTitle" = "Sveiki!";
-"favorites.favoriteLessons.title" = "Piedāvātā nodarbība";
+"favorites.favoriteLessons.title" = "Aktuālā nodarbība";
 "favorites.favoriteTools.title" = "Tava rīku izlase";
 "favorites.favoriteTools.viewAll" = "Skatīt visus";
 "favorites.favoriteLessons.details" = "Apraksts";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
-"toolSettings.languagesList.deleteLanguage.title" = "Nav";
+"toolSettings.languagesList.deleteLanguage.title" = "Noņemt";
 
 "toolSettings.chooseLanguage.toggleMessage" = "Iespēja pārslēgties starp divām dažādām valodām šajā rīkā.";
 "toolDetails.versions.title" = "Rīka versijas";
@@ -42,34 +53,34 @@
 "parallelLanguage.selectLanguageButton.title" = "Izvēlies valodu";
 "parellelLanguage.prompt" = "Vai vēlies iestatīt paralēlo valodu?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Aizvērt pamācību";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "Rīki";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Katrs rīks ir paredzēts citam sarunas posmam – pirms sarunas, sarunas laikā vai pēc sarunas.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.title" = "Padomi rīka lietošanā";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
-"tutorial.toolTip.message" = "'GodTools' padomi palīdz paskaidrot Labo vēsti un iepazīt Jēzu.";
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "'GodTools' apmācības padomi palīdz paskaidrot Labo vēsti un iepazīt Jēzu.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "Ekrāna koplietošana";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "Tagad vari attālināti kopīgot savu ekrānu, lai sarunu biedrs varētu sekot tam, kā tu izmanto rīku sarunās par Labo vēsti.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Nodarbības";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "Katrā 'GodTools' nodarbībā uzzini kaut ko tādu, kas var palīdzēt veidot sarunas par Dievu.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Šo pamācību vari atrast izvēlnē, kad vien tā ir nepieciešama.";
 
 "onboardingTutorial.beginButton.title" = "Sākt";
@@ -169,7 +180,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "my_tools" = "Izlase";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Rīki";
+"find_tools" = "Visi rīki";
 
 "unavailable" = "Nav pieejams";
 
@@ -196,7 +207,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "account_login" = "Pieteikšanās kontā";
 
 // Tool Detail
-"about" = "Par lietotni";
+"about" = "Par rīku";
 "help" = "Biežāk uzdotie jautājumi";
 "contact_us" = "Sazinies ar mums";
 "preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";

@@ -36,7 +36,7 @@ class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
     func allToolsToolbarItemWillAppear() -> ToolsMenuToolbarItemViewModelType {
         
         return ToolsMenuToolbarItemViewModel(
-            title: localizationServices.stringForMainBundle(key: "find_tools"),
+            title: localizationServices.stringForMainBundle(key: "tool_menu_item.tools"),
             image: ImageCatalog.toolsMenuAllTools.image
         )
     }

@@ -90,7 +90,7 @@ extension LessonsContentViewModel {
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     }
     
-    func trackLessonTappedAnalytics() {
+    private func trackLessonTappedAnalytics() {
         
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,

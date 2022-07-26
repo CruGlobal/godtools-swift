@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Δεν είναι διαθέσιμο σε %@";
+
+"tool_menu_item.tools" = "Εργαλεία";
+"lessons.pageTitle" = "Κατηγορίες";
+"lessons.pageSubtitle" = "Πρακτικές ιδέες για να χτίσετε σχέσεις και να ξεκινήσετε ουσιαστικές συζητήσεις.";
 "toolSettings.languagesAvailable.title" = "Διαθέσιμες γλώσσες";
 "toolDetails.versions.message" = "Επιλέξτε μια διαφορετική έκδοση αυτού του εργαλείου παρακάτω. Κάθε έκδοση διαθέτει μοναδικό στυλ και περιεχόμενο, ώστε να μπορείτε να βρείτε αυτό που είναι καλύτερο για τη συνομιλία σας. Μπορείτε να προτιμήσετε πολλές εκδόσεις του ίδιου εργαλείου.";
 "favorites.noTools.title" = "Δεν υπάρχουν αγαπημένα εργαλεία για εμφάνιση";

@@ -7,16 +7,29 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
 
-class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
+class FileCache {
     
     let fileManager: FileManager = FileManager.default
     let rootDirectory: String
     let errorDomain: String
     
-    required init(rootDirectory: String) {
+    init(rootDirectory: String) {
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
+    }
+    
+    func getIsDirectory(url: URL) -> Bool {
+        
+        var isDirectory: ObjCBool = false
+        
+        if fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory){
+            return isDirectory.boolValue
+        }
+        
+        return false
     }
     
     func getUserDocumentsDirectory() -> Result<URL, Error> {
@@ -45,10 +58,10 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         }
     }
     
-    func getDirectory(location: CacheLocation) -> Result<URL, Error> {
-        
+    func getDirectory(location: FileCacheLocation) -> Result<URL, Error> {
+                
         guard let directoryUrl = location.directoryUrl else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Directory url can't be null."]))
+            return getRootDirectory()
         }
         
         switch getRootDirectory() {
@@ -58,11 +71,51 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
             return .failure(error)
         }
     }
-
-    func getFile(location: CacheLocation) -> Result<URL, Error> {
+    
+    private func createDirectoryIfNotExists(location: FileCacheLocation) -> Result<URL, Error> {
+        
+        switch getDirectory(location: location) {
+        
+        case .success(let directoryUrl):
+            return createDirectoryIfNotExists(directoryUrl: directoryUrl)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func createDirectoryIfNotExists(directoryUrl: URL) -> Result<URL, Error> {
+        
+        guard !fileManager.fileExists(atPath: directoryUrl.path) else {
+            return .success(directoryUrl)
+        }
+        
+        do {
+            try fileManager.createDirectory(
+                at: directoryUrl,
+                withIntermediateDirectories: true,
+                attributes: nil
+            )
+            return .success(directoryUrl)
+        }
+        catch let error {
+            return .failure(error)
+        }
+    }
+    
+    func getFileExists(location: FileCacheLocation) -> Result<Bool, Error> {
+        
+        switch getFile(location: location) {
+        case .success(let url):
+            return .success(fileManager.fileExists(atPath: url.path))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getFile(location: FileCacheLocation) -> Result<URL, Error> {
         
         guard let fileUrl = location.fileUrl else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "File url can't be null."]))
+            return .failure(NSError.errorWithDescription(description: "Found nil fileUrl on FileCacheLocation with relativeUrlString: \(location.relativeUrlString)"))
         }
         
         switch getRootDirectory() {
@@ -73,36 +126,43 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         }
     }
     
-    private func createDirectoryIfNotExists(location: CacheLocation) -> Result<URL, Error> {
+    func getData(location: FileCacheLocation) -> Result<Data?, Error> {
         
-        switch getDirectory(location: location) {
-        
-        case .success(let directoryUrl):
-            
-            if !fileManager.fileExists(atPath: directoryUrl.path) {
-                
-                do {
-                    try fileManager.createDirectory(
-                        at: directoryUrl,
-                        withIntermediateDirectories: true,
-                        attributes: nil
-                    )
-                    return .success(directoryUrl)
-                }
-                catch let error {
-                    return .failure(error)
-                }
-            }
-            else {
-                return .success(directoryUrl)
-            }
-            
+        switch getFile(location: location) {
+        case .success(let url):
+            return .success(fileManager.contents(atPath: url.path))
         case .failure(let error):
             return .failure(error)
         }
     }
     
-    func cache(location: CacheLocation, data: Data) -> Result<URL, Error> {
+    func getUIImage(location: FileCacheLocation) -> Result<UIImage?, Error> {
+        
+        switch getData(location: location) {
+        case .success(let data):
+            guard let data = data else {
+                return .success(nil)
+            }
+            return .success(UIImage(data: data))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getImage(location: FileCacheLocation) -> Result<Image?, Error> {
+        
+        switch getUIImage(location: location) {
+        case .success(let uiImage):
+            guard let uiImage = uiImage else {
+                return .success(nil)
+            }
+            return .success(Image(uiImage: uiImage))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func storeFile(location: FileCacheLocation, data: Data) -> Result<URL, Error> {
         
         switch createDirectoryIfNotExists(location: location) {
         case .success( _):
@@ -124,26 +184,6 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         }
     }
     
-    func getData(location: CacheLocation) -> Result<Data?, Error> {
-        
-        switch getFile(location: location) {
-        case .success(let url):
-            return .success(fileManager.contents(atPath: url.path))
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
-    
-    func fileExists(location: CacheLocation) -> Result<Bool, Error> {
-        
-        switch getFile(location: location) {
-        case .success(let url):
-            return .success(fileManager.fileExists(atPath: url.path))
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
-    
     func removeRootDirectory() -> Error? {
         
         switch getRootDirectory() {
@@ -154,7 +194,7 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         }
     }
     
-    func removeDirectory(location: CacheLocation) -> Error? {
+    func removeDirectory(location: FileCacheLocation) -> Error? {
         
         switch getDirectory(location: location) {
         case .success(let directoryUrl):
@@ -164,7 +204,7 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         }
     }
     
-    func removeFile(location: CacheLocation) -> Error? {
+    func removeFile(location: FileCacheLocation) -> Error? {
         
         switch getFile(location: location) {
         case .success(let fileUrl):
@@ -183,5 +223,63 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
         catch let error {
             return error
         }
+    }
+    
+    func moveContentsOfDirectory(directory: URL, toDirectory: URL) -> Error? {
+        
+        do {
+            let contents: [String] = try fileManager.contentsOfDirectory(atPath: directory.path)
+            for item in contents {
+                do {
+                    try fileManager.moveItem(atPath: directory.appendingPathComponent(item).path, toPath: toDirectory.appendingPathComponent(item).path)
+                }
+                catch let error {
+                    return error
+                }
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
+    }
+    
+    func moveChildDirectoryContentsIntoParent(parentDirectory: URL) -> Error? {
+       
+        // check if the contents is a single directory and if it is, move contents of this directory up a level into the parent directory
+        
+        do {
+            
+            let contentsOfParentDirectory: [String] = try fileManager.contentsOfDirectory(atPath: parentDirectory.path)
+            
+            guard contentsOfParentDirectory.count == 1 else {
+                return nil
+            }
+            
+            let childDirectory: URL = parentDirectory.appendingPathComponent(contentsOfParentDirectory[0])
+            
+            guard getIsDirectory(url: childDirectory) else {
+                return nil
+            }
+            
+            if let moveItemsError = moveContentsOfDirectory(directory: childDirectory, toDirectory: parentDirectory) {
+                return moveItemsError
+            }
+            
+            // delete directory since contents were moved
+            do {
+               try fileManager.removeItem(at: childDirectory)
+            }
+            catch let error {
+                return error
+            }
+        }
+        catch let error {
+            
+            return error
+        }
+        
+        return nil
     }
 }

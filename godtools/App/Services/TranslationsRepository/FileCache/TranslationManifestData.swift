@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class TranslationManifestData {
     
     let translationZipFile: TranslationZipFileModel

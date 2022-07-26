@@ -1,4 +1,12 @@
+/* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Not available in %@";
+
+"menu.deleteAccount" = "Delete Account";
+"alert.mailAppUnavailable.title" = "Mail App Unavailable";
+"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
+"deleteAccount.navTitle" = "Delete Account";
+"deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org.";
+"tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
 "toolSettings.languagesAvailable.title" = "Languages available";
@@ -46,34 +54,34 @@
 "parallelLanguage.selectLanguageButton.title" = "Select a language";
 "parellelLanguage.prompt" = "Would you like to set a secondary language?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Close tutorial";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "Tools";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Each tool is made for a different stage of conversation- before, during or after.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.title" = "Tool tips";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "Screen sharing";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Lessons";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
 
 "onboardingTutorial.beginButton.title" = "Begin";
@@ -196,7 +204,6 @@ If you don't receive this message until later, the link may not still work. We c
 "language_settings" = "Language Settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
-"menu.deleteAccount" = "Delete Account";
 
 // Login
 "login" = "Login";
@@ -268,8 +275,6 @@ The app can be downloaded from https://godtoolsapp.com";
 "OK" = "OK";
 "cancel" = "Cancel";
 "required_field_missing" = "\"%@\" is a required field.";
-"alert.mailAppUnavailable.title" = "Mail App Unavailable";
-"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device.";
 
 "onboardingTutorial.getStartedButton.title" = "Get Started";
 
@@ -340,7 +345,3 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
-
-// DeleteAccount
-"deleteAccount.navTitle" = "Delete Account";
-"deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org";

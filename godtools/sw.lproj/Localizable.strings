@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Haipatikani kwenye %@";
+
+"tool_menu_item.tools" = "Zana";
+"lessons.pageTitle" = "Mafunzo kwa ajili yako";
+"lessons.pageSubtitle" = "Mawazo ya vitendo ya kujenga mahusiano na kuanza mazungumzo yenye maana.";
 "toolSettings.languagesAvailable.title" = "Lugha zinazopatikana";
 "toolDetails.versions.message" = "Chagua toleo tofauti la zana hii hapa chini. Kila toleo lina mtindo na maudhui ya kipekee ili uweze kupata ile ambayo ni bora zaidi kwa mazungumzo yako. Unaweza kupendelea matoleo mengi ya zana sawa.";
 "favorites.noTools.title" = "Hakuna zana unazopenda za kuonyesha";

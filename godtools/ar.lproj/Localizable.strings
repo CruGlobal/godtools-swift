@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "غير متاحة في غضون %@";
+
+"tool_menu_item.tools" = "أدوات";
+"lessons.pageTitle" = "الدروس المُعدة لأجلك";
+"lessons.pageSubtitle" = "أفكار عملية لبناء علاقات وبدء محادثات هادفة.";
 "toolSettings.languagesAvailable.title" = "اللغات المتاحة";
 "toolDetails.versions.message" = "اختر إصدار مختلف من هذه الأداة أدناه. يتميز كل إصدار بأسلوب فريد ومحتوى فريد حتى تتمكن من العثور على الأفضل لمحادثتك. يمكنك تفضيل إصدارات متعددة من نفس الأداة.";
 "favorites.noTools.title" = "لا توجد أدوات مفضلة للعرض";

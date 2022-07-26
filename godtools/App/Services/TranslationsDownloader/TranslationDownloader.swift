@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import RequestOperation
 
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class TranslationDownloader: NSObject {
     
     typealias TranslationId = String
@@ -128,7 +129,7 @@ class TranslationDownloader: NSObject {
                 continue
             }
             
-            let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
+            let operation: RequestOperation = translationsApi.getTranslationZipFileDataOperation(translationId: translationId)
                     
             operations.append(operation)
             
@@ -199,3 +200,4 @@ class TranslationDownloader: NSObject {
         }
     }
 }
+

@@ -111,7 +111,7 @@ extension AllFavoriteToolsViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
-    func trackFavoritedToolTappedAnalytics() {
+    private func trackFavoritedToolTappedAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
@@ -122,7 +122,7 @@ extension AllFavoriteToolsViewModel {
         ))
     }
     
-    func trackOpenFavoritedToolButtonAnalytics() {
+    private func trackOpenFavoritedToolButtonAnalytics() {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,

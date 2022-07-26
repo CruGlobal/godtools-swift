@@ -50,12 +50,9 @@ class InitialDeviceResourcesLoader {
             
             self?.cacheAttachmentFiles(cacheResult: cacheResult, complete: { [weak self] in
                 
-                self?.cacheTranslations { [weak self] in
+                self?.setupInitialFavoritedResourcesAndLanguage { [weak self] in
                     
-                    self?.setupInitialFavoritedResourcesAndLanguage { [weak self] in
-                        
-                        self?.handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: completeOnMain)
-                    }
+                    self?.handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: completeOnMain)
                 }
             })
         }
@@ -157,23 +154,6 @@ class InitialDeviceResourcesLoader {
 
             complete()
         })
-    }
-    
-    private func cacheTranslations(complete: @escaping (() -> Void)) {
-        
-        let translationIds: [String] = ["2351", "2615", "2767", "2776"]
-        
-        for translationId in translationIds {
-    
-            processTranslationId(translationId: translationId) {
-                
-                let finished: Bool = translationId == translationIds.last
-                                
-                if finished {
-                    complete()
-                }
-            }
-        }
     }
     
     private func processTranslationId(translationId: String, complete: @escaping (() -> Void)) {

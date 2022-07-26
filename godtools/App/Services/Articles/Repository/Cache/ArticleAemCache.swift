@@ -207,7 +207,7 @@ class ArticleAemCache {
     
     private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) -> ArticleAemCacheError? {
         
-        let cacheFileResult: Result<URL, Error> = fileCache.cache(
+        let cacheFileResult: Result<URL, Error> = fileCache.storeFile(
             location: ArticleAemWebArchiveFileCacheLocation(filename: webArchiveFilename),
             data: webArchivePlistData
         )

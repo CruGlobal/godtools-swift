@@ -155,7 +155,7 @@ extension GetToolTranslationsUseCase {
         
         for toolTranslation in toolTranslations {
             
-            switch mobileContentParser.parse(translationManifestData: toolTranslation.translationManifestData) {
+            switch mobileContentParser.parse(translationManifestFileName: toolTranslation.manifestFileName) {
             
             case .success(let manifest):
                 
@@ -291,7 +291,8 @@ extension GetToolTranslationsUseCase {
                 resource: resource,
                 language: language,
                 translation: languageTranslation,
-                translationManifestData: translationManifestData
+                manifestFileName: languageTranslation.manifestName,
+                manifestData: translationManifestData.manifestXmlData
             )
             
             toolTranslations.append(toolTranslation)
@@ -311,3 +312,4 @@ extension GetToolTranslationsUseCase {
         return nil
     }
 }
+

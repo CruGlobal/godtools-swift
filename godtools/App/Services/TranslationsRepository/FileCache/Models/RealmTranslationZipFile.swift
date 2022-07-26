@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 
+@available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class RealmTranslationZipFile: Object, TranslationZipFileModelType {
     
     @objc dynamic var translationId: String = ""

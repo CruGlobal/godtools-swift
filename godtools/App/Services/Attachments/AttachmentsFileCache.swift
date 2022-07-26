@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+@available(*, deprecated) // TODO: This should be removed and logic for cacheing attachment files should be moved into ResourcesSHA256FileCache. ~Levi
 class AttachmentsFileCache {
     
     typealias AttachmentId = String
@@ -33,7 +34,7 @@ class AttachmentsFileCache {
             
             let sha256FileLocation: SHA256FileLocation = attachment.sha256FileLocation
                             
-            switch sha256FileCacheRef.getImage(location: sha256FileLocation) {
+            switch sha256FileCacheRef.getUIImage(location: sha256FileLocation) {
             case .success(let cachedImage):
                 return cachedImage
             case .failure( _):
@@ -60,7 +61,7 @@ class AttachmentsFileCache {
     
     func attachmentExists(location: SHA256FileLocation) -> Bool {
         
-        switch sha256FileCache.fileExists(location: location) {
+        switch sha256FileCache.getFileExists(location: location) {
         case .success(let fileExists):
             return fileExists
         case .failure(let error):
@@ -73,7 +74,14 @@ class AttachmentsFileCache {
         
         let location: SHA256FileLocation = attachmentFile.location
         
-        let cacheError: Error? = sha256FileCache.cacheSHA256File(location: location, fileData: fileData)
+        let cacheError: Error?
+        
+        switch sha256FileCache.storeFile(location: location, fileData: fileData) {
+        case .success( _):
+            cacheError = nil
+        case .failure(let error):
+            cacheError = error
+        }
         
         if let cacheError = cacheError {
             complete(cacheError)
@@ -138,3 +146,4 @@ class AttachmentsFileCache {
         }// end realmDatabase.background
     }
 }
+
