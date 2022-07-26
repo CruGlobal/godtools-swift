@@ -18,7 +18,6 @@ class AppDiContainer {
     private let languagesApi: MobileContentLanguagesApi
     private let resourcesApi: ResourcesApiType
     private let translationsApi: MobileContentTranslationsApi
-    private let realmResourcesCache: RealmResourcesCache
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesCache: ResourcesCache
     private let languagesCache: RealmLanguagesCache
@@ -73,9 +72,7 @@ class AppDiContainer {
         translationsApi = MobileContentTranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-                        
-        realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
-        
+                                
         resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi)
         
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
@@ -124,7 +121,7 @@ class AppDiContainer {
             legacyRealmMigration: legacyRealmMigration,
             attachmentsFileCache: attachmentsFileCache,
             translationsFileCache: translationsFileCache,
-            realmResourcesCache: realmResourcesCache,
+            resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             favoritedResourcesCache: favoritedResourcesCache,
             languagesCache: languagesCache,
             deviceLanguage: deviceLanguage,
@@ -135,7 +132,7 @@ class AppDiContainer {
             realmDatabase: realmDatabase,
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
-            realmResourcesCache: realmResourcesCache,
+            resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             resourcesCache: resourcesCache,
             languagesCache: languagesCache,
             resourcesCleanUp: resourcesCleanUp,
