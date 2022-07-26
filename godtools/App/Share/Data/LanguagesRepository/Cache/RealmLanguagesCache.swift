@@ -13,15 +13,15 @@ import Combine
 class RealmLanguagesCache {
     
     private let realmDatabase: RealmDatabase
-    private let languagesChangedNotificationName = Notification.Name("languagesCache.notification.languagesChanged")
+    private let languagesSyncedNotificationName = Notification.Name("languagesCache.notification.languagesSynced")
 
     required init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
-    func getLanguagesChangedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: languagesChangedNotificationName)
+    func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
+        NotificationCenter.default.publisher(for: languagesSyncedNotificationName)
     }
     
     func getLanguage(id: String) -> LanguageModel? {
@@ -56,62 +56,53 @@ class RealmLanguagesCache {
             .map({LanguageModel(model: $0)})
     }
         
-    func storeLanguages(languages: [LanguageModel], deletesNonExisting: Bool) -> AnyPublisher<[LanguageModel], Error> {
+    func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
 
         return Future() { promise in
 
             self.realmDatabase.background { (realm: Realm) in
                 
-                var languagesToRemove: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
-                var writeError: Error?
+                var languagesToStore: [Object] = Array()
+                var languagesStored: [String: RealmLanguage] = Dictionary()
+                var languageIdsRemoved: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
                 
+                for language in languages {
+                    
+                    let realmLanguage: RealmLanguage = RealmLanguage()
+                    realmLanguage.mapFrom(model: language)
+                    languagesToStore.append(realmLanguage)
+                    languagesStored[realmLanguage.id] = realmLanguage
+                    
+                    if let index = languageIdsRemoved.firstIndex(of: language.id) {
+                        languageIdsRemoved.remove(at: index)
+                    }
+                }
+                
+                let languagesToRemove: [RealmLanguage] = Array(realm.objects(RealmLanguage.self).filter("id IN %@", languageIdsRemoved))
+                                
                 do {
                     
                     try realm.write {
-                        
-                        for language in languages {
-                            
-                            if let index = languagesToRemove.firstIndex(where: {$0.id == language.id}) {
-                                languagesToRemove.remove(at: index)
-                            }
-   
-                            if let existingLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: language.id) {
-                                
-                                existingLanguage.mapFrom(model: language, shouldIgnoreMappingPrimaryKey: true)
-                            }
-                            else {
-                                
-                                let newLanguage: RealmLanguage = RealmLanguage()
-                                newLanguage.mapFrom(model: language, shouldIgnoreMappingPrimaryKey: false)
-                                realm.add(newLanguage)
-                            }
-                        }
-                              
-                        if deletesNonExisting {
-                            realm.delete(languagesToRemove)
-                        }
-                        
-                        writeError = nil
+                        realm.add(languagesToStore, update: .all)
+                        realm.delete(languagesToRemove)
                     }
-                }
-                catch let error {
                     
-                    writeError = error
-                }
-                
-                if let writeError = writeError {
-                    
-                    promise(.failure(writeError))
-                }
-                else {
-                                   
                     NotificationCenter.default.post(
-                        name: self.languagesChangedNotificationName,
+                        name: self.languagesSyncedNotificationName,
                         object: [languages],
                         userInfo: nil
                     )
                     
-                    promise(.success(languages))
+                    let result = RealmLanguagesCacheSyncResult(
+                        languagesStored: languagesStored,
+                        languageIdsRemoved: languageIdsRemoved
+                    )
+                    
+                    promise(.success(result))
+                }
+                catch let error {
+                    
+                    promise(.failure(error))
                 }
             }
         }
