@@ -13,16 +13,34 @@ GodTools
 
 ### Programming Guide
 
+- [Conventions](#conventions)
 - [Architecture](#architecture)
+
+#### Conventions
+
+- [Classes](#classes)
+
+
+#### Classes
+
+- Class / Struct attributes should always be declared with the type.
+- Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow grouped by private first, then internal, then public.   
 
 #### Architecture
 
 ![alt text](ReadMeAssets/clean_architecture.png)
 
+- [Summary](#summary)
 - [Presentation Layer](#presentation-layer)
 - [Domain Layer](#domain-layer)
 - [Data Layer](#data-layer)
 - [Coordinator](#coordinator)
+
+
+#### Summary
+The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, an Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles(https://www.geeksforgeeks.org/solid-principle-in-programming-understand-with-real-life-examples/) .
+
+The purpose of this pattern is to create a clear separation of concerns and responsibilities.
 
 #### Presentation Layer
 
@@ -126,3 +144,4 @@ A Repository has the following responsibilities:
 
 #### Coordinator
 - TODO
+
