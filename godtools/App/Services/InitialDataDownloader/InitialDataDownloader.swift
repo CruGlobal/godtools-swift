@@ -8,10 +8,12 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class InitialDataDownloader: NSObject {
     
     private let realmDatabase: RealmDatabase
+    private let resourcesRepository: ResourcesRepository
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesSync: InitialDataDownloaderResourcesSync
@@ -21,6 +23,7 @@ class InitialDataDownloader: NSObject {
     private let languageSettingsCache: LanguageSettingsCacheType
     private let favoritedResourceTranslationDownloader : FavoritedResourceTranslationDownloader
     
+    private var downloadAndCacheInitialData: AnyCancellable?
     private var downloadResourcesOperation: OperationQueue?
     
     private(set) var didComplete: Bool = false
@@ -35,9 +38,10 @@ class InitialDataDownloader: NSObject {
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
+        self.resourcesRepository = resourcesRepository
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
         self.resourcesSync = resourcesSync
@@ -61,6 +65,20 @@ class InitialDataDownloader: NSObject {
     }
     
     func downloadInitialData() {
+
+        downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+                
+                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
+            .sink(receiveCompletion: { completed in
+                print(completed)
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+                print(result)
+            })
+        
+        return
         
         if downloadResourcesOperation != nil {
             return

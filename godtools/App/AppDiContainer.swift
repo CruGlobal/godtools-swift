@@ -120,6 +120,7 @@ class AppDiContainer {
         
         initialDataDownloader = InitialDataDownloader(
             realmDatabase: realmDatabase,
+            resourcesRepository: dataLayer.getResourcesRepository(),
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
