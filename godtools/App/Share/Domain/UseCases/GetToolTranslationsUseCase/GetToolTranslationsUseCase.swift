@@ -7,39 +7,46 @@
 //
 
 import Foundation
+import Combine
 
-class GetToolTranslationsUseCase: NSObject {
+class GetToolTranslationsUseCase {
     
     typealias TranslationId = String
     
-    private let initialDataDownloader: InitialDataDownloader
-    private let translationDownloader: TranslationDownloader
-    private let resourcesCache: ResourcesCache
+    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
-    private let translationsFileCache: TranslationsFileCache
     private let mobileContentParser: MobileContentParser
-    private let languageSettingsService: LanguageSettingsService
     
-    private var didInitiateDownloadStartedClosure: Bool = false
-    private var downloadTranslationsReceipt: DownloadTranslationsReceipt?
-    
-    init(initialDataDownloader: InitialDataDownloader, translationDownloader: TranslationDownloader, resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, translationsFileCache: TranslationsFileCache, mobileContentParser: MobileContentParser, languageSettingsService: LanguageSettingsService) {
+    private var getToolTranslationsCancellable: AnyCancellable?
         
-        self.initialDataDownloader = initialDataDownloader
-        self.translationDownloader = translationDownloader
-        self.resourcesCache = resourcesCache
+    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository, mobileContentParser: MobileContentParser) {
+
+        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository
-        self.translationsFileCache = translationsFileCache
         self.mobileContentParser = mobileContentParser
-        self.languageSettingsService = languageSettingsService
-        
-        super.init()
     }
     
-    deinit {
-        removeDownloadInitialDataObservers()
-        destroyDownloadTranslationsReceipt()
+    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)) {
+        
+        getToolTranslationsCancellable = determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+            .mapError { error in
+                return error as Error
+            }
+            .flatMap({ toolTranslationsToDownload -> AnyPublisher<Bool, Error> in
+                    
+                return Just(true).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
+            .sink { completed in
+                print(completed)
+            } receiveValue: { (value: Bool) in
+                print(value)
+            }
     }
+    
+    /*
     
     private func initiateDownloadStartedClosure(downloadStarted: @escaping (() -> Void)) {
         
@@ -181,23 +188,21 @@ extension GetToolTranslationsUseCase {
         
         removeDownloadInitialDataObservers()
         
-        initialDataDownloader.didDownloadAndCacheResources.addObserver(self) { [weak self] (didDownloadAndCacheResources: Bool) in
+        initialDataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             
             guard let weakSelf = self else {
                 return
             }
             
-            if didDownloadAndCacheResources {
-                weakSelf.removeDownloadInitialDataObservers()
-                completion()
-            }
+            weakSelf.removeDownloadInitialDataObservers()
+            completion()
         }
         
         initialDataDownloader.downloadInitialData()
     }
     
     private func removeDownloadInitialDataObservers() {
-        initialDataDownloader.didDownloadAndCacheResources.removeObserver(self)
+        initialDataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
     private func downloadTranslationsFromRemoteDatabase(translationIds: [String], completion: @escaping (() -> Void)) {
@@ -310,6 +315,6 @@ extension GetToolTranslationsUseCase {
         }
         
         return nil
-    }
+    }*/
 }
 

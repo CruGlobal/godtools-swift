@@ -271,10 +271,6 @@ class AppDiContainer {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
-    func getMobileContentParser() -> MobileContentParser {
-        return MobileContentParser(resourcesFileCache: resourcesFileCache)
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
@@ -376,18 +372,6 @@ class AppDiContainer {
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
-    func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
-        return GetToolTranslationsUseCase(
-            initialDataDownloader: initialDataDownloader,
-            translationDownloader: translationDownloader,
-            resourcesCache: initialDataDownloader.resourcesCache,
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            translationsFileCache: translationsFileCache,
-            mobileContentParser: getMobileContentParser(),
-            languageSettingsService: languageSettingsService
         )
     }
     

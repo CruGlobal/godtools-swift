@@ -691,7 +691,7 @@ extension AppFlow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
-            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
+            getToolTranslationsUseCase: appDiContainer.domainLayer.getToolTranslationsUseCase(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
             bannerImageRepository: appDiContainer.getResourceBannerImageRepository()

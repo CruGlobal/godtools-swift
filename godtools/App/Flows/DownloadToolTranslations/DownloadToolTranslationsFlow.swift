@@ -28,7 +28,7 @@ class DownloadToolTranslationsFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = presentInFlow.navigationController
         self.determineToolTranslationsToDownload = determineToolTranslationsToDownload
-        self.getToolTranslationsUseCase = appDiContainer.getToolTranslationsUseCase()
+        self.getToolTranslationsUseCase = appDiContainer.domainLayer.getToolTranslationsUseCase()
         self.didDownloadToolTranslations = didDownloadToolTranslations
            
         getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
@@ -36,7 +36,6 @@ class DownloadToolTranslationsFlow: Flow {
             self?.navigateToDownloadTool(didCloseClosure: { [weak self] in
                 
                 self?.dismissDownloadTool()
-                self?.getToolTranslationsUseCase.cancel()
             })
             
         }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in

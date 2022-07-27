@@ -37,8 +37,6 @@ class InitialDataDownloader: NSObject {
     @available(*, deprecated)
     let resourcesUpdatedFromRemoteDatabase: SignalValue<InitialDataDownloaderError?> = SignalValue()
     @available(*, deprecated)
-    let didDownloadAndCacheResources: ObservableValue<Bool> = ObservableValue(value: false)
-    @available(*, deprecated)
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
@@ -74,6 +72,8 @@ class InitialDataDownloader: NSObject {
         downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
             .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
+                self.cachedResourcesAvailable.accept(value: true)
+                
                 return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
                     .eraseToAnyPublisher()
             })
@@ -81,6 +81,7 @@ class InitialDataDownloader: NSObject {
                 print(completed)
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
                 print(result)
+                self.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
             })
         
         return
@@ -160,8 +161,6 @@ class InitialDataDownloader: NSObject {
         downloadResourcesOperation = nil
         
         resourcesUpdatedFromRemoteDatabase.accept(value: error)
-        
-        didDownloadAndCacheResources.accept(value: true)
     }
     
     private func downloadLatestAttachments(resourcesCacheResult: ResourcesCacheResult) {

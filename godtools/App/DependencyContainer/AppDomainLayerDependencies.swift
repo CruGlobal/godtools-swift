@@ -16,4 +16,13 @@ class AppDomainLayerDependencies {
         
         self.dataLayer = dataLayer
     }
+    
+    func getToolTranslationsUseCase() -> GetToolTranslationsUseCase {
+        return GetToolTranslationsUseCase(
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            mobileContentParser: dataLayer.getMobileContentParser()
+        )
+    }
 }
