@@ -309,7 +309,6 @@ class AppDiContainer {
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
             onboardingTutorialViewedCache: getOnboardingTutorialViewedCache(),
             isNewUserCache: isNewUserService.isNewUserCache
         )
@@ -442,10 +441,6 @@ class AppDiContainer {
             cache: RealmTranslationsCache(realmDatabase: realmDatabase),
             resourcesFileCache: resourcesFileCache
         )
-    }
-    
-    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
-        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
     }
     
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
