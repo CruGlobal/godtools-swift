@@ -32,10 +32,15 @@ class InitialDataDownloader: NSObject {
     let attachmentsFileCache: AttachmentsFileCache
     
     // observables
+    @available(*, deprecated)
     let cachedResourcesAvailable: ObservableValue<Bool> = ObservableValue(value: false)
+    @available(*, deprecated)
     let resourcesUpdatedFromRemoteDatabase: SignalValue<InitialDataDownloaderError?> = SignalValue()
+    @available(*, deprecated)
     let didDownloadAndCacheResources: ObservableValue<Bool> = ObservableValue(value: false)
+    @available(*, deprecated)
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
+    @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
     required init(realmDatabase: RealmDatabase, resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
