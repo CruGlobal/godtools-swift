@@ -208,6 +208,10 @@ class AppDiContainer {
         return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
+    func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
+        return GetDeviceLanguageUseCase(deviceLanguage: deviceLanguage)
+    }
+    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
     }
@@ -300,7 +304,7 @@ class AppDiContainer {
     }
     
     func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
-        return GetOnboardingQuickLinksEnabledUseCase(deviceLanguage: deviceLanguage)
+        return GetOnboardingQuickLinksEnabledUseCase(getDeviceLanguageUseCase: getDeviceLanguageUseCase())
     }
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
