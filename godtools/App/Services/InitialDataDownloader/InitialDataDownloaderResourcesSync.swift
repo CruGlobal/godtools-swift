@@ -53,7 +53,7 @@ class InitialDataDownloaderResourcesSync {
                 for language in languages {
                     
                     let realmLanguage: RealmLanguage = RealmLanguage()
-                    realmLanguage.mapFrom(model: language, shouldIgnoreMappingPrimaryKey: false)
+                    realmLanguage.mapFrom(model: language)
                     realmLanguagesDictionary[realmLanguage.id] = realmLanguage
                     realmObjectsToCache.append(realmLanguage)
                     
@@ -75,7 +75,7 @@ class InitialDataDownloaderResourcesSync {
                 for resource in resourcesPlusLatestTranslationsAndAttachments.resources {
                     
                     let realmResource = RealmResource()
-                    realmResource.mapFrom(model: resource, shouldIgnoreMappingPrimaryKey: false)
+                    realmResource.mapFrom(model: resource)
                     realmResourcesDictionary[realmResource.id] = realmResource
                     realmObjectsToCache.append(realmResource)
                     
@@ -97,7 +97,7 @@ class InitialDataDownloaderResourcesSync {
                 for translation in resourcesPlusLatestTranslationsAndAttachments.translations {
                     
                     let realmTranslation = RealmTranslation()
-                    realmTranslation.mapFrom(model: translation, shouldIgnoreMappingPrimaryKey: false)
+                    realmTranslation.mapFrom(model: translation)
                     
                     if let resourceId = translation.resource?.id {
                         realmTranslation.resource = realmResourcesDictionary[resourceId]
@@ -128,7 +128,7 @@ class InitialDataDownloaderResourcesSync {
                 for attachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                     
                     let realmAttachment = RealmAttachment()
-                    realmAttachment.mapFrom(model: attachment, shouldIgnoreMappingPrimaryKey: false)
+                    realmAttachment.mapFrom(model: attachment)
                     
                     if let resourceId = attachment.resource?.id {
                         realmAttachment.resource = realmResourcesDictionary[resourceId]
