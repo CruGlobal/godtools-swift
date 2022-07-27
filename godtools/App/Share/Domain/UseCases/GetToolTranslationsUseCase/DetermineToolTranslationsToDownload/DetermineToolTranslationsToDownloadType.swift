@@ -9,9 +9,7 @@
 import Foundation
 
 protocol DetermineToolTranslationsToDownloadType {
-    
-    var resourcesCache: ResourcesCache { get }
-    
+        
     func getResource() -> ResourceModel?
     func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError>
 }

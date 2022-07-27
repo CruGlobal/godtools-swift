@@ -34,6 +34,16 @@ class TranslationsRepository {
         return cache.getTranslations(ids: ids)
     }
     
+    func getTranslationManifestFromCache(manifestName: String) -> Data? {
+       
+        switch resourcesFileCache.getData(location: FileCacheLocation(relativeUrlString: manifestName)) {
+        case .success(let data):
+            return data
+        case .failure( _):
+            return nil
+        }
+    }
+    
     func downloadAnCacheTranslationFiles(translationIds: [String]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
                 
         let requests = translationIds.map {

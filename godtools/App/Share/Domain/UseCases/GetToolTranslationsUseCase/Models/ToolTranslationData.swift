@@ -13,15 +13,13 @@ class ToolTranslationData {
     let resource: ResourceModel
     let language: LanguageModel
     let translation: TranslationModel
-    let manifestFileName: String
     let manifestData: Data
     
-    init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, manifestFileName: String, manifestData: Data) {
+    init(resource: ResourceModel, language: LanguageModel, translation: TranslationModel, manifestData: Data) {
         
         self.resource = resource
         self.language = language
         self.translation = translation
-        self.manifestFileName = manifestFileName
         self.manifestData = manifestData
     }
 }

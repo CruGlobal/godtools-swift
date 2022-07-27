@@ -28,23 +28,212 @@ class GetToolTranslationsUseCase {
         self.mobileContentParser = mobileContentParser
     }
     
-    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)) {
+    func getToolTranslationsFromCache(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType) -> AnyPublisher<ToolTranslationsDomainModel, ToolTranslationsDomainError> {
         
-        getToolTranslationsCancellable = determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+        return getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
             .mapError { error in
-                return error as Error
+                return .errorFetchingTranslationManifestsFromCache(error: error)
             }
-            .flatMap({ toolTranslationsToDownload -> AnyPublisher<Bool, Error> in
+            .flatMap({ result -> AnyPublisher<ToolTranslationsDomainModel, ToolTranslationsDomainError> in
+                
+                switch result {
+                
+                case .didGetToolTranslationsData(let toolTranslationsData):
                     
+                    return self.parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: toolTranslationsData).publisher
+                        .mapError { error in
+                            return .errorParsingTranslationManifestData(error: error)
+                        }
+                        .eraseToAnyPublisher()
+                    
+                case .failedToFetchResourcesFromCache:
+                    
+                    return Fail(error: .failedToFetchResourcesFromCache)
+                        .eraseToAnyPublisher()
+                
+                case .failedToFetchTranslationManifestsFromCache(let translationIds):
+                    
+                    return Fail(error: .failedToFetchTranslationFilesFromCache(translationIds: translationIds))
+                        .eraseToAnyPublisher()
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func getToolTranslationsFromRemote() {
+        
+    }
+    
+    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, Error>) -> Void)) {
+        
+        getToolTranslationsCancellable = getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
+            .flatMap({ result -> AnyPublisher<Bool, Error> in
+                
+                switch result {
+                
+                case .didGetToolTranslationsData(let toolTranslationsData):
+                    
+                    downloadFinished(self.parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: toolTranslationsData))
+                    
+                case .failedToFetchResourcesFromCache:
+                    
+                    downloadStarted()
+                    
+                    return self.downloadResourcesFromRemote()
+                        .flatMap({ results -> AnyPublisher<GetToolTranslationsManifestsFromCacheResult, Error> in
+                            
+                            return self.getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
+                                .eraseToAnyPublisher()
+                        })
+                        .flatMap({ result  -> AnyPublisher<Bool, Error> in
+                            
+                            switch result {
+                           
+                            case .didGetToolTranslationsData(let toolTranslationsData):
+                                downloadFinished(self.parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: toolTranslationsData))
+                            
+                            case .failedToFetchResourcesFromCache:
+                                break
+                            
+                            case .failedToFetchTranslationManifestsFromCache(let translationIds):
+                                break
+                            }
+                        })
+                        .eraseToAnyPublisher()
+                    
+                
+                case .failedToFetchTranslationManifestsFromCache(let translationIds):
+                    
+                    downloadStarted()
+                    
+                    return self.translationsRepository.downloadAnCacheTranslationFiles(translationIds: translationIds)
+                        .flatMap({ results -> AnyPublisher<GetToolTranslationsManifestsFromCacheResult, Error> in
+                                
+                            return self.getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
+                                .eraseToAnyPublisher()
+                        })
+                        .flatMap({ result  -> AnyPublisher<Bool, Error> in
+                            
+                            switch result {
+                            case .didGetToolTranslationsData(let toolTranslationsData):
+                                
+                                downloadFinished(self.parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: toolTranslationsData))
+                                
+                            case .failedToFetchResourcesFromCache:
+                                break
+                            case .failedToFetchTranslationManifestsFromCache(let translationIds):
+                                break
+                            }
+                        })
+                        .eraseToAnyPublisher()
+                }
+                
                 return Just(true).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
-            .sink { completed in
-                print(completed)
-            } receiveValue: { (value: Bool) in
-                print(value)
-            }
+            .sink(receiveCompletion: { completed in
+                
+            }, receiveValue: { (value: Bool) in
+                
+            })
     }
+    
+    private func getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType) -> AnyPublisher<GetToolTranslationsManifestsFromCacheResult, Error> {
+        
+        var toolTranslationsData: [ToolTranslationData] = Array()
+        var translationIdsNeededDownloading: [String] = Array()
+        
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+            .mapError { error in
+                return error as Error
+            }
+            .flatMap({ toolTranslationsToDownload -> AnyPublisher<GetToolTranslationsManifestsFromCacheResult, Error> in
+                
+                let resource: ResourceModel = toolTranslationsToDownload.resource
+                let languages: [LanguageModel] = toolTranslationsToDownload.languages
+                
+                for language in languages {
+                    
+                    guard let translation = self.resourcesRepository.getResourceLanguageTranslation(resourceId: resource.id, languageId: language.id) else {
+                        
+                        return Just(.failedToFetchResourcesFromCache).setFailureType(to: Error.self)
+                            .eraseToAnyPublisher()
+                    }
+                                        
+                    guard let cachedManifest = self.translationsRepository.getTranslationManifestFromCache(manifestName: translation.manifestName) else {
+                        
+                        translationIdsNeededDownloading.append(translation.id)
+                        
+                        continue
+                    }
+
+                    let translationData = ToolTranslationData(
+                        resource: resource,
+                        language: language,
+                        translation: translation,
+                        manifestData: cachedManifest
+                    )
+                    
+                    toolTranslationsData.append(translationData)
+                }
+                
+                guard translationIdsNeededDownloading.isEmpty else {
+                    return Just(.failedToFetchTranslationManifestsFromCache(translationIds: translationIdsNeededDownloading)).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                    
+                return Just(.didGetToolTranslationsData(toolTranslationsData: toolTranslationsData)).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func downloadResourcesFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+        
+        return resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+            .flatMap({ results -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+                    
+                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+        
+    private func parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: [ToolTranslationData]) -> Result<ToolTranslationsDomainModel, Error> {
+        
+        guard let resource = toolTranslations.first?.resource else {
+            return .failure(NSError.errorWithDescription(description: "Tool translations can't be empty."))
+        }
+        
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        for toolTranslation in toolTranslations {
+            
+            switch mobileContentParser.parse(translationManifestFileName: toolTranslation.translation.manifestName) {
+            
+            case .success(let manifest):
+                
+                let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                    manifest: manifest,
+                    language: toolTranslation.language
+                )
+                
+                languageTranslationManifests.append(languageTranslationManifest)
+            
+            case .failure(let error):
+                return .failure(error)
+            }
+        }
+        
+        let toolTranslationsDomainModel = ToolTranslationsDomainModel(
+            tool: resource,
+            languageTranslationManifests: languageTranslationManifests
+        )
+        
+        return .success(toolTranslationsDomainModel)
+    }
+    
+
     
     /*
     
