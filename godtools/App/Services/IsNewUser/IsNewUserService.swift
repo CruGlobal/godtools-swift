@@ -11,9 +11,9 @@ import Foundation
 class IsNewUserService {
     
     let determineNewUser: DetermineIfNewUserType
-    let isNewUserCache: IsNewUserCacheType
+    let isNewUserCache: IsNewUserDefaultsCache
     
-    required init(isNewUserCache: IsNewUserCacheType, determineNewUser: DetermineIfNewUserType) {
+    required init(isNewUserCache: IsNewUserDefaultsCache, determineNewUser: DetermineIfNewUserType) {
                 
         self.determineNewUser = determineNewUser
         self.isNewUserCache = isNewUserCache

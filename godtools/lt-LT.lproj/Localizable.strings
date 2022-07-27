@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nėra %@";
+
+"tool_menu_item.tools" = "Įrankiai";
+"lessons.pageTitle" = "Jums paruoštos pamokos";
+"lessons.pageSubtitle" = "Praktinės idėjos, kaip užmegzti santykius ir pradėti prasmingus pokalbius.";
 "toolSettings.languagesAvailable.title" = "Galimos kalbos";
 "toolDetails.versions.message" = "Apačioje pasirinkite kitą šio įrankio versiją. Kiekviena versija turi unikalų stilių ir turinį, taigi, galėsite rasti jūsų pokalbiui tinkamiausią. Galite pasirinkti kelias mėgstamiausias to paties įrankio versijas.";
 "favorites.noTools.title" = "Nėra jokių mėgstamiausių įrankių";

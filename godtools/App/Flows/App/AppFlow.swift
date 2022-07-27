@@ -491,6 +491,7 @@ extension AppFlow {
             analytics: appDiContainer.analytics,
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             fontService: appDiContainer.getFontService()
         )
         
@@ -665,7 +666,9 @@ extension AppFlow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            flowDelegate: self
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            flowDelegate: self,
+            analytics: appDiContainer.analytics
         )
         
         let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))

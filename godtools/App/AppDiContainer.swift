@@ -11,9 +11,8 @@ import OktaAuthentication
 
 class AppDiContainer {
         
-    private let legacyRealmMigration: LegacyRealmMigration
-    private let realmDatabase: RealmDatabase
-    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache() // TODO: Make private. ~Levi
+    private let realmDatabase: RealmDatabase = RealmDatabase()
+    private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
     private let resourcesApi: ResourcesApiType
@@ -30,8 +29,7 @@ class AppDiContainer {
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let config: ConfigType
-    let crashReporting: CrashReportingType
+    let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
@@ -57,21 +55,17 @@ class AppDiContainer {
     let firebaseInAppMessaging: FirebaseInAppMessagingType
         
     required init(appDeepLinkingService: DeepLinkingServiceType) {
-        
-        config = AppConfig()
-        
-        crashReporting = FirebaseCrashlyticsService()
-        
+                        
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
-        realmDatabase = RealmDatabase()
-
         languagesApi = MobileContentLanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
         resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
         translationsApi = MobileContentTranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        
+        resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                         
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
         
@@ -81,11 +75,11 @@ class AppDiContainer {
         
         languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
         
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
                 
         translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
-        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
            
@@ -101,26 +95,17 @@ class AppDiContainer {
             downloadedLanguagesCache: downloadedLanguagesCache,
             translationDownloader: translationDownloader
         )
-        
-        legacyRealmMigration = LegacyRealmMigration(
-            realmDatabase: realmDatabase,
-            languageSettingsCache: languageSettingsCache,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            failedFollowUpsCache: failedFollowUpsCache
-        )
-        
+                
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
-            resourcesSHA256FileCache: resourcesSHA256FileCache,
+            resourcesSHA256FileCache: resourcesFileCache,
             favoritedResourcesCache: favoritedResourcesCache,
             downloadedLanguagesCache: downloadedLanguagesCache
         )
         
         initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
             realmDatabase: realmDatabase,
-            legacyRealmMigration: legacyRealmMigration,
             attachmentsFileCache: attachmentsFileCache,
             translationsFileCache: translationsFileCache,
             realmResourcesCache: realmResourcesCache,
@@ -247,6 +232,13 @@ class AppDiContainer {
         return GoogleAdwordsAnalytics(config: config)
     }
     
+    func getLanguageAvailabilityStringUseCase() -> GetLanguageAvailabilityStringUseCase {
+        return GetLanguageAvailabilityStringUseCase(
+            localizationServices: localizationServices,
+            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         return LanguagesRepository(cache: languagesCache)
     }
@@ -268,7 +260,7 @@ class AppDiContainer {
     }
     
     func getManifestResourcesCache() -> ManifestResourcesCache {
-        return ManifestResourcesCache(translationsFileCache: translationsFileCache)
+        return ManifestResourcesCache(resourcesFileCache: resourcesFileCache)
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
@@ -280,7 +272,7 @@ class AppDiContainer {
     }
     
     func getMobileContentParser() -> MobileContentParser {
-        return MobileContentParser(translationsFileCache: translationsFileCache)
+        return MobileContentParser(resourcesFileCache: resourcesFileCache)
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
@@ -329,7 +321,7 @@ class AppDiContainer {
     
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
-            cache: OptInOnboardingBannerEnabledCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+            cache: OptInOnboardingBannerEnabledCache()
         )
     }
     
@@ -360,6 +352,10 @@ class AppDiContainer {
     
     func getSetupParallelLanguageViewedCache() -> SetupParallelLanguageViewedCacheType {
         return SetupParallelLanguageViewedUserDefaultsCache()
+    }
+    
+    func getShareableImageUseCase() -> GetShareableImageUseCase {
+        return GetShareableImageUseCase()
     }
     
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
@@ -433,6 +429,14 @@ class AppDiContainer {
         return GetTranslatedLanguageUseCase(
             languagesRepository: getLanguagesRepository(),
             localizationServices: localizationServices
+        )
+    }
+    
+    func getTranslationsRepository() -> TranslationsRepository {
+        return TranslationsRepository(
+            api: translationsApi,
+            cache: RealmTranslationsCache(realmDatabase: realmDatabase),
+            resourcesFileCache: resourcesFileCache
         )
     }
     

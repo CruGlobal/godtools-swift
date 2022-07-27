@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Indisponibil în %@";
+
+"tool_menu_item.tools" = "Instrumentele";
+"lessons.pageTitle" = "Lecții create pentru tine";
+"lessons.pageSubtitle" = "Idei practice pentru a construi relații și a începe conversații relevante.";
 "toolSettings.languagesAvailable.title" = "Limbi disponibile";
 "toolDetails.versions.message" = "Alege o versiune diferită a instrumentului de mai jos. Fiecare versiune are un stil și un conținut unice pentru a le găsi pe cele care se potrivesc cel mai bine conversației tale. Poți adăuga la favorite mai multe versiuni ale aceluiași instrument.";
 "favorites.noTools.title" = "Niciun instrument preferat de afișat";

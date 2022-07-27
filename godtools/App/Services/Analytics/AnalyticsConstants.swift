@@ -15,13 +15,16 @@ struct AnalyticsConstants {
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let exitLink = "cru.mobileexitlink"
         static let grMasterPersonID = "cru.grmpid"
+        static let lessonOpenTapped = "cru.lesson_open_tap"
         static let loggedInStatus = "cru.loggedinstatus"
         static let previousScreenName = "cru.previousscreenname"
         static let screenName = "cru.screenname"
         static let screenNameFirebase = "screen_name"
         static let shareAction = "cru.shareiconengaged"
+        static let shareableId = "cru.shareable_id"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
+        static let source = "cru.source"
         static let ssoguid = "cru.ssoguid"
         static let snowplowid = "cru.snowplowid"
         static let toggleAction = "cru.toggleswitch"
@@ -68,10 +71,12 @@ struct AnalyticsConstants {
     
     struct ActionNames {
         static let aboutToolOpened = "About Tool Open Button"
+        static let lessonOpenTapped = "Lesson Open Tap"
         static let parallelLanguageToggled = "Parallel Language Toggled"
         static let shareIconEngaged = "Share Icon Engaged"
         static let shareScreenEngaged = "Share Screen Engaged"
         static let shareScreenOpened = "Share Screen Opened"
+        static let shareShareable = "share_shareable"
         static let toolOpenedShortcut = "Tool Opened Shortcut"
         static let toolOpenTapped = "Tool Open Tap"
         static let toolOpened = "Tool Open Button"
@@ -83,5 +88,10 @@ struct AnalyticsConstants {
         static let viewedLessonsAction = "iam_lessons"
         static let viewedMyToolsAction = "iam_mytools"
         static let viewedToolsAction = "iam_tools"
+    }
+    
+    struct Sources {
+        static let featured = "featured"
+        static let spotlight = "spotlight"
     }
 }

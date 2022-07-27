@@ -1,3 +1,9 @@
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "No disponible en %@";
+
+"tool_menu_item.tools" = "Herramientas";
+"lessons.pageTitle" = "Lecciones hechas para ti";
+"lessons.pageSubtitle" = "Ideas prácticas para establecer relaciones e iniciar conversaciones significativas.";
 "toolSettings.languagesAvailable.title" = "Idiomas disponibles";
 "toolDetails.versions.message" = "Elija una versión diferente de esta herramienta a continuación. Cada versión tiene un estilo y un contenido únicos para que puedas encontrar la que mejor se adapte a tu conversación. Puedes marcar como favoritas varias versiones de la misma herramienta.";
 "favorites.noTools.title" = "No hay herramientas favoritas para mostrar";
@@ -42,34 +48,34 @@
 "parallelLanguage.selectLanguageButton.title" = "Seleccione un idioma";
 "parellelLanguage.prompt" = "¿Quiere establecer un idioma secundario?";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Cerrar tutorial";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "HERRAMIENTAS";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Cada herramienta está hecha para una etapa diferente de la conversación: antes, durante o después.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.title" = "Consejos sobre la herramienta";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.message" = "Los consejos de GodTools te guían mientras ayudas a alguien a entender el evangelio y a encontrarse con Jesús.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "Compartir pantalla";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.message" = "Ahora puedes compartir tu pantalla a distancia para que la otra persona pueda seguirte mientras utilizas una herramienta para hablar del evangelio.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Lecciones";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.message" = "En cada lección de GodTools aprenderás algo que te ayudará a tener conversaciones reales sobre Dios.";
 
-/* Tutorial phrase, do not translate unless asked to do so. */
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Encuentra este tutorial en el menú siempre que lo necesites.";
 
 "onboardingTutorial.beginButton.title" = "Comenzar";

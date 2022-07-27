@@ -11,27 +11,27 @@ import GodToolsToolParser
 
 class MobileContentMultiplatformParserFactory: IosXmlPullParserFactory {
         
-    private let translationsFileCache: TranslationsFileCache
+    private let resourcesFileCache: ResourcesSHA256FileCache
     
-    required init(translationsFileCache: TranslationsFileCache) {
+    required init(resourcesFileCache: ResourcesSHA256FileCache) {
         
-        self.translationsFileCache = translationsFileCache
+        self.resourcesFileCache = resourcesFileCache
         
         super.init()
     }
     
     override func openFile(fileName: String) -> Data? {
                 
-        let location = SHA256FileLocation(sha256WithPathExtension: fileName)
-        
-        let result = translationsFileCache.getData(location: location)
+        let location = FileCacheLocation(relativeUrlString: fileName)
+                
+        let result = resourcesFileCache.getData(location: location)
         
         switch result {
         
         case .success(let data):
             return data
             
-        case .failure(let error):
+        case .failure( _):
             return nil
         }
     }

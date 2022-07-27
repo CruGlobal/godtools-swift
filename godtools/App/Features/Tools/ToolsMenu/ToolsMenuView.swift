@@ -132,7 +132,8 @@ class ToolsMenuView: UIViewController {
             return favoritedToolsView
         
         case .lessons:
-            return LessonsListView(viewModel: viewModel.lessonsWillAppear())
+            return LessonsView(contentView: LessonsContentView(viewModel: viewModel.lessonsWillAppear()))
+            
         }
     }
     
@@ -299,5 +300,16 @@ extension ToolsMenuView: ToolsMenuToolbarViewDelegate {
     func toolsMenuToolbarAllToolsTapped(toolsMenuToolbar: ToolsMenuToolbarView) {
         
         navigateToPage(pageType: .allTools, animated: true)
+    }
+}
+
+// MARK: - Static
+
+extension ToolsMenuView {
+    
+    private static let marginMultiplier: CGFloat = 15/375
+    
+    static func getMargin(for width: CGFloat) -> CGFloat {
+        return width * marginMultiplier
     }
 }

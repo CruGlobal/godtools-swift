@@ -21,6 +21,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let favoritedResourcesCache: FavoritedResourcesCache
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
+    let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     weak var delegate: BaseFavoriteToolsViewModelDelegate?
     weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
     
@@ -30,12 +31,13 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         self.toolCardViewModelDelegate = toolCardViewModelDelegate
         
@@ -65,6 +67,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: toolCardViewModelDelegate
         )
     }

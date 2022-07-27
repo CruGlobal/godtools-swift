@@ -14,6 +14,7 @@ class ToolSettingsViewModel: ObservableObject {
     
     private let localizationServices: LocalizationServices
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
+    private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     private let primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>
     private let parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>
@@ -40,11 +41,12 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
+        self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.primaryLanguageSubject = primaryLanguageSubject
         self.parallelLanguageSubject = parallelLanguageSubject
@@ -156,10 +158,8 @@ class ToolSettingsViewModel: ObservableObject {
         let manifestResourcesCache: ManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
         let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
         
-        guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getImageFromManifestResources(resource: resource) else {
-            return
-        }
+        guard let shareableImageDomainModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else { return }
         
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareImage: imageToShare))
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareableImageDomainModel: shareableImageDomainModel))
     }
 }
