@@ -26,6 +26,14 @@ class TranslationsRepository {
         self.resourcesFileCache = resourcesFileCache
     }
     
+    func getTranslation(id: String) -> TranslationModel? {
+        return cache.getTranslation(id: id)
+    }
+    
+    func getTranslations(ids: [String]) -> [TranslationModel] {
+        return cache.getTranslations(ids: ids)
+    }
+    
     func downloadAnCacheTranslationFiles(translationIds: [String]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
                 
         let requests = translationIds.map {

@@ -8,36 +8,72 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class MobileContentLanguagesApi {
+    
+    private enum Path {
+        static let languages = "/languages"
+    }
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    required init(config: ConfigType, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
             
-        session = sharedSession.session
+        session = ignoreCacheSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    func newGetLanguagesOperation() -> RequestOperation {
+    private func getLanguagesRequest() -> URLRequest {
         
-        let urlRequest: URLRequest = requestBuilder.build(
+        return requestBuilder.build(
             session: session,
-            urlString: baseUrl + "/languages",
+            urlString: baseUrl + Path.languages,
             method: .get,
             headers: nil,
             httpBody: nil,
             queryItems: nil
         )
-        
-        return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
+    func getLanguages() -> AnyPublisher<[LanguageModel], URLResponseError> {
+        
+        return session.dataTaskPublisher(for: getLanguagesRequest())
+            .tryMap {
+                
+                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
+                
+                guard urlResponseObject.isSuccessHttpStatusCode else {
+                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
+                }
+                
+                return urlResponseObject.data
+            }
+            .mapError {
+                return URLResponseError.requestError(error: $0 as Error)
+            }
+            .decode(type: LanguagesDataModel.self, decoder: JSONDecoder())
+            .map {
+                return $0.data
+            }
+            .mapError {
+                return URLResponseError.decodeError(error: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    @available(*, deprecated) // TODO: Remove once switched over to using Combine publishers. ~Levi
+    func getLanguagesOperation() -> RequestOperation {
+        
+        return RequestOperation(session: session, urlRequest: getLanguagesRequest())
+    }
+    
+    @available(*, deprecated) // TODO: Remove once switched over to using Combine publishers. ~Levi
     func getLanguages(complete: @escaping ((_ result: Result<Data?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
-        let languagesOperation: RequestOperation = newGetLanguagesOperation()
+        let languagesOperation: RequestOperation = getLanguagesOperation()
         
         let queue = OperationQueue()
         
@@ -58,9 +94,10 @@ class MobileContentLanguagesApi {
         return queue
     }
     
+    @available(*, deprecated) // TODO: Remove once switched over to using Combine publishers. ~Levi
     func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
-        let languagesOperation: RequestOperation = newGetLanguagesOperation()
+        let languagesOperation: RequestOperation = getLanguagesOperation()
         
         let queue = OperationQueue()
         

@@ -1,5 +1,5 @@
 //
-//  SharedIgnoreCacheSession.swift
+//  IgnoreCacheSession.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/12/20.
@@ -8,12 +8,11 @@
 
 import Foundation
 
-@available(*, deprecated) // TODO: Will be replaced with Common/URLSession/IgnoreCacheSession. GT-1727 ~Levi
-class SharedIgnoreCacheSession: SharedSessionType {
-    
+class IgnoreCacheSession {
+        
     let session: URLSession
     
-    required init() {
+    init() {
         
         let configuration = URLSessionConfiguration.ephemeral
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
@@ -24,7 +23,7 @@ class SharedIgnoreCacheSession: SharedSessionType {
         configuration.httpCookieStorage = nil
         
         configuration.timeoutIntervalForRequest = 60
-            
+     
         session = URLSession(configuration: configuration)
     }
 }
