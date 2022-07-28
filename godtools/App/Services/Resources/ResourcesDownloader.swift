@@ -24,7 +24,7 @@ class ResourcesDownloader {
              
         let queue = OperationQueue()
                                         
-        let languagesOperation: RequestOperation = languagesApi.newGetLanguagesOperation()
+        let languagesOperation: RequestOperation = languagesApi.getLanguagesOperation()
         let resourcesPlusLatestTranslationsAndAttachmentsOperation: RequestOperation = resourcesApi.newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
         let operations: [RequestOperation] = [languagesOperation, resourcesPlusLatestTranslationsAndAttachmentsOperation]

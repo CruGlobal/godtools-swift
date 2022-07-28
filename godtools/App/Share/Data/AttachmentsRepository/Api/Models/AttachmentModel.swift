@@ -14,6 +14,7 @@ struct AttachmentModel: AttachmentModelType, Decodable {
     let fileFilename: String
     let id: String
     let isZipped: Bool
+    let resourceId: String?
     let sha256: String
     let type: String
     
@@ -47,6 +48,7 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         fileFilename = realmAttachment.fileFilename
         id = realmAttachment.id
         isZipped = realmAttachment.isZipped
+        resourceId = realmAttachment.resourceId
         sha256 = realmAttachment.sha256
         type = realmAttachment.type
         
@@ -85,6 +87,8 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         sha256 = try attributesContainer?.decodeIfPresent(String.self, forKey: .sha256) ?? ""
                 
         // relationships - resource
-        resource = try resourceContainer?.decode(ResourceModel.self, forKey: .data)
+        resourceId = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)?.id
+        
+        resource = nil
     }
 }
