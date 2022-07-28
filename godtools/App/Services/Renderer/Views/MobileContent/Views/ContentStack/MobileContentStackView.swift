@@ -647,13 +647,20 @@ extension MobileContentStackView {
             constrainLeadingToSuperviewLeading = true
             constrainTrailingToSuperviewTrailing = true
             
+            let multiplier: CGFloat
+            if size.width != 0 {
+                multiplier = size.height / size.width
+            } else {
+                multiplier = 0
+            }
+            
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
                 item: childView,
                 attribute: .height,
                 relatedBy: .equal,
                 toItem: childView,
                 attribute: .width,
-                multiplier: size.height / size.width,
+                multiplier: multiplier,
                 constant: 0
             )
             
