@@ -99,11 +99,11 @@ class InitialDataDownloaderResourcesSync {
                     let realmTranslation = RealmTranslation()
                     realmTranslation.mapFrom(model: translation)
                     
-                    if let resourceId = translation.resource?.id {
+                    if let resourceId = translation.resourceId {
                         realmTranslation.resource = realmResourcesDictionary[resourceId]
                     }
                     
-                    if let languageId = translation.language?.id {
+                    if let languageId = translation.languageId {
                         realmTranslation.language = realmLanguagesDictionary[languageId]
                     }
                     
@@ -130,7 +130,7 @@ class InitialDataDownloaderResourcesSync {
                     let realmAttachment = RealmAttachment()
                     realmAttachment.mapFrom(model: attachment)
                     
-                    if let resourceId = attachment.resource?.id {
+                    if let resourceId = attachment.resourceId {
                         realmAttachment.resource = realmResourcesDictionary[resourceId]
                     }
                     
