@@ -10,19 +10,17 @@ import Foundation
 
 class OnboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
     
-    private let getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase
     private let onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType
     private let isNewUserCache: IsNewUserDefaultsCache
     
-    required init(getTutorialIsAvailableUseCase: GetTutorialIsAvailableUseCase, onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType, isNewUserCache: IsNewUserDefaultsCache) {
+    required init(onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType, isNewUserCache: IsNewUserDefaultsCache) {
                 
-        self.getTutorialIsAvailableUseCase = getTutorialIsAvailableUseCase
         self.onboardingTutorialViewedCache = onboardingTutorialViewedCache
         self.isNewUserCache = isNewUserCache
     }
     
     var onboardingTutorialIsAvailable: Bool {
-        return isNewUserCache.isNewUser && !onboardingTutorialViewedCache.onboardingTutorialHasBeenViewed && getTutorialIsAvailableUseCase.getTutorialIsAvailable()
+        return isNewUserCache.isNewUser && !onboardingTutorialViewedCache.onboardingTutorialHasBeenViewed
     }
     
     func markOnboardingTutorialViewed() {
