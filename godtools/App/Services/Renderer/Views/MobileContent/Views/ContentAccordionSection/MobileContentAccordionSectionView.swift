@@ -86,6 +86,12 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     
     private func toggleContentHidden() {
         setContentHidden(hidden: !contentIsHidden, animated: true)
+        
+        if contentIsHidden {
+            viewModel.sectionClosed()
+        } else {
+            viewModel.sectionOpened()
+        }
     }
     
     var viewHeight: CGFloat {
