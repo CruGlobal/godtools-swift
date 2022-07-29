@@ -28,7 +28,7 @@ class TranslationManifestParser {
     }
     
     func parse(manifestName: String) -> AnyPublisher<Manifest, Error> {
-        
+                
         switch resourcesFileCache.getFileExists(location: FileCacheLocation(relativeUrlString: manifestName)) {
         
         case .success(let fileExists):
@@ -44,25 +44,18 @@ class TranslationManifestParser {
                 .eraseToAnyPublisher()
         }
         
-        return Future() { promise in
+        let result: ParserResult = self.parser.parseManifestBlocking(fileName: manifestName, config: self.parserConfig)
+        
+        if let resultData = result as? ParserResult.Data {
             
-            self.parser.parseManifest(fileName: manifestName, config: self.parserConfig) { (result: ParserResult?, error: Error?) in
-                                
-                if let resultData = result as? ParserResult.Data {
-                    
-                    promise(.success(resultData.manifest))
-                }
-                else if let error = error {
-                    
-                    promise(.failure(error))
-                }
-                else {
-                    
-                    let error: Error = NSError.errorWithDescription(description: "Failed to parse tool manifest.")
-                    promise(.failure(error))
-                }
-            }
+            return Just(resultData.manifest).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
-        .eraseToAnyPublisher()
+        else {
+            
+            let error: Error = NSError.errorWithDescription(description: "Failed to parse tool manifest.")
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
 }

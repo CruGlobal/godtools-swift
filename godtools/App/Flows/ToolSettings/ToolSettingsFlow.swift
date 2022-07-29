@@ -393,7 +393,7 @@ class ToolSettingsFlow: Flow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
         )
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                    
             guard let weakSelf = self else {
                 return

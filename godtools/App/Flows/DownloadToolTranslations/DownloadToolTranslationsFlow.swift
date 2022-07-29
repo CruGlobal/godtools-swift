@@ -13,7 +13,7 @@ class DownloadToolTranslationsFlow: Flow {
     
     private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
-    private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)
+    private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, URLResponseError>) -> Void)
     
     private var downloadToolView: DownloadToolView?
     private var downloadToolModal: UIViewController?
@@ -24,7 +24,7 @@ class DownloadToolTranslationsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+    required init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, URLResponseError>) -> Void)) {
         
         self.presentInFlow = presentInFlow
         self.appDiContainer = appDiContainer

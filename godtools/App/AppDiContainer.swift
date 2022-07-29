@@ -275,6 +275,10 @@ class AppDiContainer {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
+    func getMobileContentParser() -> MobileContentParser {
+        return MobileContentParser(resourcesFileCache: resourcesFileCache)
+    }
+    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
@@ -305,7 +309,6 @@ class AppDiContainer {
     
     func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
-            getTutorialIsAvailableUseCase: getTutorialIsAvailableUseCase(),
             onboardingTutorialViewedCache: getOnboardingTutorialViewedCache(),
             isNewUserCache: isNewUserService.isNewUserCache
         )
@@ -418,10 +421,6 @@ class AppDiContainer {
             languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: localizationServices
         )
-    }
-    
-    func getTutorialIsAvailableUseCase() -> GetTutorialIsAvailableUseCase {
-        return GetTutorialIsAvailableUseCase(deviceLanguage: deviceLanguage)
     }
     
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {

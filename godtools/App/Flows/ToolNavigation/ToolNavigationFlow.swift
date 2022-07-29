@@ -78,7 +78,7 @@ extension ToolNavigationFlow {
     
     private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                         
             switch result {
             
@@ -165,13 +165,13 @@ extension ToolNavigationFlow {
         }
     }
         
-    private func presentDownloadToolError(downloadToolError: Error) {
+    private func presentDownloadToolError(downloadToolError: URLResponseError) {
         
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         
         let viewModel = AlertMessageViewModel(
             title: nil,
-            message: downloadToolError.localizedDescription,
+            message: downloadToolError.getErrorMessage(),
             cancelTitle: nil,
             acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
             acceptHandler: nil
