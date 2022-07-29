@@ -275,10 +275,6 @@ class AppDiContainer {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
-    func getMobileContentParser() -> MobileContentParser {
-        return MobileContentParser(resourcesFileCache: resourcesFileCache)
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(

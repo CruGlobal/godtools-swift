@@ -16,16 +16,14 @@ class GetToolTranslationsUseCase {
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
-    private let mobileContentParser: MobileContentParser
     
     private var getToolTranslationsCancellable: AnyCancellable?
         
-    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository, mobileContentParser: MobileContentParser) {
+    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
 
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository
-        self.mobileContentParser = mobileContentParser
     }
     
     func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {

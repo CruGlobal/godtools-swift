@@ -38,10 +38,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getMobileContentParser() -> MobileContentParser {
-        return MobileContentParser(resourcesFileCache: getResourcesFileCache())
-    }
-    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
