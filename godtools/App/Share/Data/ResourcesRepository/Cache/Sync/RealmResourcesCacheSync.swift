@@ -161,9 +161,7 @@ class RealmResourcesCacheSync {
                 do {
                     try realm.write {
                         realm.add(realmObjectsToCache, update: .all)
-                        // TODO: Will need to implement clean up of deleted resources. ~Levi
-                        //realm.delete(realmObjectsToRemove)
-                        // TODO: Will need to delete resources, attachments, translations and test. ~Levi
+                        realm.delete(realmObjectsToRemove)
                     }
                     
                     let syncResult = RealmResourcesCacheSyncResult(

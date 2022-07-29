@@ -68,10 +68,12 @@ class InitialDataDownloader: NSObject {
     }
     
     func downloadInitialData() {
-
-        /*
+        
         downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
-            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
+            }
+            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
                 
                 self.cachedResourcesAvailable.accept(value: true)
                 
@@ -83,77 +85,7 @@ class InitialDataDownloader: NSObject {
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
                 print(result)
                 self.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
-            })*/
-        
-        return
-        
-        if downloadResourcesOperation != nil {
-            return
-        }
-                        
-        let realmDatabase: RealmDatabase = self.realmDatabase
-        let resourcesSync: InitialDataDownloaderResourcesSync = self.resourcesSync
-        let cachedResourcesAvailableAlreadySetToTrue: Bool = cachedResourcesAvailable.value
-        
-        initialDeviceResourcesLoader.loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: { [weak self] in
-            
-            if resourcesSync.resourcesAvailable && !cachedResourcesAvailableAlreadySetToTrue {
-                self?.cachedResourcesAvailable.accept(value: true)
-            }
-                        
-            self?.downloadResourcesOperation = self?.resourcesDownloader.downloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) in
-                
-                let resourcesDownloaderResult: ResourcesDownloaderResult?
-                let resourcesDownloadError: ResourcesDownloaderError?
-                
-                switch result {
-                
-                case .success(let downloadResult):
-                    resourcesDownloaderResult = downloadResult
-                    resourcesDownloadError = nil
-                    
-                case .failure(let downloadError):
-                    resourcesDownloaderResult = nil
-                    resourcesDownloadError = downloadError
-                }
-                
-                if let resourcesDownloadError = resourcesDownloadError {
-                    self?.handleDownloadInitialDataCompleted(error: .failedToDownloadResources(error: resourcesDownloadError))
-                    return
-                }
-                
-                guard let downloaderResult = resourcesDownloaderResult else {
-                    self?.handleDownloadInitialDataCompleted(error: .failedToGetResourcesDownloaderResult)
-                    return
-                }
-                
-                realmDatabase.background { [weak self] (realm: Realm) in
-                                        
-                    let cacheResult: Result<ResourcesCacheResult, Error> = resourcesSync.cacheResources(realm: realm, downloaderResult: downloaderResult)
-                    
-                    switch cacheResult {
-                    
-                    case .success(let resourcesCacheResult):
-                        
-                        self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
-                        
-                        self?.checkForParallelLanguageDeletedAndClearFromSettings(realm: realm)
-                        
-                        self?.handleDownloadInitialDataCompleted(error: nil)
-                        
-                        self?.downloadLatestAttachments(resourcesCacheResult: resourcesCacheResult)
-                        
-                        self?.downloadLatestTranslations(realm: realm)
-                        
-                        self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
-                        
-                    case .failure(let cacheError):
-                        self?.handleDownloadInitialDataCompleted(error: .failedToCacheResources(error: cacheError))
-                        return
-                    }
-                }
             })
-        })
     }
     
     private func handleDownloadInitialDataCompleted(error: InitialDataDownloaderError?) {
