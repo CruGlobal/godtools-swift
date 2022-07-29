@@ -18,6 +18,7 @@ class GetToolTranslationsUseCase {
     private let languagesRepository: LanguagesRepository
     
     private var getToolTranslationsCancellable: AnyCancellable?
+    private var didInitiateDownloadStarted: Bool = false
         
     init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
 
@@ -26,17 +27,23 @@ class GetToolTranslationsUseCase {
         self.languagesRepository = languagesRepository
     }
     
+    private func initiateDownloadStarted(downloadStarted: (() -> Void)?) {
+        
+        guard !didInitiateDownloadStarted else {
+            return
+        }
+        
+        didInitiateDownloadStarted = true
+        
+        downloadStarted?()
+    }
+    
     func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
-        
-        var didInitiateDownloadStarted: Bool = false
-        
+                
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
             .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, URLResponseError> in
                 
-                if !didInitiateDownloadStarted {
-                    didInitiateDownloadStarted = true
-                    downloadStarted?()
-                }
+                self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
                 return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
                     .flatMap { results in
@@ -58,10 +65,7 @@ class GetToolTranslationsUseCase {
                 return self.translationsRepository.getTranslationManifests(translations: translations, manifestParserType: parserType)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                         
-                        if !didInitiateDownloadStarted {
-                            didInitiateDownloadStarted = true
-                            downloadStarted?()
-                        }
+                        self.initiateDownloadStarted(downloadStarted: downloadStarted)
                         
                         return self.translationsRepository.downloadAndCacheTranslationsFiles(translations: translations)
                             .flatMap { files in
