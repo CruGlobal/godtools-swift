@@ -8,10 +8,12 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 class ToolDetailsViewModel: NSObject, ObservableObject {
     
     private let dataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritedResourcesCache: FavoritedResourcesCache
@@ -24,6 +26,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
+    private var getToolTranslationsCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -45,11 +48,12 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
+        self.resourcesRepository = resourcesRepository
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -211,39 +215,25 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             return
         }
         
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: resourceId,
-            languageIds: [primaryLanguage.id],
-            resourcesCache: dataDownloader.resourcesCache,
-            languagesRepository: languagesRepository
-        )
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
-            // download started, currently nothing will be shown while this downloads in the background. ~Levi
-        }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
-            DispatchQueue.main.async { [weak self] in
-                
-                let hidesLearnToShareToolButtonValue: Bool
-                
-                switch result {
-                case .success(let toolTranslations):
-                    
-                    if let primaryLanguageTranslationManifest = toolTranslations.languageTranslationManifests.first {
-                        
-                        hidesLearnToShareToolButtonValue = primaryLanguageTranslationManifest.manifest.tips.isEmpty
-                    }
-                    else {
-                        
-                        hidesLearnToShareToolButtonValue = true
-                    }
-                    
-                case .failure( _):
-                    
-                    hidesLearnToShareToolButtonValue = true
-                }
-                
-                self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
+        getToolTranslationsCancellable = getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+            
+        })
+        .sink(receiveCompletion: { completed in
+            
+        }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
+            
+            let hidesLearnToShareToolButtonValue: Bool
+            
+            if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
+                hidesLearnToShareToolButtonValue = manifest.tips.isEmpty
             }
+            else {
+                hidesLearnToShareToolButtonValue = true
+            }
+            
+            self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
         })
     }
 }

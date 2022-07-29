@@ -12,4 +12,5 @@ enum DetermineToolTranslationsToDownloadError: Error {
     
     case failedToFetchResourceFromCache
     case failedToFetchLanguageFromCache
+    case failedToFetchTranslationFromCache
 }

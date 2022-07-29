@@ -24,7 +24,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslations, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

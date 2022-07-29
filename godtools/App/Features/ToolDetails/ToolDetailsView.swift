@@ -116,6 +116,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "1")!,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,

@@ -688,6 +688,7 @@ extension AppFlow {
             flowDelegate: self,
             resource: resource,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,

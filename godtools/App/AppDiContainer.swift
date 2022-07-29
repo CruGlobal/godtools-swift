@@ -275,7 +275,7 @@ class AppDiContainer {
         return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
     }
     
-    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations) -> MobileContentRenderer {
+    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
@@ -417,14 +417,6 @@ class AppDiContainer {
         return GetTranslatedLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: localizationServices
-        )
-    }
-    
-    func getTranslationsRepository() -> TranslationsRepository {
-        return TranslationsRepository(
-            api: translationsApi,
-            cache: RealmTranslationsCache(realmDatabase: realmDatabase),
-            resourcesFileCache: resourcesFileCache
         )
     }
     

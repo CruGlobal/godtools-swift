@@ -7,45 +7,60 @@
 //
 
 import Foundation
+import Combine
 
 class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType {
     
     private let resourceId: String
     private let languageIds: [String]
-    private let languagesRepository: LanguagesRepository
-    
-    let resourcesCache: ResourcesCache
-    
-    required init(resourceId: String, languageIds: [String], resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository) {
+    private let resourcesRepository: ResourcesRepository
+        
+    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
-        self.resourcesCache = resourcesCache
-        self.languagesRepository = languagesRepository
+        self.resourcesRepository = resourcesRepository
     }
     
     func getResource() -> ResourceModel? {
-        return resourcesCache.getResource(id: resourceId)
+        return resourcesRepository.getResource(id: resourceId)
     }
     
-    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
-        guard let cachedResource = getResource() else {
-            return .failure(.failedToFetchResourceFromCache)
-        }
-        
-        var cachedLanguages: [LanguageModel] = Array()
-        
-        for languageId in languageIds {
+        guard let resource = getResource() else {
             
-            if let language = languagesRepository.getLanguage(id: languageId) {
-                cachedLanguages.append(language)
-            }
-            else {
-                return .failure(.failedToFetchLanguageFromCache)
-            }
+            return Fail(error: .failedToFetchResourceFromCache)
+                .eraseToAnyPublisher()
         }
         
-        return .success(ToolTranslationsToDownload(resource: cachedResource, languages: cachedLanguages))
+        let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
+                
+        var translations: [TranslationModel] = Array()
+                
+        for languageId in supportedLanguageIds {
+            
+            guard let translation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
+                return Fail(error: .failedToFetchTranslationFromCache)
+                    .eraseToAnyPublisher()
+            }
+            
+            translations.append(translation)
+        }
+        
+        if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
+            
+            translations = [englishTranslation]
+        }
+        else {
+            
+            return Fail(error: .failedToFetchTranslationFromCache)
+                .eraseToAnyPublisher()
+        }
+
+        let result = DetermineToolTranslationsToDownloadResult(translations: translations)
+        
+        return Just(result).setFailureType(to: DetermineToolTranslationsToDownloadError.self)
+            .eraseToAnyPublisher()
     }
 }

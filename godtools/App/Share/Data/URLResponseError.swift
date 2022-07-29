@@ -11,6 +11,7 @@ import Foundation
 enum URLResponseError: Error {
 
     case decodeError(error: Error)
+    case otherError(error: Error)
     case requestError(error: Error)
     case statusCode(urlResponseObject: URLResponseObject)
 }

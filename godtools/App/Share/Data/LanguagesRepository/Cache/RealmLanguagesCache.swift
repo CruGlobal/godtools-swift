@@ -55,6 +55,15 @@ class RealmLanguagesCache {
             }
     }
     
+    func getLanguages(languageCodes: [String]) -> [LanguageModel] {
+        
+        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self)
+            .filter("code IN %@", languageCodes)
+            .map{
+                LanguageModel(model: $0)
+            }
+    }
+    
     func getLanguages() -> [LanguageModel] {
         return realmDatabase.mainThreadRealm.objects(RealmLanguage.self)
             .map({LanguageModel(model: $0)})

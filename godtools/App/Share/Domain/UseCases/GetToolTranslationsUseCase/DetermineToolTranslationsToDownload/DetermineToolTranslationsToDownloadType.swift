@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import Combine
 
 protocol DetermineToolTranslationsToDownloadType {
-        
+    
     func getResource() -> ResourceModel?
-    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError>
+    func determineToolTranslationsToDownload() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError>
 }

@@ -28,6 +28,108 @@ class GetToolTranslationsUseCase {
         self.mobileContentParser = mobileContentParser
     }
     
+    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
+        
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+            .catch({ (error:DetermineToolTranslationsToDownloadError) in
+                
+                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .mapError { error in
+                        return DetermineToolTranslationsToDownloadError.failedToFetchResourceFromCache
+                    }
+                    .flatMap { results in
+                        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+                    }
+            })
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
+            }
+            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                                
+                return self.translationsRepository.getTranslationManifests(translations: result.translations, manifestParserType: .renderer)
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> in
+                    
+                return self.mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: translationManifests)
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func getToolTranslationsFromCache(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
+        
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+            .mapError { error in
+                return error as Error
+            }
+            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
+                                
+                return self.translationsRepository.getTranslationManifests(translations: result.translations, manifestParserType: .renderer)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, Error> in
+                    
+                return self.mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: translationManifests)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    /*
+    private func getToolTranslationsFromRemote(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
+        
+        downloadStarted?()
+        
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+            .mapError { error in
+                return error as Error
+            }
+            .flatMap({ result -> AnyPublisher<[TranslationFilesDataModel], Error> in
+                
+                let translationIds: [String] = result.translations.map({$0.id})
+                
+                return self.translationsRepository.downloadAnCacheTranslationFiles(translationIds: translationIds)
+            })
+            .flatMap({ translationFiles -> AnyPublisher<ToolTranslationsDomainModel, Error> in
+                
+                return self.getToolTranslationsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }*/
+    
+    private func mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
+        
+        guard let resource = translationManifests.first?.translation.resource else {
+            return Fail(error: (NSError.errorWithDescription(description: "Failed to get resource on translation model.")))
+                .eraseToAnyPublisher()
+        }
+        
+        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        for translationManifest in translationManifests {
+            
+            guard let language = translationManifest.translation.language else {
+                return Fail(error: (NSError.errorWithDescription(description: "Failed to get language on translation model.")))
+                    .eraseToAnyPublisher()
+            }
+            
+            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: translationManifest.manifest, language: language))
+        }
+        
+        return Just(ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageTranslationManifests)).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    /*
+    
     func getToolTranslationsFromCache(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType) -> AnyPublisher<ToolTranslationsDomainModel, ToolTranslationsDomainError> {
         
         return getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: determineToolTranslationsToDownload)
@@ -62,7 +164,9 @@ class GetToolTranslationsUseCase {
     
     func getToolTranslationsFromRemote() {
         
-    }
+    }*/
+    
+    /*
     
     func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, Error>) -> Void)) {
         
@@ -136,8 +240,9 @@ class GetToolTranslationsUseCase {
             }, receiveValue: { (value: Bool) in
                 
             })
-    }
+    }*/
     
+    /*
     private func getToolTranslationsManifestsFromCache(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType) -> AnyPublisher<GetToolTranslationsManifestsFromCacheResult, Error> {
         
         var toolTranslationsData: [ToolTranslationData] = Array()
@@ -186,8 +291,9 @@ class GetToolTranslationsUseCase {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-    }
+    }*/
     
+    /*
     private func downloadResourcesFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
@@ -197,41 +303,7 @@ class GetToolTranslationsUseCase {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-    }
-        
-    private func parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: [ToolTranslationData]) -> Result<ToolTranslationsDomainModel, Error> {
-        
-        guard let resource = toolTranslations.first?.resource else {
-            return .failure(NSError.errorWithDescription(description: "Tool translations can't be empty."))
-        }
-        
-        var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
-        
-        for toolTranslation in toolTranslations {
-            
-            switch mobileContentParser.parse(translationManifestFileName: toolTranslation.translation.manifestName) {
-            
-            case .success(let manifest):
-                
-                let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-                    manifest: manifest,
-                    language: toolTranslation.language
-                )
-                
-                languageTranslationManifests.append(languageTranslationManifest)
-            
-            case .failure(let error):
-                return .failure(error)
-            }
-        }
-        
-        let toolTranslationsDomainModel = ToolTranslationsDomainModel(
-            tool: resource,
-            languageTranslationManifests: languageTranslationManifests
-        )
-        
-        return .success(toolTranslationsDomainModel)
-    }
+    }*/
     
 
     

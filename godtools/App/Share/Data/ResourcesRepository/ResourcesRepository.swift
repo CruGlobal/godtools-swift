@@ -85,26 +85,18 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), getResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote())
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments())
+            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
                 
                 return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
+                    .mapError { error in
+                        return .otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
-    }
-}
-
-extension ResourcesRepository {
-    
-    private func getResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
-        
-        return self.api.getResourcesPlusLatestTranslationsAndAttachments()
-            .mapError {
-                $0 as Error
-            }
             .eraseToAnyPublisher()
     }
 }

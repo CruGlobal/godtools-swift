@@ -69,6 +69,7 @@ class InitialDataDownloader: NSObject {
     
     func downloadInitialData() {
 
+        /*
         downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
             .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
@@ -82,7 +83,7 @@ class InitialDataDownloader: NSObject {
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
                 print(result)
                 self.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
-            })
+            })*/
         
         return
         

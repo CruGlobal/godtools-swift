@@ -40,16 +40,24 @@ class LanguagesRepository {
         return cache.getLanguages(ids: ids)
     }
     
+    func getLanguages(languageCodes: [String]) -> [LanguageModel] {
+        return cache.getLanguages(languageCodes: languageCodes)
+    }
+    
     func getLanguages() -> [LanguageModel] {
         return cache.getLanguages()
     }
     
-    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> {
         
-        return getLanguagesFromRemote()
-            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
+        return api.getLanguages()
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> in
                 
                 return self.cache.syncLanguages(languages: languages)
+                    .mapError { error in
+                        return .otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
@@ -61,18 +69,6 @@ class LanguagesRepository {
                 
                 return self.cache.syncLanguages(languages: languages)
             })
-            .eraseToAnyPublisher()
-    }
-}
-
-extension LanguagesRepository {
-    
-    private func getLanguagesFromRemote() -> AnyPublisher<[LanguageModel], Error> {
-        
-        return self.api.getLanguages()
-            .mapError{
-                $0 as Error
-            }
             .eraseToAnyPublisher()
     }
 }

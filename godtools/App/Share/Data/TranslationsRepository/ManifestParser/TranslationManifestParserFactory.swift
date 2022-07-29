@@ -1,5 +1,5 @@
 //
-//  TranslationFileManifestParserFactory.swift
+//  TranslationManifestParserFactory.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/18/22.
@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class TranslationFileManifestParserFactory: IosXmlPullParserFactory {
+class TranslationManifestParserFactory: IosXmlPullParserFactory {
     
     private let resourcesFileCache: ResourcesSHA256FileCache
     
