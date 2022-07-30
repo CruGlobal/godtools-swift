@@ -10,15 +10,15 @@ import Foundation
 
 class GetDeviceLanguageUseCase {
     
-    private let deviceLanguage: DeviceLanguageType
+    private let deviceLanguage: DeviceLanguage
     
-    init(deviceLanguage: DeviceLanguageType) {
+    init(deviceLanguage: DeviceLanguage) {
         
         self.deviceLanguage = deviceLanguage
     }
     
     func getDeviceLanguage() -> DeviceLanguageDomainModel {
-        
+                
         let deviceLocale: Locale = deviceLanguage.preferredLocalizationLocale ?? deviceLanguage.locale
         
         let languageCode = (deviceLocale.languageCode ?? deviceLocale.identifier).lowercased()

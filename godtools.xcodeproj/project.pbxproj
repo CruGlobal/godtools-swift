@@ -604,7 +604,6 @@
 		45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */; };
 		45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */; };
 		45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */; };
-		45AD1F7925938A9800A096A0 /* DeviceLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFC25938A9700A096A0 /* DeviceLanguageType.swift */; };
 		45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */; };
 		45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */; };
 		45AD1F7C25938A9800A096A0 /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */; };
@@ -1743,7 +1742,6 @@
 		45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipType.swift; sourceTree = "<group>"; };
 		45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTip.swift; sourceTree = "<group>"; };
 		45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsService.swift; sourceTree = "<group>"; };
-		45AD1DFC25938A9700A096A0 /* DeviceLanguageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguageType.swift; sourceTree = "<group>"; };
 		45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
 		45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSessionType.swift; sourceTree = "<group>"; };
 		45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
@@ -4937,7 +4935,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */,
-				45AD1DFC25938A9700A096A0 /* DeviceLanguageType.swift */,
 			);
 			path = DeviceLanguage;
 			sourceTree = "<group>";
@@ -7598,7 +7595,6 @@
 				45E39ECC27457A14006A59E4 /* AnimatedResource.swift in Sources */,
 				45AE974027C97A9400C2CB33 /* MultiplatformContentHeader.swift in Sources */,
 				456777BE287DB3770044AEB2 /* ReviewShareShareableViewModel.swift in Sources */,
-				45AD1F7925938A9800A096A0 /* DeviceLanguageType.swift in Sources */,
 				450F94DB27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift in Sources */,
 				45D63E85288F75B0009B4610 /* RealmAttachmentsCache.swift in Sources */,
 				4567782B287DC1F30044AEB2 /* ShareArticleViewModel.swift in Sources */,

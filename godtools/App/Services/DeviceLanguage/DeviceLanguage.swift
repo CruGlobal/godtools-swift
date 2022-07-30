@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeviceLanguage: DeviceLanguageType {
+class DeviceLanguage {
     
     var locale: Locale {
         return Locale.current

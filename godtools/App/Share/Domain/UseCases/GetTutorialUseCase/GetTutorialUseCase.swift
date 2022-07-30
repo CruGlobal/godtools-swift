@@ -12,9 +12,9 @@ import Lottie
 class GetTutorialUseCase {
     
     private let localizationServices: LocalizationServices
-    private let deviceLanguage: DeviceLanguageType
+    private let deviceLanguage: DeviceLanguage
     
-    required init(localizationServices: LocalizationServices, deviceLanguage: DeviceLanguageType) {
+    required init(localizationServices: LocalizationServices, deviceLanguage: DeviceLanguage) {
         
         self.localizationServices = localizationServices
         self.deviceLanguage = deviceLanguage

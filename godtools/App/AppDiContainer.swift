@@ -42,7 +42,7 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let deviceLanguage: DeviceLanguageType = DeviceLanguage()
+    let deviceLanguage: DeviceLanguage = DeviceLanguage()
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
