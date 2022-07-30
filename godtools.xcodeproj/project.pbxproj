@@ -115,6 +115,10 @@
 		4542F408281086480016C254 /* DeepLinkAppsFlyerParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542F407281086480016C254 /* DeepLinkAppsFlyerParserType.swift */; };
 		4542F40A2810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542F4092810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift */; };
 		454D1C4227A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */; };
+		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
+		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
+		4554512E28948E350072EC6E /* GetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512D28948E350072EC6E /* GetSettingsParallelLanguageUseCase.swift */; };
+		4554513028948E420072EC6E /* GetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512F28948E420072EC6E /* GetSettingsPrimaryLanguageUseCase.swift */; };
 		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
@@ -1251,6 +1255,10 @@
 		4542F407281086480016C254 /* DeepLinkAppsFlyerParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkAppsFlyerParserType.swift; sourceTree = "<group>"; };
 		4542F4092810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestAppsFlyer.swift; sourceTree = "<group>"; };
 		454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontallyCenteredCollectionViewCellSize.swift; sourceTree = "<group>"; };
+		4554512428948D220072EC6E /* LanguageSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsRepository.swift; sourceTree = "<group>"; };
+		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
+		4554512D28948E350072EC6E /* GetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
+		4554512F28948E420072EC6E /* GetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		4555599A27B3193D00A32A61 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4555599B27B3194800A32A61 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
@@ -2492,6 +2500,7 @@
 			isa = PBXGroup;
 			children = (
 				45D63E79288F75B0009B4610 /* AttachmentsRepository */,
+				4554512328948D090072EC6E /* LanguageSettingsRepository */,
 				45D63E5F288F698C009B4610 /* LanguagesRepository */,
 				D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */,
 				4511D245286CB9D200276174 /* ResourceBannerImageRepository */,
@@ -2784,6 +2793,39 @@
 				4542F4032810822E0016C254 /* GodToolsDeepLinkingManifest.swift */,
 			);
 			path = GodToolsManifest;
+			sourceTree = "<group>";
+		};
+		4554512328948D090072EC6E /* LanguageSettingsRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4554512428948D220072EC6E /* LanguageSettingsRepository.swift */,
+				4554512628948D7B0072EC6E /* Cache */,
+			);
+			path = LanguageSettingsRepository;
+			sourceTree = "<group>";
+		};
+		4554512628948D7B0072EC6E /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		4554512B28948E270072EC6E /* GetSettingsPrimaryLanguageUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				4554512F28948E420072EC6E /* GetSettingsPrimaryLanguageUseCase.swift */,
+			);
+			path = GetSettingsPrimaryLanguageUseCase;
+			sourceTree = "<group>";
+		};
+		4554512C28948E270072EC6E /* GetSettingsParallelLanguageUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				4554512D28948E350072EC6E /* GetSettingsParallelLanguageUseCase.swift */,
+			);
+			path = GetSettingsParallelLanguageUseCase;
 			sourceTree = "<group>";
 		};
 		45557AE3252D085B00ACFA95 /* Services */ = {
@@ -6063,6 +6105,8 @@
 				4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */,
 				D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase */,
 				D42FEBDF28760A1C0002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase */,
+				4554512C28948E270072EC6E /* GetSettingsParallelLanguageUseCase */,
+				4554512B28948E270072EC6E /* GetSettingsPrimaryLanguageUseCase */,
 				D41B38B9288EDA2F00BD5899 /* GetShareableImageUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				4570B7072889B1D10024C931 /* GetToolTranslationsUseCase */,
@@ -7481,6 +7525,7 @@
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
 				D1BF24522763B98600C6FEB0 /* ParallelLanguageListView.swift in Sources */,
 				45B98765283BFE5300E1DA7F /* TranslationZipFileModelType.swift in Sources */,
+				4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				4567773A287DAFC70044AEB2 /* MenuSectionHeaderView.swift in Sources */,
 				45828BD3279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift in Sources */,
@@ -7740,6 +7785,7 @@
 				D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */,
 				D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */,
 				4567788A287DC6D40044AEB2 /* LanguageSettingsView.swift in Sources */,
+				4554512E28948E350072EC6E /* GetSettingsParallelLanguageUseCase.swift in Sources */,
 				45BF6EB72704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift in Sources */,
 				4555832C269F2C7B00C3FF14 /* ToolPageCardBounceAnimation.swift in Sources */,
 				45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */,
@@ -7851,6 +7897,7 @@
 				456777B6287DB3770044AEB2 /* ShareToolViewModel.swift in Sources */,
 				45677788287DB3520044AEB2 /* ShareToolScreenTutorialItemProvider.swift in Sources */,
 				D44F3ADE286256EB0008390D /* ToolCardProvider.swift in Sources */,
+				4554513028948E420072EC6E /* GetSettingsPrimaryLanguageUseCase.swift in Sources */,
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				45AD1F6F25938A9800A096A0 /* FailedFollowUpsCache.swift in Sources */,
@@ -8151,6 +8198,7 @@
 				45AD1BCF25938A4F00A096A0 /* ImageCatalog.swift in Sources */,
 				D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */,
 				45BCB00B2893038A005A4F49 /* DetermineToolTranslationsToDownloadResult.swift in Sources */,
+				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,
 				455583D5269F2DA500C3FF14 /* MobileContentHeaderViewModel.swift in Sources */,
 				45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */,
 				4555832F269F2C7B00C3FF14 /* ToolPageCardTopConstantState.swift in Sources */,

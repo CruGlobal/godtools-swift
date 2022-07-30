@@ -30,6 +30,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLanguageSettingsRepository() -> LanguageSettingsRepository {
+        
+        return LanguageSettingsRepository(
+            cache: LanguageSettingsCache(languagesRepository: getLanguagesRepository())
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         
         return LanguagesRepository(
