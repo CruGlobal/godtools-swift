@@ -10,6 +10,7 @@ import Foundation
 
 struct DeviceLanguageDomainModel {
     
-    let languageCode: String
-    
+    let locale: Locale
+    let localeIdentifier: String
+    let localeLanguageCode: String
 }
