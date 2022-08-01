@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Deprecated in place of LanguageSettingsRepository. ~Levi
 class LanguageSettingsService: NSObject {
     
     private let languagesRepository: LanguagesRepository
