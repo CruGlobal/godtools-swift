@@ -11,15 +11,30 @@ import Combine
 
 class GetSettingsParallelLanguageUseCase {
     
+    private let languagesRepository: LanguagesRepository
     private let languageSettingsRepository: LanguageSettingsRepository
+    private let getLanguageUseCase: GetLanguageUseCase
     
-    init(languageSettingsRepository: LanguageSettingsRepository) {
+    init(languagesRepository: LanguagesRepository, languageSettingsRepository: LanguageSettingsRepository, getLanguageUseCase: GetLanguageUseCase) {
         
+        self.languagesRepository = languagesRepository
         self.languageSettingsRepository = languageSettingsRepository
+        self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getParallelLanguage() -> LanguageModel? {
+    func getParallelLanguage() -> AnyPublisher<LanguageDomainModel?, Never> {
         
-        return nil
+        return Publishers.CombineLatest(languagesRepository.getLanguagesChanged(), languageSettingsRepository.getParallelLanguageChanged())
+            .flatMap({ (void: Void, parallelLanguageId: String?) -> AnyPublisher<LanguageDomainModel?, Never> in
+                
+                guard let parallelLanguageId = parallelLanguageId else {
+                    return Just(nil)
+                        .eraseToAnyPublisher()
+                }
+                
+                return Just(self.getLanguageUseCase.getLanguage(id: parallelLanguageId))
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

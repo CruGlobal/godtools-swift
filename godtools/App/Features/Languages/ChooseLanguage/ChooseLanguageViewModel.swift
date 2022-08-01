@@ -7,24 +7,34 @@
 //
 
 import Foundation
+import Combine
 
-class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
+class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         
     enum ChooseLanguageType {
         case primary
         case parallel
     }
     
-    private let dataDownloader: InitialDataDownloader
-    private let languagesRepository: LanguagesRepository
-    private let languageSettingsService: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase
+    private let userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase
+    private let userDidDeleteParallelLanguageUseCase: UserDidDeleteParallelLanguageUseCase
+    private let getLanguagesListUseCase: GetLanguagesListUseCase
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let localizationServices: LocalizationServices
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
-    private let shouldDisplaySelectedLanguageAtTop: Bool = false
-            
+    
+    private var allLanguages: [LanguageDomainModel] = Array()
+    private var settingsPrimaryLanguage: LanguageDomainModel?
+    private var settingsParallelLanguage: LanguageDomainModel?
+    
+    private var languagesList: [LanguageDomainModel] = Array()
+    
+    private var cancellables = Set<AnyCancellable>()
+                
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
@@ -34,23 +44,23 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase,  userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, userDidDeleteParallelLanguageUseCase: UserDidDeleteParallelLanguageUseCase, getLanguagesListUseCase: GetLanguagesListUseCase, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
-        self.dataDownloader = dataDownloader
-        self.languagesRepository = languagesRepository
-        self.languageSettingsService = languageSettingsService
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.userDidSetSettingsPrimaryLanguageUseCase = userDidSetSettingsPrimaryLanguageUseCase
+        self.userDidSetSettingsParallelLanguageUseCase = userDidSetSettingsParallelLanguageUseCase
+        self.userDidDeleteParallelLanguageUseCase = userDidDeleteParallelLanguageUseCase
+        self.getLanguagesListUseCase = getLanguagesListUseCase
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.localizationServices = localizationServices
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         
         deleteLanguageButtonTitle = localizationServices.stringForMainBundle(key: "clear")
         closeKeyboardTitle = localizationServices.stringForMainBundle(key: "dismiss")
-        
-        super.init()
-                
+                        
         switch chooseLanguageType {
         case .primary:
             navTitle.accept(value: localizationServices.stringForMainBundle(key: "primary_language"))
@@ -58,15 +68,19 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             navTitle.accept(value: localizationServices.stringForMainBundle(key: "parallel_language"))
         }
         
-        reloadData()
-        
-        setupBinding()
+        Publishers.Zip3(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), getSettingsParallelLanguageUseCase.getParallelLanguage())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] languages, settingsPrimaryLanguage, settingsParallelLanguage in
+                self?.allLanguages = languages
+                self?.settingsPrimaryLanguage = settingsPrimaryLanguage
+                self?.settingsParallelLanguage = settingsParallelLanguage
+                self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage, settingsParallelLanguage: settingsParallelLanguage)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
     private var analyticsScreenName: String {
@@ -81,121 +95,33 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         return "language settings"
     }
     
-    private func setupBinding() {
-        
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                if cachedResourcesAvailable {
-                    self?.reloadData()
-                }
-            }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadData()
-                }
-            }
-        }
-    }
-    
-    private var allLanguages: [TranslatedLanguage] {
-        
-        let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
-        let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
-        
-        var storedLanguageModels: [LanguageModel] = languagesRepository.getLanguages()
-        
+    private func setLanguagesList(languages: [LanguageDomainModel], settingsPrimaryLanguage: LanguageDomainModel?, settingsParallelLanguage: LanguageDomainModel?) {
+             
+        let selectedLanguage: LanguageDomainModel?
+                
         switch chooseLanguageType {
         
         case .primary:
-            // move primary to top of list
-            if shouldDisplaySelectedLanguageAtTop, let primaryLanguage = userPrimaryLanguage, let index = storedLanguageModels.firstIndex(of: primaryLanguage) {
-                storedLanguageModels.remove(at: index)
-                storedLanguageModels.insert(primaryLanguage, at: 0)
-            }
-        case .parallel:
-            // remove primary language from list of parallel languages
-            if let userPrimaryLanguage = userPrimaryLanguage {
-                storedLanguageModels = storedLanguageModels.filter {
-                    $0.id != userPrimaryLanguage.id
-                }
-            }
+            selectedLanguage = settingsPrimaryLanguage
+            self.languagesList = languages
             
-            // move parallel to top of list
-            if shouldDisplaySelectedLanguageAtTop, let parallelLanguage = userParallelLanguage, let index = storedLanguageModels.firstIndex(of: parallelLanguage) {
-                storedLanguageModels.remove(at: index)
-                storedLanguageModels.insert(parallelLanguage, at: 0)
-            }
-        }
-        
-        let translatedLanguages: [TranslatedLanguage] = storedLanguageModels.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0)})
-        let sortedLanguages: [TranslatedLanguage] = translatedLanguages.sorted(by: {$0.name < $1.name})
-        
-        return sortedLanguages
-    }
-    
-    private var languagesList: [TranslatedLanguage] = Array() {
-        
-        didSet {
-            numberOfLanguages.accept(value: languagesList.count)
-        }
-    }
-    
-    private var selectedLanguage: TranslatedLanguage? {
-        
-        if let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count {
-            return languagesList[index]
-        }
-        
-        return nil
-    }
-    
-    private func reloadData() {
-        
-        reloadLanguages()
-        reloadSelectedLanguage()
-        reloadHidesDeleteLanguageButton()
-    }
-    
-    private func reloadLanguages() {
-                
-        languagesList = allLanguages
-    }
-    
-    private func reloadSelectedLanguage() {
-                
-        let language: LanguageModel?
-        
-        switch chooseLanguageType {
-        case .primary:
-            language = languageSettingsService.primaryLanguage.value
         case .parallel:
-            language = languageSettingsService.parallelLanguage.value
+            selectedLanguage = settingsParallelLanguage
+            self.languagesList = languages.filter({$0.dataModelId != settingsPrimaryLanguage?.dataModelId})
         }
+                
+        numberOfLanguages.accept(value: languagesList.count)
         
-        var selectedIndex: Int? = nil
-        
-        for index in 0 ..< languagesList.count {
-            let translatedLanguage: TranslatedLanguage = languagesList[index]
-            if translatedLanguage.id == language?.id {
-                selectedIndex = index
-                break
-            }
-        }
-        
-        selectedLanguageIndex.accept(value: selectedIndex)
+        selectedLanguageIndex.accept(value: languagesList.firstIndex(where: {$0.dataModelId == selectedLanguage?.dataModelId}))
     }
     
-    private func reloadHidesDeleteLanguageButton() {
+    private var selectedLanguage: LanguageDomainModel? {
         
-        switch chooseLanguageType {
-        case .primary:
-            hidesDeleteLanguageButton.accept(value: true)
-        case .parallel:
-            hidesDeleteLanguageButton.accept(value: languageSettingsService.parallelLanguage.value == nil)
+        guard let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count else {
+            return nil
         }
+        
+        return languagesList[index]
     }
     
     func pageViewed() {
@@ -209,28 +135,23 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         case .primary:
             break
         case .parallel:
-            languageSettingsService.languageSettingsCache.deleteParallelLanguageId()
-            selectedLanguageIndex.accept(value: nil)
-            reloadLanguages()
-            reloadHidesDeleteLanguageButton()
+            userDidDeleteParallelLanguageUseCase.deleteParallelLanguage()
             flowDelegate?.navigate(step: .deleteLanguageTappedFromChooseLanguage)
         }
     }
     
     func languageTapped(index: Int) {
+                
+        let selectedLanguage: LanguageDomainModel = languagesList[index]
         
-        selectedLanguageIndex.accept(value: index)
-        
-        let selectedLanguage: TranslatedLanguage = languagesList[index]
+        downloadedLanguagesCache.addDownloadedLanguage(languageId: selectedLanguage.dataModelId)
         
         switch chooseLanguageType {
         case .primary:
-            languageSettingsService.languageSettingsCache.cachePrimaryLanguageId(languageId: selectedLanguage.id)
-            if selectedLanguage.id == languageSettingsService.languageSettingsCache.parallelLanguageId.value {
-                languageSettingsService.languageSettingsCache.deleteParallelLanguageId()
-            }
+            userDidSetSettingsPrimaryLanguageUseCase.setPrimaryLanguage(language: selectedLanguage)
+
         case .parallel:
-            languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: selectedLanguage.id)
+            userDidSetSettingsParallelLanguageUseCase.setParallelLanguage(language: selectedLanguage)
         }
                 
         flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)
@@ -241,24 +162,24 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         if !text.isEmpty {
                         
             let filteredLanguages = allLanguages.filter {
-                $0.name.lowercased().contains(text.lowercased())
+                $0.translatedName.lowercased().contains(text.lowercased())
             }
             
-            languagesList = filteredLanguages
+            setLanguagesList(languages: filteredLanguages, settingsPrimaryLanguage: settingsPrimaryLanguage, settingsParallelLanguage: settingsParallelLanguage)
         }
         else {
-            languagesList = allLanguages
+            setLanguagesList(languages: allLanguages, settingsPrimaryLanguage: settingsPrimaryLanguage, settingsParallelLanguage: settingsParallelLanguage)
         }
     }
     
     func willDisplayLanguage(index: Int) -> ChooseLanguageCellViewModel {
-        
-        let translatedLanguage: TranslatedLanguage = languagesList[index]
+                
+        let language: LanguageDomainModel = languagesList[index]
         
         return ChooseLanguageCellViewModel(
-            translatedLanguage: translatedLanguage,
-            languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: translatedLanguage.id),
-            hidesSelected: translatedLanguage.id != selectedLanguage?.id,
+            language: language,
+            languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: language.dataModelId),
+            hidesSelected: language.dataModelId != selectedLanguage?.dataModelId,
             selectorColor: nil,
             separatorColor: nil,
             separatorLeftInset: nil,
