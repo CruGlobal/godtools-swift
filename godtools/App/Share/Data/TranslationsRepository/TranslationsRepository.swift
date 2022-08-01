@@ -16,16 +16,14 @@ class TranslationsRepository {
     private let api: MobileContentTranslationsApi
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
-    private let rendererManifestParser: ParseTranslationManifestForRenderer
-    private let relatedFilesManifestParser: ParseTranslationManifestForRelatedFiles
+    private let mainThreadManifestRendererParser: ParseTranslationManifestForRenderer
     
-    init(api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, rendererManifestParser: ParseTranslationManifestForRenderer, relatedFilesManifestParser: ParseTranslationManifestForRelatedFiles) {
+    init(api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
         
         self.api = api
         self.cache = cache
         self.resourcesFileCache = resourcesFileCache
-        self.rendererManifestParser = rendererManifestParser
-        self.relatedFilesManifestParser = relatedFilesManifestParser
+        self.mainThreadManifestRendererParser = ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)
     }
     
     func getTranslation(id: String) -> TranslationModel? {
@@ -34,6 +32,18 @@ class TranslationsRepository {
     
     func getTranslations(ids: [String]) -> [TranslationModel] {
         return cache.getTranslations(ids: ids)
+    }
+    
+    func getTranslationManifestOnMainThread(manifestFileDataModel: TranslationManifestFileDataModel) -> Manifest? {
+        
+        switch mainThreadManifestRendererParser.parse(manifestName: manifestFileDataModel.translation.manifestName) {
+        
+        case .success(let manifest):
+            return manifest
+        
+        case .failure( _):
+            return nil
+        }
     }
         
     func getTranslationManifests(translations: [TranslationModel], manifestParserType: TranslationManifestParserType) -> AnyPublisher<[TranslationManifestFileDataModel], Error> {
@@ -51,7 +61,7 @@ class TranslationsRepository {
         
         let manifestParser: TranslationManifestParser = self.getManifestParser(manifestParserType: manifestParserType)
         
-        return manifestParser.parse(manifestName: translation.manifestName)
+        return manifestParser.parse(manifestName: translation.manifestName).publisher
             .map { manifest in
                 
                 return TranslationManifestFileDataModel(manifest: manifest, translation: translation)
@@ -100,12 +110,12 @@ class TranslationsRepository {
 extension TranslationsRepository {
     
     private func getManifestParser(manifestParserType: TranslationManifestParserType) -> TranslationManifestParser {
-        
+                
         switch manifestParserType {
         case .relatedFiles:
-            return relatedFilesManifestParser
+            return ParseTranslationManifestForRelatedFiles(resourcesFileCache: resourcesFileCache)
         case .renderer:
-            return rendererManifestParser
+            return ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)
         }
     }
     
