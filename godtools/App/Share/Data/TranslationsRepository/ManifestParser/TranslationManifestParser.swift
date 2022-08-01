@@ -8,7 +8,6 @@
 
 import Foundation
 import GodToolsToolParser
-import Combine
 
 class TranslationManifestParser {
     
@@ -27,35 +26,27 @@ class TranslationManifestParser {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func parse(manifestName: String) -> AnyPublisher<Manifest, Error> {
+    func parse(manifestName: String) -> Result<Manifest, Error> {
                 
         switch resourcesFileCache.getFileExists(location: FileCacheLocation(relativeUrlString: manifestName)) {
         
         case .success(let fileExists):
             
             guard fileExists else {
-                return Fail(error: NSError.errorWithDescription(description: "Could not find translation manifest file in file cache."))
-                    .eraseToAnyPublisher()
+                return .failure(NSError.errorWithDescription(description: "Could not find translation manifest file in file cache."))
             }
             
         case .failure(let error):
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+            return .failure(error)
         }
         
         let result: ParserResult = self.parser.parseManifestBlocking(fileName: manifestName, config: self.parserConfig)
         
         if let resultData = result as? ParserResult.Data {
-            
-            return Just(resultData.manifest).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
+            return .success(resultData.manifest)
         }
         else {
-            
-            let error: Error = NSError.errorWithDescription(description: "Failed to parse tool manifest.")
-            return Fail(error: error)
-                .eraseToAnyPublisher()
+            return .failure(NSError.errorWithDescription(description: "Failed to parse tool manifest."))
         }
     }
 }
