@@ -60,14 +60,11 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslationsRepository() -> TranslationsRepository {
-        
-        let resourcesFileCache = getResourcesFileCache()
-        
+    func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
-            resourcesFileCache: resourcesFileCache
+            resourcesFileCache: getResourcesFileCache()
         )
     }
 }
