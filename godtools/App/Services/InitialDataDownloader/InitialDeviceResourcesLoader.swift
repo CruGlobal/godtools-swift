@@ -14,18 +14,18 @@ class InitialDeviceResourcesLoader {
     private let realmDatabase: RealmDatabase
     private let attachmentsFileCache: AttachmentsFileCache
     private let translationsFileCache: TranslationsFileCache
-    private let realmResourcesCache: RealmResourcesCache
+    private let resourcesSync: InitialDataDownloaderResourcesSync
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languagesCache: RealmLanguagesCache
     private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, resourcesSync: InitialDataDownloaderResourcesSync, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
         self.attachmentsFileCache = attachmentsFileCache
         self.translationsFileCache = translationsFileCache
-        self.realmResourcesCache = realmResourcesCache
+        self.resourcesSync = resourcesSync
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languagesCache = languagesCache
         self.deviceLanguage = deviceLanguage
@@ -34,7 +34,7 @@ class InitialDeviceResourcesLoader {
     
     func loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: @escaping (() -> Void)) {
         
-        guard !realmResourcesCache.resourcesAvailable else {
+        guard !resourcesSync.resourcesAvailable else {
             completeOnMain()
             return
         }
@@ -58,7 +58,7 @@ class InitialDeviceResourcesLoader {
     
     private func loadAndCacheLanguagesPlusResourcesPlusLatestAttachmentsAndTranslations(complete: @escaping ((_ result: Result<ResourcesCacheResult, Error>?) -> Void)) {
         
-        let realmResourcesCache: RealmResourcesCache = self.realmResourcesCache
+        let resourcesSync: InitialDataDownloaderResourcesSync = self.resourcesSync
         
         realmDatabase.background { (realm: Realm) in
             
@@ -77,7 +77,7 @@ class InitialDeviceResourcesLoader {
                     resourcesPlusLatestTranslationsAndAttachments: resources
                 )
                 
-                let result: Result<ResourcesCacheResult, Error> = realmResourcesCache.cacheResources(realm: realm, downloaderResult: downloaderResult)
+                let result: Result<ResourcesCacheResult, Error> = resourcesSync.cacheResources(realm: realm, downloaderResult: downloaderResult)
                 
                 complete(result)
             }

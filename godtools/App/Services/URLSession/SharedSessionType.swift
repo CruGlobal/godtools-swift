@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Will be replaced with Common/URLSession/IgnoreCacheSession. GT-1727 ~Levi
 protocol SharedSessionType {
     
     var session: URLSession { get }

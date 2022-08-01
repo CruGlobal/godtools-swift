@@ -71,7 +71,7 @@ class ParallelLanguageListViewModel: NSObject, ParallelLanguageListViewModelType
         
         let primaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         
-        var storedLanguageModels: [LanguageModel] = languagesRepository.getAllLanguages()
+        var storedLanguageModels: [LanguageModel] = languagesRepository.getLanguages()
         
         // remove primary language from list of parallel languages
         if let primaryLanguage = primaryLanguage {

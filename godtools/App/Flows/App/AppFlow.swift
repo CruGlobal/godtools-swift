@@ -310,9 +310,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToToolsMenu()
                 
+                let deviceLanguageCode = appDiContainer.getDeviceLanguageUseCase().getDeviceLanguage().languageCode
+                
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
-                    primaryLanguageCodes: ["en"],
+                    primaryLanguageCodes: [deviceLanguageCode],
                     parallelLanguageCodes: [],
                     liveShareStream: nil,
                     page: nil,
@@ -692,7 +694,7 @@ extension AppFlow {
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
             bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
             
@@ -810,7 +812,7 @@ extension AppFlow {
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()

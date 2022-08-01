@@ -14,7 +14,7 @@ class InitialDataDownloader: NSObject {
     private let realmDatabase: RealmDatabase
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let resourcesDownloader: ResourcesDownloader
-    private let realmResourcesCache: RealmResourcesCache
+    private let resourcesSync: InitialDataDownloaderResourcesSync
     private let languagesCache: RealmLanguagesCache
     private let resourcesCleanUp: ResourcesCleanUp
     private let attachmentsDownloader: AttachmentsDownloader
@@ -35,12 +35,12 @@ class InitialDataDownloader: NSObject {
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
-        self.realmResourcesCache = realmResourcesCache
+        self.resourcesSync = resourcesSync
         self.languagesCache = languagesCache
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
@@ -51,7 +51,7 @@ class InitialDataDownloader: NSObject {
         
         super.init()
         
-        if realmResourcesCache.resourcesAvailable {
+        if resourcesSync.resourcesAvailable {
             cachedResourcesAvailable.accept(value: true)
         }
     }
@@ -67,12 +67,12 @@ class InitialDataDownloader: NSObject {
         }
                         
         let realmDatabase: RealmDatabase = self.realmDatabase
-        let realmResourcesCache: RealmResourcesCache = self.realmResourcesCache
+        let resourcesSync: InitialDataDownloaderResourcesSync = self.resourcesSync
         let cachedResourcesAvailableAlreadySetToTrue: Bool = cachedResourcesAvailable.value
         
         initialDeviceResourcesLoader.loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: { [weak self] in
             
-            if realmResourcesCache.resourcesAvailable && !cachedResourcesAvailableAlreadySetToTrue {
+            if resourcesSync.resourcesAvailable && !cachedResourcesAvailableAlreadySetToTrue {
                 self?.cachedResourcesAvailable.accept(value: true)
             }
                         
@@ -104,7 +104,7 @@ class InitialDataDownloader: NSObject {
                 
                 realmDatabase.background { [weak self] (realm: Realm) in
                                         
-                    let cacheResult: Result<ResourcesCacheResult, Error> = realmResourcesCache.cacheResources(realm: realm, downloaderResult: downloaderResult)
+                    let cacheResult: Result<ResourcesCacheResult, Error> = resourcesSync.cacheResources(realm: realm, downloaderResult: downloaderResult)
                     
                     switch cacheResult {
                     
