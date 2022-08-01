@@ -34,7 +34,7 @@ class GetToolTranslationsUseCase {
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
-                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
                     .flatMap { results in
                         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
                             .mapError { error in

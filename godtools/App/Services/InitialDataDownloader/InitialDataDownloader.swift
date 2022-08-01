@@ -69,21 +69,15 @@ class InitialDataDownloader: NSObject {
     
     func downloadInitialData() {
         
-        downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+        downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
-            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
-                
-                self.cachedResourcesAvailable.accept(value: true)
-                
-                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
-                    .eraseToAnyPublisher()
-            })
             .sink(receiveCompletion: { completed in
                 print(completed)
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
                 print(result)
+                self.cachedResourcesAvailable.accept(value: true)
                 self.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
             })
     }
