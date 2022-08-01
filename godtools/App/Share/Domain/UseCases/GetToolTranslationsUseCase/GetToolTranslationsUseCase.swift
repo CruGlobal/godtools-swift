@@ -27,17 +27,6 @@ class GetToolTranslationsUseCase {
         self.languagesRepository = languagesRepository
     }
     
-    private func initiateDownloadStarted(downloadStarted: (() -> Void)?) {
-        
-        guard !didInitiateDownloadStarted else {
-            return
-        }
-        
-        didInitiateDownloadStarted = true
-        
-        downloadStarted?()
-    }
-    
     func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
                 
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
@@ -81,6 +70,7 @@ class GetToolTranslationsUseCase {
                     }
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> in
                     
                 return self.mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: translationManifests)
@@ -90,6 +80,17 @@ class GetToolTranslationsUseCase {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+    
+    private func initiateDownloadStarted(downloadStarted: (() -> Void)?) {
+        
+        guard !didInitiateDownloadStarted else {
+            return
+        }
+        
+        didInitiateDownloadStarted = true
+        
+        downloadStarted?()
     }
     
     private func mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
@@ -108,11 +109,21 @@ class GetToolTranslationsUseCase {
                     .eraseToAnyPublisher()
             }
             
-            languageTranslationManifests.append(MobileContentRendererLanguageTranslationManifest(manifest: translationManifest.manifest, language: language))
+            guard let manifest = translationsRepository.getTranslationManifestOnMainThread(manifestFileDataModel: translationManifest) else {
+                continue
+            }
+            
+            let rendererLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                manifest: manifest,
+                language: language
+            )
+            
+            languageTranslationManifests.append(rendererLanguageTranslationManifest)
         }
         
         return Just(ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageTranslationManifests)).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
 }
+
 
