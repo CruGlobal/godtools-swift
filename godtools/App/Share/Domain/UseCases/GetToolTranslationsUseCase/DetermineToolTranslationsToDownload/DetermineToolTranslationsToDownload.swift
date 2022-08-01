@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType {
     
@@ -26,12 +25,10 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         return resourcesRepository.getResource(id: resourceId)
     }
     
-    func determineToolTranslationsToDownload() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
-            
-            return Fail(error: .failedToFetchResourceFromCache)
-                .eraseToAnyPublisher()
+            return .failure(.failedToFetchResourceFromCache)
         }
         
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
@@ -41,8 +38,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         for languageId in supportedLanguageIds {
             
             guard let translation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
-                return Fail(error: .failedToFetchTranslationFromCache)
-                    .eraseToAnyPublisher()
+                return .failure(.failedToFetchTranslationFromCache)
             }
             
             translations.append(translation)
@@ -54,13 +50,11 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         }
         else {
             
-            return Fail(error: .failedToFetchTranslationFromCache)
-                .eraseToAnyPublisher()
+            return .failure(.failedToFetchTranslationFromCache)
         }
 
         let result = DetermineToolTranslationsToDownloadResult(translations: translations)
         
-        return Just(result).setFailureType(to: DetermineToolTranslationsToDownloadError.self)
-            .eraseToAnyPublisher()
+        return .success(result)
     }
 }

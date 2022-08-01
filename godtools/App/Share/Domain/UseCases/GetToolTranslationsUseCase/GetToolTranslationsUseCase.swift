@@ -29,14 +29,14 @@ class GetToolTranslationsUseCase {
     
     func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
                 
-        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
             .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, URLResponseError> in
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
                 return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
                     .flatMap { results in
-                        return determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+                        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
                             .mapError { error in
                                 return URLResponseError.otherError(error: error)
                             }
