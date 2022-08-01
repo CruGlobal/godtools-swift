@@ -24,7 +24,7 @@ GodTools
 #### Classes
 
 - Class / Struct attributes should always be declared with the type.
-- Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow grouped by private first, then internal, then public.   
+- Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow constants and are grouped by private first, then internal, then public.   
 
 #### Architecture
 
@@ -140,8 +140,9 @@ A Repository has the following responsibilities:
 - Provides data retrieving and data storage.
 - Encapsulates data storage types (remote, disk, bundle, hardcoded).
 
-
-
 #### Coordinator
-- TODO
+
+The Coorindator is responsible for the navigation decisions, dependency injection, and the navigation between views. In GodTools, any class that implements the Flow protocol is a class that implements the coordinator pattern. 
+The Coordinator is the decision maker when it comes to navigation. For example, say a user taps a button to login, the coordinater (Flow) receives this as a step enumeration (describes an action) and determines where to navigate based on that action. Once navigation is determined, the coordinator will instantiate the view, viewModel, inject any dependencies, and then perform navigation.
+
 
