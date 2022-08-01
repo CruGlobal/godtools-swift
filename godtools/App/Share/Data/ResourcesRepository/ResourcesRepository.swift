@@ -28,8 +28,8 @@ class ResourcesRepository {
         self.languagesRepository = languagesRepository
     }
     
-    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
-        return cache.getResourcesSyncedPublisher()
+    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+        return cache.getResourcesChanged()
     }
     
     func getResource(id: String) -> ResourceModel? {

@@ -18,33 +18,36 @@ class LanguageSettingsRepository {
         self.cache = cache
     }
     
-    func getPrimaryLanguageChangedPublisher() -> NotificationCenter.Publisher {
-        
-        return cache.getPrimaryLanguageChangedPublisher()
+    func getPrimaryLanguageChanged() -> AnyPublisher<String?, Never> {
+        return cache.getPrimaryLanguageChanged()
     }
     
-    func getParallelLanguageChangedPublisher() -> NotificationCenter.Publisher {
-        
-        return cache.getParallelLanguageChangedPublisher()
+    func getParallelLanguageChanged() -> AnyPublisher<String?, Never> {
+        return cache.getParallelLanguageChanged()
     }
     
-    func getPrimaryLanguage() -> LanguageModel? {
+    func getPrimaryLanguageId() -> String? {
         
-        return cache.getPrimaryLanguage()
+        return cache.getPrimaryLanguageId()
     }
     
-    func getParallelLanguage() -> LanguageModel? {
+    func getParallelLanguageId() -> String? {
         
-        return cache.getParallelLanguage()
+        return cache.getParallelLanguageId()
     }
 
-    func storePrimaryLanguage(language: LanguageModel) {
+    func storePrimaryLanguage(id: String) {
         
-        cache.storePrimaryLanguage(language: language)
+        cache.storePrimaryLanguage(id: id)
     }
     
-    func storeParallelLanguage(language: LanguageModel) {
+    func storeParallelLanguage(id: String) {
         
-        cache.storeParallelLanguage(language: language)
+        cache.storeParallelLanguage(id: id)
+    }
+    
+    func deleteParallelLanguage() {
+        
+        cache.deleteParallelLanguage()
     }
 }

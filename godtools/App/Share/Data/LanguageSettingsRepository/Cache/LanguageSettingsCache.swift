@@ -10,64 +10,54 @@ import Foundation
 import Combine
 
 class LanguageSettingsCache {
-    
-    private let primaryLanguageChangedNotificationName = Notification.Name("languageSettingsCache.notification.primaryLanguageChanged")
-    private let parallelLanguageChangedNotificationName = Notification.Name("languageSettingsCache.notification.parallelLanguageChanged")
-    
-    private let userDefaults: UserDefaults = UserDefaults.standard
-    private let languagesRepository: LanguagesRepository
-    
-    init(languagesRepository: LanguagesRepository) {
         
-        self.languagesRepository = languagesRepository
+    private let userDefaults: UserDefaults = UserDefaults.standard
+    
+    init() {
+        
     }
     
-    func getPrimaryLanguageChangedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: primaryLanguageChangedNotificationName)
+    func getPrimaryLanguageChanged() -> AnyPublisher<String?, Never> {
+        return userDefaults.publisher(for: \.primaryLanguageId)
+            .eraseToAnyPublisher()
     }
     
-    func getParallelLanguageChangedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: parallelLanguageChangedNotificationName)
+    func getParallelLanguageChanged() -> AnyPublisher<String?, Never> {
+        return userDefaults.publisher(for: \.parallelLanguageId)
+            .eraseToAnyPublisher()
     }
     
-    func getPrimaryLanguage() -> LanguageModel? {
+    func getPrimaryLanguageId() -> String? {
         
         guard let languageId = userDefaults.primaryLanguageId else {
             return nil
         }
         
-        return languagesRepository.getLanguage(id: languageId)
+        return languageId
     }
     
-    func getParallelLanguage() -> LanguageModel? {
+    func getParallelLanguageId() -> String? {
         
         guard let languageId = userDefaults.parallelLanguageId else {
             return nil
         }
         
-        return languagesRepository.getLanguage(id: languageId)
+        return languageId
     }
 
-    func storePrimaryLanguage(language: LanguageModel) {
+    func storePrimaryLanguage(id: String?) {
         
-        userDefaults.primaryLanguageId = language.id
-        
-        NotificationCenter.default.post(
-            name: self.primaryLanguageChangedNotificationName,
-            object: language,
-            userInfo: nil
-        )
+        userDefaults.primaryLanguageId = id
     }
     
-    func storeParallelLanguage(language: LanguageModel) {
+    func storeParallelLanguage(id: String?) {
         
-        userDefaults.parallelLanguageId = language.id
+        userDefaults.parallelLanguageId = id
+    }
+    
+    func deleteParallelLanguage() {
         
-        NotificationCenter.default.post(
-            name: self.parallelLanguageChangedNotificationName,
-            object: language,
-            userInfo: nil
-        )
+        storeParallelLanguage(id: nil)
     }
 }
 

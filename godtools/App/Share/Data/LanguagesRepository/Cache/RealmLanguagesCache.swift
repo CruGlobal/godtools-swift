@@ -13,7 +13,6 @@ import Combine
 class RealmLanguagesCache {
     
     private let realmDatabase: RealmDatabase
-    private let languagesSyncedNotificationName = Notification.Name("languagesCache.notification.languagesSynced")
 
     required init(realmDatabase: RealmDatabase) {
         
@@ -24,8 +23,9 @@ class RealmLanguagesCache {
         return realmDatabase.mainThreadRealm.objects(RealmLanguage.self).count
     }
     
-    func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: languagesSyncedNotificationName)
+    func getLanguagesChanged() -> AnyPublisher<Void, Never> {
+        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self).objectWillChange
+            .eraseToAnyPublisher()
     }
     
     func getLanguage(id: String) -> LanguageModel? {
@@ -56,12 +56,8 @@ class RealmLanguagesCache {
     }
     
     func getLanguages(languageCodes: [String]) -> [LanguageModel] {
-        
-        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self)
-            .filter("code IN %@", languageCodes)
-            .map{
-                LanguageModel(model: $0)
-            }
+    
+        return languageCodes.compactMap({getLanguage(code:$0)})
     }
     
     func getLanguages() -> [LanguageModel] {
@@ -76,7 +72,6 @@ class RealmLanguagesCache {
             self.realmDatabase.background { (realm: Realm) in
                 
                 var languagesToStore: [Object] = Array()
-                var languagesStored: [String: RealmLanguage] = Dictionary()
                 var languageIdsRemoved: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
                 
                 for language in languages {
@@ -84,7 +79,6 @@ class RealmLanguagesCache {
                     let realmLanguage: RealmLanguage = RealmLanguage()
                     realmLanguage.mapFrom(model: language)
                     languagesToStore.append(realmLanguage)
-                    languagesStored[realmLanguage.id] = realmLanguage
                     
                     if let index = languageIdsRemoved.firstIndex(of: language.id) {
                         languageIdsRemoved.remove(at: index)
@@ -100,14 +94,7 @@ class RealmLanguagesCache {
                         realm.delete(languagesToRemove)
                     }
                     
-                    NotificationCenter.default.post(
-                        name: self.languagesSyncedNotificationName,
-                        object: [languages],
-                        userInfo: nil
-                    )
-                    
                     let result = RealmLanguagesCacheSyncResult(
-                        languagesStored: languagesStored,
                         languageIdsRemoved: languageIdsRemoved
                     )
                     

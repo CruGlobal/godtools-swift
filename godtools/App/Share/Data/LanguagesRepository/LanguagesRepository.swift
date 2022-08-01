@@ -23,9 +23,9 @@ class LanguagesRepository {
     var numberOfLanguages: Int {
         return cache.numberOfLanguages
     }
-    
-    func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
-        return cache.getLanguagesSyncedPublisher()
+
+    func getLanguagesChanged() -> AnyPublisher<Void, Never> {
+        return cache.getLanguagesChanged()
     }
     
     func getLanguage(id: String) -> LanguageModel? {

@@ -25,8 +25,9 @@ class RealmResourcesCache {
         return realmDatabase.mainThreadRealm.objects(RealmResource.self).count
     }
     
-    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
-        return resourcesSync.getResourcesSyncedPublisher()
+    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+        return realmDatabase.mainThreadRealm.objects(RealmResource.self).objectWillChange
+            .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
