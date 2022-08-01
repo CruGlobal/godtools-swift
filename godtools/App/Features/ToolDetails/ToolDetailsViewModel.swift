@@ -220,6 +220,7 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         getToolTranslationsCancellable = getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
+        .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { completed in
             
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
