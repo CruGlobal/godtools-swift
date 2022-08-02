@@ -22,17 +22,17 @@ class RealmResourcesCache {
     }
     
     var numberOfResources: Int {
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self).count
+        return realmDatabase.openRealm().objects(RealmResource.self).count
     }
     
     func getResourcesChanged() -> AnyPublisher<Void, Never> {
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self).objectWillChange
+        return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
             return nil
         }
         
@@ -41,7 +41,7 @@ class RealmResourcesCache {
     
     func getResource(abbreviation: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first else {
+        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first else {
             return nil
         }
         
@@ -50,7 +50,7 @@ class RealmResourcesCache {
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self)
+        return realmDatabase.openRealm().objects(RealmResource.self)
             .filter("id IN %@", ids)
             .map{
                 ResourceModel(realmResource: $0)
@@ -58,13 +58,13 @@ class RealmResourcesCache {
     }
     
     func getResources() -> [ResourceModel] {
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self)
+        return realmDatabase.openRealm().objects(RealmResource.self)
             .map({ResourceModel(realmResource: $0)})
     }
     
     func getResourceLanguages(id: String) -> [LanguageModel] {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
             return Array()
         }
         
@@ -73,7 +73,7 @@ class RealmResourcesCache {
     
     func getResourceLanguageTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         
@@ -86,7 +86,7 @@ class RealmResourcesCache {
     
     func getResourceLanguageTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         

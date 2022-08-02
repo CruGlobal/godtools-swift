@@ -29,6 +29,10 @@ class RealmDatabase {
         }
     }
     
+    func openRealm() -> Realm {
+        return try! Realm(configuration: RealmDatabase.config)
+    }
+    
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
         backgroundQueue.async {
