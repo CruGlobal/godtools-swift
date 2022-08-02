@@ -36,7 +36,7 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         numberOfLanguages = ObservableValue(value: 0)
         
-        Publishers.Zip(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguage())
+        Publishers.CombineLatest(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguage())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages, settingsPrimaryLanguage) in
                 self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage)
