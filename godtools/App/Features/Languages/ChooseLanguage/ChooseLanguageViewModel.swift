@@ -117,11 +117,11 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     
     private var selectedLanguage: LanguageDomainModel? {
         
-        guard let index = selectedLanguageIndex.value, index >= 0 && index < languagesList.count else {
+        guard let index = selectedLanguageIndex.value else {
             return nil
         }
         
-        return languagesList[index]
+        return languagesList[safe: index]
     }
     
     func pageViewed() {
