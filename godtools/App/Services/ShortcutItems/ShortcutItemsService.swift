@@ -13,14 +13,14 @@ class ShortcutItemsService: NSObject {
     
     private let realmDatabase: RealmDatabase
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsCache: LanguageSettingsCacheType
+    private let languageSettingsService: LanguageSettingsService
     private let favoritedResourcesCache: FavoritedResourcesCache
     
-    required init(realmDatabase: RealmDatabase, dataDownloader: InitialDataDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache) {
+    required init(realmDatabase: RealmDatabase, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache) {
         
         self.realmDatabase = realmDatabase
         self.dataDownloader = dataDownloader
-        self.languageSettingsCache = languageSettingsCache
+        self.languageSettingsService = languageSettingsService
         self.favoritedResourcesCache = favoritedResourcesCache
         
         super.init()
@@ -76,8 +76,8 @@ class ShortcutItemsService: NSObject {
         
         var shortcutItems: [UIApplicationShortcutItem] = Array()
         
-        let primaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let parallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        let primaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
+        let parallelLanguageId: String = languageSettingsService.parallelLanguage.value?.id ?? ""
         
         let primaryLanguageCode: String = getLanguageCode(
             realm: realm,

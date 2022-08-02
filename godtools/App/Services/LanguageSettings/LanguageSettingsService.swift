@@ -7,53 +7,74 @@
 //
 
 import Foundation
+import Combine
 
 @available(*, deprecated) // TODO: Deprecated in place of LanguageSettingsRepository. ~Levi
-class LanguageSettingsService: NSObject {
+class LanguageSettingsService {
+        
+    private static let primaryLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
+    private static let parallelLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     
     private let languagesRepository: LanguagesRepository
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     
-    let languageSettingsCache: LanguageSettingsCacheType
-    let primaryLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
-    let parallelLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
+    private var cancellables = Set<AnyCancellable>()
     
-    required init(languagesRepository: LanguagesRepository, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(languagesRepository: LanguagesRepository, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase) {
         
         self.languagesRepository = languagesRepository
-        self.languageSettingsCache = languageSettingsCache
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         
-        super.init()
-        
-        setupBinding()
-    }
-    
-    deinit {
-        languageSettingsCache.primaryLanguageId.removeObserver(self)
-        languageSettingsCache.parallelLanguageId.removeObserver(self)
-    }
-    
-    private func setupBinding() {
-        
-        languageSettingsCache.primaryLanguageId.addObserver(self) { [weak self] (primaryLanguageId: String?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadPrimaryLanguage()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (primaryLanguage: LanguageDomainModel?) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let primaryLanguageDataModel: LanguageModel?
+                
+                if let primaryLanguage = primaryLanguage {
+                    primaryLanguageDataModel = weakSelf.languagesRepository.getLanguage(id: primaryLanguage.dataModelId)
+                }
+                else {
+                    primaryLanguageDataModel = nil
+                }
+                
+                LanguageSettingsService.primaryLanguage.accept(value: primaryLanguageDataModel)
             }
-        }
+            .store(in: &cancellables)
         
-        languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadParallelLanguage()
+        getSettingsParallelLanguageUseCase.getParallelLanguage()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let parallelLanguageDataModel: LanguageModel?
+                
+                if let parallelLanguage = parallelLanguage {
+                    parallelLanguageDataModel = weakSelf.languagesRepository.getLanguage(id: parallelLanguage.dataModelId)
+                }
+                else {
+                    parallelLanguageDataModel = nil
+                }
+                
+                LanguageSettingsService.parallelLanguage.accept(value: parallelLanguageDataModel)
             }
-        }
+            .store(in: &cancellables)
     }
     
-    private func reloadPrimaryLanguage() {
-        let language: LanguageModel? = languagesRepository.getLanguage(id: languageSettingsCache.primaryLanguageId.value ?? "")
-        primaryLanguage.accept(value: language)
+    var primaryLanguage: ObservableValue<LanguageModel?> {
+        return LanguageSettingsService.primaryLanguage
     }
     
-    private func reloadParallelLanguage() {
-        let language: LanguageModel? = languagesRepository.getLanguage(id: languageSettingsCache.parallelLanguageId.value ?? "")
-        parallelLanguage.accept(value: language)
+    var parallelLanguage: ObservableValue<LanguageModel?> {
+        return LanguageSettingsService.parallelLanguage
     }
 }

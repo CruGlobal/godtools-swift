@@ -23,7 +23,6 @@ class AppDiContainer {
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
     private let failedFollowUpsCache: FailedFollowUpsCache
-    private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     private let resourcesCleanUp: ResourcesCleanUp
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
@@ -114,8 +113,7 @@ class AppDiContainer {
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             favoritedResourcesCache: favoritedResourcesCache,
             languagesCache: languagesCache,
-            deviceLanguage: deviceLanguage,
-            languageSettingsCache: languageSettingsCache
+            deviceLanguage: deviceLanguage
         )
         
         initialDataDownloader = InitialDataDownloader(
@@ -128,14 +126,13 @@ class AppDiContainer {
             languagesCache: languagesCache,
             resourcesCleanUp: resourcesCleanUp,
             attachmentsDownloader: attachmentsDownloader,
-            languageSettingsCache: languageSettingsCache,
             favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
-        // TODO: Remove LanguagesRepository(cache: languagesCache) allocation here and use getLanguagesRepository().  This will be possible when no longer storing references in AppDiContainer. ~Levi
         languageSettingsService = LanguageSettingsService(
-            languagesRepository: LanguagesRepository(api: MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession()), cache: RealmLanguagesCache(realmDatabase: realmDatabase)),
-            languageSettingsCache: languageSettingsCache
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
         )
         
         languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
@@ -150,7 +147,7 @@ class AppDiContainer {
         
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
-            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
+            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
         )
                 
         appsFlyer = AppsFlyer(config: config, deepLinkingService: appDeepLinkingService)
@@ -173,7 +170,7 @@ class AppDiContainer {
         shortcutItemsService = ShortcutItemsService(
             realmDatabase: realmDatabase,
             dataDownloader: initialDataDownloader,
-            languageSettingsCache: languageSettingsCache,
+            languageSettingsService: languageSettingsService,
             favoritedResourcesCache: favoritedResourcesCache
         )
         

@@ -20,7 +20,6 @@ class InitialDataDownloader: NSObject {
     private let languagesCache: RealmLanguagesCache
     private let resourcesCleanUp: ResourcesCleanUp
     private let attachmentsDownloader: AttachmentsDownloader
-    private let languageSettingsCache: LanguageSettingsCacheType
     private let favoritedResourceTranslationDownloader : FavoritedResourceTranslationDownloader
     
     private var downloadAndCacheInitialData: AnyCancellable?
@@ -41,7 +40,7 @@ class InitialDataDownloader: NSObject {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.resourcesRepository = resourcesRepository
@@ -51,7 +50,6 @@ class InitialDataDownloader: NSObject {
         self.languagesCache = languagesCache
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
-        self.languageSettingsCache = languageSettingsCache
         self.resourcesCache = resourcesCache
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
         self.favoritedResourceTranslationDownloader = favoritedResourceTranslationDownloader
@@ -108,6 +106,7 @@ class InitialDataDownloader: NSObject {
     
     private func checkForParallelLanguageDeletedAndClearFromSettings(realm: Realm) {
         
+        /*
         guard let settingsParallelLanguageId = languageSettingsCache.parallelLanguageId.value, !settingsParallelLanguageId.isEmpty else {
             return
         }
@@ -117,6 +116,6 @@ class InitialDataDownloader: NSObject {
         
         if parallelLanguageRemoved {
             languageSettingsCache.deleteParallelLanguageId()
-        }
+        }*/
     }
 }
