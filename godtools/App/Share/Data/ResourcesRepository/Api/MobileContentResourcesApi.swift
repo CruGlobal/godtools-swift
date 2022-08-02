@@ -26,7 +26,7 @@ class MobileContentResourcesApi {
         
         return requestBuilder.build(
             session: session,
-            urlString: baseUrl + "/resources?include=latest-translations,attachments",
+            urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
             method: .get,
             headers: nil,
             httpBody: nil,
