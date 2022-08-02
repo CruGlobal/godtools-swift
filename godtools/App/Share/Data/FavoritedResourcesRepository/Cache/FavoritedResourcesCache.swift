@@ -24,6 +24,17 @@ class FavoritedResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
+    func store(resourceId: String) {
+        addToFavorites(resourceId: resourceId)
+    }
+    
+    func delete(resourceId: String) {
+        removeFromFavorites(resourceId: resourceId)
+    }
+    
+    
+    // MARK: -
+    
     func getFavoritedResources() -> [FavoritedResourceModel] {
         return getFavoritedResources(realm: realmDatabase.mainThreadRealm)
     }
