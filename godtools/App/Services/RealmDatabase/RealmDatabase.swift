@@ -16,6 +16,7 @@ class RealmDatabase {
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     
+    @available(*, deprecated) // TODO: Would like to move away from using the mainThreadRealm and instead use the func openRealm() since realm instances cant be shared across threads. ~Levi
     let mainThreadRealm: Realm
     
     required init() {
