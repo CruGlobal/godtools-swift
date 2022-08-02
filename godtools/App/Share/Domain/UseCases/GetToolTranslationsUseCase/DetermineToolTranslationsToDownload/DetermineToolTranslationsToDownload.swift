@@ -45,14 +45,9 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         }
         
         if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
-            
             translations = [englishTranslation]
         }
-        else {
-            
-            return .failure(.failedToFetchTranslationFromCache)
-        }
-
+    
         let result = DetermineToolTranslationsToDownloadResult(translations: translations)
         
         return .success(result)
