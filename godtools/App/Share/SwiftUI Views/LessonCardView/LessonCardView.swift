@@ -70,7 +70,7 @@ struct LessonCardView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = LessonCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
+            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleLessonsSorted().first!,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),

@@ -43,16 +43,16 @@ struct ToolCardNavButtonView: View {
 struct ToolCardNavButtonView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let cardType: ToolCardType = .square
-        
-        let viewModel = MockToolCardViewModel(
-            title: "Knowing God Personally",
-            category: "Gospel Invitation",
-            showParallelLanguage: true,
-            showBannerImage: true,
-            attachmentsDownloadProgress: 0.80,
-            translationDownloadProgress: 0.55,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners
+
+        let viewModel = ToolCardViewModel(
+            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            delegate: nil
         )
         
         ToolCardNavButtonView(sizeToFit: 200, leadingPadding: 20, buttonSpacing: 4, viewModel: viewModel)
