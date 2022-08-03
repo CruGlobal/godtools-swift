@@ -56,6 +56,62 @@ class ResourcesSHA256FileCache {
         return fileCache.decompressZipFileAndStoreFileContents(zipFileData: zipFileData)
     }
     
+    // MARK: - Attachment Files
+    
+    func storeAttachmentFile(attachmentId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
+        
+        return Just(FileCacheLocation(relativeUrlString: "")).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    private func createStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) -> AnyPublisher<FileCacheLocation, Error> {
+           
+        return Future() { promise in
+            
+            guard let filenameWithPathExtension = location.filenameWithPathExtension else {
+                
+                let error: Error = NSError.errorWithDescription(description: "Failed to create attachment file relationships because a file with path extension does not exist.")
+                promise(.failure(error))
+                return
+            }
+            
+            self.realmDatabase.background { (realm: Realm) in
+                
+                guard let realmAttachment = realm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId) else {
+                    
+                    let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because an attachment object does not exist in realm.")
+                    promise(.failure(error))
+                    return
+                }
+                
+                do {
+                    
+                    try realm.write {
+                        
+                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.attachments.contains(realmAttachment) {
+                            
+                            existingRealmSHA256File.attachments.append(realmAttachment)
+                        }
+                        else {
+                            
+                            let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
+                            newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
+                            newRealmSHA256File.attachments.append(realmAttachment)
+                            
+                            realm.add(newRealmSHA256File, update: .all)
+                        }
+                        
+                        promise(.success(location))
+                    }
+                }
+                catch let error {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     // MARK: - Translation Files
     
     func storeTranslationFile(translationId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {

@@ -12,40 +12,44 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     
     private let resourceId: String
     private let languageIds: [String]
-    private let languagesRepository: LanguagesRepository
-    
-    let resourcesCache: ResourcesCache
-    
-    required init(resourceId: String, languageIds: [String], resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository) {
+    private let resourcesRepository: ResourcesRepository
+        
+    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
-        self.resourcesCache = resourcesCache
-        self.languagesRepository = languagesRepository
+        self.resourcesRepository = resourcesRepository
     }
     
     func getResource() -> ResourceModel? {
-        return resourcesCache.getResource(id: resourceId)
+        return resourcesRepository.getResource(id: resourceId)
     }
     
-    func determineToolTranslationsToDownload() -> Result<ToolTranslationsToDownload, DetermineToolTranslationsToDownloadError> {
+    func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
-        guard let cachedResource = getResource() else {
+        guard let resource = getResource() else {
             return .failure(.failedToFetchResourceFromCache)
         }
         
-        var cachedLanguages: [LanguageModel] = Array()
-        
-        for languageId in languageIds {
+        let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
+                
+        var translations: [TranslationModel] = Array()
+                
+        for languageId in supportedLanguageIds {
             
-            if let language = languagesRepository.getLanguage(id: languageId) {
-                cachedLanguages.append(language)
+            guard let translation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
+                return .failure(.failedToFetchTranslationFromCache)
             }
-            else {
-                return .failure(.failedToFetchLanguageFromCache)
-            }
+            
+            translations.append(translation)
         }
         
-        return .success(ToolTranslationsToDownload(resource: cachedResource, languages: cachedLanguages))
+        if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
+            translations = [englishTranslation]
+        }
+    
+        let result = DetermineToolTranslationsToDownloadResult(translations: translations)
+        
+        return .success(result)
     }
 }

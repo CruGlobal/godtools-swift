@@ -23,12 +23,12 @@ class LanguageSettingsFlow: Flow {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             analytics: appDiContainer.analytics
         )
+        
         let view = LanguageSettingsView(viewModel: viewModel)
         
         sharedNavigationController.pushViewController(view, animated: true)
@@ -63,12 +63,14 @@ class LanguageSettingsFlow: Flow {
         
         let viewModel = ChooseLanguageViewModel(
             flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            languageSettingsService: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            userDidSetSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsPrimaryLanguageUseCase(),
+            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
+            userDidDeleteParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteParallelLanguageUseCase(),
+            getLanguagesListUseCase: appDiContainer.domainLayer.getLanguagesListUseCase(),
             downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
             localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             analytics: appDiContainer.analytics,
             chooseLanguageType: chooseLanguageType
         )

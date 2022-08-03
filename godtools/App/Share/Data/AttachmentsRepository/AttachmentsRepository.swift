@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class AttachmentsRepository {
     
@@ -26,29 +27,47 @@ class AttachmentsRepository {
         
         return cache.getAttachment(id: id)
     }
-}
-
-extension AttachmentsRepository {
     
-    private func downloadAndCacheAttachmentFile(attachmentId: String) -> AnyPublisher<Bool, Error> {
-
-        guard let attachment = cache.getAttachment(id: attachmentId) else {
-            return Fail(error: NSError.errorWithDescription(description: "Failed to download attachment file because an attachment does not exist in the database."))
+    func getAttachmentImage(id: String) -> AnyPublisher<Image?, URLResponseError> {
+        
+        return downloadAndCacheAttachmentFile(id: id)
+            .flatMap({ location -> AnyPublisher<Image?, URLResponseError> in
+                
+                return self.resourcesFileCache.getImage(location: location).publisher
+                    .mapError({ error in
+                        return .otherError(error: error)
+                    })
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func downloadAndCacheAttachmentFile(id: String) -> AnyPublisher<FileCacheLocation, URLResponseError> {
+        
+        guard let attachment = getAttachment(id: id) else {
+            let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Attachment does not exist in the realm database.")
+            return Fail(error: .otherError(error: error))
                 .eraseToAnyPublisher()
         }
         
+        return downloadAndCacheAttachmentFile(attachment: attachment)
+    }
+    
+    func downloadAndCacheAttachmentFile(attachment: AttachmentModel) -> AnyPublisher<FileCacheLocation, URLResponseError> {
+        
         guard let url = URL(string: attachment.file) else {
-            return Fail(error: NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute."))
+            let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute.")
+            return Fail(error: .otherError(error: error))
                 .eraseToAnyPublisher()
         }
         
         return api.getAttachmentFile(url: url)
-            .mapError { error in
-                return error as Error
-            }
-            .flatMap({ urlResponseObject -> AnyPublisher<Bool, Error> in
+            .flatMap({ responseObject -> AnyPublisher<FileCacheLocation, URLResponseError> in
                 
-                return Just(true).setFailureType(to: Error.self)
+                return self.resourcesFileCache.storeAttachmentFile(attachmentId: attachment.id, fileName: attachment.sha256, fileData: responseObject.data)
+                    .mapError({ error in
+                        return .otherError(error: error)
+                    })
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

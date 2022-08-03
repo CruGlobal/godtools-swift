@@ -7,309 +7,123 @@
 //
 
 import Foundation
+import Combine
 
-class GetToolTranslationsUseCase: NSObject {
+class GetToolTranslationsUseCase {
     
     typealias TranslationId = String
     
-    private let initialDataDownloader: InitialDataDownloader
-    private let translationDownloader: TranslationDownloader
-    private let resourcesCache: ResourcesCache
+    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
-    private let translationsFileCache: TranslationsFileCache
-    private let mobileContentParser: MobileContentParser
-    private let languageSettingsService: LanguageSettingsService
     
-    private var didInitiateDownloadStartedClosure: Bool = false
-    private var downloadTranslationsReceipt: DownloadTranslationsReceipt?
-    
-    init(initialDataDownloader: InitialDataDownloader, translationDownloader: TranslationDownloader, resourcesCache: ResourcesCache, languagesRepository: LanguagesRepository, translationsFileCache: TranslationsFileCache, mobileContentParser: MobileContentParser, languageSettingsService: LanguageSettingsService) {
+    private var getToolTranslationsCancellable: AnyCancellable?
+    private var didInitiateDownloadStarted: Bool = false
         
-        self.initialDataDownloader = initialDataDownloader
-        self.translationDownloader = translationDownloader
-        self.resourcesCache = resourcesCache
+    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
+
+        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository
-        self.translationsFileCache = translationsFileCache
-        self.mobileContentParser = mobileContentParser
-        self.languageSettingsService = languageSettingsService
-        
-        super.init()
     }
     
-    deinit {
-        removeDownloadInitialDataObservers()
-        destroyDownloadTranslationsReceipt()
+    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
+                
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+            .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, URLResponseError> in
+                
+                self.initiateDownloadStarted(downloadStarted: downloadStarted)
+                
+                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+                    .flatMap { results in
+                        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+                            .mapError { error in
+                                return URLResponseError.otherError(error: error)
+                            }
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
+            }
+            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                   
+                let translations: [TranslationModel] = result.translations
+                let parserType: TranslationManifestParserType = .renderer
+                
+                return self.translationsRepository.getTranslationManifests(translations: translations, manifestParserType: parserType)
+                    .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                        
+                        self.initiateDownloadStarted(downloadStarted: downloadStarted)
+                        
+                        return self.translationsRepository.downloadAndCacheTranslationsFiles(translations: translations)
+                            .flatMap { files in
+                                return self.translationsRepository.getTranslationManifests(translations: translations, manifestParserType: parserType)
+                                    .mapError { error in
+                                        return URLResponseError.otherError(error: error)
+                                    }
+                            }
+                            .eraseToAnyPublisher()
+                    })
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> in
+                    
+                return self.mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: translationManifests)
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
     
-    private func initiateDownloadStartedClosure(downloadStarted: @escaping (() -> Void)) {
+    private func initiateDownloadStarted(downloadStarted: (() -> Void)?) {
         
-        guard !didInitiateDownloadStartedClosure else {
+        guard !didInitiateDownloadStarted else {
             return
         }
         
-        didInitiateDownloadStartedClosure = true
-        downloadStarted()
+        didInitiateDownloadStarted = true
+        
+        downloadStarted?()
     }
     
-    func cancel() {
+    private func mapTranslationManifestsToToolTranslationsDomainModel(translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
         
-        removeDownloadInitialDataObservers()
-        destroyDownloadTranslationsReceipt()
-    }
-    
-    func getToolTranslations(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: @escaping (() -> Void), downloadFinished: @escaping ((_ result: Result<ToolTranslations, GetToolTranslationsError>) -> Void)) {
-        
-        let downloadResourcesNeeded: Bool
-        let downloadTranslationsNeeded: [TranslationId]
-        let fetchedToolTranslations: [ToolTranslationData]
-        
-        switch determineToolTranslationsToDownload.determineToolTranslationsToDownload() {
-            
-        case .success(let toolTranslationsToDownload):
-            
-            switch getToolTranslationsFromCache(resource: toolTranslationsToDownload.resource, languages: toolTranslationsToDownload.languages) {
-            
-            case .success(let toolTranslations):
-                
-                downloadResourcesNeeded = false
-                downloadTranslationsNeeded = []
-                fetchedToolTranslations = toolTranslations
-            
-            case .failure(let error):
-                
-                switch error {
-                case .failedToFetchTranslationsFromCache(let translationIdsNeededDownloading):
-                    downloadResourcesNeeded = false
-                    downloadTranslationsNeeded = translationIdsNeededDownloading
-                    fetchedToolTranslations = []
-                }
-            }
-            
-        case .failure(let error):
-            
-            switch error {
-            
-            case .failedToFetchResourceFromCache:
-                downloadResourcesNeeded = true
-                downloadTranslationsNeeded = []
-                fetchedToolTranslations = []
-            
-            case .failedToFetchLanguageFromCache:
-                downloadResourcesNeeded = true
-                downloadTranslationsNeeded = []
-                fetchedToolTranslations = []
-            }
+        guard let resource = translationManifests.first?.translation.resource else {
+            return Fail(error: (NSError.errorWithDescription(description: "Failed to get resource on translation model.")))
+                .eraseToAnyPublisher()
         }
-        
-        if downloadResourcesNeeded {
-            
-            initiateDownloadStartedClosure(downloadStarted: downloadStarted)
-            
-            downloadResourcesFromRemoteDatabase { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    
-                    self?.getToolTranslations(
-                        determineToolTranslationsToDownload: determineToolTranslationsToDownload,
-                        downloadStarted: downloadStarted,
-                        downloadFinished: downloadFinished
-                    )
-                }
-            }
-        }
-        else if downloadTranslationsNeeded.count > 0 {
-            
-            initiateDownloadStartedClosure(downloadStarted: downloadStarted)
-            
-            downloadTranslationsFromRemoteDatabase(translationIds: downloadTranslationsNeeded) { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    
-                    self?.getToolTranslations(
-                        determineToolTranslationsToDownload: determineToolTranslationsToDownload,
-                        downloadStarted: downloadStarted,
-                        downloadFinished: downloadFinished
-                    )
-                }
-            }
-        }
-        else if fetchedToolTranslations.count > 0 {
-            
-            let toolTranslations = ToolTranslations(
-                tool: fetchedToolTranslations[0].resource,
-                languageTranslationManifests: parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: fetchedToolTranslations)
-            )
-            
-            downloadFinished(.success(toolTranslations))
-        }
-        else {
-            
-            downloadFinished(.failure(.failedToDownloadTranslations(translationDownloaderErrors: [])))
-        }
-    }
-}
-
-extension GetToolTranslationsUseCase {
-    
-    private func parseToolTranslationsToGodToolsToolParserManifestObjects(toolTranslations: [ToolTranslationData]) -> [MobileContentRendererLanguageTranslationManifest] {
         
         var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         
-        for toolTranslation in toolTranslations {
+        for translationManifest in translationManifests {
             
-            switch mobileContentParser.parse(translationManifestFileName: toolTranslation.manifestFileName) {
-            
-            case .success(let manifest):
-                
-                let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
-                    manifest: manifest,
-                    language: toolTranslation.language
-                )
-                
-                languageTranslationManifests.append(languageTranslationManifest)
-            
-            case .failure(let error):
-                break
-            }
-        }
-        
-        return languageTranslationManifests
-    }
-}
-
-extension GetToolTranslationsUseCase {
-    
-    private func downloadResourcesFromRemoteDatabase(completion: @escaping (() -> Void)) {
-        
-        removeDownloadInitialDataObservers()
-        
-        initialDataDownloader.didDownloadAndCacheResources.addObserver(self) { [weak self] (didDownloadAndCacheResources: Bool) in
-            
-            guard let weakSelf = self else {
-                return
+            guard let language = translationManifest.translation.language else {
+                return Fail(error: (NSError.errorWithDescription(description: "Failed to get language on translation model.")))
+                    .eraseToAnyPublisher()
             }
             
-            if didDownloadAndCacheResources {
-                weakSelf.removeDownloadInitialDataObservers()
-                completion()
-            }
-        }
-        
-        initialDataDownloader.downloadInitialData()
-    }
-    
-    private func removeDownloadInitialDataObservers() {
-        initialDataDownloader.didDownloadAndCacheResources.removeObserver(self)
-    }
-    
-    private func downloadTranslationsFromRemoteDatabase(translationIds: [String], completion: @escaping (() -> Void)) {
-                                       
-        destroyDownloadTranslationsReceipt()
-        
-        downloadTranslationsReceipt = translationDownloader.downloadAndCacheTranslationManifests(translationIds: translationIds)
-        
-        downloadTranslationsReceipt?.completedSignal.addObserver(self, onObserve: { [weak self] in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.downloadTranslationsReceipt?.completedSignal.removeObserver(weakSelf)
-            
-            completion()
-        })
-    }
-    
-    private func destroyDownloadTranslationsReceipt() {
-        
-        guard let downloadTranslationsReceipt = self.downloadTranslationsReceipt else {
-            return
-        }
-        
-        downloadTranslationsReceipt.progressObserver.removeObserver(self)
-        downloadTranslationsReceipt.translationDownloadedSignal.removeObserver(self)
-        downloadTranslationsReceipt.completedSignal.removeObserver(self)
-        downloadTranslationsReceipt.cancel()
-        
-        self.downloadTranslationsReceipt = nil
-    }
-}
-
-extension GetToolTranslationsUseCase {
-    
-    private func getToolTranslationsFromCache(resource: ResourceModel, languages: [LanguageModel]) -> Result<[ToolTranslationData], GetToolTranslationsFromCacheError> {
-        
-        let resourceId: String = resource.id
-        
-        var toolTranslations: [ToolTranslationData] = Array()
-        var translationIdsNeededDownloading: [String] = Array()
-        
-        for language in languages {
-            
-            guard let languageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: language.id) else {
+            guard let manifest = translationsRepository.getTranslationManifestOnMainThread(manifestFileDataModel: translationManifest) else {
                 continue
             }
             
-            getTranslationManifest(
-                resource: resource,
-                language: language,
-                languageTranslation: languageTranslation,
-                toolTranslations: &toolTranslations,
-                translationIdsNeededDownloading: &translationIdsNeededDownloading
-            )
-        }
-        
-        let shouldFallbackToEnglishLanguage: Bool = translationIdsNeededDownloading.isEmpty && toolTranslations.isEmpty
-        
-        if shouldFallbackToEnglishLanguage,
-            let englishLanguage = languagesRepository.getLanguage(code: "en"),
-            let englishLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: englishLanguage.id) {
-            
-            getTranslationManifest(
-                resource: resource,
-                language: englishLanguage,
-                languageTranslation: englishLanguageTranslation,
-                toolTranslations: &toolTranslations,
-                translationIdsNeededDownloading: &translationIdsNeededDownloading
-            )
-        }
-        
-        guard translationIdsNeededDownloading.isEmpty else {
-            return .failure(.failedToFetchTranslationsFromCache(translationIdsNeededDownloading: translationIdsNeededDownloading))
-        }
-        
-        return .success(toolTranslations)
-    }
-    
-    private func getTranslationManifest(resource: ResourceModel, language: LanguageModel, languageTranslation: TranslationModel, toolTranslations: inout [ToolTranslationData], translationIdsNeededDownloading: inout [String]) {
-        
-        let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslation(translationId: languageTranslation.id)
-        
-        switch translationManifestResult {
-            
-        case .success(let translationManifestData):
-            
-            let toolTranslation = ToolTranslationData(
-                resource: resource,
-                language: language,
-                translation: languageTranslation,
-                manifestFileName: languageTranslation.manifestName,
-                manifestData: translationManifestData.manifestXmlData
+            let rendererLanguageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                manifest: manifest,
+                language: language
             )
             
-            toolTranslations.append(toolTranslation)
-            
-        case .failure( _):
-            translationIdsNeededDownloading.append(languageTranslation.id)
-        }
-    }
-    
-    private func fetchFirstSupportedLanguageForResource(resource: ResourceModel, languageCodes: [String]) -> LanguageModel? {
-        for code in languageCodes {
-            if let language = languagesRepository.getLanguage(code: code), resource.supportsLanguage(languageId: language.id) {
-                return language
-            }
+            languageTranslationManifests.append(rendererLanguageTranslationManifest)
         }
         
-        return nil
+        return Just(ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageTranslationManifests)).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }
+
 

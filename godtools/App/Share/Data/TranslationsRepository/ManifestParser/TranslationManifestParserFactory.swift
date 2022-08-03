@@ -1,19 +1,19 @@
 //
-//  MobileContentMultiplatformParserFactory.swift
+//  TranslationManifestParserFactory.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/6/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 7/18/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import GodToolsToolParser
 
-class MobileContentMultiplatformParserFactory: IosXmlPullParserFactory {
-        
+class TranslationManifestParserFactory: IosXmlPullParserFactory {
+    
     private let resourcesFileCache: ResourcesSHA256FileCache
     
-    required init(resourcesFileCache: ResourcesSHA256FileCache) {
+    init(resourcesFileCache: ResourcesSHA256FileCache) {
         
         self.resourcesFileCache = resourcesFileCache
         

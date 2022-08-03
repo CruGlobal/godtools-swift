@@ -17,15 +17,10 @@ class RealmResourcesCacheSync {
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
-    private let resourcesSyncedNotificationName = Notification.Name("resourcesCache.notification.resourcesSynced")
     
     required init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
-    }
-    
-    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: resourcesSyncedNotificationName)
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
@@ -79,7 +74,7 @@ class RealmResourcesCacheSync {
                         }
                         
                         if let languageId = translation.language?.id {
-                            realmTranslation.language = languagesSyncResult.languagesStored[languageId]
+                            realmTranslation.language = realm.object(ofType: RealmLanguage.self, forPrimaryKey: languageId)
                         }
                         
                         realmTranslationsDictionary[realmTranslation.id] = realmTranslation
@@ -161,9 +156,7 @@ class RealmResourcesCacheSync {
                 do {
                     try realm.write {
                         realm.add(realmObjectsToCache, update: .all)
-                        // TODO: Will need to implement clean up of deleted resources. ~Levi
-                        //realm.delete(realmObjectsToRemove)
-                        // TODO: Will need to delete resources, attachments, translations and test. ~Levi
+                        realm.delete(realmObjectsToRemove)
                     }
                     
                     let syncResult = RealmResourcesCacheSyncResult(
@@ -172,12 +165,6 @@ class RealmResourcesCacheSync {
                         translationIdsRemoved: translationIdsRemoved,
                         attachmentIdsRemoved: attachmentIdsRemoved,
                         latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)
-                    )
-                    
-                    NotificationCenter.default.post(
-                        name: self.resourcesSyncedNotificationName,
-                        object: resourcesPlusLatestTranslationsAndAttachments,
-                        userInfo: nil
                     )
                     
                     promise(.success(syncResult))

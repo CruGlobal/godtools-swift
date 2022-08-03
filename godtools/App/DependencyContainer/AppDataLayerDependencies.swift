@@ -22,7 +22,6 @@ class AppDataLayerDependencies {
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
-        
         return AttachmentsRepository(
             api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
@@ -30,12 +29,21 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLanguageSettingsRepository() -> LanguageSettingsRepository {
+        return LanguageSettingsRepository(
+            cache: LanguageSettingsCache()
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
-        
         return LanguagesRepository(
             api: MobileContentLanguagesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmLanguagesCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getLocalizationServices() -> LocalizationServices {
+        return LocalizationServices()
     }
     
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
@@ -43,7 +51,6 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesRepository() -> ResourcesRepository {
-        
         return ResourcesRepository(
             api: MobileContentResourcesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmResourcesCache(realmDatabase: sharedRealmDatabase),
@@ -53,8 +60,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslationsRepository() -> TranslationsRepository {
-        
+    func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),

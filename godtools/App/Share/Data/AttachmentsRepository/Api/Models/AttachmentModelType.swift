@@ -16,7 +16,6 @@ protocol AttachmentModelType {
     var fileFilename: String { get }
     var id: String { get }
     var isZipped: Bool { get }
-    var resourceId: String? { get }
     var sha256: String { get }
     var type: String { get }
     

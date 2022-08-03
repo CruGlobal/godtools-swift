@@ -8,19 +8,21 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class InitialDataDownloader: NSObject {
     
     private let realmDatabase: RealmDatabase
+    private let resourcesRepository: ResourcesRepository
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesSync: InitialDataDownloaderResourcesSync
     private let languagesCache: RealmLanguagesCache
     private let resourcesCleanUp: ResourcesCleanUp
     private let attachmentsDownloader: AttachmentsDownloader
-    private let languageSettingsCache: LanguageSettingsCacheType
     private let favoritedResourceTranslationDownloader : FavoritedResourceTranslationDownloader
     
+    private var downloadAndCacheInitialData: AnyCancellable?
     private var downloadResourcesOperation: OperationQueue?
     
     private(set) var didComplete: Bool = false
@@ -29,22 +31,25 @@ class InitialDataDownloader: NSObject {
     let attachmentsFileCache: AttachmentsFileCache
     
     // observables
+    @available(*, deprecated)
     let cachedResourcesAvailable: ObservableValue<Bool> = ObservableValue(value: false)
+    @available(*, deprecated)
     let resourcesUpdatedFromRemoteDatabase: SignalValue<InitialDataDownloaderError?> = SignalValue()
-    let didDownloadAndCacheResources: ObservableValue<Bool> = ObservableValue(value: false)
+    @available(*, deprecated)
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
+    @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
+        self.resourcesRepository = resourcesRepository
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
         self.resourcesSync = resourcesSync
         self.languagesCache = languagesCache
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
-        self.languageSettingsCache = languageSettingsCache
         self.resourcesCache = resourcesCache
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
         self.favoritedResourceTranslationDownloader = favoritedResourceTranslationDownloader
@@ -62,73 +67,17 @@ class InitialDataDownloader: NSObject {
     
     func downloadInitialData() {
         
-        if downloadResourcesOperation != nil {
-            return
-        }
-                        
-        let realmDatabase: RealmDatabase = self.realmDatabase
-        let resourcesSync: InitialDataDownloaderResourcesSync = self.resourcesSync
-        let cachedResourcesAvailableAlreadySetToTrue: Bool = cachedResourcesAvailable.value
-        
-        initialDeviceResourcesLoader.loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: { [weak self] in
-            
-            if resourcesSync.resourcesAvailable && !cachedResourcesAvailableAlreadySetToTrue {
-                self?.cachedResourcesAvailable.accept(value: true)
+        downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
             }
-                        
-            self?.downloadResourcesOperation = self?.resourcesDownloader.downloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) in
-                
-                let resourcesDownloaderResult: ResourcesDownloaderResult?
-                let resourcesDownloadError: ResourcesDownloaderError?
-                
-                switch result {
-                
-                case .success(let downloadResult):
-                    resourcesDownloaderResult = downloadResult
-                    resourcesDownloadError = nil
-                    
-                case .failure(let downloadError):
-                    resourcesDownloaderResult = nil
-                    resourcesDownloadError = downloadError
-                }
-                
-                if let resourcesDownloadError = resourcesDownloadError {
-                    self?.handleDownloadInitialDataCompleted(error: .failedToDownloadResources(error: resourcesDownloadError))
-                    return
-                }
-                
-                guard let downloaderResult = resourcesDownloaderResult else {
-                    self?.handleDownloadInitialDataCompleted(error: .failedToGetResourcesDownloaderResult)
-                    return
-                }
-                
-                realmDatabase.background { [weak self] (realm: Realm) in
-                                        
-                    let cacheResult: Result<ResourcesCacheResult, Error> = resourcesSync.cacheResources(realm: realm, downloaderResult: downloaderResult)
-                    
-                    switch cacheResult {
-                    
-                    case .success(let resourcesCacheResult):
-                        
-                        self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
-                        
-                        self?.checkForParallelLanguageDeletedAndClearFromSettings(realm: realm)
-                        
-                        self?.handleDownloadInitialDataCompleted(error: nil)
-                        
-                        self?.downloadLatestAttachments(resourcesCacheResult: resourcesCacheResult)
-                        
-                        self?.downloadLatestTranslations(realm: realm)
-                        
-                        self?.resourcesCleanUp.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: resourcesCacheResult)
-                        
-                    case .failure(let cacheError):
-                        self?.handleDownloadInitialDataCompleted(error: .failedToCacheResources(error: cacheError))
-                        return
-                    }
-                }
+            .sink(receiveCompletion: { completed in
+                print(completed)
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+                print(result)
+                self.cachedResourcesAvailable.accept(value: true)
+                self.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
             })
-        })
     }
     
     private func handleDownloadInitialDataCompleted(error: InitialDataDownloaderError?) {
@@ -137,8 +86,6 @@ class InitialDataDownloader: NSObject {
         downloadResourcesOperation = nil
         
         resourcesUpdatedFromRemoteDatabase.accept(value: error)
-        
-        didDownloadAndCacheResources.accept(value: true)
     }
     
     private func downloadLatestAttachments(resourcesCacheResult: ResourcesCacheResult) {
@@ -159,6 +106,7 @@ class InitialDataDownloader: NSObject {
     
     private func checkForParallelLanguageDeletedAndClearFromSettings(realm: Realm) {
         
+        /*
         guard let settingsParallelLanguageId = languageSettingsCache.parallelLanguageId.value, !settingsParallelLanguageId.isEmpty else {
             return
         }
@@ -168,6 +116,6 @@ class InitialDataDownloader: NSObject {
         
         if parallelLanguageRemoved {
             languageSettingsCache.deleteParallelLanguageId()
-        }
+        }*/
     }
 }

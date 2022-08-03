@@ -21,7 +21,7 @@ class GetOnboardingQuickLinksEnabledUseCase {
         
         let supportedLanguageCodes: [String] = [LanguageCodes.english, LanguageCodes.french, LanguageCodes.latvian, LanguageCodes.vietnamese]
         
-        let languageCode = getDeviceLanguageUseCase.getDeviceLanguage().languageCode
+        let languageCode = getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode
         
         return supportedLanguageCodes.contains(languageCode)
     }

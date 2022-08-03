@@ -31,7 +31,6 @@ class RealmAttachment: Object, AttachmentModelType {
         fileFilename = model.fileFilename
         id = model.id
         isZipped = model.isZipped
-        resourceId = model.resourceId
         sha256 = model.sha256
         type = model.type
     }

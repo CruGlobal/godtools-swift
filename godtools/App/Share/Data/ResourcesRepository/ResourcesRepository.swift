@@ -28,8 +28,8 @@ class ResourcesRepository {
         self.languagesRepository = languagesRepository
     }
     
-    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
-        return cache.getResourcesSyncedPublisher()
+    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+        return cache.getResourcesChanged()
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -56,7 +56,21 @@ class ResourcesRepository {
         return cache.getResourceLanguageTranslation(resourceId: resourceId, languageCode: languageCode)
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
+        
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
+            }
+            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
+                                
+                return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
         
         guard !ResourcesRepository.didSyncResourcesFromJsonFileCache else {
             return Just(nil).setFailureType(to: Error.self)
@@ -85,26 +99,18 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), getResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote())
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments())
+            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
                 
                 return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
+                    .mapError { error in
+                        return .otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
-    }
-}
-
-extension ResourcesRepository {
-    
-    private func getResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
-        
-        return self.api.getResourcesPlusLatestTranslationsAndAttachments()
-            .mapError {
-                $0 as Error
-            }
             .eraseToAnyPublisher()
     }
 }

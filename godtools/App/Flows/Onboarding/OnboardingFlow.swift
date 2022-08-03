@@ -70,7 +70,7 @@ class OnboardingFlow: Flow {
     
     private func navigateToQuickStartOrTools() {
         
-        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.getOnboardingQuickLinksEnabledUseCase()
+        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.domainLayer.getOnboardingQuickLinksEnabledUseCase()
         
         if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
             

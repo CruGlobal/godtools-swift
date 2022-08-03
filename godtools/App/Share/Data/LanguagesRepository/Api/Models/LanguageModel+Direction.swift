@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: This will need to be removed and LanguageDomainModel (direction attribute) should be used in place. ~Levi
 extension LanguageModel {
     
     var languageDirection: LanguageDirection {

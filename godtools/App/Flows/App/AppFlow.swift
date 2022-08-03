@@ -310,7 +310,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToToolsMenu()
                 
-                let deviceLanguageCode = appDiContainer.getDeviceLanguageUseCase().getDeviceLanguage().languageCode
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
                 
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
@@ -688,12 +688,13 @@ extension AppFlow {
             flowDelegate: self,
             resource: resource,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
-            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
+            getToolTranslationsUseCase: appDiContainer.domainLayer.getToolTranslationsUseCase(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
             bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
@@ -811,12 +812,12 @@ extension AppFlow {
         
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()
+            getLanguagesListUseCase: appDiContainer.domainLayer.getLanguagesListUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
+        
         let view = ParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)

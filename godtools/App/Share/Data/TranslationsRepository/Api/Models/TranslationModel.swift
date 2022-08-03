@@ -12,9 +12,7 @@ struct TranslationModel: TranslationModelType, Decodable {
     
     let id: String
     let isPublished: Bool
-    let languageId: String?
     let manifestName: String
-    let resourceId: String?
     let translatedDescription: String
     let translatedName: String
     let translatedTagline: String
@@ -53,9 +51,7 @@ struct TranslationModel: TranslationModelType, Decodable {
         
         id = realmTranslation.id
         isPublished = realmTranslation.isPublished
-        languageId = realmTranslation.languageId
         manifestName = realmTranslation.manifestName
-        resourceId = realmTranslation.resourceId
         translatedDescription = realmTranslation.translatedDescription
         translatedName = realmTranslation.translatedName
         translatedTagline = realmTranslation.translatedTagline
@@ -108,12 +104,9 @@ struct TranslationModel: TranslationModelType, Decodable {
         version = try attributesContainer?.decodeIfPresent(Int.self, forKey: .version) ?? -1
         
         // relationships - resource
-        resourceId = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)?.id
+        resource = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)
                 
         // relationships - language
-        languageId = try languageContainer?.decodeIfPresent(LanguageModel.self, forKey: .data)?.id
-        
-        resource = nil
-        language = nil
+        language = try languageContainer?.decodeIfPresent(LanguageModel.self, forKey: .data)
     }
 }
