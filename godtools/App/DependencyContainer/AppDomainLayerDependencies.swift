@@ -18,7 +18,7 @@ class AppDomainLayerDependencies {
     }
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase(getLanguageUseCase: getLanguageUseCase())
+        return GetDeviceLanguageUseCase()
     }
     
     func getLanguagesListUseCase() -> GetLanguagesListUseCase {
