@@ -61,8 +61,8 @@ class MobileContentAnimationView: MobileContentView {
         
         let animationSize: CGSize
         
-        if let animatedViewModel = viewModel.animatedViewModel {
-            animationSize = animatedViewModel.getAssetSize()
+        if let animatedViewModel = viewModel.animatedViewModel, let assetSize = animatedViewModel.getAssetSize() {
+            animationSize = assetSize
         }
         else {
             animationSize = CGSize(width: bounds.size.width, height: 40)
