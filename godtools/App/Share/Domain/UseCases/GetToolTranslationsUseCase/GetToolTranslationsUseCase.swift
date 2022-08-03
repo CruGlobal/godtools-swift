@@ -51,14 +51,14 @@ class GetToolTranslationsUseCase {
                 let translations: [TranslationModel] = result.translations
                 let parserType: TranslationManifestParserType = .renderer
                 
-                return self.translationsRepository.getTranslationManifests(translations: translations, manifestParserType: parserType)
+                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: parserType)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                         
                         return self.translationsRepository.downloadAndCacheTranslationsFiles(translations: translations)
                             .flatMap { files in
-                                return self.translationsRepository.getTranslationManifests(translations: translations, manifestParserType: parserType)
+                                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: parserType)
                                     .mapError { error in
                                         return URLResponseError.otherError(error: error)
                                     }
