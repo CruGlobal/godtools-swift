@@ -10,6 +10,6 @@ import Foundation
 
 protocol FavoritedResourceModelType {
     
+    var createdAt: Date { get }
     var resourceId: String { get }
-    var sortOrder: Int { get }
 }
