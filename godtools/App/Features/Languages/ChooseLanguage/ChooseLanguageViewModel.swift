@@ -68,7 +68,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
             navTitle.accept(value: localizationServices.stringForMainBundle(key: "parallel_language"))
         }
         
-        Publishers.Zip3(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), getSettingsParallelLanguageUseCase.getParallelLanguage())
+        Publishers.CombineLatest3(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(), getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] languages, settingsPrimaryLanguage, settingsParallelLanguage in
                 self?.allLanguages = languages
