@@ -10,13 +10,15 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolDetailsViewModel: NSObject, ObservableObject {
+class ToolDetailsViewModel: ObservableObject {
     
     private let dataDownloader: InitialDataDownloader
     private let resourcesRepository: ResourcesRepository
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let getToolTranslationsUseCase: GetToolTranslationsUseCase
@@ -48,15 +50,17 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.resourcesRepository = resourcesRepository
+        self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.getToolTranslationsUseCase = getToolTranslationsUseCase
@@ -66,16 +70,11 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
-        super.init()
-        
         reloadToolDetails(resource: resource)
-        setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private var analyticsScreenName: String {
@@ -88,21 +87,6 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     
     private var siteSubSection: String {
         return "tool-info"
-    }
-    
-    private func setupBinding() {
-        
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited(resourceId: resourceId)
-            }
-        }
-        
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited(resourceId: resourceId)
-            }
-        }
     }
     
     private func reloadToolDetails(resource: ResourceModel) {
@@ -205,8 +189,8 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     }
     
     private func reloadFavorited(resourceId: String) {
-                
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+          
+        isFavorited = favoritedResourcesRepository.getFavoritedResource(resourceId: resourceId) != nil
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
@@ -268,13 +252,13 @@ extension ToolDetailsViewModel {
     func toggleFavorited() {
         
         if isFavorited {
-            
-            favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         else {
-            
-            favoritedResourcesCache.addToFavorites(resourceId: resource.id)
+            addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
         }
+
+        reloadFavorited(resourceId: resource.id)
     }
     
     func segmentTapped(index: Int) {
