@@ -10,4 +10,7 @@ import Foundation
 
 protocol MobileContentAccordionSectionViewModelType {
     
+    func sectionOpened()
+    func sectionClosed()
+    
 }
