@@ -67,15 +67,7 @@ struct LessonCardView: View {
 struct LessonCardView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let viewModel = LessonCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
-            delegate: nil
-        )
+        let viewModel = MockLessonCardViewModel(title: "a really really really really long title goes here to see how the lines wrap")
         
         LessonCardView(viewModel: viewModel, cardWidth: 345)
     }

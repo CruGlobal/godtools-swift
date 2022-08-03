@@ -18,7 +18,7 @@ class LessonCardProvider: NSObject, ObservableObject {
     
     func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
         assertionFailure("This method should be overriden in the subclass")
-        return BaseLessonCardViewModel()
+        return MockLessonCardViewModel()
     }
     
     func lessonTapped(resource: ResourceModel) {}
