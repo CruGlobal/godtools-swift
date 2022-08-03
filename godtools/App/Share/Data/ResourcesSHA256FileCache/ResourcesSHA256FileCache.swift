@@ -114,10 +114,8 @@ class ResourcesSHA256FileCache {
     
     // MARK: - Translation Files
     
-    func storeTranslationFile(translationId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
-        
-        let location = FileCacheLocation(relativeUrlString: fileName)
-        
+    func storeTranslationFile(translationId: String, location: FileCacheLocation, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
+                
         return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [location])
             .flatMap({ fileCacheLocations -> AnyPublisher<URL, Error> in
                 
