@@ -71,26 +71,30 @@ class RealmResourcesCache {
         return realmResource.languages.map({LanguageModel(model: $0)})
     }
     
-    func getResourceLanguageTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+    func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         
-        guard let realmTranslation = realmResource.latestTranslations.filter("language.id = '\(languageId)'").first else {
+        guard let realmTranslation = realmResource.latestTranslations
+            .filter("language.id = '\(languageId)'")
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
         
         return TranslationModel(realmTranslation: realmTranslation)
     }
     
-    func getResourceLanguageTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
+    func getResourceLanguageLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         
-        guard let realmTranslation = realmResource.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased())).first else {
+        guard let realmTranslation = realmResource.latestTranslations
+            .filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased()))
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
 

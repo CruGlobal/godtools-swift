@@ -57,11 +57,11 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         if let primaryTranslation = primaryTranslation {
             return primaryTranslation
         }
-        else if let primarySettingsLanguageId = languageSettingsService.primaryLanguage.value?.id, let primarySettingsTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resource.id, languageId: primarySettingsLanguageId) {
+        else if let primarySettingsLanguageId = languageSettingsService.primaryLanguage.value?.id, let primarySettingsTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primarySettingsLanguageId) {
             
             return primarySettingsTranslation
         }
-        else if let englishTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
+        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
             
             return englishTranslation
         }
@@ -95,7 +95,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         
         for languageId in languageIds {
             
-            guard let translation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 continue
             }
             

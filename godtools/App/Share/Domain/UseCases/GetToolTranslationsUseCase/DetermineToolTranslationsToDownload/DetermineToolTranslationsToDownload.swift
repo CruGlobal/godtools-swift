@@ -37,14 +37,14 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
                 
         for languageId in supportedLanguageIds {
             
-            guard let translation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 return .failure(.failedToFetchTranslationFromCache)
             }
             
             translations.append(translation)
         }
         
-        if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
+        if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
             translations = [englishTranslation]
         }
     
