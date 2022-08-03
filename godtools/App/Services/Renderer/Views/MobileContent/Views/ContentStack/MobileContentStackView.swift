@@ -651,7 +651,7 @@ extension MobileContentStackView {
             if size.width != 0 {
                 multiplier = size.height / size.width
             } else {
-                multiplier = 1
+                multiplier = 0.1
             }
             
             let aspectRatio: NSLayoutConstraint = NSLayoutConstraint(
