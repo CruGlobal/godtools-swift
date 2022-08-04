@@ -29,7 +29,7 @@ struct LessonsListView: View {
                     .foregroundColor(ColorPalette.gtGrey.color)
                 
                 Text(viewModel.subtitle)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
+                    .font(FontLibrary.sfProTextRegular.font(size: 14))
                     .foregroundColor(ColorPalette.gtGrey.color)
             }
             .padding(.top, 24)

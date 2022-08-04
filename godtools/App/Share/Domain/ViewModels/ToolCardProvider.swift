@@ -22,7 +22,7 @@ class ToolCardProvider: NSObject, ObservableObject {
     
     func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
         assertionFailure("This method should be overriden in the subclass")
-        return MockToolCardViewModel()
+        return BaseToolCardViewModel()
     }
     
     func toolTapped(resource: ResourceModel) {}
