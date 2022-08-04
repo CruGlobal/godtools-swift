@@ -21,14 +21,14 @@ class ToolDetailsViewModel: ObservableObject {
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
-    private let getToolTranslationsUseCase: GetToolTranslationsUseCase
+    private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
     private let bannerImageRepository: ResourceBannerImageRepository
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
-    private var getToolTranslationsCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -50,7 +50,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -63,7 +63,7 @@ class ToolDetailsViewModel: ObservableObject {
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
-        self.getToolTranslationsUseCase = getToolTranslationsUseCase
+        self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.bannerImageRepository = bannerImageRepository
@@ -201,12 +201,12 @@ class ToolDetailsViewModel: ObservableObject {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        getToolTranslationsCancellable = getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+        getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { completed in
-            
+                        
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
             
             let hidesLearnToShareToolButtonValue: Bool
@@ -220,6 +220,7 @@ class ToolDetailsViewModel: ObservableObject {
             
             self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
         })
+        .store(in: &cancellables)
     }
 }
 
