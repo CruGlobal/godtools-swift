@@ -13,7 +13,6 @@ import Combine
 class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
-    private let getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     @available(*, deprecated)
     private let resourcesDownloader: ResourcesDownloader
@@ -42,10 +41,9 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader) {
+    required init(resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader) {
         
         self.resourcesRepository = resourcesRepository
-        self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
         self.resourcesSync = resourcesSync
@@ -72,8 +70,6 @@ class InitialDataDownloader {
                 print(result)
                 self?.cachedResourcesAvailable.accept(value: true)
                 self?.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
-                
-                self?.getAllFavoritedToolsLatestTranslationFilesUseCase.getLatestTranslationFilesForAllFavoritedTools()
             })
             .store(in: &cancellables)
     }

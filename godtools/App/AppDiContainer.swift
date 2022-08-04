@@ -109,7 +109,6 @@ class AppDiContainer {
         
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            getAllFavoritedToolsLatestTranslationFilesUseCase: domainLayer.getAllFavoritedToolsLatestTranslationFilesUseCase(),
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),

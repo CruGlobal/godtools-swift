@@ -10,24 +10,30 @@ import Foundation
 
 class AppDomainLayerDependencies {
     
+    private static var backgroundDownloadingUseCase: BackgroundDownloadingUseCase!
+    
     private let dataLayer: AppDataLayerDependencies
     
     init(dataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
+        
+        AppDomainLayerDependencies.backgroundDownloadingUseCase = getBackgroundDownloadingUseCase()
     }
     
     func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
         return AddToolToFavoritesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            getFavoritedToolsLatestTranslationFilesUseCase: getFavoritedToolsLatestTranslationFilesUseCase()
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
     
-    func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
+    private func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
-            getFavoritedToolsLatestTranslationFilesUseCase: getFavoritedToolsLatestTranslationFilesUseCase()
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -37,17 +43,14 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase()
+    private func getBackgroundDownloadingUseCase() -> BackgroundDownloadingUseCase {
+        return BackgroundDownloadingUseCase(
+            getAllFavoritedToolsLatestTranslationFilesUseCase: getAllFavoritedToolsLatestTranslationFilesUseCase()
+        )
     }
     
-    func getFavoritedToolsLatestTranslationFilesUseCase() -> GetFavoritedToolsLatestTranslationFilesUseCase {
-        return GetFavoritedToolsLatestTranslationFilesUseCase(
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            translationsRepository: dataLayer.getTranslationsRepository()
-        )
+    func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
+        return GetDeviceLanguageUseCase()
     }
     
     func getLanguagesListUseCase() -> GetLanguagesListUseCase {
