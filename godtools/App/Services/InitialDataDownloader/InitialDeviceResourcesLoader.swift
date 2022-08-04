@@ -46,10 +46,8 @@ class InitialDeviceResourcesLoader {
             
             self?.cacheAttachmentFiles(cacheResult: cacheResult, complete: { [weak self] in
                 
-                self?.setupInitialFavoritedResourcesAndLanguage { [weak self] in
-                    
-                    self?.handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: completeOnMain)
-                }
+                self?.setupInitialFavoritedResourcesAndLanguage()
+                self?.handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: completeOnMain)
             })
         }
     }
@@ -172,17 +170,12 @@ class InitialDeviceResourcesLoader {
         }
     }
     
-    private func setupInitialFavoritedResourcesAndLanguage(complete: @escaping (() -> Void)) {
+    private func setupInitialFavoritedResourcesAndLanguage() {
                 
-        realmDatabase.background { [weak self] (realm: Realm) in
-            
-            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "2") //satisfied
-            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "1") //knowing god personally
-            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "4") //fourlaws
-            self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
-                        
-            complete()
-        }
+        favoritedResourcesCache.addToFavorites(resourceId: "2") //satisfied
+        favoritedResourcesCache.addToFavorites(resourceId: "1") //knowing god personally
+        favoritedResourcesCache.addToFavorites(resourceId: "4") //fourlaws
+        favoritedResourcesCache.addToFavorites(resourceId: "8") //teach me to share
     }
     
     private func handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: @escaping (() -> Void)) {
