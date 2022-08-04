@@ -946,7 +946,6 @@
 		45EDBCF227359CD70099495B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45EDBCF127359CD70099495B /* RealmSwift */; };
 		45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */; };
 		45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */; };
-		45F38D2A2833EC36009E3E15 /* LanguageTranslationsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F38D292833EC35009E3E15 /* LanguageTranslationsDownloader.swift */; };
 		45F5A048268A72200081C507 /* IncomingDeepLinkUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
 		45F88B0A2860BA8700C8027F /* GetTranslatedLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F88AFC2860BA8700C8027F /* GetTranslatedLanguageUseCase.swift */; };
@@ -2080,7 +2079,6 @@
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSync.swift; sourceTree = "<group>"; };
 		45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSyncResult.swift; sourceTree = "<group>"; };
-		45F38D292833EC35009E3E15 /* LanguageTranslationsDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTranslationsDownloader.swift; sourceTree = "<group>"; };
 		45F5A047268A72200081C507 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
 		45F88AFC2860BA8700C8027F /* GetTranslatedLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTranslatedLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -4912,7 +4910,6 @@
 				45AD1EA425938A9800A096A0 /* IsNewUser */,
 				45AD1DE525938A9700A096A0 /* LanguageDirection */,
 				45AD1DE825938A9700A096A0 /* LanguageSettings */,
-				45F38D282833EC35009E3E15 /* LanguageTranslationsDownloader */,
 				45D6D0282708B8FF0063C38A /* LessonEvaluation */,
 				45AD1EE125938A9800A096A0 /* Localization */,
 				D1C8FEBB2714E92E0071BD07 /* OnboardingTutorial */,
@@ -6223,14 +6220,6 @@
 				45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */,
 			);
 			path = Sync;
-			sourceTree = "<group>";
-		};
-		45F38D282833EC35009E3E15 /* LanguageTranslationsDownloader */ = {
-			isa = PBXGroup;
-			children = (
-				45F38D292833EC35009E3E15 /* LanguageTranslationsDownloader.swift */,
-			);
-			path = LanguageTranslationsDownloader;
 			sourceTree = "<group>";
 		};
 		45F88AFA2860BA8700C8027F /* UseCases */ = {
@@ -7931,7 +7920,6 @@
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
-				45F38D2A2833EC36009E3E15 /* LanguageTranslationsDownloader.swift in Sources */,
 				D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */,
 				45558325269F2C7B00C3FF14 /* ToolPageFormViewModel.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,

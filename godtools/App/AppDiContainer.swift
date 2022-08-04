@@ -36,7 +36,6 @@ class AppDiContainer {
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let languageDirectionService: LanguageDirectionService
-    let languageTranslationsDownloader: LanguageTranslationsDownloader
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -127,15 +126,7 @@ class AppDiContainer {
         )
         
         languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
-        
-        languageTranslationsDownloader = LanguageTranslationsDownloader(
-            realmDatabase: realmDatabase,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            translationDownloader: translationDownloader
-        )
-        
+                
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
