@@ -60,7 +60,9 @@ class ResourcesSHA256FileCache {
     
     func storeAttachmentFile(attachmentId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
         
-        return Just(FileCacheLocation(relativeUrlString: "")).setFailureType(to: Error.self)
+        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
+        
+        return Just(fileCacheLocation).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     
@@ -114,16 +116,18 @@ class ResourcesSHA256FileCache {
     
     // MARK: - Translation Files
     
-    func storeTranslationFile(translationId: String, location: FileCacheLocation, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
+    func storeTranslationFile(translationId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
                 
-        return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [location])
+        let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
+        
+        return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [fileCacheLocation])
             .flatMap({ fileCacheLocations -> AnyPublisher<URL, Error> in
                 
-                return self.fileCache.storeFile(location: location, data: fileData).publisher
+                return self.fileCache.storeFile(location: fileCacheLocation, data: fileData).publisher
                     .eraseToAnyPublisher()
             })
             .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in
-                return Just(location).setFailureType(to: Error.self)
+                return Just(fileCacheLocation).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
