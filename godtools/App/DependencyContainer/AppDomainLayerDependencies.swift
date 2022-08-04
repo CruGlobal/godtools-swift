@@ -24,24 +24,29 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAllFavoritedResourcesLatestTranslationFilesUseCase() -> GetAllFavoritedResourcesLatestTranslationFilesUseCase {
+        return GetAllFavoritedResourcesLatestTranslationFilesUseCase(
+            getAllFavoritedResourcesUseCase: getAllFavoritedResourcesUseCase(),
+            getFavoritedResourcesLatestTranslationFilesUseCase: getFavoritedResourcesLatestTranslationFilesUseCase()
+        )
+    }
+    
+    func getAllFavoritedResourcesUseCase() -> GetAllFavoritedResourcesUseCase {
+        return GetAllFavoritedResourcesUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(getLanguageUseCase: getLanguageUseCase())
     }
     
     func getFavoritedResourcesLatestTranslationFilesUseCase() -> GetFavoritedResourcesLatestTranslationFilesUseCase {
         return GetFavoritedResourcesLatestTranslationFilesUseCase(
-            getFavoritedResourcesUseCase: getFavoritedResourcesUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             translationsRepository: dataLayer.getTranslationsRepository()
-        )
-    }
-    
-    func getFavoritedResourcesUseCase() -> GetFavoritedResourcesUseCase {
-        return GetFavoritedResourcesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     

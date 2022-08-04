@@ -22,10 +22,8 @@ class AddToolToFavoritesUseCase {
     func addToolToFavorites(resourceId: String) {
         
         switch favoritedResourcesRepository.storeFavoritedResource(resourceId: resourceId) {
-        
         case .success(let favoritedResource):
-            getFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFiles(favoritedResources: [favoritedResource])
-            
+            getFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFiles(for: [favoritedResource])
         case .failure( _):
             break
         }
