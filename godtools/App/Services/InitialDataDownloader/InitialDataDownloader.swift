@@ -10,23 +10,26 @@ import Foundation
 import RealmSwift
 import Combine
 
-class InitialDataDownloader: NSObject {
+class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
     private let getAllFavoritedResourcesLatestTranslationFilesUseCase: GetAllFavoritedResourcesLatestTranslationFilesUseCase
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
+    @available(*, deprecated)
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesSync: InitialDataDownloaderResourcesSync
+    @available(*, deprecated)
     private let languagesCache: RealmLanguagesCache
+    @available(*, deprecated)
     private let resourcesCleanUp: ResourcesCleanUp
+    @available(*, deprecated)
     private let attachmentsDownloader: AttachmentsDownloader
     
-    private var downloadAndCacheInitialData: AnyCancellable?
-    private var downloadResourcesOperation: OperationQueue?
-    
-    private(set) var didComplete: Bool = false
-        
+    private var cancellables = Set<AnyCancellable>()
+                
+    @available(*, deprecated)
     let resourcesCache: ResourcesCache
+    @available(*, deprecated)
     let attachmentsFileCache: AttachmentsFileCache
     
     // observables
@@ -51,30 +54,15 @@ class InitialDataDownloader: NSObject {
         self.attachmentsDownloader = attachmentsDownloader
         self.resourcesCache = resourcesCache
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
-        
-        super.init()
-        
+                
         if resourcesSync.resourcesAvailable {
             cachedResourcesAvailable.accept(value: true)
         }
     }
     
-    deinit {
-
-    }
-    
-//    func syncInitialData() -> AnyPublisher<Bool, URLResponseError> {
-//
-//        return resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
-//            .flatMap({ syncResult -> AnyPublisher<Bool, URLResponseError> in
-//
-//                return self.getAl
-//            })
-//    }
-    
     func downloadInitialData() {
         
-        downloadAndCacheInitialData = resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
@@ -87,5 +75,6 @@ class InitialDataDownloader: NSObject {
                 
                 self?.getAllFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFilesForAllFavoritedResources()
             })
+            .store(in: &cancellables)
     }
 }
