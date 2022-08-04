@@ -42,31 +42,29 @@ class LanguageTranslationsDownloader: NSObject {
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             
             if let primaryLanguage = primaryLanguage {
-                self?.realmDatabase.background { [weak self] (realm: Realm) in
-                    self?.downloadLanguageTranslationsForAllFavoritedResources(realm: realm, languageId: primaryLanguage.id)
-                }
+                self?.downloadLanguageTranslationsForAllFavoritedResources(languageId: primaryLanguage.id)
             }
         }
         
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             
             if let parallelLanguage = parallelLanguage {
-                self?.realmDatabase.background { [weak self] (realm: Realm) in
-                    self?.downloadLanguageTranslationsForAllFavoritedResources(realm: realm, languageId: parallelLanguage.id)
-                }
+                self?.downloadLanguageTranslationsForAllFavoritedResources(languageId: parallelLanguage.id)
             }
         }
     }
     
-    private func downloadLanguageTranslationsForAllFavoritedResources(realm: Realm, languageId: String) {
+    private func downloadLanguageTranslationsForAllFavoritedResources(languageId: String) {
         
         guard !languageId.isEmpty else {
             return
         }
         
+        /*
+        
         downloadedLanguagesCache.addDownloadedLanguage(realm: realm, languageId: languageId)
         
-        let favoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getFavoritedResources(realm: realm)
+        let favoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getFavoritedResources()
         var translationIdsToDownload: [String] = Array()
         
         for favoritedResource in favoritedResources {
@@ -76,6 +74,6 @@ class LanguageTranslationsDownloader: NSObject {
             }
         }
         
-        _ = translationDownloader.downloadAndCacheTranslationManifests(realm: realm, translationIds: translationIdsToDownload)
+        _ = translationDownloader.downloadAndCacheTranslationManifests(realm: realm, translationIds: translationIdsToDownload)*/
     }
 }
