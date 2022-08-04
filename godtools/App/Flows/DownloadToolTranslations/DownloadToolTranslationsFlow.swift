@@ -12,12 +12,12 @@ import Combine
 class DownloadToolTranslationsFlow: Flow {
     
     private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType
-    private let getToolTranslationsUseCase: GetToolTranslationsUseCase
+    private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, URLResponseError>) -> Void)
     
     private var downloadToolView: DownloadToolView?
     private var downloadToolModal: UIViewController?
-    private var getToolTranslationsManifestsCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
     
     private weak var presentInFlow: Flow?
     
@@ -30,10 +30,10 @@ class DownloadToolTranslationsFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = presentInFlow.navigationController
         self.determineToolTranslationsToDownload = determineToolTranslationsToDownload
-        self.getToolTranslationsUseCase = appDiContainer.domainLayer.getToolTranslationsUseCase()
+        self.getToolTranslationsFilesUseCase = appDiContainer.domainLayer.getToolTranslationsFilesUseCase()
         self.didDownloadToolTranslations = didDownloadToolTranslations
         
-        getToolTranslationsManifestsCancellable = getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
+        getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
             
             self?.navigateToDownloadTool(didCloseClosure: { [weak self] in
                 self?.dismissDownloadTool()
@@ -61,6 +61,7 @@ class DownloadToolTranslationsFlow: Flow {
                 self?.didDownloadToolTranslations(.success(toolTranslations))
             }
         })
+        .store(in: &cancellables)
     }
     
     func navigate(step: FlowStep) {
