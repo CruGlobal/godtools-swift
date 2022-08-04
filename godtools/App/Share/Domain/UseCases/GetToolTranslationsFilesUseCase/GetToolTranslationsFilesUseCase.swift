@@ -38,7 +38,7 @@ class GetToolTranslationsFilesUseCase {
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
         case .downloadManifestForTipsCount:
-            manifestParserType = .tips(parseRelated: false)
+            manifestParserType = .tips(parsesRelatedFiles: false)
         }
         
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
