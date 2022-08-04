@@ -33,7 +33,6 @@ class AppDiContainer {
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
-    let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let languageDirectionService: LanguageDirectionService
@@ -90,14 +89,7 @@ class AppDiContainer {
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
               
         downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
-                
-        favoritedResourceTranslationDownloader = FavoritedResourceTranslationDownloader(
-            realmDatabase: realmDatabase,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            translationDownloader: translationDownloader
-        )
-                
+                                
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
@@ -117,16 +109,15 @@ class AppDiContainer {
         )
         
         initialDataDownloader = InitialDataDownloader(
-            realmDatabase: realmDatabase,
             resourcesRepository: dataLayer.getResourcesRepository(),
+            getAllFavoritedResourcesLatestTranslationFilesUseCase: domainLayer.getAllFavoritedResourcesLatestTranslationFilesUseCase(),
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             resourcesCache: resourcesCache,
             languagesCache: languagesCache,
             resourcesCleanUp: resourcesCleanUp,
-            attachmentsDownloader: attachmentsDownloader,
-            favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
+            attachmentsDownloader: attachmentsDownloader
         )
         
         languageSettingsService = LanguageSettingsService(
