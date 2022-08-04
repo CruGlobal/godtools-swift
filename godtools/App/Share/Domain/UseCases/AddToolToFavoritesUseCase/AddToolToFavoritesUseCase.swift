@@ -11,15 +11,23 @@ import Foundation
 class AddToolToFavoritesUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let getFavoritedResourcesLatestTranslationFilesUseCase: GetFavoritedResourcesLatestTranslationFilesUseCase
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, getFavoritedResourcesLatestTranslationFilesUseCase: GetFavoritedResourcesLatestTranslationFilesUseCase) {
      
         self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.getFavoritedResourcesLatestTranslationFilesUseCase = getFavoritedResourcesLatestTranslationFilesUseCase
     }
     
-    // TODO: Replace ResourceModel with ToolDomainModel when GT-1742 is implemented. ~Levi
-    func addToolToFavorites(resource: ResourceModel) {
+    func addToolToFavorites(resourceId: String) {
         
-        favoritedResourcesRepository.store(resourceId: resource.id)
+        switch favoritedResourcesRepository.storeFavoritedResource(resourceId: resourceId) {
+        
+        case .success(let favoritedResource):
+            getFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFiles(favoritedResources: [favoritedResource])
+            
+        case .failure( _):
+            break
+        }
     }
 }

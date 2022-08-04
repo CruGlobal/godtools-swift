@@ -17,9 +17,8 @@ class RemoveToolFromFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    // TODO: Replace ResourceModel with ToolDomainModel when GT-1742 is implemented. ~Levi
-    func removeToolFromFavorites(resourceModel: ResourceModel) {
+    func removeToolFromFavorites(resourceId: String) {
         
-        favoritedResourcesRepository.delete(resourceId: resourceModel.id)
+        _ = favoritedResourcesRepository.deleteFavoritedResource(resourceId: resourceId)
     }
 }

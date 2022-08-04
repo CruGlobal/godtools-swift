@@ -11,10 +11,16 @@ import RealmSwift
 
 class RealmFavoritedResource: Object, FavoritedResourceModelType {
     
+    @objc dynamic var createdAt: Date = Date()
     @objc dynamic var resourceId: String = ""
-    @objc dynamic var sortOrder: Int = -1
     
     override static func primaryKey() -> String? {
         return "resourceId"
+    }
+    
+    func mapFrom(model: FavoritedResourceModel) {
+            
+        createdAt = model.createdAt
+        resourceId = model.resourceId
     }
 }

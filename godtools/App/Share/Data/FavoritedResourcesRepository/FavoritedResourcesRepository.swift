@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class FavoritedResourcesRepository {
     
@@ -17,11 +18,36 @@ class FavoritedResourcesRepository {
         self.cache = cache
     }
     
-    func store(resourceId: String) {
-        
+    var numberOfFavoritedResources: Int {
+        return cache.numberOfFavoritedResources
     }
     
-    func delete(resourceId: String) {
+    func getFavoritedResourcesChanged() -> AnyPublisher<Void, Never> {
+        return cache.getFavoritedResourcesChanged()
+    }
+    
+    func getFavoritedResource(resourceId: String) -> FavoritedResourceModel? {
         
+        return cache.getFavoritedResource(resourceId: resourceId)
+    }
+    
+    func getFavoritedResources() -> [FavoritedResourceModel] {
+        
+        return cache.getFavoritedResources()
+    }
+    
+    func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceModel] {
+        
+        return cache.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: ascendingOrder)
+    }
+    
+    func storeFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
+        
+        return cache.storeFavoritedResource(resourceId: resourceId)
+    }
+    
+    func deleteFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
+
+        return cache.deleteFavoritedResource(resourceId: resourceId)
     }
 }

@@ -8,64 +8,125 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class FavoritedResourcesCache {
-    
-    typealias ResourceId = String
-    
+        
     private let realmDatabase: RealmDatabase
     
-    let resourceFavorited: SignalValue<ResourceId> = SignalValue()
-    let resourceUnfavorited: SignalValue<ResourceId> = SignalValue()
-    let resourceSorted: SignalValue<ResourceId> = SignalValue()
+    @available(*, deprecated)
+    let resourceFavorited: SignalValue<String> = SignalValue()
+    @available(*, deprecated)
+    let resourceUnfavorited: SignalValue<String> = SignalValue()
+    @available(*, deprecated)
+    let resourceSorted: SignalValue<String> = SignalValue()
     
     required init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
-    func store(resourceId: String) {
-        addToFavorites(resourceId: resourceId)
+    var numberOfFavoritedResources: Int {
+        return realmDatabase.openRealm().objects(RealmFavoritedResource.self).count
     }
     
-    func delete(resourceId: String) {
-        removeFromFavorites(resourceId: resourceId)
-    }
-    
-    
-    // MARK: -
-    
-    func getFavoritedResources() -> [FavoritedResourceModel] {
-        return getFavoritedResources(realm: realmDatabase.mainThreadRealm)
-    }
-    
-    func getFavoritedResources(realm: Realm) -> [FavoritedResourceModel] {
-        return Array(realm.objects(RealmFavoritedResource.self)).map({FavoritedResourceModel(model: $0)})
+    func getFavoritedResourcesChanged() -> AnyPublisher<Void, Never> {
+        return realmDatabase.openRealm().objects(RealmFavoritedResource.self).objectWillChange
+            .eraseToAnyPublisher()
     }
     
     func getFavoritedResource(resourceId: String) -> FavoritedResourceModel? {
-        let realm: Realm = realmDatabase.mainThreadRealm
-        if let realmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) {
-            return FavoritedResourceModel(model: realmFavoritedResource)
+        
+        guard let realmFavoritedResource = realmDatabase.openRealm().object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
+            return nil
         }
-        return nil
+        
+        return FavoritedResourceModel(model: realmFavoritedResource)
     }
     
+    func getFavoritedResources() -> [FavoritedResourceModel] {
+        
+        return realmDatabase.openRealm().objects(RealmFavoritedResource.self)
+            .map({FavoritedResourceModel(model: $0)})
+    }
+    
+    func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceModel] {
+        
+        return realmDatabase.openRealm().objects(RealmFavoritedResource.self)
+            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: ascendingOrder)
+            .map({FavoritedResourceModel(model: $0)})
+    }
+    
+    func storeFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
+        
+        let favoritedResource = FavoritedResourceModel(resourceId: resourceId)
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        do {
+            
+            try realm.write {
+                
+                let realmFavoritedResource: RealmFavoritedResource = RealmFavoritedResource()
+                realmFavoritedResource.mapFrom(model: favoritedResource)
+                
+                realm.add(realmFavoritedResource, update: .all)
+            }
+            
+            return .success(favoritedResource)
+        }
+        catch let error {
+            
+            return .failure(error)
+        }
+    }
+    
+    func deleteFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
+
+        let realm: Realm = realmDatabase.openRealm()
+        
+        guard let realmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
+            return .failure(NSError.errorWithDescription(description: "Favorited resource with resourceId \(resourceId) does not exist in the realm database."))
+        }
+        
+        let favoritedResource: FavoritedResourceModel = FavoritedResourceModel(model: realmFavoritedResource)
+        
+        do {
+            
+            try realm.write {
+                realm.delete(realmFavoritedResource)
+            }
+            
+            return .success(favoritedResource)
+        }
+        catch let error {
+            
+            return .failure(error)
+        }
+    }
+    
+    // MARK: -
+    
+    @available(*, deprecated)
     func getSortedFavoritedResources() -> [FavoritedResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         return getSortedFavoritedResources(realm: realm)
     }
     
+    @available(*, deprecated)
     func getSortedFavoritedResources(realm: Realm) -> [FavoritedResourceModel] {
-        let realmFavoritedResource = realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: "sortOrder", ascending: true)
+        let realmFavoritedResource = realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: false)
         return Array(realmFavoritedResource.map({FavoritedResourceModel(model: $0)}))
+        
     }
     
+    @available(*, deprecated)
     func isFavorited(resourceId: String) -> Bool {
         let realm: Realm = realmDatabase.mainThreadRealm
         return realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil
     }
     
+    @available(*, deprecated)
     func toggleFavorited(resourceId: String) {
         
         if isFavorited(resourceId: resourceId) {
@@ -76,198 +137,31 @@ class FavoritedResourcesCache {
         }
     }
     
+    @available(*, deprecated)
     func addToFavorites(resourceId: String) {
         
-        addToFavorites(realm: realmDatabase.mainThreadRealm, resourceId: resourceId)
-    }
-    
-    func addToFavorites(realm: Realm, resourceId: String) {
-                
-        if realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil {
-            return
-        }
-        
-        flattenSortOrder(realm: realm, startSortOrder: 1)
-        
-        let realmFavoritedResource = RealmFavoritedResource()
-        realmFavoritedResource.resourceId = resourceId
-        realmFavoritedResource.sortOrder = 0
-        
-        do {
-            try realm.write {
-                realm.add(realmFavoritedResource, update: .all)
-            }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            return
-        }
+        storeFavoritedResource(resourceId: resourceId)
         
         resourceFavorited.accept(value: resourceId)
     }
     
+    @available(*, deprecated)
     func removeFromFavorites(resourceId: String) {
         
-        removeFromFavorites(realm: realmDatabase.mainThreadRealm, resourceId: resourceId)
-    }
-    
-    func removeFromFavorites(realm: Realm, resourceId: String) {
-                
-        guard let favoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
-            return
-        }
-        
-        do {
-            try realm.write {
-                realm.delete(favoritedResource)
-            }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            return
-        }
-        
-        flattenSortOrder(realm: realm, startSortOrder: 0)
+        deleteFavoritedResource(resourceId: resourceId)
         
         resourceUnfavorited.accept(value: resourceId)
     }
     
+    @available(*, deprecated)
     func setSortOrder(resourceId: String, newSortOrder: Int) {
-        
-        guard newSortOrder >= 0 else {
-            assertionFailure("Invalid sortOrder.  Must be 0 or greater.")
-            return
-        }
-        
-        let realm: Realm = realmDatabase.mainThreadRealm
-        
-        guard let favoritedResourceToSort: RealmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
-            assertionFailure("resource does not exist")
-            return
-        }
-        
-        let currentSortOrder: Int = favoritedResourceToSort.sortOrder
-        guard currentSortOrder != newSortOrder else {
-            assertionFailure("current sortOrder: \(currentSortOrder) is equal to new sortOrder: \(newSortOrder)")
-            return
-        }
-        
-        let movedForward: Bool = currentSortOrder < newSortOrder
-        let movedBackward: Bool = currentSortOrder > newSortOrder
-        
-        do {
-            try realm.write {
-                favoritedResourceToSort.sortOrder = -1
-            }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            return
-        }
-        
-        if movedBackward {
-            
-            let favorites: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self).filter("sortOrder >= \(newSortOrder)").sorted(byKeyPath: "sortOrder"))
-            
-            var nextSortOrder: Int = newSortOrder + 1
-            
-            do {
-                try realm.write {
-                    for favorite in favorites {
-                        favorite.sortOrder = nextSortOrder
-                        nextSortOrder += 1
-                    }
-                }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-                return
-            }
-        }
-        else if movedForward {
-            
-            let favorites: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self).filter("sortOrder >= \(currentSortOrder)").sorted(byKeyPath: "sortOrder"))
-            
-            var sortOrder: Int = currentSortOrder
-            
-            do {
-                try realm.write {
-                                        
-                    for favorite in favorites {
-                                                
-                        favorite.sortOrder = sortOrder
-                        sortOrder += 1
-                        
-                        if sortOrder == newSortOrder {
-                            sortOrder += 1
-                        }
-                    }
-                }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-                return
-            }
-        }
-        
-        do {
-            try realm.write {
-                favoritedResourceToSort.sortOrder = newSortOrder
-            }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            return
-        }
         
         resourceSorted.accept(value: resourceId)
     }
     
+    @available(*, deprecated)
     private func flattenSortOrder(realm: Realm, startSortOrder: Int) -> Error? {
         
-        let sortedFavorites: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: "sortOrder"))
-        
-        var index: Int = startSortOrder
-        
-        do {
-            try realm.write {
-                
-                for favorite in sortedFavorites {
-                    favorite.sortOrder = index
-                    index += 1
-                }
-            }
-        }
-        catch let error {
-            return error
-        }
-        
         return nil
-    }
-    
-    func bulkDeleteFavoritedResources(realm: Realm, resourceIds: [String]) -> Error? {
-        
-        var favoritedResourcesToDelete: [RealmFavoritedResource] = Array()
-        
-        for resourceId in resourceIds {
-            if let realmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) {
-                favoritedResourcesToDelete.append(realmFavoritedResource)
-            }
-        }
-        
-        guard !favoritedResourcesToDelete.isEmpty else {
-            return nil
-        }
-        
-        do {
-            try realm.write {
-                realm.delete(favoritedResourcesToDelete)
-            }
-        }
-        catch let error {
-            return error
-        }
-        
-        return flattenSortOrder(realm: realm, startSortOrder: 0)
     }
 }
