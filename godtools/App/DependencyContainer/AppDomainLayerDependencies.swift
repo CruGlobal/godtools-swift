@@ -20,19 +20,19 @@ class AppDomainLayerDependencies {
     func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
         return AddToolToFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            getFavoritedResourcesLatestTranslationFilesUseCase: getFavoritedResourcesLatestTranslationFilesUseCase()
+            getFavoritedToolsLatestTranslationFilesUseCase: getFavoritedToolsLatestTranslationFilesUseCase()
         )
     }
     
-    func getAllFavoritedResourcesLatestTranslationFilesUseCase() -> GetAllFavoritedResourcesLatestTranslationFilesUseCase {
-        return GetAllFavoritedResourcesLatestTranslationFilesUseCase(
-            getAllFavoritedResourcesUseCase: getAllFavoritedResourcesUseCase(),
-            getFavoritedResourcesLatestTranslationFilesUseCase: getFavoritedResourcesLatestTranslationFilesUseCase()
+    func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
+        return GetAllFavoritedToolsLatestTranslationFilesUseCase(
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
+            getFavoritedToolsLatestTranslationFilesUseCase: getFavoritedToolsLatestTranslationFilesUseCase()
         )
     }
     
-    func getAllFavoritedResourcesUseCase() -> GetAllFavoritedResourcesUseCase {
-        return GetAllFavoritedResourcesUseCase(
+    func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
+        return GetAllFavoritedToolsUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
@@ -41,8 +41,8 @@ class AppDomainLayerDependencies {
         return GetDeviceLanguageUseCase()
     }
     
-    func getFavoritedResourcesLatestTranslationFilesUseCase() -> GetFavoritedResourcesLatestTranslationFilesUseCase {
-        return GetFavoritedResourcesLatestTranslationFilesUseCase(
+    func getFavoritedToolsLatestTranslationFilesUseCase() -> GetFavoritedToolsLatestTranslationFilesUseCase {
+        return GetFavoritedToolsLatestTranslationFilesUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
@@ -90,6 +90,18 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
+        return GetToolDetailsMediaUseCase(
+            attachmentsRepository: dataLayer.getAttachmentsRepository()
+        )
+    }
+    
+    func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
+        return GetToolIsFavoritedUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
     

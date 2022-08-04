@@ -13,7 +13,7 @@ import Combine
 class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
-    private let getAllFavoritedResourcesLatestTranslationFilesUseCase: GetAllFavoritedResourcesLatestTranslationFilesUseCase
+    private let getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     @available(*, deprecated)
     private let resourcesDownloader: ResourcesDownloader
@@ -42,10 +42,10 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, getAllFavoritedResourcesLatestTranslationFilesUseCase: GetAllFavoritedResourcesLatestTranslationFilesUseCase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader) {
+    required init(resourcesRepository: ResourcesRepository, getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader) {
         
         self.resourcesRepository = resourcesRepository
-        self.getAllFavoritedResourcesLatestTranslationFilesUseCase = getAllFavoritedResourcesLatestTranslationFilesUseCase
+        self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
         self.resourcesDownloader = resourcesDownloader
         self.resourcesSync = resourcesSync
@@ -73,7 +73,7 @@ class InitialDataDownloader {
                 self?.cachedResourcesAvailable.accept(value: true)
                 self?.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
                 
-                self?.getAllFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFilesForAllFavoritedResources()
+                self?.getAllFavoritedToolsLatestTranslationFilesUseCase.getLatestTranslationFilesForAllFavoritedTools()
             })
             .store(in: &cancellables)
     }

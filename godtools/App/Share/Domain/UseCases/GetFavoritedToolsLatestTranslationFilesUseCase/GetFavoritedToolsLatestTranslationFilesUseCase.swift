@@ -1,5 +1,5 @@
 //
-//  GetFavoritedResourcesLatestTranslationFilesUseCase.swift
+//  GetFavoritedToolsLatestTranslationFilesUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/2/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetFavoritedResourcesLatestTranslationFilesUseCase {
+class GetFavoritedToolsLatestTranslationFilesUseCase {
         
     private static var cancellables = Set<AnyCancellable>()
 
@@ -26,23 +26,23 @@ class GetFavoritedResourcesLatestTranslationFilesUseCase {
         self.translationsRepository = translationsRepository
     }
     
-    func getLatestTranslationFiles(for favoritedResources: [FavoritedResourceModel]) {
+    func getLatestTranslationFiles(for favoritedTools: [FavoritedResourceModel]) {
                      
         let languages: [LanguageDomainModel] = [getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), getSettingsParallelLanguageUseCase.getParallelLanguage()].compactMap({
             return $0
         })
         
-        guard !favoritedResources.isEmpty && !languages.isEmpty else {
+        guard !favoritedTools.isEmpty && !languages.isEmpty else {
             return
         }
        
         var translations: [TranslationModel] = Array()
         
-        for favoritedResource in favoritedResources {
+        for tool in favoritedTools {
             
             for language in languages {
                 
-                guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: favoritedResource.resourceId, languageId: language.dataModelId) else {
+                guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
                     continue
                 }
                 
@@ -55,14 +55,14 @@ class GetFavoritedResourcesLatestTranslationFilesUseCase {
         cancellable = translationsRepository.downloadAndCacheTranslationsFiles(translations: translations)
             .sink { completed in
                 if let cancellable = cancellable {
-                    GetFavoritedResourcesLatestTranslationFilesUseCase.cancellables.remove(cancellable)
+                    GetFavoritedToolsLatestTranslationFilesUseCase.cancellables.remove(cancellable)
                 }
             } receiveValue: { (files: [TranslationFilesDataModel]) in
 
             }
         
         if let cancellable = cancellable {
-            GetFavoritedResourcesLatestTranslationFilesUseCase.cancellables.update(with: cancellable)
+            GetFavoritedToolsLatestTranslationFilesUseCase.cancellables.update(with: cancellable)
         }
     }
 }

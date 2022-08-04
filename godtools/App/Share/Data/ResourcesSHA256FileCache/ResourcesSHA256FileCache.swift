@@ -62,7 +62,16 @@ class ResourcesSHA256FileCache {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        return Just(fileCacheLocation).setFailureType(to: Error.self)
+        return createStoredFileRelationshipsToAttachment(attachmentId: attachmentId, location: fileCacheLocation)
+            .flatMap({ fileCacheLocation -> AnyPublisher<URL, Error> in
+                
+                return self.fileCache.storeFile(location: fileCacheLocation, data: fileData).publisher
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in
+                return Just(fileCacheLocation).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     

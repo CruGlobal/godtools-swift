@@ -11,19 +11,19 @@ import Foundation
 class AddToolToFavoritesUseCase {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
-    private let getFavoritedResourcesLatestTranslationFilesUseCase: GetFavoritedResourcesLatestTranslationFilesUseCase
+    private let getFavoritedToolsLatestTranslationFilesUseCase: GetFavoritedToolsLatestTranslationFilesUseCase
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, getFavoritedResourcesLatestTranslationFilesUseCase: GetFavoritedResourcesLatestTranslationFilesUseCase) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, getFavoritedToolsLatestTranslationFilesUseCase: GetFavoritedToolsLatestTranslationFilesUseCase) {
      
         self.favoritedResourcesRepository = favoritedResourcesRepository
-        self.getFavoritedResourcesLatestTranslationFilesUseCase = getFavoritedResourcesLatestTranslationFilesUseCase
+        self.getFavoritedToolsLatestTranslationFilesUseCase = getFavoritedToolsLatestTranslationFilesUseCase
     }
     
     func addToolToFavorites(resourceId: String) {
         
         switch favoritedResourcesRepository.storeFavoritedResource(resourceId: resourceId) {
-        case .success(let favoritedResource):
-            getFavoritedResourcesLatestTranslationFilesUseCase.getLatestTranslationFiles(for: [favoritedResource])
+        case .success(let favoritedTool):
+            getFavoritedToolsLatestTranslationFilesUseCase.getLatestTranslationFiles(for: [favoritedTool])
         case .failure( _):
             break
         }

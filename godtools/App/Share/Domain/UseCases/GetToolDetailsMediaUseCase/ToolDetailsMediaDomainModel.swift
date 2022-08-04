@@ -1,16 +1,17 @@
 //
-//  ToolDetailsMediaType.swift
+//  ToolDetailsMediaDomainModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/22.
+//  Created by Levi Eggert on 8/4/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 
-enum ToolDetailsMediaType {
+enum ToolDetailsMediaDomainModel {
     
-    case animation(viewModel: AnimatedViewModelType)
+    case animation(viewModel: AnimatedViewModel)
     case image(image: Image)
     case youtube(videoId: String, playerParameters: [String: Any]?)
     case empty

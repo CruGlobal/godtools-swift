@@ -14,9 +14,10 @@ class ToolDetailsViewModel: ObservableObject {
     
     private let dataDownloader: InitialDataDownloader
     private let resourcesRepository: ResourcesRepository
-    private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -28,11 +29,13 @@ class ToolDetailsViewModel: ObservableObject {
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
-    private var cancellables = Set<AnyCancellable>()
+    private var mediaCancellable: AnyCancellable?
+    private var toolIsFavoritedCancellable: AnyCancellable?
+    private var hidesLearnToShareCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var mediaType: ToolDetailsMediaType = .empty
+    @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
     @Published var totalViews: String = ""
     @Published var openToolButtonTitle: String = ""
@@ -50,15 +53,16 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, favoritedResourcesRepository: FavoritedResourcesRepository, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.resourcesRepository = resourcesRepository
-        self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -146,8 +150,6 @@ class ToolDetailsViewModel: ObservableObject {
             }
         })
         
-        reloadMedia(resource: resource)
-        reloadFavorited(resourceId: resource.id)
         reloadLearnToShareToolButtonState(resourceId: resource.id)
         
         if let metatoolId = resource.metatoolId {
@@ -157,40 +159,18 @@ class ToolDetailsViewModel: ObservableObject {
         if selectedToolVersion == nil {
             selectedToolVersion = toolVersions.filter({$0.id == resource.id}).first
         }
-    }
-    
-    private func reloadMedia(resource: ResourceModel) {
         
-        let media: ToolDetailsMediaType
+        mediaCancellable = getToolDetailsMediaUseCase.getMedia(resource: resource)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (media: ToolDetailsMediaDomainModel) in
+                self?.mediaType = media
+            })
         
-        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            
-            let playsInFullScreen: Int = 0
-            let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
-            
-            media = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
-        }
-        else if !resource.attrAboutBannerAnimation.isEmpty, let filePath = dataDownloader.attachmentsFileCache.getAttachmentFileUrl(attachmentId: resource.attrAboutBannerAnimation)?.path {
-            
-            let resource: AnimatedResource = .filepathJsonFile(filepath: filePath)
-            let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
-            
-            media = .animation(viewModel: viewModel)
-        }
-        else if let uiImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) {
-            let image: Image = Image(uiImage: uiImage)
-            media = .image(image: image)
-        }
-        else {
-            media = .empty
-        }
-        
-        mediaType = media
-    }
-    
-    private func reloadFavorited(resourceId: String) {
-          
-        isFavorited = favoritedResourcesRepository.getFavoritedResource(resourceId: resourceId) != nil
+        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (isFavorited: Bool) in
+                self?.isFavorited = isFavorited
+            })
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
@@ -201,7 +181,7 @@ class ToolDetailsViewModel: ObservableObject {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
         .receive(on: DispatchQueue.main)
@@ -220,7 +200,6 @@ class ToolDetailsViewModel: ObservableObject {
             
             self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
         })
-        .store(in: &cancellables)
     }
 }
 
@@ -258,8 +237,6 @@ extension ToolDetailsViewModel {
         else {
             addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
         }
-
-        reloadFavorited(resourceId: resource.id)
     }
     
     func segmentTapped(index: Int) {
