@@ -63,19 +63,20 @@ class ResourcesSHA256FileCache {
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
         return createStoredFileRelationshipsToAttachment(attachmentId: attachmentId, location: fileCacheLocation)
-            .flatMap({ fileCacheLocation -> AnyPublisher<URL, Error> in
+            .flatMap({ storeResourcesFilesResult -> AnyPublisher<URL, Error> in
                 
                 return self.fileCache.storeFile(location: fileCacheLocation, data: fileData).publisher
                     .eraseToAnyPublisher()
             })
             .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in
+                
                 return Just(fileCacheLocation).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func createStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) -> AnyPublisher<FileCacheLocation, Error> {
+    private func createStoredFileRelationshipsToAttachment(attachmentId: String, location: FileCacheLocation) -> AnyPublisher<StoreResourcesFilesResult, Error> {
            
         return Future() { promise in
             
@@ -112,11 +113,17 @@ class ResourcesSHA256FileCache {
                             realm.add(newRealmSHA256File, update: .all)
                         }
                         
-                        promise(.success(location))
+                        let storeResourcesFilesResult = StoreResourcesFilesResult(
+                            storedFiles: [location],
+                            deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
+                        )
+                        
+                        promise(.success(storeResourcesFilesResult))
                     }
                 }
-                catch let error {
-                    promise(.failure(error))
+                catch let writeError {
+                   
+                    promise(.failure(writeError))
                 }
             }
         }
@@ -130,12 +137,13 @@ class ResourcesSHA256FileCache {
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
         return createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: [fileCacheLocation])
-            .flatMap({ fileCacheLocations -> AnyPublisher<URL, Error> in
+            .flatMap({ storeResourcesFilesResult -> AnyPublisher<URL, Error> in
                 
                 return self.fileCache.storeFile(location: fileCacheLocation, data: fileData).publisher
                     .eraseToAnyPublisher()
             })
             .flatMap({ url -> AnyPublisher<FileCacheLocation, Error> in
+                
                 return Just(fileCacheLocation).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
@@ -148,106 +156,91 @@ class ResourcesSHA256FileCache {
             .flatMap({ fileCacheLocations -> AnyPublisher<[FileCacheLocation], Error> in
                 
                 return self.createStoredFileRelationshipsToTranslationPublisher(translationId: translationId, fileCacheLocations: fileCacheLocations)
+                    .map { storeResourcesFilesResult in
+                        return fileCacheLocations
+                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func createStoredFileRelationshipsToTranslationPublisher(translationId: String, fileCacheLocations: [FileCacheLocation]) -> AnyPublisher<[FileCacheLocation], Error> {
+    private func createStoredFileRelationshipsToTranslationPublisher(translationId: String, fileCacheLocations: [FileCacheLocation]) -> AnyPublisher<StoreResourcesFilesResult, Error> {
         
         return Future() { promise in
             
-            self.createStoredFileRelationshipsToTranslation(translationId: translationId, fileCacheLocations: fileCacheLocations) { (error: Error?) in
+            self.realmDatabase.background { (realm: Realm) in
                 
-                if let error = error {
+                guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
+                    
+                    let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because a translation object does not exist in realm.")
+                    
                     promise(.failure(error))
+    
+                    return
                 }
-                else {
-                    promise(.success(fileCacheLocations))
+                                
+                do {
+                    
+                    try realm.write {
+
+                        for location in fileCacheLocations {
+                                  
+                            guard let filenameWithPathExtension = location.filenameWithPathExtension else {
+                                continue
+                            }
+                            
+                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension),
+                               !existingRealmSHA256File.translations.contains(realmTranslation) {
+                                
+                                existingRealmSHA256File.translations.append(realmTranslation)
+                            }
+                            else {
+                                
+                                let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
+                                newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
+                                newRealmSHA256File.translations.append(realmTranslation)
+                                
+                                realm.add(newRealmSHA256File, update: .all)
+                            }
+                        }
+                    }
+                    
+                    let storeResourcesFilesResult = StoreResourcesFilesResult(
+                        storedFiles: fileCacheLocations,
+                        deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
+                    )
+                    
+                    promise(.success(storeResourcesFilesResult))
+                }
+                catch let writeError {
+                    
+                    promise(.failure(writeError))
                 }
             }
         }
         .eraseToAnyPublisher()
     }
-
-    private func createStoredFileRelationshipsToTranslation(translationId: String, fileCacheLocations: [FileCacheLocation], completion: @escaping ((_ error: Error?) -> Void)) {
-        
-        realmDatabase.background { (realm: Realm) in
-            
-            guard let realmTranslation = realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationId) else {
-                
-                let error: Error = NSError.errorWithDescription(description: "Failed to create file relationships because a translation object does not exist in realm.")
-                
-                completion(error)
-               
-                return
-            }
-            
-            let error: Error?
-            
-            do {
-                
-                try realm.write {
-
-                    for location in fileCacheLocations {
-                              
-                        guard let filenameWithPathExtension = location.filenameWithPathExtension else {
-                            continue
-                        }
-                        
-                        if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension),
-                           !existingRealmSHA256File.translations.contains(realmTranslation) {
-                            
-                            existingRealmSHA256File.translations.append(realmTranslation)
-                        }
-                        else {
-                            
-                            let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                            newRealmSHA256File.sha256WithPathExtension = filenameWithPathExtension
-                            newRealmSHA256File.translations.append(realmTranslation)
-                            
-                            realm.add(newRealmSHA256File, update: .all)
-                        }
-                    }
-                }
-                
-                error = nil
-            }
-            catch let writeError {
-                
-                error = writeError
-            }
-            
-            completion(error)
-        }
-    }
     
-    // MARK: - Deleting Outdated Files
+    // MARK: - Deleting Unused Files
     
-    func deleteUnusedSHA256ResourceFiles(realm: Realm) -> [Error] {
-        
-        // TODO: Implement in GT-1448. ~Levi
-        
-        assertionFailure("Implement in GT-1448.")
-        return []
-        
-        /*
-        var errors: [Error] = Array()
+    private func deleteUnusedResourceFiles(realm: Realm) -> DeleteResourcesFilesResult {
         
         let query: String = "attachments.@count = 0 AND translations.@count = 0"
         let realmSHA256FilesToDelete: [RealmSHA256File] = Array(realm.objects(RealmSHA256File.self).filter(query))
-           
-        for file in realmSHA256FilesToDelete {
-    
-            let error: Error? = removeFile(location: file.location)
-            
-            if let error = error {
-                errors.append(error)
-            }
-        }
         
-        guard !realmSHA256FilesToDelete.isEmpty else {
-            return errors
+        var filesToRemove: [FileCacheLocation] = Array()
+        var removeFileErrors: [Error] = Array()
+        var writeError: Error?
+        
+        for file in realmSHA256FilesToDelete {
+            
+            let location: FileCacheLocation = FileCacheLocation(relativeUrlString: file.sha256WithPathExtension)
+            
+            filesToRemove.append(location)
+            
+            if let error = fileCache.removeFile(location: location) {
+                removeFileErrors.append(error)
+            }
         }
         
         do {
@@ -256,9 +249,10 @@ class ResourcesSHA256FileCache {
             }
         }
         catch let error {
-            errors.append(error)
+            
+            writeError = error
         }
         
-        return errors*/
+        return DeleteResourcesFilesResult(filesRemoved: filesToRemove, removeFileErrors: removeFileErrors, writeError: writeError)
     }
 }

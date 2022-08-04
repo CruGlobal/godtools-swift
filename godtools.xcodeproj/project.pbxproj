@@ -98,6 +98,8 @@
 		45325F30285CF90D0078D932 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2F285CF90D0078D932 /* Strings.swift */; };
 		4533999E283D725300AE02E4 /* ToolSettingsFlowToolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533999D283D725300AE02E4 /* ToolSettingsFlowToolData.swift */; };
 		4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */; };
+		4534208D289C45ED003442E3 /* DeleteResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */; };
+		4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */; };
 		4534FB1028973759006B4FB1 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534FB0F28973759006B4FB1 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */; };
 		4534FB1328976F84006B4FB1 /* UserDidSetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534FB1228976F84006B4FB1 /* UserDidSetSettingsParallelLanguageUseCase.swift */; };
 		4534FB20289775E8006B4FB1 /* GetLanguagesListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534FB1F289775E8006B4FB1 /* GetLanguagesListUseCase.swift */; };
@@ -1247,6 +1249,8 @@
 		45325F2F285CF90D0078D932 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		4533999D283D725300AE02E4 /* ToolSettingsFlowToolData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlowToolData.swift; sourceTree = "<group>"; };
 		4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
+		4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResourcesFilesResult.swift; sourceTree = "<group>"; };
+		4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreResourcesFilesResult.swift; sourceTree = "<group>"; };
 		4534FB0F28973759006B4FB1 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		4534FB1228976F84006B4FB1 /* UserDidSetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		4534FB1F289775E8006B4FB1 /* GetLanguagesListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLanguagesListUseCase.swift; sourceTree = "<group>"; };
@@ -6195,12 +6199,14 @@
 		45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */ = {
 			isa = PBXGroup;
 			children = (
+				4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */,
 				45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */,
 				45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */,
 				45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */,
 				45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */,
 				45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */,
 				45E8FA9F2882FD4B00D7D569 /* SHA256FilesCache.swift */,
+				4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */,
 			);
 			path = ResourcesSHA256FileCache;
 			sourceTree = "<group>";
@@ -8218,6 +8224,7 @@
 				4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */,
 				45B98769283BFE5300E1DA7F /* TranslationsFileCacheError.swift in Sources */,
 				4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */,
+				4534208D289C45ED003442E3 /* DeleteResourcesFilesResult.swift in Sources */,
 				45FB160B27DBDDB60009DF8E /* OnboardingFlow.swift in Sources */,
 				455583D6269F2DA500C3FF14 /* MobileContentTabsViewModel.swift in Sources */,
 				45AE973F27C97A9400C2CB33 /* MultiplatformContent.swift in Sources */,
@@ -8262,6 +8269,7 @@
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
 				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
+				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,
 				45D63EA2288F77D4009B4610 /* ResourceModelType.swift in Sources */,
 				456777D2287DB3770044AEB2 /* ShareShareableView.swift in Sources */,
 				45677889287DC6D40044AEB2 /* LanguageSettingsViewModel.swift in Sources */,
