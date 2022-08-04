@@ -12,5 +12,6 @@ import GodToolsToolParser
 struct TranslationManifestFileDataModel {
     
     let manifest: Manifest
+    let relatedFiles: [FileCacheLocation]
     let translation: TranslationModel
 }
