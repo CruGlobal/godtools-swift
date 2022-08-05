@@ -255,8 +255,18 @@ extension ToolDetailsViewModel {
     
     func openToolTapped() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.aboutToolOpened, siteSection: siteSection, siteSubSection: siteSubSection, url: nil, data: [AnalyticsConstants.Keys.toolAboutOpened: 1]))
-        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpened,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
+                AnalyticsConstants.Keys.tool: resource.abbreviation
+            ])
+        )
+
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     

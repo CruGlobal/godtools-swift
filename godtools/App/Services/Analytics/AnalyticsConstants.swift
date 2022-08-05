@@ -95,5 +95,6 @@ struct AnalyticsConstants {
         static let favoriteTools = "favorite_tools"
         static let featured = "featured"
         static let spotlight = "spotlight"
+        static let toolDetails = "tool_details"
     }
 }
