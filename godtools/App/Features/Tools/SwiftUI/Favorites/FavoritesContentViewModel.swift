@@ -176,7 +176,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     }
     
     func toolCardTapped(resource: ResourceModel) {
-        trackFavoritedToolTappedAnalytics()
+        trackOpenFavoritedToolButtonAnalytics(for: resource)
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
@@ -233,17 +233,6 @@ extension FavoritesContentViewModel {
                     AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
                     AnalyticsConstants.Keys.tool: lesson.abbreviation
                   ]
-        ))
-    }
-    
-    private func trackFavoritedToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
-            siteSection: "",
-            siteSubSection: "",
-            url: nil,
-            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
         ))
     }
     
