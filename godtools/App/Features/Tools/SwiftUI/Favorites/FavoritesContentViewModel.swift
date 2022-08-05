@@ -156,7 +156,7 @@ extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
     
     func lessonCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
-        trackFeaturedLessonTappedAnalytics()
+        trackFeaturedLessonTappedAnalytics(for: resource)
     }
 }
 
@@ -221,7 +221,7 @@ extension FavoritesContentViewModel {
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
-    private func trackFeaturedLessonTappedAnalytics() {
+    private func trackFeaturedLessonTappedAnalytics(for lesson: ResourceModel) {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
@@ -229,8 +229,8 @@ extension FavoritesContentViewModel {
             siteSubSection: "",
             url: nil,
             data: [
-                    AnalyticsConstants.Keys.lessonOpenTapped: 1,
-                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
+                    AnalyticsConstants.Keys.tool: lesson.abbreviation
                   ]
         ))
     }

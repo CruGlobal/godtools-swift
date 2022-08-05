@@ -98,7 +98,7 @@ extension LessonsContentViewModel {
             siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]
+            data: [:]
         ))
     }
 }
