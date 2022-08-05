@@ -85,12 +85,14 @@ struct AnalyticsConstants {
         static let onboardingQuickStartArticles = "onboarding_link_articles"
         static let onboardingQuickStartLessons = "onboarding_link_lessons"
         static let onboardingQuickStartTools = "onboarding_link_tools"
+        static let openDetails = "open_details"
         static let viewedLessonsAction = "iam_lessons"
         static let viewedMyToolsAction = "iam_mytools"
         static let viewedToolsAction = "iam_tools"
     }
     
     struct Sources {
+        static let favoriteTools = "favorite_tools"
         static let featured = "featured"
         static let spotlight = "spotlight"
     }
