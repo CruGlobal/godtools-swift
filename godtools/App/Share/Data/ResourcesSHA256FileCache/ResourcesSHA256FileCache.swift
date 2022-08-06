@@ -112,19 +112,21 @@ class ResourcesSHA256FileCache {
                             
                             realm.add(newRealmSHA256File, update: .all)
                         }
-                        
-                        let storeResourcesFilesResult = StoreResourcesFilesResult(
-                            storedFiles: [location],
-                            deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
-                        )
-                        
-                        promise(.success(storeResourcesFilesResult))
                     }
                 }
                 catch let writeError {
                    
                     promise(.failure(writeError))
+                    
+                    return
                 }
+                
+                let storeResourcesFilesResult = StoreResourcesFilesResult(
+                    storedFiles: [location],
+                    deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
+                )
+                
+                promise(.success(storeResourcesFilesResult))
             }
         }
         .eraseToAnyPublisher()
@@ -204,18 +206,20 @@ class ResourcesSHA256FileCache {
                             }
                         }
                     }
-                    
-                    let storeResourcesFilesResult = StoreResourcesFilesResult(
-                        storedFiles: fileCacheLocations,
-                        deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
-                    )
-                    
-                    promise(.success(storeResourcesFilesResult))
                 }
                 catch let writeError {
                     
                     promise(.failure(writeError))
+                    
+                    return
                 }
+                
+                let storeResourcesFilesResult = StoreResourcesFilesResult(
+                    storedFiles: fileCacheLocations,
+                    deleteResourcesFilesResult: self.deleteUnusedResourceFiles(realm: realm)
+                )
+                
+                promise(.success(storeResourcesFilesResult))
             }
         }
         .eraseToAnyPublisher()
