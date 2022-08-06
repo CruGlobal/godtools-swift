@@ -41,7 +41,7 @@ class RealmResourcesCache {
     
     func getResource(abbreviation: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first else {
+        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'").first else {
             return nil
         }
         
@@ -50,8 +50,10 @@ class RealmResourcesCache {
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
+        let idKeyPath: String = #keyPath(RealmResource.id)
+        
         return realmDatabase.openRealm().objects(RealmResource.self)
-            .filter("id IN %@", ids)
+            .filter("\(idKeyPath) IN %@", ids)
             .map{
                 ResourceModel(realmResource: $0)
             }
@@ -78,7 +80,7 @@ class RealmResourcesCache {
         }
         
         guard let realmTranslation = realmResource.latestTranslations
-            .filter("language.id = '\(languageId)'")
+            .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
@@ -92,8 +94,10 @@ class RealmResourcesCache {
             return nil
         }
         
+        
+                        
         guard let realmTranslation = realmResource.latestTranslations
-            .filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased()))
+            .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
