@@ -29,6 +29,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
+        return FavoritedResourcesRepository(
+            cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()

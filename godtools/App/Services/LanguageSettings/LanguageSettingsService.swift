@@ -27,7 +27,7 @@ class LanguageSettingsService {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (primaryLanguage: LanguageDomainModel?) in
                 
@@ -48,7 +48,7 @@ class LanguageSettingsService {
             }
             .store(in: &cancellables)
         
-        getSettingsParallelLanguageUseCase.getParallelLanguage()
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
                 

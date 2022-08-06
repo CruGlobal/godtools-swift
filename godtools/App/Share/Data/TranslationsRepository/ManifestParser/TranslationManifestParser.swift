@@ -15,6 +15,18 @@ class TranslationManifestParser {
     private let parserConfig: ParserConfig
     private let resourcesFileCache: ResourcesSHA256FileCache
     
+    static func getManifestParser(type: TranslationManifestParserType, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
+        
+        switch type {
+        case .related:
+            return ParseTranslationManifestForRelatedFiles(resourcesFileCache: resourcesFileCache)
+        case .renderer:
+            return ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)
+        case .tips(let parseRelated):
+            return ParseTranslationManifestForTips(resourcesFileCache: resourcesFileCache, parseRelated: parseRelated)
+        }
+    }
+    
     init(parserConfig: ParserConfig, resourcesFileCache: ResourcesSHA256FileCache) {
         
         self.parser = IosManifestParser(
@@ -28,7 +40,16 @@ class TranslationManifestParser {
     
     func parse(manifestName: String) -> Result<Manifest, Error> {
                 
-        switch resourcesFileCache.getFileExists(location: FileCacheLocation(relativeUrlString: manifestName)) {
+        let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
+        
+        switch resourcesFileCache.getData(location: location) {
+        case .success(let data):
+            print("data: \(data)")
+        case .failure(let error):
+            print(error)
+        }
+        
+        switch resourcesFileCache.getFileExists(location: location) {
         
         case .success(let fileExists):
             
@@ -44,6 +65,9 @@ class TranslationManifestParser {
         
         if let resultData = result as? ParserResult.Data {
             return .success(resultData.manifest)
+        }
+        else if let resultError = result as? ParserResult.Error, let kotlinException = resultError.error {
+            return .failure(NSError.errorWithDescription(description: "Failed to parse tool manifest, found kotlin exception \(kotlinException)"))
         }
         else {
             return .failure(NSError.errorWithDescription(description: "Failed to parse tool manifest."))

@@ -43,7 +43,7 @@ class LanguageSettingsViewModel: LanguageSettingsViewModelType {
                 
         navTitle.accept(value: localizationServices.stringForMainBundle(key: "language_settings"))
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (language: LanguageDomainModel?) in
                 
@@ -53,7 +53,7 @@ class LanguageSettingsViewModel: LanguageSettingsViewModelType {
             }
             .store(in: &cancellables)
         
-        getSettingsParallelLanguageUseCase.getParallelLanguage()
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
                 

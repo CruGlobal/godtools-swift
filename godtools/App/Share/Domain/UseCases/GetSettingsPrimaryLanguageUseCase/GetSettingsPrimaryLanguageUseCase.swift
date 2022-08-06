@@ -24,33 +24,38 @@ class GetSettingsPrimaryLanguageUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getPrimaryLanguage() -> AnyPublisher<LanguageDomainModel?, Never> {
+    func getPrimaryLanguagePublisher() -> AnyPublisher<LanguageDomainModel?, Never> {
         
         return Publishers.CombineLatest(languagesRepository.getLanguagesChanged(), languageSettingsRepository.getPrimaryLanguageChanged())
             .flatMap({ (void: Void, primaryLanguageId: String?) -> AnyPublisher<LanguageDomainModel?, Never> in
                 
-                let language: LanguageDomainModel?
-                
-                if let primaryLanguageId = primaryLanguageId {
-
-                    language = self.getLanguageUseCase.getLanguage(id: primaryLanguageId)
-                }
-                else if let deviceLanguage = self.getLanguageUseCase.getLanguage(locale: self.getDeviceLanguageUseCase.getDeviceLanguage().locale) {
-                    
-                    language = deviceLanguage
-                }
-                else if let englishLanguage = self.getLanguageUseCase.getLanguage(locale: Locale(identifier: LanguageCodes.english)) {
-                    
-                    language = englishLanguage
-                }
-                else {
-                    
-                    language = nil
-                }
-                
-                return Just(language)
+                return Just(self.getPrimaryLanguage())
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+    
+    func getPrimaryLanguage() -> LanguageDomainModel? {
+        
+        let language: LanguageDomainModel?
+        
+        if let primaryLanguageId = languageSettingsRepository.getPrimaryLanguageId() {
+
+            language = self.getLanguageUseCase.getLanguage(id: primaryLanguageId)
+        }
+        else if let deviceLanguage = self.getLanguageUseCase.getLanguage(locale: self.getDeviceLanguageUseCase.getDeviceLanguage().locale) {
+            
+            language = deviceLanguage
+        }
+        else if let englishLanguage = self.getLanguageUseCase.getLanguage(locale: Locale(identifier: LanguageCodes.english)) {
+            
+            language = englishLanguage
+        }
+        else {
+            
+            language = nil
+        }
+        
+        return language
     }
 }

@@ -22,19 +22,23 @@ class GetSettingsParallelLanguageUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getParallelLanguage() -> AnyPublisher<LanguageDomainModel?, Never> {
+    func getParallelLanguagePublisher() -> AnyPublisher<LanguageDomainModel?, Never> {
         
         return Publishers.CombineLatest(languagesRepository.getLanguagesChanged(), languageSettingsRepository.getParallelLanguageChanged())
             .flatMap({ (void: Void, parallelLanguageId: String?) -> AnyPublisher<LanguageDomainModel?, Never> in
                 
-                guard let parallelLanguageId = parallelLanguageId else {
-                    return Just(nil)
-                        .eraseToAnyPublisher()
-                }
-                
-                return Just(self.getLanguageUseCase.getLanguage(id: parallelLanguageId))
+                return Just(self.getParallelLanguage())
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+    
+    func getParallelLanguage() -> LanguageDomainModel? {
+        
+        guard let parallelLanguageId = languageSettingsRepository.getParallelLanguageId() else {
+            return nil
+        }
+        
+        return getLanguageUseCase.getLanguage(id: parallelLanguageId)
     }
 }

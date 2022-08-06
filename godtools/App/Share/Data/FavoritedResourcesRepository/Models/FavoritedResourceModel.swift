@@ -10,12 +10,18 @@ import Foundation
 
 struct FavoritedResourceModel: FavoritedResourceModelType {
     
+    let createdAt: Date
     let resourceId: String
-    let sortOrder: Int
+    
+    init(resourceId: String) {
+        
+        createdAt = Date()
+        self.resourceId = resourceId
+    }
     
     init(model: FavoritedResourceModelType) {
         
+        createdAt = model.createdAt
         resourceId = model.resourceId
-        sortOrder = model.sortOrder
     }
 }

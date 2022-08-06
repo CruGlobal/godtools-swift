@@ -33,11 +33,9 @@ class AppDiContainer {
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
-    let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let languageDirectionService: LanguageDirectionService
-    let languageTranslationsDownloader: LanguageTranslationsDownloader
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -90,14 +88,7 @@ class AppDiContainer {
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
               
         downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
-                
-        favoritedResourceTranslationDownloader = FavoritedResourceTranslationDownloader(
-            realmDatabase: realmDatabase,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            translationDownloader: translationDownloader
-        )
-                
+                                
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
@@ -117,7 +108,6 @@ class AppDiContainer {
         )
         
         initialDataDownloader = InitialDataDownloader(
-            realmDatabase: realmDatabase,
             resourcesRepository: dataLayer.getResourcesRepository(),
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
@@ -125,8 +115,7 @@ class AppDiContainer {
             resourcesCache: resourcesCache,
             languagesCache: languagesCache,
             resourcesCleanUp: resourcesCleanUp,
-            attachmentsDownloader: attachmentsDownloader,
-            favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
+            attachmentsDownloader: attachmentsDownloader
         )
         
         languageSettingsService = LanguageSettingsService(
@@ -136,15 +125,7 @@ class AppDiContainer {
         )
         
         languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
-        
-        languageTranslationsDownloader = LanguageTranslationsDownloader(
-            realmDatabase: realmDatabase,
-            favoritedResourcesCache: favoritedResourcesCache,
-            languageSettingsService: languageSettingsService,
-            downloadedLanguagesCache: downloadedLanguagesCache,
-            translationDownloader: translationDownloader
-        )
-        
+                
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)

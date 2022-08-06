@@ -10,6 +10,19 @@ import Foundation
 
 enum TranslationManifestParserType {
     
-    case relatedFiles
+    case related
     case renderer
+    case tips(parsesRelatedFiles: Bool)
+    
+    var parsesRelatedFiles: Bool {
+        
+        switch self {
+        case .related:
+            return true
+        case .renderer:
+            return true
+        case .tips(let parsesRelatedFiles):
+            return parsesRelatedFiles
+        }
+    }
 }
