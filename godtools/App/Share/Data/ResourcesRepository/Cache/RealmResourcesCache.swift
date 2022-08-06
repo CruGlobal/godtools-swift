@@ -50,10 +50,8 @@ class RealmResourcesCache {
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
-        let idKeyPath: String = #keyPath(RealmResource.id)
-        
         return realmDatabase.openRealm().objects(RealmResource.self)
-            .filter("\(idKeyPath) IN %@", ids)
+            .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
             .map{
                 ResourceModel(realmResource: $0)
             }
