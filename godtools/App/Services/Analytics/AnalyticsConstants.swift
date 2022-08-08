@@ -78,7 +78,6 @@ struct AnalyticsConstants {
         static let shareScreenOpened = "Share Screen Opened"
         static let shareShareable = "share_shareable"
         static let toolOpenedShortcut = "Tool Opened Shortcut"
-        static let toolOpenTapped = "Tool Open Tap"
         static let toolOpened = "open_tool"
         static let tutorialHomeDismiss = "Tutorial Home Dismiss"
         static let tutorialVideo = "Tutorial Video"
