@@ -92,6 +92,7 @@ struct AnalyticsConstants {
     }
     
     struct Sources {
+        static let allTools = "all_tools"
         static let favoriteTools = "favorite_tools"
         static let featured = "featured"
         static let spotlight = "spotlight"
