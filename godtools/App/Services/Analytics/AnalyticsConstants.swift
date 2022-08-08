@@ -98,5 +98,6 @@ struct AnalyticsConstants {
         static let lessons = "lessons"
         static let spotlight = "spotlight"
         static let toolDetails = "tool_details"
+        static let versions = "versions"
     }
 }
