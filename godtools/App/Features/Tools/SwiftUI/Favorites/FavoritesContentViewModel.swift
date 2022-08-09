@@ -36,6 +36,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             delegate: self
         )

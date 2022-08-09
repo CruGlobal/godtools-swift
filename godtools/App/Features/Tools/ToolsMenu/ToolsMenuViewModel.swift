@@ -56,6 +56,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
         )
     }
