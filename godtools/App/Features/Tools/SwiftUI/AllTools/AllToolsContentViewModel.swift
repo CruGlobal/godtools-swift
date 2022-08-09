@@ -24,6 +24,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
         
     private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
         ToolSpotlightViewModel(
@@ -64,7 +65,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -77,6 +78,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
         super.init()
     }
@@ -106,7 +108,7 @@ extension AllToolsContentViewModel {
     }
     
     private func handleToolFavoriteButtonTapped(resource: ResourceModel) {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+        toggleToolFavoritedUseCase.toggleToolFavorited(tool: resource)
     }
 }
 

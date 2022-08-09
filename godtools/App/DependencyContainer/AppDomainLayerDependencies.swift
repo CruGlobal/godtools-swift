@@ -100,6 +100,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
+        return ToggleToolFavoritedUseCase(
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase(),
+            addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
+            removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
+        )
+    }
+    
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
             attachmentsRepository: dataLayer.getAttachmentsRepository()
