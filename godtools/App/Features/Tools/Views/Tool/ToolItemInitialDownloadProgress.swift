@@ -23,7 +23,6 @@ extension ToolItemInitialDownloadProgress {
     private func destroyDownloadAttachmentsReceipt() {
         if let receipt = downloadAttachmentsReceipt {
             receipt.progressObserver.removeObserver(self)
-            receipt.attachmentDownloadedSignal.removeObserver(self)
             receipt.completedSignal.removeObserver(self)
             downloadAttachmentsReceipt = nil
         }
