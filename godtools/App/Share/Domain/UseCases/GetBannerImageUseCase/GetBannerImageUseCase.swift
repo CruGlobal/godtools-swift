@@ -19,8 +19,20 @@ class GetBannerImageUseCase {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func getBannerImagePublisher(for resourceId: String) -> AnyPublisher<Image?, Never> {
+    func getBannerImagePublisher(for attachmentId: String) -> AnyPublisher<Image?, Never> {
         
-        return attachmentsRepository.getAttachmentImage(id: resourceId)
+        return attachmentsRepository.getAttachmentImage(id: attachmentId)
+    }
+    
+    func getBannerImage(for attachmentId: String) -> Image? {
+        
+        var image: Image?
+        
+        let _ = getBannerImagePublisher(for: attachmentId)
+            .sink { bannerImage in
+                image = bannerImage
+            }
+        
+        return image
     }
 }
