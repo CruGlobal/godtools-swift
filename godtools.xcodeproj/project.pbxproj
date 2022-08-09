@@ -665,7 +665,6 @@
 		45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */; };
 		45AD1FF125938A9800A096A0 /* AttachmentsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */; };
 		45AD1FF225938A9800A096A0 /* AttachmentsDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */; };
-		45AD1FF325938A9800A096A0 /* DeviceAttachmentBanners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9E25938A9800A096A0 /* DeviceAttachmentBanners.swift */; };
 		45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */; };
 		45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */; };
 		45AD1FF825938A9800A096A0 /* IsNewUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EA525938A9800A096A0 /* IsNewUserService.swift */; };
@@ -1816,7 +1815,6 @@
 		45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAttachmentData.swift; sourceTree = "<group>"; };
 		45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsFileCache.swift; sourceTree = "<group>"; };
 		45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsDownloaderError.swift; sourceTree = "<group>"; };
-		45AD1E9E25938A9800A096A0 /* DeviceAttachmentBanners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceAttachmentBanners.swift; sourceTree = "<group>"; };
 		45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAttachmentsReceipt.swift; sourceTree = "<group>"; };
 		45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedAttachmentResult.swift; sourceTree = "<group>"; };
 		45AD1EA525938A9800A096A0 /* IsNewUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserService.swift; sourceTree = "<group>"; };
@@ -5234,7 +5232,6 @@
 				45AD1E9A25938A9800A096A0 /* AttachmentsDownloader.swift */,
 				45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */,
 				45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */,
-				45AD1E9E25938A9800A096A0 /* DeviceAttachmentBanners.swift */,
 				45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */,
 				45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */,
 				45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */,
@@ -7655,7 +7652,6 @@
 				45AD1B9125938A4F00A096A0 /* ToolView.swift in Sources */,
 				45AD1FE125938A9800A096A0 /* EmailSignUpModelType.swift in Sources */,
 				D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */,
-				45AD1FF325938A9800A096A0 /* DeviceAttachmentBanners.swift in Sources */,
 				45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */,
 				45677800287DB4E10044AEB2 /* AboutTextProviderType.swift in Sources */,
 				4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */,
