@@ -36,7 +36,6 @@ class ToolPageCardView: MobileContentView, NibBased {
     private var keyboardHeightForAddedContentSize: Double?
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
-    private var isObservingKeyboard: Bool = false
     private var heightConstraint: NSLayoutConstraint?
     
     private weak var delegate: ToolPageCardViewDelegate?
@@ -89,7 +88,7 @@ class ToolPageCardView: MobileContentView, NibBased {
     deinit {
         print("x deinit: \(type(of: self))")
         
-        disableKeyboardObserving()
+        keyboardObserver.stopObservingKeyboardChanges()
         
         if let backgroundImageParent = self.backgroundImageParent {
             backgroundImageView.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
@@ -228,7 +227,7 @@ class ToolPageCardView: MobileContentView, NibBased {
         
         if let formView = childView as? MobileContentFormView {
             self.formView = formView
-            enableKeyboardObserving()
+            keyboardObserver.startObservingKeyboardChanges(delegate: self)
         }
     }
     
@@ -293,44 +292,11 @@ class ToolPageCardView: MobileContentView, NibBased {
     }
 }
 
-// MARK: - Keyboard
+// MARK: - KeyboardNotificationObserverDelegate
 
-extension ToolPageCardView {
+extension ToolPageCardView: KeyboardNotificationObserverDelegate {
     
-    private func enableKeyboardObserving() {
-        
-        guard !isObservingKeyboard else {
-            return
-        }
-        
-        isObservingKeyboard = true
-        
-        keyboardObserver.startObservingKeyboardChanges()
-        
-        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
-        }
-        
-        keyboardObserver.keyboardHeightDidChangeSignal.addObserver(self) { [weak self] (height: Double) in
-            self?.handleKeyboardHeightChange(height: height)
-        }
-    }
-    
-    private func disableKeyboardObserving() {
-        
-        guard isObservingKeyboard else {
-            return
-        }
-        
-        isObservingKeyboard = false
-        
-        keyboardObserver.stopObservingKeyboardChanges()
-        
-        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
-        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
-    }
-    
-    private func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+    func keyboardStateDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardStateChange: KeyboardStateChange) {
         
         switch keyboardStateChange.keyboardState {
             
@@ -354,8 +320,8 @@ extension ToolPageCardView {
         }
     }
     
-    private func handleKeyboardHeightChange(height: Double) {
-
+    func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double) {
+        
     }
     
     private func addKeyboardHeightToContentSize(keyboardHeight: CGFloat) {

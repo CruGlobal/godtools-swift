@@ -43,7 +43,7 @@ class ToolPageCardsView: MobileContentView {
         setupLayout()
         setupBinding()
         
-        keyboardObserver.startObservingKeyboardChanges()
+        keyboardObserver.startObservingKeyboardChanges(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -53,8 +53,6 @@ class ToolPageCardsView: MobileContentView {
     deinit {
         print("x deinit: \(type(of: self))")
         keyboardObserver.stopObservingKeyboardChanges()
-        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
-        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
     }
     
     private func setupLayout() {
@@ -63,9 +61,6 @@ class ToolPageCardsView: MobileContentView {
     
     private func setupBinding() {
         
-        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
-        }
     }
     
     private func addCardJumpObserving() {
@@ -157,11 +152,11 @@ class ToolPageCardsView: MobileContentView {
     }
 }
 
-// MARK: - Keyboard
+// MARK: - KeyboardNotificationObserverDelegate
 
-extension ToolPageCardsView {
+extension ToolPageCardsView: KeyboardNotificationObserverDelegate {
     
-    func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+    func keyboardStateDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardStateChange: KeyboardStateChange) {
         
         guard let currentCardPosition = self.currentCardPosition else {
             return
@@ -180,7 +175,7 @@ extension ToolPageCardsView {
         }
     }
     
-    func handleKeyboardHeightChanged(keyboardHeight: Double) {
+    func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double) {
         
     }
 }
