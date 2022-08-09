@@ -86,16 +86,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     }
 }
 
-// MARK: - Public
- 
-extension ToolCardViewModel {
- 
-    func didDownloadAttachments() {
-        
-    }
-    
-}
-
 // MARK: - Private
 
 extension ToolCardViewModel {

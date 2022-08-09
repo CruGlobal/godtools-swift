@@ -16,8 +16,6 @@ protocol ToolItemInitialDownloadProgress: NSObject {
     var translationDownloadProgress: ObservableValue<Double> { get }
     var downloadAttachmentsReceipt: DownloadAttachmentsReceipt? { get set }
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt? { get set }
-    
-    func didDownloadAttachments()
 }
 
 extension ToolItemInitialDownloadProgress {
@@ -49,20 +47,6 @@ extension ToolItemInitialDownloadProgress {
         receipt.progressObserver.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.attachmentsDownloadProgress.accept(value: progress)
-            }
-        }
-        
-        receipt.attachmentDownloadedSignal.addObserver(self) { [weak self] (result: DownloadedAttachmentResult) in
-            DispatchQueue.main.async { [weak self] in
-                
-                guard let attachmentId = self?.resource.attrBanner else {
-                    return
-                }
-
-                if result.downloadError == nil && result.attachmentFile.relatedAttachmentIds.contains(attachmentId) {
-                    
-                    self?.didDownloadAttachments()
-                }
             }
         }
         

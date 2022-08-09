@@ -60,12 +60,6 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     override func lessonCardTapped() {
         delegate?.lessonCardTapped(resource: resource)
     }
-    
-    // MARK: - ToolItemInitialDownloadProgress
-    
-    func didDownloadAttachments() {
-        
-    }
 }
 
 // MARK: - Private
