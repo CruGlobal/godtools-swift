@@ -49,6 +49,10 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getBannerImageUseCase() -> GetBannerImageUseCase {
+        return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
+    }
+    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase()
     }
