@@ -708,7 +708,6 @@
 		45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD206B25938B4400A096A0 /* OnboardPrimaryButton.swift */; };
 		45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD207225938B6A00A096A0 /* AnimatableValue.swift */; };
 		45AD208325938B6A00A096A0 /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD207825938B6A00A096A0 /* KeyboardNotificationObserver.swift */; };
-		45AD208425938B6A00A096A0 /* KeyboardObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD207925938B6A00A096A0 /* KeyboardObserverType.swift */; };
 		45AD208525938B6A00A096A0 /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD207A25938B6A00A096A0 /* KeyboardState.swift */; };
 		45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD207B25938B6A00A096A0 /* KeyboardStateChange.swift */; };
 		45AD209625938C4900A096A0 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD208E25938C4900A096A0 /* GlobalActivityAnalyticsUserDefaultsCache.swift */; };
@@ -1858,7 +1857,6 @@
 		45AD206B25938B4400A096A0 /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
 		45AD207225938B6A00A096A0 /* AnimatableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatableValue.swift; sourceTree = "<group>"; };
 		45AD207825938B6A00A096A0 /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
-		45AD207925938B6A00A096A0 /* KeyboardObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserverType.swift; sourceTree = "<group>"; };
 		45AD207A25938B6A00A096A0 /* KeyboardState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardState.swift; sourceTree = "<group>"; };
 		45AD207B25938B6A00A096A0 /* KeyboardStateChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardStateChange.swift; sourceTree = "<group>"; };
 		45AD208E25938C4900A096A0 /* GlobalActivityAnalyticsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsUserDefaultsCache.swift; sourceTree = "<group>"; };
@@ -5436,7 +5434,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD207825938B6A00A096A0 /* KeyboardNotificationObserver.swift */,
-				45AD207925938B6A00A096A0 /* KeyboardObserverType.swift */,
 				45AD207A25938B6A00A096A0 /* KeyboardState.swift */,
 				45AD207B25938B6A00A096A0 /* KeyboardStateChange.swift */,
 			);
@@ -8420,7 +8417,6 @@
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
-				45AD208425938B6A00A096A0 /* KeyboardObserverType.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,
 				45AD1FD925938A9800A096A0 /* WebArchiveOperationError.swift in Sources */,
 				45AD1FDA25938A9800A096A0 /* WebArchiveOperation.swift in Sources */,

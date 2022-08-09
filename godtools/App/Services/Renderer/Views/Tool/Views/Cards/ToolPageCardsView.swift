@@ -19,7 +19,7 @@ class ToolPageCardsView: MobileContentView {
     
     private let viewModel: ToolPageCardsViewModelType
     private let safeArea: UIEdgeInsets
-    private let keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
+    private let keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var cardBounceAnimation: ToolPageCardBounceAnimation?
     private var allCards: [ToolPageCardView] = Array()

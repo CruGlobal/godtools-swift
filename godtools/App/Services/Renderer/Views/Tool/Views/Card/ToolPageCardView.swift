@@ -27,7 +27,7 @@ class ToolPageCardView: MobileContentView, NibBased {
     private let bottomGradientLayer: CAGradientLayer = CAGradientLayer()
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
     
-    private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
+    private lazy var keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var backgroundImageParent: UIView?
     private var formView: MobileContentFormView?
