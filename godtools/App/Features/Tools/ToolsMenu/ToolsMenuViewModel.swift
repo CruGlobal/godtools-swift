@@ -16,16 +16,18 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -34,10 +36,13 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
+        
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        
         self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
@@ -72,7 +77,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             getBannerImageUseCase: getBannerImageUseCase,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase
         )
     }
     
@@ -86,7 +92,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             favoritingToolMessageCache: favoritingToolMessageCache,
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase
         )
     }
     

@@ -54,6 +54,7 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             flowDelegate: nil,
             analytics: appDiContainer.analytics
         )

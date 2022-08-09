@@ -20,8 +20,11 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let favoritedResourcesCache: FavoritedResourcesCache
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
+    
     let getBannerImageUseCase: GetBannerImageUseCase
     let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    
     weak var delegate: BaseFavoriteToolsViewModelDelegate?
     weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
     
@@ -31,13 +34,14 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.delegate = delegate
         self.toolCardViewModelDelegate = toolCardViewModelDelegate
         
@@ -51,9 +55,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     deinit {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
         dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
-        favoritedResourcesCache.resourceSorted.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
@@ -63,11 +64,11 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         return ToolCardViewModel(
             resource: tool,
             dataDownloader: dataDownloader,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: toolCardViewModelDelegate
         )
     }
