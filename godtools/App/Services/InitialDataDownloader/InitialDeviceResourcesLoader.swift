@@ -13,17 +13,15 @@ class InitialDeviceResourcesLoader {
     
     private let realmDatabase: RealmDatabase
     private let attachmentsFileCache: AttachmentsFileCache
-    private let translationsFileCache: TranslationsFileCache
     private let resourcesSync: InitialDataDownloaderResourcesSync
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languagesCache: RealmLanguagesCache
     private let deviceLanguage: DeviceLanguage
         
-    required init(realmDatabase: RealmDatabase, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, resourcesSync: InitialDataDownloaderResourcesSync, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguage) {
+    required init(realmDatabase: RealmDatabase, attachmentsFileCache: AttachmentsFileCache, resourcesSync: InitialDataDownloaderResourcesSync, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: RealmLanguagesCache, deviceLanguage: DeviceLanguage) {
         
         self.realmDatabase = realmDatabase
         self.attachmentsFileCache = attachmentsFileCache
-        self.translationsFileCache = translationsFileCache
         self.resourcesSync = resourcesSync
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languagesCache = languagesCache

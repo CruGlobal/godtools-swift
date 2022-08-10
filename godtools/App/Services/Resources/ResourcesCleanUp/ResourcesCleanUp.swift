@@ -9,18 +9,17 @@
 import Foundation
 import RealmSwift
 
+@available(*, deprecated) // TODO: This class can be removed. ~Levi
 class ResourcesCleanUp {
     
     private let realmDatabase: RealmDatabase
-    private let translationsFileCache: TranslationsFileCache
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     
-    required init(realmDatabase: RealmDatabase, translationsFileCache: TranslationsFileCache, resourcesSHA256FileCache: ResourcesSHA256FileCache, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
+    required init(realmDatabase: RealmDatabase, resourcesSHA256FileCache: ResourcesSHA256FileCache, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
         
         self.realmDatabase = realmDatabase
-        self.translationsFileCache = translationsFileCache
         self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.favoritedResourcesCache = favoritedResourcesCache
         self.downloadedLanguagesCache = downloadedLanguagesCache

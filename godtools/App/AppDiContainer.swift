@@ -29,8 +29,6 @@ class AppDiContainer {
 
     let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
-    let translationsFileCache: TranslationsFileCache
-    let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
@@ -73,11 +71,7 @@ class AppDiContainer {
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
         languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
-        
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
-                
-        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
-        
+                                
         attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
@@ -90,7 +84,6 @@ class AppDiContainer {
                                 
         resourcesCleanUp = ResourcesCleanUp(
             realmDatabase: realmDatabase,
-            translationsFileCache: translationsFileCache,
             resourcesSHA256FileCache: resourcesFileCache,
             favoritedResourcesCache: favoritedResourcesCache,
             downloadedLanguagesCache: downloadedLanguagesCache
@@ -99,7 +92,6 @@ class AppDiContainer {
         initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
             realmDatabase: realmDatabase,
             attachmentsFileCache: attachmentsFileCache,
-            translationsFileCache: translationsFileCache,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             favoritedResourcesCache: favoritedResourcesCache,
             languagesCache: languagesCache,
