@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+@available(*, deprecated) // TODO: This class is no longer needed as UseCases will determine any initial data. ~Levi
 class InitialDeviceResourcesLoader {
     
     private let realmDatabase: RealmDatabase
@@ -31,6 +32,7 @@ class InitialDeviceResourcesLoader {
         setupInitialFavoritedResourcesAndLanguage()
     }
     
+    @available(*, deprecated) // TODO: This logic should be handled in a UseCase.  See GT-1715. ~Levi
     private func setupInitialFavoritedResourcesAndLanguage() {
                 
         favoritedResourcesCache.addToFavorites(resourceId: "2") //satisfied
