@@ -660,7 +660,6 @@
 		45AD1FEB25938A9800A096A0 /* InitialDeviceResourcesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9425938A9800A096A0 /* InitialDeviceResourcesLoader.swift */; };
 		45AD1FEC25938A9800A096A0 /* InitialDataDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9525938A9800A096A0 /* InitialDataDownloaderError.swift */; };
 		45AD1FF025938A9800A096A0 /* NoAttachmentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */; };
-		45AD1FF125938A9800A096A0 /* AttachmentsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */; };
 		45AD1FF225938A9800A096A0 /* AttachmentsDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */; };
 		45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */; };
 		45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */; };
@@ -1805,7 +1804,6 @@
 		45AD1E9425938A9800A096A0 /* InitialDeviceResourcesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDeviceResourcesLoader.swift; sourceTree = "<group>"; };
 		45AD1E9525938A9800A096A0 /* InitialDataDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataDownloaderError.swift; sourceTree = "<group>"; };
 		45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAttachmentData.swift; sourceTree = "<group>"; };
-		45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsFileCache.swift; sourceTree = "<group>"; };
 		45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsDownloaderError.swift; sourceTree = "<group>"; };
 		45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAttachmentsReceipt.swift; sourceTree = "<group>"; };
 		45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedAttachmentResult.swift; sourceTree = "<group>"; };
@@ -5210,7 +5208,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD1E9D25938A9800A096A0 /* AttachmentsDownloaderError.swift */,
-				45AD1E9C25938A9800A096A0 /* AttachmentsFileCache.swift */,
 				45AD1E9F25938A9800A096A0 /* DownloadAttachmentsReceipt.swift */,
 				45AD1EA025938A9800A096A0 /* DownloadedAttachmentResult.swift */,
 				45AD1E9B25938A9800A096A0 /* NoAttachmentData.swift */,
@@ -7525,7 +7522,6 @@
 				D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */,
 				45AD1FDC25938A9800A096A0 /* EmailSignUpService.swift in Sources */,
 				45677743287DAFC70044AEB2 /* MenuItem.swift in Sources */,
-				45AD1FF125938A9800A096A0 /* AttachmentsFileCache.swift in Sources */,
 				45677866287DC5C90044AEB2 /* AccountActivityViewModelType.swift in Sources */,
 				45C93B31261D31D600592FFF /* WebArchiveUrl.swift in Sources */,
 				45D9608A289B871A001A5A3E /* GetAllFavoritedToolsUseCase.swift in Sources */,
