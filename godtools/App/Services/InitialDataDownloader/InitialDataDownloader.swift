@@ -14,8 +14,6 @@ class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
-    @available(*, deprecated)
-    private let resourcesDownloader: ResourcesDownloader
     private let resourcesSync: InitialDataDownloaderResourcesSync
     @available(*, deprecated)
     private let languagesCache: RealmLanguagesCache
@@ -37,11 +35,10 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp) {
+    required init(resourcesRepository: ResourcesRepository, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp) {
         
         self.resourcesRepository = resourcesRepository
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
-        self.resourcesDownloader = resourcesDownloader
         self.resourcesSync = resourcesSync
         self.languagesCache = languagesCache
         self.resourcesCleanUp = resourcesCleanUp
