@@ -60,7 +60,6 @@ struct AllToolsContentView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),

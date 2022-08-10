@@ -31,6 +31,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private var disableOptInOnboardingBannerSubscription: AnyCancellable?
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
         
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
@@ -64,18 +65,20 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
         super.init()
                 
@@ -186,7 +189,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }

@@ -30,7 +30,7 @@ class ToolCardsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, getBannerImageUseCase: GetBannerImageUseCase,  getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase,  getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
