@@ -12,9 +12,9 @@ import RequestOperation
 class ResourcesDownloader {
     
     private let languagesApi: MobileContentLanguagesApi
-    private let resourcesApi: ResourcesApiType
+    private let resourcesApi: ResourcesApi
         
-    required init(languagesApi: MobileContentLanguagesApi, resourcesApi: ResourcesApiType) {
+    required init(languagesApi: MobileContentLanguagesApi, resourcesApi: ResourcesApi) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi

@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-class ResourcesApi: ResourcesApiType {
+class ResourcesApi {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

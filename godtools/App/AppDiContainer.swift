@@ -15,7 +15,7 @@ class AppDiContainer {
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
-    private let resourcesApi: ResourcesApiType
+    private let resourcesApi: ResourcesApi
     private let translationsApi: MobileContentTranslationsApi
     private let resourcesDownloader: ResourcesDownloader
     private let resourcesCache: ResourcesCache
