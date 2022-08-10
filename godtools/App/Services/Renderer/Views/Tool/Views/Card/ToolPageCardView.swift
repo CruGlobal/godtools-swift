@@ -180,6 +180,18 @@ class ToolPageCardView: MobileContentView, NibBased {
         bottomGradientLayer.frame = bottomGradientView.bounds
     }
     
+    private func searchChildForNestedForm(childView: MobileContentView) -> MobileContentFormView? {
+        
+        if let formView = childView as? MobileContentFormView {
+            return formView
+        }
+        else if let paragraph = childView as? MobileContentParagraphView, let formView = paragraph.children.first as? MobileContentFormView {
+            return formView
+        }
+
+        return nil
+    }
+    
     var isHiddenCard: Bool {
         return viewModel.isHiddenCard
     }
@@ -225,7 +237,7 @@ class ToolPageCardView: MobileContentView, NibBased {
         
         contentStackView.renderChild(childView: childView)
         
-        if let formView = childView as? MobileContentFormView {
+        if let formView = searchChildForNestedForm(childView: childView) {
             self.formView = formView
             keyboardObserver.startObservingKeyboardChanges(delegate: self)
         }
