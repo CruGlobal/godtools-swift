@@ -292,13 +292,6 @@ class AppDiContainer {
         return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
     }
     
-    func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
-        return ResourceBannerImageRepository(
-            attachmentsFileCache: attachmentsFileCache,
-            bundleBannerImages: BundleResourceBannerImages()
-        )
-    }
-    
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
         return SetupParallelLanguageAvailability(
             setupParallelLanguageViewedCache: getSetupParallelLanguageViewedCache(),
