@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 protocol ToolCardViewModelDelegate: AnyObject {
     func toolCardTapped(resource: ResourceModel)
@@ -22,10 +23,10 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     let resource: ResourceModel
     let dataDownloader: InitialDataDownloader
-    private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: ToolCardViewModelDelegate?
     
@@ -34,16 +35,18 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
+    private var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
-        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
@@ -83,16 +86,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     }
 }
 
-// MARK: - Public
- 
-extension ToolCardViewModel {
- 
-    func didDownloadAttachments() {
-        reloadBannerImage()
-    }
-    
-}
-
 // MARK: - Private
 
 extension ToolCardViewModel {
@@ -106,7 +99,6 @@ extension ToolCardViewModel {
         isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
         
         reloadDataForPrimaryLanguage()
-        reloadBannerImage()
     }
     
     private func setupBinding() {
@@ -120,6 +112,12 @@ extension ToolCardViewModel {
                 }
             }
         }
+        
+        getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.bannerImage, on: self)
+            .store(in: &cancellables)
+        
         translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async {
                 withAnimation {
@@ -157,23 +155,6 @@ extension ToolCardViewModel {
                 self?.reloadParallelLanguageName()
             }
         }
-    }
-    
-    private func reloadBannerImage() {
-        let image: Image?
-        
-        // TODO: - Eventually refactor existing code to use SwiftUI's Image rather than UIImage
-        if let cachedImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) {
-            image = Image(uiImage: cachedImage)
-        }
-        else if let deviceImage = deviceAttachmentBanners.getDeviceBanner(resourceId: resource.id) {
-            image = Image(uiImage: deviceImage)
-        }
-        else {
-            image = nil
-        }
-        
-        bannerImage = image
     }
     
     private func reloadDataForPrimaryLanguage() {

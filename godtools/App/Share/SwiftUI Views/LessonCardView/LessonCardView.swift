@@ -73,6 +73,7 @@ struct LessonCardView_Previews: PreviewProvider {
             resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleLessonsSorted().first!,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             delegate: nil
         )
