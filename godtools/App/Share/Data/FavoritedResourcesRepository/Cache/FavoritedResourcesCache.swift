@@ -10,7 +10,6 @@ import Foundation
 import RealmSwift
 import Combine
 
-@available(*, deprecated)
 class FavoritedResourcesCache {
         
     private let realmDatabase: RealmDatabase

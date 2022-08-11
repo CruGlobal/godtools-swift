@@ -128,10 +128,7 @@ extension ToolCardViewModel {
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isFavorited in
-                
-                self?.isFavorited = isFavorited
-            }
+            .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
