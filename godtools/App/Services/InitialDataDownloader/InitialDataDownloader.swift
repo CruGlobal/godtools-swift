@@ -13,7 +13,6 @@ import Combine
 class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
-    private let resourcesSync: InitialDataDownloaderResourcesSync
     @available(*, deprecated)
     private let languagesCache: RealmLanguagesCache
     
@@ -32,16 +31,11 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache) {
+    required init(resourcesRepository: ResourcesRepository, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache) {
         
         self.resourcesRepository = resourcesRepository
-        self.resourcesSync = resourcesSync
         self.languagesCache = languagesCache
         self.resourcesCache = resourcesCache
-                
-        if resourcesSync.resourcesAvailable {
-            cachedResourcesAvailable.accept(value: true)
-        }
     }
     
     func downloadInitialData() {
