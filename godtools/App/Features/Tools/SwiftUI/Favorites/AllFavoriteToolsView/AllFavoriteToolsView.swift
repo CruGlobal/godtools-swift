@@ -49,12 +49,10 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
         
         let viewModel = AllFavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getFavoritedResourcesChangedUseCase: appDiContainer.domainLayer.getFavoritedResourcesChangedUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             flowDelegate: nil,

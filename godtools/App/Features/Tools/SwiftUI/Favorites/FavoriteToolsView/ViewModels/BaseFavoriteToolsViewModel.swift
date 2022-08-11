@@ -18,13 +18,11 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     // MARK: - Properties
     
     let dataDownloader: InitialDataDownloader
-    let favoritedResourcesCache: FavoritedResourcesCache
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     
     let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     let getBannerImageUseCase: GetBannerImageUseCase
-    let getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase
     let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
@@ -39,15 +37,13 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getFavoritedResourcesChangedUseCase = getFavoritedResourcesChangedUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.delegate = delegate

@@ -21,14 +21,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
     
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
@@ -49,12 +47,10 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
-            getFavoritedResourcesChangedUseCase: getFavoritedResourcesChangedUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
@@ -70,17 +66,15 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getFavoritedResourcesChangedUseCase = getFavoritedResourcesChangedUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
