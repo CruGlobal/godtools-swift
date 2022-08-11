@@ -13,8 +13,6 @@ import Combine
 class InitialDataDownloader {
     
     private let resourcesRepository: ResourcesRepository
-    @available(*, deprecated)
-    private let languagesCache: RealmLanguagesCache
     
     private var cancellables = Set<AnyCancellable>()
                 
@@ -31,10 +29,9 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache) {
+    required init(resourcesRepository: ResourcesRepository, resourcesCache: ResourcesCache) {
         
         self.resourcesRepository = resourcesRepository
-        self.languagesCache = languagesCache
         self.resourcesCache = resourcesCache
     }
     

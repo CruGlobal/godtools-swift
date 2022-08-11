@@ -18,7 +18,6 @@ class AppDiContainer {
     private let resourcesApi: ResourcesApi
     private let translationsApi: MobileContentTranslationsApi
     private let resourcesCache: ResourcesCache
-    private let languagesCache: RealmLanguagesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
@@ -62,9 +61,7 @@ class AppDiContainer {
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                                         
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-        
-        languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
-                                                   
+                                                           
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
         
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
@@ -73,8 +70,7 @@ class AppDiContainer {
                                 
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            resourcesCache: resourcesCache,
-            languagesCache: languagesCache
+            resourcesCache: resourcesCache
         )
         
         languageSettingsService = LanguageSettingsService(
