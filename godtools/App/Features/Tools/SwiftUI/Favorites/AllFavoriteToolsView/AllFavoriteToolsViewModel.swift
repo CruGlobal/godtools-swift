@@ -15,11 +15,15 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     private weak var flowDelegate: FlowDelegate?
     private let analytics: AnalyticsContainer
     
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
         self.analytics = analytics
+        
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
         super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: nil, toolCardViewModelDelegate: nil)
     }
@@ -76,8 +80,7 @@ extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-                // TODO: - fix this
-//            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }

@@ -673,6 +673,7 @@ extension AppFlow {
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: self,
             analytics: appDiContainer.analytics
         )
