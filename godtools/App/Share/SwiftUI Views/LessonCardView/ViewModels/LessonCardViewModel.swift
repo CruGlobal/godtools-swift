@@ -118,10 +118,7 @@ extension LessonCardViewModel {
         
         getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] image in
-                
-                self?.bannerImage = image
-            }
+            .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
         
         translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
