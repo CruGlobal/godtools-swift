@@ -17,6 +17,14 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
+    override var tools: [ResourceModel] {
+        didSet {
+            if tools.isEmpty {
+                closePage()
+            }
+        }
+    }
+    
     // MARK: - Init
     
     init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
@@ -41,14 +49,6 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
-    }
-    
-    override func removeFavoritedResource(resourceIds: [String]) {
-        super.removeFavoritedResource(resourceIds: resourceIds)
-        
-        if tools.isEmpty {
-            closePage()
-        }
     }
 }
 

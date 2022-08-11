@@ -82,10 +82,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
         sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
     }
-    
-    func removeFavoritedResource(resourceIds: [String]) {
-        // TODO: - fix this
-    }
 }
 
 // MARK: - Private
