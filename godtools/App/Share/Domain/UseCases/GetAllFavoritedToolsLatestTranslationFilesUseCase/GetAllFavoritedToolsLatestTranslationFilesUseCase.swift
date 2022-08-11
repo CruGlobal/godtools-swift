@@ -11,7 +11,7 @@ import Combine
 
 class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     
-    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
+    private let getAllFavoritedToolIDsUseCase: GetAllFavoritedToolIDsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let resourcesRepository: ResourcesRepository
@@ -20,9 +20,9 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     private var cancellables = Set<AnyCancellable>()
     private var downloadLatestTranslationsCancellable: AnyCancellable?
     
-    init(getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getAllFavoritedToolIDsUseCase: GetAllFavoritedToolIDsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
-        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
+        self.getAllFavoritedToolIDsUseCase = getAllFavoritedToolIDsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.resourcesRepository = resourcesRepository
@@ -30,7 +30,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
         
         Publishers.CombineLatest4(
             resourcesRepository.getResourcesChanged(),
-            getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher(),
+            getAllFavoritedToolIDsUseCase.getAllFavoritedToolIDsPublisher(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(),
             getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
             .sink { [weak self] (resourcesChanged: Void, favoritedTools: [FavoritedResourceModel], primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in

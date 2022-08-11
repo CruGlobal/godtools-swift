@@ -40,8 +40,8 @@ class ResourcesRepository {
         return cache.getResource(abbreviation: abbreviation)
     }
     
-    func getResources(ids: [String]) -> [ResourceModel] {
-        return cache.getResources(ids: ids)
+    func getResources(ids: [String], maintainOrder: Bool = false) -> [ResourceModel] {
+        return cache.getResources(ids: ids, maintainOrder: maintainOrder)
     }
     
     func getResourceLanguages(id: String) -> [LanguageModel] {

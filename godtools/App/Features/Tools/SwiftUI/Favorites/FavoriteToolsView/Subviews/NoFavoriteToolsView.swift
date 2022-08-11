@@ -54,6 +54,7 @@ struct NoFavoriteToolsView_Previews: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFavoritedResourcesChangedUseCase: appDiContainer.domainLayer.getFavoritedResourcesChangedUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),

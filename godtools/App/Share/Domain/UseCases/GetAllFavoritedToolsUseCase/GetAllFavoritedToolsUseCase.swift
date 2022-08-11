@@ -2,7 +2,7 @@
 //  GetAllFavoritedToolsUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/3/22.
+//  Created by Rachael Skeath on 8/11/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
@@ -11,26 +11,45 @@ import Combine
 
 class GetAllFavoritedToolsUseCase {
     
-    private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let getAllFavoritedToolIDsUseCase: GetAllFavoritedToolIDsUseCase
+    private let resourcesRepository: ResourcesRepository
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(getAllFavoritedToolIDsUseCase: GetAllFavoritedToolIDsUseCase, resourcesRepository: ResourcesRepository) {
         
-        self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.getAllFavoritedToolIDsUseCase = getAllFavoritedToolIDsUseCase
+        self.resourcesRepository = resourcesRepository
     }
     
-    func getAllFavoritedToolsPublisher() -> AnyPublisher<[FavoritedResourceModel], Never> {
+    func getAllFavoritedToolsPublisher(filterOutHidden: Bool) -> AnyPublisher<[ResourceModel], Never> {
         
-        return favoritedResourcesRepository.getFavoritedResourcesChanged()
-            .flatMap({ void -> AnyPublisher<[FavoritedResourceModel], Never> in
+        return getAllFavoritedToolIDsUseCase.getAllFavoritedToolIDsPublisher()
+            .flatMap { favoritedResourceModels -> AnyPublisher<[ResourceModel], Never> in
                 
-                return Just(self.getAllFavoritedTools())
+                let resourceIds = favoritedResourceModels.map { $0.resourceId }
+                var favoritedResources = self.resourcesRepository.getResources(ids: resourceIds, maintainOrder: true)
+                
+                if filterOutHidden {
+                    favoritedResources = favoritedResources.filter { $0.isHidden == false }
+                }
+                
+                return Just(favoritedResources)
                     .eraseToAnyPublisher()
-            })
+            }
             .eraseToAnyPublisher()
     }
     
-    func getAllFavoritedTools() -> [FavoritedResourceModel] {
+    func getAllFavoritedTools(filterOutHidden: Bool) -> [ResourceModel] {
         
-        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+        return getAllFavoritedToolIDsUseCase.getAllFavoritedToolIDs()
+            .compactMap({ favoritedResourceModel in
+                
+                guard let resource = self.resourcesRepository.getResource(id: favoritedResourceModel.resourceId) else { return nil }
+                
+                if filterOutHidden, resource.isHidden {
+                    return nil
+                }
+                
+                return resource
+            })
     }
 }

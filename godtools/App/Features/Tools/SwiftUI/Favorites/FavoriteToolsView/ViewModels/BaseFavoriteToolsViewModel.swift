@@ -22,6 +22,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     
+    let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     let getBannerImageUseCase: GetBannerImageUseCase
     let getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase
     let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
@@ -38,12 +39,13 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
+        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getFavoritedResourcesChangedUseCase = getFavoritedResourcesChangedUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
@@ -53,7 +55,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         
         super.init()
         
-        reloadFavoritedResourcesFromCache()
         setupBinding()
         setText()
     }
@@ -115,10 +116,15 @@ extension BaseFavoriteToolsViewModel {
             }
         }
         
-        getFavoritedResourcesChangedUseCase.getFavoritedResourcesChanged()
+        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher(filterOutHidden: true)
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.reloadFavoritedResourcesFromCache()
+            .sink { [weak self] favoritedTools in
+                
+                withAnimation {
+                    self?.tools = favoritedTools
+                }
+                
+                self?.delegate?.toolsAreLoading(false)
             }
             .store(in: &cancellables)
         
@@ -130,19 +136,8 @@ extension BaseFavoriteToolsViewModel {
     }
     
     private func reloadFavoritedResourcesFromCache() {
-        
-        let sortedFavoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getSortedFavoritedResources()
-        let sortedFavoritedResourcesIds: [String] = sortedFavoritedResources.map({$0.resourceId})
-        
-        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: sortedFavoritedResourcesIds)
-        
-        let filteredResources: [ResourceModel] = resources.filter({
-            return !$0.isHidden
-        })
-        
         withAnimation {
-            tools = filteredResources
+            tools = getAllFavoritedToolsUseCase.getAllFavoritedTools(filterOutHidden: true)
         }
-        self.delegate?.toolsAreLoading(false)
     }
 }

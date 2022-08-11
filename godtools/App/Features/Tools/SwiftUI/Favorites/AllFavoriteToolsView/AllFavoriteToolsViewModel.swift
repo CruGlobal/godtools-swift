@@ -17,11 +17,11 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
+    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         
-        super.init(dataDownloader: dataDownloader, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getBannerImageUseCase: getBannerImageUseCase, getFavoritedResourcesChangedUseCase: getFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: nil, toolCardViewModelDelegate: nil)
+        super.init(dataDownloader: dataDownloader, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getFavoritedResourcesChangedUseCase: getFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: nil, toolCardViewModelDelegate: nil)
     }
     
     // MARK: - Overrides

@@ -48,13 +48,27 @@ class RealmResourcesCache {
         return ResourceModel(realmResource: realmResource)
     }
     
-    func getResources(ids: [String]) -> [ResourceModel] {
+    func getResources(ids: [String], maintainOrder: Bool = false) -> [ResourceModel] {
         
-        return realmDatabase.openRealm().objects(RealmResource.self)
-            .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
-            .map{
-                ResourceModel(realmResource: $0)
+        if maintainOrder {
+            
+            var resources: [ResourceModel] = Array()
+            
+            for id in ids {
+                if let resourceModel = getResource(id: id) {
+                    resources.append(resourceModel)
+                }
             }
+            return resources
+            
+        } else {
+            
+            return realmDatabase.openRealm().objects(RealmResource.self)
+                .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
+                .map{
+                    ResourceModel(realmResource: $0)
+                }
+        }
     }
     
     func getResources() -> [ResourceModel] {

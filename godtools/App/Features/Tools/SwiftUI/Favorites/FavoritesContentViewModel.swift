@@ -26,6 +26,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private weak var delegate: FavoritesContentViewModelDelegate?
     
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
@@ -51,6 +52,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
             getFavoritedResourcesChangedUseCase: getFavoritedResourcesChangedUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
@@ -68,7 +70,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -76,6 +78,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         
+        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getFavoritedResourcesChangedUseCase = getFavoritedResourcesChangedUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
