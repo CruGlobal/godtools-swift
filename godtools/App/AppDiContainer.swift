@@ -20,7 +20,6 @@ class AppDiContainer {
     private let resourcesCache: ResourcesCache
     private let languagesCache: RealmLanguagesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
-    private let resourcesCleanUp: ResourcesCleanUp
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType = AppConfig()
@@ -72,19 +71,11 @@ class AppDiContainer {
               
         downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
                                 
-        resourcesCleanUp = ResourcesCleanUp(
-            realmDatabase: realmDatabase,
-            resourcesSHA256FileCache: resourcesFileCache,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache
-        )
-        
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             resourcesCache: resourcesCache,
-            languagesCache: languagesCache,
-            resourcesCleanUp: resourcesCleanUp
+            languagesCache: languagesCache
         )
         
         languageSettingsService = LanguageSettingsService(

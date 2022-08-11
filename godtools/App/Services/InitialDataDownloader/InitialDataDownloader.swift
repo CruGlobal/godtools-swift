@@ -16,8 +16,6 @@ class InitialDataDownloader {
     private let resourcesSync: InitialDataDownloaderResourcesSync
     @available(*, deprecated)
     private let languagesCache: RealmLanguagesCache
-    @available(*, deprecated)
-    private let resourcesCleanUp: ResourcesCleanUp
     
     private var cancellables = Set<AnyCancellable>()
                 
@@ -34,12 +32,11 @@ class InitialDataDownloader {
     @available(*, deprecated)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(resourcesRepository: ResourcesRepository, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache, resourcesCleanUp: ResourcesCleanUp) {
+    required init(resourcesRepository: ResourcesRepository, resourcesSync: InitialDataDownloaderResourcesSync, resourcesCache: ResourcesCache, languagesCache: RealmLanguagesCache) {
         
         self.resourcesRepository = resourcesRepository
         self.resourcesSync = resourcesSync
         self.languagesCache = languagesCache
-        self.resourcesCleanUp = resourcesCleanUp
         self.resourcesCache = resourcesCache
                 
         if resourcesSync.resourcesAvailable {

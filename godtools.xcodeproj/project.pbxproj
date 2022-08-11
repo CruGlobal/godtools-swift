@@ -620,8 +620,6 @@
 		45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */; };
 		45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */; };
 		45AD1F7C25938A9800A096A0 /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */; };
-		45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0325938A9700A096A0 /* ResourcesCleanUpError.swift */; };
-		45AD1F7E25938A9800A096A0 /* ResourcesCleanUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0425938A9700A096A0 /* ResourcesCleanUp.swift */; };
 		45AD1F9325938A9800A096A0 /* ResourcesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1D25938A9700A096A0 /* ResourcesApi.swift */; };
 		45AD1F9425938A9800A096A0 /* ResourcesDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1E25938A9700A096A0 /* ResourcesDownloaderError.swift */; };
 		45AD1F9525938A9800A096A0 /* DownloadResourceTranslationsReceipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */; };
@@ -1761,8 +1759,6 @@
 		45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
 		45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSessionType.swift; sourceTree = "<group>"; };
 		45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
-		45AD1E0325938A9700A096A0 /* ResourcesCleanUpError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesCleanUpError.swift; sourceTree = "<group>"; };
-		45AD1E0425938A9700A096A0 /* ResourcesCleanUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesCleanUp.swift; sourceTree = "<group>"; };
 		45AD1E1D25938A9700A096A0 /* ResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesApi.swift; sourceTree = "<group>"; };
 		45AD1E1E25938A9700A096A0 /* ResourcesDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesDownloaderError.swift; sourceTree = "<group>"; };
 		45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadResourceTranslationsReceipts.swift; sourceTree = "<group>"; };
@@ -5045,18 +5041,8 @@
 				45AD1E2025938A9700A096A0 /* ResourcesDownloaderResult.swift */,
 				45AD1E2225938A9700A096A0 /* RealmResourcesCache */,
 				45AD1E1125938A9700A096A0 /* ResourcesApi */,
-				45AD1E0225938A9700A096A0 /* ResourcesCleanUp */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		45AD1E0225938A9700A096A0 /* ResourcesCleanUp */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E0425938A9700A096A0 /* ResourcesCleanUp.swift */,
-				45AD1E0325938A9700A096A0 /* ResourcesCleanUpError.swift */,
-			);
-			path = ResourcesCleanUp;
 			sourceTree = "<group>";
 		};
 		45AD1E1125938A9700A096A0 /* ResourcesApi */ = {
@@ -7997,7 +7983,6 @@
 				45C61DD9280905F40058946F /* DeepLinkingManifest.swift in Sources */,
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,
 				4570B7042889B1760024C931 /* DownloadToolView.swift in Sources */,
-				45AD1F7D25938A9800A096A0 /* ResourcesCleanUpError.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				45AD21042593953100A096A0 /* DownloadedLanguageModel.swift in Sources */,
 				453C1BD62899A50C007332E2 /* FavoritedResourcesCache.swift in Sources */,
@@ -8058,7 +8043,6 @@
 				D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */,
 				456777BC287DB3770044AEB2 /* ShareToolScreenTutorialViewModelType.swift in Sources */,
 				45AD20D325938F6800A096A0 /* FollowUpModel.swift in Sources */,
-				45AD1F7E25938A9800A096A0 /* ResourcesCleanUp.swift in Sources */,
 				45E39ED427457CB5006A59E4 /* MobileContentAnimationViewModel.swift in Sources */,
 				45AE975F27C97A9500C2CB33 /* Text+MobileContentRenderableModel.swift in Sources */,
 				45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */,
