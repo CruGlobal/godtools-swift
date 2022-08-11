@@ -14,8 +14,6 @@ class AppDiContainer {
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
-    private let languagesApi: MobileContentLanguagesApi
-    private let translationsApi: MobileContentTranslationsApi
     private let resourcesCache: ResourcesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
@@ -50,11 +48,7 @@ class AppDiContainer {
         
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
-                
-        languagesApi = MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession())
-                
-        translationsApi = MobileContentTranslationsApi(config: config, ignoreCacheSession: IgnoreCacheSession())
-        
+                                        
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                                         
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
