@@ -21,7 +21,6 @@ class AppDiContainer {
     private let languagesCache: RealmLanguagesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let resourcesCleanUp: ResourcesCleanUp
-    private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType = AppConfig()
@@ -80,17 +79,8 @@ class AppDiContainer {
             downloadedLanguagesCache: downloadedLanguagesCache
         )
         
-        initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
-            realmDatabase: realmDatabase,
-            resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
-            favoritedResourcesCache: favoritedResourcesCache,
-            languagesCache: languagesCache,
-            deviceLanguage: deviceLanguage
-        )
-        
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
             resourcesCache: resourcesCache,
             languagesCache: languagesCache,
