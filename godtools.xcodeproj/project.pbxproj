@@ -620,7 +620,6 @@
 		45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */; };
 		45AD1F7B25938A9800A096A0 /* SharedSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */; };
 		45AD1F7C25938A9800A096A0 /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */; };
-		45AD1F9325938A9800A096A0 /* ResourcesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1D25938A9700A096A0 /* ResourcesApi.swift */; };
 		45AD1F9425938A9800A096A0 /* ResourcesDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1E25938A9700A096A0 /* ResourcesDownloaderError.swift */; };
 		45AD1F9525938A9800A096A0 /* DownloadResourceTranslationsReceipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */; };
 		45AD1F9625938A9800A096A0 /* ResourcesDownloaderResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E2025938A9700A096A0 /* ResourcesDownloaderResult.swift */; };
@@ -1758,7 +1757,6 @@
 		45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
 		45AD1DFF25938A9700A096A0 /* SharedSessionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedSessionType.swift; sourceTree = "<group>"; };
 		45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
-		45AD1E1D25938A9700A096A0 /* ResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesApi.swift; sourceTree = "<group>"; };
 		45AD1E1E25938A9700A096A0 /* ResourcesDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesDownloaderError.swift; sourceTree = "<group>"; };
 		45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadResourceTranslationsReceipts.swift; sourceTree = "<group>"; };
 		45AD1E2025938A9700A096A0 /* ResourcesDownloaderResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesDownloaderResult.swift; sourceTree = "<group>"; };
@@ -5038,17 +5036,8 @@
 				45AD1E1E25938A9700A096A0 /* ResourcesDownloaderError.swift */,
 				45AD1E2025938A9700A096A0 /* ResourcesDownloaderResult.swift */,
 				45AD1E2225938A9700A096A0 /* RealmResourcesCache */,
-				45AD1E1125938A9700A096A0 /* ResourcesApi */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		45AD1E1125938A9700A096A0 /* ResourcesApi */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E1D25938A9700A096A0 /* ResourcesApi.swift */,
-			);
-			path = ResourcesApi;
 			sourceTree = "<group>";
 		};
 		45AD1E2225938A9700A096A0 /* RealmResourcesCache */ = {
@@ -7528,7 +7517,6 @@
 				45D63E75288F698C009B4610 /* LanguageModel+Direction.swift in Sources */,
 				45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */,
 				4555840B269F2DA500C3FF14 /* MobileContentErrorView.swift in Sources */,
-				45AD1F9325938A9800A096A0 /* ResourcesApi.swift in Sources */,
 				45AE975C27C97A9500C2CB33 /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */,
 				45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */,

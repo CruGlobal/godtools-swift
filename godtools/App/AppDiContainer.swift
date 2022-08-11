@@ -15,7 +15,6 @@ class AppDiContainer {
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: MobileContentLanguagesApi
-    private let resourcesApi: ResourcesApi
     private let translationsApi: MobileContentTranslationsApi
     private let resourcesCache: ResourcesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -53,9 +52,7 @@ class AppDiContainer {
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                 
         languagesApi = MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession())
-        
-        resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
-        
+                
         translationsApi = MobileContentTranslationsApi(config: config, ignoreCacheSession: IgnoreCacheSession())
         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
