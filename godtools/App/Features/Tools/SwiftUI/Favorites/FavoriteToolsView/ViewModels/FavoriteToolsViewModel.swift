@@ -35,9 +35,9 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
         
-        super.init(dataDownloader: dataDownloader, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: delegate, toolCardViewModelDelegate: delegate)
+        super.init(dataDownloader: dataDownloader, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getBannerImageUseCase: getBannerImageUseCase, getFavoritedResourcesChangedUseCase: getFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: delegate, toolCardViewModelDelegate: delegate)
         
         maxNumberCardsToShow = maxNumberCardsShown
     }

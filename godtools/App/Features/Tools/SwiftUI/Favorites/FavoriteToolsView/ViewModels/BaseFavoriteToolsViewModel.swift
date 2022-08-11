@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol BaseFavoriteToolsViewModelDelegate: AnyObject {
     func toolsAreLoading(_ isLoading: Bool)
@@ -22,11 +23,14 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let localizationServices: LocalizationServices
     
     let getBannerImageUseCase: GetBannerImageUseCase
+    let getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase
     let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     weak var delegate: BaseFavoriteToolsViewModelDelegate?
     weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
@@ -34,12 +38,14 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFavoritedResourcesChangedUseCase: GetFavoritedResourcesChangedUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
+        self.getFavoritedResourcesChangedUseCase = getFavoritedResourcesChangedUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.delegate = delegate
@@ -81,7 +87,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     }
     
     func removeFavoritedResource(resourceIds: [String]) {
-        removeTools(toolIdsToRemove: resourceIds)
+        // TODO: - fix this
     }
 }
 
@@ -109,72 +115,17 @@ extension BaseFavoriteToolsViewModel {
             }
         }
         
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.addFavoritedResource(resourceId: resourceId)
+        getFavoritedResourcesChangedUseCase.getFavoritedResourcesChanged()
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.reloadFavoritedResourcesFromCache()
             }
-        }
-        
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.removeFavoritedResource(resourceIds: [resourceId])
-            }
-        }
-        
-        favoritedResourcesCache.resourceSorted.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavoritedResourcesFromCache()
-            }
-        }
+            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.setText()
             }
-        }
-    }
-    
-    private func addTool(tool: ResourceModel) {
-        
-        var updatedToolsList: [ResourceModel] = tools
-        
-        guard !updatedToolsList.contains(tool) else {
-            return
-        }
-        
-        updatedToolsList.insert(tool, at: 0)
-        tools = updatedToolsList
-    }
-
-    private func removeTools(toolIdsToRemove: [String]) {
-        let toolsToRemove: [ResourceModel] = tools.filter({toolIdsToRemove.contains($0.id)})
-        removeTools(toolsToRemove: toolsToRemove)
-    }
-    
-    func removeTools(toolsToRemove: [ResourceModel]) {
-        
-        guard !tools.isEmpty && !toolsToRemove.isEmpty else {
-            return
-        }
-        
-        var updatedToolsList: [ResourceModel] = tools
-        var removedIndexPaths: [IndexPath] = Array()
-        
-        for toolToRemove in toolsToRemove {
-            if let index = updatedToolsList.firstIndex(of: toolToRemove) {
-                removedIndexPaths.append(IndexPath(row: index, section: 0))
-                updatedToolsList.remove(at: index)
-            }
-        }
-        
-        withAnimation {
-            tools = updatedToolsList
-        }
-    }
-    
-    private func addFavoritedResource(resourceId: String) {
-        if let tool = dataDownloader.resourcesCache.getResource(id: resourceId) {
-            addTool(tool: tool)
         }
     }
     
@@ -189,7 +140,9 @@ extension BaseFavoriteToolsViewModel {
             return !$0.isHidden
         })
         
-        tools = filteredResources
+        withAnimation {
+            tools = filteredResources
+        }
         self.delegate?.toolsAreLoading(false)
     }
 }

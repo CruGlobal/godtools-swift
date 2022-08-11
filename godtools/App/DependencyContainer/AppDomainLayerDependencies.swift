@@ -57,6 +57,10 @@ class AppDomainLayerDependencies {
         return GetDeviceLanguageUseCase()
     }
     
+    func getFavoritedResourcesChangedUseCase() -> GetFavoritedResourcesChangedUseCase {
+        return GetFavoritedResourcesChangedUseCase(favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository())
+    }
+    
     func getLanguagesListUseCase() -> GetLanguagesListUseCase {
         return GetLanguagesListUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),

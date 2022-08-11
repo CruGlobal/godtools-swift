@@ -76,6 +76,7 @@ struct FavoritesContentView_Previews: PreviewProvider {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
+            getFavoritedResourcesChangedUseCase: appDiContainer.domainLayer.getFavoritedResourcesChangedUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
