@@ -1,4 +1,6 @@
+/* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ 에서 이용 불가";
+
 "tool_menu_item.tools" = "도구";
 "lessons.pageTitle" = "맞춤 수업";
 "lessons.pageSubtitle" = "관계를 형성하고 의미 있는 대화를 시작하기 위한 실용적인 아이디어입니다.";
