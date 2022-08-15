@@ -11,12 +11,10 @@ import GodToolsToolParser
 
 class TrainingViewFactory: MobileContentPageViewFactoryType {
     
-    private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
             
-    required init(translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(viewedTrainingTipsService: ViewedTrainingTipsService) {
         
-        self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
     }
     
@@ -60,7 +58,6 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             tipModel: tipModel,
             renderedPageContext: renderedPageContext,
             viewType: trainingTipViewType,
-            translationsFileCache: translationsFileCache,
             viewedTrainingTipsService: viewedTrainingTipsService
         )
         

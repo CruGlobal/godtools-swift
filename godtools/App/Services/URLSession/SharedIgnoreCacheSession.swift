@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Will be replaced with Common/URLSession/IgnoreCacheSession. GT-1727 ~Levi
 class SharedIgnoreCacheSession: SharedSessionType {
     
     let session: URLSession

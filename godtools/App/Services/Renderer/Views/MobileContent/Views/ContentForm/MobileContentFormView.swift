@@ -71,6 +71,15 @@ class MobileContentFormView: MobileContentStackView {
         currentEditedTextField = nil
     }
     
+    private func getVisibleInputTextFields() -> [UITextField] {
+        return inputViews.compactMap({
+            guard !$0.isHiddenInput else {
+                return nil
+            }
+            return $0.getInputTextField()
+        })
+    }
+    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
@@ -93,8 +102,6 @@ class MobileContentFormView: MobileContentStackView {
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
-    
-    // MARK: -
 }
 
 // MARK: - UITextFieldDelegate
@@ -102,11 +109,38 @@ class MobileContentFormView: MobileContentStackView {
 extension MobileContentFormView: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
         currentEditedTextField = textField
+        
+        let inputTextFields: [UITextField] = getVisibleInputTextFields()
+        let isLastInput: Bool = textField == inputTextFields.last
+        
+        textField.returnKeyType = !isLastInput ? .next : .done
+        
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
         currentEditedTextField = textField
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let inputTextFields: [UITextField] = getVisibleInputTextFields()
+        
+        if let textInputIndex = inputTextFields.firstIndex(of: textField) {
+            
+            let nextTextInputIndex: Int = textInputIndex + 1
+            
+            if nextTextInputIndex >= inputTextFields.count {
+                textField.resignFirstResponder()
+            }
+            else {
+                inputTextFields[nextTextInputIndex].becomeFirstResponder()
+            }
+        }
+
+        return true
     }
 }

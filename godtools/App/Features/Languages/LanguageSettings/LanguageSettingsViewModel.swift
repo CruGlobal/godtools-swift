@@ -7,15 +7,17 @@
 //
 
 import Foundation
+import Combine
 
-class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
+class LanguageSettingsViewModel: LanguageSettingsViewModelType {
 
-    private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let localizationServices: LocalizationServices
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let analytics: AnalyticsContainer
     
+    private var cancellables = Set<AnyCancellable>()
+        
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
@@ -26,35 +28,40 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let shareGodToolsInNativeLanguage: String
     let languageAvailability: String
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.analytics = analytics
         
         primaryLanguageTitle = localizationServices.stringForMainBundle(key: "primary_language")
         parallelLanguageTitle = localizationServices.stringForMainBundle(key: "parallel_language")
         shareGodToolsInNativeLanguage = localizationServices.stringForMainBundle(key: "share_god_tools_native_language")
         languageAvailability = localizationServices.stringForMainBundle(key: "not_every_tool_is_available")
-        
-        super.init()
-        
+                
         navTitle.accept(value: localizationServices.stringForMainBundle(key: "language_settings"))
-                      
-        reloadData()
         
-        setupBinding()
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
-        languageSettingsService.parallelLanguage.removeObserver(self)
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (language: LanguageDomainModel?) in
+                
+                let title: String = language?.translatedName ?? self?.localizationServices.stringForMainBundle(key: "select_primary_language") ?? ""
+
+                self?.primaryLanguageButtonTitle.accept(value: title)
+            }
+            .store(in: &cancellables)
+        
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
+                
+                let title: String = language?.translatedName ?? self?.localizationServices.stringForMainBundle(key: "select_parallel_language") ?? ""
+                
+                self?.parallelLanguageButtonTitle.accept(value: title)
+            })
+            .store(in: &cancellables)
     }
     
     private var analyticsScreenName: String {
@@ -68,70 +75,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     private var analyticsSiteSubSection: String {
         return ""
     }
-    
-    private func setupBinding() {
-        
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                if cachedResourcesAvailable {
-                    self?.reloadData()
-                }
-            }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadData()
-                }
-            }
-        }
-        
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadPrimaryLanguageButtonTitle()
-            }
-        }
-        
-        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadParallelLanguageButtonTitle()
-            }
-        }
-    }
-    
-    private func reloadData() {
-        reloadPrimaryLanguageButtonTitle()
-        reloadParallelLanguageButtonTitle()
-    }
-    
-    private func reloadPrimaryLanguageButtonTitle() {
-        
-        let title: String
-        
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value {
-            title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: primaryLanguage).name
-        }
-        else {
-            title = localizationServices.stringForMainBundle(key: "select_primary_language")
-        }
+}
 
-        primaryLanguageButtonTitle.accept(value: title)
-    }
-    
-    private func reloadParallelLanguageButtonTitle() {
-            
-        let title: String
-        
-        if let parallelLanguage = languageSettingsService.parallelLanguage.value {
-            title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: parallelLanguage).name
-        }
-        else {
-            title = localizationServices.stringForMainBundle(key: "select_parallel_language")
-        }
+// MARK: - Inputs
 
-        parallelLanguageButtonTitle.accept(value: title)
-    }
+extension LanguageSettingsViewModel {
     
     func pageViewed() {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))

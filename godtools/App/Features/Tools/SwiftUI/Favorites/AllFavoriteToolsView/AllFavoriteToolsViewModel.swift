@@ -15,13 +15,25 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     private weak var flowDelegate: FlowDelegate?
     private let analytics: AnalyticsContainer
     
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    
+    override var tools: [ResourceModel] {
+        didSet {
+            if tools.isEmpty {
+                closePage()
+            }
+        }
+    }
+    
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         
-        super.init(dataDownloader: dataDownloader, deviceAttachmentBanners: deviceAttachmentBanners, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, delegate: nil, toolCardViewModelDelegate: nil)
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        
+        super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: nil, toolCardViewModelDelegate: nil)
     }
     
     // MARK: - Overrides
@@ -30,21 +42,13 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         return ToolCardViewModel(
             resource: tool,
             dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
-    }
-    
-    override func removeFavoritedResource(resourceIds: [String]) {
-        super.removeFavoritedResource(resourceIds: resourceIds)
-        
-        if tools.isEmpty {
-            closePage()
-        }
     }
 }
 
@@ -70,24 +74,25 @@ extension AllFavoriteToolsViewModel {
 
 extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     func toolCardTapped(resource: ResourceModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: resource)
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
-        trackFavoritedToolTappedAnalytics()
     }
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }
     
     func toolDetailsButtonTapped(resource: ResourceModel) {
+        trackFavoritedToolDetailsButtonAnalytics(for: resource)
         flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
     }
     
     func openToolButtonTapped(resource: ResourceModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: resource)
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
-        trackOpenFavoritedToolButtonAnalytics()
     }
 }
 
@@ -111,25 +116,31 @@ extension AllFavoriteToolsViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
     
-    private func trackFavoritedToolTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
-            siteSection: "",
-            siteSubSection: "",
-            url: nil,
-            data: [AnalyticsConstants.Keys.toolOpenTapped: 1]
-        ))
-    }
-    
-    private func trackOpenFavoritedToolButtonAnalytics() {
+    private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.toolOpened: 1]
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                AnalyticsConstants.Keys.tool: tool.abbreviation
+            ]
+        ))
+    }
+    
+    private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.openDetails,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
+                AnalyticsConstants.Keys.tool: tool.abbreviation
+            ]
         ))
     }
 }

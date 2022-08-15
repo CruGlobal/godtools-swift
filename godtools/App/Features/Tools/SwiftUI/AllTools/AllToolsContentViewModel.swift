@@ -15,22 +15,24 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
-    private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    
+    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
         
     private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
         ToolSpotlightViewModel(
             dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
     }()
@@ -45,11 +47,11 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private(set) lazy var toolCardsViewModel: ToolCardsViewModel = {
         ToolCardsViewModel(
             dataDownloader: dataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            favoritedResourcesCache: favoritedResourcesCache,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
     }()
@@ -61,17 +63,19 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, deviceAttachmentBanners: DeviceAttachmentBanners, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
-        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
+        
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
         super.init()
     }
@@ -96,12 +100,12 @@ extension AllToolsContentViewModel {
 extension AllToolsContentViewModel {
     
     private func handleToolCardTapped(resource: ResourceModel, isSpotlight: Bool) {
-        trackToolTappedAnalytics(isSpotlight: isSpotlight)
+        trackToolTappedAnalytics(for: resource, isSpotlight: isSpotlight)
         flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
     }
     
     private func handleToolFavoriteButtonTapped(resource: ResourceModel) {
-        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+        toggleToolFavoritedUseCase.toggleToolFavorited(tool: resource)
     }
 }
 
@@ -177,20 +181,18 @@ extension AllToolsContentViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
     }
             
-    private func trackToolTappedAnalytics(isSpotlight: Bool) {
-        
-        var data: [String: Any] = [AnalyticsConstants.Keys.toolOpenTapped: 1]
-        if isSpotlight {
-            data[AnalyticsConstants.Keys.source] = AnalyticsConstants.Sources.spotlight
-        }
+    private func trackToolTappedAnalytics(for tool: ResourceModel, isSpotlight: Bool) {
         
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.toolOpenTapped,
+            actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: data
+            data: [
+                AnalyticsConstants.Keys.source: isSpotlight ? AnalyticsConstants.Sources.spotlight : AnalyticsConstants.Sources.allTools,
+                AnalyticsConstants.Keys.tool: tool.abbreviation
+            ]
         ))
     }
 }

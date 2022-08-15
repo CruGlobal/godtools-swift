@@ -310,9 +310,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToToolsMenu()
                 
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
+                
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
-                    primaryLanguageCodes: ["en"],
+                    primaryLanguageCodes: [deviceLanguageCode],
                     parallelLanguageCodes: [],
                     liveShareStream: nil,
                     page: nil,
@@ -485,13 +487,16 @@ extension AppFlow {
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
             analytics: appDiContainer.analytics,
+            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             fontService: appDiContainer.getFontService()
         )
         
@@ -662,11 +667,13 @@ extension AppFlow {
     private func navigateToAllToolFavorites() {
         let viewModel = AllFavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: self,
             analytics: appDiContainer.analytics
         )
@@ -686,15 +693,19 @@ extension AppFlow {
             flowDelegate: self,
             resource: resource,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
+            addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
-            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
-            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
             
         )
         
@@ -809,12 +820,12 @@ extension AppFlow {
         
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
-            languageSettingsService: appDiContainer.languageSettingsService,
-            localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase()
+            getLanguagesListUseCase: appDiContainer.domainLayer.getLanguagesListUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
+        
         let view = ParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)

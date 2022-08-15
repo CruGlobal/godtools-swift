@@ -17,10 +17,9 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
-    private let translationsFileCache: TranslationsFileCache
     private let viewedTrainingTipsService: ViewedTrainingTipsService
         
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -28,7 +27,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.followUpService = followUpService
-        self.translationsFileCache = translationsFileCache
         self.viewedTrainingTipsService = viewedTrainingTipsService
     }
     
@@ -63,7 +61,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
                 renderedPageContext: renderedPageContext,
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
 

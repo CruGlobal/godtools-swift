@@ -51,11 +51,12 @@ struct NoFavoriteToolsView_Previews: PreviewProvider {
 
         let viewModel = FavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil
         )
         

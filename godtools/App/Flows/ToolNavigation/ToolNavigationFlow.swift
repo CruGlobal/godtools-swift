@@ -24,9 +24,8 @@ extension ToolNavigationFlow {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService
         )
         
@@ -66,8 +65,7 @@ extension ToolNavigationFlow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
             languageIds: languageIds,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: appDiContainer.getLanguagesRepository()
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -80,7 +78,7 @@ extension ToolNavigationFlow {
     
     private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                         
             switch result {
             
@@ -111,7 +109,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslations, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -167,13 +165,18 @@ extension ToolNavigationFlow {
         }
     }
         
-    private func presentDownloadToolError(downloadToolError: GetToolTranslationsError) {
+    private func presentDownloadToolError(downloadToolError: URLResponseError) {
         
-        let viewModel = DownloadToolErrorViewModel(
-            downloadToolError: downloadToolError,
-            localizationServices: appDiContainer.localizationServices
+        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        
+        let viewModel = AlertMessageViewModel(
+            title: nil,
+            message: downloadToolError.getErrorMessage(),
+            cancelTitle: nil,
+            acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+            acceptHandler: nil
         )
-        
+
         presentAlertMessage(viewModel: viewModel)
     }
     

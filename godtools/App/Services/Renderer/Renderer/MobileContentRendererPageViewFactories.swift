@@ -19,7 +19,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let analytics: AnalyticsContainer = appDiContainer.analytics
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
-        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
@@ -50,12 +49,10 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
@@ -70,12 +67,10 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService,
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
@@ -84,7 +79,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .trainingTip:
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
-                translationsFileCache: translationsFileCache,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             

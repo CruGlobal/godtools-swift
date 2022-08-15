@@ -20,7 +20,7 @@ class MobileContentRenderer {
     let primaryLanguage: LanguageModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslations, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
+    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
         
         let sharedState: State = State()
         let resource: ResourceModel = toolTranslations.tool
@@ -52,7 +52,7 @@ class MobileContentRenderer {
         self.pageRenderers = pageRenderers
     }
     
-    func copy(toolTranslations: ToolTranslations) -> MobileContentRenderer {
+    func copy(toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
         
         return MobileContentRenderer(
             navigation: navigation,

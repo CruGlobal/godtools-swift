@@ -24,7 +24,7 @@ struct SpotlightTitleView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
             Text(subtitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 12))
+                .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(ColorPalette.gtGrey.color)
         }
     }

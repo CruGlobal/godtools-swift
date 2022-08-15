@@ -22,4 +22,13 @@ class URLResponseObject {
     var httpStatusCode: Int? {
         return (urlResponse as? HTTPURLResponse)?.statusCode
     }
+    
+    var isSuccessHttpStatusCode: Bool {
+            
+            guard let httpStatusCode = self.httpStatusCode else {
+                return false
+            }
+            
+            return httpStatusCode >= 200 && httpStatusCode < 400
+        }
 }

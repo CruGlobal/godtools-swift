@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class RealmTranslationsCache {
     
@@ -16,18 +17,22 @@ class RealmTranslationsCache {
         
         self.realmDatabase = realmDatabase
     }
-    
-    func getRealmTranslation(id: String) -> RealmTranslation? {
-        
-        return realmDatabase.mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
-    }
-    
+
     func getTranslation(id: String) -> TranslationModel? {
         
-        guard let realmTranslation = realmDatabase.mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id) else {
+        guard let realmTranslation = realmDatabase.openRealm().object(ofType: RealmTranslation.self, forPrimaryKey: id) else {
             return nil
         }
         
         return TranslationModel(realmTranslation: realmTranslation)
+    }
+    
+    func getTranslations(ids: [String]) -> [TranslationModel] {
+        
+        return realmDatabase.openRealm().objects(RealmTranslation.self)
+            .filter("id IN %@", ids)
+            .map{
+                TranslationModel(realmTranslation: $0)
+            }
     }
 }

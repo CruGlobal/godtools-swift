@@ -16,9 +16,9 @@ class MobileContentTranslationsApi {
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: ConfigType, sharedSession: SharedSessionType) {
+    required init(config: ConfigType, ignoreCacheSession: IgnoreCacheSession) {
                     
-        session = sharedSession.session
+        session = ignoreCacheSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
     
@@ -36,14 +36,21 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<URLResponseObject, Error> {
+    func getTranslationFile(fileName: String) -> AnyPublisher<URLResponseObject, URLResponseError> {
         
         return session.dataTaskPublisher(for: getTranslationFileRequest(fileName: fileName))
-            .map {
-                return URLResponseObject(data: $0.data, urlResponse: $0.response)
+            .tryMap {
+                
+                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
+                
+                guard urlResponseObject.isSuccessHttpStatusCode else {
+                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
+                }
+                
+                return urlResponseObject
             }
             .mapError {
-                return $0 as Error
+                return URLResponseError.requestError(error: $0 as Error)
             }
             .eraseToAnyPublisher()
     }
@@ -62,14 +69,21 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String) -> AnyPublisher<URLResponseObject, Error> {
+    func getTranslationZipFile(translationId: String) -> AnyPublisher<URLResponseObject, URLResponseError> {
         
         return session.dataTaskPublisher(for: getTranslationZipFileRequest(translationId: translationId))
-            .map {
-                return URLResponseObject(data: $0.data, urlResponse: $0.response)
+            .tryMap {
+                
+                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
+                
+                guard urlResponseObject.isSuccessHttpStatusCode else {
+                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
+                }
+                
+                return urlResponseObject
             }
             .mapError {
-                return $0 as Error
+                return URLResponseError.requestError(error: $0 as Error)
             }
             .eraseToAnyPublisher()
     }

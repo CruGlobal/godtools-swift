@@ -116,15 +116,19 @@ struct ToolDetailsView_Preview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "1")!,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
+            addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
-            getToolTranslationsUseCase: appDiContainer.getToolTranslationsUseCase(),
-            languagesRepository: appDiContainer.getLanguagesRepository(),
+            getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
-            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
         )
         
         return ToolDetailsView(viewModel: viewModel)

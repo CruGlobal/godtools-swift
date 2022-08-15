@@ -9,14 +9,8 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentRendererLanguageTranslationManifest {
+struct MobileContentRendererLanguageTranslationManifest {
     
     let manifest: Manifest
     let language: LanguageModel
-    
-    required init(manifest: Manifest, language: LanguageModel) {
-        
-        self.manifest = manifest
-        self.language = language
-    }
 }
