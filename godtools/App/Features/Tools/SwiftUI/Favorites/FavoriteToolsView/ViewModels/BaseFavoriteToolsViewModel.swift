@@ -129,12 +129,8 @@ extension BaseFavoriteToolsViewModel {
         
         let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: favoritedResourcesIds)
         
-        let filteredResources: [ResourceModel] = resources.filter({
-            return !$0.isHidden
-        })
-        
         withAnimation {
-            tools = filteredResources
+            tools = resources
         }
         self.delegate?.toolsAreLoading(false)
     }
