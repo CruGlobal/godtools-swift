@@ -32,6 +32,7 @@ class GetToolVersionsUseCase {
         }
         
         let resourceVersions: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
+            .filter({!$0.isHidden})
         
         guard !resourceVersions.isEmpty else {
             return []
