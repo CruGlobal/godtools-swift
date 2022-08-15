@@ -115,7 +115,6 @@ struct ToolDetailsView_Preview: PreviewProvider {
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
             resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "1")!,
-            dataDownloader: appDiContainer.initialDataDownloader,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
             addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),

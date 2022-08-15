@@ -12,7 +12,6 @@ import Combine
 
 class ToolDetailsViewModel: ObservableObject {
     
-    private let dataDownloader: InitialDataDownloader
     private let resourcesRepository: ResourcesRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
@@ -53,11 +52,10 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.dataDownloader = dataDownloader
         self.resourcesRepository = resourcesRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
@@ -97,19 +95,17 @@ class ToolDetailsViewModel: ObservableObject {
         
         self.resource = resource
         
-        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
-
         let nameValue: String
         let aboutDetailsValue: String
         let languageBundle: Bundle
-        
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+                
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
             nameValue = englishTranslation.translatedName
             aboutDetailsValue = englishTranslation.translatedDescription
@@ -129,8 +125,8 @@ class ToolDetailsViewModel: ObservableObject {
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
-        
-        let resourceLanguages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
+                        
+        let resourceLanguages: [LanguageModel] =  resourcesRepository.getResourceLanguages(id: resource.id)
         let resourceTranslatedLanguageNames: [String] = resourceLanguages.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0).name})
         availableLanguagesList = resourceTranslatedLanguageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
         
@@ -277,7 +273,7 @@ extension ToolDetailsViewModel {
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
         
-        guard let resource = dataDownloader.resourcesCache.getResource(id: toolVersion.id) else {
+        guard let resource = resourcesRepository.getResource(id: toolVersion.id) else {
             return
         }
         
