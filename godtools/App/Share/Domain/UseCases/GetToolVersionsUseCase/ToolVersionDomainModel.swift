@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct ToolVersionDomainModel: Identifiable {
+struct ToolVersionDomainModel {
     
-    let id: String
     let bannerImageId: String
+    let dataModelId: String
     let name: String
     let description: String
     let numberOfLanguages: Int
@@ -21,4 +21,10 @@ struct ToolVersionDomainModel: Identifiable {
     let parallelLanguage: String?
     let parallelLanguageIsSupported: Bool
     let isDefaultVersion: Bool
+}
+
+extension ToolVersionDomainModel: Identifiable {
+    var id: String {
+        return dataModelId
+    }
 }
