@@ -16,7 +16,7 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
     
     private var mobileContentPageViewFactory: MobileContentPageViewFactory?
             
-    required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
         self.renderedPageContext = renderedPageContext
