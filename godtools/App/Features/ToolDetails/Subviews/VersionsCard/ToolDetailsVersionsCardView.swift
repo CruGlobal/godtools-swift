@@ -100,8 +100,8 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let toolVersion = ToolVersionDomainModel(
-            id: "1",
             bannerImageId: "1",
+            dataModelId: "1",
             name: "Tool Name",
             description: "Tool description",
             numberOfLanguages: 45,

@@ -101,8 +101,8 @@ class GetToolVersionsUseCase {
         }
                 
         return ToolVersionDomainModel(
-            id: resourceVersion.id,
             bannerImageId: resourceVersion.attrBanner,
+            dataModelId: resourceVersion.id,
             name: name,
             description: description,
             numberOfLanguages: toolLanguages.count,
