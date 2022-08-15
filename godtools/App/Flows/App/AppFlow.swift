@@ -705,7 +705,7 @@ extension AppFlow {
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
-            bannerImageRepository: appDiContainer.getResourceBannerImageRepository()
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
             
         )
         

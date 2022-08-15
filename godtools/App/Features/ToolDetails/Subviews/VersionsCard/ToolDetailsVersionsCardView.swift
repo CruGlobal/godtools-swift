@@ -115,7 +115,7 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         
         let viewModel = ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            bannerImageRepository: appDiContainer.getResourceBannerImageRepository(),
+            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             isSelected: false
         )
         

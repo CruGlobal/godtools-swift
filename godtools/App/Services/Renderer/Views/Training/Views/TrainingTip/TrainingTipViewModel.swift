@@ -20,7 +20,7 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, translationsFileCache: TranslationsFileCache, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
         self.renderedPageContext = renderedPageContext

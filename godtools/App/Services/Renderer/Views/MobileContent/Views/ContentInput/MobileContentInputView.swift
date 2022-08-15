@@ -45,19 +45,23 @@ class MobileContentInputView: MobileContentView, NibBased {
         inputTextField.placeholder = viewModel.placeholder
     }
     
-    @objc func handleInputChanged(textField: UITextField) {
+    @objc private func handleInputChanged(textField: UITextField) {
         viewModel.inputChanged(text: textField.text)
+    }
+    
+    var isHiddenInput: Bool {
+        return viewModel.isHidden
+    }
+    
+    func getInputTextField() -> UITextField {
+        return inputTextField
     }
     
     func setInputDelegate(delegate: UITextFieldDelegate) {
         inputTextField.delegate = delegate
     }
     
-    // MARK: - MobileContentView
-
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
-    
-    // MARK: -
 }

@@ -14,23 +14,12 @@ class AppDiContainer {
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
-    private let languagesApi: MobileContentLanguagesApi
-    private let resourcesApi: ResourcesApiType
-    private let translationsApi: MobileContentTranslationsApi
-    private let resourcesDownloader: ResourcesDownloader
     private let resourcesCache: ResourcesCache
-    private let languagesCache: RealmLanguagesCache
-    private let attachmentsFileCache: AttachmentsFileCache
-    private let attachmentsDownloader: AttachmentsDownloader
     private let failedFollowUpsCache: FailedFollowUpsCache
-    private let resourcesCleanUp: ResourcesCleanUp
-    private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
-    let translationsFileCache: TranslationsFileCache
-    let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
@@ -59,62 +48,20 @@ class AppDiContainer {
         
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
-                
-        languagesApi = MobileContentLanguagesApi(config: AppConfig(), ignoreCacheSession: IgnoreCacheSession())
-        
-        resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
-        
-        translationsApi = MobileContentTranslationsApi(config: config, ignoreCacheSession: IgnoreCacheSession())
-        
+                                        
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-                                
-        resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi)
-        
+                                        
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-        
-        languagesCache = RealmLanguagesCache(realmDatabase: realmDatabase)
-        
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
-                
-        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, resourcesCache: resourcesCache, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
-        
-        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesFileCache)
-        
-        attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
-           
+                                                           
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
         
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
               
         downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
                                 
-        resourcesCleanUp = ResourcesCleanUp(
-            realmDatabase: realmDatabase,
-            translationsFileCache: translationsFileCache,
-            resourcesSHA256FileCache: resourcesFileCache,
-            favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache
-        )
-        
-        initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
-            realmDatabase: realmDatabase,
-            attachmentsFileCache: attachmentsFileCache,
-            translationsFileCache: translationsFileCache,
-            resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
-            favoritedResourcesCache: favoritedResourcesCache,
-            languagesCache: languagesCache,
-            deviceLanguage: deviceLanguage
-        )
-        
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            initialDeviceResourcesLoader: initialDeviceResourcesLoader,
-            resourcesDownloader: resourcesDownloader,
-            resourcesSync: InitialDataDownloaderResourcesSync(realmDatabase: realmDatabase),
-            resourcesCache: resourcesCache,
-            languagesCache: languagesCache,
-            resourcesCleanUp: resourcesCleanUp,
-            attachmentsDownloader: attachmentsDownloader
+            resourcesCache: resourcesCache
         )
         
         languageSettingsService = LanguageSettingsService(
@@ -302,13 +249,6 @@ class AppDiContainer {
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
-    }
-    
-    func getResourceBannerImageRepository() -> ResourceBannerImageRepository {
-        return ResourceBannerImageRepository(
-            attachmentsFileCache: attachmentsFileCache,
-            bundleBannerImages: BundleResourceBannerImages()
-        )
     }
     
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {

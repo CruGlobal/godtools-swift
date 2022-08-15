@@ -67,7 +67,7 @@ extension LessonsContentViewModel: LessonsListViewModelDelegate {
     
     func lessonCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(resource: resource))
-        trackLessonTappedAnalytics()
+        trackLessonTappedAnalytics(for: resource)
     }
 }
 
@@ -94,7 +94,7 @@ extension LessonsContentViewModel {
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     }
     
-    private func trackLessonTappedAnalytics() {
+    private func trackLessonTappedAnalytics(for lesson: ResourceModel) {
         
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
@@ -102,7 +102,10 @@ extension LessonsContentViewModel {
             siteSection: "",
             siteSubSection: "",
             url: nil,
-            data: [AnalyticsConstants.Keys.lessonOpenTapped: 1]
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
+                AnalyticsConstants.Keys.tool: lesson.abbreviation
+            ]
         ))
     }
 }
