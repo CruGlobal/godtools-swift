@@ -2075,6 +2075,7 @@
 		45FB160427DBDDB60009DF8E /* ArticleFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleFlow.swift; sourceTree = "<group>"; };
 		45FB160627DBDDB60009DF8E /* AppFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		45FC123827A833BF00F4EC4F /* NavBarSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarSelectorView.swift; sourceTree = "<group>"; };
+		45FD5E0928AACACF0016E05A /* GetResourcesScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResourcesScript.swift; sourceTree = "<group>"; };
 		45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViewModelType.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6327,6 +6328,14 @@
 			path = NavBarSelector;
 			sourceTree = "<group>";
 		};
+		45FD5E0828AACA960016E05A /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				45FD5E0928AACACF0016E05A /* GetResourcesScript.swift */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -6349,6 +6358,7 @@
 				45AD217E2593ABC800A096A0 /* README.md */,
 				4F0CCC1E1EE73E9D00AE4E45 /* Podfile */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
+				45FD5E0828AACA960016E05A /* Scripts */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -7016,6 +7026,7 @@
 				4F5732871EA69CF00082035C /* Resources */,
 				D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */,
 				4503BEFB2821B6E500629692 /* Download And Add Initial Resources and Languages JSON Files */,
+				45FD5E0A28AACAE70016E05A /* Get Resources Script */,
 				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 			);
 			buildRules = (
@@ -7422,6 +7433,25 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+		45FD5E0A28AACAE70016E05A /* Get Resources Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Scripts/GetResourcesScript.swift",
+			);
+			name = "Get Resources Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 \\\n  -o GetResourcesScript\n  \n./GetResourcesScript\n";
 		};
 		D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8286,7 +8316,6 @@
 				45B98761283BFE5300E1DA7F /* NoTranslationZipData.swift in Sources */,
 				45A93C6F286DE4B900090E01 /* ToolDetailsVersionsView.swift in Sources */,
 				4555832D269F2C7B00C3FF14 /* ToolPageCardsView.swift in Sources */,
-				45AD208325938B6A00A096A0 /* KeyboardNotificationObserver.swift in Sources */,
 				D41B38AC287F0FDD00BD5899 /* FeaturedLessonCardsView.swift in Sources */,
 				4534FB20289775E8006B4FB1 /* GetLanguagesListUseCase.swift in Sources */,
 				D44F3ABC283C13E20008390D /* TwoRowHGrid.swift in Sources */,
