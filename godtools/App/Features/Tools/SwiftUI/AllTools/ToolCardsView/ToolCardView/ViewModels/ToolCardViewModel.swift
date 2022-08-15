@@ -96,8 +96,6 @@ extension ToolCardViewModel {
     }
     
     private func setupPublishedProperties() {
-        isFavorited = getToolIsFavoritedUseCase.getToolIsFavorited(tool: resource)
-        
         reloadDataForPrimaryLanguage()
     }
     
