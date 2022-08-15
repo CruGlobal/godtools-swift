@@ -108,15 +108,11 @@ extension BaseFavoriteToolsViewModel {
             }
         }
         
-        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher(filterOutHidden: true)
+        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] favoritedTools in
+            .sink { [weak self] favoritedResourceModels in
                 
-                withAnimation {
-                    self?.tools = favoritedTools
-                }
-                
-                self?.delegate?.toolsAreLoading(false)
+                self?.reloadFavoritedResourcesFromCache(from: favoritedResourceModels)
             }
             .store(in: &cancellables)
         
@@ -127,9 +123,19 @@ extension BaseFavoriteToolsViewModel {
         }
     }
     
-    private func reloadFavoritedResourcesFromCache() {
+    private func reloadFavoritedResourcesFromCache(from favoritedResources: [FavoritedResourceModel]? = nil) {
+        let favoritedResourceModels = favoritedResources ?? getAllFavoritedToolsUseCase.getAllFavoritedTools()
+        let favoritedResourcesIds: [String] = favoritedResourceModels.map({$0.resourceId})
+        
+        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: favoritedResourcesIds)
+        
+        let filteredResources: [ResourceModel] = resources.filter({
+            return !$0.isHidden
+        })
+        
         withAnimation {
-            tools = getAllFavoritedToolsUseCase.getAllFavoritedTools(filterOutHidden: true)
+            tools = filteredResources
         }
+        self.delegate?.toolsAreLoading(false)
     }
 }

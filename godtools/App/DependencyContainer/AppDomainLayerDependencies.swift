@@ -29,7 +29,7 @@ class AppDomainLayerDependencies {
     
     private func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
-            getAllFavoritedToolIDsUseCase: getAllFavoritedToolIDsUseCase(),
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository(),
@@ -37,14 +37,9 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAllFavoritedToolIDsUseCase() -> GetAllFavoritedToolIDsUseCase {
-        return GetAllFavoritedToolIDsUseCase(favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository())
-    }
-    
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
-            getAllFavoritedToolIDsUseCase: getAllFavoritedToolIDsUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
     
