@@ -21,15 +21,18 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
     
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
-    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private var disableOptInOnboardingBannerSubscription: AnyCancellable?
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    
+    private var cancellables = Set<AnyCancellable>()
         
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
@@ -44,11 +47,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
     }()
@@ -62,25 +66,22 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
+        
+        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
         super.init()
-                
-        disableOptInOnboardingBannerSubscription = getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (isEnabled: Bool) in
-                self?.hideTutorialBanner = !isEnabled
-         })
                         
         setup()
     }
@@ -126,6 +127,14 @@ extension FavoritesContentViewModel {
                 self?.setupTitle()
             }
         }
+        
+        getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEnabled in
+                
+                self?.hideTutorialBanner = !isEnabled
+            }
+            .store(in: &cancellables)
     }
     
     private func setupTitle() {
@@ -183,7 +192,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }

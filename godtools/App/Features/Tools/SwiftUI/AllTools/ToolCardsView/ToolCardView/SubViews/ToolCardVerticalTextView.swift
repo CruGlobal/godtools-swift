@@ -49,11 +49,11 @@ struct ToolCardVerticalTextView_Previews: PreviewProvider {
         let viewModel = ToolCardViewModel(
             resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
             dataDownloader: appDiContainer.initialDataDownloader,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil
         )
         
