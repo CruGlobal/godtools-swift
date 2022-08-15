@@ -284,7 +284,7 @@ extension ToolDetailsViewModel {
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
         
-        guard let resource = resourcesRepository.getResource(id: toolVersion.id) else {
+        guard let resource = resourcesRepository.getResource(id: toolVersion.dataModelId) else {
             return
         }
         
