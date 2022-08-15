@@ -197,6 +197,21 @@ class ToolDetailsViewModel: ObservableObject {
             self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
         })
     }
+    
+    private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.openDetails,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
+                AnalyticsConstants.Keys.tool: tool.abbreviation
+            ]
+        ))
+    }
 }
 
 // MARK: - Inputs
@@ -290,20 +305,5 @@ extension ToolDetailsViewModel {
             getBannerImageUseCase: getBannerImageUseCase,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
-    }
-    
-    private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.openDetails,
-            siteSection: "",
-            siteSubSection: "",
-            url: nil,
-            data: [
-                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
-            ]
-        ))
     }
 }
