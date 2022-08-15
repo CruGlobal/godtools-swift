@@ -30,10 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                        
-        appDiContainer.config.logConfiguration()
-        
-        if appDiContainer.config.build == .analyticsLogging {
+                                
+        if appDiContainer.dataLayer.getAppConfig().build == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 

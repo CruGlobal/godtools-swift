@@ -14,7 +14,7 @@ class GlobalActivityServices {
     private let globalActivityApi: GlobalActivityAnalyticsApi
     private let globalActivityCache: GlobalActivityAnalyticsCacheType
     
-    required init(config: ConfigType, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, sharedSession: SharedSessionType) {
         
         self.globalActivityApi = GlobalActivityAnalyticsApi(config: config, sharedSession: sharedSession)
         self.globalActivityCache = GlobalActivityAnalyticsUserDefaultsCache()

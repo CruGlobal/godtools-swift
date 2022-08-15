@@ -16,7 +16,7 @@ class MobileContentTranslationsApi {
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: ConfigType, ignoreCacheSession: IgnoreCacheSession) {
+    required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
         session = ignoreCacheSession.session
         baseUrl = config.mobileContentApiBaseUrl
