@@ -150,7 +150,8 @@ class RealmResourcesCacheSync {
                 let attachmentsToRemove: [RealmAttachment] = Array(realm.objects(RealmAttachment.self).filter("id IN %@", attachmentIdsRemoved))
                 
                 realmObjectsToRemove.append(contentsOf: resourcesToRemove)
-                realmObjectsToRemove.append(contentsOf: translationsToRemove)
+                // TODO: Will complete in GT-1413. ~Levi
+                //realmObjectsToRemove.append(contentsOf: translationsToRemove)
                 realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
 
                 do {
