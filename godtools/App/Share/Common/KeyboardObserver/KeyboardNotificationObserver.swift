@@ -8,17 +8,22 @@
 
 import UIKit
 
-class KeyboardNotificationObserver: NSObject, KeyboardObserverType {
+protocol KeyboardNotificationObserverDelegate: AnyObject {
     
-    let keyboardStateDidChangeSignal: SignalValue<KeyboardStateChange> = SignalValue()
-    let keyboardHeightDidChangeSignal: SignalValue<Double> = SignalValue()
-    
+    func keyboardStateDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardStateChange: KeyboardStateChange)
+    func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double)
+}
+
+class KeyboardNotificationObserver: NSObject {
+        
     private(set) var keyboardState: KeyboardState = .didHide
     private(set) var keyboardHeight: Double = 0
     private(set) var keyboardAnimationDuration: Double = 0
     private(set) var keyboardIsUp: Bool = false
     private(set) var isObservingKeyboardChanges: Bool = false
     private(set) var loggingEnabled: Bool = false
+    
+    private weak var delegate: KeyboardNotificationObserverDelegate?
         
     required init(loggingEnabled: Bool) {
         
@@ -31,13 +36,15 @@ class KeyboardNotificationObserver: NSObject, KeyboardObserverType {
         stopObservingKeyboardChanges()
     }
     
-    func startObservingKeyboardChanges() {
+    func startObservingKeyboardChanges(delegate: KeyboardNotificationObserverDelegate) {
         
         guard !isObservingKeyboardChanges else {
             return
         }
         
         isObservingKeyboardChanges = true
+        
+        self.delegate = delegate
                 
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
@@ -53,6 +60,8 @@ class KeyboardNotificationObserver: NSObject, KeyboardObserverType {
         }
         
         isObservingKeyboardChanges = false
+        
+        delegate = nil
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
@@ -111,9 +120,17 @@ class KeyboardNotificationObserver: NSObject, KeyboardObserverType {
             keyboardHeight = newKeyboardHeight
             
             if sendNotificationIfKeyboardHeightChanged {
-                keyboardHeightDidChangeSignal.accept(value: keyboardHeight)
+                notifyKeyboardHeightChange(keyboardHeight: keyboardHeight)
             }
         }
+    }
+    
+    private func notifyKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        delegate?.keyboardStateDidChange(keyboardObserver: self, keyboardStateChange: keyboardStateChange)
+    }
+    
+    private func notifyKeyboardHeightChange(keyboardHeight: Double) {
+        delegate?.keyboardHeightDidChange(keyboardObserver: self, keyboardHeight: keyboardHeight)
     }
 }
 
@@ -142,7 +159,7 @@ extension KeyboardNotificationObserver {
                     sendNotificationIfKeyboardHeightChanged: true
                 )
                 
-                keyboardStateDidChangeSignal.accept(value: KeyboardStateChange(keyboardState: .willShow, keyboardHeight: newKeyboardHeight))
+                notifyKeyboardStateChange(keyboardStateChange: KeyboardStateChange(keyboardState: .willShow, keyboardHeight: newKeyboardHeight))
             }
         }
         else if notification.name == UIResponder.keyboardDidShowNotification {
@@ -156,7 +173,7 @@ extension KeyboardNotificationObserver {
             keyboardState = .didShow
                         
             if currentState == .willShow {
-                keyboardStateDidChangeSignal.accept(value: KeyboardStateChange(keyboardState: .didShow, keyboardHeight: keyboardHeight))
+                notifyKeyboardStateChange(keyboardStateChange: KeyboardStateChange(keyboardState: .didShow, keyboardHeight: keyboardHeight))
             }
         }
         else if notification.name == UIResponder.keyboardWillHideNotification {
@@ -167,7 +184,7 @@ extension KeyboardNotificationObserver {
             
             keyboardState = .willHide
             
-            keyboardStateDidChangeSignal.accept(value: KeyboardStateChange(keyboardState: .willHide, keyboardHeight: keyboardHeight))
+            notifyKeyboardStateChange(keyboardStateChange: KeyboardStateChange(keyboardState: .willHide, keyboardHeight: keyboardHeight))
         }
         else if notification.name == UIResponder.keyboardDidHideNotification {
             
@@ -175,7 +192,7 @@ extension KeyboardNotificationObserver {
             
             keyboardState = .didHide
             
-            keyboardStateDidChangeSignal.accept(value: KeyboardStateChange(keyboardState: .didHide, keyboardHeight: keyboardHeight))
+            notifyKeyboardStateChange(keyboardStateChange: KeyboardStateChange(keyboardState: .didHide, keyboardHeight: keyboardHeight))
         }
         else if notification.name == UIResponder.keyboardDidChangeFrameNotification {
             
