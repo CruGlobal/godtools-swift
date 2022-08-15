@@ -158,15 +158,11 @@ class ToolDetailsViewModel: ObservableObject {
         
         mediaCancellable = getToolDetailsMediaUseCase.getMedia(resource: resource)
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (media: ToolDetailsMediaDomainModel) in
-                self?.mediaType = media
-            })
+            .assign(to: \.mediaType, on: self)
         
         toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (isFavorited: Bool) in
-                self?.isFavorited = isFavorited
-            })
+            .assign(to: \.isFavorited, on: self)
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
