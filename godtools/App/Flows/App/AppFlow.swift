@@ -919,6 +919,8 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
             
+            appDiContainer.dataLayer.getLaunchCountRepository().incrementLaunchCount()            
+            
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
