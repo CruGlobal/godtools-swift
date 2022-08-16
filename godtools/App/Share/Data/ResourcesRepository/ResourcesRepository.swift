@@ -28,6 +28,10 @@ class ResourcesRepository {
         self.languagesRepository = languagesRepository
     }
     
+    var numberOfResources: Int {
+        return cache.numberOfResources
+    }
+    
     func getResourcesChanged() -> AnyPublisher<Void, Never> {
         return cache.getResourcesChanged()
     }
