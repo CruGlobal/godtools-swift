@@ -45,7 +45,8 @@ class AppDomainLayerDependencies {
     
     private func getBackgroundDownloadingUseCase() -> BackgroundDownloadingUseCase {
         return BackgroundDownloadingUseCase(
-            getAllFavoritedToolsLatestTranslationFilesUseCase: getAllFavoritedToolsLatestTranslationFilesUseCase()
+            getAllFavoritedToolsLatestTranslationFilesUseCase: getAllFavoritedToolsLatestTranslationFilesUseCase(),
+            storeInitialFavoritedToolsUseCase: getStoreInitialFavoritedToolsUseCase()
         )
     }
     
@@ -97,6 +98,14 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
+            launchCountRepository: dataLayer.getLaunchCountRepository()
         )
     }
     

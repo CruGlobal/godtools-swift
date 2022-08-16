@@ -11,9 +11,11 @@ import Foundation
 class BackgroundDownloadingUseCase {
         
     private let getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase
+    private let storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase
     
-    init(getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase) {
+    init(getAllFavoritedToolsLatestTranslationFilesUseCase: GetAllFavoritedToolsLatestTranslationFilesUseCase, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
         
         self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
+        self.storeInitialFavoritedToolsUseCase = storeInitialFavoritedToolsUseCase
     }
 }
