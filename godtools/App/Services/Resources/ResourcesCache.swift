@@ -141,13 +141,4 @@ class ResourcesCache {
         }
         return translation
     }
-    
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
-        
-        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
-        
-        let realmResourceVariants: [RealmResource] = Array(realmDatabase.mainThreadRealm.objects(RealmResource.self).filter(predicate))
-        
-        return realmResourceVariants.map({ResourceModel(realmResource: $0)})
-    }
 }

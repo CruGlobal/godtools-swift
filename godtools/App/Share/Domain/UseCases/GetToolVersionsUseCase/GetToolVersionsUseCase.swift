@@ -10,15 +10,15 @@ import Foundation
 
 class GetToolVersionsUseCase {
     
-    private let resourcesCache: ResourcesCache
+    private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     private let languageSettingsService: LanguageSettingsService
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
-    init(resourcesCache: ResourcesCache, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getToolLanguagesUseCase: GetToolLanguagesUseCase, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getToolLanguagesUseCase: GetToolLanguagesUseCase, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
         
-        self.resourcesCache = resourcesCache
+        self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
@@ -27,11 +27,11 @@ class GetToolVersionsUseCase {
     
     func getToolVersions(resourceId: String) -> [ToolVersionDomainModel] {
         
-        guard let resource = resourcesCache.getResource(id: resourceId) else {
+        guard let resource = resourcesRepository.getResource(id: resourceId) else {
             return []
         }
         
-        let resourceVersions: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
+        let resourceVersions: [ResourceModel] = resourcesRepository.getResourceVariants(resourceId: resourceId)
             .filter({!$0.isHidden})
         
         guard !resourceVersions.isEmpty else {
@@ -53,13 +53,13 @@ class GetToolVersionsUseCase {
         let languageBundle: Bundle
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
             description = primaryTranslation.translatedTagline
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageCode: "en") {
+        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             description = englishTranslation.translatedTagline

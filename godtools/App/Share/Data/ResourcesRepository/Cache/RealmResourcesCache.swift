@@ -94,6 +94,13 @@ class RealmResourcesCache {
         return TranslationModel(realmTranslation: realmTranslation)
     }
     
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
+        
+        return realmDatabase.openRealm().objects(RealmResource.self).filter(predicate).map({ResourceModel(realmResource: $0)})
+    }
+    
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)

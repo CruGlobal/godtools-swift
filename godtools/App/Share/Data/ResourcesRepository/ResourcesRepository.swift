@@ -52,6 +52,11 @@ class ResourcesRepository {
         return cache.getResourceLanguageLatestTranslation(resourceId: resourceId, languageCode: languageCode)
     }
     
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        return cache.getResourceVariants(resourceId: resourceId)
+    }
+    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
