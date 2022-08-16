@@ -270,13 +270,6 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
-        return GetToolLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: domainLayer.getLanguageUseCase()
-        )
-    }
-    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
@@ -292,7 +285,7 @@ class AppDiContainer {
             resourcesCache: initialDataDownloader.resourcesCache,
             localizationServices: localizationServices,
             languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: getToolLanguagesUseCase(),
+            getToolLanguagesUseCase: domainLayer.getToolLanguagesUseCase(),
             getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
         )
     }
