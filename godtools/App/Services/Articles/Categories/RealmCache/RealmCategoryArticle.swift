@@ -18,16 +18,6 @@ class RealmCategoryArticle: Object, CategoryArticleModelType {
     
     let aemUris = List<String>()
     
-    func mapFrom(model: CategoryArticleModel) {
-        
-        aemTag = model.aemTag
-        aemUris.removeAll()
-        aemUris.append(objectsIn: model.aemUris)
-        categoryId = model.categoryId
-        languageCode = model.languageCode
-        uuid = model.uuid.uuidString
-    }
-    
     override static func primaryKey() -> String? {
         return "uuid"
     }

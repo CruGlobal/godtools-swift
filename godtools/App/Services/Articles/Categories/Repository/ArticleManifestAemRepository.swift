@@ -27,9 +27,7 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
         
-        let realmCategoryArticles: [RealmCategoryArticle] = categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
-        
-        return realmCategoryArticles.map({CategoryArticleModel(realmModel: $0)})
+        return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
     func downloadAndCacheManifestAemUris(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
