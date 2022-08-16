@@ -33,6 +33,11 @@ class InitialDataDownloader {
         
         self.resourcesRepository = resourcesRepository
         self.resourcesCache = resourcesCache
+        
+        // TODO: This can be removed after we do some refactoring to remove the ObservableValues and SignalValues in this class which will be replaced by domain layer use cases. ~Levi
+        if resourcesRepository.numberOfResources > 0 {
+            cachedResourcesAvailable.accept(value: true)
+        }
     }
     
     func downloadInitialData() {
