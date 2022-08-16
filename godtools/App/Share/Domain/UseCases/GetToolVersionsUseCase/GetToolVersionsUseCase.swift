@@ -45,8 +45,8 @@ class GetToolVersionsUseCase {
     
     private func getToolVersion(resource: ResourceModel, resourceVersion: ResourceModel) -> ToolVersionDomainModel {
         
-        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resourceVersion)
-        let toolLanguagesIds: [String] = toolLanguages.map({$0.id})
+        let toolLanguages: [LanguageDomainModel] = getToolLanguagesUseCase.getToolLanguages(resource: resourceVersion)
+        let toolLanguagesIds: [String] = toolLanguages.map({$0.dataModelId})
                 
         let name: String
         let description: String

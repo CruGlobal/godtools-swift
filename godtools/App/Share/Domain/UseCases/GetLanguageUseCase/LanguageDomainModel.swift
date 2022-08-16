@@ -15,3 +15,9 @@ struct LanguageDomainModel {
     let localeIdentifier: String
     let translatedName: String
 }
+
+extension LanguageDomainModel: Identifiable {
+    var id: String {
+        return dataModelId
+    }
+}

@@ -273,7 +273,7 @@ class AppDiContainer {
     func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
         return GetToolLanguagesUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
-            localizationServices: localizationServices
+            getLanguageUseCase: domainLayer.getLanguageUseCase()
         )
     }
     

@@ -293,9 +293,9 @@ class ToolSettingsFlow: Flow {
         
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.getToolLanguagesUseCase()
   
-        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
+        let toolLanguages: [LanguageDomainModel] = getToolLanguagesUseCase.getToolLanguages(resource: toolData.renderer.value.resource)
       
-        var languagesList: [ToolLanguageModel] = toolLanguages
+        var languagesList: [LanguageDomainModel] = toolLanguages
         
         let selectedLanguage: LanguageModel?
         let deleteTappedClosure: (() -> Void)?
@@ -304,7 +304,7 @@ class ToolSettingsFlow: Flow {
         case .primary:
             
             if let parallelLanguageId = settingsParallelLanguage.value?.id {
-                languagesList = languagesList.filter({$0.id != parallelLanguageId})
+                languagesList = languagesList.filter({$0.dataModelId != parallelLanguageId})
             }
             
             selectedLanguage = settingsPrimaryLanguage.value
@@ -312,7 +312,7 @@ class ToolSettingsFlow: Flow {
             
         case .parallel:
             
-            languagesList = languagesList.filter({$0.id != settingsPrimaryLanguage.value.id})
+            languagesList = languagesList.filter({$0.dataModelId != settingsPrimaryLanguage.value.id})
             
             selectedLanguage = settingsParallelLanguage.value
             deleteTappedClosure = { [weak self] in
@@ -331,9 +331,9 @@ class ToolSettingsFlow: Flow {
                 
                 switch languageListType {
                 case .primary:
-                    self?.setToolPrimaryLanguage(languageId: language.id)
+                    self?.setToolPrimaryLanguage(languageId: language.dataModelId)
                 case .parallel:
-                    self?.setToolParallelLanguage(languageId: language.id)
+                    self?.setToolParallelLanguage(languageId: language.dataModelId)
                 }
             })
         }, deleteTappedClosure: deleteTappedClosure)
