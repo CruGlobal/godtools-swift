@@ -12,7 +12,7 @@ import GoogleAnalytics
 
 class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     
-    private let config: ConfigType
+    private let config: AppConfig
     private let userAuthentication: UserAuthenticationType
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
@@ -20,7 +20,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: ConfigType, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(config: AppConfig, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
         self.config = config
         self.userAuthentication = userAuthentication

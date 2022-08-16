@@ -12,12 +12,12 @@ import AppsFlyerLib
 class AppsFlyer: NSObject, AppsFlyerType {
     
     private let sharedAppsFlyerLib: AppsFlyerLib = AppsFlyerLib.shared()
-    private let config: ConfigType
+    private let config: AppConfig
     private let deepLinkingService: DeepLinkingServiceType
     
     private var isConfigured: Bool = false
     
-    required init(config: ConfigType, deepLinkingService: DeepLinkingServiceType) {
+    required init(config: AppConfig, deepLinkingService: DeepLinkingServiceType) {
         
         self.config = config
         self.deepLinkingService = deepLinkingService

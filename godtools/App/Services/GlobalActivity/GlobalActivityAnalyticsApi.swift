@@ -15,7 +15,7 @@ class GlobalActivityAnalyticsApi {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    required init(config: ConfigType, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, sharedSession: SharedSessionType) {
         
         session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl

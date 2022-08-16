@@ -15,7 +15,7 @@ class FollowUpsApi {
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: ConfigType, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, sharedSession: SharedSessionType) {
         
         session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl
