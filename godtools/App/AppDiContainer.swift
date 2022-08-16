@@ -284,9 +284,9 @@ class AppDiContainer {
         return GetToolVersionsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             localizationServices: localizationServices,
-            languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: domainLayer.getToolLanguagesUseCase(),
-            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
+            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
+            getToolLanguagesUseCase: domainLayer.getToolLanguagesUseCase()
         )
     }
     
