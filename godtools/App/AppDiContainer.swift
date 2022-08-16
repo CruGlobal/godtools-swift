@@ -280,16 +280,6 @@ class AppDiContainer {
         )
     }
     
-    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
-        return GetToolVersionsUseCase(
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            localizationServices: localizationServices,
-            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
-            getToolLanguagesUseCase: domainLayer.getToolLanguagesUseCase()
-        )
-    }
-    
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteSharePublisher(

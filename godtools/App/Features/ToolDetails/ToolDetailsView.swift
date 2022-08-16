@@ -126,7 +126,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
             analytics: appDiContainer.analytics,
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
+            getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
         )
         
