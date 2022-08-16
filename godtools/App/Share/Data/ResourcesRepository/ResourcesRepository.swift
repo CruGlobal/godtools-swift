@@ -44,10 +44,6 @@ class ResourcesRepository {
         return cache.getResources(ids: ids)
     }
     
-    func getResourceLanguages(id: String) -> [LanguageModel] {
-        return cache.getResourceLanguages(id: id)
-    }
-    
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         return cache.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId)
     }

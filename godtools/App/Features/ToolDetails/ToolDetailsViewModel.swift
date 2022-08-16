@@ -18,9 +18,9 @@ class ToolDetailsViewModel: ObservableObject {
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getToolLanguagesUseCase: GetToolLanguagesUseCase
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
@@ -52,7 +52,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -62,9 +62,9 @@ class ToolDetailsViewModel: ObservableObject {
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getToolLanguagesUseCase = getToolLanguagesUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
@@ -126,9 +126,7 @@ class ToolDetailsViewModel: ObservableObject {
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
                         
-        let resourceLanguages: [LanguageModel] =  resourcesRepository.getResourceLanguages(id: resource.id)
-        let resourceTranslatedLanguageNames: [String] = resourceLanguages.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0).name})
-        availableLanguagesList = resourceTranslatedLanguageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
+        availableLanguagesList = getToolLanguagesUseCase.getToolLanguages(resource: resource).map({$0.translatedName}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         segmentTypes = [.about, .versions].filter({
             if $0 == .versions && resource.metatoolId == nil {

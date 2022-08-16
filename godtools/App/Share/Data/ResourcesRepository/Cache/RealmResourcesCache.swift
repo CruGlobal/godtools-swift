@@ -62,15 +62,6 @@ class RealmResourcesCache {
             .map({ResourceModel(realmResource: $0)})
     }
     
-    func getResourceLanguages(id: String) -> [LanguageModel] {
-        
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
-            return Array()
-        }
-        
-        return realmResource.languages.map({LanguageModel(model: $0)})
-    }
-    
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
