@@ -17,7 +17,7 @@ class ToolDetailsViewModel: ObservableObject {
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let languageSettingsService: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
@@ -52,7 +52,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -61,7 +61,7 @@ class ToolDetailsViewModel: ObservableObject {
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.languageSettingsService = languageSettingsService
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
@@ -98,12 +98,12 @@ class ToolDetailsViewModel: ObservableObject {
         let nameValue: String
         let aboutDetailsValue: String
         let languageBundle: Bundle
-                
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        
+        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
         else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
@@ -167,7 +167,7 @@ class ToolDetailsViewModel: ObservableObject {
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
         
-        guard let primaryLanguage = languageSettingsService.primaryLanguage.value else {
+        guard let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() else {
             return
         }
         

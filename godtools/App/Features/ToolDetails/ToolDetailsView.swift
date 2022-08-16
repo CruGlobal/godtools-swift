@@ -120,7 +120,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
             addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            languageSettingsService: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
