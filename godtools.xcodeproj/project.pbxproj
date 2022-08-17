@@ -35,6 +35,7 @@
 		4505C696282B4A0B0047951D /* ToolsMenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C688282B4A0A0047951D /* ToolsMenuViewModelType.swift */; };
 		4505C698282B4D940047951D /* AllToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C697282B4D940047951D /* AllToolsView.swift */; };
 		4508D26928341BE20092ECA4 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508D26828341BE20092ECA4 /* CloseButton.swift */; };
+		450A001D28AC0E9900578378 /* Realm+SafeWrite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A001C28AC0E9900578378 /* Realm+SafeWrite.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450E442727565DCD00D4311E /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442627565DCD00D4311E /* TutorialItem.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
@@ -1100,7 +1101,6 @@
 		D45922F4286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */; };
 		D46BBE1F28A159F70025EB79 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */; };
 		D46BBE2428A312140025EB79 /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */; };
-		D46BBE2A28A588700025EB79 /* GetAllFavoritedToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE2928A588700025EB79 /* GetAllFavoritedToolsUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -1171,6 +1171,7 @@
 		4505C688282B4A0A0047951D /* ToolsMenuViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuViewModelType.swift; sourceTree = "<group>"; };
 		4505C697282B4D940047951D /* AllToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsView.swift; sourceTree = "<group>"; };
 		4508D26828341BE20092ECA4 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		450A001C28AC0E9900578378 /* Realm+SafeWrite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+SafeWrite.swift"; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450E442627565DCD00D4311E /* TutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
@@ -2279,7 +2280,6 @@
 		D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsViewModel.swift; sourceTree = "<group>"; };
 		D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
-		D46BBE2928A588700025EB79 /* GetAllFavoritedToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -5111,6 +5111,7 @@
 			isa = PBXGroup;
 			children = (
 				45AD1E7425938A9800A096A0 /* RealmDatabase.swift */,
+				450A001C28AC0E9900578378 /* Realm+SafeWrite.swift */,
 			);
 			path = RealmDatabase;
 			sourceTree = "<group>";
@@ -6946,14 +6947,6 @@
 			path = ToggleToolFavoritedUseCase;
 			sourceTree = "<group>";
 		};
-		D46BBE2B28A588740025EB79 /* GetAllFavoritedToolsUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D46BBE2928A588700025EB79 /* GetAllFavoritedToolsUseCase.swift */,
-			);
-			path = GetAllFavoritedToolsUseCase;
-			sourceTree = "<group>";
-		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -7802,6 +7795,7 @@
 				D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */,
 				45558405269F2DA500C3FF14 /* MobileContentPagesView.swift in Sources */,
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
+				450A001D28AC0E9900578378 /* Realm+SafeWrite.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
 				4505C692282B4A0B0047951D /* ToolsMenuToolbarItemViewModelType.swift in Sources */,
