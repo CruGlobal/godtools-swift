@@ -15,13 +15,25 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     private weak var flowDelegate: FlowDelegate?
     private let analytics: AnalyticsContainer
     
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    
+    override var tools: [ResourceModel] {
+        didSet {
+            if tools.isEmpty {
+                closePage()
+            }
+        }
+    }
+    
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         
-        super.init(dataDownloader: dataDownloader, favoritedResourcesCache: favoritedResourcesCache, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, delegate: nil, toolCardViewModelDelegate: nil)
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        
+        super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: nil, toolCardViewModelDelegate: nil)
     }
     
     // MARK: - Overrides
@@ -30,21 +42,13 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         return ToolCardViewModel(
             resource: tool,
             dataDownloader: dataDownloader,
-            favoritedResourcesCache: favoritedResourcesCache,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
-    }
-    
-    override func removeFavoritedResource(resourceIds: [String]) {
-        super.removeFavoritedResource(resourceIds: resourceIds)
-        
-        if tools.isEmpty {
-            closePage()
-        }
     }
 }
 
@@ -76,7 +80,7 @@ extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
     
     func toolFavoriteButtonTapped(resource: ResourceModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }

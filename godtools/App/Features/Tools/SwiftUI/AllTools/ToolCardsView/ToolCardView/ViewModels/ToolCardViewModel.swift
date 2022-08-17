@@ -23,11 +23,13 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     let resource: ResourceModel
     let dataDownloader: InitialDataDownloader
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    
     private weak var delegate: ToolCardViewModelDelegate?
     
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -39,15 +41,15 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.delegate = delegate
         
         super.init()
@@ -61,8 +63,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
@@ -96,8 +96,6 @@ extension ToolCardViewModel {
     }
     
     private func setupPublishedProperties() {
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
-        
         reloadDataForPrimaryLanguage()
     }
     
@@ -126,24 +124,10 @@ extension ToolCardViewModel {
             }
         }
         
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            guard let self = self else { return }
-
-            if resourceId == self.resource.id {
-                DispatchQueue.main.async { [weak self] in
-                    self?.isFavorited = true
-                }
-            }
-        }
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            guard let self = self else { return }
-
-            if resourceId == self.resource.id {
-                DispatchQueue.main.async { [weak self] in
-                    self?.isFavorited = false
-                }
-            }
-        }
+        getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isFavorited, on: self)
+            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in

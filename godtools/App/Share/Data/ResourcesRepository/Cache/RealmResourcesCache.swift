@@ -92,8 +92,6 @@ class RealmResourcesCache {
             return nil
         }
         
-        
-                        
         guard let realmTranslation = realmResource.latestTranslations
             .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
