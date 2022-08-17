@@ -54,19 +54,6 @@ class RealmDatabase {
         }
     }
     
-    func getObjects<T: Object>(realm: Realm, primaryKeys: [String]) -> [T] {
-        
-        var objects: [T] = Array()
-        
-        for key in primaryKeys {
-            if let object = realm.object(ofType: T.self, forPrimaryKey: key) {
-                objects.append(object)
-            }
-        }
-        
-        return objects
-    }
-    
     private static var createConfig: Realm.Configuration {
         
         var config = Realm.Configuration()
