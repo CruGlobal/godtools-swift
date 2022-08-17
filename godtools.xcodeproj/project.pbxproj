@@ -439,7 +439,6 @@
 		456778A2287DC7200044AEB2 /* BaseLanguagesListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567789C287DC7200044AEB2 /* BaseLanguagesListItemViewModel.swift */; };
 		4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567CE3E27CD0C6B00C3B543 /* MobileContentPageRenderer.swift */; };
 		4567CE4327CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567CE4227CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift */; };
-		456A8A4A2864C702000EC6B4 /* ToolLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A482864C702000EC6B4 /* ToolLanguageModel.swift */; };
 		456A8A4B2864C702000EC6B4 /* GetToolLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A8A492864C702000EC6B4 /* GetToolLanguagesUseCase.swift */; };
 		456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */; };
 		456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */; };
@@ -1578,7 +1577,6 @@
 		4567789C287DC7200044AEB2 /* BaseLanguagesListItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLanguagesListItemViewModel.swift; sourceTree = "<group>"; };
 		4567CE3E27CD0C6B00C3B543 /* MobileContentPageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPageRenderer.swift; sourceTree = "<group>"; };
 		4567CE4227CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererLanguageTranslationManifest.swift; sourceTree = "<group>"; };
-		456A8A482864C702000EC6B4 /* ToolLanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolLanguageModel.swift; sourceTree = "<group>"; };
 		456A8A492864C702000EC6B4 /* GetToolLanguagesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolLanguagesUseCase.swift; sourceTree = "<group>"; };
 		456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextLabelAttributes.swift; sourceTree = "<group>"; };
 		456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingViewModelType.swift; sourceTree = "<group>"; };
@@ -4136,7 +4134,6 @@
 			isa = PBXGroup;
 			children = (
 				456A8A492864C702000EC6B4 /* GetToolLanguagesUseCase.swift */,
-				456A8A482864C702000EC6B4 /* ToolLanguageModel.swift */,
 			);
 			path = GetToolLanguagesUseCase;
 			sourceTree = "<group>";
@@ -8148,7 +8145,6 @@
 				455583F3269F2DA500C3FF14 /* MobileContentTabViewModel.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
 				455583D2269F2DA500C3FF14 /* MobileContentFormViewModel.swift in Sources */,
-				456A8A4A2864C702000EC6B4 /* ToolLanguageModel.swift in Sources */,
 				45677783287DB21F0044AEB2 /* ToolTrainingAnimatedTransitioning.swift in Sources */,
 				456FBE0527A48D2D0033FBCB /* HorizontallyCenteredCollectionViewCell.swift in Sources */,
 				45C93ADB261D310900592FFF /* ArticleAemCacheErrorData.swift in Sources */,

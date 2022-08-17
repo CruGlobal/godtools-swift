@@ -13,12 +13,12 @@ class LanguagesListViewModel: ObservableObject {
     private let selectedLanguageId: String?
     private let localizationServices: LocalizationServices
     private let closeTappedClosure: (() -> Void)
-    private let languageTappedClosure: ((_ language: ToolLanguageModel) -> Void)
+    private let languageTappedClosure: ((_ language: LanguageDomainModel) -> Void)
     private let deleteTappedClosure: (() -> Void)?
     
-    @Published var languages: [ToolLanguageModel] = Array()
+    @Published var languages: [LanguageDomainModel] = Array()
         
-    required init(languages: [ToolLanguageModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: ToolLanguageModel) -> Void), deleteTappedClosure: (() -> Void)?) {
+    required init(languages: [LanguageDomainModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: LanguageDomainModel) -> Void), deleteTappedClosure: (() -> Void)?) {
         
         self.selectedLanguageId = selectedLanguageId
         self.localizationServices = localizationServices
@@ -41,7 +41,7 @@ class LanguagesListViewModel: ObservableObject {
         return DeleteLanguageListItemViewModel(localizationServices: localizationServices)
     }
     
-    func getLanguagesListItemViewModel(language: ToolLanguageModel) -> BaseLanguagesListItemViewModel {
+    func getLanguagesListItemViewModel(language: LanguageDomainModel) -> BaseLanguagesListItemViewModel {
         return LanguagesListItemViewModel(language: language, selectedLanguageId: selectedLanguageId)
     }
     
@@ -50,7 +50,7 @@ class LanguagesListViewModel: ObservableObject {
         closeTappedClosure()
     }
     
-    func languageTapped(language: ToolLanguageModel) {
+    func languageTapped(language: LanguageDomainModel) {
             
         languageTappedClosure(language)
     }
