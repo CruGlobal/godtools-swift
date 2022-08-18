@@ -62,33 +62,33 @@ enum GetResourcesScript {
                 
                 print("resources request finished")
                 
-                if let data = data {
-                    
-                    let jsonFileUrl: URL = scriptAssetsDirectory.appendingPathComponent("script_assets.json")
-                    print("creating resources json at url: \(jsonFileUrl.absoluteString)")
-                    print("  path: \(jsonFileUrl.path)")
-                    let success: Bool = FileManager.default.createFile(atPath: jsonFileUrl.path, contents: data, attributes: nil)
-                    print("  create resources.json successful: \(success)")
-
-                    print("did save script_assets.json to file cache")
-
-                    do {
-                        
-                        // save script_assets to bundle directory
-                        try GetResourcesScript.safeShell("cp -r ${SRCROOT}/godtools/Assets/ScriptAssets/script_assets.json ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}")
-                                                
-                        // delete Assets/ScriptAssets directory
-                        try GetResourcesScript.safeShell("rm -r ${SRCROOT}/godtools/Assets/ScriptAssets")
-                        
-                        // delete bundle script assets
-                        //try GetResourcesScript.safeShell("rm -r ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/script_assets.json")
-                        //try GetResourcesScript.safeShell("rsync -av ${SRCROOT}/godtools/Assets/ScriptAssets/script_assets.json ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/")
-                        print("did run shell rsync")
-                    }
-                    catch let error {
-                        print("failed to copy resources.json with error: \(error)")
-                    }
-                }
+//                if let data = data {
+//
+//                    let jsonFileUrl: URL = scriptAssetsDirectory.appendingPathComponent("script_assets.json")
+//                    print("creating resources json at url: \(jsonFileUrl.absoluteString)")
+//                    print("  path: \(jsonFileUrl.path)")
+//                    let success: Bool = FileManager.default.createFile(atPath: jsonFileUrl.path, contents: data, attributes: nil)
+//                    print("  create resources.json successful: \(success)")
+//
+//                    print("did save script_assets.json to file cache")
+//
+//                    do {
+//
+//                        // save script_assets to bundle directory
+//                        try GetResourcesScript.safeShell("cp -r ${SRCROOT}/godtools/Assets/ScriptAssets/script_assets.json ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}")
+//
+//                        // delete Assets/ScriptAssets directory
+//                        try GetResourcesScript.safeShell("rm -r ${SRCROOT}/godtools/Assets/ScriptAssets")
+//
+//                        // delete bundle script assets
+//                        //try GetResourcesScript.safeShell("rm -r ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/script_assets.json")
+//                        //try GetResourcesScript.safeShell("rsync -av ${SRCROOT}/godtools/Assets/ScriptAssets/script_assets.json ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/")
+//                        print("did run shell rsync")
+//                    }
+//                    catch let error {
+//                        print("failed to copy resources.json with error: \(error)")
+//                    }
+//                }
                 
                 semaphore.signal()
             }
