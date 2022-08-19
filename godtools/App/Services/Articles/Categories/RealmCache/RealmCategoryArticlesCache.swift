@@ -19,75 +19,62 @@ class RealmCategoryArticlesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getCategoryArticles(categoryId: String, languageCode: String) -> [RealmCategoryArticle] {
+    func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
         
-        let realm: Realm = realmDatabase.mainThreadRealm
-        let allRealmArticles = realm.objects(RealmCategoryArticle.self)
-        
-        let predicate = NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode)
-        
-        return Array(allRealmArticles.filter(predicate))
-    }
-    
-    func getCategoryArticleOnMainThread(uuid: CategoryArticleUUID) -> RealmCategoryArticle? {
-        
-        return getCategoryArticle(realm: realmDatabase.mainThreadRealm, uuid: uuid)
-    }
-    
-    func getCategoryArticle(realm: Realm, uuid: CategoryArticleUUID) -> RealmCategoryArticle? {
-        
-        return realm.object(ofType: RealmCategoryArticle.self, forPrimaryKey: uuid.uuidString)
+        return realmDatabase.openRealm().objects(RealmCategoryArticle.self)
+            .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
+            .map({CategoryArticleModel(realmModel: $0)})
     }
     
     func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
-        realmDatabase.background { [weak self] (realm: Realm) in
+        realmDatabase.background { (realm: Realm) in
             
             typealias AemTag = String
             
             var realmCategoryArticles: [AemTag: RealmCategoryArticle] = Dictionary()
             var errors: [Error] = Array()
             
+            var categoryArticlesToCache: [RealmCategoryArticle] = Array()
+            
             for category in categories {
-                
-                let categoryId: String = category.id
-               
+                               
                 for aemTag in category.aemTags {
                     
-                    let categoryUUID = CategoryArticleUUID(
-                        categoryId: categoryId,
-                        languageCode: languageCode,
-                        aemTag: aemTag
-                    )
+                    let categoryArticleUUID = CategoryArticleUUID(categoryId: category.id, languageCode: languageCode, aemTag: aemTag)
                     
-                    let categoryArticle: RealmCategoryArticle
+                    let aemUris: List<String>
                     
-                    if let cachedCategoryArticle = self?.getCategoryArticle(realm: realm, uuid: categoryUUID) {
-                        
-                        categoryArticle = cachedCategoryArticle
+                    if let existingRealmCategoryArticle = realm.object(ofType: RealmCategoryArticle.self, forPrimaryKey: categoryArticleUUID.uuidString) {
+                        aemUris = existingRealmCategoryArticle.aemUris
                     }
                     else {
-                        
-                        categoryArticle = RealmCategoryArticle()
-                        
-                        categoryArticle.aemTag = aemTag
-                        categoryArticle.categoryId = categoryId
-                        categoryArticle.languageCode = languageCode
-                        categoryArticle.uuid = categoryUUID.uuidString
-                        
-                        do {
-                            try realm.write {
-                                realm.add(categoryArticle)
-                            }
-                        }
-                        catch let error {
-                            errors.append(error)
-                        }
+                        aemUris = List<String>()
                     }
                     
-                    realmCategoryArticles[aemTag] = categoryArticle
-                }//end category aemTags
-            }//end categories
+                    let realmCategoryArticle = RealmCategoryArticle()
+                    
+                    realmCategoryArticle.aemTag = aemTag
+                    realmCategoryArticle.aemUris.removeAll()
+                    realmCategoryArticle.aemUris.append(objectsIn: aemUris)
+                    realmCategoryArticle.categoryId = category.id
+                    realmCategoryArticle.languageCode = languageCode
+                    realmCategoryArticle.uuid = categoryArticleUUID.uuidString
+                    
+                    categoryArticlesToCache.append(realmCategoryArticle)
+                    
+                    realmCategoryArticles[aemTag] = realmCategoryArticle
+                }
+            }
+            
+            do {
+                try realm.write {
+                    realm.add(categoryArticlesToCache, update: .all)
+                }
+            }
+            catch let error {
+                errors.append(error)
+            }
             
             for aemData in aemDataObjects {
                 
@@ -97,21 +84,25 @@ class RealmCategoryArticlesCache {
                     
                     for category in categories {
                         
-                        if category.aemTags.contains(jcrAemTag) {
-                            
-                            if let realmCategoryArticle = realmCategoryArticles[jcrAemTag] {
-                                
-                                do {
-                                    try realm.write {
-                                        if !realmCategoryArticle.aemUris.contains(aemData.aemUri) {
-                                            realmCategoryArticle.aemUris.append(aemData.aemUri)
-                                        }
-                                    }
-                                }
-                                catch let error {
-                                    errors.append(error)
-                                }
+                        guard category.aemTags.contains(jcrAemTag) else {
+                            continue
+                        }
+                        
+                        guard let realmCategoryArticle = realmCategoryArticles[jcrAemTag] else {
+                            continue
+                        }
+                        
+                        guard !realmCategoryArticle.aemUris.contains(aemData.aemUri) else {
+                            continue
+                        }
+                        
+                        do {
+                            try realm.write {
+                                realmCategoryArticle.aemUris.append(aemData.aemUri)
                             }
+                        }
+                        catch let error {
+                            errors.append(error)
                         }
                     }
                 }

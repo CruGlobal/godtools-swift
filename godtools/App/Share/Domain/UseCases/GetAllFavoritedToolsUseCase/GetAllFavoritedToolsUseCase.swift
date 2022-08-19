@@ -30,21 +30,7 @@ class GetAllFavoritedToolsUseCase {
     }
     
     func getAllFavoritedTools() -> [FavoritedResourceModel] {
-        
-        storeInitialFavoritedResourcesIfNeeded()
-        
-        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
-    }
-    
-    private func storeInitialFavoritedResourcesIfNeeded() {
-        
-        guard favoritedResourcesRepository.numberOfFavoritedResources == 0 else {
-            return
-        }
                 
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "2")
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "1")
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "4")
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "8")
+        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
     }
 }

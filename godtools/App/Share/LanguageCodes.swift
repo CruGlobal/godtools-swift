@@ -13,6 +13,7 @@ enum LanguageCodes {
     static let english = "en"
     static let french = "fr"
     static let latvian = "lv"
+    static let spanish = "es"
     static let vietnamese = "vi"
     
 }
