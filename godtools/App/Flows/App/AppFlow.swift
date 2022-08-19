@@ -918,6 +918,13 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
             
+            appDiContainer.dataLayer.getLaunchCountRepository().incrementLaunchCount()
+            
+            AppBackgroundState.shared.start(
+                getAllFavoritedToolsLatestTranslationFilesUseCase: appDiContainer.domainLayer.getAllFavoritedToolsLatestTranslationFilesUseCase(),
+                storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
+            )
+            
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
