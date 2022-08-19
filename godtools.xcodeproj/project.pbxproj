@@ -885,10 +885,10 @@
 		45D63E9D288F77D4009B4610 /* RealmResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E8E288F77D4009B4610 /* RealmResourcesCache.swift */; };
 		45D63E9E288F77D4009B4610 /* RealmResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E90288F77D4009B4610 /* RealmResource.swift */; };
 		45D63E9F288F77D4009B4610 /* ResourcesJsonFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E92288F77D4009B4610 /* ResourcesJsonFileCache.swift */; };
-		45D63EA0288F77D4009B4610 /* DefaultVariantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E95288F77D4009B4610 /* DefaultVariantData.swift */; };
+		45D63EA0288F77D4009B4610 /* ResourceModelDefaultVariantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E95288F77D4009B4610 /* ResourceModelDefaultVariantData.swift */; };
 		45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E96288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift */; };
 		45D63EA2288F77D4009B4610 /* ResourceModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E97288F77D4009B4610 /* ResourceModelType.swift */; };
-		45D63EA3288F77D4009B4610 /* MetatoolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E98288F77D4009B4610 /* MetatoolData.swift */; };
+		45D63EA3288F77D4009B4610 /* ResourceModelMetatoolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E98288F77D4009B4610 /* ResourceModelMetatoolData.swift */; };
 		45D63EA4288F77D4009B4610 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E99288F77D4009B4610 /* ResourceType.swift */; };
 		45D63EA5288F77D4009B4610 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9A288F77D4009B4610 /* ResourceModel.swift */; };
 		45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */; };
@@ -2006,10 +2006,10 @@
 		45D63E8E288F77D4009B4610 /* RealmResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourcesCache.swift; sourceTree = "<group>"; };
 		45D63E90288F77D4009B4610 /* RealmResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResource.swift; sourceTree = "<group>"; };
 		45D63E92288F77D4009B4610 /* ResourcesJsonFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesJsonFileCache.swift; sourceTree = "<group>"; };
-		45D63E95288F77D4009B4610 /* DefaultVariantData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultVariantData.swift; sourceTree = "<group>"; };
+		45D63E95288F77D4009B4610 /* ResourceModelDefaultVariantData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModelDefaultVariantData.swift; sourceTree = "<group>"; };
 		45D63E96288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesPlusLatestTranslationsAndAttachmentsModel.swift; sourceTree = "<group>"; };
 		45D63E97288F77D4009B4610 /* ResourceModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModelType.swift; sourceTree = "<group>"; };
-		45D63E98288F77D4009B4610 /* MetatoolData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetatoolData.swift; sourceTree = "<group>"; };
+		45D63E98288F77D4009B4610 /* ResourceModelMetatoolData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModelMetatoolData.swift; sourceTree = "<group>"; };
 		45D63E99288F77D4009B4610 /* ResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45D63E9A288F77D4009B4610 /* ResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
 		45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentResourcesApi.swift; sourceTree = "<group>"; };
@@ -2537,16 +2537,8 @@
 			isa = PBXGroup;
 			children = (
 				451C8B7828AEC70900E98AFA /* DownloadInitialResourcesScript.swift */,
-				451C8B7928AEC7D700E98AFA /* InputFiles */,
 			);
 			path = DownloadInitialResources;
-			sourceTree = "<group>";
-		};
-		451C8B7928AEC7D700E98AFA /* InputFiles */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = InputFiles;
 			sourceTree = "<group>";
 		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
@@ -6073,9 +6065,9 @@
 		45D63E94288F77D4009B4610 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45D63E95288F77D4009B4610 /* DefaultVariantData.swift */,
-				45D63E98288F77D4009B4610 /* MetatoolData.swift */,
 				45D63E9A288F77D4009B4610 /* ResourceModel.swift */,
+				45D63E95288F77D4009B4610 /* ResourceModelDefaultVariantData.swift */,
+				45D63E98288F77D4009B4610 /* ResourceModelMetatoolData.swift */,
 				45D63E97288F77D4009B4610 /* ResourceModelType.swift */,
 				45D63E96288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift */,
 				45D63E99288F77D4009B4610 /* ResourceType.swift */,
@@ -7059,7 +7051,6 @@
 				D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */,
 				4503BEFB2821B6E500629692 /* Download And Add Initial Resources and Languages JSON Files */,
 				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
-				45FD5E0A28AACAE70016E05A /* Get Resources Script */,
 				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 			);
 			buildRules = (
@@ -7456,6 +7447,15 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelType.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelDefaultVariantData.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelMetatoolData.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceType.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModelType.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Models/AttachmentModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Models/AttachmentModelType.swift",
 			);
 			name = "Download Initial Resources";
 			outputFileListPaths = (
@@ -7464,7 +7464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7485,25 +7485,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
-		};
-		45FD5E0A28AACAE70016E05A /* Get Resources Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Scripts/GetResourcesScript.swift",
-			);
-			name = "Get Resources Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 \\\n  -o GetResourcesScript\n  \n./GetResourcesScript\n";
 		};
 		D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7743,7 +7724,7 @@
 				4505C695282B4A0B0047951D /* ToolsMenuToolbarView.swift in Sources */,
 				451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */,
 				D19D00F925AF51FA007C535B /* AppsFlyer.swift in Sources */,
-				45D63EA3288F77D4009B4610 /* MetatoolData.swift in Sources */,
+				45D63EA3288F77D4009B4610 /* ResourceModelMetatoolData.swift in Sources */,
 				45AE975127C97A9500C2CB33 /* Image+MobileContentRenderableModel.swift in Sources */,
 				45C93AF1261D310900592FFF /* ArticleAemDownloadOperationError.swift in Sources */,
 				456778A1287DC7200044AEB2 /* LanguagesListItemView.swift in Sources */,
@@ -8318,7 +8299,7 @@
 				45558320269F2C7B00C3FF14 /* ToolPageView.swift in Sources */,
 				D41B38A5287DBF3F00BD5899 /* AllToolsCategoryButtonViewModel.swift in Sources */,
 				4567786A287DC5C90044AEB2 /* GlobalActivityCellViewModel.swift in Sources */,
-				45D63EA0288F77D4009B4610 /* DefaultVariantData.swift in Sources */,
+				45D63EA0288F77D4009B4610 /* ResourceModelDefaultVariantData.swift in Sources */,
 				D45922EE286B398C00904B87 /* LessonCardsView.swift in Sources */,
 				45677755287DB02B0044AEB2 /* WebContentViewModel.swift in Sources */,
 				45AE974127C97A9400C2CB33 /* Video+MobileContentRenderableModel.swift in Sources */,
