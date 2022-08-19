@@ -24,6 +24,6 @@ class RealmAttachmentsCache {
             return nil
         }
         
-        return AttachmentModel(realmAttachment: realmAttachment)
+        return AttachmentModel(model: realmAttachment)
     }
 }
