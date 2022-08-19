@@ -24,7 +24,7 @@ class RealmTranslationsCache {
             return nil
         }
         
-        return TranslationModel(realmTranslation: realmTranslation)
+        return TranslationModel(model: realmTranslation)
     }
     
     func getTranslations(ids: [String]) -> [TranslationModel] {
@@ -32,7 +32,7 @@ class RealmTranslationsCache {
         return realmDatabase.openRealm().objects(RealmTranslation.self)
             .filter("id IN %@", ids)
             .map{
-                TranslationModel(realmTranslation: $0)
+                TranslationModel(model: $0)
             }
     }
 }
