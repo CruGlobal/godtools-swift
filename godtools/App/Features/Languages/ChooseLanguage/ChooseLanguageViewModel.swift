@@ -69,7 +69,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         }
         
         Publishers.CombineLatest3(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(), getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .sink { [weak self] languages, settingsPrimaryLanguage, settingsParallelLanguage in
                 self?.allLanguages = languages
                 self?.settingsPrimaryLanguage = settingsPrimaryLanguage
