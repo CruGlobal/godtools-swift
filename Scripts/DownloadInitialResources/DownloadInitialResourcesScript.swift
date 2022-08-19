@@ -12,60 +12,133 @@ import Combine
 @main
 enum DownloadInitialResourcesScript {
              
+    private static var runScriptCancellable: AnyCancellable?
+    
     static func main() {
         
         print("Hello DownloadInitialResourcesScript")
         
-        let session: URLSession = DownloadInitialResourcesScript.getSession()
         let apiBaseUrl: String = "https://mobile-content-api.cru.org"
-        
+        let session: URLSession = getIgnoreCacheSession()
         
         let semaphore = DispatchSemaphore( value: 0)
-        let getResourcesCancellable: AnyCancellable? = DownloadInitialResourcesScript.getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(session: session, apiBaseUrl: apiBaseUrl)
-            .sink { _ in
+        
+        DownloadInitialResourcesScript.runScriptCancellable = createTemporaryAssetsDirectory()
+            .flatMap({ result -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
                 
-            } receiveValue: { (resources: Data, languages: Data) in
+                return getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(
+                    session: session,
+                    apiBaseUrl: apiBaseUrl
+                )
+            })
+            .flatMap({ result -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
                 
-            }
+                return saveResourcesAndLanguagesDataToBundleAsJsonFile(
+                    resourcesData: result.resourcesData,
+                    languagesData: result.languagesData
+                )
+            })
+            .flatMap({ result -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> in
+                
+                return parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: result.resourcesData)
+            })
+            .flatMap({ result -> AnyPublisher<Bool, Error> in
+                
+                return saveResourceAttachmentsToBundle(resources: result)
+            })
+            .flatMap({ result -> AnyPublisher<String, Error> in
+                
+                return deleteTemporaryAssetsDirectory()
+            })
+            .sink(receiveCompletion: { result in
+                print("Finished DownloadInitialResourcesScript with result: \(result)")
+                semaphore.signal()
+            }, receiveValue: { result in
+                
+            })
+        
+        semaphore.wait()
+    }
+}
+
+// MARK: - Save Resources and Languages Json Files to Bundle
+
+extension DownloadInitialResourcesScript {
+    
+    private static func saveResourcesAndLanguagesDataToBundleAsJsonFile(resourcesData: Data, languagesData: Data) -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> {
+        
+        return getTemporaryAssetsFileUrl()
+            .flatMap({ temporaryAssetsUrl -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
+                                
+                let resourcesJsonFileUrl: URL = temporaryAssetsUrl.appendingPathComponent(getResourcesJsonFilePath())
+                let languagesJsonFileUrl: URL = temporaryAssetsUrl.appendingPathComponent(getLanguagesJsonFilePath())
+                                
+                let didCreateResourcesJsonFile: Bool = FileManager.default.createFile(atPath: resourcesJsonFileUrl.path, contents: resourcesData, attributes: nil)
+                let didCreateLanguagesJsonFile: Bool = FileManager.default.createFile(atPath: languagesJsonFileUrl.path, contents: languagesData, attributes: nil)
+
+                guard didCreateResourcesJsonFile && didCreateLanguagesJsonFile else {
+                    
+                    return Fail(error: getError(description: "Failed to create resources and languages json files at temporary assets url."))
+                        .eraseToAnyPublisher()
+                }
+                
+                do {
+                    
+                    _ = try safeShell("cp -r \(getTemporaryAssetsShellFilePath())/\(getResourcesJsonFilePath()) ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}")
+                    _ = try safeShell("cp -r \(getTemporaryAssetsShellFilePath())/\(getLanguagesJsonFilePath()) ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}")
+                    
+                    return Just((resourcesData: resourcesData, languagesData: languagesData))
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                catch let error {
+                                        
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Fetching Resources and Languages Data
+
+extension DownloadInitialResourcesScript {
+    
+    private static func parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: Data) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+                
+        do {
+            
+            let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsModel.self, from: resourcesData)
+            
+            return Just(resources).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
     }
     
-    private static func getSession() -> URLSession {
-        
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-     
-        return URLSession(configuration: configuration)
-    }
-    
-    private static func getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(session: URLSession, apiBaseUrl: String) -> AnyPublisher<(resources: Data, languages: Data), Error> {
+    private static func getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(session: URLSession, apiBaseUrl: String) -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> {
         
         return Publishers
             .CombineLatest(getResourcesPlusLatestTranslationsAndAttachments(session: session, apiBaseUrl: apiBaseUrl), getLanguages(session: session, apiBaseUrl: apiBaseUrl))
             .mapError {
                 return $0 as Error
             }
-            .flatMap({ (resources: (data: Data, response: URLResponse), languages: (data: Data, response: URLResponse)) -> AnyPublisher<(resources: Data, languages: Data), Error> in
+            .flatMap({ (resources: (data: Data, response: URLResponse), languages: (data: Data, response: URLResponse)) -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
                 
                 let resourcesHttpStatusCode: Int = (resources.response as? HTTPURLResponse)?.statusCode ?? -1
                 let languagesHttpStatusCode: Int = (languages.response as? HTTPURLResponse)?.statusCode ?? -1
                 
                 guard (resourcesHttpStatusCode >= 200 && resourcesHttpStatusCode < 400) && (languagesHttpStatusCode >= 200 && languagesHttpStatusCode < 400) else {
                     
-                    let description: String = "Failed to fetch resources.  Invalid httpStatusCode."
-                    let error: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: description])
-                    
-                    return Fail(error: error)
+                    return Fail(error: getError(description: "Failed to fetch resources.  Invalid httpStatusCode."))
                         .eraseToAnyPublisher()
                 }
                 
-                return Just((resources: resources.data, languages: languages.data))
+                return Just((resourcesData: resources.data, languagesData: languages.data))
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
@@ -124,5 +197,124 @@ enum DownloadInitialResourcesScript {
         
         return session.dataTaskPublisher(for: urlRequest)
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Save Resources Attachments To Bundle
+
+extension DownloadInitialResourcesScript {
+    
+    private static func saveResourceAttachmentsToBundle(resources: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Bool, Error> {
+        
+        return Just(true).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - TemporaryAssets Directory
+
+extension DownloadInitialResourcesScript {
+        
+    private static func getTemporaryAssetsPath() -> String {
+        return "Scripts/TemporaryAssets"
+    }
+    
+    private static func getTemporaryAssetsShellFilePath() -> String {
+        return "${SRCROOT}/\(getTemporaryAssetsPath())"
+    }
+    
+    private static func getTemporaryAssetsFileUrl() -> AnyPublisher<URL, Error> {
+        
+        guard let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] else {
+            
+            return Fail(error: getError(description: "Failed to get SRCROOT from ProcessInfo."))
+                .eraseToAnyPublisher()
+        }
+        
+        let temporaryAssetsUrl: URL = URL(fileURLWithPath: srcRoot).appendingPathComponent(getTemporaryAssetsPath())
+        
+        return Just(temporaryAssetsUrl).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    private static func getResourcesJsonFilePath() -> String {
+        return "resources.json"
+    }
+    
+    private static func getLanguagesJsonFilePath() -> String {
+        return "languages.json"
+    }
+    
+    private static func createTemporaryAssetsDirectory() -> AnyPublisher<String, Error> {
+        
+        do {
+            
+            let result: String = try safeShell("mkdir \(getTemporaryAssetsShellFilePath())")
+            
+            return Just(result).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    private static func deleteTemporaryAssetsDirectory() -> AnyPublisher<String, Error> {
+        
+        do {
+            
+            let result: String = try safeShell("rm -r \(getTemporaryAssetsShellFilePath())")
+            
+            return Just(result).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+    }
+}
+
+// MARK: -
+
+extension DownloadInitialResourcesScript {
+    
+    private static func getError(description: String) -> Error {
+        return NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: description])
+    }
+    
+    private static func getIgnoreCacheSession() -> URLSession {
+        
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        configuration.urlCache = nil
+        
+        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
+        configuration.httpShouldSetCookies = false
+        configuration.httpCookieStorage = nil
+        
+        configuration.timeoutIntervalForRequest = 60
+     
+        return URLSession(configuration: configuration)
+    }
+    
+    private static func safeShell(_ command: String) throws -> String {
+        
+        let task = Process()
+        let pipe = Pipe()
+        
+        task.standardOutput = pipe
+        task.standardError = pipe
+        task.arguments = ["-c", command]
+        task.executableURL = URL(fileURLWithPath: "/bin/zsh")
+        task.standardInput = nil
+
+        try task.run()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(data: data, encoding: .utf8) ?? ""
+        
+        return output
     }
 }
