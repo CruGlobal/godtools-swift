@@ -36,7 +36,7 @@ class RealmResourcesCache {
             return nil
         }
         
-        return ResourceModel(realmResource: realmResource)
+        return ResourceModel(model: realmResource)
     }
     
     func getResource(abbreviation: String) -> ResourceModel? {
@@ -45,7 +45,7 @@ class RealmResourcesCache {
             return nil
         }
         
-        return ResourceModel(realmResource: realmResource)
+        return ResourceModel(model: realmResource)
     }
     
     func getResources(ids: [String]) -> [ResourceModel] {
@@ -53,13 +53,13 @@ class RealmResourcesCache {
         return realmDatabase.openRealm().objects(RealmResource.self)
             .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
             .map{
-                ResourceModel(realmResource: $0)
+                ResourceModel(model: $0)
             }
     }
     
     func getResources() -> [ResourceModel] {
         return realmDatabase.openRealm().objects(RealmResource.self)
-            .map({ResourceModel(realmResource: $0)})
+            .map({ResourceModel(model: $0)})
     }
     
     func getResourceLanguages(id: String) -> [LanguageModel] {
@@ -83,7 +83,7 @@ class RealmResourcesCache {
             return nil
         }
         
-        return TranslationModel(realmTranslation: realmTranslation)
+        return TranslationModel(model: realmTranslation)
     }
     
     func getResourceLanguageLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
@@ -98,7 +98,7 @@ class RealmResourcesCache {
             return nil
         }
 
-        return TranslationModel(realmTranslation: realmTranslation)
+        return TranslationModel(model: realmTranslation)
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
