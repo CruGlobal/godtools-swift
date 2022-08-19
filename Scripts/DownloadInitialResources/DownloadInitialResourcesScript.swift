@@ -207,9 +207,7 @@ extension DownloadInitialResourcesScript {
     private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
         
         let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.map({$0.attrBanner})
-        
-        let latestAttachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments
-        
+                
         let attachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
         
         let requests = attachments.map {
