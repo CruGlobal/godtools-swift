@@ -9,16 +9,12 @@
 import Foundation
 
 class AppDomainLayerDependencies {
-    
-    private static var backgroundDownloadingUseCase: BackgroundDownloadingUseCase!
-    
+        
     private let dataLayer: AppDataLayerDependencies
     
     init(dataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        
-        AppDomainLayerDependencies.backgroundDownloadingUseCase = getBackgroundDownloadingUseCase()
     }
     
     func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
@@ -27,7 +23,7 @@ class AppDomainLayerDependencies {
         )
     }
     
-    private func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
+    func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
@@ -40,12 +36,6 @@ class AppDomainLayerDependencies {
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
-    private func getBackgroundDownloadingUseCase() -> BackgroundDownloadingUseCase {
-        return BackgroundDownloadingUseCase(
-            getAllFavoritedToolsLatestTranslationFilesUseCase: getAllFavoritedToolsLatestTranslationFilesUseCase()
         )
     }
     
@@ -97,6 +87,14 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
+            launchCountRepository: dataLayer.getLaunchCountRepository()
         )
     }
     
