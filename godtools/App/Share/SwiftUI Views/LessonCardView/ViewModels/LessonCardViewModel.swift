@@ -117,7 +117,7 @@ extension LessonCardViewModel {
         }
         
         getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
         
