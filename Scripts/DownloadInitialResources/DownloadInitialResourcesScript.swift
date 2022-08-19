@@ -42,12 +42,12 @@ enum DownloadInitialResourcesScript {
                 
                 return parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: result.resourcesData)
             })
-            .flatMap({ result -> AnyPublisher<Bool, Error> in
+            .flatMap({ result -> AnyPublisher<[Bool], Error> in
                 
-                return saveResourceAttachmentsToBundle(resources: result)
+                return saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: result)
             })
             .flatMap({ result -> AnyPublisher<String, Error> in
-                
+                                
                 return deleteTemporaryAssetsDirectory()
             })
             .sink(receiveCompletion: { result in
@@ -204,9 +204,99 @@ extension DownloadInitialResourcesScript {
 
 extension DownloadInitialResourcesScript {
     
-    private static func saveResourceAttachmentsToBundle(resources: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Bool, Error> {
+    private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
         
-        return Just(true).setFailureType(to: Error.self)
+        let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.flatMap({[$0.attrBanner, $0.attrBannerAbout]})
+        
+        let latestAttachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments
+        
+        let attachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
+        
+        let requests = attachments.map {
+            downloadAttachmentAndSaveToBundle(attachment: $0)
+        }
+        
+        return Publishers.MergeMany(requests)
+            .collect()
+            .eraseToAnyPublisher()
+    }
+    
+    private static func downloadAttachmentAndSaveToBundle(attachment: AttachmentModel) -> AnyPublisher<Bool, Error> {
+        
+        return getTemporaryAssetsFileUrl()
+            .flatMap({ temporaryAssetsUrl -> AnyPublisher<(URL, Data), Error> in
+                
+                let getAttachmentData = getAttachmentFile(attachment: attachment)
+                    .eraseToAnyPublisher()
+                
+                let justUrl = Just(temporaryAssetsUrl)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+                
+                return justUrl.zip(getAttachmentData)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (temporaryAssetsUrl: URL, data: Data) -> AnyPublisher<Bool, Error> in
+                
+                let attachmentFileName: String = attachment.sha256
+                let fileUrl: URL = temporaryAssetsUrl.appendingPathComponent(attachmentFileName)
+                
+                let didCreateAttachmentFile: Bool = FileManager.default.createFile(
+                    atPath: fileUrl.path,
+                    contents: data,
+                    attributes: nil
+                )
+                
+                guard didCreateAttachmentFile else {
+                    
+                    return Fail(error: getError(description: "Failed to create attachment file at temporary assets url."))
+                        .eraseToAnyPublisher()
+                }
+                
+                do {
+                    _ = try safeShell("cp -r \(getTemporaryAssetsShellFilePath())/\(attachmentFileName) ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}")
+                    
+                    return Just(true)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                catch let error {
+                                        
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private static func getAttachmentFile(attachment: AttachmentModel) -> AnyPublisher<Data, Error> {
+        
+        guard let url = URL(string: attachment.file) else {
+
+            return Fail(error: getError(description: "Failed to download attachment file. Invalid URL if file attribute."))
+                .eraseToAnyPublisher()
+        }
+        
+        let session: URLSession = getIgnoreCacheSession()
+        
+        return session.dataTaskPublisher(for: url)
+            .mapError {
+                return $0 as Error
+            }
+            .flatMap({ (result: (data: Data, response: URLResponse)) -> AnyPublisher<Data, Error> in
+                
+                let httpStatusCode: Int = (result.response as? HTTPURLResponse)?.statusCode ?? -1
+                
+                guard httpStatusCode >= 200 && httpStatusCode < 400 else {
+                    
+                    return Fail(error: getError(description: "Failed to fetch attachment.  Invalid httpStatusCode."))
+                        .eraseToAnyPublisher()
+                }
+                
+                return Just(result.data)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
 }
