@@ -45,9 +45,9 @@ struct LanguageModel: LanguageModelType, Decodable {
         }
         
         // attributes
-        code = try attributesContainer?.decode(String.self, forKey: .code) ?? ""
-        direction = try attributesContainer?.decode(String.self, forKey: .direction) ?? ""
-        name = try attributesContainer?.decode(String.self, forKey: .name) ?? ""
+        code = try attributesContainer?.decodeIfPresent(String.self, forKey: .code) ?? ""
+        direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
+        name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
     }
     
     init(model: LanguageModelType) {

@@ -65,7 +65,7 @@ class FavoritedResourcesCache {
         
         do {
             
-            try realm.write {
+            try realm.safeWrite {
                 
                 let realmFavoritedResource: RealmFavoritedResource = RealmFavoritedResource()
                 realmFavoritedResource.mapFrom(model: favoritedResource)

@@ -112,7 +112,7 @@ extension ToolCardViewModel {
         }
         
         getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
         
@@ -125,7 +125,7 @@ extension ToolCardViewModel {
         }
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
         

@@ -129,7 +129,7 @@ extension FavoritesContentViewModel {
         }
         
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .sink { [weak self] isEnabled in
                 
                 self?.hideTutorialBanner = !isEnabled

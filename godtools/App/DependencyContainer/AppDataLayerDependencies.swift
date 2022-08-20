@@ -48,6 +48,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLaunchCountRepository() -> LaunchCountRepository {
+        return LaunchCountRepository(
+            cache: LaunchCountCache()
+        )
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices()
     }
