@@ -15,7 +15,7 @@ enum DownloadInitialResourcesScript {
     private static var runScriptCancellable: AnyCancellable?
     
     static func main() {
-                
+          
         let apiBaseUrl: String = "https://mobile-content-api.cru.org"
         let session: URLSession = getIgnoreCacheSession()
         
@@ -201,11 +201,18 @@ extension DownloadInitialResourcesScript {
 
 extension DownloadInitialResourcesScript {
     
-    private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
+    private static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> [AttachmentModel] {
         
         let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.map({$0.attrBanner})
                 
         let attachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
+        
+        return attachments
+    }
+    
+    private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
+                        
+        let attachments: [AttachmentModel] = getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel)
         
         let requests = attachments.map {
             downloadAttachmentAndSaveToBundle(attachment: $0)
