@@ -159,7 +159,7 @@ class ToolDetailsViewModel: ObservableObject {
             .assign(to: \.mediaType, on: self)
         
         toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
     }
     
@@ -174,7 +174,7 @@ class ToolDetailsViewModel: ObservableObject {
         hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
-        .receive(on: DispatchQueue.main)
+        .receiveOnMain()
         .sink(receiveCompletion: { completed in
                         
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in

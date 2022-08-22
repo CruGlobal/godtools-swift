@@ -109,7 +109,7 @@ extension BaseFavoriteToolsViewModel {
         }
         
         getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .sink { [weak self] favoritedResourceModels in
                 
                 self?.reloadFavoritedResourcesFromCache(from: favoritedResourceModels)

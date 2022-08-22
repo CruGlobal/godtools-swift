@@ -125,7 +125,7 @@ extension ToolCardViewModel {
         }
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
-            .receive(on: DispatchQueue.main)
+            .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
         
