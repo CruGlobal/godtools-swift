@@ -49,7 +49,6 @@ enum DownloadInitialResourcesScript {
                 return deleteTemporaryAssetsDirectory()
             })
             .sink(receiveCompletion: { result in
-                print("Finished DownloadInitialResourcesScript with result: \(result)")
                 semaphore.signal()
             }, receiveValue: { result in
                 
