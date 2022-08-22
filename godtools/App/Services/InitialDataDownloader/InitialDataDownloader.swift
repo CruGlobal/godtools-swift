@@ -46,10 +46,11 @@ class InitialDataDownloader {
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
-            .sink(receiveCompletion: { completed in
-            }, receiveValue: { [weak self] (result: RealmResourcesCacheSyncResult) in
+            .sink(receiveCompletion: { [weak self] completed in
                 self?.cachedResourcesAvailable.accept(value: true)
                 self?.resourcesUpdatedFromRemoteDatabase.accept(value: nil)
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+                
             })
             .store(in: &cancellables)
     }
