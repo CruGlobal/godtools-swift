@@ -7386,7 +7386,7 @@
 		};
 		451C8B7628AEC6AD00E98AFA /* Download Initial Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -7414,7 +7414,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};

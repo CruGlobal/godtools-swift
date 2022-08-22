@@ -67,6 +67,8 @@ class DownloadInitialResourcesTests: XCTestCase {
     
     func testThatResourceAttachmentsExistInMainBundle() {
         
+        // TODO: Complete testing that attachments are included in the main app bundle. ~Levi
+        
         XCTAssertTrue(true, "")
         
         //let expectation = XCTestExpectation(description: "Wait for resources download.")
