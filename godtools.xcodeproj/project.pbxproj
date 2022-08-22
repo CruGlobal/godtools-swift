@@ -1105,6 +1105,7 @@
 		D45922F4286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */; };
 		D46BBE1F28A159F70025EB79 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */; };
 		D46BBE2428A312140025EB79 /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */; };
+		D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2287,6 +2288,7 @@
 		D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsViewModel.swift; sourceTree = "<group>"; };
 		D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
+		D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6393,17 +6395,18 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
-				4F5732961EA69CF00082035C /* Assets.xcassets */,
+				45AD174725938A4D00A096A0 /* App */,
 				4556AEC823E22185002C15E8 /* Assets */,
-				453D866624E08454004EA89F /* MissingLocalizations */,
-				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
-				4F57329B1EA69CF00082035C /* Info.plist */,
-				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
-				457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */,
-				4FAF207A1F02933900C43AFC /* Localizable.strings */,
+				4F5732961EA69CF00082035C /* Assets.xcassets */,
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
-				45AD174725938A4D00A096A0 /* App */,
+				457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */,
+				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
+				4F57329B1EA69CF00082035C /* Info.plist */,
+				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
+				4FAF207A1F02933900C43AFC /* Localizable.strings */,
+				453D866624E08454004EA89F /* MissingLocalizations */,
+				D471CFBF28B3D67100DCE61C /* Preview Content */,
 			);
 			path = godtools;
 			sourceTree = "<group>";
@@ -6957,6 +6960,14 @@
 			path = ToggleToolFavoritedUseCase;
 			sourceTree = "<group>";
 		};
+		D471CFBF28B3D67100DCE61C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -7273,6 +7284,7 @@
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */,
 				4567788F287DC6D40044AEB2 /* ChooseLanguageView.xib in Resources */,
+				D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */,
 				453D866A24E08461004EA89F /* Localizable.strings in Resources */,
 				451EBE2924AD968B00C4D6DD /* bae08d104b5ad1e9d7f97a25a88800adbce94cf36c508deaf3a2067f45919a36.png in Resources */,
 				4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */,
@@ -8709,6 +8721,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 927;
+				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -8889,6 +8902,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 927;
+				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -9070,6 +9084,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 927;
+				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
@@ -9250,6 +9265,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 927;
+				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -9460,6 +9476,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 927;
+				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;

@@ -47,12 +47,11 @@ struct ResourceCardBannerImageView: View {
 struct ResourceCardBannerImageView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let bannerImage = appDiContainer.domainLayer.getBannerImageUseCase().getBannerImage(for: "925")
 
         let cardType: ToolCardType = .square
         
         ResourceCardBannerImageView(
-            bannerImage: bannerImage,
+            bannerImage: Image("previewBannerImage"),
             isSquareLayout: cardType.isSquareLayout,
             cardWidth: cardType.isSquareLayout ? 200 : 375,
             cornerRadius: 6
