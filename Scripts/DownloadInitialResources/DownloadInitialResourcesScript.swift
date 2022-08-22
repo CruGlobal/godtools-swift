@@ -15,9 +15,7 @@ enum DownloadInitialResourcesScript {
     private static var runScriptCancellable: AnyCancellable?
     
     static func main() {
-        
-        print("Hello DownloadInitialResourcesScript")
-        
+                
         let apiBaseUrl: String = "https://mobile-content-api.cru.org"
         let session: URLSession = getIgnoreCacheSession()
         
