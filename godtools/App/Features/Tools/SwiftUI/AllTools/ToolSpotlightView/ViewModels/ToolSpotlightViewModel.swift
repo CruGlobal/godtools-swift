@@ -57,9 +57,9 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
@@ -103,7 +103,13 @@ extension ToolSpotlightViewModel {
     }
     
     private func reloadResourcesFromCache() {
+        
+        // TODO: - use a use case here
+        
         tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
+            .map({ resource in
+                return ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource)
+            })
     }
     
     private func setTitleText() {
@@ -116,14 +122,15 @@ extension ToolSpotlightViewModel {
 // MARK: - ToolCardViewModelDelegate
 
 extension ToolSpotlightViewModel: ToolCardViewModelDelegate {
-    func toolCardTapped(resource: ResourceModel) {
-        delegate?.spotlightToolCardTapped(resource: resource)
+    
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        delegate?.spotlightToolCardTapped(resource: tool.resource)
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
-        delegate?.spotlightToolFavoriteButtonTapped(resource: resource)
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
+        delegate?.spotlightToolFavoriteButtonTapped(resource: tool.resource)
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {}
-    func openToolButtonTapped(resource: ResourceModel) {}
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {}
+    func openToolButtonTapped(_ tool: ToolDomainModel) {}
 }

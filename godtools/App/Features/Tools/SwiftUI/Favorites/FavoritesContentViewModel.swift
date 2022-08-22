@@ -185,26 +185,26 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
         delegate?.favoriteToolsViewGoToToolsTapped()
     }
     
-    func toolCardTapped(resource: ResourceModel) {
-        trackOpenFavoritedToolButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: tool.id)
         }
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: tool.resource, removeHandler: removedHandler))
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {
-        trackFavoritedToolDetailsButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {
+        trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: tool.resource))
     }
     
-    func openToolButtonTapped(resource: ResourceModel) {
-        trackOpenFavoritedToolButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    func openToolButtonTapped(_ tool: ToolDomainModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
     }
 }
 

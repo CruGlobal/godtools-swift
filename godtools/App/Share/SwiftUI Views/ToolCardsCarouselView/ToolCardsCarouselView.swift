@@ -49,7 +49,7 @@ struct ToolCardsCarouselView: View {
     }
     
     @ViewBuilder
-    func makeToolCardView(with tool: ResourceModel) -> some View {
+    func makeToolCardView(with tool: ToolDomainModel) -> some View {
         
         ToolCardView(
             viewModel: viewModel.cardViewModel(for: tool),

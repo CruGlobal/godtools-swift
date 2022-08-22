@@ -132,20 +132,20 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 
 extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
     
-    func toolCardTapped(resource: ResourceModel) {
-        handleToolCardTapped(resource: resource, isSpotlight: false)
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        handleToolCardTapped(resource: tool.resource, isSpotlight: false)
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
-        handleToolFavoriteButtonTapped(resource: resource)
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
+        handleToolFavoriteButtonTapped(resource: tool.resource)
     }
     
     func toolsAreLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {}
-    func openToolButtonTapped(resource: ResourceModel) {}
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {}
+    func openToolButtonTapped(_ tool: ToolDomainModel) {}
 }
 
 // MARK: - ToolSpotlightViewModelDelegate

@@ -43,9 +43,10 @@ struct ToolCardNavButtonView: View {
 struct ToolCardNavButtonView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-
+        let resource = appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!
+        
         let viewModel = ToolCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
+            tool: ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource),
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,

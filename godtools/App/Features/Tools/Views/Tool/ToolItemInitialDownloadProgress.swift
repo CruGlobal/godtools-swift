@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol ToolItemInitialDownloadProgress: NSObject {
+protocol ResourceItemInitialDownloadProgress: NSObject {
     
-    var resource: ResourceModel { get }
+    var resourceId: String { get }
     var dataDownloader: InitialDataDownloader { get }
     var attachmentsDownloadProgress: ObservableValue<Double> { get }
     var translationDownloadProgress: ObservableValue<Double> { get }
@@ -18,7 +18,7 @@ protocol ToolItemInitialDownloadProgress: NSObject {
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt? { get set }
 }
 
-extension ToolItemInitialDownloadProgress {
+extension ResourceItemInitialDownloadProgress {
     
     private func destroyDownloadAttachmentsReceipt() {
         if let receipt = downloadAttachmentsReceipt {
@@ -88,7 +88,7 @@ extension ToolItemInitialDownloadProgress {
         dataDownloader.latestTranslationsDownload.addObserver(self) { [weak self] (receipts: DownloadResourceTranslationsReceipts?) in
             DispatchQueue.main.async { [weak self] in
                 if let receipts = receipts,
-                   let resourceId = self?.resource.id,
+                   let resourceId = self?.resourceId,
                    let resourceTranslationsDownloadReceipt = receipts.getReceipt(resourceId: resourceId) {
                     self?.observeDownloadResourceTranslationsReceipt(receipt: resourceTranslationsDownloadReceipt)
                 }
