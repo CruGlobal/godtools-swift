@@ -847,6 +847,8 @@
 		45CDFB5628173FE400AC4F2E /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB5528173FE400AC4F2E /* FirebaseInAppMessaging-Beta */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */; };
+		45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */; };
+		45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */; };
 		45D63E52288F67CE009B4610 /* AppDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E50288F67CD009B4610 /* AppDomainLayerDependencies.swift */; };
 		45D63E53288F67CE009B4610 /* AppDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E51288F67CD009B4610 /* AppDataLayerDependencies.swift */; };
 		45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */; };
@@ -1174,7 +1176,6 @@
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
-		451C8B7828AEC70900E98AFA /* DownloadInitialResourcesScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadInitialResourcesScript.swift; sourceTree = "<group>"; };
 		451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackgroundState.swift; sourceTree = "<group>"; };
 		451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewPositionState.swift; sourceTree = "<group>"; };
 		451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionState.swift; sourceTree = "<group>"; };
@@ -1956,6 +1957,9 @@
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
+		45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResourcesAttachments.swift; sourceTree = "<group>"; };
+		45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResourcesAndLanguagesData.swift; sourceTree = "<group>"; };
+		45D5433528B4001400C4E70F /* DownloadInitialResourcesScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadInitialResourcesScript.swift; sourceTree = "<group>"; };
 		45D63E50288F67CD009B4610 /* AppDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		45D63E51288F67CD009B4610 /* AppDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDataLayerDependencies.swift; sourceTree = "<group>"; };
 		45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreCacheSession.swift; sourceTree = "<group>"; };
@@ -2507,14 +2511,6 @@
 				4570B6FE2889B1760024C931 /* DownloadTool */,
 			);
 			path = DownloadTool;
-			sourceTree = "<group>";
-		};
-		451C8B7728AEC70900E98AFA /* DownloadInitialResources */ = {
-			isa = PBXGroup;
-			children = (
-				451C8B7828AEC70900E98AFA /* DownloadInitialResourcesScript.swift */,
-			);
-			path = DownloadInitialResources;
 			sourceTree = "<group>";
 		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
@@ -5855,6 +5851,24 @@
 			path = Lessons;
 			sourceTree = "<group>";
 		};
+		45D5433128B4001400C4E70F /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				45D5433228B4001400C4E70F /* DownloadInitialResources */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		45D5433228B4001400C4E70F /* DownloadInitialResources */ = {
+			isa = PBXGroup;
+			children = (
+				45D5433528B4001400C4E70F /* DownloadInitialResourcesScript.swift */,
+				45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */,
+				45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */,
+			);
+			path = DownloadInitialResources;
+			sourceTree = "<group>";
+		};
 		45D63E4F288F67CD009B4610 /* DependencyContainer */ = {
 			isa = PBXGroup;
 			children = (
@@ -6316,7 +6330,7 @@
 		45FD5E0828AACA960016E05A /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				451C8B7728AEC70900E98AFA /* DownloadInitialResources */,
+				45D5433128B4001400C4E70F /* Scripts */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -7372,13 +7386,13 @@
 		};
 		451C8B7628AEC6AD00E98AFA /* Download Initial Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelDefaultVariantData.swift",
@@ -7391,15 +7405,18 @@
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModelType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Extensions/NSError+Error.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",
 			);
 			name = "Download Initial Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7801,6 +7818,7 @@
 				4542F40A2810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
 				45558410269F2DA500C3FF14 /* MobileContentTextViewModelType.swift in Sources */,
 				D1E98EDF27974F0100D1B738 /* LessonEvaluationViewModel.swift in Sources */,
+				45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */,
 				D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */,
 				45677830287DC1F30044AEB2 /* ArticleWebViewModelType.swift in Sources */,
 				45C93AF0261D310900592FFF /* ArticleAemDownloaderError.swift in Sources */,
@@ -8225,6 +8243,7 @@
 				45325F26285CF8B40078D932 /* VideoView.swift in Sources */,
 				D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */,
 				45AE974527C97A9400C2CB33 /* CallToAction+MobileContentRenderableModel.swift in Sources */,
+				45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */,
 				45AD1B9725938A4F00A096A0 /* ToolLanguageSegmentViewModel.swift in Sources */,
 				4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */,
 				45E39ED327457CB5006A59E4 /* MobileContentAnimationView.swift in Sources */,

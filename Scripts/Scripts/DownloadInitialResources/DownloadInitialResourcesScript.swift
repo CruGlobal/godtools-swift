@@ -24,7 +24,7 @@ enum DownloadInitialResourcesScript {
         DownloadInitialResourcesScript.runScriptCancellable = createTemporaryAssetsDirectory()
             .flatMap({ result -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
                 
-                return getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(
+                return GetResourcesAndLanguagesData.getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(
                     session: session,
                     apiBaseUrl: apiBaseUrl
                 )
@@ -38,7 +38,7 @@ enum DownloadInitialResourcesScript {
             })
             .flatMap({ result -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> in
                 
-                return parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: result.resourcesData)
+                return GetResourcesAndLanguagesData.parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: result.resourcesData)
             })
             .flatMap({ result -> AnyPublisher<[Bool], Error> in
                 
@@ -75,7 +75,7 @@ extension DownloadInitialResourcesScript {
 
                 guard didCreateResourcesJsonFile && didCreateLanguagesJsonFile else {
                     
-                    return Fail(error: getError(description: "Failed to create resources and languages json files at temporary assets url."))
+                    return Fail(error: NSError.errorWithDescription(description: "Failed to create resources and languages json files at temporary assets url."))
                         .eraseToAnyPublisher()
                 }
                 
@@ -98,128 +98,23 @@ extension DownloadInitialResourcesScript {
     }
 }
 
-// MARK: - Fetching Resources and Languages Data
-
-extension DownloadInitialResourcesScript {
-    
-    private static func parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: Data) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
-                
-        do {
-            
-            let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsModel.self, from: resourcesData)
-            
-            return Just(resources).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        catch let error {
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    private static func getResourcesPlusLatestTranslationsAndAttachmentsPlusLanguagesData(session: URLSession, apiBaseUrl: String) -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> {
-        
-        return Publishers
-            .CombineLatest(getResourcesPlusLatestTranslationsAndAttachments(session: session, apiBaseUrl: apiBaseUrl), getLanguages(session: session, apiBaseUrl: apiBaseUrl))
-            .mapError {
-                return $0 as Error
-            }
-            .flatMap({ (resources: (data: Data, response: URLResponse), languages: (data: Data, response: URLResponse)) -> AnyPublisher<(resourcesData: Data, languagesData: Data), Error> in
-                
-                let resourcesHttpStatusCode: Int = (resources.response as? HTTPURLResponse)?.statusCode ?? -1
-                let languagesHttpStatusCode: Int = (languages.response as? HTTPURLResponse)?.statusCode ?? -1
-                
-                guard (resourcesHttpStatusCode >= 200 && resourcesHttpStatusCode < 400) && (languagesHttpStatusCode >= 200 && languagesHttpStatusCode < 400) else {
-                    
-                    return Fail(error: getError(description: "Failed to fetch resources.  Invalid httpStatusCode."))
-                        .eraseToAnyPublisher()
-                }
-                
-                return Just((resourcesData: resources.data, languagesData: languages.data))
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    private static func getResourcesPlusLatestTranslationsAndAttachments(session: URLSession, apiBaseUrl: String) -> AnyPublisher<(data: Data, response: URLResponse), URLError> {
-        
-        let urlString: String = apiBaseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments"
-        
-        guard let url = URL(string: urlString) else {
-            
-            let description: String = "Failed to create url from urlString: \(urlString)"
-            let error: URLError = URLError(URLError.Code(rawValue: -1), userInfo: [NSLocalizedDescriptionKey: description])
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        let configuration = session.configuration
-        
-        var urlRequest = URLRequest(
-            url: url,
-            cachePolicy: configuration.requestCachePolicy,
-            timeoutInterval: configuration.timeoutIntervalForRequest
-        )
-
-        urlRequest.httpMethod = "GET"
-        
-        return session.dataTaskPublisher(for: urlRequest)
-            .eraseToAnyPublisher()
-    }
-    
-    private static func getLanguages(session: URLSession, apiBaseUrl: String) -> AnyPublisher<(data: Data, response: URLResponse), URLError> {
-        
-        let urlString: String = apiBaseUrl + "/languages"
-        
-        guard let url = URL(string: urlString) else {
-            
-            let description: String = "Failed to create url from urlString: \(urlString)"
-            let error: URLError = URLError(URLError.Code(rawValue: -1), userInfo: [NSLocalizedDescriptionKey: description])
-            
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-        
-        let configuration = session.configuration
-        
-        var urlRequest = URLRequest(
-            url: url,
-            cachePolicy: configuration.requestCachePolicy,
-            timeoutInterval: configuration.timeoutIntervalForRequest
-        )
-
-        urlRequest.httpMethod = "GET"
-        
-        return session.dataTaskPublisher(for: urlRequest)
-            .eraseToAnyPublisher()
-    }
-}
-
 // MARK: - Save Resources Attachments To Bundle
 
 extension DownloadInitialResourcesScript {
-    
-    private static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> [AttachmentModel] {
         
-        let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.map({$0.attrBanner})
-                
-        let attachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
-        
-        return attachments
-    }
-    
     private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
-                        
-        let attachments: [AttachmentModel] = getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel)
-        
-        let requests = attachments.map {
-            downloadAttachmentAndSaveToBundle(attachment: $0)
-        }
-        
-        return Publishers.MergeMany(requests)
-            .collect()
+                      
+        return GetResourcesAttachments.getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
+            .flatMap({ attachments -> AnyPublisher<[Bool], Error> in
+                
+                let requests = attachments.map {
+                    downloadAttachmentAndSaveToBundle(attachment: $0)
+                }
+                
+                return Publishers.MergeMany(requests)
+                    .collect()
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
@@ -251,7 +146,7 @@ extension DownloadInitialResourcesScript {
                 
                 guard didCreateAttachmentFile else {
                     
-                    return Fail(error: getError(description: "Failed to create attachment file at temporary assets url."))
+                    return Fail(error: NSError.errorWithDescription(description: "Failed to create attachment file at temporary assets url."))
                         .eraseToAnyPublisher()
                 }
                 
@@ -275,7 +170,7 @@ extension DownloadInitialResourcesScript {
         
         guard let url = URL(string: attachment.file) else {
 
-            return Fail(error: getError(description: "Failed to download attachment file. Invalid URL if file attribute."))
+            return Fail(error: NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute."))
                 .eraseToAnyPublisher()
         }
         
@@ -291,7 +186,7 @@ extension DownloadInitialResourcesScript {
                 
                 guard httpStatusCode >= 200 && httpStatusCode < 400 else {
                     
-                    return Fail(error: getError(description: "Failed to fetch attachment.  Invalid httpStatusCode."))
+                    return Fail(error: NSError.errorWithDescription(description: "Failed to fetch attachment.  Invalid httpStatusCode."))
                         .eraseToAnyPublisher()
                 }
                 
@@ -319,7 +214,7 @@ extension DownloadInitialResourcesScript {
         
         guard let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] else {
             
-            return Fail(error: getError(description: "Failed to get SRCROOT from ProcessInfo."))
+            return Fail(error: NSError.errorWithDescription(description: "Failed to get SRCROOT from ProcessInfo."))
                 .eraseToAnyPublisher()
         }
         
@@ -371,10 +266,6 @@ extension DownloadInitialResourcesScript {
 // MARK: -
 
 extension DownloadInitialResourcesScript {
-    
-    private static func getError(description: String) -> Error {
-        return NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: description])
-    }
     
     private static func getIgnoreCacheSession() -> URLSession {
         

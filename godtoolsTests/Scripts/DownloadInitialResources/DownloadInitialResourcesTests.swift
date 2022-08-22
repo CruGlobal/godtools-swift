@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 @testable import godtools
+import Combine
 
 class DownloadInitialResourcesTests: XCTestCase {
     
@@ -67,5 +68,8 @@ class DownloadInitialResourcesTests: XCTestCase {
     func testThatResourceAttachmentsExistInMainBundle() {
         
         XCTAssertTrue(true, "")
+        
+        //let expectation = XCTestExpectation(description: "Wait for resources download.")
+        //wait(for: [expectation], timeout: 10.0)
     }
 }
