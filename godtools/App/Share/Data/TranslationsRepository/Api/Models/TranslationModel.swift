@@ -47,30 +47,18 @@ struct TranslationModel: TranslationModelType, Decodable {
         case data = "data"
     }
     
-    init(realmTranslation: RealmTranslation) {
+    init(model: TranslationModelType) {
         
-        id = realmTranslation.id
-        isPublished = realmTranslation.isPublished
-        manifestName = realmTranslation.manifestName
-        translatedDescription = realmTranslation.translatedDescription
-        translatedName = realmTranslation.translatedName
-        translatedTagline = realmTranslation.translatedTagline
-        type = realmTranslation.type
-        version = realmTranslation.version
-        
-        if let realmResource = realmTranslation.resource {
-            resource = ResourceModel(realmResource: realmResource)
-        }
-        else {
-            resource = nil
-        }
-        
-        if let realmLanguage = realmTranslation.language {
-            language = LanguageModel(model: realmLanguage)
-        }
-        else {
-            language = nil
-        }
+        id = model.id
+        isPublished = model.isPublished
+        manifestName = model.manifestName
+        translatedDescription = model.translatedDescription
+        translatedName = model.translatedName
+        translatedTagline = model.translatedTagline
+        type = model.type
+        version = model.version
+        resource = model.getResource()
+        language = model.getLanguage()
     }
     
     init(from decoder: Decoder) throws {
@@ -108,5 +96,16 @@ struct TranslationModel: TranslationModelType, Decodable {
                 
         // relationships - language
         language = try languageContainer?.decodeIfPresent(LanguageModel.self, forKey: .data)
+    }
+}
+
+extension TranslationModel {
+    
+    func getResource() -> ResourceModel? {
+        return resource
+    }
+    
+    func getLanguage() -> LanguageModel? {
+        return language
     }
 }

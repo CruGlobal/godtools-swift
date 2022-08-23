@@ -23,19 +23,19 @@ class ResourcesCache {
     func getResources() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let realmResources: [RealmResource] = Array(realm.objects(RealmResource.self))
-        return realmResources.map({ResourceModel(realmResource: $0)})
+        return realmResources.map({ResourceModel(model: $0)})
     }
     
     func getSortedResources() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let sortedRealmResources: [RealmResource] = Array(realm.objects(RealmResource.self).sorted(byKeyPath: "attrDefaultOrder", ascending: true))
-        return sortedRealmResources.map({ResourceModel(realmResource: $0)})
+        return sortedRealmResources.map({ResourceModel(model: $0)})
     }
     
     func getResourcesWithoutMetaToolVariants() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let resourcesWithoutVariants: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K == nil || %K == ''", #keyPath(RealmResource.metatoolId), #keyPath(RealmResource.metatoolId))))
-        return resourcesWithoutVariants.map { ResourceModel(realmResource: $0) }
+        return resourcesWithoutVariants.map { ResourceModel(model: $0) }
     }
     
     func getResources(resourceIds: [String]) -> [ResourceModel] {
@@ -43,7 +43,7 @@ class ResourcesCache {
         var resources: [ResourceModel] = Array()
         for resourceId in resourceIds {
             if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
-                resources.append(ResourceModel(realmResource: realmResource))
+                resources.append(ResourceModel(model: realmResource))
             }
         }
         return resources
@@ -71,19 +71,19 @@ class ResourcesCache {
     func getMetaTools() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let metaToolResources: [RealmResource] = Array(realm.objects(RealmResource.self).where { $0.resourceType == ResourceType.metaTool.rawValue })
-        return metaToolResources.map { ResourceModel(realmResource: $0) }
+        return metaToolResources.map { ResourceModel(model: $0) }
     }
     
     func getToolsWithAbbreviations(_ abbreviatons: [String]) -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let resources: [RealmResource] = Array(realm.objects(RealmResource.self).filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.abbreviation), abbreviatons)))
-        return resources.map { ResourceModel(realmResource: $0) }
+        return resources.map { ResourceModel(model: $0) }
     }
     
     func getResource(id: String) -> ResourceModel? {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {
-            return ResourceModel(realmResource: realmResource)
+            return ResourceModel(model: realmResource)
         }
         return nil
     }
@@ -98,7 +98,7 @@ class ResourcesCache {
     func getResource(abbreviation: String) -> ResourceModel? {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first {
-            return ResourceModel(realmResource: realmResource)
+            return ResourceModel(model: realmResource)
         }
         return nil
     }
@@ -119,7 +119,7 @@ class ResourcesCache {
         let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
         let translation: TranslationModel?
         if let realmTranslation = realmTranslation {
-            translation = TranslationModel(realmTranslation: realmTranslation)
+            translation = TranslationModel(model: realmTranslation)
         }
         else {
             translation = nil
@@ -134,7 +134,7 @@ class ResourcesCache {
         let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased())).first
         let translation: TranslationModel?
         if let realmTranslation = realmTranslation {
-            translation = TranslationModel(realmTranslation: realmTranslation)
+            translation = TranslationModel(model: realmTranslation)
         }
         else {
             translation = nil

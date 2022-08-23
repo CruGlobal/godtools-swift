@@ -1,5 +1,5 @@
 //
-//  DefaultVariantData.swift
+//  ResourceModelDefaultVariantData.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/1/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DefaultVariantData: Codable {
+struct ResourceModelDefaultVariantData: Codable {
     
     let id: String
     let type: String

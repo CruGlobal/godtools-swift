@@ -10,7 +10,6 @@ import Foundation
 
 class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     
-    private let didCloseClosure: (() -> Void)
     private let downloadProgressNumberFormatter: NumberFormatter = NumberFormatter()
     private let downloadProgressIntervalRatePerSecond: TimeInterval = 60
     
@@ -20,14 +19,16 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
     private var didStartToolDownload: Bool = false
     private var didCompleteToolDownload: Bool = false
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let progressValue: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(downloadMessage: String, didCloseClosure: @escaping (() -> Void)) {
-        
-        self.didCloseClosure = didCloseClosure
+    required init(flowDelegate: FlowDelegate, downloadMessage: String) {
+                
+        self.flowDelegate = flowDelegate
         
         super.init()
         
@@ -50,7 +51,7 @@ class DownloadToolViewModel: NSObject, DownloadToolViewModelType {
         
         stopDownload()
         
-        didCloseClosure()
+        flowDelegate?.navigate(step: .closeTappedFromDownloadToolProgress)
     }
     
     func completeDownloadProgress(didCompleteDownload: @escaping (() -> Void)) {

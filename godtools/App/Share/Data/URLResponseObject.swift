@@ -25,10 +25,10 @@ class URLResponseObject {
     
     var isSuccessHttpStatusCode: Bool {
             
-            guard let httpStatusCode = self.httpStatusCode else {
-                return false
-            }
-            
-            return httpStatusCode >= 200 && httpStatusCode < 400
+        guard let httpStatusCode = self.httpStatusCode else {
+            return false
         }
+        
+        return httpStatusCode >= 200 && httpStatusCode < 400
+    }
 }
