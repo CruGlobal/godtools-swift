@@ -41,21 +41,16 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         case data = "data"
     }
     
-    init(realmAttachment: RealmAttachment) {
+    init(model: AttachmentModelType) {
         
-        file = realmAttachment.file
-        fileFilename = realmAttachment.fileFilename
-        id = realmAttachment.id
-        isZipped = realmAttachment.isZipped
-        sha256 = realmAttachment.sha256
-        type = realmAttachment.type
+        file = model.file
+        fileFilename = model.fileFilename
+        id = model.id
+        isZipped = model.isZipped
+        sha256 = model.sha256
+        type = model.type
         
-        if let realmResource = realmAttachment.resource {
-            resource = ResourceModel(realmResource: realmResource)
-        }
-        else {
-            resource = nil
-        }
+        resource = model.getResource()
     }
     
     init(from decoder: Decoder) throws {
@@ -86,5 +81,12 @@ struct AttachmentModel: AttachmentModelType, Decodable {
                 
         // relationships - resource
         resource = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)
+    }
+}
+
+extension AttachmentModel {
+    
+    func getResource() -> ResourceModel? {
+        return resource
     }
 }

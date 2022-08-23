@@ -25,7 +25,8 @@ class AppDataLayerDependencies {
         return AttachmentsRepository(
             api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
-            resourcesFileCache: getResourcesFileCache()
+            resourcesFileCache: getResourcesFileCache(),
+            bundle: AttachmentsBundleCache()
         )
     }
     

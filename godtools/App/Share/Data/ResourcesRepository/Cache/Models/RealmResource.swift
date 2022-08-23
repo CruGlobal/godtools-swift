@@ -64,9 +64,21 @@ class RealmResource: Object, ResourceModelType {
         type = model.type
         
         latestTranslationIds.removeAll()
-        latestTranslationIds.append(objectsIn: model.latestTranslationIds)
+        latestTranslationIds.append(objectsIn: model.getLatestTranslationIds())
         
         attachmentIds.removeAll()
-        attachmentIds.append(objectsIn: model.attachmentIds)
+        attachmentIds.append(objectsIn: model.getAttachmentIds())
+    }
+    
+    func getLatestTranslationIds() -> [String] {
+        return Array(latestTranslationIds)
+    }
+    
+    func getAttachmentIds() -> [String] {
+        return Array(attachmentIds)
+    }
+    
+    func getLanguageIds() -> [String] {
+        return languages.map({$0.id})
     }
 }
