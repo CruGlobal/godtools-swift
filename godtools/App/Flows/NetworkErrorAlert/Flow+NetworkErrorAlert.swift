@@ -12,6 +12,10 @@ extension Flow {
     
     func presentNetworkError(responseError: URLResponseError) {
         
+        guard !responseError.getError().requestCancelled else {
+            return
+        }
+        
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         
         let title: String
