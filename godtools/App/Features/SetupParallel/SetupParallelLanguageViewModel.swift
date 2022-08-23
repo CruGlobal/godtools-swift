@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import Combine
 
-class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelType {
+class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
     private let localizationServices: LocalizationServices
-    private let languageSettingsService: LanguageSettingsService
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    
+    private var cancellables = Set<AnyCancellable>()
     
     let animatedViewModel: AnimatedViewModel
     let promptText: String
@@ -26,12 +28,11 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
     let yesNoButtonsHidden: ObservableValue<Bool>
     let getStartedButtonHidden: ObservableValue<Bool>
     
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
+    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
-        self.languageSettingsService = languageSettingsService
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         
         animatedViewModel = AnimatedViewModel(
             animationDataResource: .mainBundleJsonFile(filename: "onboarding_parallel_language"),
@@ -47,52 +48,39 @@ class SetupParallelLanguageViewModel: NSObject, SetupParallelLanguageViewModelTy
         selectLanguageButtonText = ObservableValue(value: "")
         yesNoButtonsHidden = ObservableValue(value: false)
         getStartedButtonHidden = ObservableValue(value: true)
-        
-        super.init()
-        
+                
         setupParallelLanguageAvailability.markSetupParallelLanguageViewed()
         
-        reloadData()
-        
-        setupBinding()
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
+                
+                let buttonText: String
+                let yesNoButtonHidden: Bool
+                let getStartedButtonHidden: Bool
+                
+                if let parallelLanguage = parallelLanguage {
+                    
+                    buttonText = parallelLanguage.translatedName
+                    yesNoButtonHidden = true
+                    getStartedButtonHidden = false
+                }
+                else {
+                    
+                    buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
+                    yesNoButtonHidden = false
+                    getStartedButtonHidden = true
+                }
+                
+                self?.selectLanguageButtonText.accept(value: buttonText)
+                self?.yesNoButtonsHidden.accept(value: yesNoButtonHidden)
+                self?.getStartedButtonHidden.accept(value: getStartedButtonHidden)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
-        
         print("x deinit: \(type(of: self))")
-        
-        languageSettingsService.parallelLanguage.removeObserver(self)
-    }
-    
-    private func reloadData() {
-                
-        if let parallelLanguage = languageSettingsService.parallelLanguage.value {
-            
-            let buttonText: String = getTranslatedLanguageUseCase.getTranslatedLanguage(language: parallelLanguage).name
-            
-            selectLanguageButtonText.accept(value: buttonText)
-            yesNoButtonsHidden.accept(value: true)
-            getStartedButtonHidden.accept(value: false)
-        }
-        else {
-            
-            let buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
-            
-            selectLanguageButtonText.accept(value: buttonText)
-            yesNoButtonsHidden.accept(value: false)
-            getStartedButtonHidden.accept(value: true)
-        }
-    }
-    
-    private func setupBinding() {
-        
-        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            
-            DispatchQueue.main.async { [weak self] in
-                
-                self?.reloadData()
-            }
-        }
     }
     
     func languageSelectorTapped() {
