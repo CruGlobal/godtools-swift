@@ -91,9 +91,8 @@ extension ToolNavigationFlow {
                     page: page
                 )
                 
-            case .failure(let error):
-                
-                self?.presentDownloadToolError(downloadToolError: error)
+            case .failure(let responseError):
+                self?.presentNetworkError(responseError: responseError)
             }
             
             self?.downloadToolTranslationFlow = nil
@@ -163,27 +162,5 @@ extension ToolNavigationFlow {
         case .unknown:
             navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
         }
-    }
-        
-    private func presentDownloadToolError(downloadToolError: URLResponseError) {
-        
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
-        
-        let viewModel = AlertMessageViewModel(
-            title: nil,
-            message: downloadToolError.getErrorMessage(),
-            cancelTitle: nil,
-            acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
-            acceptHandler: nil
-        )
-
-        presentAlertMessage(viewModel: viewModel)
-    }
-    
-    private func presentAlertMessage(viewModel: AlertMessageViewModelType) {
-        
-        let view = AlertMessageView(viewModel: viewModel)
-        
-        navigationController.present(view.controller, animated: true, completion: nil)
     }
 }
