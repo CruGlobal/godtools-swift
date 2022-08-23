@@ -112,7 +112,6 @@
 		4542F408281086480016C254 /* DeepLinkAppsFlyerParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542F407281086480016C254 /* DeepLinkAppsFlyerParserType.swift */; };
 		4542F40A2810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542F4092810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift */; };
 		454D1C4227A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */; };
-		454F1A3128B3F3C60069FE3D /* DownloadInitialResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F1A3028B3F3C60069FE3D /* DownloadInitialResourcesTests.swift */; };
 		4554205B28B17AEA00368CFE /* AttachmentFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
 		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
@@ -1241,7 +1240,6 @@
 		4542F407281086480016C254 /* DeepLinkAppsFlyerParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkAppsFlyerParserType.swift; sourceTree = "<group>"; };
 		4542F4092810871F0016C254 /* DeepLinkingParserManifestAppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestAppsFlyer.swift; sourceTree = "<group>"; };
 		454D1C4127A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontallyCenteredCollectionViewCellSize.swift; sourceTree = "<group>"; };
-		454F1A3028B3F3C60069FE3D /* DownloadInitialResourcesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadInitialResourcesTests.swift; sourceTree = "<group>"; };
 		4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentFileDataModel.swift; sourceTree = "<group>"; };
 		4554512428948D220072EC6E /* LanguageSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsRepository.swift; sourceTree = "<group>"; };
 		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
@@ -2824,22 +2822,6 @@
 				4542F4032810822E0016C254 /* GodToolsDeepLinkingManifest.swift */,
 			);
 			path = GodToolsManifest;
-			sourceTree = "<group>";
-		};
-		454F1A2E28B3F3BC0069FE3D /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				454F1A2F28B3F3BC0069FE3D /* DownloadInitialResources */,
-			);
-			path = Scripts;
-			sourceTree = "<group>";
-		};
-		454F1A2F28B3F3BC0069FE3D /* DownloadInitialResources */ = {
-			isa = PBXGroup;
-			children = (
-				454F1A3028B3F3C60069FE3D /* DownloadInitialResourcesTests.swift */,
-			);
-			path = DownloadInitialResources;
 			sourceTree = "<group>";
 		};
 		4554512328948D090072EC6E /* LanguageSettingsRepository */ = {
@@ -6394,7 +6376,6 @@
 		4FC97EA720D2B17B00084A33 /* godtoolsTests */ = {
 			isa = PBXGroup;
 			children = (
-				454F1A2E28B3F3BC0069FE3D /* Scripts */,
 				4584D7FF252B5BDD007B5D4E /* Share */,
 				4FC97EAA20D2B27B00084A33 /* Info.plist */,
 				4FC97EAC20D2B2BB00084A33 /* analytics-test1.xml */,
@@ -8477,7 +8458,6 @@
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
-				454F1A3128B3F3C60069FE3D /* DownloadInitialResourcesTests.swift in Sources */,
 				45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
