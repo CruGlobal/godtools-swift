@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 
+@available(*, deprecated) // TODO: RequestOperation won't be needed as we move to Combine Publishers.  Flow+NetworkErrorAlert can be used for presenting URLResponseError's. ~Levi
 struct ResponseErrorAlertMessage: AlertMessageType {
     
     let title: String
