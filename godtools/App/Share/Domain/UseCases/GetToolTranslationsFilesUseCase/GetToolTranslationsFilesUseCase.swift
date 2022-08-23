@@ -70,9 +70,6 @@ class GetToolTranslationsFilesUseCase {
                         return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType)
                             .eraseToAnyPublisher()
                     })
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main) // NOTE: Need to switch to main queue and parse manifests again because Manifests can't be passed across threads at this time. ~Levi

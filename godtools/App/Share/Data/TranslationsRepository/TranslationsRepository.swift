@@ -201,9 +201,6 @@ extension TranslationsRepository {
                 return self.getTranslationFileFromRemote(translation: translation, fileName: fileName)
                     .eraseToAnyPublisher()
             })
-            .mapError({ error in
-                return URLResponseError.otherError(error: error)
-            })
             .flatMap({ fileCacheLocation -> AnyPublisher<FileCacheLocation, URLResponseError> in
                 
                 return Just(fileCacheLocation).setFailureType(to: URLResponseError.self)

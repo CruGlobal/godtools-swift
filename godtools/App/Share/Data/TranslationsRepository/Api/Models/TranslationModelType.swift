@@ -9,10 +9,7 @@
 import Foundation
 
 protocol TranslationModelType {
-    
-    associatedtype ResourceModel = ResourceModelType
-    associatedtype LanguageModel = LanguageModelType
-    
+        
     var id: String { get }
     var isPublished: Bool { get }
     var manifestName: String { get }
@@ -22,6 +19,6 @@ protocol TranslationModelType {
     var type: String { get }
     var version: Int { get }
     
-    var resource: ResourceModel? { get }
-    var language: LanguageModel? { get }
+    func getResource() -> ResourceModel?
+    func getLanguage() -> LanguageModel?
 }

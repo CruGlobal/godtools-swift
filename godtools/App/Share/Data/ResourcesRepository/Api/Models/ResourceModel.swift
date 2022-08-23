@@ -70,31 +70,31 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case data = "data"
     }
     
-    init(realmResource: RealmResource) {
+    init(model: ResourceModelType) {
         
-        abbreviation = realmResource.abbreviation
-        attrAboutBannerAnimation = realmResource.attrAboutBannerAnimation
-        attrAboutOverviewVideoYoutube = realmResource.attrAboutOverviewVideoYoutube
-        attrBanner = realmResource.attrBanner
-        attrBannerAbout = realmResource.attrBannerAbout
-        attrCategory = realmResource.attrCategory
-        attrDefaultOrder = realmResource.attrDefaultOrder
-        attrSpotlight = realmResource.attrSpotlight
-        defaultVariantId = realmResource.defaultVariantId
-        id = realmResource.id
-        isHidden = realmResource.isHidden
-        manifest = realmResource.manifest
-        metatoolId = realmResource.metatoolId
-        name = realmResource.name
-        oneskyProjectId = realmResource.oneskyProjectId
-        resourceDescription = realmResource.resourceDescription
-        resourceType = realmResource.resourceType
-        totalViews = realmResource.totalViews
-        type = realmResource.type
+        abbreviation = model.abbreviation
+        attrAboutBannerAnimation = model.attrAboutBannerAnimation
+        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
+        attrBanner = model.attrBanner
+        attrBannerAbout = model.attrBannerAbout
+        attrCategory = model.attrCategory
+        attrDefaultOrder = model.attrDefaultOrder
+        attrSpotlight = model.attrSpotlight
+        defaultVariantId = model.defaultVariantId
+        id = model.id
+        isHidden = model.isHidden
+        manifest = model.manifest
+        metatoolId = model.metatoolId
+        name = model.name
+        oneskyProjectId = model.oneskyProjectId
+        resourceDescription = model.resourceDescription
+        resourceType = model.resourceType
+        totalViews = model.totalViews
+        type = model.type
         
-        latestTranslationIds = Array(realmResource.latestTranslationIds)
-        attachmentIds = Array(realmResource.attachmentIds)
-        languageIds = Array(realmResource.languages).map({$0.id})
+        latestTranslationIds = model.getLatestTranslationIds()
+        attachmentIds = model.getAttachmentIds()
+        languageIds = model.getLanguageIds()
     }
     
     init(from decoder: Decoder) throws {
@@ -154,11 +154,11 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         
         // relationships - metatool
         
-        let metatoolData: MetatoolData?
+        let metatoolData: ResourceModelMetatoolData?
 
         do {
             let metatoolContainer: KeyedDecodingContainer<DataCodingKeys>? = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .metatool)
-            metatoolData = try metatoolContainer?.decodeIfPresent(MetatoolData.self, forKey: .data)
+            metatoolData = try metatoolContainer?.decodeIfPresent(ResourceModelMetatoolData.self, forKey: .data)
         }
         catch {
             metatoolData = nil
@@ -168,11 +168,11 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         
         // relationships - default variant
         
-        let defaultVariantData: DefaultVariantData?
+        let defaultVariantData: ResourceModelDefaultVariantData?
         
         do {
             let defaultVariantContainer = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .defaultVariant)
-            defaultVariantData = try defaultVariantContainer?.decodeIfPresent(DefaultVariantData.self, forKey: .data)
+            defaultVariantData = try defaultVariantContainer?.decodeIfPresent(ResourceModelDefaultVariantData.self, forKey: .data)
         }
         catch {
             defaultVariantData = nil
@@ -180,7 +180,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         
         defaultVariantId = defaultVariantData?.id
         
-        // set when initialized from a RealmResource.
+        // set when initialized from a model.
         languageIds = Array()
     }
 }
@@ -203,6 +203,18 @@ extension ResourceModel {
     
     var isLessonType: Bool {
         return resourceTypeEnum.isLessonType
+    }
+    
+    func getLatestTranslationIds() -> [String] {
+        return latestTranslationIds
+    }
+    
+    func getAttachmentIds() -> [String] {
+        return attachmentIds
+    }
+    
+    func getLanguageIds() -> [String] {
+        return languageIds
     }
     
     func supportsLanguage(languageId: String) -> Bool {

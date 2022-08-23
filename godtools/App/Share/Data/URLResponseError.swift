@@ -15,6 +15,20 @@ enum URLResponseError: Error {
     case requestError(error: Error)
     case statusCode(urlResponseObject: URLResponseObject)
     
+    func getError() -> Error {
+        
+        switch self {
+        case .decodeError(let error):
+            return error
+        case .otherError(let error):
+            return error
+        case .requestError(let error):
+            return error
+        case .statusCode(let responseObject):
+            return NSError.errorWithDescription(description: "Response failed due to httpStatusCode: \(String(describing: responseObject.httpStatusCode))")
+        }
+    }
+    
     func getErrorMessage() -> String {
         
         switch self {
