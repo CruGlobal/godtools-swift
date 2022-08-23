@@ -34,10 +34,7 @@ class DownloadToolTranslationsFlow: Flow {
         self.didDownloadToolTranslations = didDownloadToolTranslations
         
         getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
-            
-            self?.navigateToDownloadTool(didCloseClosure: { [weak self] in
-                self?.dismissDownloadTool()
-            })
+            self?.navigateToDownloadTool()
         })
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { [weak self] completed in
@@ -46,14 +43,16 @@ class DownloadToolTranslationsFlow: Flow {
             case .finished:
                 break
             case .failure(let error):
-                self?.didDownloadToolTranslations(.failure(error))
+                self?.dismissDownloadTool(completion: {
+                    self?.didDownloadToolTranslations(.failure(error))
+                })
             }
             
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
             
             if let downloadToolView = self?.downloadToolView {
                 downloadToolView.completeDownloadProgress {
-                    self?.dismissDownloadTool()
+                    self?.dismissDownloadTool(completion: nil)
                     self?.didDownloadToolTranslations(.success(toolTranslations))
                 }
             }
@@ -66,9 +65,16 @@ class DownloadToolTranslationsFlow: Flow {
     
     func navigate(step: FlowStep) {
         
+        switch step {
+        case .closeTappedFromDownloadToolProgress:
+            dismissDownloadTool(completion: nil)
+            
+        default:
+            break
+        }
     }
     
-    private func navigateToDownloadTool(didCloseClosure: @escaping (() -> Void)) {
+    private func navigateToDownloadTool() {
         
         guard downloadToolModal == nil else {
             return
@@ -98,8 +104,8 @@ class DownloadToolTranslationsFlow: Flow {
         }
         
         let viewModel = DownloadToolViewModel(
-            downloadMessage: downloadMessage,
-            didCloseClosure: didCloseClosure
+            flowDelegate: self,
+            downloadMessage: downloadMessage
         )
         
         let view = DownloadToolView(viewModel: viewModel)
@@ -112,14 +118,14 @@ class DownloadToolTranslationsFlow: Flow {
         downloadToolModal = modal
     }
     
-    private func dismissDownloadTool() {
+    private func dismissDownloadTool(completion: (() -> Void)?) {
         
         guard let modal = downloadToolModal else {
             return
         }
         
-        modal.dismiss(animated: true)
-        
+        modal.dismiss(animated: true, completion: completion)
+                
         downloadToolView = nil
         downloadToolModal = nil
     }

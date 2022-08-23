@@ -145,4 +145,7 @@ enum FlowStep {
     case closeTappedFromReviewShareShareable
     case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
     case toolSettingsFlowCompleted
+    
+    // download tool
+    case closeTappedFromDownloadToolProgress
 }
