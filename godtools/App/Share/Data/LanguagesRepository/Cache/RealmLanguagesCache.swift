@@ -108,25 +108,4 @@ class RealmLanguagesCache {
         }
         .eraseToAnyPublisher()
     }
-    
-    // MARK: -
-    
-    // TODO: Remove deprecated methods. ~Levi
-    
-    @available(*, deprecated)
-    func getLanguage(realm: Realm, id: String) -> RealmLanguage? {
-        return realm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
-    }
-
-    @available(*, deprecated)
-    func getLanguage(realm: Realm, code: String) -> RealmLanguage? {
-
-        guard !code.isEmpty else {
-            return nil
-        }
-
-        let lowercasedCode: String = code.lowercased()
-
-        return realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first
-    }
 }

@@ -8,9 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 enum InitialDataDownloaderError: Error {
     
-    case failedToDownloadResources(error: ResourcesDownloaderError)
-    case failedToCacheResources(error: Error)
-    case failedToGetResourcesDownloaderResult
 }
