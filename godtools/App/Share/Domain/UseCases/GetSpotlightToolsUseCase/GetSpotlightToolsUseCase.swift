@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import Combine
 
 class GetSpotlightToolsUseCase {
     
@@ -16,8 +16,8 @@ class GetSpotlightToolsUseCase {
         self.getAllToolsUseCase = getAllToolsUseCase
     }
     
-    func getAllSpotlightTools() -> [ToolDomainModel] {
-
-        return getAllToolsUseCase.getAllTools(andFilteredBy: { $0.attrSpotlight })
+    func getSpotlightToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
+        
+        return getAllToolsUseCase.getAllToolsSortedPublisher(andFilteredBy: { $0.attrSpotlight })
     }
 }

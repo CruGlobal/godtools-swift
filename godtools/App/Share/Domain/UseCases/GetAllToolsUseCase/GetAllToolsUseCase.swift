@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import Combine
 
 class GetAllToolsUseCase {
     
@@ -16,12 +16,25 @@ class GetAllToolsUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getAllToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
+    func getAllToolsSortedPublisher(andFilteredBy additionalFilter: ResourceFilter? = nil) -> AnyPublisher<[ToolDomainModel], Never> {
+        
+        return resourcesRepository.getResourcesChanged()
+            .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
+                
+                let tools = self.getAllToolsSorted(andFilteredBy: additionalFilter)
+                
+                return Just(tools)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getAllToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
         
         return getAllTools().sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
     }
     
-    func getAllTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
+    private func getAllTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
