@@ -9,10 +9,7 @@
 import Foundation
 
 protocol ResourceModelType {
-    
-    associatedtype TranslationIds = Sequence
-    associatedtype AttachmentIds = Sequence
-    
+        
     var abbreviation: String { get }
     var attrAboutBannerAnimation: String { get }
     var attrAboutOverviewVideoYoutube: String { get }
@@ -23,6 +20,7 @@ protocol ResourceModelType {
     var attrSpotlight: Bool { get }
     var defaultVariantId: String? { get }
     var id: String { get }
+    var isHidden: Bool { get }
     var manifest: String { get }
     var metatoolId: String? { get }
     var name: String { get }
@@ -31,7 +29,8 @@ protocol ResourceModelType {
     var resourceType: String { get }
     var totalViews: Int { get }
     var type: String { get }
-    
-    var latestTranslationIds: TranslationIds { get }
-    var attachmentIds: AttachmentIds { get }
+        
+    func getLatestTranslationIds() -> [String]
+    func getAttachmentIds() -> [String]
+    func getLanguageIds() -> [String]
 }

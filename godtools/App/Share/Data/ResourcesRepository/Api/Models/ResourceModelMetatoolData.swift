@@ -1,5 +1,5 @@
 //
-//  MetatoolData.swift
+//  ResourceModelMetatoolData.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/21/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MetatoolData: Decodable {
+struct ResourceModelMetatoolData: Decodable {
     
     let id: String
     let type: String

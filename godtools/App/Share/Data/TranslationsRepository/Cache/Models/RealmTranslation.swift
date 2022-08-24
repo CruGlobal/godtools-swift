@@ -38,4 +38,22 @@ class RealmTranslation: Object, TranslationModelType {
         type = model.type
         version = model.version
     }
+    
+    func getResource() -> ResourceModel? {
+        
+        guard let realmResource = resource else {
+            return nil
+        }
+        
+        return ResourceModel(model: realmResource)
+    }
+    
+    func getLanguage() -> LanguageModel? {
+        
+        guard let realmLanguage = language else {
+            return nil
+        }
+        
+        return LanguageModel(model: realmLanguage)
+    }
 }
