@@ -102,13 +102,13 @@ extension ToolCardsViewModel {
         if let categoryFilterValue = categoryFilterValue {
             tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrCategory == categoryFilterValue })
                 .map({ resource in
-                    ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource)
+                    return ToolDomainModel(resource: resource)
                 })
             
         } else {
             tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted()
                 .map({ resource in
-                    ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource)
+                    return ToolDomainModel(resource: resource)
                 })
         }
         

@@ -46,7 +46,7 @@ struct ToolCardNavButtonView_Previews: PreviewProvider {
         let resource = appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!
         
         let viewModel = ToolCardViewModel(
-            tool: ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource),
+            tool: ToolDomainModel(resource: resource),
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,

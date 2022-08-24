@@ -1105,7 +1105,6 @@
 		D45922F4286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */; };
 		D46BBE1F28A159F70025EB79 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */; };
 		D46BBE2428A312140025EB79 /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */; };
-		D471CFC328B40F0900DCE61C /* GetToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC228B40F0900DCE61C /* GetToolUseCase.swift */; };
 		D471CFC628B40F4200DCE61C /* ToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */; };
 		D471CFC828B4199C00DCE61C /* GetSpotlightToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */; };
 		D471CFCC28B66E8100DCE61C /* GetAllToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */; };
@@ -2291,7 +2290,6 @@
 		D45922F3286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsViewModel.swift; sourceTree = "<group>"; };
 		D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
-		D471CFC228B40F0900DCE61C /* GetToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolUseCase.swift; sourceTree = "<group>"; };
 		D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDomainModel.swift; sourceTree = "<group>"; };
 		D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpotlightToolsUseCase.swift; sourceTree = "<group>"; };
 		D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllToolsUseCase.swift; sourceTree = "<group>"; };
@@ -6214,7 +6212,6 @@
 				45D96091289B897A001A5A3E /* GetToolIsFavoritedUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				459BD081289AD4310075901B /* GetToolTranslationsFilesUseCase */,
-				D471CFC428B40F1000DCE61C /* GetToolUseCase */,
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
@@ -6969,15 +6966,6 @@
 			path = ToggleToolFavoritedUseCase;
 			sourceTree = "<group>";
 		};
-		D471CFC428B40F1000DCE61C /* GetToolUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D471CFC228B40F0900DCE61C /* GetToolUseCase.swift */,
-				D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */,
-			);
-			path = GetToolUseCase;
-			sourceTree = "<group>";
-		};
 		D471CFC928B419A000DCE61C /* GetSpotlightToolsUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -6997,6 +6985,7 @@
 			isa = PBXGroup;
 			children = (
 				D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */,
+				D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */,
 			);
 			path = GetAllToolsUseCase;
 			sourceTree = "<group>";
@@ -8261,7 +8250,6 @@
 				451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */,
 				455583E3269F2DA500C3FF14 /* MobileContentViewModelType.swift in Sources */,
 				45B9875F283BFE5300E1DA7F /* TranslationDownloaderError.swift in Sources */,
-				D471CFC328B40F0900DCE61C /* GetToolUseCase.swift in Sources */,
 				4555833A269F2C7B00C3FF14 /* ToolPageHeroView.swift in Sources */,
 				456777C5287DB3770044AEB2 /* ToolSettingsView.swift in Sources */,
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,

@@ -108,7 +108,7 @@ extension ToolSpotlightViewModel {
         
         tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
             .map({ resource in
-                return ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource)
+                return ToolDomainModel(resource: resource)
             })
     }
     

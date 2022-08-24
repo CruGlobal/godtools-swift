@@ -135,7 +135,7 @@ extension BaseFavoriteToolsViewModel {
         withAnimation {
             tools = resources
                 .map({ resource in
-                    ToolDomainModel(dataModelId: resource.id, attrBanner: resource.attrBanner, resource: resource)
+                    return ToolDomainModel(resource: resource)
                 })
         }
         self.delegate?.toolsAreLoading(false)
