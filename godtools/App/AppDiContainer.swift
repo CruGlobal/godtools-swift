@@ -18,7 +18,6 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
@@ -45,6 +44,8 @@ class AppDiContainer {
                         
         dataLayer = AppDataLayerDependencies()
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
+        
+        let config: AppConfig = dataLayer.getAppConfig()
         
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
@@ -145,7 +146,7 @@ class AppDiContainer {
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: config)
+        return FirebaseConfiguration(config: dataLayer.getAppConfig())
     }
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
@@ -157,7 +158,7 @@ class AppDiContainer {
     }
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
-        return GoogleAdwordsAnalytics(config: config)
+        return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
     func getLanguageAvailabilityStringUseCase() -> GetLanguageAvailabilityStringUseCase {
@@ -270,13 +271,6 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
-        return GetToolLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            localizationServices: localizationServices
-        )
-    }
-    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
@@ -287,17 +281,8 @@ class AppDiContainer {
         )
     }
     
-    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
-        return GetToolVersionsUseCase(
-            resourcesCache: initialDataDownloader.resourcesCache,
-            localizationServices: localizationServices,
-            languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: getToolLanguagesUseCase(),
-            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
-        )
-    }
-    
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
+        let config: AppConfig = dataLayer.getAppConfig()
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteSharePublisher(
             config: config,
@@ -308,6 +293,7 @@ class AppDiContainer {
     }
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        let config: AppConfig = dataLayer.getAppConfig()
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteShareSubscriber(
             config: config,

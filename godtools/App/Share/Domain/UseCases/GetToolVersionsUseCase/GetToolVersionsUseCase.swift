@@ -10,28 +10,28 @@ import Foundation
 
 class GetToolVersionsUseCase {
     
-    private let resourcesCache: ResourcesCache
+    private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
-    private let languageSettingsService: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
-    init(resourcesCache: ResourcesCache, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService, getToolLanguagesUseCase: GetToolLanguagesUseCase, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase) {
         
-        self.resourcesCache = resourcesCache
+        self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
-        self.languageSettingsService = languageSettingsService
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
     }
     
     func getToolVersions(resourceId: String) -> [ToolVersionDomainModel] {
         
-        guard let resource = resourcesCache.getResource(id: resourceId) else {
+        guard let resource = resourcesRepository.getResource(id: resourceId) else {
             return []
         }
         
-        let resourceVersions: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
+        let resourceVersions: [ResourceModel] = resourcesRepository.getResourceVariants(resourceId: resourceId)
             .filter({!$0.isHidden})
         
         guard !resourceVersions.isEmpty else {
@@ -45,21 +45,23 @@ class GetToolVersionsUseCase {
     
     private func getToolVersion(resource: ResourceModel, resourceVersion: ResourceModel) -> ToolVersionDomainModel {
         
-        let toolLanguages: [ToolLanguageModel] = getToolLanguagesUseCase.getToolLanguages(resource: resourceVersion)
-        let toolLanguagesIds: [String] = toolLanguages.map({$0.id})
+        let toolLanguages: [LanguageDomainModel] = getToolLanguagesUseCase.getToolLanguages(resource: resourceVersion)
+        let toolLanguagesIds: [String] = toolLanguages.map({$0.dataModelId})
                 
+        let primaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        
         let name: String
         let description: String
         let languageBundle: Bundle
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
             description = primaryTranslation.translatedTagline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceVersion.id, languageCode: "en") {
+        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             description = englishTranslation.translatedTagline
@@ -72,31 +74,31 @@ class GetToolVersionsUseCase {
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         
-        let primaryLanguage: String?
+        let primaryLanguageTranslatedName: String?
         let supportsPrimaryLanguage: Bool
         
-        let parallelLanguage: String?
+        let parallelLanguageTranslatedName: String?
         let supportsParallelLanguage: Bool
         
-        if let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id {
+        if let primaryLanguage = primaryLanguage {
             
-            primaryLanguage = getTranslatedLanguageUseCase.getTranslatedLanguage(languageId: primaryLanguageId)?.name
-            supportsPrimaryLanguage = toolLanguagesIds.contains(primaryLanguageId)
+            primaryLanguageTranslatedName = primaryLanguage.translatedName
+            supportsPrimaryLanguage = toolLanguagesIds.contains(primaryLanguage.dataModelId)
         }
         else {
             
-            primaryLanguage = nil
+            primaryLanguageTranslatedName = nil
             supportsPrimaryLanguage = false
         }
         
-        if let parallelLanguageId = languageSettingsService.parallelLanguage.value?.id {
+        if let parallelLanguage = getSettingsParallelLanguageUseCase.getParallelLanguage() {
             
-            parallelLanguage = getTranslatedLanguageUseCase.getTranslatedLanguage(languageId: parallelLanguageId)?.name
-            supportsParallelLanguage = toolLanguagesIds.contains(parallelLanguageId)
+            parallelLanguageTranslatedName = parallelLanguage.translatedName
+            supportsParallelLanguage = toolLanguagesIds.contains(parallelLanguage.dataModelId)
         }
         else {
             
-            parallelLanguage = nil
+            parallelLanguageTranslatedName = nil
             supportsParallelLanguage = false
         }
                 
@@ -107,9 +109,9 @@ class GetToolVersionsUseCase {
             description: description,
             numberOfLanguages: toolLanguages.count,
             numberOfLanguagesString: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), toolLanguages.count),
-            primaryLanguage: primaryLanguage,
+            primaryLanguage: primaryLanguageTranslatedName,
             primaryLanguageIsSupported: supportsPrimaryLanguage,
-            parallelLanguage: parallelLanguage,
+            parallelLanguage: parallelLanguageTranslatedName,
             parallelLanguageIsSupported: supportsParallelLanguage,
             isDefaultVersion: resourceVersion.id == resource.defaultVariantId
         )

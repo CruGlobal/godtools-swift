@@ -14,7 +14,7 @@ class ViewsService {
     private let viewsApi: ViewsApi
     private let failedResourceViewsCache: FailedResourceViewsCache
     
-    required init(config: ConfigType, realmDatabase: RealmDatabase, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, realmDatabase: RealmDatabase, sharedSession: SharedIgnoreCacheSession) {
         
         viewsApi = ViewsApi(config: config, sharedSession: sharedSession)
         failedResourceViewsCache = FailedResourceViewsCache(realmDatabase: realmDatabase)

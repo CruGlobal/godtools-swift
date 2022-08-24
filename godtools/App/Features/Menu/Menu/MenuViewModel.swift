@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
-    private let config: ConfigType
+    private let config: AppConfig
     private let deviceLanguage: DeviceLanguage
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     private let userAuthentication: UserAuthenticationType
@@ -25,7 +25,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, deviceLanguage: DeviceLanguage, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    required init(flowDelegate: FlowDelegate, config: AppConfig, deviceLanguage: DeviceLanguage, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.config = config

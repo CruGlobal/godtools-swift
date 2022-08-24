@@ -25,7 +25,7 @@ class TractRemoteShareSubscriber: NSObject {
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
     let subscribedToChannelObserver: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(config: ConfigType, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
+    required init(config: AppConfig, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
         
         self.remoteUrl = URL(string: config.tractRemoteShareConnectionUrl)!
         self.webSocket = webSocket

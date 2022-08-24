@@ -693,19 +693,18 @@ extension AppFlow {
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             resource: resource,
-            dataDownloader: appDiContainer.initialDataDownloader,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
             addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            languageSettingsService: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
+            getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
             
         )
