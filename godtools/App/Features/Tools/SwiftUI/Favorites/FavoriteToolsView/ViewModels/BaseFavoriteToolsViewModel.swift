@@ -125,8 +125,6 @@ extension BaseFavoriteToolsViewModel {
     
     private func reloadFavoritedResourcesFromCache(from favoritedResources: [FavoritedResourceModel]? = nil) {
         
-        // TODO: - make this a use case
-        
         let favoritedResourceModels = favoritedResources ?? getAllFavoritedToolsUseCase.getAllFavoritedTools()
         let favoritedResourcesIds: [String] = favoritedResourceModels.map({$0.resourceId})
         

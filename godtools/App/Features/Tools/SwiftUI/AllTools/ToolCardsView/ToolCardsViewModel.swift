@@ -98,7 +98,7 @@ extension ToolCardsViewModel {
     }
     
     private func reloadResourcesFromCache() {
-        // TODO: - make this a use case
+        
         if let categoryFilterValue = categoryFilterValue {
             tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrCategory == categoryFilterValue })
                 .map({ resource in
