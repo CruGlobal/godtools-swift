@@ -15,7 +15,7 @@ class ViewsApi {
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: AppConfig, sharedSession: SharedSessionType) {
+    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession) {
                     
         session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl
