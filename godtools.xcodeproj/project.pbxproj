@@ -235,6 +235,7 @@
 		45558417269F2F6100C3FF14 /* MobileContentAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558414269F2F6100C3FF14 /* MobileContentAnalytics.swift */; };
 		45558498269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45558459269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift */; };
 		4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555845C269F2F9E00C3FF14 /* TrainingTipEvent.swift */; };
+		45567D1928B59A0A003A0EC2 /* GetShortcutItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45567D1828B59A0A003A0EC2 /* GetShortcutItemsUseCase.swift */; };
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
@@ -660,9 +661,6 @@
 		45AD200225938A9800A096A0 /* RealmResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB025938A9800A096A0 /* RealmResourceView.swift */; };
 		45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */; };
 		45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */; };
-		45AD201625938A9800A096A0 /* ShortcutItemsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1ECE25938A9800A096A0 /* ShortcutItemsService.swift */; };
-		45AD201725938A9800A096A0 /* ToolShortcutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1ECF25938A9800A096A0 /* ToolShortcutItem.swift */; };
-		45AD201825938A9800A096A0 /* ShortcutItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1ED025938A9800A096A0 /* ShortcutItemType.swift */; };
 		45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */; };
 		45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */; };
 		45AD202825938A9800A096A0 /* LocalizationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE325938A9800A096A0 /* LocalizationServices.swift */; };
@@ -946,6 +944,8 @@
 		45FB161827DBDDB60009DF8E /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB160627DBDDB60009DF8E /* AppFlow.swift */; };
 		45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC123827A833BF00F4EC4F /* NavBarSelectorView.swift */; };
 		45FF25E7260BED6F00D771B6 /* ToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */; };
+		45FF773D28B66D370027DDE4 /* ShortcutItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF773B28B66D370027DDE4 /* ShortcutItemType.swift */; };
+		45FF773E28B66D370027DDE4 /* ToolShortcutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FF773C28B66D370027DDE4 /* ToolShortcutItem.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
@@ -1366,6 +1366,7 @@
 		45558414269F2F6100C3FF14 /* MobileContentAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnalytics.swift; sourceTree = "<group>"; };
 		45558459269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderedPageContext.swift; sourceTree = "<group>"; };
 		4555845C269F2F9E00C3FF14 /* TrainingTipEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipEvent.swift; sourceTree = "<group>"; };
+		45567D1828B59A0A003A0EC2 /* GetShortcutItemsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShortcutItemsUseCase.swift; sourceTree = "<group>"; };
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
@@ -1788,9 +1789,6 @@
 		45AD1EB025938A9800A096A0 /* RealmResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourceView.swift; sourceTree = "<group>"; };
 		45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthenticationType.swift; sourceTree = "<group>"; };
 		45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingService.swift; sourceTree = "<group>"; };
-		45AD1ECE25938A9800A096A0 /* ShortcutItemsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutItemsService.swift; sourceTree = "<group>"; };
-		45AD1ECF25938A9800A096A0 /* ToolShortcutItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutItem.swift; sourceTree = "<group>"; };
-		45AD1ED025938A9800A096A0 /* ShortcutItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutItemType.swift; sourceTree = "<group>"; };
 		45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundle.swift; sourceTree = "<group>"; };
 		45AD1EE325938A9800A096A0 /* LocalizationServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationServices.swift; sourceTree = "<group>"; };
@@ -2058,6 +2056,8 @@
 		45FB160627DBDDB60009DF8E /* AppFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		45FC123827A833BF00F4EC4F /* NavBarSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarSelectorView.swift; sourceTree = "<group>"; };
 		45FF25E6260BED6F00D771B6 /* ToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolViewModelType.swift; sourceTree = "<group>"; };
+		45FF773B28B66D370027DDE4 /* ShortcutItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutItemType.swift; sourceTree = "<group>"; };
+		45FF773C28B66D370027DDE4 /* ToolShortcutItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutItem.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3459,6 +3459,16 @@
 				4555845C269F2F9E00C3FF14 /* TrainingTipEvent.swift */,
 			);
 			path = Events;
+			sourceTree = "<group>";
+		};
+		45567D1728B599FB003A0EC2 /* GetShortcutItemsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				45567D1828B59A0A003A0EC2 /* GetShortcutItemsUseCase.swift */,
+				45FF773B28B66D370027DDE4 /* ShortcutItemType.swift */,
+				45FF773C28B66D370027DDE4 /* ToolShortcutItem.swift */,
+			);
+			path = GetShortcutItemsUseCase;
 			sourceTree = "<group>";
 		};
 		4556AEC823E22185002C15E8 /* Assets */ = {
@@ -4869,7 +4879,6 @@
 				D10AD0D62790C0A0004859C4 /* SetupParallelLanguage */,
 				45677784287DB3520044AEB2 /* ShareToolScreenTutorialItemProvider */,
 				45677786287DB3520044AEB2 /* ShareToolScreenTutorialNumberOfViewsCache */,
-				45AD1ECD25938A9800A096A0 /* ShortcutItems */,
 				45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */,
 				45AD1E4B25938A9800A096A0 /* TractRemoteShare */,
 				45B9874A283BFE5300E1DA7F /* TranslationsDownloader */,
@@ -5221,16 +5230,6 @@
 				456E504825D0CF7E0075FF6A /* Parsers */,
 			);
 			path = DeepLinkingService;
-			sourceTree = "<group>";
-		};
-		45AD1ECD25938A9800A096A0 /* ShortcutItems */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1ED025938A9800A096A0 /* ShortcutItemType.swift */,
-				45AD1ECE25938A9800A096A0 /* ShortcutItemsService.swift */,
-				45AD1ECF25938A9800A096A0 /* ToolShortcutItem.swift */,
-			);
-			path = ShortcutItems;
 			sourceTree = "<group>";
 		};
 		45AD1EDF25938A9800A096A0 /* FirebaseConfiguration */ = {
@@ -6166,6 +6165,7 @@
 				4554512C28948E270072EC6E /* GetSettingsParallelLanguageUseCase */,
 				4554512B28948E270072EC6E /* GetSettingsPrimaryLanguageUseCase */,
 				D41B38B9288EDA2F00BD5899 /* GetShareableImageUseCase */,
+				45567D1728B599FB003A0EC2 /* GetShortcutItemsUseCase */,
 				45D96099289B9671001A5A3E /* GetToolDetailsMediaUseCase */,
 				45D96091289B897A001A5A3E /* GetToolIsFavoritedUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
@@ -7546,6 +7546,7 @@
 				455582E8269F2C1000C3FF14 /* TrainingPageViewModelType.swift in Sources */,
 				4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */,
 				4567789D287DC7200044AEB2 /* LanguagesListView.swift in Sources */,
+				45FF773D28B66D370027DDE4 /* ShortcutItemType.swift in Sources */,
 				4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */,
 				45677805287DB4E10044AEB2 /* AboutViewModel.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
@@ -7691,7 +7692,6 @@
 				4542F401281080C00016C254 /* DeepLinkingParserManifestType.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
-				45AD201725938A9800A096A0 /* ToolShortcutItem.swift in Sources */,
 				45363FD127E2420B0000546A /* AppsFlyerDeepLinkValueParser.swift in Sources */,
 				D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */,
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
@@ -7970,6 +7970,7 @@
 				45C93AE1261D310900592FFF /* ArticleAemCacheResult.swift in Sources */,
 				45FB161027DBDDB60009DF8E /* LearnToShareToolFlow.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
+				45FF773E28B66D370027DDE4 /* ToolShortcutItem.swift in Sources */,
 				4567775D287DB02B0044AEB2 /* HelpWebContent.swift in Sources */,
 				4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45D63E70288F698C009B4610 /* LanguagesRepository.swift in Sources */,
@@ -8030,7 +8031,6 @@
 				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45D63E84288F75B0009B4610 /* AttachmentsRepository.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
-				45AD201825938A9800A096A0 /* ShortcutItemType.swift in Sources */,
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				45558334269F2C7B00C3FF14 /* ToolPageModalsViewModel.swift in Sources */,
 				45558323269F2C7B00C3FF14 /* ToolPageViewModel.swift in Sources */,
@@ -8117,7 +8117,6 @@
 				45677742287DAFC70044AEB2 /* MenuSection.swift in Sources */,
 				4567775E287DB02B0044AEB2 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				45677733287DAFC70044AEB2 /* MailViewModel.swift in Sources */,
-				45AD201625938A9800A096A0 /* ShortcutItemsService.swift in Sources */,
 				45AD1FD725938A9800A096A0 /* WebArchiveOperationResult.swift in Sources */,
 				45325F2D285CF8DA0078D932 /* ViewGeometry.swift in Sources */,
 				45AD209B25938C4900A096A0 /* GlobalActivityAnalyticsApi.swift in Sources */,
@@ -8357,6 +8356,7 @@
 				45A93C74286DE4BA00090E01 /* ToolDetailsVersionsCardViewModel.swift in Sources */,
 				45AD1F6125938A9800A096A0 /* ActionCableIdentifier.swift in Sources */,
 				45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */,
+				45567D1928B59A0A003A0EC2 /* GetShortcutItemsUseCase.swift in Sources */,
 				455583FB269F2DA500C3FF14 /* MobileContentInputView.swift in Sources */,
 				45C93AF4261D310900592FFF /* ArticleAemRepositoryType.swift in Sources */,
 				45677879287DC63A0044AEB2 /* AccountItem.swift in Sources */,

@@ -31,7 +31,6 @@ class AppDiContainer {
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let shortcutItemsService: ShortcutItemsService
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
@@ -94,13 +93,6 @@ class AppDiContainer {
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-        
-        shortcutItemsService = ShortcutItemsService(
-            realmDatabase: realmDatabase,
-            dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
-            favoritedResourcesCache: favoritedResourcesCache
-        )
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         

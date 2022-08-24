@@ -90,6 +90,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
+        return GetShortcutItemsUseCase(
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),

@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillResignActive(_ application: UIApplication) {
         
-        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
+        reloadShortcutItems(application: application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -77,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         
+        reloadShortcutItems(application: application)
+        
         AppEvents.activateApp()
         
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
@@ -84,6 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
     
+    }
+}
+
+// MARK: - Shortcut Items
+
+extension AppDelegate {
+    
+    private func reloadShortcutItems(application: UIApplication) {
+        
+        application.shortcutItems = appDiContainer.domainLayer.getShortcutItemsUseCase().getShortcutItems()
     }
 }
 
