@@ -65,13 +65,13 @@ class RealmResourcesCache {
     func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
         return realmDatabase.openRealm().objects(RealmResource.self)
             .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
-            .map { ResourceModel(realmResource: $0)}
+            .map { ResourceModel(model: $0)}
     }
     
     func getResources(with resourceType: ResourceType) -> [ResourceModel] {
         return realmDatabase.openRealm().objects(RealmResource.self)
             .where { $0.resourceType == resourceType.rawValue }
-            .map { ResourceModel(realmResource: $0) }
+            .map { ResourceModel(model: $0) }
     }
     
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
