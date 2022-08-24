@@ -11,6 +11,7 @@ import RealmSwift
 
 typealias ResourceFilter = (ResourceModel) -> Bool
 
+@available(*, deprecated) // TODO: This should be phased out in place of ResourcesRepository / UseCases for Combine + Domain Layer refactoring. ~Levi
 class ResourcesCache {
     
     private let realmDatabase: RealmDatabase
