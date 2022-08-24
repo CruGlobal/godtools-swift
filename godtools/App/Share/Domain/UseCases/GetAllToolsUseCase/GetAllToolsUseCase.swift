@@ -31,7 +31,7 @@ class GetAllToolsUseCase {
     
     private func getAllToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
         
-        return getAllTools().sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
+        return getAllTools(andFilteredBy: additionalFilter).sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
     }
     
     private func getAllTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {

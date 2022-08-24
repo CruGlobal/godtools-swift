@@ -47,6 +47,7 @@ struct ToolSpotlightView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlighToolsUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil
         )
