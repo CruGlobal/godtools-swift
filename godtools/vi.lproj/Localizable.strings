@@ -143,7 +143,7 @@
 ";
 
 /* This is a loading screen */
-"loading_favorited_tool" = "Tải về bản dịch gần đây nhất của công cụ này.";
+"loading_favorited_tool" = "Đang tải cập nhật mới nhất.";
 
 /* Adds a question mark */
 "remove_from_favorites_title" = "Xóa khỏi Ưa thích? ";
