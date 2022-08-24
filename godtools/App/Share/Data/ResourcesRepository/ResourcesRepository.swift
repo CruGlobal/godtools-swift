@@ -48,6 +48,14 @@ class ResourcesRepository {
         return cache.getResources(ids: ids)
     }
     
+    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
+        return cache.getResources(with: metaToolIds)
+    }
+    
+    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
+        return cache.getResources(with: resourceType)
+    }
+    
     func getResourceLanguages(id: String) -> [LanguageModel] {
         return cache.getResourceLanguages(id: id)
     }
