@@ -16,12 +16,12 @@ class GetAllToolsUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getAllToolsSorted() -> [ToolDomainModel] {
+    func getAllToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
         
         return getAllTools().sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
     }
     
-    func getAllTools() -> [ToolDomainModel] {
+    func getAllTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
@@ -32,6 +32,15 @@ class GetAllToolsUseCase {
         let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
         
         return combinedResourcesAndDefaultVariants
+            .filter { resource in
+                
+                if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
+                    return false
+                }
+                
+                return resource.isToolType && resource.isHidden == false
+                
+            }
             .map { ToolDomainModel(resource: $0) }
     }
 }

@@ -10,4 +10,14 @@ import Foundation
 
 class GetSpotlightToolsUseCase {
     
+    private let getAllToolsUseCase: GetAllToolsUseCase
+    
+    init(getAllToolsUseCase: GetAllToolsUseCase) {
+        self.getAllToolsUseCase = getAllToolsUseCase
+    }
+    
+    func getAllSpotlightTools() -> [ToolDomainModel] {
+
+        return getAllToolsUseCase.getAllTools(andFilteredBy: { $0.attrSpotlight })
+    }
 }
