@@ -88,3 +88,6 @@ fastlane/unencrypted
 fastlane/fastlane_cleanup_script.sh
 encrypted
 fastlane_cleanup_script.sh
+
+## Script Executables
+DownloadInitialResourcesScript
