@@ -16,12 +16,12 @@ class GetAllToolsUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getAllToolsSortedPublisher(andFilteredBy additionalFilter: ResourceFilter? = nil) -> AnyPublisher<[ToolDomainModel], Never> {
+    func getAllToolsPublisher(sorted: Bool) -> AnyPublisher<[ToolDomainModel], Never> {
         
         return resourcesRepository.getResourcesChanged()
             .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let tools = self.getAllToolsSorted(andFilteredBy: additionalFilter)
+                let tools = self.getAllTools(sorted: sorted)
                 
                 return Just(tools)
                     .eraseToAnyPublisher()
@@ -29,12 +29,7 @@ class GetAllToolsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getAllToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
-        
-        return getAllTools(andFilteredBy: additionalFilter).sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
-    }
-    
-    private func getAllTools(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ToolDomainModel] {
+    private func getAllTools(sorted: Bool) -> [ToolDomainModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
@@ -43,17 +38,13 @@ class GetAllToolsUseCase {
         let resourcesExcludingVariants = resourcesRepository.getResources(with: ["", nil])
         
         let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
+   
+        var allTools = combinedResourcesAndDefaultVariants.filter { $0.isToolType && $0.isHidden == false }
         
-        return combinedResourcesAndDefaultVariants
-            .filter { resource in
-                
-                if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
-                    return false
-                }
-                
-                return resource.isToolType && resource.isHidden == false
-                
-            }
-            .map { ToolDomainModel(resource: $0) }
+        if sorted {
+            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
+        }
+        
+        return allTools.map { ToolDomainModel(resource: $0) }
     }
 }
