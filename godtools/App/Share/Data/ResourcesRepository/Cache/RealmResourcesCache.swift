@@ -111,6 +111,13 @@ class RealmResourcesCache {
         return realmDatabase.openRealm().objects(RealmResource.self).filter(predicate).map({ResourceModel(model: $0)})
     }
     
+    func getSpotlightTools() -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .where { $0.attrSpotlight == true && $0.isHidden == false }
+            .map { ResourceModel(model: $0) }
+            .filter { $0.isToolType }
+    }
+    
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)

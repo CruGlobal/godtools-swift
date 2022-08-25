@@ -10,14 +10,23 @@ import Combine
 
 class GetSpotlightToolsUseCase {
     
-    private let getAllToolsUseCase: GetAllToolsUseCase
+    private let resourcesRepository: ResourcesRepository
     
-    init(getAllToolsUseCase: GetAllToolsUseCase) {
-        self.getAllToolsUseCase = getAllToolsUseCase
+    init(resourcesRepository: ResourcesRepository) {
+        self.resourcesRepository = resourcesRepository
     }
     
     func getSpotlightToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return getAllToolsUseCase.getAllToolsSortedPublisher(andFilteredBy: { $0.attrSpotlight })
+        return resourcesRepository.getResourcesChanged()
+            .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
+                
+                let spotlightTools = self.resourcesRepository.getSpotlightTools()
+                    .map { ToolDomainModel(resource: $0) }
+                
+                return Just(spotlightTools)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

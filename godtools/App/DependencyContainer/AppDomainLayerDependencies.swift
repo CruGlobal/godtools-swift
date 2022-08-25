@@ -95,7 +95,7 @@ class AppDomainLayerDependencies {
     }
     
     func getSpotlighToolsUseCase() -> GetSpotlightToolsUseCase {
-        return GetSpotlightToolsUseCase(getAllToolsUseCase: getAllToolsUseCase())
+        return GetSpotlightToolsUseCase(resourcesRepository: dataLayer.getResourcesRepository())
     }
     
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
