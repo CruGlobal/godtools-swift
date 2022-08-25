@@ -23,7 +23,6 @@ class AppDiContainer {
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
-    let languageDirectionService: LanguageDirectionService
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -70,9 +69,7 @@ class AppDiContainer {
             getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
         )
-        
-        languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
-                
+                        
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
