@@ -10,9 +10,11 @@ import Combine
 
 class GetAllToolsUseCase {
     
+    private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository) {
+    init(getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+        self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
@@ -45,6 +47,6 @@ class GetAllToolsUseCase {
             allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
         }
         
-        return allTools.map { ToolDomainModel(resource: $0) }
+        return allTools.map { getToolUseCase.getTool(resource: $0) }
     }
 }

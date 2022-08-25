@@ -1079,6 +1079,7 @@
 		D471CFC628B40F4200DCE61C /* ToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */; };
 		D471CFC828B4199C00DCE61C /* GetSpotlightToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */; };
 		D471CFCC28B66E8100DCE61C /* GetAllToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */; };
+		D471CFD028B80B9800DCE61C /* GetToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2236,6 +2237,7 @@
 		D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDomainModel.swift; sourceTree = "<group>"; };
 		D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpotlightToolsUseCase.swift; sourceTree = "<group>"; };
 		D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllToolsUseCase.swift; sourceTree = "<group>"; };
+		D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6102,6 +6104,7 @@
 				45D96091289B897A001A5A3E /* GetToolIsFavoritedUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				459BD081289AD4310075901B /* GetToolTranslationsFilesUseCase */,
+				D471CFD128B80B9F00DCE61C /* GetToolUseCase */,
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
@@ -6884,9 +6887,17 @@
 			isa = PBXGroup;
 			children = (
 				D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */,
-				D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */,
 			);
 			path = GetAllToolsUseCase;
+			sourceTree = "<group>";
+		};
+		D471CFD128B80B9F00DCE61C /* GetToolUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */,
+				D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */,
+			);
+			path = GetToolUseCase;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -8198,6 +8209,7 @@
 				45AE974327C97A9400C2CB33 /* TractPage+MobileContentRenderableModel.swift in Sources */,
 				45325F24285CF8B40078D932 /* Segment.swift in Sources */,
 				45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */,
+				D471CFD028B80B9800DCE61C /* GetToolUseCase.swift in Sources */,
 				45558320269F2C7B00C3FF14 /* ToolPageView.swift in Sources */,
 				D41B38A5287DBF3F00BD5899 /* AllToolsCategoryButtonViewModel.swift in Sources */,
 				4567786A287DC5C90044AEB2 /* GlobalActivityCellViewModel.swift in Sources */,

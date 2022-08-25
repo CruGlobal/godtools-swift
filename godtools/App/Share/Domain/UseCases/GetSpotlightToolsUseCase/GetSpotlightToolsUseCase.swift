@@ -10,9 +10,11 @@ import Combine
 
 class GetSpotlightToolsUseCase {
     
+    private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository) {
+    init(getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+        self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
@@ -22,7 +24,7 @@ class GetSpotlightToolsUseCase {
             .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
                 let spotlightTools = self.resourcesRepository.getSpotlightTools()
-                    .map { ToolDomainModel(resource: $0) }
+                    .map { self.getToolUseCase.getTool(resource: $0) }
                 
                 return Just(spotlightTools)
                     .eraseToAnyPublisher()

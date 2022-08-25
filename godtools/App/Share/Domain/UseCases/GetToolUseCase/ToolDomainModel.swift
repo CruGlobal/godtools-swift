@@ -10,8 +10,8 @@ import Foundation
 
 struct ToolDomainModel {
     
-    let attrBanner: String
-    let attrDefaultOrder: Int
+    // TODO: - finish mapping necessary attributes in GT-1777
+    let bannerImageId: String
     let dataModelId: String
     
     // TODO: - remove this once we're done refactoring to pass ToolDomainModels around instead of ResourceModels
@@ -20,9 +20,9 @@ struct ToolDomainModel {
 
 extension ToolDomainModel {
     
+    // TODO: - remove this once we're done refactoring.  (Should be using GetToolUseCase if we need to map from ResourceModel to ToolDomainModel)
     init(resource: ResourceModel) {
-        attrBanner = resource.attrBanner
-        attrDefaultOrder = resource.attrDefaultOrder
+        bannerImageId = resource.attrBanner
         dataModelId = resource.id
         
         self.resource = resource

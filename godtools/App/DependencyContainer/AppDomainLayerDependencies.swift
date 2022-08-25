@@ -40,7 +40,10 @@ class AppDomainLayerDependencies {
     }
     
     func getAllToolsUseCase() -> GetAllToolsUseCase {
-        return GetAllToolsUseCase(resourcesRepository: dataLayer.getResourcesRepository())
+        return GetAllToolsUseCase(
+            getToolUseCase: getToolUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
     }
     
     func getBannerImageUseCase() -> GetBannerImageUseCase {
@@ -95,7 +98,10 @@ class AppDomainLayerDependencies {
     }
     
     func getSpotlighToolsUseCase() -> GetSpotlightToolsUseCase {
-        return GetSpotlightToolsUseCase(resourcesRepository: dataLayer.getResourcesRepository())
+        return GetSpotlightToolsUseCase(
+            getToolUseCase: getToolUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
     }
     
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
@@ -131,6 +137,10 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             getLanguageUseCase: getLanguageUseCase()
         )
+    }
+    
+    func getToolUseCase() -> GetToolUseCase {
+        return GetToolUseCase()
     }
     
     func getToolVersionsUseCase() -> GetToolVersionsUseCase {

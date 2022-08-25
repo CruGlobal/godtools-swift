@@ -113,7 +113,7 @@ extension ToolCardViewModel {
             }
         }
         
-        getBannerImageUseCase.getBannerImagePublisher(for: tool.attrBanner)
+        getBannerImageUseCase.getBannerImagePublisher(for: tool.bannerImageId)
             .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
