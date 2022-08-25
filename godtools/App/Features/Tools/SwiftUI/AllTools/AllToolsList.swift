@@ -57,7 +57,7 @@ struct AllToolsList_Previews: PreviewProvider {
             analytics: appDiContainer.analytics,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlighToolsUseCase(),
+            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
         )
