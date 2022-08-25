@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKCoreKit
+import GodToolsToolParser
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
