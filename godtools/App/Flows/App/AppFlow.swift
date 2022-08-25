@@ -768,7 +768,7 @@ extension AppFlow {
             pageIndexReached: pageIndexReached,
             lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
             lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            languageSettings: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             localization: appDiContainer.localizationServices
         )
         let view = LessonEvaluationView(viewModel: viewModel)
@@ -804,8 +804,7 @@ extension AppFlow {
             let viewModel = SetupParallelLanguageViewModel(
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
-                languageSettingsService: appDiContainer.languageSettingsService,
-                getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)

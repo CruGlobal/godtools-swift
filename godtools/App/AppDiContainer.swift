@@ -23,7 +23,6 @@ class AppDiContainer {
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
-    let languageDirectionService: LanguageDirectionService
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -31,7 +30,6 @@ class AppDiContainer {
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let shortcutItemsService: ShortcutItemsService
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyerType
@@ -70,9 +68,7 @@ class AppDiContainer {
             getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
         )
-        
-        languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
-                
+                        
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
@@ -94,13 +90,6 @@ class AppDiContainer {
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-        
-        shortcutItemsService = ShortcutItemsService(
-            realmDatabase: realmDatabase,
-            dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
-            favoritedResourcesCache: favoritedResourcesCache
-        )
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         

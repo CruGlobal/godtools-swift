@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: LanguageDirectionDomainModel should be used in place of LanguageDirection. ~Levi
 enum LanguageDirection {
     
     case leftToRight
