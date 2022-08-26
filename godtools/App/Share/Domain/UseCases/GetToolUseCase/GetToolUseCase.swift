@@ -14,7 +14,9 @@ class GetToolUseCase {
         
         return ToolDomainModel(
             bannerImageId: resource.attrBanner,
+            category: resource.attrCategory,
             dataModelId: resource.id,
+            name: resource.name,
             resource: resource
         )
     }

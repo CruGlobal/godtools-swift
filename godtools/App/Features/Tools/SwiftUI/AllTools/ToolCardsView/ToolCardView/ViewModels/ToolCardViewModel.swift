@@ -157,7 +157,7 @@ extension ToolCardViewModel {
             languageBundle = bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
             languageDirection = primaryLanguage.languageDirection
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: tool.resource.id, languageCode: "en") {
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: tool.id, languageCode: "en") {
             
             toolName = englishTranslation.translatedName
             languageBundle = bundleLoader.englishBundle ?? Bundle.main
@@ -165,13 +165,13 @@ extension ToolCardViewModel {
         }
         else {
             
-            toolName = tool.resource.name
+            toolName = tool.name
             languageBundle = bundleLoader.englishBundle ?? Bundle.main
             languageDirection = .leftToRight
         }
         
         title = toolName
-        category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: tool.resource.attrCategory)
+        category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: tool.category)
         detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
         openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
         layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
