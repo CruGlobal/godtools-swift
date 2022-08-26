@@ -158,7 +158,7 @@ class ToolDetailsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.mediaType, on: self)
         
-        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: resource.id)
+        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
             .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
     }

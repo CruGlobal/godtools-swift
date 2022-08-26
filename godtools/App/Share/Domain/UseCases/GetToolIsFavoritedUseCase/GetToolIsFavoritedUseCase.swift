@@ -18,20 +18,20 @@ class GetToolIsFavoritedUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getToolIsFavoritedPublisher(toolId: String) -> AnyPublisher<Bool, Never>  {
+    func getToolIsFavoritedPublisher(tool: ResourceModel) -> AnyPublisher<Bool, Never>  {
         
         return favoritedResourcesRepository.getFavoritedResourcesChanged()
             .flatMap({ void -> AnyPublisher<Bool, Never> in
                 
-                return Just(self.getToolIsFavorited(toolId: toolId))
+                return Just(self.getToolIsFavorited(tool: tool))
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
     // TODO: - change this to pass in the id instead of tool (GT-1777)
-    func getToolIsFavorited(toolId: String) -> Bool {
+    func getToolIsFavorited(tool: ResourceModel) -> Bool {
         
-        return favoritedResourcesRepository.getFavoritedResource(resourceId: toolId) != nil
+        return favoritedResourcesRepository.getFavoritedResource(resourceId: tool.id) != nil
     }
 }
