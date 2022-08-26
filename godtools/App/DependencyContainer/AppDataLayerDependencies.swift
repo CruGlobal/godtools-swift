@@ -36,6 +36,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getFirebaseCrashReporting() -> FirebaseCrashReporting {
+        return FirebaseCrashReporting()
+    }
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()

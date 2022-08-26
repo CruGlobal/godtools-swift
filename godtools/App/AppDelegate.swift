@@ -31,12 +31,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                                
-        if appDiContainer.dataLayer.getAppConfig().build == .analyticsLogging {
+            
+        let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
+        
+        if appConfig.build == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
+        
+        if appConfig.build == .release {
+            
+            let firebaseCrashReporting: FirebaseCrashReporting = appDiContainer.dataLayer.getFirebaseCrashReporting()
+            
+            NapierProxyKt.enableCustomLogging { (logLevel: NapierLogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
+                
+                guard let error = throwable?.asError() else {
+                    return
+                }
+                
+                firebaseCrashReporting.recordError(error: error)
+            }
+        }
                 
         appDiContainer.appsFlyer.configure()
         
