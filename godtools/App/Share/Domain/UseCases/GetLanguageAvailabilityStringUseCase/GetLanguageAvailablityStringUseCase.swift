@@ -18,7 +18,7 @@ class GetLanguageAvailabilityStringUseCase {
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
     }
     
-    func getLanguageAvailability(for resource: ResourceModel, language: LanguageModel?) -> (isAvailable: Bool, string: String) {
+    func getLanguageAvailability(for resource: LanguageSupportable, language: LanguageModel?) -> (isAvailable: Bool, string: String) {
         guard let language = language else {
             return (false, "")
         }
