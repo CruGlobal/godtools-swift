@@ -17,6 +17,8 @@ class FirebaseCrashReporting {
     
     func recordError(error: Error) {
         
-        Crashlytics.crashlytics().record(error: error)
+        DispatchQueue.global().async {
+            Crashlytics.crashlytics().record(error: error)
+        }
     }
 }
