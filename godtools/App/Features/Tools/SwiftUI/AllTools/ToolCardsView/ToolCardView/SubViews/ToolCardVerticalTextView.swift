@@ -45,9 +45,10 @@ struct ToolCardVerticalTextView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let cardType: ToolCardType = .squareWithNavButtons
+        let resource = appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!
         
         let viewModel = ToolCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!,
+            tool: ToolDomainModel(resource: resource),
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,

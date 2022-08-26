@@ -21,6 +21,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
@@ -29,7 +30,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -43,6 +44,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
@@ -97,6 +99,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getSpotlightToolsUseCase: getSpotlightToolsUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
         )

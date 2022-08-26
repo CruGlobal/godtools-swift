@@ -13,7 +13,7 @@ protocol LessonCardDelegate: AnyObject {
     func lessonCardTapped(resource: ResourceModel)
 }
 
-class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgress {
+class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadProgress {
     
     // MARK: - Properties
     
@@ -30,6 +30,10 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
     private var cancellables = Set<AnyCancellable>()
+    
+    var resourceId: String {
+        return resource.id
+    }
     
     // MARK: - Init
     

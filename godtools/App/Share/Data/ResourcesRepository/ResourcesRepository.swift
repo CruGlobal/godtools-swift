@@ -48,6 +48,14 @@ class ResourcesRepository {
         return cache.getResources(ids: ids)
     }
     
+    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
+        return cache.getResources(with: metaToolIds)
+    }
+    
+    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
+        return cache.getResources(with: resourceType)
+    }
+    
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         return cache.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId)
     }
@@ -59,6 +67,10 @@ class ResourcesRepository {
     func getResourceVariants(resourceId: String) -> [ResourceModel] {
         
         return cache.getResourceVariants(resourceId: resourceId)
+    }
+    
+    func getSpotlightTools() -> [ResourceModel] {
+        return cache.getSpotlightTools()
     }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {

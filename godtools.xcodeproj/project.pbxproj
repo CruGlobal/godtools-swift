@@ -1075,6 +1075,10 @@
 		D46BBE1F28A159F70025EB79 /* GetBannerImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */; };
 		D46BBE2428A312140025EB79 /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */; };
 		D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */; };
+		D471CFC628B40F4200DCE61C /* ToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */; };
+		D471CFC828B4199C00DCE61C /* GetSpotlightToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */; };
+		D471CFCC28B66E8100DCE61C /* GetAllToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */; };
+		D471CFD028B80B9800DCE61C /* GetToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2228,6 +2232,10 @@
 		D46BBE1E28A159F70025EB79 /* GetBannerImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBannerImageUseCase.swift; sourceTree = "<group>"; };
 		D46BBE2328A312140025EB79 /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
 		D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDomainModel.swift; sourceTree = "<group>"; };
+		D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpotlightToolsUseCase.swift; sourceTree = "<group>"; };
+		D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllToolsUseCase.swift; sourceTree = "<group>"; };
+		D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6075,6 +6083,7 @@
 				D42FEBE2287617F70002FAD9 /* DisableOptInOnboardingBannerUseCase */,
 				45D9608B289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase */,
 				45D96088289B871A001A5A3E /* GetAllFavoritedToolsUseCase */,
+				D471CFCD28B66E8400DCE61C /* GetAllToolsUseCase */,
 				D46BBE2028A15B600025EB79 /* GetBannerImageUseCase */,
 				D41B38C028906AF600BD5899 /* GetDeviceLanguageUseCase */,
 				D41B38B62885BEA100BD5899 /* GetLanguageAvailabilityStringUseCase */,
@@ -6086,14 +6095,17 @@
 				4554512C28948E270072EC6E /* GetSettingsParallelLanguageUseCase */,
 				4554512B28948E270072EC6E /* GetSettingsPrimaryLanguageUseCase */,
 				D41B38B9288EDA2F00BD5899 /* GetShareableImageUseCase */,
+				D471CFC928B419A000DCE61C /* GetSpotlightToolsUseCase */,
 				45567D1728B599FB003A0EC2 /* GetShortcutItemsUseCase */,
 				45D96099289B9671001A5A3E /* GetToolDetailsMediaUseCase */,
 				45D96091289B897A001A5A3E /* GetToolIsFavoritedUseCase */,
 				456A8A472864C702000EC6B4 /* GetToolLanguagesUseCase */,
 				459BD081289AD4310075901B /* GetToolTranslationsFilesUseCase */,
+				D471CFD128B80B9F00DCE61C /* GetToolUseCase */,
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
+				D471CFCA28B41A8C00DCE61C /* New Group */,
 				453C1BDA2899A889007332E2 /* RemoveToolFromFavoritesUseCase */,
 				4533C4C928AC2C1600F9628B /* StoreInitialFavoritedToolsUseCase */,
 				D46BBE2528A312230025EB79 /* ToggleToolFavoritedUseCase */,
@@ -6853,6 +6865,38 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D471CFC928B419A000DCE61C /* GetSpotlightToolsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */,
+			);
+			path = GetSpotlightToolsUseCase;
+			sourceTree = "<group>";
+		};
+		D471CFCA28B41A8C00DCE61C /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		D471CFCD28B66E8400DCE61C /* GetAllToolsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFCB28B66E8100DCE61C /* GetAllToolsUseCase.swift */,
+			);
+			path = GetAllToolsUseCase;
+			sourceTree = "<group>";
+		};
+		D471CFD128B80B9F00DCE61C /* GetToolUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFCF28B80B9800DCE61C /* GetToolUseCase.swift */,
+				D471CFC528B40F4200DCE61C /* ToolDomainModel.swift */,
+			);
+			path = GetToolUseCase;
+			sourceTree = "<group>";
+		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -7569,6 +7613,7 @@
 				4567784A287DC4100044AEB2 /* ArticleWebViewModelFlowType.swift in Sources */,
 				4567786C287DC5C90044AEB2 /* AccountItemCellViewModel.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
+				D471CFC828B4199C00DCE61C /* GetSpotlightToolsUseCase.swift in Sources */,
 				45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */,
 				4567786E287DC5C90044AEB2 /* AccountActivityViewModel.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
@@ -8159,6 +8204,7 @@
 				45AE974327C97A9400C2CB33 /* TractPage+MobileContentRenderableModel.swift in Sources */,
 				45325F24285CF8B40078D932 /* Segment.swift in Sources */,
 				45AD1FF525938A9800A096A0 /* DownloadedAttachmentResult.swift in Sources */,
+				D471CFD028B80B9800DCE61C /* GetToolUseCase.swift in Sources */,
 				45558320269F2C7B00C3FF14 /* ToolPageView.swift in Sources */,
 				D41B38A5287DBF3F00BD5899 /* AllToolsCategoryButtonViewModel.swift in Sources */,
 				4567786A287DC5C90044AEB2 /* GlobalActivityCellViewModel.swift in Sources */,
@@ -8209,6 +8255,7 @@
 				455583D5269F2DA500C3FF14 /* MobileContentHeaderViewModel.swift in Sources */,
 				45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */,
 				4555832F269F2C7B00C3FF14 /* ToolPageCardTopConstantState.swift in Sources */,
+				D471CFC628B40F4200DCE61C /* ToolDomainModel.swift in Sources */,
 				45558322269F2C7B00C3FF14 /* ToolPageViewModelType.swift in Sources */,
 				45A93C6F286DE4B900090E01 /* ToolDetailsVersionsView.swift in Sources */,
 				4555832D269F2C7B00C3FF14 /* ToolPageCardsView.swift in Sources */,
@@ -8247,6 +8294,7 @@
 				456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */,
 				450F94DA27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift in Sources */,
 				455583EB269F2DA500C3FF14 /* MobileContentSpacerViewModelType.swift in Sources */,
+				D471CFCC28B66E8100DCE61C /* GetAllToolsUseCase.swift in Sources */,
 				4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */,
 				D10AD0D82790C0E5004859C4 /* SetupParallelLanguageAvailabilityType.swift in Sources */,
 				45AD1F6E25938A9800A096A0 /* FollowUpsApi.swift in Sources */,

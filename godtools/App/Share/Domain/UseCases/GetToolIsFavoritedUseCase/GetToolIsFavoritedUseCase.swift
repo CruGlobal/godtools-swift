@@ -29,6 +29,7 @@ class GetToolIsFavoritedUseCase {
             .eraseToAnyPublisher()
     }
     
+    // TODO: - change this to pass in the id instead of tool (GT-1777)
     func getToolIsFavorited(tool: ResourceModel) -> Bool {
         
         return favoritedResourcesRepository.getFavoritedResource(resourceId: tool.id) != nil
