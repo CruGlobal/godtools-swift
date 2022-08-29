@@ -32,11 +32,9 @@ class GodToolsParserLogger {
             
             DispatchQueue.global().async {
                 
+                Crashlytics.crashlytics().log("\(String(describing: tag)): \(String(describing: message))")
                 if let error = throwable?.asError() {
                     Crashlytics.crashlytics().record(error: error)
-                }
-                else {
-                    Crashlytics.crashlytics().log("\(String(describing: tag)): \(String(describing: message))")
                 }
             }
         }
