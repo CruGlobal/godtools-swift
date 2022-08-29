@@ -8,7 +8,6 @@
 
 import UIKit
 import FBSDKCoreKit
-import GodToolsToolParser
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,14 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let firebaseCrashReporting: FirebaseCrashReporting = appDiContainer.dataLayer.getFirebaseCrashReporting()
             
-            NapierProxyKt.enableCustomLogging { (logLevel: NapierLogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
-                
-                guard let error = throwable?.asError() else {
-                    return
-                }
-                
-                firebaseCrashReporting.recordError(error: error)
-            }
+            GodToolsParserLogger.shared.start(firebaseCrashReporting: firebaseCrashReporting)
         }
                 
         appDiContainer.appsFlyer.configure()
