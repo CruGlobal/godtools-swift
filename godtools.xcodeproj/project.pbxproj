@@ -14,6 +14,7 @@
 		4502BD3E279F3B4D000C544A /* MobileContentFlowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */; };
 		4502BD40279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3F279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift */; };
 		4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */; };
+		4504D00428BD00E400D8A5FD /* GodToolsParserLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504D00328BD00E400D8A5FD /* GodToolsParserLogger.swift */; };
 		45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051204275AA7050081BF56 /* MobileContentParagraphView.swift */; };
 		45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */; };
 		45051209275AA7260081BF56 /* MobileContentParagraphViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */; };
@@ -1129,6 +1130,7 @@
 		4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemView.swift; sourceTree = "<group>"; };
 		4502BD3F279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModelType.swift; sourceTree = "<group>"; };
 		4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModel.swift; sourceTree = "<group>"; };
+		4504D00328BD00E400D8A5FD /* GodToolsParserLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GodToolsParserLogger.swift; sourceTree = "<group>"; };
 		45051204275AA7050081BF56 /* MobileContentParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphView.swift; sourceTree = "<group>"; };
 		45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModel.swift; sourceTree = "<group>"; };
 		45051208275AA7260081BF56 /* MobileContentParagraphViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModelType.swift; sourceTree = "<group>"; };
@@ -2359,6 +2361,14 @@
 			path = ContentFlowItem;
 			sourceTree = "<group>";
 		};
+		4504D00228BD00C500D8A5FD /* GodToolsParserLogger */ = {
+			isa = PBXGroup;
+			children = (
+				4504D00328BD00E400D8A5FD /* GodToolsParserLogger.swift */,
+			);
+			path = GodToolsParserLogger;
+			sourceTree = "<group>";
+		};
 		45051203275AA6E50081BF56 /* ContentParagraph */ = {
 			isa = PBXGroup;
 			children = (
@@ -2459,6 +2469,7 @@
 				4565757D28AB0B35005B2A3B /* AppConfig */,
 				45D63E79288F75B0009B4610 /* AttachmentsRepository */,
 				453C1BD02899A50C007332E2 /* FavoritedResourcesRepository */,
+				4504D00228BD00C500D8A5FD /* GodToolsParserLogger */,
 				4554512328948D090072EC6E /* LanguageSettingsRepository */,
 				45D63E5F288F698C009B4610 /* LanguagesRepository */,
 				4533C4CC28AC2C4C00F9628B /* LaunchCountRepository */,
@@ -7496,6 +7507,7 @@
 				45C93AEA261D310900592FFF /* ArticleAemDownloadOperation.swift in Sources */,
 				4542F3FD281056F00016C254 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */,
 				45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */,
+				4504D00428BD00E400D8A5FD /* GodToolsParserLogger.swift in Sources */,
 				4567777E287DB21F0044AEB2 /* ToolTrainingView.swift in Sources */,
 				45AE975D27C97A9500C2CB33 /* Tip+MobileContentRenderableModel.swift in Sources */,
 				45C93AE0261D310900592FFF /* ArticleAemCacheArchivedObject.swift in Sources */,

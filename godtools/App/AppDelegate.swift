@@ -30,12 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                                
-        if appDiContainer.dataLayer.getAppConfig().build == .analyticsLogging {
+            
+        let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
+        
+        if appConfig.build == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
+        
+        if appConfig.build == .release {
+                        
+            GodToolsParserLogger.shared.start()
+        }
                 
         appDiContainer.appsFlyer.configure()
         
