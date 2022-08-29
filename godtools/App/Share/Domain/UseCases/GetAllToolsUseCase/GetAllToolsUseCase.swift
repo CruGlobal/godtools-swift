@@ -36,15 +36,34 @@ class GetAllToolsUseCase {
         return resourcesRepository.getResourcesChanged()
             .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let tools = self.getAllTools(sorted: sorted)
+                let toolResources = self.getAllTools(sorted: sorted)
                 
-                return Just(tools)
+                return Just(toolResources)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getAllToolsResourceModelPublisher(sorted: Bool) -> AnyPublisher<[ResourceModel], Never> {
+        
+        return resourcesRepository.getResourcesChanged()
+            .flatMap { _ -> AnyPublisher<[ResourceModel], Never> in
+                
+                let toolResources = self.getAllToolsResourceModels(sorted: sorted)
+                
+                return Just(toolResources)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
     private func getAllTools(sorted: Bool, with category: String? = nil) -> [ToolDomainModel] {
+        
+        return getAllToolsResourceModels(sorted: sorted, with: category)
+            .map { getToolUseCase.getTool(resource: $0) }
+    }
+    
+    private func getAllToolsResourceModels(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
@@ -68,6 +87,6 @@ class GetAllToolsUseCase {
             allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
         }
         
-        return allTools.map { getToolUseCase.getTool(resource: $0) }
+        return allTools
     }
 }
