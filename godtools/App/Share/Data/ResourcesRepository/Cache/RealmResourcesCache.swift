@@ -22,78 +22,83 @@ class RealmResourcesCache {
     }
     
     var numberOfResources: Int {
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self).count
+        return realmDatabase.openRealm().objects(RealmResource.self).count
     }
     
-    func getResourcesSyncedPublisher() -> NotificationCenter.Publisher {
-        return resourcesSync.getResourcesSyncedPublisher()
+    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+        return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
+            .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
             return nil
         }
         
-        return ResourceModel(realmResource: realmResource)
+        return ResourceModel(model: realmResource)
     }
     
     func getResource(abbreviation: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first else {
+        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'").first else {
             return nil
         }
         
-        return ResourceModel(realmResource: realmResource)
+        return ResourceModel(model: realmResource)
     }
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self)
-            .filter("id IN %@", ids)
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
             .map{
-                ResourceModel(realmResource: $0)
+                ResourceModel(model: $0)
             }
     }
     
     func getResources() -> [ResourceModel] {
-        return realmDatabase.mainThreadRealm.objects(RealmResource.self)
-            .map({ResourceModel(realmResource: $0)})
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .map({ResourceModel(model: $0)})
     }
     
     func getResourceLanguages(id: String) -> [LanguageModel] {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
             return Array()
         }
         
         return realmResource.languages.map({LanguageModel(model: $0)})
     }
     
-    func getResourceLanguageTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+    func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         
-        guard let realmTranslation = realmResource.latestTranslations.filter("language.id = '\(languageId)'").first else {
+        guard let realmTranslation = realmResource.latestTranslations
+            .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
         
-        return TranslationModel(realmTranslation: realmTranslation)
+        return TranslationModel(model: realmTranslation)
     }
     
-    func getResourceLanguageTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
+    func getResourceLanguageLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         
-        guard let realmResource = realmDatabase.mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
         
-        guard let realmTranslation = realmResource.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased())).first else {
+        guard let realmTranslation = realmResource.latestTranslations
+            .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
             return nil
         }
 
-        return TranslationModel(realmTranslation: realmTranslation)
+        return TranslationModel(model: realmTranslation)
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {

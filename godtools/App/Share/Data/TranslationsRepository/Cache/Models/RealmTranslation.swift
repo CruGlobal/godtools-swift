@@ -13,9 +13,7 @@ class RealmTranslation: Object, TranslationModelType {
     
     @objc dynamic var id: String = ""
     @objc dynamic var isPublished: Bool = false
-    @objc dynamic var languageId: String?
     @objc dynamic var manifestName: String = ""
-    @objc dynamic var resourceId: String?
     @objc dynamic var translatedDescription: String = ""
     @objc dynamic var translatedName: String = ""
     @objc dynamic var translatedTagline: String = ""
@@ -33,13 +31,29 @@ class RealmTranslation: Object, TranslationModelType {
         
         id = model.id
         isPublished = model.isPublished
-        languageId = model.languageId
         manifestName = model.manifestName
-        resourceId = model.resourceId
         translatedDescription = model.translatedDescription
         translatedName = model.translatedName
         translatedTagline = model.translatedTagline
         type = model.type
         version = model.version
+    }
+    
+    func getResource() -> ResourceModel? {
+        
+        guard let realmResource = resource else {
+            return nil
+        }
+        
+        return ResourceModel(model: realmResource)
+    }
+    
+    func getLanguage() -> LanguageModel? {
+        
+        guard let realmLanguage = language else {
+            return nil
+        }
+        
+        return LanguageModel(model: realmLanguage)
     }
 }

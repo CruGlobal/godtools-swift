@@ -8,26 +8,34 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
-class ToolDetailsViewModel: NSObject, ObservableObject {
+class ToolDetailsViewModel: ObservableObject {
     
     private let dataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
+    private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
+    private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
     private let analytics: AnalyticsContainer
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
-    private let getToolTranslationsUseCase: GetToolTranslationsUseCase
+    private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
-    private let bannerImageRepository: ResourceBannerImageRepository
+    private let getBannerImageUseCase: GetBannerImageUseCase
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
+    private var mediaCancellable: AnyCancellable?
+    private var toolIsFavoritedCancellable: AnyCancellable?
+    private var hidesLearnToShareCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var mediaType: ToolDetailsMediaType = .empty
+    @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
     @Published var totalViews: String = ""
     @Published var openToolButtonTitle: String = ""
@@ -45,33 +53,32 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsUseCase: GetToolTranslationsUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, bannerImageRepository: ResourceBannerImageRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
+        self.resourcesRepository = resourcesRepository
+        self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
+        self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
-        self.getToolTranslationsUseCase = getToolTranslationsUseCase
+        self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
-        self.bannerImageRepository = bannerImageRepository
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
-        super.init()
-        
         reloadToolDetails(resource: resource)
-        setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private var analyticsScreenName: String {
@@ -84,21 +91,6 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
     
     private var siteSubSection: String {
         return "tool-info"
-    }
-    
-    private func setupBinding() {
-        
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited(resourceId: resourceId)
-            }
-        }
-        
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavorited(resourceId: resourceId)
-            }
-        }
     }
     
     private func reloadToolDetails(resource: ResourceModel) {
@@ -158,8 +150,6 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             }
         })
         
-        reloadMedia(resource: resource)
-        reloadFavorited(resourceId: resource.id)
         reloadLearnToShareToolButtonState(resourceId: resource.id)
         
         if let metatoolId = resource.metatoolId {
@@ -169,40 +159,18 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
         if selectedToolVersion == nil {
             selectedToolVersion = toolVersions.filter({$0.id == resource.id}).first
         }
-    }
-    
-    private func reloadMedia(resource: ResourceModel) {
         
-        let media: ToolDetailsMediaType
+        mediaCancellable = getToolDetailsMediaUseCase.getMedia(resource: resource)
+            .receiveOnMain()
+            .sink(receiveValue: { [weak self] (media: ToolDetailsMediaDomainModel) in
+                self?.mediaType = media
+            })
         
-        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            
-            let playsInFullScreen: Int = 0
-            let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
-            
-            media = .youtube(videoId: resource.attrAboutOverviewVideoYoutube, playerParameters: playerParameters)
-        }
-        else if !resource.attrAboutBannerAnimation.isEmpty, let filePath = dataDownloader.attachmentsFileCache.getAttachmentFileUrl(attachmentId: resource.attrAboutBannerAnimation)?.path {
-            
-            let resource: AnimatedResource = .filepathJsonFile(filepath: filePath)
-            let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
-            
-            media = .animation(viewModel: viewModel)
-        }
-        else if let uiImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) {
-            let image: Image = Image(uiImage: uiImage)
-            media = .image(image: image)
-        }
-        else {
-            media = .empty
-        }
-        
-        mediaType = media
-    }
-    
-    private func reloadFavorited(resourceId: String) {
-                
-        isFavorited = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
+            .receiveOnMain()
+            .sink(receiveValue: { [weak self] (isFavorited: Bool) in
+                self?.isFavorited = isFavorited
+            })
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
@@ -211,39 +179,26 @@ class ToolDetailsViewModel: NSObject, ObservableObject {
             return
         }
         
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: resourceId,
-            languageIds: [primaryLanguage.id],
-            resourcesCache: dataDownloader.resourcesCache,
-            languagesRepository: languagesRepository
-        )
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        getToolTranslationsUseCase.getToolTranslations(determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
-            // download started, currently nothing will be shown while this downloads in the background. ~Levi
-        }, downloadFinished: { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
-            DispatchQueue.main.async { [weak self] in
-                
-                let hidesLearnToShareToolButtonValue: Bool
-                
-                switch result {
-                case .success(let toolTranslations):
-                    
-                    if let primaryLanguageTranslationManifest = toolTranslations.languageTranslationManifests.first {
+        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+            
+        })
+        .receiveOnMain()
+        .sink(receiveCompletion: { completed in
                         
-                        hidesLearnToShareToolButtonValue = primaryLanguageTranslationManifest.manifest.tips.isEmpty
-                    }
-                    else {
-                        
-                        hidesLearnToShareToolButtonValue = true
-                    }
-                    
-                case .failure( _):
-                    
-                    hidesLearnToShareToolButtonValue = true
-                }
-                
-                self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
+        }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
+            
+            let hidesLearnToShareToolButtonValue: Bool
+            
+            if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
+                hidesLearnToShareToolButtonValue = manifest.tips.isEmpty
             }
+            else {
+                hidesLearnToShareToolButtonValue = true
+            }
+            
+            self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
         })
     }
 }
@@ -264,8 +219,18 @@ extension ToolDetailsViewModel {
     
     func openToolTapped() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.aboutToolOpened, siteSection: siteSection, siteSubSection: siteSubSection, url: nil, data: [AnalyticsConstants.Keys.toolAboutOpened: 1]))
-        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.toolOpened,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
+                AnalyticsConstants.Keys.tool: resource.abbreviation
+            ])
+        )
+
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
@@ -277,12 +242,10 @@ extension ToolDetailsViewModel {
     func toggleFavorited() {
         
         if isFavorited {
-            
-            favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
+            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
         }
         else {
-            
-            favoritedResourcesCache.addToFavorites(resourceId: resource.id)
+            addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
         }
     }
     
@@ -320,6 +283,7 @@ extension ToolDetailsViewModel {
         
         selectedToolVersion = toolVersion
 
+        trackToolVersionTappedAnalytics(for: resource)
         reloadToolDetails(resource: resource)
     }
     
@@ -327,8 +291,23 @@ extension ToolDetailsViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            bannerImageRepository: bannerImageRepository,
+            getBannerImageUseCase: getBannerImageUseCase,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
+    }
+    
+    private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.openDetails,
+            siteSection: "",
+            siteSubSection: "",
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
+                AnalyticsConstants.Keys.tool: tool.abbreviation
+            ]
+        ))
     }
 }

@@ -32,6 +32,7 @@ class GetToolVersionsUseCase {
         }
         
         let resourceVersions: [ResourceModel] = resourcesCache.getResourceVariants(resourceId: resourceId)
+            .filter({!$0.isHidden})
         
         guard !resourceVersions.isEmpty else {
             return []
@@ -100,8 +101,8 @@ class GetToolVersionsUseCase {
         }
                 
         return ToolVersionDomainModel(
-            id: resourceVersion.id,
             bannerImageId: resourceVersion.attrBanner,
+            dataModelId: resourceVersion.id,
             name: name,
             description: description,
             numberOfLanguages: toolLanguages.count,

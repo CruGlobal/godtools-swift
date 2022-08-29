@@ -8,6 +8,8 @@
 
 import Foundation
 
+// TODO: Remove in place of GetLanguageUseCase's LanguageDomainModel.swift. ~Levi
+@available(*, deprecated)
 class GetTranslatedLanguageUseCase {
     
     private let languagesRepository: LanguagesRepository

@@ -13,31 +13,40 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let initialDataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let favoritedResourcesCache: FavoritedResourcesCache
-    private let deviceAttachmentBanners: DeviceAttachmentBanners
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    
+    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
+    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.favoritedResourcesCache = favoritedResourcesCache
-        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
+        
+        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
+        
         self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
     }
     
@@ -56,6 +65,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
+            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
         )
     }
@@ -64,14 +74,16 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return FavoritesContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            favoritedResourcesCache: favoritedResourcesCache,
             analytics: analytics,
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
+            getBannerImageUseCase: getBannerImageUseCase,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
         )
     }
     
@@ -79,13 +91,14 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return AllToolsContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            deviceAttachmentBanners: deviceAttachmentBanners,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
-            favoritedResourcesCache: favoritedResourcesCache,
             favoritingToolMessageCache: favoritingToolMessageCache,
             analytics: analytics,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
         )
     }
     

@@ -12,10 +12,11 @@ import RealmSwift
 class RealmDatabase {
     
     private static let config: Realm.Configuration = RealmDatabase.createConfig
-    private static let schemaVersion: UInt64 = 10
+    private static let schemaVersion: UInt64 = 12
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     
+    @available(*, deprecated) // TODO: Would like to move away from using the mainThreadRealm and instead use the func openRealm() since realm instances cant be shared across threads. ~Levi
     let mainThreadRealm: Realm
     
     required init() {
@@ -27,6 +28,10 @@ class RealmDatabase {
             assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
             self.mainThreadRealm = try! Realm(configuration: RealmDatabase.config)
         }
+    }
+    
+    func openRealm() -> Realm {
+        return try! Realm(configuration: RealmDatabase.config)
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
@@ -47,19 +52,6 @@ class RealmDatabase {
                 async(realm)
             }
         }
-    }
-    
-    func getObjects<T: Object>(realm: Realm, primaryKeys: [String]) -> [T] {
-        
-        var objects: [T] = Array()
-        
-        for key in primaryKeys {
-            if let object = realm.object(ofType: T.self, forPrimaryKey: key) {
-                objects.append(object)
-            }
-        }
-        
-        return objects
     }
     
     private static var createConfig: Realm.Configuration {

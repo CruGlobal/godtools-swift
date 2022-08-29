@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol LessonCardDelegate: AnyObject {
     func lessonCardTapped(resource: ResourceModel)
@@ -19,6 +20,7 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     let resource: ResourceModel
     let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private weak var delegate: LessonCardDelegate?
 
@@ -27,12 +29,15 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
     var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
+    private var cancellables = Set<AnyCancellable>()
+    
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
+    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.delegate = delegate
         
@@ -55,12 +60,6 @@ class LessonCardViewModel: BaseLessonCardViewModel, ToolItemInitialDownloadProgr
     override func lessonCardTapped() {
         delegate?.lessonCardTapped(resource: resource)
     }
-    
-    // MARK: - ToolItemInitialDownloadProgress
-    
-    func didDownloadAttachments() {
-        reloadBannerImage()
-    }
 }
 
 // MARK: - Private
@@ -76,7 +75,6 @@ extension LessonCardViewModel {
     
     private func setupPublishedProperties() {
         reloadTitle()
-        reloadBannerImage()
     }
     
     private func reloadTitle() {
@@ -104,19 +102,6 @@ extension LessonCardViewModel {
         translationAvailableText = languageAvailability.string
     }
     
-    private func reloadBannerImage() {
-        
-        if let cachedImage = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) {
-            
-            bannerImage = Image(uiImage: cachedImage)
-            
-        } else {
-            
-            bannerImage = nil
-        }
-
-    }
-    
     private func setupBinding() {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
@@ -130,6 +115,12 @@ extension LessonCardViewModel {
                 }
             }
         }
+        
+        getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
+            .receiveOnMain()
+            .assign(to: \.bannerImage, on: self)
+            .store(in: &cancellables)
+        
         translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async {
                 withAnimation {

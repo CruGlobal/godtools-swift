@@ -8,12 +8,16 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 class ToolDetailsVersionsCardViewModel: ObservableObject {
     
-    private let bannerImageRepository: ResourceBannerImageRepository
+    private let getBannerImageUseCase: GetBannerImageUseCase
     
-    let bannerImage: Image?
+    private var cancellables = Set<AnyCancellable>()
+    
+    @Published var bannerImage: Image?
+    
     let isSelected: Bool
     let name: String
     let description: String
@@ -23,12 +27,11 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     let parallelLanguageName: String?
     let parallelLanguageIsSupported: Bool
     
-    init(toolVersion: ToolVersionDomainModel, bannerImageRepository: ResourceBannerImageRepository, isSelected: Bool) {
+    init(toolVersion: ToolVersionDomainModel, getBannerImageUseCase: GetBannerImageUseCase, isSelected: Bool) {
         
-        self.bannerImageRepository = bannerImageRepository
-        
-        bannerImage = bannerImageRepository.getBannerImage(resourceId: toolVersion.id, bannerId: toolVersion.bannerImageId)
+        self.getBannerImageUseCase = getBannerImageUseCase
         self.isSelected = isSelected
+        
         name = toolVersion.name
         description = toolVersion.description
         languages = toolVersion.numberOfLanguagesString
@@ -36,5 +39,10 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         primaryLanguageIsSupported = toolVersion.primaryLanguageIsSupported
         parallelLanguageName = toolVersion.parallelLanguage
         parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
+        
+        getBannerImageUseCase.getBannerImagePublisher(for: toolVersion.bannerImageId)
+            .receiveOnMain()
+            .assign(to: \.bannerImage, on: self)
+            .store(in: &cancellables)
     }
 }

@@ -11,9 +11,9 @@ import Combine
 
 class GetOptInOnboardingTutorialAvailableUseCase {
     
-    private let deviceLanguage: DeviceLanguageType
+    private let deviceLanguage: DeviceLanguage
     
-    required init(deviceLanguage: DeviceLanguageType) {
+    required init(deviceLanguage: DeviceLanguage) {
         
         self.deviceLanguage = deviceLanguage
     }

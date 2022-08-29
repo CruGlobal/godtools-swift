@@ -9,9 +9,6 @@
 import Foundation
 
 struct RealmLanguagesCacheSyncResult {
-    
-    typealias LanguageId = String
-    
-    let languagesStored: [LanguageId: RealmLanguage]
-    let languageIdsRemoved: [LanguageId]
+        
+    let languageIdsRemoved: [String]
 }

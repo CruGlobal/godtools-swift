@@ -24,8 +24,7 @@ extension ToolNavigationFlow {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             languageSettingsService: appDiContainer.languageSettingsService
         )
@@ -66,8 +65,7 @@ extension ToolNavigationFlow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
             languageIds: languageIds,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository()
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -80,7 +78,7 @@ extension ToolNavigationFlow {
     
     private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                         
             switch result {
             
@@ -93,9 +91,8 @@ extension ToolNavigationFlow {
                     page: page
                 )
                 
-            case .failure(let error):
-                
-                self?.presentDownloadToolError(downloadToolError: error)
+            case .failure(let responseError):
+                self?.presentNetworkError(responseError: responseError)
             }
             
             self?.downloadToolTranslationFlow = nil
@@ -111,7 +108,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslations, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -165,22 +162,5 @@ extension ToolNavigationFlow {
         case .unknown:
             navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
         }
-    }
-        
-    private func presentDownloadToolError(downloadToolError: GetToolTranslationsError) {
-        
-        let viewModel = DownloadToolErrorViewModel(
-            downloadToolError: downloadToolError,
-            localizationServices: appDiContainer.localizationServices
-        )
-        
-        presentAlertMessage(viewModel: viewModel)
-    }
-    
-    private func presentAlertMessage(viewModel: AlertMessageViewModelType) {
-        
-        let view = AlertMessageView(viewModel: viewModel)
-        
-        navigationController.present(view.controller, animated: true, completion: nil)
     }
 }

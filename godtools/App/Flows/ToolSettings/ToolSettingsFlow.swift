@@ -390,11 +390,10 @@ class ToolSettingsFlow: Flow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,
             languageIds: languageIds,
-            resourcesCache: appDiContainer.initialDataDownloader.resourcesCache,
-            languagesRepository: languagesRepository
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
         )
         
-        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslations, GetToolTranslationsError>) in
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                    
             guard let weakSelf = self else {
                 return

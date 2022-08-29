@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import Combine
 
 class RealmAttachmentsCache {
     
@@ -21,10 +20,10 @@ class RealmAttachmentsCache {
     
     func getAttachment(id: String) -> AttachmentModel? {
         
-        guard let realmAttachment = realmDatabase.mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id) else {
+        guard let realmAttachment = realmDatabase.openRealm().object(ofType: RealmAttachment.self, forPrimaryKey: id) else {
             return nil
         }
         
-        return AttachmentModel(realmAttachment: realmAttachment)
+        return AttachmentModel(model: realmAttachment)
     }
 }

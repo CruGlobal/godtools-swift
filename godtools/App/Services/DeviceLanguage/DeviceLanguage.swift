@@ -8,7 +8,8 @@
 
 import Foundation
 
-class DeviceLanguage: DeviceLanguageType {
+@available(*, deprecated) // This logic will move to GetDeviceLanguageUseCase. ~Levi
+class DeviceLanguage {
     
     var locale: Locale {
         return Locale.current

@@ -28,7 +28,7 @@ class AnimatedViewModel: AnimatedViewModelType {
         self.loop = loop
     }
     
-    func getAssetSize() -> CGSize {
-        return animationData?.size ?? .zero
+    func getAssetSize() -> CGSize? {
+        return animationData?.size
     }
 }

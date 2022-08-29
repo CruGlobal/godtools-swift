@@ -27,7 +27,7 @@ class ToolPageCardView: MobileContentView, NibBased {
     private let bottomGradientLayer: CAGradientLayer = CAGradientLayer()
     private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
     
-    private lazy var keyboardObserver: KeyboardObserverType = KeyboardNotificationObserver(loggingEnabled: false)
+    private lazy var keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
     private var backgroundImageParent: UIView?
     private var formView: MobileContentFormView?
@@ -36,7 +36,6 @@ class ToolPageCardView: MobileContentView, NibBased {
     private var keyboardHeightForAddedContentSize: Double?
     private var didAddKeyboardHeightToContentSize: Bool = false
     private var cardSwipingIsEnabled: Bool = false
-    private var isObservingKeyboard: Bool = false
     private var heightConstraint: NSLayoutConstraint?
     
     private weak var delegate: ToolPageCardViewDelegate?
@@ -89,7 +88,7 @@ class ToolPageCardView: MobileContentView, NibBased {
     deinit {
         print("x deinit: \(type(of: self))")
         
-        disableKeyboardObserving()
+        keyboardObserver.stopObservingKeyboardChanges()
         
         if let backgroundImageParent = self.backgroundImageParent {
             backgroundImageView.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
@@ -181,6 +180,18 @@ class ToolPageCardView: MobileContentView, NibBased {
         bottomGradientLayer.frame = bottomGradientView.bounds
     }
     
+    private func searchChildForNestedForm(childView: MobileContentView) -> MobileContentFormView? {
+        
+        if let formView = childView as? MobileContentFormView {
+            return formView
+        }
+        else if let paragraph = childView as? MobileContentParagraphView, let formView = paragraph.children.first as? MobileContentFormView {
+            return formView
+        }
+
+        return nil
+    }
+    
     var isHiddenCard: Bool {
         return viewModel.isHiddenCard
     }
@@ -226,9 +237,9 @@ class ToolPageCardView: MobileContentView, NibBased {
         
         contentStackView.renderChild(childView: childView)
         
-        if let formView = childView as? MobileContentFormView {
+        if let formView = searchChildForNestedForm(childView: childView) {
             self.formView = formView
-            enableKeyboardObserving()
+            keyboardObserver.startObservingKeyboardChanges(delegate: self)
         }
     }
     
@@ -293,44 +304,11 @@ class ToolPageCardView: MobileContentView, NibBased {
     }
 }
 
-// MARK: - Keyboard
+// MARK: - KeyboardNotificationObserverDelegate
 
-extension ToolPageCardView {
+extension ToolPageCardView: KeyboardNotificationObserverDelegate {
     
-    private func enableKeyboardObserving() {
-        
-        guard !isObservingKeyboard else {
-            return
-        }
-        
-        isObservingKeyboard = true
-        
-        keyboardObserver.startObservingKeyboardChanges()
-        
-        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
-            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
-        }
-        
-        keyboardObserver.keyboardHeightDidChangeSignal.addObserver(self) { [weak self] (height: Double) in
-            self?.handleKeyboardHeightChange(height: height)
-        }
-    }
-    
-    private func disableKeyboardObserving() {
-        
-        guard isObservingKeyboard else {
-            return
-        }
-        
-        isObservingKeyboard = false
-        
-        keyboardObserver.stopObservingKeyboardChanges()
-        
-        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
-        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
-    }
-    
-    private func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+    func keyboardStateDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardStateChange: KeyboardStateChange) {
         
         switch keyboardStateChange.keyboardState {
             
@@ -354,8 +332,8 @@ extension ToolPageCardView {
         }
     }
     
-    private func handleKeyboardHeightChange(height: Double) {
-
+    func keyboardHeightDidChange(keyboardObserver: KeyboardNotificationObserver, keyboardHeight: Double) {
+        
     }
     
     private func addKeyboardHeightToContentSize(keyboardHeight: CGFloat) {

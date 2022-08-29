@@ -31,8 +31,16 @@ class RealmAttachment: Object, AttachmentModelType {
         fileFilename = model.fileFilename
         id = model.id
         isZipped = model.isZipped
-        resourceId = model.resourceId
         sha256 = model.sha256
         type = model.type
+    }
+    
+    func getResource() -> ResourceModel? {
+        
+        guard let realmResource = resource else {
+            return nil
+        }
+        
+        return ResourceModel(model: realmResource)
     }
 }

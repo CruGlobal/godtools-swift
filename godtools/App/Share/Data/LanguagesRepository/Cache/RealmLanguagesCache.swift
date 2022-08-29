@@ -13,7 +13,6 @@ import Combine
 class RealmLanguagesCache {
     
     private let realmDatabase: RealmDatabase
-    private let languagesSyncedNotificationName = Notification.Name("languagesCache.notification.languagesSynced")
 
     required init(realmDatabase: RealmDatabase) {
         
@@ -21,16 +20,17 @@ class RealmLanguagesCache {
     }
     
     var numberOfLanguages: Int {
-        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self).count
+        return realmDatabase.openRealm().objects(RealmLanguage.self).count
     }
     
-    func getLanguagesSyncedPublisher() -> NotificationCenter.Publisher {
-        NotificationCenter.default.publisher(for: languagesSyncedNotificationName)
+    func getLanguagesChanged() -> AnyPublisher<Void, Never> {
+        return realmDatabase.openRealm().objects(RealmLanguage.self).objectWillChange
+            .eraseToAnyPublisher()
     }
     
     func getLanguage(id: String) -> LanguageModel? {
         
-        guard let realmLanguage = realmDatabase.mainThreadRealm.object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
+        guard let realmLanguage = realmDatabase.openRealm().object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
             return nil
         }
         
@@ -39,7 +39,7 @@ class RealmLanguagesCache {
     
     func getLanguage(code: String) -> LanguageModel? {
                 
-        guard let realmLanguage = realmDatabase.mainThreadRealm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased())).first else {
+        guard let realmLanguage = realmDatabase.openRealm().objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased())).first else {
             return nil
         }
         
@@ -48,15 +48,20 @@ class RealmLanguagesCache {
     
     func getLanguages(ids: [String]) -> [LanguageModel] {
         
-        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self)
+        return realmDatabase.openRealm().objects(RealmLanguage.self)
             .filter("id IN %@", ids)
             .map{
                 LanguageModel(model: $0)
             }
     }
     
+    func getLanguages(languageCodes: [String]) -> [LanguageModel] {
+    
+        return languageCodes.compactMap({getLanguage(code:$0)})
+    }
+    
     func getLanguages() -> [LanguageModel] {
-        return realmDatabase.mainThreadRealm.objects(RealmLanguage.self)
+        return realmDatabase.openRealm().objects(RealmLanguage.self)
             .map({LanguageModel(model: $0)})
     }
         
@@ -67,7 +72,6 @@ class RealmLanguagesCache {
             self.realmDatabase.background { (realm: Realm) in
                 
                 var languagesToStore: [Object] = Array()
-                var languagesStored: [String: RealmLanguage] = Dictionary()
                 var languageIdsRemoved: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
                 
                 for language in languages {
@@ -75,7 +79,6 @@ class RealmLanguagesCache {
                     let realmLanguage: RealmLanguage = RealmLanguage()
                     realmLanguage.mapFrom(model: language)
                     languagesToStore.append(realmLanguage)
-                    languagesStored[realmLanguage.id] = realmLanguage
                     
                     if let index = languageIdsRemoved.firstIndex(of: language.id) {
                         languageIdsRemoved.remove(at: index)
@@ -91,14 +94,7 @@ class RealmLanguagesCache {
                         realm.delete(languagesToRemove)
                     }
                     
-                    NotificationCenter.default.post(
-                        name: self.languagesSyncedNotificationName,
-                        object: [languages],
-                        userInfo: nil
-                    )
-                    
                     let result = RealmLanguagesCacheSyncResult(
-                        languagesStored: languagesStored,
                         languageIdsRemoved: languageIdsRemoved
                     )
                     

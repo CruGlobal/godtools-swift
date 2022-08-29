@@ -9,16 +9,13 @@
 import Foundation
 
 protocol AttachmentModelType {
-    
-    associatedtype ResourceModel = ResourceModelType
-    
+        
     var file: String { get }
     var fileFilename: String { get }
     var id: String { get }
     var isZipped: Bool { get }
-    var resourceId: String? { get }
     var sha256: String { get }
     var type: String { get }
-    
-    var resource: ResourceModel? { get }
+
+    func getResource() -> ResourceModel?
 }
