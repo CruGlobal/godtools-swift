@@ -40,10 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.getFirebaseConfiguration().configure()
         
         if appConfig.build == .release {
-            
-            let firebaseCrashReporting: FirebaseCrashReporting = appDiContainer.dataLayer.getFirebaseCrashReporting()
-            
-            GodToolsParserLogger.shared.start(firebaseCrashReporting: firebaseCrashReporting)
+                        
+            GodToolsParserLogger.shared.start()
         }
                 
         appDiContainer.appsFlyer.configure()

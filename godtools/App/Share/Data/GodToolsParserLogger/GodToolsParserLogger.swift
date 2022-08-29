@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import FirebaseCrashlytics
 
 class GodToolsParserLogger {
     
@@ -19,7 +20,7 @@ class GodToolsParserLogger {
         
     }
     
-    func start(firebaseCrashReporting: FirebaseCrashReporting) {
+    func start() {
         
         guard !isStarted else {
             return
@@ -29,11 +30,15 @@ class GodToolsParserLogger {
                 
         NapierProxyKt.enableCustomLogging { (logLevel: NapierLogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
             
-            guard let error = throwable?.asError() else {
-                return
+            DispatchQueue.global().async {
+                
+                if let error = throwable?.asError() {
+                    Crashlytics.crashlytics().record(error: error)
+                }
+                else {
+                    Crashlytics.crashlytics().log("\(String(describing: tag)): \(String(describing: message))")
+                }
             }
-            
-            firebaseCrashReporting.recordError(error: error)
         }
     }
 }

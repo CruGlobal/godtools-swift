@@ -35,11 +35,7 @@ class AppDataLayerDependencies {
             cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
         )
     }
-    
-    func getFirebaseCrashReporting() -> FirebaseCrashReporting {
-        return FirebaseCrashReporting()
-    }
-    
+
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
