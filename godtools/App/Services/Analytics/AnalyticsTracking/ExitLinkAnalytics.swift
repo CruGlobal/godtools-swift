@@ -10,9 +10,9 @@ import Foundation
 
 class ExitLinkAnalytics {
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalytics) {
         self.firebaseAnalytics = firebaseAnalytics
     }
     

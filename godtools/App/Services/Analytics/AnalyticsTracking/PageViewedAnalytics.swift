@@ -10,10 +10,10 @@ import Foundation
 
 class PageViewedAnalytics {
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
     private let snowplowAnalytics: SnowplowAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalytics) {
+    required init(firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics

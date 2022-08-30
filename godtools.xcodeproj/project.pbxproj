@@ -669,7 +669,6 @@
 		45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203B25938AC300A096A0 /* PageViewedAnalytics.swift */; };
 		45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */; };
 		45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204225938AC300A096A0 /* AnalyticsConstants.swift */; };
-		45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */; };
 		45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */; };
 		45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */; };
 		45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */; };
@@ -1785,7 +1784,6 @@
 		45AD203B25938AC300A096A0 /* PageViewedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewedAnalytics.swift; sourceTree = "<group>"; };
 		45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolOpenedAnalytics.swift; sourceTree = "<group>"; };
 		45AD204225938AC300A096A0 /* AnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConstants.swift; sourceTree = "<group>"; };
-		45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowplowAnalytics.swift; sourceTree = "<group>"; };
 		45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerAnalyticsType.swift; sourceTree = "<group>"; };
@@ -5279,7 +5277,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */,
-				45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */,
 				45428A7A26712A3A0022A66D /* FirebaseAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = Firebase;
@@ -8275,7 +8272,6 @@
 				45C93AEC261D310900592FFF /* ArticleJcrContentType.swift in Sources */,
 				D44F3ADA28624E5D0008390D /* FavoritesContentView.swift in Sources */,
 				D42600CA282BFA7900E7A520 /* ResourceCardProgressView.swift in Sources */,
-				45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */,
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,
