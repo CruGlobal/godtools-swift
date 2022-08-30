@@ -20,7 +20,7 @@ class GetToolCategoriesUseCase {
         self.dataDownloader = dataDownloader
     }
     
-    func getToolCategories() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
+    func getToolCategoriesPublisher() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
         
         return getAllToolsUseCase.getAllToolsResourceModelPublisher(sorted: false)
             .flatMap({ toolResources -> AnyPublisher<[ToolCategoryDomainModel], Never> in

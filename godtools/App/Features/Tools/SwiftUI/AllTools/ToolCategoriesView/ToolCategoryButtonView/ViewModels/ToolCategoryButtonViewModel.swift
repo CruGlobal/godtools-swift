@@ -12,21 +12,21 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
     
     // MARK: - Properties
     
-    let attrCategory: String
+    let category: ToolCategoryDomainModel
     let localizationServices: LocalizationServices
     let languageSettingsService: LanguageSettingsService
         
     // MARK: - Init
     
-    init(attrCategory: String, selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
-        self.attrCategory = attrCategory
+    init(category: ToolCategoryDomainModel, selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
+        self.category = category
         self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
         
         let bundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        let translatedCategory = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: attrCategory)
+        let translatedCategory = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: category.category)
         
-        let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
+        let buttonState = ToolCategoryButtonState(category: category.category, selectedCategory: selectedAttrCategory)
         
         super.init(categoryText: translatedCategory, buttonState: buttonState)                
     }
@@ -34,7 +34,7 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
     // MARK: - Overrides
     
     override func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
-        let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
+        let buttonState = ToolCategoryButtonState(category: category.category, selectedCategory: selectedAttrCategory)
         
         setButtonState(buttonState)
     }

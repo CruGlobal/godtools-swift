@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import Combine
 import SwiftUI
 
 protocol ToolCategoriesViewModelDelegate: AnyObject {
@@ -20,7 +20,11 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
+    private let getToolCategoriesUseCase: GetToolCategoriesUseCase
+    
     private weak var delegate: ToolCategoriesViewModelDelegate?
+    private var cancellables = Set<AnyCancellable>()
         
     // MARK: - Published
     
@@ -30,10 +34,13 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, delegate: ToolCategoriesViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
+        self.getToolCategoriesUseCase = getToolCategoriesUseCase
+        
         self.delegate = delegate
                 
         super.init()
@@ -63,7 +70,7 @@ extension ToolCategoriesViewModel {
             
         case let categoryButtonViewModel as ToolCategoryButtonViewModel:
             
-            let category = categoryButtonViewModel.attrCategory
+            let category = categoryButtonViewModel.category.category
             if category == selectedCategory {
                 selectedCategory = nil
             } else {
@@ -89,23 +96,13 @@ extension ToolCategoriesViewModel {
     
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+        getToolCategoriesUseCase.getToolCategoriesPublisher()
+            .receiveOnMain()
+            .sink { categories in
                 
-                if cachedResourcesAvailable {
-                    self.reloadAvailableCategoriesFromCache()
-                }
+                self.refreshCategoryButtons(with: categories)
             }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadAvailableCategoriesFromCache()
-                }
-            }
-        }
+            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
@@ -114,25 +111,12 @@ extension ToolCategoriesViewModel {
         }
     }
         
-    private func reloadAvailableCategoriesFromCache() {
-        let sortedTools = dataDownloader.resourcesCache
-            .getAllVisibleTools()
-            .sortedByPrimaryLanguageAvailable(languageSettingsService: languageSettingsService, dataDownloader: dataDownloader)
-        
-        var uniqueCategories = [String]()
-        sortedTools.forEach { tool in
-            let category = tool.attrCategory
-            
-            if uniqueCategories.contains(category) == false {
-                uniqueCategories.append(category)
-            }
-        }
-            
+    private func refreshCategoryButtons(with categories: [ToolCategoryDomainModel]) {
         let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
 
-        let categoryButtonVMs = uniqueCategories.map { category in
+        let categoryButtonVMs = categories.map { category in
                 
-            return ToolCategoryButtonViewModel(attrCategory: category, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+            return ToolCategoryButtonViewModel(category: category, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
         }
         
         buttonViewModels = [allToolsButtonVM] + categoryButtonVMs
@@ -144,7 +128,8 @@ extension ToolCategoriesViewModel {
     }
     
     private func reloadForLanguageChange() {
-        reloadAvailableCategoriesFromCache()
+        // TODO: - include this in the use case
+//        reloadAvailableCategoriesFromCache()
         setTitleText()
     }
 }
