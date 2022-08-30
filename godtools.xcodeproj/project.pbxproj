@@ -671,7 +671,6 @@
 		45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204225938AC300A096A0 /* AnalyticsConstants.swift */; };
 		45AD205725938AC300A096A0 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */; };
 		45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */; };
-		45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */; };
 		45AD205A25938AC300A096A0 /* SnowplowAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */; };
 		45AD205B25938AC300A096A0 /* AppsFlyerAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */; };
 		45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */; };
@@ -1788,7 +1787,6 @@
 		45AD204225938AC300A096A0 /* AnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConstants.swift; sourceTree = "<group>"; };
 		45AD204425938AC300A096A0 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
-		45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowplowAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowplowAnalytics.swift; sourceTree = "<group>"; };
 		45AD204A25938AC300A096A0 /* AppsFlyerAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerAnalyticsType.swift; sourceTree = "<group>"; };
 		45AD204B25938AC300A096A0 /* AppsFlyerAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerAnalytics.swift; sourceTree = "<group>"; };
@@ -5291,7 +5289,6 @@
 			isa = PBXGroup;
 			children = (
 				45AD204825938AC300A096A0 /* SnowplowAnalytics.swift */,
-				45AD204725938AC300A096A0 /* SnowplowAnalyticsType.swift */,
 				45428A7C26712ABA0022A66D /* SnowplowAnalytics+MobileContentAnalyticsSystem.swift */,
 			);
 			path = Snowplow;
@@ -7990,7 +7987,6 @@
 				456777C0287DB3770044AEB2 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */,
-				45AD205925938AC300A096A0 /* SnowplowAnalyticsType.swift in Sources */,
 				45D63E84288F75B0009B4610 /* AttachmentsRepository.swift in Sources */,
 				45AD1F7025938A9800A096A0 /* FollowUpsService.swift in Sources */,
 				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
