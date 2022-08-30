@@ -11,28 +11,19 @@ import Foundation
 class AnalyticsContainer {
      
     // analytics systems
-    let appsFlyerAnalytics: AppsFlyerAnalyticsType
-    let firebaseAnalytics: FirebaseAnalyticsType
-    let snowplowAnalytics: SnowplowAnalyticsType
+    let appsFlyerAnalytics: AppsFlyerAnalytics
+    let firebaseAnalytics: FirebaseAnalytics
+    let snowplowAnalytics: SnowplowAnalytics
 
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics
     let trackActionAnalytics: TrackActionAnalytics
             
-    required init(
-        appsFlyerAnalytics: AppsFlyerAnalyticsType,
-        firebaseAnalytics: FirebaseAnalyticsType,
-        snowplowAnalytics: SnowplowAnalyticsType
-    ) {
+    init(appsFlyerAnalytics: AppsFlyerAnalytics, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
-        self.pageViewedAnalytics = PageViewedAnalytics(
-            firebaseAnalytics: firebaseAnalytics,
-            snowplowAnalytics: snowplowAnalytics
-        )
-        self.trackActionAnalytics = TrackActionAnalytics(
-            firebaseAnalytics: firebaseAnalytics,
-            snowplowAnalytics: snowplowAnalytics
-        )
+        pageViewedAnalytics = PageViewedAnalytics(firebaseAnalytics: firebaseAnalytics, snowplowAnalytics: snowplowAnalytics)
+        
+        trackActionAnalytics = TrackActionAnalytics(firebaseAnalytics: firebaseAnalytics, snowplowAnalytics: snowplowAnalytics)
 
         self.appsFlyerAnalytics = appsFlyerAnalytics
         self.firebaseAnalytics = firebaseAnalytics

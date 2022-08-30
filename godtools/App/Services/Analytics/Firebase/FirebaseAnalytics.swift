@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAnalytics
 import GoogleAnalytics
 
-class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
+class FirebaseAnalytics: NSObject {
     
     private let config: AppConfig
     private let userAuthentication: UserAuthenticationType

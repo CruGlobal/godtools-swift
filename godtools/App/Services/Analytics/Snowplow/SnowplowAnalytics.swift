@@ -9,7 +9,7 @@
 import Foundation
 import SnowplowTracker
 
-class SnowplowAnalytics: SnowplowAnalyticsType  {
+class SnowplowAnalytics  {
    
     private let userAuthentication: UserAuthenticationType
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
