@@ -13,12 +13,12 @@ class AppsFlyerAnalytics: NSObject, AppsFlyerAnalyticsType {
     private let serialQueue: DispatchQueue = DispatchQueue(label: "appsflyer.serial.queue")
     private let loggingEnabled: Bool
     
-    private var appsFlyer: AppsFlyerType
+    private var appsFlyer: AppsFlyer
     
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
     
-    required init(appsFlyer: AppsFlyerType, loggingEnabled: Bool) {
+    required init(appsFlyer: AppsFlyer, loggingEnabled: Bool) {
         
         self.appsFlyer = appsFlyer
         self.loggingEnabled = loggingEnabled

@@ -32,7 +32,7 @@ class AppDiContainer {
     let viewsService: ViewsService
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
-    let appsFlyer: AppsFlyerType
+    let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
