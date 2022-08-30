@@ -63,7 +63,7 @@ class GetAllToolsUseCase {
             .map { getToolUseCase.getTool(resource: $0) }
     }
     
-    private func getAllToolsResourceModels(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
+    func getAllToolsResourceModels(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }

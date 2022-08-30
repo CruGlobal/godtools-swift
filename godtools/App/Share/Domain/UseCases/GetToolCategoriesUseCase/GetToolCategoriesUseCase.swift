@@ -11,21 +11,25 @@ import Combine
 class GetToolCategoriesUseCase {
     
     private let getAllToolsUseCase: GetAllToolsUseCase
-    private let languageSettingsRepository: LanguageSettingsRepository
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, languageSettingsRepository: LanguageSettingsRepository, resourcesRepository: ResourcesRepository) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
         self.getAllToolsUseCase = getAllToolsUseCase
-        self.languageSettingsRepository = languageSettingsRepository
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.resourcesRepository = resourcesRepository
     }
     
     func getToolCategoriesPublisher() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
         
-        return getAllToolsUseCase.getAllToolsResourceModelPublisher(sorted: false)
-            .flatMap({ toolResources -> AnyPublisher<[ToolCategoryDomainModel], Never> in
+        return Publishers.CombineLatest(
+            resourcesRepository.getResourcesChanged(),
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        )
+            .flatMap({ _, primaryLanguage -> AnyPublisher<[ToolCategoryDomainModel], Never> in
                 
-                let sortedResources = self.sortToolsByPrimaryLanguageAvailable(toolResources)
+                let toolResources = self.getAllToolsUseCase.getAllToolsResourceModels(sorted: false)
+                let sortedResources = self.sortToolsByPrimaryLanguageAvailable(toolResources, primaryLanguage: primaryLanguage)
                 let categories = self.getUniqueCategories(from: sortedResources)
                 
                 return Just(categories)
@@ -49,8 +53,8 @@ class GetToolCategoriesUseCase {
         return uniqueCategories.map { ToolCategoryDomainModel(category: $0) }
     }
     
-    private func sortToolsByPrimaryLanguageAvailable(_ toolResources: [ResourceModel]) -> [ResourceModel] {
-        guard let primaryLanguageId = languageSettingsRepository.getPrimaryLanguageId() else { return toolResources }
+    private func sortToolsByPrimaryLanguageAvailable(_ toolResources: [ResourceModel], primaryLanguage: LanguageDomainModel?) -> [ResourceModel] {
+        guard let primaryLanguageId = primaryLanguage?.id else { return toolResources }
         
         return toolResources.sorted(by: { resource1, resource2 in
                         

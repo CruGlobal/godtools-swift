@@ -50,8 +50,6 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     }
     
     deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
     }
 }
@@ -128,8 +126,6 @@ extension ToolCategoriesViewModel {
     }
     
     private func reloadForLanguageChange() {
-        // TODO: - include this in the use case
-//        reloadAvailableCategoriesFromCache()
         setTitleText()
     }
 }
