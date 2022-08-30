@@ -41,9 +41,7 @@ class AppDiContainer {
     required init(appDeepLinkingService: DeepLinkingServiceType) {
                         
         dataLayer = AppDataLayerDependencies()
-        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-
-        domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer, resourcesCache: resourcesCache)
+        domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         let config: AppConfig = dataLayer.getAppConfig()
         
@@ -52,7 +50,7 @@ class AppDiContainer {
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
            
-        // put resources cache back here
+        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
         

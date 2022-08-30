@@ -11,22 +11,10 @@ import Foundation
 class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
-    private var dataDownloader: InitialDataDownloader? = nil
     
-    init(dataLayer: AppDataLayerDependencies, resourcesCache: ResourcesCache) {
+    init(dataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        
-        // TODO: - remove these.  this is for temporary testing purposes.
-  
-        dataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository(), resourcesCache: resourcesCache)
-    }
-    
-    func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
-        return GetToolCategoriesUseCase(
-            getAllToolsUseCase: getAllToolsUseCase(),
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
-            dataDownloader: dataDownloader!)
     }
     
     func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
@@ -138,6 +126,14 @@ class AppDomainLayerDependencies {
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase(),
             addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
+        )
+    }
+    
+    func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
+        return GetToolCategoriesUseCase(
+            getAllToolsUseCase: getAllToolsUseCase(),
+            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
+            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     

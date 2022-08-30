@@ -12,12 +12,12 @@ class GetToolCategoriesUseCase {
     
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let languageSettingsRepository: LanguageSettingsRepository
-    private let dataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, languageSettingsRepository: LanguageSettingsRepository, dataDownloader: InitialDataDownloader) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, languageSettingsRepository: LanguageSettingsRepository, resourcesRepository: ResourcesRepository) {
         self.getAllToolsUseCase = getAllToolsUseCase
         self.languageSettingsRepository = languageSettingsRepository
-        self.dataDownloader = dataDownloader
+        self.resourcesRepository = resourcesRepository
     }
     
     func getToolCategoriesPublisher() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
@@ -55,7 +55,7 @@ class GetToolCategoriesUseCase {
         return toolResources.sorted(by: { resource1, resource2 in
                         
             func resourceHasTranslation(_ resource: ResourceModel) -> Bool {
-                return dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
+                return resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
             }
             
             func isInDefaultOrder() -> Bool {
