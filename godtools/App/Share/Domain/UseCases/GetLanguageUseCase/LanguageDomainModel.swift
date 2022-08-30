@@ -9,7 +9,8 @@
 import Foundation
 
 struct LanguageDomainModel {
-    
+
+    let analyticsContentLanguage: String
     let dataModelId: String
     let direction: LanguageDirectionDomainModel
     let localeIdentifier: String
