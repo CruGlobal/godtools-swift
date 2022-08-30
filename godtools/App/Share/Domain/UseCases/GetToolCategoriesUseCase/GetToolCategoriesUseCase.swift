@@ -11,12 +11,12 @@ import Combine
 class GetToolCategoriesUseCase {
     
     private let getAllToolsUseCase: GetAllToolsUseCase
-    private let languageSettingsService: LanguageSettingsService
+    private let languageSettingsRepository: LanguageSettingsRepository
     private let dataDownloader: InitialDataDownloader
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, languageSettingsService: LanguageSettingsService, dataDownloader: InitialDataDownloader) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, languageSettingsRepository: LanguageSettingsRepository, dataDownloader: InitialDataDownloader) {
         self.getAllToolsUseCase = getAllToolsUseCase
-        self.languageSettingsService = languageSettingsService
+        self.languageSettingsRepository = languageSettingsRepository
         self.dataDownloader = dataDownloader
     }
     
@@ -50,7 +50,7 @@ class GetToolCategoriesUseCase {
     }
     
     private func sortToolsByPrimaryLanguageAvailable(_ toolResources: [ResourceModel]) -> [ResourceModel] {
-        guard let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id else { return toolResources }
+        guard let primaryLanguageId = languageSettingsRepository.getPrimaryLanguageId() else { return toolResources }
         
         return toolResources.sorted(by: { resource1, resource2 in
                         

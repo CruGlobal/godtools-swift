@@ -11,7 +11,6 @@ import Foundation
 class AppDomainLayerDependencies {
         
     private let dataLayer: AppDataLayerDependencies
-    private var languageSettingsService: LanguageSettingsService? = nil
     private var dataDownloader: InitialDataDownloader? = nil
     
     init(dataLayer: AppDataLayerDependencies, resourcesCache: ResourcesCache) {
@@ -19,18 +18,14 @@ class AppDomainLayerDependencies {
         self.dataLayer = dataLayer
         
         // TODO: - remove these.  this is for temporary testing purposes.
-        languageSettingsService = LanguageSettingsService(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase()
-        )
+  
         dataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository(), resourcesCache: resourcesCache)
     }
     
     func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
         return GetToolCategoriesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
-            languageSettingsService: languageSettingsService!,
+            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             dataDownloader: dataDownloader!)
     }
     
