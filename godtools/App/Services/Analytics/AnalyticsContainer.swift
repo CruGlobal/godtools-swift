@@ -11,7 +11,7 @@ import Foundation
 class AnalyticsContainer {
      
     // analytics systems
-    let appsFlyerAnalytics: AppsFlyerAnalyticsType
+    let appsFlyerAnalytics: AppsFlyerAnalytics
     let firebaseAnalytics: FirebaseAnalytics
     let snowplowAnalytics: SnowplowAnalytics
 
@@ -19,7 +19,7 @@ class AnalyticsContainer {
     let pageViewedAnalytics: PageViewedAnalytics
     let trackActionAnalytics: TrackActionAnalytics
             
-    init(appsFlyerAnalytics: AppsFlyerAnalyticsType, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(appsFlyerAnalytics: AppsFlyerAnalytics, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
         pageViewedAnalytics = PageViewedAnalytics(firebaseAnalytics: firebaseAnalytics, snowplowAnalytics: snowplowAnalytics)
         
