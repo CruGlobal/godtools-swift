@@ -24,7 +24,9 @@ class PageViewedAnalytics {
         firebaseAnalytics.trackScreenView(
             screenName: trackScreen.screenName,
             siteSection: trackScreen.siteSection,
-            siteSubSection: trackScreen.siteSubSection
+            siteSubSection: trackScreen.siteSubSection,
+            contentLanguage: trackScreen.contentLanguage,
+            secondaryContentLanguage: trackScreen.secondaryContentLanguage
         )
         
         snowplowAnalytics.trackScreenView(screenName: trackScreen.screenName)
