@@ -11,18 +11,21 @@ import Foundation
 enum TranslationManifestParserType {
     
     case downloadManifestAndRelatedFiles
+    case downloadManifestOnly
     case renderer
-    case tips(parsesRelatedFiles: Bool)
     
-    var parsesRelatedFiles: Bool {
+    var downloadRelatedFilesNeeded: Bool {
         
         switch self {
+        
         case .downloadManifestAndRelatedFiles:
+            return true
+        
+        case .downloadManifestOnly:
             return false
+       
         case .renderer:
             return true
-        case .tips(let parsesRelatedFiles):
-            return parsesRelatedFiles
         }
     }
 }

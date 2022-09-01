@@ -55,7 +55,7 @@ extension TranslationsRepository {
         return manifestParser.parse(manifestName: translation.manifestName).publisher
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
             
-                guard manifestParserType.parsesRelatedFiles else {
+                guard manifestParserType.downloadRelatedFilesNeeded else {
                     
                     let manifestWithoutRelatedFiles = TranslationManifestFileDataModel(manifest: manifest, relatedFiles: [], translation: translation)
                     
@@ -109,7 +109,7 @@ extension TranslationsRepository {
             })
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
                 
-                guard manifestParserType.parsesRelatedFiles else {
+                guard manifestParserType.downloadRelatedFilesNeeded else {
                     
                     let manifestWithoutRelatedFiles = TranslationManifestFileDataModel(manifest: manifest, relatedFiles: [], translation: translation)
                     
