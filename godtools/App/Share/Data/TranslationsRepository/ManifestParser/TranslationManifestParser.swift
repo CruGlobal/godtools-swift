@@ -15,7 +15,7 @@ class TranslationManifestParser {
     private let parserConfig: ParserConfig
     private let resourcesFileCache: ResourcesSHA256FileCache
     
-    static func getManifestParser(type: TranslationManifestParserType, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
+    static func getManifestParser(type: TranslationManifestParserType, appConfig: AppConfig, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
         
         switch type {
         
@@ -26,7 +26,7 @@ class TranslationManifestParser {
             return TranslationManifestParser(parserConfig: ParserConfig().withParseRelated(enabled: false), resourcesFileCache: resourcesFileCache)
         
         case .renderer:
-            return ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)
+            return ParseTranslationManifestForRenderer(appConfig: appConfig, resourcesFileCache: resourcesFileCache)
         }
     }
     

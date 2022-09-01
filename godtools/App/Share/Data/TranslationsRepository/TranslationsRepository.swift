@@ -13,12 +13,14 @@ import RequestOperation
 
 class TranslationsRepository {
         
+    private let appConfig: AppConfig
     private let api: MobileContentTranslationsApi
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     
-    init(api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(appConfig: AppConfig, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
         
+        self.appConfig = appConfig
         self.api = api
         self.cache = cache
         self.resourcesFileCache = resourcesFileCache
@@ -50,7 +52,7 @@ extension TranslationsRepository {
     
     func getTranslationManifestFromCache(translation: TranslationModel, manifestParserType: TranslationManifestParserType) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
         
-        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, resourcesFileCache: resourcesFileCache)
+        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, appConfig: appConfig, resourcesFileCache: resourcesFileCache)
         
         return manifestParser.parse(manifestName: translation.manifestName).publisher
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
@@ -99,7 +101,7 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in
@@ -165,7 +167,7 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .downloadManifestAndRelatedFiles, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .downloadManifestAndRelatedFiles, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in
