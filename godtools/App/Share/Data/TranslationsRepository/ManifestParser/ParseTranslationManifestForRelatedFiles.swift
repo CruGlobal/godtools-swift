@@ -15,7 +15,7 @@ class ParseTranslationManifestForRelatedFiles: TranslationManifestParser {
     init(resourcesFileCache: ResourcesSHA256FileCache) {
     
         super.init(
-            parserConfig: ParserConfig(supportedFeatures: [], supportedDeviceTypes: [], parsePages: false, parseTips: false),
+            parserConfig: ParserConfig().withParseRelated(enabled: false),
             resourcesFileCache: resourcesFileCache
         )
     }
