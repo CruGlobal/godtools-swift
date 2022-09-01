@@ -274,6 +274,8 @@ extension ToolDetailsViewModel {
             screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
+            secondaryContentLanguage: nil,
             url: url.absoluteString
         )
         

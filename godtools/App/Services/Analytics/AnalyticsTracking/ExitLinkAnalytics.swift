@@ -22,6 +22,8 @@ class ExitLinkAnalytics {
             screenName: exitLink.screenName,
             siteSection: exitLink.siteSection,
             siteSubSection: exitLink.siteSubSection,
+            contentLanguage: exitLink.contentLanguage,
+            secondaryContentLanguage: exitLink.secondaryContentLanguage,
             url: exitLink.url
         )        
     }
