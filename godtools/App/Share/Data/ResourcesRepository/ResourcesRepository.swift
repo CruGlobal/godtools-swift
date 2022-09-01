@@ -76,9 +76,20 @@ class ResourcesRepository {
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
-            .mapError { error in
-                return URLResponseError.otherError(error: error)
-            }
+            .map({ result in
+                    
+                return RealmResourcesCacheSyncResult(
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languageIdsRemoved: []),
+                    resourceIdsRemoved: [],
+                    translationIdsRemoved: [],
+                    attachmentIdsRemoved: [],
+                    latestAttachmentFiles: []
+                )
+            })
+            .catch({ (error: Error) in
+                return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
             .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
                                 
                 return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()

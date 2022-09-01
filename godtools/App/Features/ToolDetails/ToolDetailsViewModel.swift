@@ -171,7 +171,7 @@ class ToolDetailsViewModel: ObservableObject {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
         .receiveOnMain()
@@ -182,7 +182,7 @@ class ToolDetailsViewModel: ObservableObject {
             let hidesLearnToShareToolButtonValue: Bool
             
             if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
-                hidesLearnToShareToolButtonValue = manifest.tips.isEmpty
+                hidesLearnToShareToolButtonValue = !manifest.hasTips
             }
             else {
                 hidesLearnToShareToolButtonValue = true
