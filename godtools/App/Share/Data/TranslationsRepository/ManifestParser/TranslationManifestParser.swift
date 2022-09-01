@@ -43,13 +43,6 @@ class TranslationManifestParser {
                 
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
         
-        switch resourcesFileCache.getData(location: location) {
-        case .success(let data):
-            print("data: \(data)")
-        case .failure(let error):
-            print(error)
-        }
-        
         switch resourcesFileCache.getFileExists(location: location) {
         
         case .success(let fileExists):
