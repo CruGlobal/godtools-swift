@@ -10,7 +10,6 @@ import Foundation
 
 enum GetToolTranslationsFilesFilter {
     
-    case downloadManifestAndRelatedFiles
     case downloadManifestAndRelatedFilesForRenderer
     case downloadManifestForTipsCount
 }
