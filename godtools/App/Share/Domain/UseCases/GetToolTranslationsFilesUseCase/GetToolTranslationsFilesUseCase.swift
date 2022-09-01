@@ -34,7 +34,7 @@ class GetToolTranslationsFilesUseCase {
         
         switch filter {
         case .downloadManifestAndRelatedFiles:
-            manifestParserType = .related
+            manifestParserType = .downloadManifestAndRelatedFiles
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
         case .downloadManifestForTipsCount:

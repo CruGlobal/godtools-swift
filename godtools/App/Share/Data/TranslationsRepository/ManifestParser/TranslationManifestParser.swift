@@ -18,7 +18,7 @@ class TranslationManifestParser {
     static func getManifestParser(type: TranslationManifestParserType, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
         
         switch type {
-        case .related:
+        case .downloadManifestAndRelatedFiles:
             return ParseTranslationManifestForRelatedFiles(resourcesFileCache: resourcesFileCache)
         case .renderer:
             return ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)

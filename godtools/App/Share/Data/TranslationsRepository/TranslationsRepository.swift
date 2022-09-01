@@ -165,7 +165,7 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .related, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .downloadManifestAndRelatedFiles, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in
