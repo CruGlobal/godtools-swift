@@ -6108,7 +6108,6 @@
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
-				D471CFCA28B41A8C00DCE61C /* New Group */,
 				453C1BDA2899A889007332E2 /* RemoveToolFromFavoritesUseCase */,
 				4533C4C928AC2C1600F9628B /* StoreInitialFavoritedToolsUseCase */,
 				D46BBE2528A312230025EB79 /* ToggleToolFavoritedUseCase */,
@@ -6873,13 +6872,6 @@
 				D471CFC728B4199C00DCE61C /* GetSpotlightToolsUseCase.swift */,
 			);
 			path = GetSpotlightToolsUseCase;
-			sourceTree = "<group>";
-		};
-		D471CFCA28B41A8C00DCE61C /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		D471CFCD28B66E8400DCE61C /* GetAllToolsUseCase */ = {
