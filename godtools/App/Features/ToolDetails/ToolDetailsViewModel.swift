@@ -182,7 +182,7 @@ class ToolDetailsViewModel: ObservableObject {
             let hidesLearnToShareToolButtonValue: Bool
             
             if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
-                hidesLearnToShareToolButtonValue = manifest.tips.isEmpty
+                hidesLearnToShareToolButtonValue = !manifest.hasTips
             }
             else {
                 hidesLearnToShareToolButtonValue = true
