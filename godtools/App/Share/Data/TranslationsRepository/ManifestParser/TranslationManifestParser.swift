@@ -20,10 +20,12 @@ class TranslationManifestParser {
         switch type {
         
         case .downloadManifestAndRelatedFiles:
-            return ParseTranslationManifestForRelatedFiles(resourcesFileCache: resourcesFileCache)
+            let parserConfig = ParserConfig().withParseRelated(enabled: false)
+            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .downloadManifestOnly:
-            return TranslationManifestParser(parserConfig: ParserConfig().withParseRelated(enabled: false), resourcesFileCache: resourcesFileCache)
+            let parserConfig = ParserConfig().withParseRelated(enabled: false)
+            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .renderer:
             return ParseTranslationManifestForRenderer(appConfig: appConfig, resourcesFileCache: resourcesFileCache)
