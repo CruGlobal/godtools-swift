@@ -19,11 +19,11 @@ class TranslationManifestParser {
         
         switch type {
         
-        case .downloadManifestAndRelatedFiles:
+        case .manifestAndRelatedFiles:
             let parserConfig = ParserConfig().withParseRelated(enabled: false)
             return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
-        case .downloadManifestOnly:
+        case .manifestOnly:
             let parserConfig = ParserConfig().withParseRelated(enabled: false)
             return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         

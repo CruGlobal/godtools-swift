@@ -10,18 +10,18 @@ import Foundation
 
 enum TranslationManifestParserType {
     
-    case downloadManifestAndRelatedFiles
-    case downloadManifestOnly
+    case manifestAndRelatedFiles
+    case manifestOnly
     case renderer
     
     var downloadRelatedFilesNeeded: Bool {
         
         switch self {
         
-        case .downloadManifestAndRelatedFiles:
+        case .manifestAndRelatedFiles:
             return true
         
-        case .downloadManifestOnly:
+        case .manifestOnly:
             return false
        
         case .renderer:
