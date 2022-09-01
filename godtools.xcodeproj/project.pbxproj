@@ -482,7 +482,6 @@
 		4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */; };
 		4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */; };
 		4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */; };
-		459A668A289AFE9400DACBF8 /* ParseTranslationManifestForTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A6689289AFE9400DACBF8 /* ParseTranslationManifestForTips.swift */; };
 		459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A668B289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift */; };
 		459B265D28862C69009C8C24 /* URLResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B265C28862C69009C8C24 /* URLResponseObject.swift */; };
 		459BD07C289AC5230075901B /* FavoritedResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD07A289AC5230075901B /* FavoritedResourceModel.swift */; };
@@ -749,7 +748,6 @@
 		45B36527288504D40012BE53 /* TranslationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B36524288504D40012BE53 /* TranslationsRepository.swift */; };
 		45B36528288504D40012BE53 /* MobileContentTranslationsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B36526288504D40012BE53 /* MobileContentTranslationsApi.swift */; };
 		45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */; };
-		45B365302885960F0012BE53 /* ParseTranslationManifestForRelatedFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3652F2885960F0012BE53 /* ParseTranslationManifestForRelatedFiles.swift */; };
 		45B365322885963A0012BE53 /* TranslationManifestParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */; };
 		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -1601,7 +1599,6 @@
 		4596622627BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureNavBarModel.swift; sourceTree = "<group>"; };
 		4599251A2704F36A008F7844 /* ChooseScaleSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseScaleSliderView.swift; sourceTree = "<group>"; };
 		4599251C2704F37B008F7844 /* ChooseScaleSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseScaleSliderView.xib; sourceTree = "<group>"; };
-		459A6689289AFE9400DACBF8 /* ParseTranslationManifestForTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForTips.swift; sourceTree = "<group>"; };
 		459A668B289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolTranslationsFilesFilter.swift; sourceTree = "<group>"; };
 		459B265C28862C69009C8C24 /* URLResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponseObject.swift; sourceTree = "<group>"; };
 		459BD07A289AC5230075901B /* FavoritedResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritedResourceModel.swift; sourceTree = "<group>"; };
@@ -1860,7 +1857,6 @@
 		45B36524288504D40012BE53 /* TranslationsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationsRepository.swift; sourceTree = "<group>"; };
 		45B36526288504D40012BE53 /* MobileContentTranslationsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentTranslationsApi.swift; sourceTree = "<group>"; };
 		45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslationsCache.swift; sourceTree = "<group>"; };
-		45B3652F2885960F0012BE53 /* ParseTranslationManifestForRelatedFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRelatedFiles.swift; sourceTree = "<group>"; };
 		45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParserFactory.swift; sourceTree = "<group>"; };
 		45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolPageHeaderView.xib; sourceTree = "<group>"; };
 		45B9874B283BFE5300E1DA7F /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
@@ -5521,9 +5517,7 @@
 		45B3652E288595F50012BE53 /* ManifestParser */ = {
 			isa = PBXGroup;
 			children = (
-				45B3652F2885960F0012BE53 /* ParseTranslationManifestForRelatedFiles.swift */,
 				4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */,
-				459A6689289AFE9400DACBF8 /* ParseTranslationManifestForTips.swift */,
 				4529B96B2893440E0011F16B /* TranslationManifestParser.swift */,
 				45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */,
 				4529B96D289345480011F16B /* TranslationManifestParserType.swift */,
@@ -6108,7 +6102,6 @@
 				45A93C79286DE57A00090E01 /* GetToolVersionsUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
-				D471CFCA28B41A8C00DCE61C /* New Group */,
 				453C1BDA2899A889007332E2 /* RemoveToolFromFavoritesUseCase */,
 				4533C4C928AC2C1600F9628B /* StoreInitialFavoritedToolsUseCase */,
 				D46BBE2528A312230025EB79 /* ToggleToolFavoritedUseCase */,
@@ -6875,13 +6868,6 @@
 			path = GetSpotlightToolsUseCase;
 			sourceTree = "<group>";
 		};
-		D471CFCA28B41A8C00DCE61C /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		D471CFCD28B66E8400DCE61C /* GetAllToolsUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -7534,7 +7520,6 @@
 				4567782D287DC1F30044AEB2 /* ArticleWebView.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
-				45B365302885960F0012BE53 /* ParseTranslationManifestForRelatedFiles.swift in Sources */,
 				453C1BD82899A523007332E2 /* FavoritedResourcesRepository.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				45677735287DAFC70044AEB2 /* MenuViewModel.swift in Sources */,
@@ -7602,7 +7587,6 @@
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
 				45AD1FD425938A9800A096A0 /* WebArchiveQueueResult.swift in Sources */,
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
-				459A668A289AFE9400DACBF8 /* ParseTranslationManifestForTips.swift in Sources */,
 				D13307242739AB910058450B /* OnboardingQuickStartItem.swift in Sources */,
 				45677848287DC3BC0044AEB2 /* ArticlesErrorMessageViewModel.swift in Sources */,
 				45AD1B9825938A4F00A096A0 /* ToolNavBarViewModelType.swift in Sources */,

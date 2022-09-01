@@ -31,14 +31,15 @@ class GetToolTranslationsFilesUseCase {
     func getToolTranslationsFiles(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
                 
         let manifestParserType: TranslationManifestParserType
+        let includeRelatedFiles: Bool
         
         switch filter {
-        case .downloadManifestAndRelatedFiles:
-            manifestParserType = .related
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
+            includeRelatedFiles = true
         case .downloadManifestForTipsCount:
-            manifestParserType = .tips(parsesRelatedFiles: false)
+            manifestParserType = .manifestOnly
+            includeRelatedFiles = false
         }
         
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
@@ -62,12 +63,12 @@ class GetToolTranslationsFilesUseCase {
                    
                 let translations: [TranslationModel] = result.translations
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType)
+                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -77,7 +78,7 @@ class GetToolTranslationsFilesUseCase {
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType)
+                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .mapError { error in
                         return .otherError(error: error)
                     }
