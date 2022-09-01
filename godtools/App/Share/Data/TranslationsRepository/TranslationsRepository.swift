@@ -39,10 +39,10 @@ class TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func getTranslationManifestsFromCache(translations: [TranslationModel], manifestParserType: TranslationManifestParserType) -> AnyPublisher<[TranslationManifestFileDataModel], Error> {
+    func getTranslationManifestsFromCache(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], Error> {
        
         let requests = translations.map {
-            self.getTranslationManifestFromCache(translation: $0, manifestParserType: manifestParserType)
+            self.getTranslationManifestFromCache(translation: $0, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
         }
         
         return Publishers.MergeMany(requests)
@@ -50,14 +50,14 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getTranslationManifestFromCache(translation: TranslationModel, manifestParserType: TranslationManifestParserType) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
+    func getTranslationManifestFromCache(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
         
         let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, appConfig: appConfig, resourcesFileCache: resourcesFileCache)
         
         return manifestParser.parse(manifestName: translation.manifestName).publisher
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
             
-                guard manifestParserType.downloadRelatedFilesNeeded else {
+                guard includeRelatedFiles else {
                     
                     let manifestWithoutRelatedFiles = TranslationManifestFileDataModel(manifest: manifest, relatedFiles: [], translation: translation)
                     
@@ -85,10 +85,10 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
+    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
        
         let requests = translations.map {
-            self.getTranslationManifestFromRemote(translation: $0, manifestParserType: manifestParserType)
+            self.getTranslationManifestFromRemote(translation: $0, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
         }
         
         return Publishers.MergeMany(requests)
@@ -96,7 +96,7 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
+    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
         
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
@@ -111,7 +111,7 @@ extension TranslationsRepository {
             })
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
                 
-                guard manifestParserType.downloadRelatedFilesNeeded else {
+                guard includeRelatedFiles else {
                     
                     let manifestWithoutRelatedFiles = TranslationManifestFileDataModel(manifest: manifest, relatedFiles: [], translation: translation)
                     
@@ -135,7 +135,7 @@ extension TranslationsRepository {
                 
                 return self.downloadAndCacheTranslationZipFiles(translation: translation)
                     .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                        return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType)
+                        return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                             .mapError({ error in
                                 return .otherError(error: error)
                             })
@@ -167,7 +167,7 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestAndRelatedFiles, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in

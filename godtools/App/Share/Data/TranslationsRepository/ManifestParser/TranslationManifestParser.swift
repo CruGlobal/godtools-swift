@@ -18,13 +18,9 @@ class TranslationManifestParser {
     static func getManifestParser(type: TranslationManifestParserType, appConfig: AppConfig, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
         
         switch type {
-        
-        case .manifestAndRelatedFiles:
-            let parserConfig = ParserConfig().withParseRelated(enabled: true).withParsePages(enabled: false).withParseTips(enabled: false)
-            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
-        
+                
         case .manifestOnly:
-            let parserConfig = ParserConfig().withParseRelated(enabled: false).withParsePages(enabled: false).withParseTips(enabled: false)
+            let parserConfig = ParserConfig().withParseRelated(enabled: false)
             return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .renderer:
