@@ -33,8 +33,6 @@ class GetToolTranslationsFilesUseCase {
         let manifestParserType: TranslationManifestParserType
         
         switch filter {
-        case .downloadManifestAndRelatedFiles:
-            manifestParserType = .downloadManifestAndRelatedFiles
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
         case .downloadManifestForTipsCount:
