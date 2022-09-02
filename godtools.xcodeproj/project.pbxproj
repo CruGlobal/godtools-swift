@@ -301,7 +301,6 @@
 		4567775E287DB02B0044AEB2 /* ShareAStoryWithUsWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677752287DB02B0044AEB2 /* ShareAStoryWithUsWebContent.swift */; };
 		4567775F287DB02B0044AEB2 /* WebContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677753287DB02B0044AEB2 /* WebContentView.swift */; };
 		45677760287DB02B0044AEB2 /* WebContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45677754287DB02B0044AEB2 /* WebContentView.xib */; };
-		45677764287DB1530044AEB2 /* TutorialFlowDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677762287DB1530044AEB2 /* TutorialFlowDiContainer.swift */; };
 		45677765287DB1530044AEB2 /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677763287DB1530044AEB2 /* TutorialFlow.swift */; };
 		45677769287DB1960044AEB2 /* GetTutorialUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677767287DB1960044AEB2 /* GetTutorialUseCase.swift */; };
 		4567776A287DB1960044AEB2 /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677768287DB1960044AEB2 /* TutorialModel.swift */; };
@@ -608,7 +607,6 @@
 		45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */; };
 		45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */; };
 		45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */; };
-		45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */; };
 		45AD1F7C25938A9800A096A0 /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */; };
 		45AD1F9525938A9800A096A0 /* DownloadResourceTranslationsReceipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */; };
 		45AD1F9725938A9800A096A0 /* AttachmentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E2125938A9700A096A0 /* AttachmentFile.swift */; };
@@ -1416,7 +1414,6 @@
 		45677752287DB02B0044AEB2 /* ShareAStoryWithUsWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAStoryWithUsWebContent.swift; sourceTree = "<group>"; };
 		45677753287DB02B0044AEB2 /* WebContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContentView.swift; sourceTree = "<group>"; };
 		45677754287DB02B0044AEB2 /* WebContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebContentView.xib; sourceTree = "<group>"; };
-		45677762287DB1530044AEB2 /* TutorialFlowDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlowDiContainer.swift; sourceTree = "<group>"; };
 		45677763287DB1530044AEB2 /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
 		45677767287DB1960044AEB2 /* GetTutorialUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTutorialUseCase.swift; sourceTree = "<group>"; };
 		45677768287DB1960044AEB2 /* TutorialModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
@@ -1720,7 +1717,6 @@
 		45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipType.swift; sourceTree = "<group>"; };
 		45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTip.swift; sourceTree = "<group>"; };
 		45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsService.swift; sourceTree = "<group>"; };
-		45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
 		45AD1E0025938A9700A096A0 /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
 		45AD1E1F25938A9700A096A0 /* DownloadResourceTranslationsReceipts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadResourceTranslationsReceipts.swift; sourceTree = "<group>"; };
 		45AD1E2125938A9700A096A0 /* AttachmentFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentFile.swift; sourceTree = "<group>"; };
@@ -3682,7 +3678,6 @@
 			isa = PBXGroup;
 			children = (
 				45677763287DB1530044AEB2 /* TutorialFlow.swift */,
-				45677762287DB1530044AEB2 /* TutorialFlowDiContainer.swift */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -4835,7 +4830,6 @@
 				45AD1E9925938A9800A096A0 /* Attachments */,
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
 				45AD1EB825938A9800A096A0 /* DeepLinkingService */,
-				45AD1DFB25938A9700A096A0 /* DeviceLanguage */,
 				45AD20F12593950300A096A0 /* DownloadedLanguages */,
 				45AD1E8025938A9800A096A0 /* EmailSignUp */,
 				45AD1EDF25938A9800A096A0 /* FirebaseConfiguration */,
@@ -4979,14 +4973,6 @@
 				45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		45AD1DFB25938A9700A096A0 /* DeviceLanguage */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1DFD25938A9700A096A0 /* DeviceLanguage.swift */,
-			);
-			path = DeviceLanguage;
 			sourceTree = "<group>";
 		};
 		45AD1DFE25938A9700A096A0 /* URLSession */ = {
@@ -7643,7 +7629,6 @@
 				45D63E85288F75B0009B4610 /* RealmAttachmentsCache.swift in Sources */,
 				4567782B287DC1F30044AEB2 /* ShareArticleViewModel.swift in Sources */,
 				45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */,
-				45677764287DB1530044AEB2 /* TutorialFlowDiContainer.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
 				456777B5287DB3770044AEB2 /* ShareToolView.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
@@ -7708,7 +7693,6 @@
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
-				45AD1F7A25938A9800A096A0 /* DeviceLanguage.swift in Sources */,
 				459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
 				D10AD0E02790C379004859C4 /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */,
