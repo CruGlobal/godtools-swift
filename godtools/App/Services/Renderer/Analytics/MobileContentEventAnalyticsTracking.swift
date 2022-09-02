@@ -24,14 +24,15 @@ class MobileContentEventAnalyticsTracking {
     func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [
-            MobileContentEventAnalyticsTracking.paramEventId: eventId.description(),
-            AnalyticsConstants.Keys.contentLanguage: language.code
+            MobileContentEventAnalyticsTracking.paramEventId: eventId.description()
         ]
         
         firebaseAnalytics.trackAction(
             screenName: "",
             siteSection: resource.abbreviation,
             siteSubSection: "",
+            contentLanguage: language.code,
+            secondaryContentLanguage: nil,
             actionName: MobileContentEventAnalyticsTracking.actionContentEvent,
             data: data
         )
