@@ -112,7 +112,8 @@ extension ToolCategoriesViewModel {
     }
         
     private func refreshCategoryButtons(with categories: [ToolCategoryDomainModel]) {
-        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+        
+        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
 
         let categoryButtonVMs = categories.map { category in
             

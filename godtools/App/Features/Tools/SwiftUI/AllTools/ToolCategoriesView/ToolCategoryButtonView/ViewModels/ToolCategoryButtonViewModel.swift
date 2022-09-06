@@ -27,7 +27,9 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
         if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() {
             
             bundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
+            
         } else {
+            
             bundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
 

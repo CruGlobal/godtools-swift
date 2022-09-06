@@ -9,10 +9,19 @@
 import Foundation
 
 class AllToolsCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
-    
-    init(selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
         
-        let bundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+    init(selectedAttrCategory: String?, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+        
+        let bundle: Bundle
+        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() {
+            
+            bundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
+            
+        } else {
+            
+            bundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+        }
+        
         let translatedAllToolsText = localizationServices.stringForBundle(bundle: bundle, key: "find_tools")
         
         let buttonState = ToolCategoryButtonState(category: nil, selectedCategory: selectedAttrCategory)
