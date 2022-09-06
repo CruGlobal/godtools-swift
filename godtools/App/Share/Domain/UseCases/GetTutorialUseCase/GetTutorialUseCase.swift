@@ -12,12 +12,12 @@ import Lottie
 class GetTutorialUseCase {
     
     private let localizationServices: LocalizationServices
-    private let deviceLanguage: DeviceLanguage
+    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     
-    required init(localizationServices: LocalizationServices, deviceLanguage: DeviceLanguage) {
+    required init(localizationServices: LocalizationServices, getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
         
         self.localizationServices = localizationServices
-        self.deviceLanguage = deviceLanguage
+        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
     }
     
     func getTutorial() -> TutorialModel {
@@ -26,7 +26,7 @@ class GetTutorialUseCase {
         let defaultContinueButtonTitle: String = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
         let lastPageContinueButtonTitle: String
         
-        if deviceLanguage.isEnglish {
+        if getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode == LanguageCodes.english {
             
             tutorialItems = getEnglishTutorialItems()
             lastPageContinueButtonTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.closeTutorial")

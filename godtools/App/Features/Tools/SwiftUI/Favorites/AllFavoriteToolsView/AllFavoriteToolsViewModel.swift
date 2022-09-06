@@ -17,7 +17,7 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
-    override var tools: [ResourceModel] {
+    override var tools: [ToolDomainModel] {
         didSet {
             if tools.isEmpty {
                 closePage()
@@ -38,9 +38,9 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
@@ -73,26 +73,27 @@ extension AllFavoriteToolsViewModel {
 // MARK: - ToolCardViewModelDelegate
 
 extension AllFavoriteToolsViewModel: ToolCardViewModelDelegate {
-    func toolCardTapped(resource: ResourceModel) {
-        trackOpenFavoritedToolButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
         let removedHandler = CallbackHandler { [weak self] in
-            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
+            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: tool.id)
         }
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: tool.resource, removeHandler: removedHandler))
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {
-        trackFavoritedToolDetailsButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {
+        trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: tool.resource))
     }
     
-    func openToolButtonTapped(resource: ResourceModel) {
-        trackOpenFavoritedToolButtonAnalytics(for: resource)
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    func openToolButtonTapped(_ tool: ToolDomainModel) {
+        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
     }
 }
 

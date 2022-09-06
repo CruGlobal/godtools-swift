@@ -90,7 +90,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     func pageDidAppear() {
         mobileContentDidAppear()
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
     }
     
     func didChangeCardPosition(cardPosition: Int?) {

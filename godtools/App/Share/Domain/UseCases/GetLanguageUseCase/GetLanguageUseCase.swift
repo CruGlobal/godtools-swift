@@ -45,6 +45,7 @@ class GetLanguageUseCase {
     func getLanguage(language: LanguageModel) -> LanguageDomainModel {
                         
         return LanguageDomainModel(
+            analyticsContentLanguage: language.code,
             dataModelId: language.id,
             direction: language.direction == "rtl" ? .rightToLeft : .leftToRight,
             localeIdentifier: language.code,

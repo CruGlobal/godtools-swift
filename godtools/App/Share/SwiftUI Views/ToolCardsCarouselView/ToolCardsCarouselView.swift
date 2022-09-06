@@ -49,7 +49,7 @@ struct ToolCardsCarouselView: View {
     }
     
     @ViewBuilder
-    func makeToolCardView(with tool: ResourceModel) -> some View {
+    func makeToolCardView(with tool: ToolDomainModel) -> some View {
         
         ToolCardView(
             viewModel: viewModel.cardViewModel(for: tool),
@@ -72,6 +72,7 @@ struct ToolCardsCarouselView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil
         )

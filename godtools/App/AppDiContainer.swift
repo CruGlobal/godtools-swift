@@ -18,24 +18,20 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let config: ConfigType = AppConfig()
     let userAuthentication: UserAuthenticationType
     let favoritedResourcesCache: FavoritedResourcesCache
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
-    let languageDirectionService: LanguageDirectionService
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let deviceLanguage: DeviceLanguage = DeviceLanguage()
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let shortcutItemsService: ShortcutItemsService
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
-    let appsFlyer: AppsFlyerType
+    let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
@@ -45,6 +41,8 @@ class AppDiContainer {
                         
         dataLayer = AppDataLayerDependencies()
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
+        
+        let config: AppConfig = dataLayer.getAppConfig()
         
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
@@ -69,9 +67,7 @@ class AppDiContainer {
             getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
         )
-        
-        languageDirectionService = LanguageDirectionService(languageSettings: languageSettingsService)
-                
+                        
         isNewUserService = IsNewUserService(
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
@@ -93,13 +89,6 @@ class AppDiContainer {
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-        
-        shortcutItemsService = ShortcutItemsService(
-            realmDatabase: realmDatabase,
-            dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
-            favoritedResourcesCache: favoritedResourcesCache
-        )
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         
@@ -145,7 +134,7 @@ class AppDiContainer {
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: config)
+        return FirebaseConfiguration(config: dataLayer.getAppConfig())
     }
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
@@ -157,7 +146,7 @@ class AppDiContainer {
     }
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
-        return GoogleAdwordsAnalytics(config: config)
+        return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
     func getLanguageAvailabilityStringUseCase() -> GetLanguageAvailabilityStringUseCase {
@@ -227,7 +216,12 @@ class AppDiContainer {
     }
     
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, tutorialVideoAnalytics: getTutorialVideoAnalytics(), analyticsScreenName: "onboarding")
+        return OnboardingTutorialCustomViewBuilder(
+            flowDelegate: flowDelegate,
+            localizationServices: localizationServices,
+            tutorialVideoAnalytics: getTutorialVideoAnalytics(),
+            analyticsScreenName: "onboarding"
+        )
     }
     
     func getOnboardingTutorialViewedCache() -> OnboardingTutorialViewedCacheType {
@@ -248,7 +242,7 @@ class AppDiContainer {
     }
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
+        return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
     }
     
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
@@ -270,13 +264,6 @@ class AppDiContainer {
         return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
-        return GetToolLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            localizationServices: localizationServices
-        )
-    }
-    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
     }
@@ -287,17 +274,8 @@ class AppDiContainer {
         )
     }
     
-    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
-        return GetToolVersionsUseCase(
-            resourcesCache: initialDataDownloader.resourcesCache,
-            localizationServices: localizationServices,
-            languageSettingsService: languageSettingsService,
-            getToolLanguagesUseCase: getToolLanguagesUseCase(),
-            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
-        )
-    }
-    
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
+        let config: AppConfig = dataLayer.getAppConfig()
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteSharePublisher(
             config: config,
@@ -308,6 +286,7 @@ class AppDiContainer {
     }
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        let config: AppConfig = dataLayer.getAppConfig()
         let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteShareSubscriber(
             config: config,

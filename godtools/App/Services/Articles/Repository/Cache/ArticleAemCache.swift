@@ -15,7 +15,7 @@ class ArticleAemCache {
     private let realmDatabase: RealmDatabase
     private let webArchiver: WebArchiveQueue
     
-    required init(realmDatabase: RealmDatabase, webArchiverSession: SharedSessionType) {
+    required init(realmDatabase: RealmDatabase, webArchiverSession: SharedIgnoreCacheSession) {
         
         self.realmDatabase = realmDatabase
         self.webArchiver = WebArchiveQueue(sharedSession: webArchiverSession)

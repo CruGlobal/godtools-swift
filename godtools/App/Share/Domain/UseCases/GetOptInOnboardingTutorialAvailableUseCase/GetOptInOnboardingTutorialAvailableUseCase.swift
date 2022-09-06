@@ -11,16 +11,16 @@ import Combine
 
 class GetOptInOnboardingTutorialAvailableUseCase {
     
-    private let deviceLanguage: DeviceLanguage
+    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     
-    required init(deviceLanguage: DeviceLanguage) {
+    required init(getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
         
-        self.deviceLanguage = deviceLanguage
+        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
     }
         
     func getOptInOnboardingTutorialIsAvailable() -> Bool {
         
-        return deviceLanguage.isEnglish
+        return getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode == LanguageCodes.english
     }
     
     func getOptInOnboardingTutorialIsAvailable() -> AnyPublisher<Bool, Never> {

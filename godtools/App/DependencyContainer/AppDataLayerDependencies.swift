@@ -35,7 +35,7 @@ class AppDataLayerDependencies {
             cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
         )
     }
-    
+
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -75,6 +75,7 @@ class AppDataLayerDependencies {
     
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
+            appConfig: getAppConfig(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache()

@@ -8,12 +8,12 @@
 
 import Foundation
 
-class AppConfig: ConfigType {
+class AppConfig {
     
     let isDebug: Bool
     let appleAppId: String
     
-    required init() {
+    init() {
         
         // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
         #if RELEASE
@@ -134,25 +134,5 @@ class AppConfig: ConfigType {
     
     private var configuration: String {
         return info["Configuration"] as? String ?? ""
-    }
-    
-    // MARK: - Log
-    
-    func logConfiguration() {
-        if isDebug {
-            print("AppConfig")
-            print("  build: \(build)")
-            print("  configuration: \(configuration)")
-            print("  isDebug: \(isDebug)")
-            print("  displayName: \(displayName)")
-            print("  appVersion: \(appVersion)")
-            print("  bundleVersion: \(bundleVersion)")
-            print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
-            print("  appsFlyerDevKey: \(appsFlyerDevKey)")
-            print("  googleAdwordsLabel: \(googleAdwordsLabel)")
-            print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
-            print("  firebaseGoogleServiceFileName: \(firebaseGoogleServiceFileName)")
-            print("")
-        }
     }
 }

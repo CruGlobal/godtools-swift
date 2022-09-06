@@ -14,7 +14,7 @@ class FollowUpsService {
     private let followUpsApi: FollowUpsApi
     private let failedFollowUpsCache: FailedFollowUpsCache
     
-    required init(config: ConfigType, sharedSession: SharedSessionType, failedFollowUpsCache: FailedFollowUpsCache) {
+    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession, failedFollowUpsCache: FailedFollowUpsCache) {
         
         self.followUpsApi = FollowUpsApi(config: config, sharedSession: sharedSession)
         self.failedFollowUpsCache = failedFollowUpsCache

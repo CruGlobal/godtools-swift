@@ -10,9 +10,9 @@ import Foundation
 
 class GoogleAdwordsAnalytics {
  
-    private let config: ConfigType
+    private let config: AppConfig
     
-    required init(config: ConfigType) {
+    required init(config: AppConfig) {
         
         self.config = config
     }

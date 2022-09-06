@@ -15,15 +15,16 @@ class TranslationManifestParser {
     private let parserConfig: ParserConfig
     private let resourcesFileCache: ResourcesSHA256FileCache
     
-    static func getManifestParser(type: TranslationManifestParserType, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
+    static func getManifestParser(type: TranslationManifestParserType, appConfig: AppConfig, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
         
         switch type {
-        case .related:
-            return ParseTranslationManifestForRelatedFiles(resourcesFileCache: resourcesFileCache)
+                
+        case .manifestOnly:
+            let parserConfig = ParserConfig().withParseRelated(enabled: false)
+            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
+        
         case .renderer:
-            return ParseTranslationManifestForRenderer(resourcesFileCache: resourcesFileCache)
-        case .tips(let parseRelated):
-            return ParseTranslationManifestForTips(resourcesFileCache: resourcesFileCache, parseRelated: parseRelated)
+            return ParseTranslationManifestForRenderer(appConfig: appConfig, resourcesFileCache: resourcesFileCache)
         }
     }
     
@@ -41,13 +42,6 @@ class TranslationManifestParser {
     func parse(manifestName: String) -> Result<Manifest, Error> {
                 
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
-        
-        switch resourcesFileCache.getData(location: location) {
-        case .success(let data):
-            print("data: \(data)")
-        case .failure(let error):
-            print(error)
-        }
         
         switch resourcesFileCache.getFileExists(location: location) {
         

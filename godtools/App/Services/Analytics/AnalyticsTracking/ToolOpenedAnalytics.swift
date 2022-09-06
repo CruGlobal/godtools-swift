@@ -11,9 +11,9 @@ import Foundation
 class ToolOpenedAnalytics {
     
     private let keyFirstToolOpened: String = "toolOpenedAnalytics.keyFirstToolOpened"
-    private let appsFlyerAnalytics: AppsFlyerAnalyticsType
+    private let appsFlyerAnalytics: AppsFlyerAnalytics
     
-    required init(appsFlyerAnalytics: AppsFlyerAnalyticsType) {
+    required init(appsFlyerAnalytics: AppsFlyerAnalytics) {
         self.appsFlyerAnalytics = appsFlyerAnalytics
     }
     

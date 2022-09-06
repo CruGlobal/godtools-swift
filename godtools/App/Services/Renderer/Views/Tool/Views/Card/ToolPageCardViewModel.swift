@@ -118,7 +118,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status1")
+        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.code, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -130,7 +130,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLanguage(language: renderedPageContext.language, key: "card_status2")
+        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.code, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -169,7 +169,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         
         let screenName: String = analyticsScreenName
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
     }
     
     func cardDidDisappear() {
