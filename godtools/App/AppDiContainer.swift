@@ -48,7 +48,7 @@ class AppDiContainer {
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-           
+        
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

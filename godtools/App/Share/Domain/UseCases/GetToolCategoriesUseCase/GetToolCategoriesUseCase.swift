@@ -28,7 +28,7 @@ class GetToolCategoriesUseCase {
         )
             .flatMap({ _, primaryLanguage -> AnyPublisher<[ToolCategoryDomainModel], Never> in
                 
-                let toolResources = self.getAllToolsUseCase.getAllToolsResourceModels(sorted: false)
+                let toolResources = self.getAllToolsUseCase.getAllToolResources(sorted: false)
                 let sortedResources = self.sortToolsByPrimaryLanguageAvailable(toolResources, primaryLanguage: primaryLanguage)
                 let categories = self.getUniqueCategories(from: sortedResources)
                 

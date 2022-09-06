@@ -17,8 +17,13 @@ class GetAllToolsUseCase {
         self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
+}
+
+// MARK: - Publishers
+
+extension GetAllToolsUseCase {
     
-    func getToolsWithCategoryPublisher(category: CurrentValueSubject<String?, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
+    func getToolsForCategoryPublisher(category: CurrentValueSubject<String?, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
         
         return Publishers.CombineLatest(resourcesRepository.getResourcesChanged(), category)
             .flatMap { (_, category) -> AnyPublisher<[ToolDomainModel], Never> in
@@ -36,34 +41,26 @@ class GetAllToolsUseCase {
         return resourcesRepository.getResourcesChanged()
             .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let toolResources = self.getAllTools(sorted: sorted)
+                let tools = self.getAllTools(sorted: sorted)
                 
-                return Just(toolResources)
+                return Just(tools)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
-    
-    func getAllToolsResourceModelPublisher(sorted: Bool) -> AnyPublisher<[ResourceModel], Never> {
-        
-        return resourcesRepository.getResourcesChanged()
-            .flatMap { _ -> AnyPublisher<[ResourceModel], Never> in
-                
-                let toolResources = self.getAllToolsResourceModels(sorted: sorted)
-                
-                return Just(toolResources)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
+}
+
+// MARK: - Tool Getters
+
+extension GetAllToolsUseCase {
     
     private func getAllTools(sorted: Bool, with category: String? = nil) -> [ToolDomainModel] {
         
-        return getAllToolsResourceModels(sorted: sorted, with: category)
+        return getAllToolResources(sorted: sorted, with: category)
             .map { getToolUseCase.getTool(resource: $0) }
     }
     
-    func getAllToolsResourceModels(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
+    func getAllToolResources(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
         
         let metaTools = resourcesRepository.getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }

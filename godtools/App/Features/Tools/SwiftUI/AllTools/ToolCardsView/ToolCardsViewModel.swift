@@ -76,7 +76,7 @@ extension ToolCardsViewModel {
     
     private func setupBinding() {
         
-        getAllToolsUseCase.getToolsWithCategoryPublisher(category: categoryFilterValuePublisher)
+        getAllToolsUseCase.getToolsForCategoryPublisher(category: categoryFilterValuePublisher)
             .receiveOnMain()
             .sink { tools in
                 
