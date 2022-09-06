@@ -169,7 +169,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         
         let screenName: String = analyticsScreenName
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
     }
     
     func cardDidDisappear() {

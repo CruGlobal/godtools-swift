@@ -26,13 +26,12 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let deviceLanguage: DeviceLanguage = DeviceLanguage()
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
-    let appsFlyer: AppsFlyerType
+    let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
@@ -217,7 +216,12 @@ class AppDiContainer {
     }
     
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(flowDelegate: flowDelegate, deviceLanguage: deviceLanguage, localizationServices: localizationServices, tutorialVideoAnalytics: getTutorialVideoAnalytics(), analyticsScreenName: "onboarding")
+        return OnboardingTutorialCustomViewBuilder(
+            flowDelegate: flowDelegate,
+            localizationServices: localizationServices,
+            tutorialVideoAnalytics: getTutorialVideoAnalytics(),
+            analyticsScreenName: "onboarding"
+        )
     }
     
     func getOnboardingTutorialViewedCache() -> OnboardingTutorialViewedCacheType {
@@ -238,7 +242,7 @@ class AppDiContainer {
     }
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase(deviceLanguage: deviceLanguage)
+        return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
     }
     
     func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {

@@ -9,7 +9,7 @@
 import UIKit
 import AppsFlyerLib
 
-class AppsFlyer: NSObject, AppsFlyerType {
+class AppsFlyer: NSObject {
     
     private let sharedAppsFlyerLib: AppsFlyerLib = AppsFlyerLib.shared()
     private let config: AppConfig

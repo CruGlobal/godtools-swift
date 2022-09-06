@@ -41,7 +41,6 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             config: appDiContainer.dataLayer.getAppConfig(),
-            deviceLanguage: appDiContainer.deviceLanguage,
             userAuthentication: appDiContainer.userAuthentication,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,

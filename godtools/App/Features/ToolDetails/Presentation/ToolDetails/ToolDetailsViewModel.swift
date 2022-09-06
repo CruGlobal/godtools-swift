@@ -22,7 +22,6 @@ class ToolDetailsViewModel: ObservableObject {
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
-    private let languagesRepository: LanguagesRepository
     private let getToolVersionsUseCase: GetToolVersionsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
     
@@ -52,7 +51,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, languagesRepository: LanguagesRepository, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -66,7 +65,6 @@ class ToolDetailsViewModel: ObservableObject {
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
-        self.languagesRepository = languagesRepository
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
@@ -171,7 +169,7 @@ class ToolDetailsViewModel: ObservableObject {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
         
-        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFiles, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
         .receiveOnMain()
@@ -182,7 +180,7 @@ class ToolDetailsViewModel: ObservableObject {
             let hidesLearnToShareToolButtonValue: Bool
             
             if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
-                hidesLearnToShareToolButtonValue = manifest.tips.isEmpty
+                hidesLearnToShareToolButtonValue = !manifest.hasTips
             }
             else {
                 hidesLearnToShareToolButtonValue = true
@@ -274,6 +272,8 @@ extension ToolDetailsViewModel {
             screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
+            secondaryContentLanguage: nil,
             url: url.absoluteString
         )
         

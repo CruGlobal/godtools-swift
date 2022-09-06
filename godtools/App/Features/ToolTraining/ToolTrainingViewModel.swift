@@ -156,6 +156,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
             screenName: getExitAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil,
             url: url
         )
         

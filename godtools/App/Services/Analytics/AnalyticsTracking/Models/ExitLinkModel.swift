@@ -13,5 +13,7 @@ struct ExitLinkModel {
     let screenName: String
     let siteSection: String
     let siteSubSection: String
+    let contentLanguage: String
+    let secondaryContentLanguage: String?
     let url: String
 }

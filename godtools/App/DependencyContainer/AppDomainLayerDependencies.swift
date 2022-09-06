@@ -178,6 +178,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTutorialUseCase() -> GetTutorialUseCase {
+        return GetTutorialUseCase(
+            localizationServices: dataLayer.getLocalizationServices(),
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
+        )
+    }
+    
     func getUserDidDeleteParallelLanguageUseCase() -> UserDidDeleteParallelLanguageUseCase {
         return UserDidDeleteParallelLanguageUseCase(
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
