@@ -23,7 +23,7 @@ class ToggleToolFavoritedUseCase {
     
     func toggleToolFavorited(tool: ResourceModel) {
         
-        if getToolIsFavoritedUseCase.getToolIsFavorited(tool: tool) {
+        if getToolIsFavoritedUseCase.getToolIsFavorited(toolId: tool.id) {
             
             removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: tool.id)
             

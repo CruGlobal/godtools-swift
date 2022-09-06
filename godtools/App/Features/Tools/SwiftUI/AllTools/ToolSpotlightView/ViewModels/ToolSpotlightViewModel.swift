@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import Combine
 
 protocol ToolSpotlightViewModelDelegate: AnyObject {
     func spotlightToolCardTapped(resource: ResourceModel)
@@ -23,9 +23,12 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var delegate: ToolSpotlightViewModelDelegate?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
@@ -34,13 +37,16 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolSpotlightViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolSpotlightViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        
         self.delegate = delegate
         
         super.init()
@@ -50,16 +56,14 @@ class ToolSpotlightViewModel: ToolCardProvider {
     }
     
     deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
@@ -77,33 +81,16 @@ extension ToolSpotlightViewModel {
     
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                if cachedResourcesAvailable {
-                    self.reloadResourcesFromCache()
-                }
-            }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadResourcesFromCache()
-                }
-            }
-        }
+        getSpotlightToolsUseCase.getSpotlightToolsPublisher()
+            .receiveOnMain()
+            .assign(to: \.tools, on: self)
+            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.setTitleText()
             }
         }
-    }
-    
-    private func reloadResourcesFromCache() {
-        tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrSpotlight })
     }
     
     private func setTitleText() {
@@ -116,14 +103,15 @@ extension ToolSpotlightViewModel {
 // MARK: - ToolCardViewModelDelegate
 
 extension ToolSpotlightViewModel: ToolCardViewModelDelegate {
-    func toolCardTapped(resource: ResourceModel) {
-        delegate?.spotlightToolCardTapped(resource: resource)
+    
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        delegate?.spotlightToolCardTapped(resource: tool.resource)
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
-        delegate?.spotlightToolFavoriteButtonTapped(resource: resource)
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
+        delegate?.spotlightToolFavoriteButtonTapped(resource: tool.resource)
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {}
-    func openToolButtonTapped(resource: ResourceModel) {}
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {}
+    func openToolButtonTapped(_ tool: ToolDomainModel) {}
 }

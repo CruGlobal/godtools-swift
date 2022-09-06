@@ -63,9 +63,9 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
@@ -124,6 +124,7 @@ extension BaseFavoriteToolsViewModel {
     }
     
     private func reloadFavoritedResourcesFromCache(from favoritedResources: [FavoritedResourceModel]? = nil) {
+        
         let favoritedResourceModels = favoritedResources ?? getAllFavoritedToolsUseCase.getAllFavoritedTools()
         let favoritedResourcesIds: [String] = favoritedResourceModels.map({$0.resourceId})
         
@@ -131,6 +132,9 @@ extension BaseFavoriteToolsViewModel {
         
         withAnimation {
             tools = resources
+                .map({ resource in
+                    return ToolDomainModel(resource: resource)
+                })
         }
         self.delegate?.toolsAreLoading(false)
     }

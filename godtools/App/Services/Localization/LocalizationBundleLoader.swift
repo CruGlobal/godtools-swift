@@ -10,7 +10,7 @@ import Foundation
 
 class LocalizationBundleLoader {
         
-    static let EnglishLocalizableStringsFile: String = "Base"
+    static let englishLocalizableStringsFile: String = "Base"
     
     required init() {
         
@@ -18,7 +18,7 @@ class LocalizationBundleLoader {
     
     var englishBundle: Bundle? {
         
-        if let englishBundle = bundleForResource(resourceName: LocalizationBundleLoader.EnglishLocalizableStringsFile) {
+        if let englishBundle = bundleForResource(resourceName: LocalizationBundleLoader.englishLocalizableStringsFile) {
             return englishBundle
         }
         return nil
@@ -32,8 +32,8 @@ class LocalizationBundleLoader {
         
         let localizableStringsFilename: String
         
-        if resourceName == "en" || resourceName == LocalizationBundleLoader.EnglishLocalizableStringsFile.lowercased() {
-            localizableStringsFilename = LocalizationBundleLoader.EnglishLocalizableStringsFile
+        if resourceName == "en" || resourceName == LocalizationBundleLoader.englishLocalizableStringsFile.lowercased() {
+            localizableStringsFilename = LocalizationBundleLoader.englishLocalizableStringsFile
         }
         else {
             localizableStringsFilename = resourceName

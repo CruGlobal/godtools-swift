@@ -12,11 +12,11 @@ class ToolShortcutItem: UIApplicationShortcutItem {
     
     private static let keyUserInfoTractUrl: String = "key_userinfo_tract_url"
     
-    static func shortcutItem(resource: RealmResource, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
+    static func shortcutItem(resourcesRepository: ResourcesRepository, resource: ResourceModel, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
         
         let shortcutName: String
 
-        if let translation = resource.latestTranslations.filter("language.code = '\(primaryLanguageCode)'").first {
+        if let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: primaryLanguageCode) {
             shortcutName = translation.translatedName
         }
         else {

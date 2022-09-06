@@ -62,13 +62,16 @@ class RealmResourcesCache {
             .map({ResourceModel(model: $0)})
     }
     
-    func getResourceLanguages(id: String) -> [LanguageModel] {
-        
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
-            return Array()
-        }
-        
-        return realmResource.languages.map({LanguageModel(model: $0)})
+    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
+            .map { ResourceModel(model: $0)}
+    }
+    
+    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .where { $0.resourceType == resourceType.rawValue }
+            .map { ResourceModel(model: $0) }
     }
     
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
@@ -99,6 +102,20 @@ class RealmResourcesCache {
         }
 
         return TranslationModel(model: realmTranslation)
+    }
+    
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
+        
+        return realmDatabase.openRealm().objects(RealmResource.self).filter(predicate).map({ResourceModel(model: $0)})
+    }
+    
+    func getSpotlightTools() -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .where { $0.attrSpotlight == true && $0.isHidden == false }
+            .map { ResourceModel(model: $0) }
+            .filter { $0.isToolType }
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {

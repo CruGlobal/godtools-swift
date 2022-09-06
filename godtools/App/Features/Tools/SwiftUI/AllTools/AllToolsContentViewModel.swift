@@ -22,6 +22,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
         
@@ -32,6 +33,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getSpotlightToolsUseCase: getSpotlightToolsUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
@@ -63,7 +65,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -74,6 +76,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
@@ -132,20 +135,20 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 
 extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
     
-    func toolCardTapped(resource: ResourceModel) {
-        handleToolCardTapped(resource: resource, isSpotlight: false)
+    func toolCardTapped(_ tool: ToolDomainModel) {
+        handleToolCardTapped(resource: tool.resource, isSpotlight: false)
     }
     
-    func toolFavoriteButtonTapped(resource: ResourceModel) {
-        handleToolFavoriteButtonTapped(resource: resource)
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel) {
+        handleToolFavoriteButtonTapped(resource: tool.resource)
     }
     
     func toolsAreLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
     }
     
-    func toolDetailsButtonTapped(resource: ResourceModel) {}
-    func openToolButtonTapped(resource: ResourceModel) {}
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel) {}
+    func openToolButtonTapped(_ tool: ToolDomainModel) {}
 }
 
 // MARK: - ToolSpotlightViewModelDelegate

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 class DownloadAttachmentsReceipt {
     
     private let progress: ObservableValue<Double> = ObservableValue(value: 0)

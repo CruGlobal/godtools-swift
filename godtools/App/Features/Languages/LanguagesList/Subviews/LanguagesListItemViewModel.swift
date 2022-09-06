@@ -10,17 +10,17 @@ import Foundation
 
 class LanguagesListItemViewModel: BaseLanguagesListItemViewModel {
     
-    private let language: ToolLanguageModel
+    private let language: LanguageDomainModel
     private let selectedLanguageId: String?
     
-    init(language: ToolLanguageModel, selectedLanguageId: String?) {
+    init(language: LanguageDomainModel, selectedLanguageId: String?) {
         
         self.language = language
         self.selectedLanguageId = selectedLanguageId
         
         super.init()
         
-        self.name = language.name
-        self.isSelected = language.id == selectedLanguageId
+        self.name = language.translatedName
+        self.isSelected = language.dataModelId == selectedLanguageId
     }
 }

@@ -9,9 +9,7 @@
 import Foundation
 import RequestOperation
 
+@available(*, deprecated)
 enum AttachmentsDownloaderError: Error {
     
-    case failedToCacheAttachment(error: Error)
-    case failedToDownloadAttachment(error: RequestResponseError<NoHttpClientErrorResponse>)
-    case noAttachmentData(missingAttachmentData: NoAttachmentData)
 }

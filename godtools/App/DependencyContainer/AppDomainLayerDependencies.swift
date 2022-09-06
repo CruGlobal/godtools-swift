@@ -39,6 +39,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAllToolsUseCase() -> GetAllToolsUseCase {
+        return GetAllToolsUseCase(
+            getToolUseCase: getToolUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
     func getBannerImageUseCase() -> GetBannerImageUseCase {
         return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
     }
@@ -90,6 +97,22 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
+        return GetShortcutItemsUseCase(
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
+    func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
+        return GetSpotlightToolsUseCase(
+            getToolUseCase: getToolUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
@@ -118,11 +141,39 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
+        return GetToolLanguagesUseCase(
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getToolUseCase() -> GetToolUseCase {
+        return GetToolUseCase()
+    }
+    
+    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
+        return GetToolVersionsUseCase(
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            localizationServices: dataLayer.getLocalizationServices(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            getToolLanguagesUseCase: getToolLanguagesUseCase()
+        )
+    }
+    
     func getToolTranslationsFilesUseCase() -> GetToolTranslationsFilesUseCase {
         return GetToolTranslationsFilesUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository(),
             languagesRepository: dataLayer.getLanguagesRepository()
+        )
+    }
+    
+    func getTutorialUseCase() -> GetTutorialUseCase {
+        return GetTutorialUseCase(
+            localizationServices: dataLayer.getLocalizationServices(),
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }
     

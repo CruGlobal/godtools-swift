@@ -15,7 +15,7 @@ class OktaAuthenticationConfiguration {
         
     }
     
-    func configureAndCreateNewOktaAuthentication(config: ConfigType) -> CruOktaAuthentication {
+    func configureAndCreateNewOktaAuthentication(config: AppConfig) -> CruOktaAuthentication {
                 
         let signInPath: String = "auth"
         let signOutPath: String = "auth/logout"

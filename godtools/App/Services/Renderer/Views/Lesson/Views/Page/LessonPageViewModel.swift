@@ -38,7 +38,15 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     func pageDidAppear() {
         mobileContentDidAppear()
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreenModel = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenModel)
     }
 }
 

@@ -14,7 +14,7 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     private let pageIndexReached: Int
     private let lessonEvaluationRepository: LessonEvaluationRepository
     private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
-    private let languageSettings: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localization: LocalizationServices
     
     private(set) var readyToShareFaithScale: Int = 6
@@ -32,24 +32,24 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, languageSettings: LanguageSettingsService, localization: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localization: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.lesson = lesson
         self.pageIndexReached = pageIndexReached
         self.lessonEvaluationRepository = lessonEvaluationRepository
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
-        self.languageSettings = languageSettings
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.localization = localization
         
-        let primaryLanguage: LanguageModel? = languageSettings.primaryLanguage.value
+        let primaryLocaleIdentifier: String? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
         
-        title = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.title")
-        wasThisHelpful = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.wasThisHelpful")
-        yesButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "yes")
-        noButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "no")
-        shareFaith = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.shareFaith")
-        sendButtonTitle = localization.stringForLanguageElseSystem(language: primaryLanguage, key: "lesson_evaluation.sendButtonTitle")
+        title = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.title")
+        wasThisHelpful = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.wasThisHelpful")
+        yesButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "yes")
+        noButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "no")
+        shareFaith = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
+        sendButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
     }
     
     func closeTapped() {

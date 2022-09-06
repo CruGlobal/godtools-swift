@@ -9,7 +9,7 @@
 import Foundation
 import SnowplowTracker
 
-class SnowplowAnalytics: SnowplowAnalyticsType  {
+class SnowplowAnalytics  {
    
     private let userAuthentication: UserAuthenticationType
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
@@ -23,7 +23,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
 
-    required init(config: ConfigType, userAuthentication: UserAuthenticationType, loggingEnabled: Bool) {
+    required init(config: AppConfig, userAuthentication: UserAuthenticationType, loggingEnabled: Bool) {
         
         self.userAuthentication = userAuthentication
         self.loggingEnabled = loggingEnabled

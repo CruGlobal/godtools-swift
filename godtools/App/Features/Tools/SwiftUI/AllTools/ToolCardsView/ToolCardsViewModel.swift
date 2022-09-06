@@ -53,9 +53,9 @@ class ToolCardsViewModel: ToolCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
@@ -66,8 +66,8 @@ class ToolCardsViewModel: ToolCardProvider {
         )
     }
     
-    override func toolTapped(resource: ResourceModel) {
-        delegate?.toolCardTapped(resource: resource)
+    override func toolTapped(_ tool: ToolDomainModel) {
+        delegate?.toolCardTapped(tool)
     }
 }
 
@@ -98,10 +98,18 @@ extension ToolCardsViewModel {
     }
     
     private func reloadResourcesFromCache() {
+        
         if let categoryFilterValue = categoryFilterValue {
             tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrCategory == categoryFilterValue })
+                .map({ resource in
+                    return ToolDomainModel(resource: resource)
+                })
+            
         } else {
             tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted()
+                .map({ resource in
+                    return ToolDomainModel(resource: resource)
+                })
         }
         
         self.delegate?.toolsAreLoading(false)

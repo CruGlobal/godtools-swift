@@ -17,9 +17,9 @@ class LessonFeedbackAnalytics {
     private static let valueHelpfulYes: String = "yes"
     private static let valueHelpfulNo: String = "no"
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }

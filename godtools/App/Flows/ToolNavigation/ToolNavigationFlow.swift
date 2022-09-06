@@ -26,7 +26,7 @@ extension ToolNavigationFlow {
             toolDeepLink: toolDeepLink,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            languageSettingsService: appDiContainer.languageSettingsService
+            primaryLanguage: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -38,16 +38,14 @@ extension ToolNavigationFlow {
     }
     
     func navigateToTool(resourceId: String, trainingTipsEnabled: Bool) {
-        
-        let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
-        
+                
         var languageIds: [String] = Array()
         
-        if let primaryLanguageId = languageSettingsService.primaryLanguage.value?.id {
+        if let primaryLanguageId = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()?.dataModelId {
             languageIds.append(primaryLanguageId)
         }
         
-        if let parallelLanguageId = languageSettingsService.parallelLanguage.value?.id {
+        if let parallelLanguageId = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase().getParallelLanguage()?.dataModelId {
             languageIds.append(parallelLanguageId)
         }
                         
