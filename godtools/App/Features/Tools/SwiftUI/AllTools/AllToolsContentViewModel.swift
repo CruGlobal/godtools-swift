@@ -135,8 +135,8 @@ extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
 
 extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
     
-    func filterToolsWithCategory(_ attrCategory: String?) {
-        toolCardsViewModel.filterTools(with: attrCategory)
+    func filterToolsWithCategory(_ categoryName: String?) {
+        toolCardsViewModel.filterTools(with: categoryName)
     }
 }
 

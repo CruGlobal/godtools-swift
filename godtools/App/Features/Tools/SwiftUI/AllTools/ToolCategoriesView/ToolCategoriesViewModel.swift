@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 protocol ToolCategoriesViewModelDelegate: AnyObject {
-    func filterToolsWithCategory(_ attrCategory: String?)
+    func filterToolsWithCategory(_ categoryName: String?)
 }
 
 class ToolCategoriesViewModel: NSObject, ObservableObject {
