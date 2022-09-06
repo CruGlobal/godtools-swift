@@ -50,7 +50,7 @@ class GetToolCategoriesUseCase {
             }
         }
         
-        return uniqueCategories.map { ToolCategoryDomainModel(category: $0) }
+        return uniqueCategories.map { ToolCategoryDomainModel(categoryName: $0) }
     }
     
     private func sortToolsByPrimaryLanguageAvailable(_ toolResources: [ResourceModel], primaryLanguage: LanguageDomainModel?) -> [ResourceModel] {

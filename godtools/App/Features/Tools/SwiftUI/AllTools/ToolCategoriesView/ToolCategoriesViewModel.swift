@@ -21,6 +21,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     
     private weak var delegate: ToolCategoriesViewModelDelegate?
@@ -34,11 +35,12 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
         self.delegate = delegate
@@ -68,7 +70,7 @@ extension ToolCategoriesViewModel {
             
         case let categoryButtonViewModel as ToolCategoryButtonViewModel:
             
-            let category = categoryButtonViewModel.category.category
+            let category = categoryButtonViewModel.category.categoryName
             if category == selectedCategory {
                 selectedCategory = nil
             } else {
@@ -113,8 +115,13 @@ extension ToolCategoriesViewModel {
         let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
 
         let categoryButtonVMs = categories.map { category in
-                
-            return ToolCategoryButtonViewModel(category: category, selectedAttrCategory: selectedCategory, localizationServices: localizationServices, languageSettingsService: languageSettingsService)
+            
+            return ToolCategoryButtonViewModel(
+                category: category,
+                selectedCategoryName: selectedCategory,
+                localizationServices: localizationServices,
+                getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+            )
         }
         
         buttonViewModels = [allToolsButtonVM] + categoryButtonVMs

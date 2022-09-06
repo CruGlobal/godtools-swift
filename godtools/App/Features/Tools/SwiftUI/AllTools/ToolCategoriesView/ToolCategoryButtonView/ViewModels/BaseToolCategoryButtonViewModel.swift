@@ -29,7 +29,7 @@ class BaseToolCategoryButtonViewModel: ObservableObject {
     
     // MARK: - For Override
     
-    func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {}
+    func updateStateWithSelectedCategory(_ selectedCategoryName: String?) {}
 }
 
 // MARK: - Public
