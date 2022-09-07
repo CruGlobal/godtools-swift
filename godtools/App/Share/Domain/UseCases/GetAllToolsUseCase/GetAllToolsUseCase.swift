@@ -35,19 +35,6 @@ extension GetAllToolsUseCase {
             }
             .eraseToAnyPublisher()
     }
-    
-    func getAllToolsPublisher(sorted: Bool) -> AnyPublisher<[ToolDomainModel], Never> {
-        
-        return resourcesRepository.getResourcesChanged()
-            .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
-                
-                let tools = self.getAllTools(sorted: sorted)
-                
-                return Just(tools)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
 }
 
 // MARK: - Tool Getters
