@@ -63,7 +63,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         resourcesRepository.getResourcesChanged()
             .receiveOnMain()
             .sink { [weak self] _ in
-                self?.checkForTranslationVersionUpdated()
+                self?.updateTranslationsIfNeeded()
             }
             .store(in: &cancellables)
     }
@@ -72,8 +72,87 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
 
     }
     
-    private func checkForTranslationVersionUpdated() {
+    private func updateTranslationsIfNeeded() {
         
+        var translationsNeededDownloading: [TranslationModel] = Array()
+                
+        for pageRenderer in renderer.value.pageRenderers {
+            
+            let resource: ResourceModel = pageRenderer.resource
+            let language: LanguageModel = pageRenderer.language
+            let currentTranslation: TranslationModel = pageRenderer.translation
+            
+            guard let latestTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+                continue
+            }
+            
+            guard latestTranslation.version > currentTranslation.version else {
+                continue
+            }
+            
+            translationsNeededDownloading.append(latestTranslation)
+        }
+        
+        guard !translationsNeededDownloading.isEmpty else {
+            return
+        }
+        
+        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, includeRelatedFiles: true)
+            .receiveOnMain()
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (manifestFileDataModels: [TranslationManifestFileDataModel]) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let currentRenderer: MobileContentRenderer = weakSelf.renderer.value
+                let currentPageRenderer: MobileContentPageRenderer = weakSelf.currentPageRenderer.value
+                
+                var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+                                
+                for pageRenderer in currentRenderer.pageRenderers {
+                    
+                    let resource: ResourceModel = pageRenderer.resource
+                    let language: LanguageModel = pageRenderer.language
+                    let currentTranslation: TranslationModel = pageRenderer.translation
+                    
+                    let updatedManifest: Manifest
+                    let updatedTranslation: TranslationModel
+                    
+                    if let latestTranslation = self?.resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
+                        
+                        updatedManifest = manifestFileDataModel.manifest
+                        updatedTranslation = manifestFileDataModel.translation
+                    }
+                    else {
+                        
+                        updatedManifest = pageRenderer.manifest
+                        updatedTranslation = pageRenderer.translation
+                    }
+                    
+                    let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                        manifest: updatedManifest,
+                        language: pageRenderer.language,
+                        translation: updatedTranslation
+                    )
+                    
+                    languageTranslationManifests.append(languageTranslationManifest)
+                }
+                
+                let toolTranslations = ToolTranslationsDomainModel(
+                    tool: currentRenderer.resource,
+                    languageTranslationManifests: languageTranslationManifests
+                )
+                
+                let updatedRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+                
+                let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
+                
+                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex)
+            }
+            .store(in: &cancellables)
     }
     
     private func getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: MobileContentPageRenderer) -> [Page] {
