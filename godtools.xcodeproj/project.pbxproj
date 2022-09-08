@@ -1035,7 +1035,6 @@
 		D44F3ABA283BC7DB0008390D /* ToolCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AB9283BC7DB0008390D /* ToolCategoriesViewModel.swift */; };
 		D44F3ABC283C13E20008390D /* TwoRowHGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABB283C13E20008390D /* TwoRowHGrid.swift */; };
 		D44F3ABE283D18A70008390D /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ABD283D18A70008390D /* SeparatorView.swift */; };
-		D44F3AC32847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AC22847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift */; };
 		D44F3ACB284E79BB0008390D /* ToolCardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ACA284E79BB0008390D /* ToolCardsViewModel.swift */; };
 		D44F3ACF28620AC40008390D /* ToolCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3ACE28620AC40008390D /* ToolCardType.swift */; };
 		D44F3AD528623CD90008390D /* GTBlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AD428623CD90008390D /* GTBlueButton.swift */; };
@@ -2187,7 +2186,6 @@
 		D44F3AB9283BC7DB0008390D /* ToolCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoriesViewModel.swift; sourceTree = "<group>"; };
 		D44F3ABB283C13E20008390D /* TwoRowHGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRowHGrid.swift; sourceTree = "<group>"; };
 		D44F3ABD283D18A70008390D /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
-		D44F3AC22847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseToolCategoryButtonViewModel.swift; sourceTree = "<group>"; };
 		D44F3ACA284E79BB0008390D /* ToolCardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardsViewModel.swift; sourceTree = "<group>"; };
 		D44F3ACE28620AC40008390D /* ToolCardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardType.swift; sourceTree = "<group>"; };
 		D44F3AD428623CD90008390D /* GTBlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTBlueButton.swift; sourceTree = "<group>"; };
@@ -6709,7 +6707,6 @@
 		D44F3AC12847BCFB0008390D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D44F3AC22847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift */,
 				D44F3AB0283678880008390D /* ToolCategoryButtonViewModel.swift */,
 			);
 			path = ViewModels;
@@ -7816,7 +7813,6 @@
 				45AD1AC725938A4E00A096A0 /* FavoritedToolsView.swift in Sources */,
 				451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */,
 				4561C41027C6891600C4A367 /* MobileContentAccordionSectionViewModelType.swift in Sources */,
-				D44F3AC32847BD0B0008390D /* BaseToolCategoryButtonViewModel.swift in Sources */,
 				D41B38A7287DFF1F00BD5899 /* LessonsContentView.swift in Sources */,
 				45AD1FBA25938A9800A096A0 /* TractRemoteSharePublisher.swift in Sources */,
 				45AD1BC725938A4F00A096A0 /* UIView+Animations.swift in Sources */,

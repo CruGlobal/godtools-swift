@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 protocol ToolCategoriesViewModelDelegate: AnyObject {
-    func filterToolsWithCategory(_ categoryId: String?)
+    func filterToolsWithCategory(_ categoryId: String)
 }
 
 class ToolCategoriesViewModel: NSObject, ObservableObject {
@@ -31,7 +31,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     @Published var categoryTitleText: String = ""
     @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
-    @Published var selectedCategoryId: String?
+    @Published var selectedCategoryId: String = GetToolCategoriesUseCase.allToolsCategoryId
     
     // MARK: - Init
     
@@ -101,7 +101,7 @@ extension ToolCategoriesViewModel {
                 localizationServices: localizationServices,
                 getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
             )
-        }        
+        }
     }
     
     private func setTitleText() {

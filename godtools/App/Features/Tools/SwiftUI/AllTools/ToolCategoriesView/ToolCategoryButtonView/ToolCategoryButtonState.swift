@@ -12,7 +12,7 @@ enum ToolCategoryButtonState {
     case selected
     case greyedOut
     
-    init(categoryId: String?, selectedCategoryId: String?) {
+    init(categoryId: String?, selectedCategoryId: String) {
 
         if selectedCategoryId == categoryId {
             self = .selected
