@@ -99,7 +99,7 @@ class GetToolTranslationsFilesUseCase {
                         return nil
                     }
                     
-                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language)
+                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language, translation: $0.translation)
                 })
                 
                 let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)

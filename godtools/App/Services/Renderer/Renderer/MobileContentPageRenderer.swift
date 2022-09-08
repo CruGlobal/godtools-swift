@@ -18,6 +18,7 @@ class MobileContentPageRenderer {
     let primaryLanguage: LanguageModel
     let manifest: Manifest
     let language: LanguageModel
+    let translation: TranslationModel
     let manifestResourcesCache: ManifestResourcesCache
     let pageViewFactories: MobileContentRendererPageViewFactories
     
@@ -28,6 +29,7 @@ class MobileContentPageRenderer {
         self.primaryLanguage = primaryLanguage
         self.manifest = languageTranslationManifest.manifest
         self.language = languageTranslationManifest.language
+        self.translation = languageTranslationManifest.translation
         self.manifestResourcesCache = manifestResourcesCache
         self.pageViewFactories = pageViewFactories
         self.navigation = navigation
@@ -73,7 +75,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
@@ -85,6 +87,7 @@ class MobileContentPageRenderer {
             resourcesCache: manifestResourcesCache,
             resource: resource,
             language: language,
+            translation: translation,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
             primaryRendererLanguage: primaryLanguage,
@@ -107,6 +110,7 @@ class MobileContentPageRenderer {
             manifestResourcesCache: manifestResourcesCache,
             resource: resource,
             language: language,
+            translation: translation,
             pageViewFactories: pageViewFactories,
             primaryLanguage: primaryLanguage,
             sharedState: sharedState,
