@@ -11,9 +11,7 @@ import Combine
 import GodToolsToolParser
 
 class GetToolTranslationsFilesUseCase {
-    
-    typealias TranslationId = String
-    
+        
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
