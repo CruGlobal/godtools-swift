@@ -133,11 +133,17 @@ class RealmResourcesCacheSync {
                 // add latest translations and add languages to resource
                 for ( _, realmResource) in realmResourcesDictionary {
                     for translationId in realmResource.latestTranslationIds {
-                        if let realmTranslation = realmTranslationsDictionary[translationId] {
+                        
+                        guard let realmTranslation = realmTranslationsDictionary[translationId] else {
+                            continue
+                        }
+                        
+                        if !realmResource.latestTranslations.contains(realmTranslation) {
                             realmResource.latestTranslations.append(realmTranslation)
-                            if let realmLanguage = realmTranslation.language {
-                                realmResource.languages.append(realmLanguage)
-                            }
+                        }
+                        
+                        if let realmLanguage = realmTranslation.language, !realmResource.languages.contains(realmLanguage) {
+                            realmResource.languages.append(realmLanguage)
                         }
                     }
                 }
