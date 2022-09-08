@@ -217,13 +217,3 @@ extension ResourceModel {
         return languageIds
     }
 }
-
-extension ResourceModel: LanguageSupportable {
-    
-    func supportsLanguage(languageId: String) -> Bool {
-        if !languageId.isEmpty {
-            return languageIds.contains(languageId)
-        }
-        return false
-    }
-}
