@@ -12,12 +12,15 @@ import Combine
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
+    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let startingPage: Int?
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private(set) var renderer: CurrentValueSubject<MobileContentRenderer, Never>
     private(set) var currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
@@ -33,11 +36,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
         self.startingPage = page
+        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -54,10 +59,21 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         super.init()
+        
+        resourcesRepository.getResourcesChanged()
+            .receiveOnMain()
+            .sink { [weak self] _ in
+                self?.checkForTranslationVersionUpdated()
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
 
+    }
+    
+    private func checkForTranslationVersionUpdated() {
+        
     }
     
     private func getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: MobileContentPageRenderer) -> [Page] {
