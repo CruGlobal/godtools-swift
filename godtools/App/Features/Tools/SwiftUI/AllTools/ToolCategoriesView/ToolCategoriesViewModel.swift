@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 protocol ToolCategoriesViewModelDelegate: AnyObject {
-    func filterToolsWithCategory(_ categoryName: String?)
+    func filterToolsWithCategory(_ categoryId: String?)
 }
 
 class ToolCategoriesViewModel: NSObject, ObservableObject {
@@ -31,7 +31,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     @Published var categoryTitleText: String = ""
     @Published var buttonViewModels = [BaseToolCategoryButtonViewModel]()
-    @Published var selectedCategory: String?
+    @Published var selectedCategoryId: String?
     
     // MARK: - Init
     
@@ -66,15 +66,15 @@ extension ToolCategoriesViewModel {
             
         case is AllToolsCategoryButtonViewModel:
             
-            selectedCategory = nil
+            selectedCategoryId = nil
             
         case let categoryButtonViewModel as ToolCategoryButtonViewModel:
             
-            let category = categoryButtonViewModel.category.categoryName
-            if category == selectedCategory {
-                selectedCategory = nil
+            let categoryId = categoryButtonViewModel.category.id
+            if categoryId == selectedCategoryId {
+                selectedCategoryId = nil
             } else {
-                selectedCategory = category
+                selectedCategoryId = categoryId
             }
             
         default:
@@ -84,9 +84,9 @@ extension ToolCategoriesViewModel {
         }
         
         
-        buttonViewModels.forEach { $0.updateStateWithSelectedCategory(selectedCategory) }
+        buttonViewModels.forEach { $0.updateStateWithSelectedCategory(selectedCategoryId) }
         
-        delegate?.filterToolsWithCategory(selectedCategory)
+        delegate?.filterToolsWithCategory(selectedCategoryId)
     }
 }
 
@@ -113,13 +113,13 @@ extension ToolCategoriesViewModel {
         
     private func refreshCategoryButtons(with categories: [ToolCategoryDomainModel]) {
         
-        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedAttrCategory: selectedCategory, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
+        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedCategoryId: selectedCategoryId, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
 
         let categoryButtonVMs = categories.map { category in
             
             return ToolCategoryButtonViewModel(
                 category: category,
-                selectedCategoryName: selectedCategory,
+                selectedCategoryId: selectedCategoryId,
                 localizationServices: localizationServices,
                 getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
             )

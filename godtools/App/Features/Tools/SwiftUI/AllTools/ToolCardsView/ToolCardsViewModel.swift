@@ -94,7 +94,7 @@ extension ToolCardsViewModel {
 
 extension ToolCardsViewModel {
     
-    func filterTools(with categoryName: String?) {
-        categoryFilterValuePublisher.value = categoryName
+    func filterTools(with categoryId: String?) {
+        categoryFilterValuePublisher.value = categoryId
     }
 }

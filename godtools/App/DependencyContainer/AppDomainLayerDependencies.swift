@@ -133,6 +133,7 @@ class AppDomainLayerDependencies {
         return GetToolCategoriesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            localizationServices: dataLayer.getLocalizationServices(),
             resourcesRepository: dataLayer.getResourcesRepository()
         )
     }

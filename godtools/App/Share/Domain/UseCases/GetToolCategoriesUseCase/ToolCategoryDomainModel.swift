@@ -10,5 +10,6 @@ import Foundation
 
 struct ToolCategoryDomainModel {
     
-    let categoryName: String
+    let id: String
+    let translatedName: String
 }

@@ -18,32 +18,20 @@ class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
         
     // MARK: - Init
     
-    init(category: ToolCategoryDomainModel, selectedCategoryName: String?, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(category: ToolCategoryDomainModel, selectedCategoryId: String?, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         self.category = category
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
-        let bundle: Bundle
-        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() {
-            
-            bundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
-            
-        } else {
-            
-            bundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-        }
-
-        let translatedCategory = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: category.categoryName)
+        let buttonState = ToolCategoryButtonState(categoryId: category.id, selectedCategoryId: selectedCategoryId)
         
-        let buttonState = ToolCategoryButtonState(category: category.categoryName, selectedCategory: selectedCategoryName)
-        
-        super.init(categoryText: translatedCategory, buttonState: buttonState)                
+        super.init(categoryText: category.translatedName, buttonState: buttonState)
     }
 
     // MARK: - Overrides
     
-    override func updateStateWithSelectedCategory(_ selectedCategoryName: String?) {
-        let buttonState = ToolCategoryButtonState(category: category.categoryName, selectedCategory: selectedCategoryName)
+    override func updateStateWithSelectedCategory(_ selectedCategoryId: String?) {
+        let buttonState = ToolCategoryButtonState(categoryId: category.id, selectedCategoryId: selectedCategoryId)
         
         setButtonState(buttonState)
     }
