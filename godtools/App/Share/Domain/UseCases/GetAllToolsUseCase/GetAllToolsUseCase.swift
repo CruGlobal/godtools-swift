@@ -26,7 +26,14 @@ extension GetAllToolsUseCase {
     func getToolsForCategoryPublisher(category: CurrentValueSubject<String?, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
         
         return Publishers.CombineLatest(resourcesRepository.getResourcesChanged(), category)
-            .flatMap { (_, category) -> AnyPublisher<[ToolDomainModel], Never> in
+            .flatMap { (_, categoryId) -> AnyPublisher<[ToolDomainModel], Never> in
+                
+                let category: String?
+                if categoryId == GetToolCategoriesUseCase.allToolsCategoryId {
+                    category = nil
+                } else {
+                    category = categoryId
+                }
                 
                 let tools = self.getAllTools(sorted: true, with: category)
                 

@@ -30,7 +30,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     // MARK: - Published
     
     @Published var categoryTitleText: String = ""
-    @Published var buttonViewModels = [BaseToolCategoryButtonViewModel]()
+    @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
     @Published var selectedCategoryId: String?
     
     // MARK: - Init
@@ -60,29 +60,9 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
 
 extension ToolCategoriesViewModel {
     
-    func categoryTapped(with buttonViewModel: BaseToolCategoryButtonViewModel) {
+    func categoryTapped(with buttonViewModel: ToolCategoryButtonViewModel) {
         
-        switch buttonViewModel {
-            
-        case is AllToolsCategoryButtonViewModel:
-            
-            selectedCategoryId = nil
-            
-        case let categoryButtonViewModel as ToolCategoryButtonViewModel:
-            
-            let categoryId = categoryButtonViewModel.category.id
-            if categoryId == selectedCategoryId {
-                selectedCategoryId = nil
-            } else {
-                selectedCategoryId = categoryId
-            }
-            
-        default:
-            
-            assertionFailure("Unhandled category button view model type")
-            return
-        }
-        
+        selectedCategoryId = buttonViewModel.category.id
         
         buttonViewModels.forEach { $0.updateStateWithSelectedCategory(selectedCategoryId) }
         
@@ -113,9 +93,7 @@ extension ToolCategoriesViewModel {
         
     private func refreshCategoryButtons(with categories: [ToolCategoryDomainModel]) {
         
-        let allToolsButtonVM = AllToolsCategoryButtonViewModel(selectedCategoryId: selectedCategoryId, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
-
-        let categoryButtonVMs = categories.map { category in
+        buttonViewModels = categories.map { category in
             
             return ToolCategoryButtonViewModel(
                 category: category,
@@ -123,9 +101,7 @@ extension ToolCategoriesViewModel {
                 localizationServices: localizationServices,
                 getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
             )
-        }
-        
-        buttonViewModels = [allToolsButtonVM] + categoryButtonVMs
+        }        
     }
     
     private func setTitleText() {
