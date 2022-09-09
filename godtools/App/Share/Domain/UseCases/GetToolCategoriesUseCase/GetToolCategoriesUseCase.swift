@@ -14,9 +14,7 @@ class GetToolCategoriesUseCase {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
-    
-    static let allToolsCategoryId = "allTools"
-    
+        
     init(getAllToolsUseCase: GetAllToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
@@ -58,12 +56,12 @@ class GetToolCategoriesUseCase {
         }
         
         let allToolsCategoryTranslation = localizationServices.stringForBundle(bundle: bundle, key: "find_tools")
-        let allToolsCategory = ToolCategoryDomainModel(id: GetToolCategoriesUseCase.allToolsCategoryId, translatedName: allToolsCategoryTranslation)
+        let allToolsCategory = ToolCategoryDomainModel(type: .allTools, translatedName: allToolsCategoryTranslation)
         
         let categories: [ToolCategoryDomainModel] = ids.map { categoryId in
             let translatedName = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: categoryId)
             
-            return ToolCategoryDomainModel(id: categoryId, translatedName: translatedName)
+            return ToolCategoryDomainModel(type: .category(id: categoryId), translatedName: translatedName)
         }
         
         return [allToolsCategory] + categories

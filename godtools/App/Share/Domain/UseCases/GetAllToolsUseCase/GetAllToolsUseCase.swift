@@ -28,14 +28,7 @@ extension GetAllToolsUseCase {
         return Publishers.CombineLatest(resourcesRepository.getResourcesChanged(), category)
             .flatMap { (_, categoryId) -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let category: String?
-                if categoryId == GetToolCategoriesUseCase.allToolsCategoryId {
-                    category = nil
-                } else {
-                    category = categoryId
-                }
-                
-                let tools = self.getAllTools(sorted: true, with: category)
+                let tools = self.getAllTools(sorted: true, with: categoryId)
                 
                 return Just(tools)
                     .eraseToAnyPublisher()

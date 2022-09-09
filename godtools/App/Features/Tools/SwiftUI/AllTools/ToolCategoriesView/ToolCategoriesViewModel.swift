@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 protocol ToolCategoriesViewModelDelegate: AnyObject {
-    func filterToolsWithCategory(_ categoryId: String)
+    func filterToolsWithCategory(_ categoryId: String?)
 }
 
 class ToolCategoriesViewModel: NSObject, ObservableObject {
@@ -30,7 +30,7 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     @Published var categoryTitleText: String = ""
     @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
-    @Published var selectedCategoryId: String = GetToolCategoriesUseCase.allToolsCategoryId
+    @Published var selectedCategoryId: String? = nil
     
     // MARK: - Init
     

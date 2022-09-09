@@ -23,7 +23,7 @@ class ToolCategoryButtonViewModel: ObservableObject {
         
     // MARK: - Init
     
-    init(category: ToolCategoryDomainModel, selectedCategoryId: String, localizationServices: LocalizationServices) {
+    init(category: ToolCategoryDomainModel, selectedCategoryId: String?, localizationServices: LocalizationServices) {
         self.category = category
         self.localizationServices = localizationServices
         
@@ -39,7 +39,7 @@ class ToolCategoryButtonViewModel: ObservableObject {
 
 extension ToolCategoryButtonViewModel {
     
-    func updateStateWithSelectedCategory(_ selectedCategoryId: String) {
+    func updateStateWithSelectedCategory(_ selectedCategoryId: String?) {
         let buttonState = ToolCategoryButtonState(categoryId: category.id, selectedCategoryId: selectedCategoryId)
         
         setButtonState(buttonState)

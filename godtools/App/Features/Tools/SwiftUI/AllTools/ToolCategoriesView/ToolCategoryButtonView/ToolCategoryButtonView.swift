@@ -39,7 +39,7 @@ struct ToolCategoryButtonView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let category = ToolCategoryDomainModel(id: "1", translatedName: "Conversation Starter")
+        let category = ToolCategoryDomainModel(type: .category(id: "1"), translatedName: "Conversation Starter")
         let viewModel = ToolCategoryButtonViewModel(
             category: category,
             selectedCategoryId: "1",
