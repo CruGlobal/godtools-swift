@@ -43,8 +43,7 @@ struct ToolCategoryButtonView_Previews: PreviewProvider {
         let viewModel = ToolCategoryButtonViewModel(
             category: category,
             selectedCategoryId: "1",
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase())
+            localizationServices: appDiContainer.localizationServices)
         
         ToolCategoryButtonView(viewModel: viewModel)
             .padding()

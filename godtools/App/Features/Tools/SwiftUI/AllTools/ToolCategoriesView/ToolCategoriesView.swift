@@ -61,7 +61,6 @@ struct ToolCategoriesView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
             delegate: nil
         )

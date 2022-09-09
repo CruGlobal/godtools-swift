@@ -14,8 +14,7 @@ class ToolCategoryButtonViewModel: ObservableObject {
     
     let category: ToolCategoryDomainModel
     private let localizationServices: LocalizationServices
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    
+
     // MARK: - Published
     
     @Published var categoryText: String = ""
@@ -24,10 +23,9 @@ class ToolCategoryButtonViewModel: ObservableObject {
         
     // MARK: - Init
     
-    init(category: ToolCategoryDomainModel, selectedCategoryId: String, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(category: ToolCategoryDomainModel, selectedCategoryId: String, localizationServices: LocalizationServices) {
         self.category = category
         self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
         categoryText = category.translatedName
         

@@ -21,7 +21,6 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     
     private weak var delegate: ToolCategoriesViewModelDelegate?
@@ -35,12 +34,11 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
         self.delegate = delegate
@@ -98,8 +96,7 @@ extension ToolCategoriesViewModel {
             return ToolCategoryButtonViewModel(
                 category: category,
                 selectedCategoryId: selectedCategoryId,
-                localizationServices: localizationServices,
-                getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+                localizationServices: localizationServices
             )
         }
     }
