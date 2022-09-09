@@ -96,7 +96,11 @@ class MobileContentRendererNavigation {
             appDiContainer: appDiContainer
         )
         
-        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(manifest: event.renderedPageContext.manifest, language: event.renderedPageContext.language)
+        let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+            manifest: event.renderedPageContext.manifest,
+            language: event.renderedPageContext.language,
+            translation: event.renderedPageContext.translation
+        )
         
         let navigation = MobileContentRendererNavigation(
             parentFlow: parentFlow,
