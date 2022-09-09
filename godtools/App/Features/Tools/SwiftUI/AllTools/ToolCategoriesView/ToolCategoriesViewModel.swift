@@ -17,7 +17,6 @@ class ToolCategoriesViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -34,8 +33,7 @@ class ToolCategoriesViewModel: ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
-        self.dataDownloader = dataDownloader
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.localizationServices = localizationServices
         
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase

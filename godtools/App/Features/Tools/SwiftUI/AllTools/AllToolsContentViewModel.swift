@@ -43,7 +43,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     }()
     private(set) lazy var categoriesViewModel: ToolCategoriesViewModel = {
         ToolCategoriesViewModel(
-            dataDownloader: dataDownloader,
             localizationServices: localizationServices,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getToolCategoriesUseCase: getToolCategoriesUseCase,
