@@ -54,13 +54,6 @@ class AppDomainLayerDependencies {
         return GetDeviceLanguageUseCase()
     }
     
-    func getLanguagesListUseCase() -> GetLanguagesListUseCase {
-        return GetLanguagesListUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
     func getLanguageUseCase() -> GetLanguageUseCase {
         return GetLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -77,6 +70,13 @@ class AppDomainLayerDependencies {
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
         return RemoveToolFromFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
+    func getSettingsLanguagesUseCase() -> GetSettingsLanguagesUseCase {
+        return GetSettingsLanguagesUseCase(
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getLanguageUseCase: getLanguageUseCase()
         )
     }
     
@@ -185,8 +185,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getUserDidDeleteParallelLanguageUseCase() -> UserDidDeleteParallelLanguageUseCase {
-        return UserDidDeleteParallelLanguageUseCase(
+    func getUserDidDeleteSettingsParallelLanguageUseCase() -> UserDidDeleteSettingsParallelLanguageUseCase {
+        return UserDidDeleteSettingsParallelLanguageUseCase(
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
         )
     }
