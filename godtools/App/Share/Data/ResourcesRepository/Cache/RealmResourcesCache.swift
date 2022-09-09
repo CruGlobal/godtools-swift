@@ -30,6 +30,32 @@ class RealmResourcesCache {
             .eraseToAnyPublisher()
     }
     
+    func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
+        let metaTools = getResources(with: .metaTool)
+        let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
+        let defaultVariants = getResources(ids: defaultVariantIds)
+        
+        let resourcesExcludingVariants = getResources(with: ["", nil])
+        
+        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
+   
+        var allTools = combinedResourcesAndDefaultVariants.filter { resource in
+                        
+            if let category = category, resource.attrCategory != category {
+                return false
+            }
+            
+            return resource.isToolType && resource.isHidden == false
+            
+        }
+        
+        if sorted {
+            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
+        }
+        
+        return allTools
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {

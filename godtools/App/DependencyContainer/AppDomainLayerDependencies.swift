@@ -129,6 +129,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
+        return GetToolCategoriesUseCase(
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            localizationServices: dataLayer.getLocalizationServices(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
             attachmentsRepository: dataLayer.getAttachmentsRepository()

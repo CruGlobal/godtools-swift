@@ -65,10 +65,6 @@ class ResourcesCache {
         return combinedResourcesAndDefaultVariants.filterForToolTypes(andFilteredBy: additionalFilter)
     }
     
-    func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getAllVisibleTools(andFilteredBy: additionalFilter).sortedByDefaultOrder()
-    }
-    
     func getMetaTools() -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         let metaToolResources: [RealmResource] = Array(realm.objects(RealmResource.self).where { $0.resourceType == ResourceType.metaTool.rawValue })
