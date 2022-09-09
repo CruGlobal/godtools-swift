@@ -95,8 +95,7 @@ extension ToolCategoriesViewModel {
             
             return ToolCategoryButtonViewModel(
                 category: category,
-                selectedCategoryId: selectedCategoryId,
-                localizationServices: localizationServices
+                selectedCategoryId: selectedCategoryId
             )
         }
     }

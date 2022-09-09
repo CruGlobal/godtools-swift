@@ -13,7 +13,6 @@ class ToolCategoryButtonViewModel: ObservableObject {
     // MARK: - Properties
     
     let category: ToolCategoryDomainModel
-    private let localizationServices: LocalizationServices
 
     // MARK: - Published
     
@@ -23,9 +22,8 @@ class ToolCategoryButtonViewModel: ObservableObject {
         
     // MARK: - Init
     
-    init(category: ToolCategoryDomainModel, selectedCategoryId: String?, localizationServices: LocalizationServices) {
+    init(category: ToolCategoryDomainModel, selectedCategoryId: String?) {
         self.category = category
-        self.localizationServices = localizationServices
         
         categoryText = category.translatedName
         

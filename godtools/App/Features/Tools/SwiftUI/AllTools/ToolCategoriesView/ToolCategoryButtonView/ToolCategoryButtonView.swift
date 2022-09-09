@@ -38,12 +38,10 @@ struct ToolCategoryButtonView: View {
 struct ToolCategoryButtonView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let category = ToolCategoryDomainModel(type: .category(id: "1"), translatedName: "Conversation Starter")
         let viewModel = ToolCategoryButtonViewModel(
-            category: category,
-            selectedCategoryId: "1",
-            localizationServices: appDiContainer.localizationServices)
+            category: ToolCategoryDomainModel(type: .category(id: "1"), translatedName: "Conversation Starter"),
+            selectedCategoryId: "1"
+        )
         
         ToolCategoryButtonView(viewModel: viewModel)
             .padding()
