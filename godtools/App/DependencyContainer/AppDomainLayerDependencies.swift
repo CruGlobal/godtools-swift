@@ -131,7 +131,6 @@ class AppDomainLayerDependencies {
     
     func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
         return GetToolCategoriesUseCase(
-            getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
             resourcesRepository: dataLayer.getResourcesRepository()

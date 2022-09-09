@@ -10,13 +10,11 @@ import Combine
 
 class GetToolCategoriesUseCase {
     
-    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
         
-    init(getAllToolsUseCase: GetAllToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
-        self.getAllToolsUseCase = getAllToolsUseCase
+    init( getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
@@ -30,8 +28,8 @@ class GetToolCategoriesUseCase {
         )
             .flatMap({ _, primaryLanguage -> AnyPublisher<[ToolCategoryDomainModel], Never> in
                 
-                let categoryIds = self.getAllToolsUseCase
-                    .getAllToolResources(sorted: false)
+                let categoryIds = self.resourcesRepository
+                    .getAllTools(sorted: false)
                     .sortedByPrimaryLanguageAvailable(primaryLanguage: primaryLanguage, resourcesRepository: self.resourcesRepository)
                     .getUniqueCategoryIds()
                 
