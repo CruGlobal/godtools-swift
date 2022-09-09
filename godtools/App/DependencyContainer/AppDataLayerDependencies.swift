@@ -12,6 +12,7 @@ class AppDataLayerDependencies {
     
     private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
     init() {
         
@@ -34,6 +35,10 @@ class AppDataLayerDependencies {
         return FavoritedResourcesRepository(
             cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
+        return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {

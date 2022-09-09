@@ -29,7 +29,6 @@ class AppDiContainer {
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
@@ -89,9 +88,7 @@ class AppDiContainer {
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-        
-        favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-        
+                
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     

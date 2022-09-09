@@ -487,7 +487,7 @@ extension AppFlow {
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
