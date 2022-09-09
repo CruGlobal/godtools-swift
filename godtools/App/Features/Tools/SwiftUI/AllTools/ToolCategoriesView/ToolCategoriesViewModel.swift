@@ -13,7 +13,7 @@ protocol ToolCategoriesViewModelDelegate: AnyObject {
     func filterToolsWithCategory(_ categoryId: String?)
 }
 
-class ToolCategoriesViewModel: NSObject, ObservableObject {
+class ToolCategoriesViewModel: ObservableObject {
     
     // MARK: - Properties
     
@@ -42,8 +42,6 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
         self.delegate = delegate
-                
-        super.init()
         
         setupBinding()
     }
