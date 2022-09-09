@@ -765,11 +765,11 @@
 		45C2594728CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593B28CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift */; };
 		45C2594828CAC3E8005D2387 /* ChooseLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */; };
 		45C2595728CAC46E005D2387 /* UserDidDeleteParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2594C28CAC46E005D2387 /* UserDidDeleteParallelLanguageUseCase.swift */; };
-		45C2595828CAC46E005D2387 /* GetLanguagesListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2594E28CAC46E005D2387 /* GetLanguagesListUseCase.swift */; };
 		45C2595928CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */; };
 		45C2595A28CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */; };
 		45C2595B28CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */; };
 		45C2595C28CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595628CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift */; };
+		45C2595F28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595E28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45C61DB1280896E60058946F /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C61DB0280896E50058946F /* AppsFlyerDeepLinkValueComponentsParser.swift */; };
 		45C61DC32808B1790058946F /* DashboardDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C61DC22808B1790058946F /* DashboardDeepLinkParser.swift */; };
@@ -1863,11 +1863,11 @@
 		45C2593B28CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModelType.swift; sourceTree = "<group>"; };
 		45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageViewModelType.swift; sourceTree = "<group>"; };
 		45C2594C28CAC46E005D2387 /* UserDidDeleteParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidDeleteParallelLanguageUseCase.swift; sourceTree = "<group>"; };
-		45C2594E28CAC46E005D2387 /* GetLanguagesListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLanguagesListUseCase.swift; sourceTree = "<group>"; };
 		45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595628CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
+		45C2595E28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsLanguagesUseCase.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45C61DB0280896E50058946F /* AppsFlyerDeepLinkValueComponentsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerDeepLinkValueComponentsParser.swift; sourceTree = "<group>"; };
 		45C61DC22808B1790058946F /* DashboardDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkParser.swift; sourceTree = "<group>"; };
@@ -5581,7 +5581,7 @@
 		45C2594A28CAC46E005D2387 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				45C2594D28CAC46E005D2387 /* GetLanguagesListUseCase */,
+				45C2595D28CAC4F9005D2387 /* GetSettingsLanguagesUseCase */,
 				45C2595328CAC46E005D2387 /* GetSettingsParallelLanguageUseCase */,
 				45C2595528CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase */,
 				45C2594B28CAC46E005D2387 /* UserDidDeleteParallelLanguageUseCase */,
@@ -5597,14 +5597,6 @@
 				45C2594C28CAC46E005D2387 /* UserDidDeleteParallelLanguageUseCase.swift */,
 			);
 			path = UserDidDeleteParallelLanguageUseCase;
-			sourceTree = "<group>";
-		};
-		45C2594D28CAC46E005D2387 /* GetLanguagesListUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				45C2594E28CAC46E005D2387 /* GetLanguagesListUseCase.swift */,
-			);
-			path = GetLanguagesListUseCase;
 			sourceTree = "<group>";
 		};
 		45C2594F28CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase */ = {
@@ -5637,6 +5629,14 @@
 				45C2595628CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift */,
 			);
 			path = GetSettingsPrimaryLanguageUseCase;
+			sourceTree = "<group>";
+		};
+		45C2595D28CAC4F9005D2387 /* GetSettingsLanguagesUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				45C2595E28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift */,
+			);
+			path = GetSettingsLanguagesUseCase;
 			sourceTree = "<group>";
 		};
 		45C61DC12808B1790058946F /* Dashboard */ = {
@@ -7861,7 +7861,6 @@
 				456777C2287DB3770044AEB2 /* ShareToolRemoteSessionURLView.swift in Sources */,
 				45677827287DC1F20044AEB2 /* ArticlesViewModel.swift in Sources */,
 				D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */,
-				45C2595828CAC46E005D2387 /* GetLanguagesListUseCase.swift in Sources */,
 				459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */,
 				45CBA01B261FB0EA0036BEB3 /* LessonViewModelType.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
@@ -8197,6 +8196,7 @@
 				45677782287DB21F0044AEB2 /* ToolTrainingViewModelType.swift in Sources */,
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,
 				456777B9287DB3770044AEB2 /* ShareToolScreenTutorialViewModel.swift in Sources */,
+				45C2595F28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift in Sources */,
 				45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */,
 				45AD1B1C25938A4E00A096A0 /* LearnToShareToolItemsProviderType.swift in Sources */,
 				455583EC269F2DA500C3FF14 /* MobileContentSpacerView.swift in Sources */,
