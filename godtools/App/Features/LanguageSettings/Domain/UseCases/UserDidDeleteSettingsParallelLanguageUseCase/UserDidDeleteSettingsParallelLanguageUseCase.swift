@@ -1,5 +1,5 @@
 //
-//  UserDidDeleteParallelLanguageUseCase.swift
+//  UserDidDeleteSettingsParallelLanguageUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/31/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserDidDeleteParallelLanguageUseCase {
+class UserDidDeleteSettingsParallelLanguageUseCase {
     
     private let languageSettingsRepository: LanguageSettingsRepository
     

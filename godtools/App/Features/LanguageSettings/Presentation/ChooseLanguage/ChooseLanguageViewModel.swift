@@ -20,7 +20,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase
     private let userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase
-    private let userDidDeleteParallelLanguageUseCase: UserDidDeleteParallelLanguageUseCase
+    private let userDidDeleteSettingsParallelLanguageUseCase: UserDidDeleteSettingsParallelLanguageUseCase
     private let getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let localizationServices: LocalizationServices
@@ -44,14 +44,14 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase,  userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, userDidDeleteParallelLanguageUseCase: UserDidDeleteParallelLanguageUseCase, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase,  userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, userDidDeleteSettingsParallelLanguageUseCase: UserDidDeleteSettingsParallelLanguageUseCase, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.userDidSetSettingsPrimaryLanguageUseCase = userDidSetSettingsPrimaryLanguageUseCase
         self.userDidSetSettingsParallelLanguageUseCase = userDidSetSettingsParallelLanguageUseCase
-        self.userDidDeleteParallelLanguageUseCase = userDidDeleteParallelLanguageUseCase
+        self.userDidDeleteSettingsParallelLanguageUseCase = userDidDeleteSettingsParallelLanguageUseCase
         self.getSettingsLanguagesUseCase = getSettingsLanguagesUseCase
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.localizationServices = localizationServices
@@ -135,7 +135,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         case .primary:
             break
         case .parallel:
-            userDidDeleteParallelLanguageUseCase.deleteParallelLanguage()
+            userDidDeleteSettingsParallelLanguageUseCase.deleteParallelLanguage()
             flowDelegate?.navigate(step: .deleteLanguageTappedFromChooseLanguage)
         }
     }

@@ -177,8 +177,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getUserDidDeleteParallelLanguageUseCase() -> UserDidDeleteParallelLanguageUseCase {
-        return UserDidDeleteParallelLanguageUseCase(
+    func getUserDidDeleteSettingsParallelLanguageUseCase() -> UserDidDeleteSettingsParallelLanguageUseCase {
+        return UserDidDeleteSettingsParallelLanguageUseCase(
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
         )
     }
