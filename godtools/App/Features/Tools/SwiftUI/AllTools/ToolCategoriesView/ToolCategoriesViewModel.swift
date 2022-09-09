@@ -18,9 +18,9 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     
     private weak var delegate: ToolCategoriesViewModelDelegate?
@@ -34,11 +34,11 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
         self.delegate = delegate
@@ -46,11 +46,6 @@ class ToolCategoriesViewModel: NSObject, ObservableObject {
         super.init()
         
         setupBinding()
-        setTitleText()
-    }
-    
-    deinit {
-        languageSettingsService.primaryLanguage.removeObserver(self)
     }
 }
 
@@ -74,6 +69,14 @@ extension ToolCategoriesViewModel {
     
     private func setupBinding() {
         
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { language in
+                
+                self.reloadForLanguageChange(to: language)
+            }
+            .store(in: &cancellables)
+        
         getToolCategoriesUseCase.getToolCategoriesPublisher()
             .receiveOnMain()
             .sink { categories in
@@ -81,12 +84,6 @@ extension ToolCategoriesViewModel {
                 self.refreshCategoryButtons(with: categories)
             }
             .store(in: &cancellables)
-        
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadForLanguageChange()
-            }
-        }
     }
         
     private func refreshCategoryButtons(with categories: [ToolCategoryDomainModel]) {
@@ -100,12 +97,14 @@ extension ToolCategoriesViewModel {
         }
     }
     
-    private func setTitleText() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+    private func setTitleText(with language: LanguageDomainModel) {
+        guard let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier) else { return }
         categoryTitleText = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.categories.title")
     }
     
-    private func reloadForLanguageChange() {
-        setTitleText()
+    private func reloadForLanguageChange(to language: LanguageDomainModel?) {
+        guard let language = language else { return }
+
+        setTitleText(with: language)
     }
 }
