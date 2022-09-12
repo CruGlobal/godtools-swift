@@ -90,6 +90,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
         )

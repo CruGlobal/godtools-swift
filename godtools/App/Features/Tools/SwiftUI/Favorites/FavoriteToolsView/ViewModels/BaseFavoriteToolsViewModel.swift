@@ -24,6 +24,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     let getBannerImageUseCase: GetBannerImageUseCase
     let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     weak var delegate: BaseFavoriteToolsViewModelDelegate?
@@ -37,7 +38,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: BaseFavoriteToolsViewModelDelegate?, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
@@ -45,19 +46,19 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        
         self.delegate = delegate
         self.toolCardViewModelDelegate = toolCardViewModelDelegate
         
         super.init()
         
         setupBinding()
-        setText()
     }
     
     deinit {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
@@ -78,8 +79,8 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Public
     
-    func setText() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+    func setText(for languageBundle: Bundle) {
+        
         sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
     }
 }
@@ -108,10 +109,16 @@ extension BaseFavoriteToolsViewModel {
             }
             .store(in: &cancellables)
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setText()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { primaryLanguage in
+                
+                guard let primaryLanguage = primaryLanguage,
+                      let languageBundle = self.localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier)
+                else { return }
+                
+                self.setText(for: languageBundle)
             }
-        }
+            .store(in: &cancellables)
     }
 }
