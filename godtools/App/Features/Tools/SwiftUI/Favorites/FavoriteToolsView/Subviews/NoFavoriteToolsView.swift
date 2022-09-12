@@ -24,6 +24,7 @@ struct NoFavoriteToolsView: View {
                 Text(viewModel.noFavoriteToolsTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .foregroundColor(ColorPalette.gtGrey.color)
+                    .multilineTextAlignment(.center)
                 
                 Text(viewModel.noFavoriteToolsDescription)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
