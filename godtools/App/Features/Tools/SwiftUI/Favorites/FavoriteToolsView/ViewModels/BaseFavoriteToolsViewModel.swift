@@ -59,7 +59,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     deinit {
         dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
