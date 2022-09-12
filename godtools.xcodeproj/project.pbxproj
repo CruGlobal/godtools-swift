@@ -1076,6 +1076,7 @@
 		D471CFD828BD460300DCE61C /* ToolCategoryDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD728BD460300DCE61C /* ToolCategoryDomainModel.swift */; };
 		D471CFDA28CB867700DCE61C /* ToolCategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD928CB867700DCE61C /* ToolCategoryType.swift */; };
 		D471CFDF28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */; };
+		D471CFE328CFB86B00DCE61C /* GetLessonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2230,6 +2231,7 @@
 		D471CFD728BD460300DCE61C /* ToolCategoryDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoryDomainModel.swift; sourceTree = "<group>"; };
 		D471CFD928CB867700DCE61C /* ToolCategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoryType.swift; sourceTree = "<group>"; };
 		D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedResourceModelsUseCase.swift; sourceTree = "<group>"; };
+		D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6133,6 +6135,7 @@
 		45F88AFA2860BA8700C8027F /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D471CFE128CFB85B00DCE61C /* GetLessonsUseCase */,
 				453C1BD92899A889007332E2 /* AddToolToFavoritesUseCase */,
 				D42FEBE2287617F70002FAD9 /* DisableOptInOnboardingBannerUseCase */,
 				D471CFE028CF7C4400DCE61C /* GetAllFavoritedResourceModelsUseCase */,
@@ -6958,6 +6961,14 @@
 				D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */,
 			);
 			path = GetAllFavoritedResourceModelsUseCase;
+			sourceTree = "<group>";
+		};
+		D471CFE128CFB85B00DCE61C /* GetLessonsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */,
+			);
+			path = GetLessonsUseCase;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -8138,6 +8149,7 @@
 				45677851287DC5750044AEB2 /* AccountViewModel.swift in Sources */,
 				45677738287DAFC70044AEB2 /* MenuItemViewModelType.swift in Sources */,
 				45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */,
+				D471CFE328CFB86B00DCE61C /* GetLessonsUseCase.swift in Sources */,
 				45F88B0B2860BA8700C8027F /* TranslatedLanguage.swift in Sources */,
 				4502BD40279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift in Sources */,
 				45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */,

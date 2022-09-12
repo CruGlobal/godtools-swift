@@ -30,6 +30,12 @@ class RealmResourcesCache {
             .eraseToAnyPublisher()
     }
     
+    func getAllLessons() -> [ResourceModel] {
+        return getResources(sorted: true).filter { resource in
+            return resource.isLessonType && resource.isHidden == false
+        }
+    }
+    
     func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
         let metaTools = getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
@@ -83,9 +89,14 @@ class RealmResourcesCache {
             }
     }
     
-    func getResources() -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
-            .map({ResourceModel(model: $0)})
+    func getResources(sorted: Bool = false) -> [ResourceModel] {
+        var realmResources = realmDatabase.openRealm().objects(RealmResource.self)
+        
+        if sorted {
+            realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        
+        return realmResources.map({ResourceModel(model: $0)})
     }
     
     func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
