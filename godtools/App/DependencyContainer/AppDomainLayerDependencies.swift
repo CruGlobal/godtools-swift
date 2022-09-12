@@ -41,7 +41,8 @@ class AppDomainLayerDependencies {
     
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase()
+            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     

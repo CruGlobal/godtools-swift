@@ -12,27 +12,32 @@ import Combine
 class GetAllFavoritedToolsUseCase {
     
     private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
+    private let resourcesRepository: ResourcesRepository
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, resourcesRepository: ResourcesRepository) {
         
         self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
+        self.resourcesRepository = resourcesRepository
     }
     
-//    func getAllFavoritedToolsPublisherr() -> AnyPublisher<[FavoritedResourceModel], Never> {
-//        
-//        return favoritedResourcesRepository.getFavoritedResourcesChanged()
-//            .flatMap({ void -> AnyPublisher<[FavoritedResourceModel], Never> in
-//                
-//                return Just(self.getAllFavoritedTools())
-//                    .eraseToAnyPublisher()
-//            })
-//            .eraseToAnyPublisher()
-//    }
-//    
-//    private func getAllFavoritedToolss() -> [ToolDomainModel] {
-//        
-//        let favoritedResourceModels = getAllFavoritedResourceModelsUseCase.getAllFavoritedTools()
-//                
-//        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
-//    }    
+    func getAllFavoritedToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
+        
+        return getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModelsPublisher()
+            .flatMap { favoritedResourceModels -> AnyPublisher<[ToolDomainModel], Never> in
+                
+                let favoritedTools = self.getFavoritedTools(from: favoritedResourceModels)
+                
+                return Just(favoritedTools)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel]) -> [ToolDomainModel] {
+        
+        let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
+        let resources: [ResourceModel] = resourcesRepository.getResources(ids: favoritedResourceIds)
+                
+        return resources.map { ToolDomainModel(resource: $0) }
+    }
 }
