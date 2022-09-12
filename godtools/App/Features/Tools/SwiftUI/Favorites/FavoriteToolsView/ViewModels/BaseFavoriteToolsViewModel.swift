@@ -100,21 +100,14 @@ extension BaseFavoriteToolsViewModel {
             }
         }
         
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadFavoritedResourcesFromCache()
-                }
-            }
-        }
-        
-        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
-            .receiveOnMain()
-            .sink { [weak self] favoritedResourceModels in
-                
-                self?.reloadFavoritedResourcesFromCache(from: favoritedResourceModels)
-            }
-            .store(in: &cancellables)
+        // TODO: - fix this
+//        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
+//            .receiveOnMain()
+//            .sink { [weak self] favoritedResourceModels in
+//
+//                self?.reloadFavoritedResourcesFromCache(from: favoritedResourceModels)
+//            }
+//            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
@@ -125,17 +118,17 @@ extension BaseFavoriteToolsViewModel {
     
     private func reloadFavoritedResourcesFromCache(from favoritedResources: [FavoritedResourceModel]? = nil) {
         
-        let favoritedResourceModels = favoritedResources ?? getAllFavoritedToolsUseCase.getAllFavoritedTools()
-        let favoritedResourcesIds: [String] = favoritedResourceModels.map({$0.resourceId})
-        
-        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: favoritedResourcesIds)
-        
-        withAnimation {
-            tools = resources
-                .map({ resource in
-                    return ToolDomainModel(resource: resource)
-                })
-        }
-        self.delegate?.toolsAreLoading(false)
+//        let favoritedResourceModels = favoritedResources ?? getAllFavoritedToolsUseCase.getAllFavoritedTools()
+//        let favoritedResourcesIds: [String] = favoritedResourceModels.map({$0.resourceId})
+//        
+//        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: favoritedResourcesIds)
+//        
+//        withAnimation {
+//            tools = resources
+//                .map({ resource in
+//                    return ToolDomainModel(resource: resource)
+//                })
+//        }
+//        self.delegate?.toolsAreLoading(false)
     }
 }

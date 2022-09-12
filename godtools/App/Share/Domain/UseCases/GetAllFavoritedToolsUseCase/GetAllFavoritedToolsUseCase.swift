@@ -11,26 +11,28 @@ import Combine
 
 class GetAllFavoritedToolsUseCase {
     
-    private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase) {
         
-        self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
     }
     
-    func getAllFavoritedToolsPublisher() -> AnyPublisher<[FavoritedResourceModel], Never> {
-        
-        return favoritedResourcesRepository.getFavoritedResourcesChanged()
-            .flatMap({ void -> AnyPublisher<[FavoritedResourceModel], Never> in
-                
-                return Just(self.getAllFavoritedTools())
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    func getAllFavoritedTools() -> [FavoritedResourceModel] {
-                
-        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
-    }
+//    func getAllFavoritedToolsPublisherr() -> AnyPublisher<[FavoritedResourceModel], Never> {
+//        
+//        return favoritedResourcesRepository.getFavoritedResourcesChanged()
+//            .flatMap({ void -> AnyPublisher<[FavoritedResourceModel], Never> in
+//                
+//                return Just(self.getAllFavoritedTools())
+//                    .eraseToAnyPublisher()
+//            })
+//            .eraseToAnyPublisher()
+//    }
+//    
+//    private func getAllFavoritedToolss() -> [ToolDomainModel] {
+//        
+//        let favoritedResourceModels = getAllFavoritedResourceModelsUseCase.getAllFavoritedTools()
+//                
+//        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+//    }    
 }

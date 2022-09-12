@@ -23,9 +23,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAllFavoritedResourceModelsUseCase() -> GetAllFavoritedResourceModelsUseCase {
+        return GetAllFavoritedResourceModelsUseCase(
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
     func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
-            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
+            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository(),
@@ -35,7 +41,7 @@ class AppDomainLayerDependencies {
     
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase()
         )
     }
     
@@ -99,7 +105,7 @@ class AppDomainLayerDependencies {
     
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
-            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
+            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()
