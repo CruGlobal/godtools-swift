@@ -24,36 +24,29 @@ struct FavoritesContentView: View {
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
             }
             
-            if viewModel.lessonsLoading && viewModel.toolsLoading {
+            GeometryReader { geo in
+                let width = geo.size.width
+                let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                 
-                ActivityIndicator(style: .medium, isAnimating: .constant(true))
-                
-            } else {
-                
-                GeometryReader { geo in
-                    let width = geo.size.width
-                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
+                BackwardCompatibleList(rootViewType: Self.self) {
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    Text(viewModel.pageTitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 30))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .padding(.top, 12)
+                        .padding(.bottom, 15)
+                    
+                    FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.bottom, 10)
+                    
+                    FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                        .listRowInsets(EdgeInsets())
                         
-                        Text(viewModel.pageTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 30))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 12)
-                            .padding(.bottom, 15)
-                        
-                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.bottom, 10)
-                        
-                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
-                            
-                        Spacer()
-                        
-                    } refreshHandler: {
-                        viewModel.refreshData()
-                    }
+                    Spacer()
+                    
+                } refreshHandler: {
+                    viewModel.refreshData()
                 }
             }
         }
