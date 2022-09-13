@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol LessonsListViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
@@ -19,9 +20,13 @@ class LessonsListViewModel: LessonCardProvider {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLessonsUseCase: GetLessonsUseCase
+    
     private weak var delegate: LessonsListViewModelDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
@@ -30,32 +35,31 @@ class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonsListViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLessonsUseCase = getLessonsUseCase
+        
         self.delegate = delegate
         
         super.init()
-        
-        reloadLessonsFromCache()
-        
+                
         setup()
     }
     
     deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
     
-    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
-            resource: lesson,
+            lesson: lesson,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             getBannerImageUseCase: getBannerImageUseCase,
@@ -82,33 +86,20 @@ extension LessonsListViewModel {
     
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
-                if cachedResourcesAvailable {
-                    self?.reloadLessonsFromCache()
-                }
+        getLessonsUseCase.getLessonsPublisher()
+            .receiveOnMain()
+            .sink { lessons in
+                
+                self.delegate?.lessonsAreLoading(lessons.isEmpty)
+                self.lessons = lessons
             }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(false)
-                if error == nil {
-                    self?.reloadLessonsFromCache()
-                }
-            }
-        }
+            .store(in: &cancellables)
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.setupTitle()
             }
         }
-    }
-    
-    private func reloadLessonsFromCache() {
-        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted()
     }
 }
 

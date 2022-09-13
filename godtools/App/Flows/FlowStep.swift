@@ -37,7 +37,7 @@ enum FlowStep {
     case chooseToolTappedFromOnboardingQuickStart
     
     // lessons list
-    case lessonTappedFromLessonsList(resource: ResourceModel)
+    case lessonTappedFromLessonsList(lesson: LessonDomainModel)
     
     // lesson
     case closeTappedFromLesson(lesson: ResourceModel, highestPageNumberViewed: Int)
@@ -49,7 +49,7 @@ enum FlowStep {
     case backgroundTappedFromLessonEvaluation
     
     // favoritedTools
-    case lessonTappedFromFeaturedLessons(resource: ResourceModel)
+    case lessonTappedFromFeaturedLessons(lesson: LessonDomainModel)
     case viewAllFavoriteToolsTappedFromFavoritedTools
     case backTappedFromAllFavoriteTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)

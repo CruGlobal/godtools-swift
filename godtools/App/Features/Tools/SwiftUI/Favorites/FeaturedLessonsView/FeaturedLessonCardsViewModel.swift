@@ -52,9 +52,9 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
-            resource: lesson,
+            lesson: lesson,
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             getBannerImageUseCase: getBannerImageUseCase,
@@ -107,5 +107,6 @@ extension FeaturedLessonCardsViewModel {
     
     private func reloadLessonsFromCache() {
         lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted(andFilteredBy: { $0.attrSpotlight })
+            .map { LessonDomainModel(resource: $0) }
     }
 }

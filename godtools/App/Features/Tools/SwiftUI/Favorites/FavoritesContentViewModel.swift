@@ -167,9 +167,9 @@ extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
         lessonsLoading = isLoading
     }
     
-    func lessonCardTapped(resource: ResourceModel) {
-        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
-        trackFeaturedLessonTappedAnalytics(for: resource)
+    func lessonCardTapped(lesson: LessonDomainModel) {
+        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(lesson: lesson))
+        trackFeaturedLessonTappedAnalytics(for: lesson)
     }
 }
 
@@ -235,7 +235,7 @@ extension FavoritesContentViewModel {
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
-    private func trackFeaturedLessonTappedAnalytics(for lesson: ResourceModel) {
+    private func trackFeaturedLessonTappedAnalytics(for lesson: LessonDomainModel) {
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,

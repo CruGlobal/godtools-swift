@@ -10,14 +10,14 @@ import SwiftUI
 import Combine
 
 protocol LessonCardDelegate: AnyObject {
-    func lessonCardTapped(resource: ResourceModel)
+    func lessonCardTapped(lesson: LessonDomainModel)
 }
 
 class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadProgress {
     
     // MARK: - Properties
     
-    let resource: ResourceModel
+    let lesson: LessonDomainModel
     let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let getBannerImageUseCase: GetBannerImageUseCase
@@ -32,13 +32,13 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     private var cancellables = Set<AnyCancellable>()
     
     var resourceId: String {
-        return resource.id
+        return lesson.id
     }
     
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
-        self.resource = resource
+    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
+        self.lesson = lesson
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.getBannerImageUseCase = getBannerImageUseCase
@@ -62,7 +62,7 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     // MARK: - Overrides
     
     override func lessonCardTapped() {
-        delegate?.lessonCardTapped(resource: resource)
+        delegate?.lessonCardTapped(lesson: lesson)
     }
 }
 
@@ -87,22 +87,22 @@ extension LessonCardViewModel {
         let titleValue: String
         let primaryLanguage = languageSettingsService.primaryLanguage.value
         
-        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageCode: "en") {
             
             titleValue = englishTranslation.translatedName
         }
         else {
             
-            titleValue = resource.resourceDescription
+            titleValue = lesson.description
         }
         
         title = titleValue
         
-        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: resource, language: primaryLanguage)
+        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: lesson, language: primaryLanguage)
         translationAvailableText = languageAvailability.string
     }
     
@@ -120,7 +120,7 @@ extension LessonCardViewModel {
             }
         }
         
-        getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
+        getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
             .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)

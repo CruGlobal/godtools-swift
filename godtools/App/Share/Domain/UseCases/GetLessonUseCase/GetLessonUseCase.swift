@@ -13,10 +13,12 @@ class GetLessonUseCase {
     func getLesson(resource: ResourceModel) -> LessonDomainModel {
         
         return LessonDomainModel(
+            abbreviation: resource.abbreviation,
             bannerImageId: resource.attrBanner,
             dataModelId: resource.id,
-            name: resource.name,
-            resource: resource
+            description: resource.resourceDescription,
+            languageIds: resource.languageIds,
+            name: resource.name
         )
     }
 }

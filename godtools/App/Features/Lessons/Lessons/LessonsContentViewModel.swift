@@ -17,8 +17,10 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLessonsUseCase: GetLessonsUseCase
     
     private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
         return LessonsListViewModel(
@@ -27,6 +29,7 @@ class LessonsContentViewModel: NSObject, ObservableObject {
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLessonsUseCase: getLessonsUseCase,
             delegate: self
         )
     }()
@@ -37,14 +40,16 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.analytics = analytics
+        
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLessonsUseCase = getLessonsUseCase
         
         super.init()
     }
@@ -65,9 +70,9 @@ extension LessonsContentViewModel: LessonsListViewModelDelegate {
         self.isLoading = isLoading
     }
     
-    func lessonCardTapped(resource: ResourceModel) {
-        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(resource: resource))
-        trackLessonTappedAnalytics(for: resource)
+    func lessonCardTapped(lesson: LessonDomainModel) {
+        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
+        trackLessonTappedAnalytics(for: lesson)
     }
 }
 
@@ -94,7 +99,7 @@ extension LessonsContentViewModel {
         analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedLessonsAction, data: nil)
     }
     
-    private func trackLessonTappedAnalytics(for lesson: ResourceModel) {
+    private func trackLessonTappedAnalytics(for lesson: LessonDomainModel) {
         
         analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
             screenName: analyticsScreenName,
