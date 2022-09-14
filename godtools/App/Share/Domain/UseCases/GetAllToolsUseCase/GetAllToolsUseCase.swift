@@ -10,18 +10,24 @@ import Combine
 
 class GetAllToolsUseCase {
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
     func getToolsForCategoryPublisher(category: CurrentValueSubject<String?, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return Publishers.CombineLatest(resourcesRepository.getResourcesChanged(), category)
-            .flatMap { (_, categoryId) -> AnyPublisher<[ToolDomainModel], Never> in
+        return Publishers.CombineLatest3(
+            resourcesRepository.getResourcesChanged(),
+            category,
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        )
+            .flatMap { (_, categoryId, _) -> AnyPublisher<[ToolDomainModel], Never> in
                 
                 let tools = self.getAllTools(sorted: true, with: categoryId)
                 

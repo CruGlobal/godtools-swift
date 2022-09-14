@@ -11,7 +11,7 @@ import Combine
 
 class GetToolUseCase {
     
-    private var getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let resourcesRepository: ResourcesRepository
     
     init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
@@ -21,34 +21,16 @@ class GetToolUseCase {
     
     func getTool(resource: ResourceModel) -> ToolDomainModel {
         
-        let currentTranslationPublisher =
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .flatMap { language -> AnyPublisher<CurrentToolTranslationDomainModel, Never> in
-                
-                let currentTranslationToUse = self.getCurrentToolTranslation(for: resource, language: language)
-                                
-                return Just(currentTranslationToUse)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-        
-        let namePublisher = getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .flatMap { language -> AnyPublisher<String, Never> in
-                
-                let translatedName = self.getName(for: resource, language: language)
-                                
-                return Just(translatedName)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        let currentToolTranslation = getCurrentToolTranslation(for: resource, language: primaryLanguage)
         
         return ToolDomainModel(
             bannerImageId: resource.attrBanner,
             category: resource.attrCategory,
-            currentTranslationPublisher: currentTranslationPublisher,
+            currentTranslation: currentToolTranslation,
             dataModelId: resource.id,
             languageIds: resource.languageIds,
-            namePublisher: namePublisher,
+            name: getName(for: resource, from: currentToolTranslation),
             resource: resource
         )
     }
@@ -69,12 +51,9 @@ class GetToolUseCase {
         }
     }
     
-    private func getName(for resource: ResourceModel, language: LanguageDomainModel?) -> String {
-        
-        guard let language = language else { return resource.name }
-        let translationToUse = getCurrentToolTranslation(for: resource, language: language)
-        
-        switch translationToUse {
+    private func getName(for resource: ResourceModel, from currentToolTranslation: CurrentToolTranslationDomainModel) -> String {
+                
+        switch currentToolTranslation {
         case .primaryLanguage(_, let translation):
             return translation.translatedName
             

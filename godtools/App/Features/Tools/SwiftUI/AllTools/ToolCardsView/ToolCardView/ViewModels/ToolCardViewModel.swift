@@ -93,6 +93,7 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
 extension ToolCardViewModel {
     
     private func setup() {
+        setStrings()
         setupBinding()
     }
     
@@ -131,27 +132,14 @@ extension ToolCardViewModel {
                 self?.reloadParallelLanguageName()
             }
         }
-        
-        tool.currentTranslationPublisher
-            .receiveOnMain()
-            .sink { currentTranslationToUse in
-                self.reloadStrings(for: currentTranslationToUse)
-            }
-            .store(in: &cancellables)
-        
-        tool.namePublisher
-            .receiveOnMain()
-            .assign(to: \.title, on: self)
-            .store(in: &cancellables)
     }
         
-    private func reloadStrings(for currentTranslation: CurrentToolTranslationDomainModel) {
+    private func setStrings() {
         let bundleLoader = localizationServices.bundleLoader
-        
         let languageBundle: Bundle
         let languageDirection: LanguageDirectionDomainModel
         
-        switch currentTranslation {
+        switch tool.currentTranslation {
         case .primaryLanguage(let language, _):
             
             languageBundle = bundleLoader.bundleForResource(resourceName: language.localeIdentifier) ?? Bundle.main
@@ -163,6 +151,7 @@ extension ToolCardViewModel {
             languageDirection = .leftToRight
         }
         
+        title = tool.name
         category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: tool.category)
         detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
         openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
