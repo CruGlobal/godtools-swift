@@ -65,7 +65,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
         
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
