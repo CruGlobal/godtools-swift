@@ -178,7 +178,6 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         
         return ChooseLanguageCellViewModel(
             language: language,
-            languageIsDownloaded: downloadedLanguagesCache.isDownloaded(languageId: language.dataModelId),
             hidesSelected: language.dataModelId != selectedLanguage?.dataModelId,
             selectorColor: nil,
             separatorColor: nil,
