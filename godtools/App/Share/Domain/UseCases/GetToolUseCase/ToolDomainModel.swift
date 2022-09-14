@@ -7,15 +7,17 @@
 //
 
 import Foundation
+import Combine
 
 struct ToolDomainModel {
     
     // TODO: - finish mapping necessary attributes in GT-1777
     let bannerImageId: String
     let category: String
+    let currentTranslationPublisher: AnyPublisher<CurrentToolTranslationDomainModel, Never>
     let dataModelId: String
     let languageIds: [String]
-    let name: String
+    let namePublisher: AnyPublisher<String, Never>
     
     // TODO: - remove this once we're done refactoring to pass ToolDomainModels around instead of ResourceModels
     let resource: ResourceModel
@@ -27,9 +29,10 @@ extension ToolDomainModel {
     init(resource: ResourceModel) {
         bannerImageId = resource.attrBanner
         category = resource.attrCategory
+        currentTranslationPublisher = Just(.englishFallback(translation: nil)).eraseToAnyPublisher()
         dataModelId = resource.id
         languageIds = resource.languageIds
-        name = resource.name
+        namePublisher = Just(resource.name).eraseToAnyPublisher()
         
         self.resource = resource
     }
