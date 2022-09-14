@@ -25,6 +25,7 @@ class GetToolUseCase {
         let currentToolTranslation = getCurrentToolTranslation(for: resource, language: primaryLanguage)
         
         return ToolDomainModel(
+            abbreviation: resource.abbreviation,
             bannerImageId: resource.attrBanner,
             category: resource.attrCategory,
             currentTranslation: currentToolTranslation,
