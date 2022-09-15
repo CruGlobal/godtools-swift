@@ -75,6 +75,12 @@ class AppDomainLayerDependencies {
         return GetDeviceLanguageUseCase()
     }
     
+    func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
+        return GetLanguageAvailabilityUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getLanguageUseCase() -> GetLanguageUseCase {
         return GetLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),

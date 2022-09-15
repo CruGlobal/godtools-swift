@@ -20,8 +20,11 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     let lesson: LessonDomainModel
     let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    
     private weak var delegate: LessonCardDelegate?
 
     var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -37,12 +40,15 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     
     // MARK: - Init
     
-    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
+    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.lesson = lesson
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        
         self.delegate = delegate
         
         super.init()
@@ -71,23 +77,19 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
 extension LessonCardViewModel {
     
     private func setup() {
-        setupPublishedProperties()
         setupBinding()
         
         addDataDownloaderObservers()
     }
     
-    private func setupPublishedProperties() {
-        reloadTitle()
-    }
-    
-    private func reloadTitle() {
+    private func reloadTitle(for primaryLanguage: LanguageDomainModel?) {
+        guard let primaryLanguage = primaryLanguage else { return }
+
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let titleValue: String
-        let primaryLanguage = languageSettingsService.primaryLanguage.value
         
-        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
+        if let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
         }
@@ -102,15 +104,23 @@ extension LessonCardViewModel {
         
         title = titleValue
         
-        let languageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: lesson, language: primaryLanguage)
-        translationAvailableText = languageAvailability.string
+        let languageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: lesson, language: primaryLanguage)
+        translationAvailableText = languageAvailability.availabilityString
     }
     
     private func setupBinding() {
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            self?.reloadTitle()
-        }
+        getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
+            .receiveOnMain()
+            .assign(to: \.bannerImage, on: self)
+            .store(in: &cancellables)
+        
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                self?.reloadTitle(for: primaryLanguage)
+            }
+            .store(in: &cancellables)
         
         attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async {
@@ -119,11 +129,6 @@ extension LessonCardViewModel {
                 }
             }
         }
-        
-        getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
-            .receiveOnMain()
-            .assign(to: \.bannerImage, on: self)
-            .store(in: &cancellables)
         
         translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async {

@@ -21,8 +21,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
@@ -34,7 +35,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -48,8 +49,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getLessonsUseCase = getLessonsUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
@@ -76,8 +78,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             localizationServices: localizationServices,
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getLessonsUseCase: getLessonsUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
         )
     }
@@ -93,7 +96,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             getBannerImageUseCase: getBannerImageUseCase,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
@@ -110,7 +114,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             analytics: analytics,
             getAllToolsUseCase: getAllToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getSpotlightToolsUseCase: getSpotlightToolsUseCase,
             getToolCategoriesUseCase: getToolCategoriesUseCase,

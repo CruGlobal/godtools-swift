@@ -19,8 +19,9 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let analytics: AnalyticsContainer
     
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
     private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
@@ -29,8 +30,9 @@ class LessonsContentViewModel: NSObject, ObservableObject {
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getLessonsUseCase: getLessonsUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             delegate: self
         )
@@ -42,7 +44,7 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -50,8 +52,9 @@ class LessonsContentViewModel: NSObject, ObservableObject {
         self.analytics = analytics
         
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getLessonsUseCase = getLessonsUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
         super.init()
