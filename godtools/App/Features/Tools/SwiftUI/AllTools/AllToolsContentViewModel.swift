@@ -189,6 +189,8 @@ extension AllToolsContentViewModel {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.viewedToolsAction, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: nil))
     }
             
     private func trackToolTappedAnalytics(for tool: ResourceModel, isSpotlight: Bool) {
