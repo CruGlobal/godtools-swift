@@ -20,6 +20,20 @@
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "17339879230736A400A715B4"
+               BuildableName = "godtoolsUIRecording.xctest"
+               BlueprintName = "godtoolsUIRecording"
+               ReferencedContainer = "container:godtools.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -45,16 +59,6 @@
                BlueprintIdentifier = "684328F01EB7CF66005E9131"
                BuildableName = "godtoolsTests.xctest"
                BlueprintName = "godtoolsTests"
-               ReferencedContainer = "container:godtools.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "17339879230736A400A715B4"
-               BuildableName = "godtoolsUIRecording.xctest"
-               BlueprintName = "godtoolsUIRecording"
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </TestableReference>
