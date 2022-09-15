@@ -49,7 +49,6 @@ struct LessonsContentView_Previews: PreviewProvider {
         let viewModel = LessonsContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),

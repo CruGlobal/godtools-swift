@@ -58,7 +58,6 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
         return LessonCardViewModel(
             lesson: lesson,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,

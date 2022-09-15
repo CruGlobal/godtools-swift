@@ -74,7 +74,6 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return LessonsContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,

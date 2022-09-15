@@ -19,7 +19,6 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     
     let lesson: LessonDomainModel
     let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
@@ -40,10 +39,9 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     
     // MARK: - Init
     
-    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
+    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.lesson = lesson
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
@@ -60,7 +58,6 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     
     deinit {
         removeDataDownloaderObservers()
-        languageSettingsService.primaryLanguage.removeObserver(self)
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
     }
