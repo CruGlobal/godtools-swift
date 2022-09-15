@@ -66,6 +66,16 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "684328F01EB7CF66005E9131"
+               BuildableName = "godtoolsTests.xctest"
+               BlueprintName = "godtoolsTests"
+               ReferencedContainer = "container:godtools.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
