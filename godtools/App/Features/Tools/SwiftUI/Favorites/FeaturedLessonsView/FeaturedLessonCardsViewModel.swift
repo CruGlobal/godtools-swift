@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol FeaturedLessonCardsViewModelDelegate: LessonCardDelegate {
-    func lessonsAreLoading(_ isLoading: Bool)
-}
-
 class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Properties
@@ -21,7 +17,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     private let localizationServices: LocalizationServices
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
-    private weak var delegate: FeaturedLessonCardsViewModelDelegate?
+    private weak var delegate: LessonCardDelegate?
     
     // MARK: - Published
     
@@ -29,7 +25,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: FeaturedLessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
@@ -82,7 +78,6 @@ extension FeaturedLessonCardsViewModel {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
                 if cachedResourcesAvailable {
                     self?.reloadLessonsFromCache()
                 }
@@ -91,7 +86,6 @@ extension FeaturedLessonCardsViewModel {
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(false)
                 if error == nil {
                     self?.reloadLessonsFromCache()
                 }

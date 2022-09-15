@@ -10,7 +10,7 @@ import SwiftUI
 
 extension LayoutDirection {
     
-    static func from(languageDirection: LanguageDirection) -> LayoutDirection {
+    static func from(languageDirection: LanguageDirectionDomainModel) -> LayoutDirection {
         switch languageDirection {
         case .leftToRight:
             return .leftToRight

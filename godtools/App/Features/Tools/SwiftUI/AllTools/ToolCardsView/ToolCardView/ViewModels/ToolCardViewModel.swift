@@ -65,7 +65,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
         
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
@@ -93,12 +92,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
 extension ToolCardViewModel {
     
     private func setup() {
-        setupPublishedProperties()
+        setStrings()
         setupBinding()
-    }
-    
-    private func setupPublishedProperties() {
-        reloadDataForPrimaryLanguage()
     }
     
     private func setupBinding() {
@@ -131,46 +126,31 @@ extension ToolCardViewModel {
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadDataForPrimaryLanguage()
-            }
-        }
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadParallelLanguageName()
             }
         }
     }
-    
-    private func reloadDataForPrimaryLanguage() {
-        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
+        
+    private func setStrings() {
         let bundleLoader = localizationServices.bundleLoader
-        
-        let toolName: String
         let languageBundle: Bundle
-        let languageDirection: LanguageDirection
+        let languageDirection: LanguageDirectionDomainModel
         
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: tool.dataModelId, languageId: primaryLanguage.id) {
+        switch tool.currentTranslation {
+        case .primaryLanguage(let language, _):
             
-            toolName = primaryTranslation.translatedName
-            languageBundle = bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
-            languageDirection = primaryLanguage.languageDirection
-        }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: tool.id, languageCode: "en") {
+            languageBundle = bundleLoader.bundleForResource(resourceName: language.localeIdentifier) ?? Bundle.main
+            languageDirection = language.direction
             
-            toolName = englishTranslation.translatedName
-            languageBundle = bundleLoader.englishBundle ?? Bundle.main
-            languageDirection = .leftToRight
-        }
-        else {
+        case .englishFallback(_):
             
-            toolName = tool.name
             languageBundle = bundleLoader.englishBundle ?? Bundle.main
             languageDirection = .leftToRight
         }
         
-        title = toolName
+        title = tool.name
         category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: tool.category)
         detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
         openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")

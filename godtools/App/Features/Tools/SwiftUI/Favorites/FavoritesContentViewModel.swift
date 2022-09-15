@@ -61,8 +61,6 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var lessonsLoading: Bool = false
-    @Published var toolsLoading: Bool = false
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
 
@@ -160,12 +158,9 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     }
 }
 
-// MARK: - FeaturedLessonCardsViewModelDelegate
+// MARK: - LessonCardDelegate
 
-extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
-    func lessonsAreLoading(_ isLoading: Bool) {
-        lessonsLoading = isLoading
-    }
+extension FavoritesContentViewModel: LessonCardDelegate {
     
     func lessonCardTapped(lesson: LessonDomainModel) {
         flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(lesson: lesson))
@@ -176,9 +171,6 @@ extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
 // MARK: - FavoriteToolsViewModelDelegate
 
 extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
-    func toolsAreLoading(_ isLoading: Bool) {
-        toolsLoading = isLoading
-    }
     
     func viewAllFavoriteToolsButtonTapped() {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)
