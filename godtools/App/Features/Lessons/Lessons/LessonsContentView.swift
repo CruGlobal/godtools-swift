@@ -54,7 +54,8 @@ struct LessonsContentView_Previews: PreviewProvider {
             analytics: appDiContainer.analytics,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase()
+            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
         )
         
         LessonsContentView(viewModel: viewModel)

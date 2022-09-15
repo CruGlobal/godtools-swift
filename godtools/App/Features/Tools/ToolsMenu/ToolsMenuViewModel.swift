@@ -77,7 +77,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
-            getLessonsUseCase: getLessonsUseCase
+            getLessonsUseCase: getLessonsUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
         )
     }
     

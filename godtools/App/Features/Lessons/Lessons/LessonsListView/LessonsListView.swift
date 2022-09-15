@@ -53,6 +53,7 @@ struct LessonsListView_Previews: PreviewProvider {
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             delegate: nil
         )
         

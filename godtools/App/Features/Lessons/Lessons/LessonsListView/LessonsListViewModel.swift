@@ -24,6 +24,7 @@ class LessonsListViewModel: LessonCardProvider {
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
     private let getLessonsUseCase: GetLessonsUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
     private weak var delegate: LessonsListViewModelDelegate?
     private var cancellables = Set<AnyCancellable>()
@@ -35,7 +36,7 @@ class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase, delegate: LessonsListViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
@@ -43,16 +44,13 @@ class LessonsListViewModel: LessonCardProvider {
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
         self.getLessonsUseCase = getLessonsUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
         self.delegate = delegate
         
         super.init()
                 
-        setup()
-    }
-    
-    deinit {
-        languageSettingsService.primaryLanguage.removeObserver(self)
+        setupBinding()
     }
     
     // MARK: - Overrides
@@ -73,17 +71,6 @@ class LessonsListViewModel: LessonCardProvider {
 
 extension LessonsListViewModel {
     
-    private func setup() {
-        setupTitle()
-        setupBinding()
-    }
-    
-    private func setupTitle() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
-        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
-    }
-    
     private func setupBinding() {
         
         getLessonsUseCase.getLessonsPublisher()
@@ -95,11 +82,21 @@ extension LessonsListViewModel {
             }
             .store(in: &cancellables)
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setupTitle()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { primaryLanguage in
+                self.setupTitle(with: primaryLanguage)
             }
-        }
+            .store(in: &cancellables)
+    }
+    
+    private func setupTitle(with language: LanguageDomainModel?) {
+        guard let language = language,
+              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
+        else { return }
+        
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
     }
 }
 
