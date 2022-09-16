@@ -134,27 +134,16 @@ extension ToolCardViewModel {
     }
         
     private func setStrings() {
-        let bundleLoader = localizationServices.bundleLoader
-        let languageBundle: Bundle
-        let languageDirection: LanguageDirectionDomainModel
-        
-        switch tool.currentTranslation {
-        case .primaryLanguage(let language, _):
-            
-            languageBundle = bundleLoader.bundleForResource(resourceName: language.localeIdentifier) ?? Bundle.main
-            languageDirection = language.direction
-            
-        case .englishFallback(_):
-            
-            languageBundle = bundleLoader.englishBundle ?? Bundle.main
-            languageDirection = .leftToRight
-        }
-        
         title = tool.name
-        category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: tool.category)
-        detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
-        openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
-        layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
+        
+        let currentTranslationLanguage = tool.currentTranslationLanguage
+        let localeIdentifier = currentTranslationLanguage?.localeIdentifier
+        
+        category = localizationServices.toolCategoryStringForLocale(localeIdentifier: localeIdentifier, category: tool.category)
+        detailsButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
+        openButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "open")
+        
+        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage?.direction ?? .leftToRight)
     }
     
     private func reloadParallelLanguageName() {

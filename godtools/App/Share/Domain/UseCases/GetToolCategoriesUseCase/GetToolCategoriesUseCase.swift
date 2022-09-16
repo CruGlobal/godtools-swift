@@ -57,7 +57,7 @@ class GetToolCategoriesUseCase {
         let allToolsCategory = ToolCategoryDomainModel(type: .allTools, translatedName: allToolsCategoryTranslation)
         
         let categories: [ToolCategoryDomainModel] = ids.map { categoryId in
-            let translatedName = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: categoryId)
+            let translatedName = localizationServices.toolCategoryStringForBundle(bundle: bundle, category: categoryId)
             
             return ToolCategoryDomainModel(type: .category(id: categoryId), translatedName: translatedName)
         }
