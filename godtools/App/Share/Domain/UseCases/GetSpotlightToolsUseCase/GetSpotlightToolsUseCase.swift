@@ -10,17 +10,22 @@ import Combine
 
 class GetSpotlightToolsUseCase {
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
     func getSpotlightToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return resourcesRepository.getResourcesChanged()
+        return Publishers.CombineLatest(
+            resourcesRepository.getResourcesChanged(),
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            )
             .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
                 let spotlightTools = self.resourcesRepository.getSpotlightTools()
