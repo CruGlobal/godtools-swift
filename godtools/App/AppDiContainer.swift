@@ -20,7 +20,6 @@ class AppDiContainer {
 
     let userAuthentication: UserAuthenticationType
     let favoritedResourcesCache: FavoritedResourcesCache
-    let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
@@ -53,9 +52,7 @@ class AppDiContainer {
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
         
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
-              
-        downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
-                                
+                                              
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
             resourcesCache: resourcesCache

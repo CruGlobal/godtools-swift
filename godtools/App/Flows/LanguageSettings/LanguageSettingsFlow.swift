@@ -69,7 +69,6 @@ class LanguageSettingsFlow: Flow {
             userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
             userDidDeleteSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteSettingsParallelLanguageUseCase(),
             getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
-            downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             chooseLanguageType: chooseLanguageType
