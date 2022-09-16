@@ -118,6 +118,7 @@ class AppDomainLayerDependencies {
     
     func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
         return GetSpotlightToolsUseCase(
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getToolUseCase: getToolUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()
         )
