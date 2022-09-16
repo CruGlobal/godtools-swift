@@ -101,6 +101,10 @@ class MobileContentTextView: MobileContentView, NibBased {
         textLabel.textAlignment = viewModel.textAlignment
         textLabel.setLineSpacing(lineSpacing: lineSpacing)
         
+        if viewModel.shouldUnderlineText, let labelText = viewModel.text {
+            textLabel.underline(labelText: labelText)
+        }
+        
         let minimumLines = viewModel.minimumLines
         
         if minimumLines > 0 {
