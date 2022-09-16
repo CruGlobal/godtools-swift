@@ -60,17 +60,6 @@ class AppDomainLayerDependencies {
         return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
     }
     
-    func getLessonUseCase() -> GetLessonUseCase {
-        return GetLessonUseCase()
-    }
-    
-    func getLessonsUseCase() -> GetLessonsUseCase {
-        return GetLessonsUseCase(
-            getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase()
     }
@@ -85,6 +74,17 @@ class AppDomainLayerDependencies {
         return GetLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getLessonUseCase() -> GetLessonUseCase {
+        return GetLessonUseCase()
+    }
+    
+    func getLessonsUseCase() -> GetLessonsUseCase {
+        return GetLessonsUseCase(
+            getLessonUseCase: getLessonUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     
