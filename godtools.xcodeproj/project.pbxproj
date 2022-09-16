@@ -114,7 +114,6 @@
 		4554205B28B17AEA00368CFE /* AttachmentFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
 		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
-		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
 		455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D8269F2C1000C3FF14 /* TrainingTipViewType.swift */; };
@@ -1224,7 +1223,6 @@
 		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
 		4555599A27B3193D00A32A61 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4555599B27B3194800A32A61 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
 		455582D8269F2C1000C3FF14 /* TrainingTipViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipViewType.swift; sourceTree = "<group>"; };
@@ -2792,18 +2790,9 @@
 		45557AE3252D085B00ACFA95 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				45557AE4252D085B00ACFA95 /* Localization */,
 				45267B7325F196FD004DB4C4 /* Renderer */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		45557AE4252D085B00ACFA95 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		455582D0269F2C1000C3FF14 /* Views */ = {
@@ -8420,7 +8409,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
