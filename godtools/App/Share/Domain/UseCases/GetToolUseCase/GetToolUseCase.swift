@@ -11,10 +11,12 @@ import Combine
 
 class GetToolUseCase {
     
+    private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
+        self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.resourcesRepository = resourcesRepository
     }
@@ -28,38 +30,30 @@ class GetToolUseCase {
             abbreviation: resource.abbreviation,
             bannerImageId: resource.attrBanner,
             category: resource.attrCategory,
-            currentTranslation: currentToolTranslation,
+            currentTranslationLanguage: currentToolTranslation.language,
             dataModelId: resource.id,
             languageIds: resource.languageIds,
-            name: getName(for: resource, from: currentToolTranslation),
+            name: currentToolTranslation.translation?.translatedName ?? resource.name,
             resource: resource
         )
     }
     
-    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> CurrentToolTranslationDomainModel {
+    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel, translation: TranslationModel?)  {
                 
         if let language = language, let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) {
             
-            return .primaryLanguage(language: language, translation: translation)
+            return (language, translation)
             
-        } else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english) {
+        } else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
             
-            return .englishFallback(translation: englishTranslation)
+            let englishLanguageDomainModel = getLanguageUseCase.getLanguage(language: englishLanguageModel)
+            return (englishLanguageDomainModel, englishTranslation)
             
         } else {
             
-            return .englishFallback(translation: nil)
-        }
-    }
-    
-    private func getName(for resource: ResourceModel, from currentToolTranslation: CurrentToolTranslationDomainModel) -> String {
-                
-        switch currentToolTranslation {
-        case .primaryLanguage(_, let translation):
-            return translation.translatedName
+            let englishLanguage = LanguageDomainModel(analyticsContentLanguage: LanguageCodes.english, dataModelId: "", direction: .leftToRight, localeIdentifier: LanguageCodes.english, translatedName: "English")
             
-        case .englishFallback(let translation):
-            return translation?.translatedName ?? resource.name
+            return (englishLanguage, nil)
         }
     }
 }
