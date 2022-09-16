@@ -13,7 +13,7 @@ struct ToolDomainModel {
     let abbreviation: String
     let bannerImageId: String
     let category: String
-    let currentTranslationLanguage: LanguageDomainModel?
+    let currentTranslationLanguage: LanguageDomainModel
     let dataModelId: String
     let languageIds: [String]
     let name: String
