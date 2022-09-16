@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-12.6
+    runs-on: macos-12
     env:
       DEVELOPER_DIR: /Applications/Xcode_14.0.app/Contents/Developer
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
@@ -41,6 +41,13 @@ jobs:
           path: ~/.konan
           key: ${{ runner.os }}-konan-${{ github.sha }}
           restore-keys: ${{ runner.os }}-konan-
+
+      - name: Archive ktlint results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ktlint-results
+          path: "**/build/reports/ktlint/"
 
       - name: Bundle Install
         run: bundle install
