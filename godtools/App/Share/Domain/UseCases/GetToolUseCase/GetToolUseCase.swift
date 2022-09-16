@@ -38,18 +38,22 @@ class GetToolUseCase {
         )
     }
     
-    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel?, translation: TranslationModel?)  {
+    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel, translation: TranslationModel?)  {
                 
         if let language = language, let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) {
             
             return (language, translation)
             
+        } else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
+            
+            let englishLanguageDomainModel = getLanguageUseCase.getLanguage(language: englishLanguageModel)
+            return (englishLanguageDomainModel, englishTranslation)
+            
         } else {
             
-            let englishLanguage = self.getLanguageUseCase.getLanguage(locale: Locale(identifier: LanguageCodes.english))
-            let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english)
+            let englishLanguage = LanguageDomainModel(analyticsContentLanguage: LanguageCodes.english, dataModelId: "", direction: .leftToRight, localeIdentifier: LanguageCodes.english, translatedName: "English")
             
-            return (englishLanguage, englishTranslation)
+            return (englishLanguage, nil)
         }
     }
 }
