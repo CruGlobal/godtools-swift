@@ -43,7 +43,10 @@ class GetAllFavoritedToolsUseCase {
     private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel]) -> [ToolDomainModel] {
         
         let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
-        let resources: [ResourceModel] = resourcesRepository.getResources(ids: favoritedResourceIds)
+        
+        let resources = favoritedResourceIds.compactMap { id in
+            return resourcesRepository.getResource(id: id)
+        }
                 
         return resources.map { getToolUseCase.getTool(resource: $0) }
     }
