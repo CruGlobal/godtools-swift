@@ -64,7 +64,6 @@ struct FavoritesContentView_Previews: PreviewProvider {
         let viewModel = FavoritesContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(), getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),

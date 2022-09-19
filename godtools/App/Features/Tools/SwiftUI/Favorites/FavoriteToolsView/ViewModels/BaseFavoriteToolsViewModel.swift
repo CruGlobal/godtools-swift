@@ -14,7 +14,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     // MARK: - Properties
     
     let dataDownloader: InitialDataDownloader
-    let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     
     let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
@@ -34,9 +33,8 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase

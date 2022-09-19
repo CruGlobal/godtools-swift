@@ -90,7 +90,6 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return FavoritesContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
