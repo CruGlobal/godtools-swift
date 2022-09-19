@@ -62,6 +62,10 @@ class RealmResourcesCache {
         return allTools
     }
     
+    func getFeaturedLessons() -> [ResourceModel] {
+        return getAllLessons().filter { $0.attrSpotlight == true }
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
