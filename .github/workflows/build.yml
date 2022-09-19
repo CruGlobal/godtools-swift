@@ -42,13 +42,6 @@ jobs:
           key: ${{ runner.os }}-konan-${{ github.sha }}
           restore-keys: ${{ runner.os }}-konan-
 
-      - name: Archive ktlint results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ktlint-results
-          path: "**/build/reports/ktlint/"
-
       - name: Bundle Install
         run: bundle install
 
