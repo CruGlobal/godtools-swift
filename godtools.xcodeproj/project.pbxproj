@@ -819,6 +819,7 @@
 		45CDFB522817324B00AC4F2E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */; };
 		45CDFB5628173FE400AC4F2E /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB5528173FE400AC4F2E /* FirebaseInAppMessaging-Beta */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
+		45D2073D28D5107900F38DD7 /* UILabel+Underline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2073C28D5107900F38DD7 /* UILabel+Underline.swift */; };
 		45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */; };
 		45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */; };
 		45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */; };
@@ -1909,6 +1910,7 @@
 		45CBA008261FB0D30036BEB3 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CBA01A261FB0EA0036BEB3 /* LessonViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModelType.swift; sourceTree = "<group>"; };
+		45D2073C28D5107900F38DD7 /* UILabel+Underline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Underline.swift"; sourceTree = "<group>"; };
 		45D266E8277499AD00960990 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResourcesAttachments.swift; sourceTree = "<group>"; };
 		45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResourcesAndLanguagesData.swift; sourceTree = "<group>"; };
@@ -4632,6 +4634,7 @@
 				45AD22B22593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift */,
 				D182CA24272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift */,
 				45AD18B325938A4E00A096A0 /* UIKit+Extensions.swift */,
+				45D2073C28D5107900F38DD7 /* UILabel+Underline.swift */,
 				4533A927270E2567009B1AF5 /* UINavigationBar+Appearance.swift */,
 				45AD18B425938A4E00A096A0 /* UIView+Animations.swift */,
 				45AD18B725938A4E00A096A0 /* UIView+Constraints.swift */,
@@ -7734,6 +7737,7 @@
 				45AD1FFE25938A9800A096A0 /* ResourceViewModelType.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
+				45D2073D28D5107900F38DD7 /* UILabel+Underline.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
