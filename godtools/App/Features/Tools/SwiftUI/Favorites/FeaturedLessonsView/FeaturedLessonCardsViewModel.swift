@@ -15,7 +15,6 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
     private let getBannerImageUseCase: GetBannerImageUseCase
@@ -32,9 +31,8 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
         self.getBannerImageUseCase = getBannerImageUseCase
@@ -46,11 +44,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
         
         super.init()
                 
-        setup()
-    }
-    
-    deinit {
-        languageSettingsService.primaryLanguage.removeObserver(self)
+        setupBinding()
     }
     
     // MARK: - Overrides
@@ -71,16 +65,6 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
 
 extension FeaturedLessonCardsViewModel {
     
-    private func setup() {
-        setupTitle()
-        setupBinding()
-    }
-    
-    private func setupTitle() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
-    }
-    
     private func setupBinding() {
         
         getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
@@ -93,10 +77,20 @@ extension FeaturedLessonCardsViewModel {
             }
             .store(in: &cancellables)
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setupTitle()
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                
+                self?.setupTitle(with: primaryLanguage)
             }
-        }
+            .store(in: &cancellables)
+    }
+    
+    private func setupTitle(with language: LanguageDomainModel?) {
+        guard let language = language,
+              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
+        else { return }
+        
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
     }
 }

@@ -40,7 +40,6 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
