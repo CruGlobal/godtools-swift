@@ -11,10 +11,8 @@ import Foundation
 class FavoritingToolMessageCache {
     
     private let userDefaultsCache: SharedUserDefaultsCache
-    
-    let disabledSignal: Signal = Signal()
-    
-    required init(userDefaultsCache: SharedUserDefaultsCache) {
+        
+    init(userDefaultsCache: SharedUserDefaultsCache) {
         
         self.userDefaultsCache = userDefaultsCache
     }
@@ -34,7 +32,5 @@ class FavoritingToolMessageCache {
         
         userDefaultsCache.cache(value: true, forKey: disabledKey)
         userDefaultsCache.commitChanges()
-        
-        disabledSignal.accept()
     }
 }

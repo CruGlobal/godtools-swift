@@ -231,7 +231,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            _ = navigationController.popViewController(animated: true)
+            navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
                         
             lessonFlow = nil
             
@@ -480,14 +480,14 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
+    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
@@ -516,7 +516,7 @@ extension AppFlow {
     
     private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let toolsMenu: ToolsMenuView = getToolsMenu(startingPage: startingPage)
+        let toolsMenu: ToolsMenuView = getNewToolsMenu(startingPage: startingPage)
         
         navigationController.setViewControllers([toolsMenu], animated: false)
         
@@ -582,8 +582,6 @@ extension AppFlow {
         
         case .tool(let toolDeepLink):
                
-            // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
-
             navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)

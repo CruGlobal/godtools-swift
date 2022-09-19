@@ -45,7 +45,7 @@ struct ToolCardNavButtonView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleTools().first!
         let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(locale: Locale(identifier: LanguageCodes.english))
-        let tool = ToolDomainModel(abbreviation: "abbr", bannerImageId: "1", category: "Tool Category", currentTranslationLanguage: language, dataModelId: "1", languageIds: [], name: "Tool Name", resource: resource)
+        let tool = ToolDomainModel(abbreviation: "abbr", bannerImageId: "1", category: "Tool Category", currentTranslationLanguage: language!, dataModelId: "1", languageIds: [], name: "Tool Name", resource: resource)
         
         let viewModel = ToolCardViewModel(
             tool: tool,

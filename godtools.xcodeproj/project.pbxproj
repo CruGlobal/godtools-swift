@@ -114,7 +114,6 @@
 		4554205B28B17AEA00368CFE /* AttachmentFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
 		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
-		45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
 		455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D8269F2C1000C3FF14 /* TrainingTipViewType.swift */; };
@@ -423,6 +422,7 @@
 		4570B7062889B1760024C931 /* DownloadToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4570B7022889B1760024C931 /* DownloadToolView.xib */; };
 		45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45714ACA262100C800EF41FB /* LessonProgressView.swift */; };
 		45714AD5262100E000EF41FB /* LessonProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45714AD4262100E000EF41FB /* LessonProgressView.xib */; };
+		4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */; };
 		4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132928C1821100481640 /* ToolDetailsViewModel.swift */; };
 		4573133828C1821100481640 /* ToolDetailsHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132A28C1821100481640 /* ToolDetailsHostingView.swift */; };
 		4573133928C1821100481640 /* ToolDetailsVersionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132C28C1821100481640 /* ToolDetailsVersionsView.swift */; };
@@ -503,7 +503,6 @@
 		45AD1AAB25938A4E00A096A0 /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD175D25938A4D00A096A0 /* TutorialCell.xib */; };
 		45AD1AAE25938A4E00A096A0 /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */; };
 		45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176125938A4D00A096A0 /* TutorialCell.swift */; };
-		45AD1AC125938A4E00A096A0 /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD177625938A4D00A096A0 /* FavoritingToolMessageCache.swift */; };
 		45AD1AC725938A4E00A096A0 /* FavoritedToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD177C25938A4D00A096A0 /* FavoritedToolsView.swift */; };
 		45AD1B1925938A4E00A096A0 /* LearnToShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD17DC25938A4D00A096A0 /* LearnToShareToolViewModel.swift */; };
 		45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD17DE25938A4D00A096A0 /* InMemoryLearnToShareToolItems.swift */; };
@@ -670,10 +669,6 @@
 		45AD20E32593915300A096A0 /* GlobalActivityAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20E22593915300A096A0 /* GlobalActivityAnalytics.swift */; };
 		45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20E9259391B000A096A0 /* JsonServices.swift */; };
 		45AD20EC259391B000A096A0 /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20EA259391B000A096A0 /* JsonServicesType.swift */; };
-		45AD20F82593950300A096A0 /* DownloadedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20F42593950300A096A0 /* DownloadedLanguagesCache.swift */; };
-		45AD21022593953100A096A0 /* RealmDownloadedLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20FF2593953100A096A0 /* RealmDownloadedLanguage.swift */; };
-		45AD21032593953100A096A0 /* DownloadedLanguageModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21002593953100A096A0 /* DownloadedLanguageModelType.swift */; };
-		45AD21042593953100A096A0 /* DownloadedLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21012593953100A096A0 /* DownloadedLanguageModel.swift */; };
 		45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21602593A62800A096A0 /* AppDelegate.swift */; };
 		45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD21612593A62800A096A0 /* AppDiContainer.swift */; };
 		45AD217F2593ABC800A096A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 45AD217E2593ABC800A096A0 /* README.md */; };
@@ -756,7 +751,6 @@
 		45C2594428CAC3E8005D2387 /* ChooseLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593828CAC3E8005D2387 /* ChooseLanguageCell.swift */; };
 		45C2594528CAC3E8005D2387 /* ChooseLanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C2593928CAC3E8005D2387 /* ChooseLanguageCell.xib */; };
 		45C2594628CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593A28CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift */; };
-		45C2594728CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593B28CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift */; };
 		45C2594828CAC3E8005D2387 /* ChooseLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */; };
 		45C2595928CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */; };
 		45C2595A28CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */; };
@@ -1083,6 +1077,7 @@
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
+		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
@@ -1234,7 +1229,6 @@
 		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
 		4555599A27B3193D00A32A61 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4555599B27B3194800A32A61 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundleTests.swift; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
 		455582D6269F2C1000C3FF14 /* TrainingTipView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingTipView.xib; sourceTree = "<group>"; };
 		455582D8269F2C1000C3FF14 /* TrainingTipViewType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingTipViewType.swift; sourceTree = "<group>"; };
@@ -1543,6 +1537,7 @@
 		4570B7022889B1760024C931 /* DownloadToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadToolView.xib; sourceTree = "<group>"; };
 		45714ACA262100C800EF41FB /* LessonProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressView.swift; sourceTree = "<group>"; };
 		45714AD4262100E000EF41FB /* LessonProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressView.xib; sourceTree = "<group>"; };
+		4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		4573132928C1821100481640 /* ToolDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsViewModel.swift; sourceTree = "<group>"; };
 		4573132A28C1821100481640 /* ToolDetailsHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsHostingView.swift; sourceTree = "<group>"; };
 		4573132C28C1821100481640 /* ToolDetailsVersionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsVersionsView.swift; sourceTree = "<group>"; };
@@ -1620,7 +1615,6 @@
 		45AD175D25938A4D00A096A0 /* TutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
 		45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
 		45AD176125938A4D00A096A0 /* TutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
-		45AD177625938A4D00A096A0 /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		45AD177C25938A4D00A096A0 /* FavoritedToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritedToolsView.swift; sourceTree = "<group>"; };
 		45AD17DC25938A4D00A096A0 /* LearnToShareToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolViewModel.swift; sourceTree = "<group>"; };
 		45AD17DE25938A4D00A096A0 /* InMemoryLearnToShareToolItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryLearnToShareToolItems.swift; sourceTree = "<group>"; };
@@ -1787,10 +1781,6 @@
 		45AD20E22593915300A096A0 /* GlobalActivityAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalytics.swift; sourceTree = "<group>"; };
 		45AD20E9259391B000A096A0 /* JsonServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		45AD20EA259391B000A096A0 /* JsonServicesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonServicesType.swift; sourceTree = "<group>"; };
-		45AD20F42593950300A096A0 /* DownloadedLanguagesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguagesCache.swift; sourceTree = "<group>"; };
-		45AD20FF2593953100A096A0 /* RealmDownloadedLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDownloadedLanguage.swift; sourceTree = "<group>"; };
-		45AD21002593953100A096A0 /* DownloadedLanguageModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguageModelType.swift; sourceTree = "<group>"; };
-		45AD21012593953100A096A0 /* DownloadedLanguageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedLanguageModel.swift; sourceTree = "<group>"; };
 		45AD21602593A62800A096A0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45AD21612593A62800A096A0 /* AppDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		45AD217E2593ABC800A096A0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1860,7 +1850,6 @@
 		45C2593828CAC3E8005D2387 /* ChooseLanguageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCell.swift; sourceTree = "<group>"; };
 		45C2593928CAC3E8005D2387 /* ChooseLanguageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLanguageCell.xib; sourceTree = "<group>"; };
 		45C2593A28CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModel.swift; sourceTree = "<group>"; };
-		45C2593B28CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModelType.swift; sourceTree = "<group>"; };
 		45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageViewModelType.swift; sourceTree = "<group>"; };
 		45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -2293,6 +2282,7 @@
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
 				45CDFB522817324B00AC4F2E /* FirebaseCrashlytics in Frameworks */,
 				45EDBCF027359CD70099495B /* Realm in Frameworks */,
+				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
 				45EDBCF227359CD70099495B /* RealmSwift in Frameworks */,
 				45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */,
 				45CDFB502817324B00AC4F2E /* FirebaseAnalytics in Frameworks */,
@@ -2467,6 +2457,7 @@
 				4565757D28AB0B35005B2A3B /* AppConfig */,
 				45D63E79288F75B0009B4610 /* AttachmentsRepository */,
 				453C1BD02899A50C007332E2 /* FavoritedResourcesRepository */,
+				4572E4B028CBCF110014DB2E /* FavoritingToolMessageCache */,
 				4504D00228BD00C500D8A5FD /* GodToolsParserLogger */,
 				4554512328948D090072EC6E /* LanguageSettingsRepository */,
 				45D63E5F288F698C009B4610 /* LanguagesRepository */,
@@ -2811,18 +2802,9 @@
 		45557AE3252D085B00ACFA95 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				45557AE4252D085B00ACFA95 /* Localization */,
 				45267B7325F196FD004DB4C4 /* Renderer */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		45557AE4252D085B00ACFA95 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				45557AE9252D094000ACFA95 /* LocaleLocalizationBundleTests.swift */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		455582D0269F2C1000C3FF14 /* Views */ = {
@@ -4078,6 +4060,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4572E4B028CBCF110014DB2E /* FavoritingToolMessageCache */ = {
+			isa = PBXGroup;
+			children = (
+				4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */,
+			);
+			path = FavoritingToolMessageCache;
+			sourceTree = "<group>";
+		};
 		4573132728C1821100481640 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -4409,20 +4399,11 @@
 		45AD176A25938A4D00A096A0 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				45AD177525938A4D00A096A0 /* Models */,
 				D44C692F280478FC0000B970 /* SwiftUI */,
 				4505C676282B4A0A0047951D /* ToolsMenu */,
 				45AD177F25938A4D00A096A0 /* Views */,
 			);
 			path = Tools;
-			sourceTree = "<group>";
-		};
-		45AD177525938A4D00A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD177625938A4D00A096A0 /* FavoritingToolMessageCache.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45AD177F25938A4D00A096A0 /* Views */ = {
@@ -4775,7 +4756,6 @@
 				45AD1E9925938A9800A096A0 /* Attachments */,
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
 				45AD1EB825938A9800A096A0 /* DeepLinkingService */,
-				45AD20F12593950300A096A0 /* DownloadedLanguages */,
 				45AD1E8025938A9800A096A0 /* EmailSignUp */,
 				45AD1EDF25938A9800A096A0 /* FirebaseConfiguration */,
 				45AD1E5725938A9800A096A0 /* FirebaseDebugArguments */,
@@ -5326,25 +5306,6 @@
 			path = Json;
 			sourceTree = "<group>";
 		};
-		45AD20F12593950300A096A0 /* DownloadedLanguages */ = {
-			isa = PBXGroup;
-			children = (
-				45AD20F42593950300A096A0 /* DownloadedLanguagesCache.swift */,
-				45AD20FE2593953100A096A0 /* Models */,
-			);
-			path = DownloadedLanguages;
-			sourceTree = "<group>";
-		};
-		45AD20FE2593953100A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD21012593953100A096A0 /* DownloadedLanguageModel.swift */,
-				45AD21002593953100A096A0 /* DownloadedLanguageModelType.swift */,
-				45AD20FF2593953100A096A0 /* RealmDownloadedLanguage.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		45AE970E27C97A9400C2CB33 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -5548,7 +5509,6 @@
 				45C2593828CAC3E8005D2387 /* ChooseLanguageCell.swift */,
 				45C2593928CAC3E8005D2387 /* ChooseLanguageCell.xib */,
 				45C2593A28CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift */,
-				45C2593B28CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -7091,6 +7051,7 @@
 				45CDFB4F2817324B00AC4F2E /* FirebaseAnalytics */,
 				45CDFB512817324B00AC4F2E /* FirebaseCrashlytics */,
 				45CDFB5528173FE400AC4F2E /* FirebaseInAppMessaging-Beta */,
+				D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -7241,6 +7202,7 @@
 				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
 				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 				45CDFB4E2817324B00AC4F2E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -7491,7 +7453,6 @@
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SnowplowTracker/SnowplowTracker.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -7501,7 +7462,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnowplowTracker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -7648,7 +7608,6 @@
 				45AD1B9125938A4F00A096A0 /* ToolView.swift in Sources */,
 				45AD1FE125938A9800A096A0 /* EmailSignUpModelType.swift in Sources */,
 				D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */,
-				45C2594728CAC3E8005D2387 /* ChooseLanguageCellViewModelType.swift in Sources */,
 				45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */,
 				45677800287DB4E10044AEB2 /* AboutTextProviderType.swift in Sources */,
 				4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */,
@@ -7679,6 +7638,7 @@
 				458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */,
 				4561C41227C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift in Sources */,
 				45AD1F6925938A9800A096A0 /* LanguageDirection.swift in Sources */,
+				4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */,
 				45B36527288504D40012BE53 /* TranslationsRepository.swift in Sources */,
 				45585BCF2687BB8F00A21D12 /* ToolDeepLinkParser.swift in Sources */,
 				4505C696282B4A0B0047951D /* ToolsMenuViewModelType.swift in Sources */,
@@ -7930,7 +7890,6 @@
 				45BF6EB72704FD2D003596A4 /* PrimaryEvaluationOptionButton.swift in Sources */,
 				4555832C269F2C7B00C3FF14 /* ToolPageCardBounceAnimation.swift in Sources */,
 				45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */,
-				45AD20F82593950300A096A0 /* DownloadedLanguagesCache.swift in Sources */,
 				D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */,
 				4555833C269F2C7B00C3FF14 /* ToolPageModalViewModelType.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
@@ -7942,7 +7901,6 @@
 				45677737287DAFC70044AEB2 /* MenuItemView.swift in Sources */,
 				45677744287DAFC70044AEB2 /* DeleteAccountHostingView.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
-				45AD1AC125938A4E00A096A0 /* FavoritingToolMessageCache.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
 				D41B38A9287DFF6100BD5899 /* LessonsListViewModel.swift in Sources */,
 				45D63E6F288F698C009B4610 /* RealmLanguagesCache.swift in Sources */,
@@ -7965,7 +7923,6 @@
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				45558335269F2C7B00C3FF14 /* ToolPageCallToActionViewModelType.swift in Sources */,
 				45C93ADE261D310900592FFF /* CacheArticleAemWebArchivePlistError.swift in Sources */,
-				45AD21022593953100A096A0 /* RealmDownloadedLanguage.swift in Sources */,
 				45AD1B8A25938A4F00A096A0 /* OnboardingTutorialAvailability.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				D1AC1491274C1ADF003510AC /* OnboardingQuickStartCellViewModelType.swift in Sources */,
@@ -8025,7 +7982,6 @@
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,
 				4570B7042889B1760024C931 /* DownloadToolView.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
-				45AD21042593953100A096A0 /* DownloadedLanguageModel.swift in Sources */,
 				453C1BD62899A50C007332E2 /* FavoritedResourcesCache.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
 				457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */,
@@ -8457,7 +8413,6 @@
 				45AD1BE125938A4F00A096A0 /* ProgressView.swift in Sources */,
 				45D63E5E288F689F009B4610 /* RealmTranslation.swift in Sources */,
 				D42600D7282C028F00E7A520 /* ToolCardFavoritedView.swift in Sources */,
-				45AD21032593953100A096A0 /* DownloadedLanguageModelType.swift in Sources */,
 				45AE975027C97A9500C2CB33 /* Paragraph+MobileContentRenderableModel.swift in Sources */,
 				45677870287DC60F0044AEB2 /* AccountItemViewType.swift in Sources */,
 				456777D3287DB3770044AEB2 /* ShareShareableViewModel.swift in Sources */,
@@ -8500,7 +8455,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45557AEA252D094100ACFA95 /* LocaleLocalizationBundleTests.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
 				45BB7FB925F6BE76000FE44B /* LanguageDirection.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
@@ -9644,6 +9598,14 @@
 				minimumVersion = 10.19.0;
 			};
 		};
+		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -9696,6 +9658,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			productName = YouTubeiOSPlayerHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

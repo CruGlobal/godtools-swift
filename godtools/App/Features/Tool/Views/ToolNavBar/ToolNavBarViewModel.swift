@@ -87,8 +87,8 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
         remoteShareIsActive.accept(value: isActive)
     }
     
-    var navTitle: String {
-        return "GodTools"
+    var navTitle: String? {
+        return nil
     } 
     
     var numberOfLanguages: Int {

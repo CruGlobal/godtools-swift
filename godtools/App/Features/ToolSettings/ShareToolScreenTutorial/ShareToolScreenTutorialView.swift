@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import youtube_ios_player_helper
+import YouTubeiOSPlayerHelper
 
 class ShareToolScreenTutorialView: UIViewController {
     //TODO: re-implement this tutorial using TutorialPagerView

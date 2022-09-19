@@ -59,7 +59,6 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
         
         return ChooseLanguageCellViewModel(
             language: language,
-            languageIsDownloaded: true, //hides downloadImageView for all cells in this list
             hidesSelected: true,
             selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
