@@ -24,6 +24,7 @@ struct NoFavoriteToolsView: View {
                 Text(viewModel.noFavoriteToolsTitle)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .foregroundColor(ColorPalette.gtGrey.color)
+                    .multilineTextAlignment(.center)
                 
                 Text(viewModel.noFavoriteToolsDescription)
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
@@ -56,6 +57,7 @@ struct NoFavoriteToolsView_Previews: PreviewProvider {
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil
         )
