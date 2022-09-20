@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
-class LessonsContentViewModel: NSObject, ObservableObject {
+class LessonsContentViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
@@ -23,22 +24,13 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
-    private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
-        return LessonsListViewModel(
-            dataDownloader: dataDownloader,
-            localizationServices: localizationServices,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getLessonsUseCase: getLessonsUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            delegate: self
-        )
-    }()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
     @Published var isLoading: Bool = false
+    @Published var sectionTitle: String = ""
+    @Published var subtitle: String = ""
     
     // MARK: - Init
     
@@ -55,6 +47,21 @@ class LessonsContentViewModel: NSObject, ObservableObject {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
         super.init()
+        
+        setupBinding()
+    }
+    
+    // MARK: - Overrides
+    
+    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
+        return LessonCardViewModel(
+            lesson: lesson,
+            dataDownloader: dataDownloader,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            delegate: self
+        )
     }
 }
 
@@ -66,12 +73,42 @@ extension LessonsContentViewModel {
     }
 }
 
-// MARK: - LessonsListViewModelDelegate
+// MARK: - Private
 
-extension LessonsContentViewModel: LessonsListViewModelDelegate {
-    func lessonsAreLoading(_ isLoading: Bool) {
-        self.isLoading = isLoading
+extension LessonsContentViewModel {
+    
+    private func setupBinding() {
+        
+        getLessonsUseCase.getLessonsPublisher()
+            .receiveOnMain()
+            .sink { [weak self] lessons in
+                
+                self?.isLoading = lessons.isEmpty
+                self?.lessons = lessons
+            }
+            .store(in: &cancellables)
+        
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                self?.setupTitle(with: primaryLanguage)
+            }
+            .store(in: &cancellables)
     }
+    
+    private func setupTitle(with language: LanguageDomainModel?) {
+        guard let language = language,
+              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
+        else { return }
+        
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
+    }
+}
+
+// MARK: - LessonCardDelegate
+
+extension LessonsContentViewModel: LessonCardDelegate {
     
     func lessonCardTapped(lesson: LessonDomainModel) {
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))

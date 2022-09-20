@@ -30,7 +30,22 @@ struct LessonsContentView: View {
                 
                 BackwardCompatibleList(rootViewType: Self.self) {
                     
-                    LessonsListView(viewModel: viewModel.lessonsListViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                    VStack(alignment: .leading, spacing: 5) {
+                        
+                        Text(viewModel.sectionTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 22))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        Text(viewModel.subtitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 14))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                    }
+                    .padding(.top, 24)
+                    .padding(.bottom, 7)
+                    .padding([.leading, .trailing], leadingTrailingPadding)
+                    .listRowInsets(EdgeInsets())
+                    
+                    LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
                         .listRowInsets(EdgeInsets())
                     
                 } refreshHandler: {

@@ -991,10 +991,8 @@
 		D404F86E28AD86FF00643BA7 /* Publisher+ReceiveOnMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D404F86D28AD86FF00643BA7 /* Publisher+ReceiveOnMain.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsContentView.swift */; };
-		D41B38A9287DFF6100BD5899 /* LessonsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A8287DFF6100BD5899 /* LessonsListViewModel.swift */; };
 		D41B38AC287F0FDD00BD5899 /* FeaturedLessonCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */; };
 		D41B38AE287F149900BD5899 /* LessonsContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AD287F149900BD5899 /* LessonsContentViewModel.swift */; };
-		D41B38B1287F151100BD5899 /* LessonsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B0287F151100BD5899 /* LessonsListView.swift */; };
 		D41B38B52885BE9C00BD5899 /* GetLanguageAvailablityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityUseCase.swift */; };
 		D41B38B8288EDA1F00BD5899 /* GetShareableImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38B7288EDA1F00BD5899 /* GetShareableImageUseCase.swift */; };
 		D41B38BB288EDA7A00BD5899 /* ShareableImageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BA288EDA7A00BD5899 /* ShareableImageDomainModel.swift */; };
@@ -2145,10 +2143,8 @@
 		D404F86D28AD86FF00643BA7 /* Publisher+ReceiveOnMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+ReceiveOnMain.swift"; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsContentView.swift; sourceTree = "<group>"; };
-		D41B38A8287DFF6100BD5899 /* LessonsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListViewModel.swift; sourceTree = "<group>"; };
 		D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsView.swift; sourceTree = "<group>"; };
 		D41B38AD287F149900BD5899 /* LessonsContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsContentViewModel.swift; sourceTree = "<group>"; };
-		D41B38B0287F151100BD5899 /* LessonsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListView.swift; sourceTree = "<group>"; };
 		D41B38B42885BE9C00BD5899 /* GetLanguageAvailablityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLanguageAvailablityUseCase.swift; sourceTree = "<group>"; };
 		D41B38B7288EDA1F00BD5899 /* GetShareableImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageUseCase.swift; sourceTree = "<group>"; };
 		D41B38BA288EDA7A00BD5899 /* ShareableImageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareableImageDomainModel.swift; sourceTree = "<group>"; };
@@ -5799,7 +5795,6 @@
 			children = (
 				D41B38A6287DFF1F00BD5899 /* LessonsContentView.swift */,
 				D41B38AD287F149900BD5899 /* LessonsContentViewModel.swift */,
-				D41B38AF287F14B200BD5899 /* LessonsListView */,
 				45CB9FF1261FB0BE0036BEB3 /* LessonsHostingView.swift */,
 			);
 			path = Lessons;
@@ -6533,15 +6528,6 @@
 				D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */,
 			);
 			path = FirebaseInAppMessages;
-			sourceTree = "<group>";
-		};
-		D41B38AF287F14B200BD5899 /* LessonsListView */ = {
-			isa = PBXGroup;
-			children = (
-				D41B38B0287F151100BD5899 /* LessonsListView.swift */,
-				D41B38A8287DFF6100BD5899 /* LessonsListViewModel.swift */,
-			);
-			path = LessonsListView;
 			sourceTree = "<group>";
 		};
 		D41B38B62885BEA100BD5899 /* GetLanguageAvailabilityUseCase */ = {
@@ -7906,7 +7892,6 @@
 				45677744287DAFC70044AEB2 /* DeleteAccountHostingView.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
-				D41B38A9287DFF6100BD5899 /* LessonsListViewModel.swift in Sources */,
 				45D63E6F288F698C009B4610 /* RealmLanguagesCache.swift in Sources */,
 				45D63E53288F67CE009B4610 /* AppDataLayerDependencies.swift in Sources */,
 				4555831F269F2C7B00C3FF14 /* ToolPageViewFactory.swift in Sources */,
@@ -8420,7 +8405,6 @@
 				45AE975027C97A9500C2CB33 /* Paragraph+MobileContentRenderableModel.swift in Sources */,
 				45677870287DC60F0044AEB2 /* AccountItemViewType.swift in Sources */,
 				456777D3287DB3770044AEB2 /* ShareShareableViewModel.swift in Sources */,
-				D41B38B1287F151100BD5899 /* LessonsListView.swift in Sources */,
 				D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */,
 				4505C68D282B4A0B0047951D /* ToolsMenuPageView.swift in Sources */,
 				45FB161127DBDDB60009DF8E /* ToolNavigationFlow.swift in Sources */,
