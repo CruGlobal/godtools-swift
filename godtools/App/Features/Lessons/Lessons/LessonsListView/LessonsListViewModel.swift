@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol LessonsListViewModelDelegate: LessonCardDelegate {
     func lessonsAreLoading(_ isLoading: Bool)
@@ -17,11 +18,16 @@ class LessonsListViewModel: LessonCardProvider {
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getLessonsUseCase: GetLessonsUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    
     private weak var delegate: LessonsListViewModelDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
@@ -30,36 +36,32 @@ class LessonsListViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonsListViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonsListViewModelDelegate?) {
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getLessonsUseCase = getLessonsUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        
         self.delegate = delegate
         
         super.init()
-        
-        reloadLessonsFromCache()
-        
-        setup()
-    }
-    
-    deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
+                
+        setupBinding()
     }
     
     // MARK: - Overrides
     
-    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
-            resource: lesson,
+            lesson: lesson,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             delegate: delegate
         )
     }
@@ -69,46 +71,32 @@ class LessonsListViewModel: LessonCardProvider {
 
 extension LessonsListViewModel {
     
-    private func setup() {
-        setupTitle()
-        setupBinding()
-    }
-    
-    private func setupTitle() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
-        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
-    }
-    
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
-                if cachedResourcesAvailable {
-                    self?.reloadLessonsFromCache()
-                }
+        getLessonsUseCase.getLessonsPublisher()
+            .receiveOnMain()
+            .sink { lessons in
+                
+                self.delegate?.lessonsAreLoading(lessons.isEmpty)
+                self.lessons = lessons
             }
-        }
+            .store(in: &cancellables)
         
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(false)
-                if error == nil {
-                    self?.reloadLessonsFromCache()
-                }
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { primaryLanguage in
+                self.setupTitle(with: primaryLanguage)
             }
-        }
-        
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setupTitle()
-            }
-        }
+            .store(in: &cancellables)
     }
     
-    private func reloadLessonsFromCache() {
-        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted()
+    private func setupTitle(with language: LanguageDomainModel?) {
+        guard let language = language,
+              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
+        else { return }
+        
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
     }
 }
 
