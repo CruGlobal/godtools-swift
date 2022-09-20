@@ -78,3 +78,10 @@ jobs:
       - name: Push Commits To Remote
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: git push
+
+      - name: Archive XCode Logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: xcode-logs
+          path: "/Users/runner/Library/Developer/Xcode/DerivedData/godtools-*/Logs/**"
