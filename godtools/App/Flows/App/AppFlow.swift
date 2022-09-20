@@ -265,20 +265,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            var toolsMenuInNavigationStack: ToolsMenuView?
-            
-            for viewController in navigationController.viewControllers {
-                if let toolsMenu = viewController as? ToolsMenuView {
-                    toolsMenuInNavigationStack = toolsMenu
-                    break
-                }
-            }
-            
             if state == .userClosedTractToLessonsList {
                 
                 navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true)
             }
-            else if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+            else if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
                
                 navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
             }
@@ -290,9 +281,20 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             tractFlow = nil
             
         case .chooseYourOwnAdventureFlowCompleted(let state):
+           
             switch state {
+            
             case .userClosedTool:
-                _ = navigationController.popViewController(animated: true)
+                
+                if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
+                   
+                    navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+                }
+                else {
+                    
+                    _ = navigationController.popViewController(animated: true)
+                }
+                
                 chooseYourOwnAdventureFlow = nil
             }
             
@@ -479,6 +481,17 @@ extension AppFlow {
 // MARK: - Tools Menu
 
 extension AppFlow {
+    
+    private func getToolsMenuInNavigationStack() -> ToolsMenuView? {
+                
+        for viewController in navigationController.viewControllers {
+            if let toolsMenu = viewController as? ToolsMenuView {
+                return toolsMenu
+            }
+        }
+        
+        return nil
+    }
     
     private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
