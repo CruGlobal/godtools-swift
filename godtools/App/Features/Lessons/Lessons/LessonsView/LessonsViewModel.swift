@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonsViewModel: LessonCardProvider {
+class LessonsViewModel: ObservableObject {
     
     // MARK: - Properties
     
@@ -31,6 +31,7 @@ class LessonsViewModel: LessonCardProvider {
     @Published var isLoading: Bool = false
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
+    @Published var lessons: [LessonDomainModel] = []
     
     // MARK: - Init
     
@@ -46,14 +47,15 @@ class LessonsViewModel: LessonCardProvider {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
-        super.init()
-        
         setupBinding()
     }
+}
+
+// MARK: - Public
+
+extension LessonsViewModel {
     
-    // MARK: - Overrides
-    
-    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
+    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
             lesson: lesson,
             dataDownloader: dataDownloader,
@@ -63,11 +65,7 @@ class LessonsViewModel: LessonCardProvider {
             delegate: self
         )
     }
-}
-
-// MARK: - Public
-
-extension LessonsViewModel {
+    
     func refreshData() {
         dataDownloader.downloadInitialData()
     }
