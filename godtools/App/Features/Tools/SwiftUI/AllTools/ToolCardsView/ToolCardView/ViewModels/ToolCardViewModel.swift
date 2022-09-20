@@ -23,11 +23,11 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
     
     let tool: ToolDomainModel
     let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var delegate: ToolCardViewModelDelegate?
@@ -43,15 +43,17 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
     
     // MARK: - Init
     
-    init(tool: ToolDomainModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(tool: ToolDomainModel, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.tool = tool
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        
         self.delegate = delegate
         
         super.init()
@@ -65,7 +67,6 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
         
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
-        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
@@ -121,16 +122,17 @@ extension ToolCardViewModel {
             }
         }
         
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] parallelLanguage in
+                self?.reloadParallelLanguageName(parallelLanguage)
+            }
+            .store(in: &cancellables)
+        
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: tool.id)
             .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
-        
-        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadParallelLanguageName()
-            }
-        }
     }
         
     private func setStrings() {
@@ -146,14 +148,14 @@ extension ToolCardViewModel {
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
     }
     
-    private func reloadParallelLanguageName() {
-        let parallelLanguage = languageSettingsService.parallelLanguage.value
-        
-        let getLanguageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
+    private func reloadParallelLanguageName(_ parallelLanguage: LanguageDomainModel?) {
+        guard let parallelLanguage = parallelLanguage else { return }
+
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
         
         if getLanguageAvailability.isAvailable {
             
-            parallelLanguageName = getLanguageAvailability.string
+            parallelLanguageName = getLanguageAvailability.availabilityString
             
         } else {
             

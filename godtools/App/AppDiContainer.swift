@@ -143,13 +143,6 @@ class AppDiContainer {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
-    func getLanguageAvailabilityStringUseCase() -> GetLanguageAvailabilityStringUseCase {
-        return GetLanguageAvailabilityStringUseCase(
-            localizationServices: localizationServices,
-            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase()
-        )
-    }
-    
     func getLearnToShareToolItemsProvider() -> LearnToShareToolItemsProviderType {
         return InMemoryLearnToShareToolItems(localization: localizationServices)
     }

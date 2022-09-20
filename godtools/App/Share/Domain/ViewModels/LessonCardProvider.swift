@@ -12,14 +12,14 @@ class LessonCardProvider: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var lessons: [ResourceModel] = []
+    @Published var lessons: [LessonDomainModel] = []
     
     // MARK: - Public
     
-    func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         assertionFailure("This method should be overriden in the subclass")
         return BaseLessonCardViewModel()
     }
     
-    func lessonTapped(resource: ResourceModel) {}
+    func lessonTapped(lesson: LessonDomainModel) {}
 }
