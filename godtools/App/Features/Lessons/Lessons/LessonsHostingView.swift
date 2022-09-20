@@ -9,11 +9,11 @@
 import UIKit
 import SwiftUI
 
-class LessonsHostingView: UIHostingController<LessonsContentView>, ToolsMenuPageView {
+class LessonsHostingView: UIHostingController<LessonsView>, ToolsMenuPageView {
     
-    private let contentView: LessonsContentView
+    private let contentView: LessonsView
     
-    required init(contentView: LessonsContentView) {
+    required init(contentView: LessonsView) {
         
         self.contentView = contentView
         

@@ -70,8 +70,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return flowDelegate
     }
     
-    func lessonsWillAppear() -> LessonsContentViewModel {
-        return LessonsContentViewModel(
+    func lessonsWillAppear() -> LessonsViewModel {
+        return LessonsViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,

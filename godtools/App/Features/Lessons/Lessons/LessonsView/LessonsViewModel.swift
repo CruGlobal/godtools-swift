@@ -1,5 +1,5 @@
 //
-//  LessonsContentViewModel.swift
+//  LessonsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/13/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonsContentViewModel: LessonCardProvider {
+class LessonsViewModel: LessonCardProvider {
     
     // MARK: - Properties
     
@@ -67,7 +67,7 @@ class LessonsContentViewModel: LessonCardProvider {
 
 // MARK: - Public
 
-extension LessonsContentViewModel {
+extension LessonsViewModel {
     func refreshData() {
         dataDownloader.downloadInitialData()
     }
@@ -75,7 +75,7 @@ extension LessonsContentViewModel {
 
 // MARK: - Private
 
-extension LessonsContentViewModel {
+extension LessonsViewModel {
     
     private func setupBinding() {
         
@@ -108,7 +108,7 @@ extension LessonsContentViewModel {
 
 // MARK: - LessonCardDelegate
 
-extension LessonsContentViewModel: LessonCardDelegate {
+extension LessonsViewModel: LessonCardDelegate {
     
     func lessonCardTapped(lesson: LessonDomainModel) {
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
@@ -118,7 +118,7 @@ extension LessonsContentViewModel: LessonCardDelegate {
 
 // MARK: - Analytics
 
-extension LessonsContentViewModel {
+extension LessonsViewModel {
     
     var analyticsScreenName: String {
         return "Lessons"
