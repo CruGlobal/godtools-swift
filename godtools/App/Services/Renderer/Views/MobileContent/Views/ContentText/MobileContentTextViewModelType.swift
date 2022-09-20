@@ -21,6 +21,7 @@ protocol MobileContentTextViewModelType: MobileContentViewModelType {
     var endImage: UIImage? { get }
     var endImageSize: CGSize { get }
     var hidesEndImage: Bool { get }
+    var shouldUnderlineText: Bool { get }
     
     func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont
 }

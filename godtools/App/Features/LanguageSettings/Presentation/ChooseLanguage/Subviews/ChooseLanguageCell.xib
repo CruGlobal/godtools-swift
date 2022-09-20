@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,18 +27,11 @@
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojZ-Jh-Pf7" userLabel="languageLabel">
-                        <rect key="frame" x="24" y="15" width="236" height="20"/>
+                        <rect key="frame" x="24" y="15" width="272" height="20"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download_green" translatesAutoresizingMaskIntoConstraints="NO" id="q6I-9x-rty" userLabel="downloadImageView">
-                        <rect key="frame" x="274" y="14" width="22" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="I07-mZ-V5Q"/>
-                            <constraint firstAttribute="width" constant="22" id="o26-Xl-wdp"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cub-Bb-Jpj" userLabel="separatorLine">
                         <rect key="frame" x="24" y="49" width="272" height="1"/>
                         <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
@@ -50,20 +43,17 @@
                 <constraints>
                     <constraint firstItem="cNY-kv-DOQ" firstAttribute="top" secondItem="I6C-AX-CyH" secondAttribute="top" id="IbF-9S-pDk"/>
                     <constraint firstAttribute="trailing" secondItem="cub-Bb-Jpj" secondAttribute="trailing" constant="24" id="UTu-gA-SCa"/>
-                    <constraint firstItem="q6I-9x-rty" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="YFG-OB-Vcg"/>
                     <constraint firstItem="ojZ-Jh-Pf7" firstAttribute="leading" secondItem="I6C-AX-CyH" secondAttribute="leading" constant="24" id="aNg-Gb-KtC"/>
                     <constraint firstAttribute="bottom" secondItem="cNY-kv-DOQ" secondAttribute="bottom" id="b7U-oE-nah"/>
                     <constraint firstItem="cub-Bb-Jpj" firstAttribute="leading" secondItem="I6C-AX-CyH" secondAttribute="leading" constant="24" id="egE-9L-MMw"/>
-                    <constraint firstAttribute="trailing" secondItem="q6I-9x-rty" secondAttribute="trailing" constant="24" id="el7-tq-aXY"/>
                     <constraint firstAttribute="bottom" secondItem="cub-Bb-Jpj" secondAttribute="bottom" id="gnT-01-fFt"/>
                     <constraint firstItem="ojZ-Jh-Pf7" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="ieJ-72-PHu"/>
                     <constraint firstItem="cNY-kv-DOQ" firstAttribute="leading" secondItem="I6C-AX-CyH" secondAttribute="leading" id="lTA-mm-GME"/>
-                    <constraint firstAttribute="trailing" secondItem="ojZ-Jh-Pf7" secondAttribute="trailing" constant="60" id="nCU-Wh-8zN"/>
+                    <constraint firstAttribute="trailing" secondItem="ojZ-Jh-Pf7" secondAttribute="trailing" constant="24" id="nCU-Wh-8zN"/>
                     <constraint firstAttribute="trailing" secondItem="cNY-kv-DOQ" secondAttribute="trailing" id="tcs-bc-fCA"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="downloadImageView" destination="q6I-9x-rty" id="7zD-ft-bry"/>
                 <outlet property="languageLabel" destination="ojZ-Jh-Pf7" id="bAp-UL-eOs"/>
                 <outlet property="selectedView" destination="cNY-kv-DOQ" id="ItI-VF-3hf"/>
                 <outlet property="separatorLeftConstraint" destination="egE-9L-MMw" id="T1e-1G-esa"/>
@@ -74,7 +64,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="download_green" width="22" height="22"/>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
