@@ -45,8 +45,16 @@ struct LessonsView: View {
                     .padding([.leading, .trailing], leadingTrailingPadding)
                     .listRowInsets(EdgeInsets())
                     
-                    LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingTrailingPadding)
-                        .listRowInsets(EdgeInsets())
+                    ForEach(viewModel.lessons) { lesson in
+                        
+                        LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                            .contentShape(Rectangle())
+                            .padding([.top, .bottom], 8)
+                            .padding([.leading, .trailing], leadingTrailingPadding)
+                        
+                    }
+                    .listRowInsets(EdgeInsets())
                     
                 } refreshHandler: {
                     viewModel.refreshData()
