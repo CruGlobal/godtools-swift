@@ -34,7 +34,14 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      
+
+      - name: Cache Cocoapods
+        uses: actions/cache@v3
+        with:
+          path: ~/.cocoapods/repos
+          key: ${{ runner.os }}-cocoapods-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-cocoapods-
+
       - name: Cache Konan
         uses: actions/cache@v3
         with:
