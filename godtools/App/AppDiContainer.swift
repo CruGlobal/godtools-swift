@@ -20,7 +20,6 @@ class AppDiContainer {
 
     let userAuthentication: UserAuthenticationType
     let favoritedResourcesCache: FavoritedResourcesCache
-    let downloadedLanguagesCache: DownloadedLanguagesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
@@ -29,7 +28,6 @@ class AppDiContainer {
     let globalActivityServices: GlobalActivityServices
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let favoritingToolMessageCache: FavoritingToolMessageCache
     let emailSignUpService: EmailSignUpService
     let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
@@ -48,15 +46,13 @@ class AppDiContainer {
         userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-                                        
+        
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-                                                           
+        
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
         
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
-              
-        downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
-                                
+                                              
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
             resourcesCache: resourcesCache
@@ -89,9 +85,7 @@ class AppDiContainer {
         followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-        
-        favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-        
+                
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
     }
     

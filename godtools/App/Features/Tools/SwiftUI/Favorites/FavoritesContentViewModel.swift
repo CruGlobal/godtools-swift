@@ -29,6 +29,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
@@ -52,6 +53,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )
@@ -59,14 +61,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var lessonsLoading: Bool = false
-    @Published var toolsLoading: Bool = false
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -78,6 +78,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
@@ -157,12 +158,9 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
     }
 }
 
-// MARK: - FeaturedLessonCardsViewModelDelegate
+// MARK: - LessonCardDelegate
 
-extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
-    func lessonsAreLoading(_ isLoading: Bool) {
-        lessonsLoading = isLoading
-    }
+extension FavoritesContentViewModel: LessonCardDelegate {
     
     func lessonCardTapped(resource: ResourceModel) {
         flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(resource: resource))
@@ -173,9 +171,6 @@ extension FavoritesContentViewModel: FeaturedLessonCardsViewModelDelegate {
 // MARK: - FavoriteToolsViewModelDelegate
 
 extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
-    func toolsAreLoading(_ isLoading: Bool) {
-        toolsLoading = isLoading
-    }
     
     func viewAllFavoriteToolsButtonTapped() {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)

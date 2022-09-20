@@ -10,20 +10,26 @@ import Combine
 
 class GetAllToolsUseCase {
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
-    init(getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
-    func getAllToolsPublisher(sorted: Bool) -> AnyPublisher<[ToolDomainModel], Never> {
+    func getToolsForCategoryPublisher(category: CurrentValueSubject<String?, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return resourcesRepository.getResourcesChanged()
-            .flatMap { _ -> AnyPublisher<[ToolDomainModel], Never> in
+        return Publishers.CombineLatest3(
+            resourcesRepository.getResourcesChanged(),
+            category,
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        )
+            .flatMap { (_, categoryId, _) -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let tools = self.getAllTools(sorted: sorted)
+                let tools = self.getAllTools(sorted: true, with: categoryId)
                 
                 return Just(tools)
                     .eraseToAnyPublisher()
@@ -31,22 +37,9 @@ class GetAllToolsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getAllTools(sorted: Bool) -> [ToolDomainModel] {
+    private func getAllTools(sorted: Bool, with category: String? = nil) -> [ToolDomainModel] {
         
-        let metaTools = resourcesRepository.getResources(with: .metaTool)
-        let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
-        let defaultVariants = resourcesRepository.getResources(ids: defaultVariantIds)
-        
-        let resourcesExcludingVariants = resourcesRepository.getResources(with: ["", nil])
-        
-        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
-   
-        var allTools = combinedResourcesAndDefaultVariants.filter { $0.isToolType && $0.isHidden == false }
-        
-        if sorted {
-            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
-        }
-        
-        return allTools.map { getToolUseCase.getTool(resource: $0) }
+        return resourcesRepository.getAllTools(sorted: sorted, with: category)
+            .map { getToolUseCase.getTool(resource: $0) }
     }
 }

@@ -58,9 +58,9 @@ struct ToolCategoriesView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = ToolCategoriesViewModel(
-            dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
             delegate: nil
         )
         

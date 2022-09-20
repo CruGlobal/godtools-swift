@@ -12,15 +12,15 @@ import RealmSwift
 
 class GetShortcutItemsUseCase {
     
-    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
+    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let resourcesRepository: ResourcesRepository
     private let maxShortcutItems: Int = 4
     
-    init(getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository) {
      
-        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
+        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.resourcesRepository = resourcesRepository
@@ -33,7 +33,7 @@ class GetShortcutItemsUseCase {
         let primaryLanguageCode: String = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier ?? "en"
         let parallelLanguageCode: String? = getSettingsParallelLanguageUseCase.getParallelLanguage()?.localeIdentifier
         
-        let favoritedResources: [FavoritedResourceModel] = getAllFavoritedToolsUseCase.getAllFavoritedTools()
+        let favoritedResources: [FavoritedResourceModel] = getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModels()
         
         for favoritedResource in favoritedResources {
                         

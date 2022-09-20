@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import youtube_ios_player_helper
+import YouTubeiOSPlayerHelper
 
 class MobileContentEmbeddedVideoView: MobileContentView {
     private let viewModel: MobileContentEmbeddedVideoViewModelType

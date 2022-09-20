@@ -12,7 +12,7 @@ import Combine
 
 class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
     
-    private let getLanguagesListUseCase: GetLanguagesListUseCase
+    private let getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase
     private let localizationServices: LocalizationServices
@@ -25,10 +25,10 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
     let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int>
     
-    required init(flowDelegate: FlowDelegate, getLanguagesListUseCase: GetLanguagesListUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices) {
+    required init(flowDelegate: FlowDelegate, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
-        self.getLanguagesListUseCase = getLanguagesListUseCase
+        self.getSettingsLanguagesUseCase = getSettingsLanguagesUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.userDidSetSettingsParallelLanguageUseCase = userDidSetSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
@@ -36,7 +36,7 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
         selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
         numberOfLanguages = ObservableValue(value: 0)
         
-        Publishers.CombineLatest(getLanguagesListUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher())
+        Publishers.CombineLatest(getSettingsLanguagesUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher())
             .receiveOnMain()
             .sink { [weak self] (languages, settingsPrimaryLanguage) in
                 self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage)
@@ -59,7 +59,6 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
         
         return ChooseLanguageCellViewModel(
             language: language,
-            languageIsDownloaded: true, //hides downloadImageView for all cells in this list
             hidesSelected: true,
             selectorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),
             separatorColor: UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0),

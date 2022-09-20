@@ -17,7 +17,6 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     private let fontSize: CGFloat = 18
-    private let defaultFontWeight: UIFont.Weight = .regular
         
     let textColor: UIColor
     
@@ -95,10 +94,10 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         return textModel.endImage == nil
     }
     
-    private func getTextStylesArray() -> [Text.Style] {
-        return Array(textModel.textStyles)
+    var shouldUnderlineText: Bool {
+        return textModel.textStyles.contains(.underline)
     }
-    
+        
     private func getLanguageTextAlign() -> Text.Align {
         
         if language.languageDirection == .rightToLeft {
@@ -129,33 +128,14 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
     }
     
     private func getFontWeight() -> UIFont.Weight {
+             
+        let textStyles: Set<Text.Style> = textModel.textStyles
         
-        let fontWeight: UIFont.Weight
-        
-        let textStyles: [Text.Style] = getTextStylesArray()
-        
-        // TODO: Need to add support for multiple textStyles. ~Levi
-        if let textStyle = textStyles.first {
-            
-            if textStyle == .bold {
-                fontWeight = .bold
-            }
-            else if textStyle == .italic {
-                fontWeight = defaultFontWeight
-            }
-            else if textStyle == .underline {
-                fontWeight = defaultFontWeight
-            }
-            else {
-                fontWeight = defaultFontWeight
-            }
-        }
-        else {
-            
-            fontWeight = defaultFontWeight
+        if textStyles.contains(.bold) {
+            return .bold
         }
         
-        return fontWeight
+        return .regular
     }
     
     private func getFontScale() -> CGFloat {

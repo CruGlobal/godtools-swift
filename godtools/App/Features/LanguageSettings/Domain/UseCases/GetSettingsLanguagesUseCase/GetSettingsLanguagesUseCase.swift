@@ -1,15 +1,15 @@
 //
-//  GetLanguagesListUseCase.swift
+//  GetSettingsLanguagesUseCase.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/31/22.
+//  Created by Levi Eggert on 9/8/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetLanguagesListUseCase {
+class GetSettingsLanguagesUseCase {
     
     private let languagesRepository: LanguagesRepository
     private let getLanguageUseCase: GetLanguageUseCase

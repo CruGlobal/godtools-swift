@@ -231,7 +231,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            _ = navigationController.popViewController(animated: true)
+            navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
                         
             lessonFlow = nil
             
@@ -480,21 +480,24 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
+    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
+            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
@@ -511,7 +514,7 @@ extension AppFlow {
     
     private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let toolsMenu: ToolsMenuView = getToolsMenu(startingPage: startingPage)
+        let toolsMenu: ToolsMenuView = getNewToolsMenu(startingPage: startingPage)
         
         navigationController.setViewControllers([toolsMenu], animated: false)
         
@@ -577,8 +580,6 @@ extension AppFlow {
         
         case .tool(let toolDeepLink):
                
-            // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
-
             navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
@@ -673,6 +674,7 @@ extension AppFlow {
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: self,
@@ -818,7 +820,7 @@ extension AppFlow {
         
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
-            getLanguagesListUseCase: appDiContainer.domainLayer.getLanguagesListUseCase(),
+            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()

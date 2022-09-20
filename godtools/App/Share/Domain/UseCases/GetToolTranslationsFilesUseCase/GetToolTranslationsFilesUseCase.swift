@@ -11,9 +11,7 @@ import Combine
 import GodToolsToolParser
 
 class GetToolTranslationsFilesUseCase {
-    
-    typealias TranslationId = String
-    
+        
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
@@ -101,7 +99,7 @@ class GetToolTranslationsFilesUseCase {
                         return nil
                     }
                     
-                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language)
+                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language, translation: $0.translation)
                 })
                 
                 let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)

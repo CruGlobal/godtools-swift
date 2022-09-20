@@ -133,11 +133,17 @@ class RealmResourcesCacheSync {
                 // add latest translations and add languages to resource
                 for ( _, realmResource) in realmResourcesDictionary {
                     for translationId in realmResource.latestTranslationIds {
-                        if let realmTranslation = realmTranslationsDictionary[translationId] {
+                        
+                        guard let realmTranslation = realmTranslationsDictionary[translationId] else {
+                            continue
+                        }
+                        
+                        if !realmResource.latestTranslations.contains(realmTranslation) {
                             realmResource.latestTranslations.append(realmTranslation)
-                            if let realmLanguage = realmTranslation.language {
-                                realmResource.languages.append(realmLanguage)
-                            }
+                        }
+                        
+                        if let realmLanguage = realmTranslation.language, !realmResource.languages.contains(realmLanguage) {
+                            realmResource.languages.append(realmLanguage)
                         }
                     }
                 }
@@ -150,8 +156,7 @@ class RealmResourcesCacheSync {
                 let attachmentsToRemove: [RealmAttachment] = Array(realm.objects(RealmAttachment.self).filter("id IN %@", attachmentIdsRemoved))
                 
                 realmObjectsToRemove.append(contentsOf: resourcesToRemove)
-                // TODO: Will complete in GT-1413. ~Levi
-                //realmObjectsToRemove.append(contentsOf: translationsToRemove)
+                realmObjectsToRemove.append(contentsOf: translationsToRemove)
                 realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
 
                 do {

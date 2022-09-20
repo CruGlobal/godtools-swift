@@ -11,26 +11,43 @@ import Combine
 
 class GetAllFavoritedToolsUseCase {
     
-    private let favoritedResourcesRepository: FavoritedResourcesRepository
+    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getToolUseCase: GetToolUseCase
+    private let resourcesRepository: ResourcesRepository
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
         
-        self.favoritedResourcesRepository = favoritedResourcesRepository
+        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getToolUseCase = getToolUseCase
+        self.resourcesRepository = resourcesRepository
     }
     
-    func getAllFavoritedToolsPublisher() -> AnyPublisher<[FavoritedResourceModel], Never> {
+    func getAllFavoritedToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return favoritedResourcesRepository.getFavoritedResourcesChanged()
-            .flatMap({ void -> AnyPublisher<[FavoritedResourceModel], Never> in
+        return Publishers.CombineLatest(
+            getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModelsPublisher(),
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            )
+            .flatMap { favoritedResourceModels, _ -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                return Just(self.getAllFavoritedTools())
+                let favoritedTools = self.getFavoritedTools(from: favoritedResourceModels)
+                
+                return Just(favoritedTools)
                     .eraseToAnyPublisher()
-            })
+            }
             .eraseToAnyPublisher()
     }
     
-    func getAllFavoritedTools() -> [FavoritedResourceModel] {
+    private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel]) -> [ToolDomainModel] {
+        
+        let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
+        
+        let resources = favoritedResourceIds.compactMap { id in
+            return resourcesRepository.getResource(id: id)
+        }
                 
-        return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+        return resources.map { getToolUseCase.getTool(resource: $0) }
     }
 }

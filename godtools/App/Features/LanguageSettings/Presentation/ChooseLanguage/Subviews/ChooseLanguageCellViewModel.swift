@@ -9,12 +9,11 @@
 import Foundation
 import UIKit
 
-class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
+class ChooseLanguageCellViewModel {
     
     private let language: LanguageDomainModel
     
     let languageName: String
-    let languageIsDownloaded: Bool
     let hidesSelected: Bool
     let hidesSeparator: Bool
     let selectorColor: UIColor?
@@ -23,11 +22,10 @@ class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     let separatorRightInset: Float
     let languageLabelFontSize: Float?
     
-    required init(language: LanguageDomainModel, languageIsDownloaded: Bool, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?, separatorLeftInset: Float?, separatorRightInset: Float?, languageLabelFontSize: Float?) {
+    required init(language: LanguageDomainModel, hidesSelected: Bool, selectorColor: UIColor?, separatorColor: UIColor?, separatorLeftInset: Float?, separatorRightInset: Float?, languageLabelFontSize: Float?) {
         
         self.language = language
         self.languageName = language.translatedName
-        self.languageIsDownloaded = languageIsDownloaded
         self.hidesSelected = hidesSelected
         self.hidesSeparator = !hidesSelected
         self.selectorColor = selectorColor

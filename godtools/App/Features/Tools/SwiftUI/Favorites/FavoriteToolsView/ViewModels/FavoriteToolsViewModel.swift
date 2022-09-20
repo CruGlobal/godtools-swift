@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-protocol FavoriteToolsViewModelDelegate: ToolCardViewModelDelegate, BaseFavoriteToolsViewModelDelegate {
+protocol FavoriteToolsViewModelDelegate: ToolCardViewModelDelegate {
     func viewAllFavoriteToolsButtonTapped()
     func goToToolsButtonTapped()
 }
@@ -22,9 +22,7 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Properties
     
-    private var favoriteToolsViewModelDelegate: FavoriteToolsViewModelDelegate? {
-        return delegate as? FavoriteToolsViewModelDelegate
-    }
+    private weak var delegate: FavoriteToolsViewModelDelegate?
     
     // MARK: - Published
     
@@ -35,22 +33,23 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
         
-        super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, delegate: delegate, toolCardViewModelDelegate: delegate)
+        self.delegate = delegate
+        
+        super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: delegate)
         
         maxNumberCardsToShow = maxNumberCardsShown
     }
     
-    override func setText() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
+    override func setText(for languageBundle: Bundle) {
         
         viewAllButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.viewAll") + " >"
         noFavoriteToolsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.title")
         noFavoriteToolsDescription = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.description")
         noFavoriteToolsButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.button")
         
-        super.setText()
+        super.setText(for: languageBundle)
     }
 }
 
@@ -58,10 +57,10 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
 
 extension FavoriteToolsViewModel {
     func viewAllButtonTapped() {
-        favoriteToolsViewModelDelegate?.viewAllFavoriteToolsButtonTapped()
+        delegate?.viewAllFavoriteToolsButtonTapped()
     }
     
     func goToToolsButtonTapped() {
-        favoriteToolsViewModelDelegate?.goToToolsButtonTapped()
+        delegate?.goToToolsButtonTapped()
     }
 }

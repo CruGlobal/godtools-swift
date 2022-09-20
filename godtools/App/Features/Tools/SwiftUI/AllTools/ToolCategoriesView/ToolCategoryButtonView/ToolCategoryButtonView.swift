@@ -12,7 +12,7 @@ struct ToolCategoryButtonView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: BaseToolCategoryButtonViewModel
+    @ObservedObject var viewModel: ToolCategoryButtonViewModel
     
     // MARK: - Body
     
@@ -38,7 +38,10 @@ struct ToolCategoryButtonView: View {
 struct ToolCategoryButtonView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let viewModel = BaseToolCategoryButtonViewModel(categoryText: "Conversation Starter", buttonState: .greyedOut)
+        let viewModel = ToolCategoryButtonViewModel(
+            category: ToolCategoryDomainModel(type: .category(id: "1"), translatedName: "Conversation Starter"),
+            selectedCategoryId: "1"
+        )
         
         ToolCategoryButtonView(viewModel: viewModel)
             .padding()

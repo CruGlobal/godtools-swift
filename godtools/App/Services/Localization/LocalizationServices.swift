@@ -102,8 +102,13 @@ class LocalizationServices {
         return key
     }
     
-    func toolCategoryStringForBundle(bundle: Bundle, attrCategory: String) -> String {
+    func toolCategoryStringForBundle(bundle: Bundle, category: String) -> String {
         
-        return stringForBundle(bundle: bundle, key: "tool_category_\(attrCategory)")
+        return stringForBundle(bundle: bundle, key: "tool_category_\(category)")
+    }
+    
+    func toolCategoryStringForLocale(localeIdentifier: String?, category: String) -> String {
+        
+        return stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "tool_category_\(category)")
     }
 }

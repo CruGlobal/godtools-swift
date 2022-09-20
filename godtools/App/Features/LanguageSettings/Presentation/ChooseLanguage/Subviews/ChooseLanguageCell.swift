@@ -13,11 +13,10 @@ class ChooseLanguageCell: UITableViewCell {
     static let nibName: String = "ChooseLanguageCell"
     static let reuseIdentifier: String = "ChooseLanguageCellReuseIdentifier"
     
-    private var viewModel: ChooseLanguageCellViewModelType?
+    private var viewModel: ChooseLanguageCellViewModel?
         
     @IBOutlet weak private var selectedView: UIView!
     @IBOutlet private weak var languageLabel: UILabel!
-    @IBOutlet weak private var downloadImageView: UIImageView!
     @IBOutlet weak private var separatorLine: UIView!
     @IBOutlet weak private var separatorLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak private var separatorRightConstraint: NSLayoutConstraint!
@@ -31,7 +30,7 @@ class ChooseLanguageCell: UITableViewCell {
         viewModel = nil
     }
     
-    func configure(viewModel: ChooseLanguageCellViewModelType) {
+    func configure(viewModel: ChooseLanguageCellViewModel) {
         
         self.viewModel = viewModel
         
@@ -42,7 +41,6 @@ class ChooseLanguageCell: UITableViewCell {
             languageLabel.font = UIFont(name: languageLabel.font.fontName, size: CGFloat(fontSize))
         }
         
-        downloadImageView.isHidden = viewModel.languageIsDownloaded
         selectedView.isHidden = viewModel.hidesSelected
         separatorLine.isHidden = viewModel.hidesSeparator
         

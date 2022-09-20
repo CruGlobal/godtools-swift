@@ -20,9 +20,12 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
     
+    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
+    private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
         
@@ -40,9 +43,9 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     }()
     private(set) lazy var categoriesViewModel: ToolCategoriesViewModel = {
         ToolCategoriesViewModel(
-            dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getToolCategoriesUseCase: getToolCategoriesUseCase,
             delegate: self
         )
     }()
@@ -51,6 +54,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
             dataDownloader: dataDownloader,
             languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
+            getAllToolsUseCase: getAllToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
@@ -65,7 +69,7 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
@@ -74,9 +78,12 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.analytics = analytics
         self.hideFavoritingToolBanner = favoritingToolMessageCache.favoritingToolMessageDisabled
         
+        self.getAllToolsUseCase = getAllToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
+        self.getToolCategoriesUseCase = getToolCategoriesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
@@ -126,8 +133,8 @@ extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
 
 extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
     
-    func filterToolsWithCategory(_ attrCategory: String?) {
-        toolCardsViewModel.filterTools(with: attrCategory)
+    func filterToolsWithCategory(_ categoryId: String?) {
+        toolCardsViewModel.filterTools(with: categoryId)
     }
 }
 
@@ -182,6 +189,8 @@ extension AllToolsContentViewModel {
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.viewedToolsAction, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: nil))
     }
             
     private func trackToolTappedAnalytics(for tool: ResourceModel, isSpotlight: Bool) {
