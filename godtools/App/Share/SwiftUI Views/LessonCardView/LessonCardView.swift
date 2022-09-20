@@ -68,13 +68,14 @@ struct LessonCardView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let lesson = LessonDomainModel(abbreviation: "five", bannerImageId: "1", dataModelId: "9", description: "five reasons", languageIds: [], name: "Five Reasons to be Courageous")
         
         let viewModel = LessonCardViewModel(
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getAllVisibleLessonsSorted().first!,
+            lesson: lesson,
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             delegate: nil
         )
         
