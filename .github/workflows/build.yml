@@ -34,7 +34,14 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      
+
+      - name: Cache Cocoapods
+        uses: actions/cache@v3
+        with:
+          path: ~/.cocoapods/repos
+          key: ${{ runner.os }}-cocoapods-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-cocoapods-
+
       - name: Cache Konan
         uses: actions/cache@v3
         with:
@@ -78,3 +85,10 @@ jobs:
       - name: Push Commits To Remote
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: git push
+
+      - name: Archive XCode Logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: xcode-logs
+          path: "/Users/runner/Library/Developer/Xcode/DerivedData/godtools-*/**"

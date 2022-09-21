@@ -265,20 +265,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            var toolsMenuInNavigationStack: ToolsMenuView?
-            
-            for viewController in navigationController.viewControllers {
-                if let toolsMenu = viewController as? ToolsMenuView {
-                    toolsMenuInNavigationStack = toolsMenu
-                    break
-                }
-            }
-            
             if state == .userClosedTractToLessonsList {
                 
                 navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true)
             }
-            else if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+            else if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
                
                 navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
             }
@@ -290,9 +281,20 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             tractFlow = nil
             
         case .chooseYourOwnAdventureFlowCompleted(let state):
+           
             switch state {
+            
             case .userClosedTool:
-                _ = navigationController.popViewController(animated: true)
+                
+                if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
+                   
+                    navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+                }
+                else {
+                    
+                    _ = navigationController.popViewController(animated: true)
+                }
+                
                 chooseYourOwnAdventureFlow = nil
             }
             
@@ -480,6 +482,17 @@ extension AppFlow {
 
 extension AppFlow {
     
+    private func getToolsMenuInNavigationStack() -> ToolsMenuView? {
+                
+        for viewController in navigationController.viewControllers {
+            if let toolsMenu = viewController as? ToolsMenuView {
+                return toolsMenu
+            }
+        }
+        
+        return nil
+    }
+    
     private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
@@ -489,12 +502,15 @@ extension AppFlow {
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
             getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
@@ -669,11 +685,11 @@ extension AppFlow {
     private func navigateToAllToolFavorites() {
         let viewModel = AllFavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),

@@ -1,5 +1,5 @@
 //
-//  GetLanguageAvailablityStringUseCase.swift
+//  GetLanguageAvailablityUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/18/22.
@@ -8,27 +8,25 @@
 
 import Foundation
 
-class GetLanguageAvailabilityStringUseCase {
+class GetLanguageAvailabilityUseCase {
     
     let localizationServices: LocalizationServices
-    let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     
-    init(localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
+    init(localizationServices: LocalizationServices) {
         self.localizationServices = localizationServices
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
     }
     
-    func getLanguageAvailability(for resource: LanguageSupportable, language: LanguageModel?) -> (isAvailable: Bool, string: String) {
+    func getLanguageAvailability(for resource: LanguageSupportable, language: LanguageDomainModel?) -> LanguageAvailabilityDomainModel {
         guard let language = language else {
-            return (false, "")
+            return LanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
         }
         
-        let translatedLanguageName = getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
+        let translatedLanguageName = language.translatedName
         
         if resource.supportsLanguage(languageId: language.id) {
             
             let string = translatedLanguageName + " ✓"
-            return (true, string)
+            return LanguageAvailabilityDomainModel(availabilityString: string, isAvailable: true)
             
         } else {
             
@@ -38,7 +36,7 @@ class GetLanguageAvailabilityStringUseCase {
             )
             let stringWithX = notAvailableString + " ✕"
             
-            return (false, stringWithX)
+            return LanguageAvailabilityDomainModel(availabilityString: stringWithX, isAvailable: false)
         }
     }
 }

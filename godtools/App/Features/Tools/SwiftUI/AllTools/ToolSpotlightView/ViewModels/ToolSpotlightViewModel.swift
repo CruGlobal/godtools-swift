@@ -22,7 +22,8 @@ class ToolSpotlightViewModel: ToolCardProvider {
     private let localizationServices: LocalizationServices
     
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
@@ -37,13 +38,14 @@ class ToolSpotlightViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolSpotlightViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolSpotlightViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         
@@ -65,10 +67,10 @@ class ToolSpotlightViewModel: ToolCardProvider {
         return ToolCardViewModel(
             tool: tool,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: self
         )

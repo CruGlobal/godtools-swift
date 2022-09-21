@@ -30,9 +30,9 @@ class GetAllFavoritedToolsUseCase {
             getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModelsPublisher(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             )
-            .flatMap { favoritedResourceModels, _ -> AnyPublisher<[ToolDomainModel], Never> in
+            .flatMap { favoritedResourceModels, primaryLanguage -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let favoritedTools = self.getFavoritedTools(from: favoritedResourceModels)
+                let favoritedTools = self.getFavoritedTools(from: favoritedResourceModels, with: primaryLanguage)
                 
                 return Just(favoritedTools)
                     .eraseToAnyPublisher()
@@ -40,14 +40,49 @@ class GetAllFavoritedToolsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel]) -> [ToolDomainModel] {
+    private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel], with primaryLanguage: LanguageDomainModel?) -> [ToolDomainModel] {
         
         let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
-        
-        let resources = favoritedResourceIds.compactMap { id in
-            return resourcesRepository.getResource(id: id)
-        }
                 
-        return resources.map { getToolUseCase.getTool(resource: $0) }
+        let favoritedResources = favoritedResourceIds
+            .compactMap { id in
+                return resourcesRepository.getResource(id: id)
+            }
+        
+        guard let primaryLanguageId = primaryLanguage?.id else {
+            return favoritedResources.map { getToolUseCase.getTool(resource: $0) }
+        }
+        
+        let sortedTools = favoritedResources.enumerated().sorted { resourceWithOrderNumber1, resourceWithOrderNumber2 in
+            
+            func resourceHasTranslation(_ resource: ResourceModel) -> Bool {
+                return resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
+            }
+            
+            func isInOriginalOrder() -> Bool {
+                resourceWithOrderNumber1.offset < resourceWithOrderNumber2.offset
+            }
+            
+            if resourceHasTranslation(resourceWithOrderNumber1.element) {
+                
+                if resourceHasTranslation(resourceWithOrderNumber2.element) {
+                    return isInOriginalOrder()
+                    
+                } else {
+                    return true
+                }
+                
+            } else if resourceHasTranslation(resourceWithOrderNumber2.element) {
+                
+                return false
+                
+            } else {
+                return isInOriginalOrder()
+            }
+        }
+            .map { getToolUseCase.getTool(resource: $0.element) }
+        
+        return sortedTools
+        
     }
 }

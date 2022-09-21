@@ -31,6 +31,8 @@ class GetToolTranslationsFilesUseCase {
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
         
+        var translationsToDownload: [TranslationModel] = Array()
+        
         switch filter {
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
@@ -61,6 +63,8 @@ class GetToolTranslationsFilesUseCase {
                    
                 let translations: [TranslationModel] = result.translations
                 
+                translationsToDownload = result.translations
+                
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                         
@@ -69,6 +73,22 @@ class GetToolTranslationsFilesUseCase {
                         return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                             .eraseToAnyPublisher()
                     })
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                
+                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
+                
+                for translation in translationsToDownload {
+                    
+                    guard let translationManifest = downloadedTranslations.first(where: {$0.translation.id == translation.id}) else {
+                        continue
+                    }
+                    
+                    maintainTranslationDownloadOrder.append(translationManifest)
+                }
+                
+                return Just(maintainTranslationDownloadOrder).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main) // NOTE: Need to switch to main queue and parse manifests again because Manifests can't be passed across threads at this time. ~Levi
