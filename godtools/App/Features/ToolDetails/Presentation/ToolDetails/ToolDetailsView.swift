@@ -49,6 +49,7 @@ struct ToolDetailsView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
         .background(Color(.sRGB, red: 245 / 255, green: 245 / 255, blue: 245 / 255, opacity: 1))
         .onAppear {
             viewModel.pageViewed()
