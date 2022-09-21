@@ -93,6 +93,21 @@ extension TranslationsRepository {
         
         return Publishers.MergeMany(requests)
             .collect()
+            .map({ downloadedTranslationManifestFileDataModels in
+                
+                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
+                
+                for translation in translations {
+                    
+                    guard let translationManifest = downloadedTranslationManifestFileDataModels.first(where: {$0.translation.id == translation.id}) else {
+                        continue
+                    }
+                    
+                    maintainTranslationDownloadOrder.append(translationManifest)
+                }
+                
+                return maintainTranslationDownloadOrder
+            })
             .eraseToAnyPublisher()
     }
     

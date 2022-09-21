@@ -1,18 +1,18 @@
 //
-//  FeaturedLessonCardsView.swift
+//  LessonCardsView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 7/13/22.
+//  Created by Rachael Skeath on 6/28/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct FeaturedLessonCardsView: View {
+struct LessonCardsView: View {
     
     // MARK: - Properties
     
-    @ObservedObject var viewModel: FeaturedLessonCardsViewModel
+    @ObservedObject var viewModel: LessonCardProvider
     let width: CGFloat
     let leadingPadding: CGFloat
     
@@ -20,27 +20,19 @@ struct FeaturedLessonCardsView: View {
     
     var body: some View {
         
-        Group {
+        ForEach(viewModel.lessons) { lesson in
             
-            Text(viewModel.sectionTitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.leading, leadingPadding)
+            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
+                .listRowInsets(EdgeInsets())
+                .contentShape(Rectangle())
+                .padding([.top, .bottom], 8)
+                .padding([.leading, .trailing], leadingPadding)
             
-            ForEach(viewModel.lessons) { lesson in
-                
-                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
-                    .listRowInsets(EdgeInsets())
-                    .contentShape(Rectangle())
-                    .padding([.top, .bottom], 8)
-                    .padding([.leading, .trailing], leadingPadding)
-                
-            }
         }
     }
 }
 
-struct FeaturedLessonCardsView_Previews: PreviewProvider {
+struct LessonCardsView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
@@ -55,6 +47,6 @@ struct FeaturedLessonCardsView_Previews: PreviewProvider {
             delegate: nil
         )
         
-        FeaturedLessonCardsView(viewModel: viewModel, width: 350, leadingPadding: 20)
+        LessonCardsView(viewModel: viewModel, width: 375, leadingPadding: 0)
     }
 }

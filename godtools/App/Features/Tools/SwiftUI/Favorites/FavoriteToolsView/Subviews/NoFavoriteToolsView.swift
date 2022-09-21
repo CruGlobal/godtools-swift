@@ -52,7 +52,6 @@ struct NoFavoriteToolsView_Previews: PreviewProvider {
 
         let viewModel = FavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
