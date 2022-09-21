@@ -13,23 +13,19 @@ import SwiftUI
 struct AnimatedSwiftUIView: UIViewRepresentable {
     
     private let viewModel: AnimatedViewModelType
-    private let frameSize: CGSize
     private let contentMode: UIView.ContentMode
     
-    init(viewModel: AnimatedViewModelType, frameSize: CGSize, contentMode: UIView.ContentMode) {
+    init(viewModel: AnimatedViewModelType, contentMode: UIView.ContentMode) {
         
         self.viewModel = viewModel
-        self.frameSize = frameSize
         self.contentMode = contentMode
     }
     
-    func makeUIView(context: Context) -> AnimationView {
+    func makeUIView(context: Context) -> UIView {
                 
-        let animationView: AnimationView = AnimationView()
+        let view: UIView = UIView(frame: .zero)
         
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        _ = animationView.addWidthConstraint(constant: frameSize.width)
-        _ = animationView.addHeightConstraint(constant: frameSize.height)
+        let animationView: AnimationView = AnimationView()
         
         animationView.animation = viewModel.animationData
         animationView.loopMode = viewModel.loop ? .loop : .playOnce
@@ -42,10 +38,18 @@ struct AnimatedSwiftUIView: UIViewRepresentable {
             animationView.stop()
         }
         
-        return animationView
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(animationView)
+                
+        NSLayoutConstraint.activate([
+            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
+        
+        return view
     }
     
-    func updateUIView(_ uiView: AnimationView, context: Context) {
+    func updateUIView(_ uiView: UIView, context: Context) {
         
     }
 }
