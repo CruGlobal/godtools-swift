@@ -44,6 +44,10 @@ class ResourcesRepository {
         return cache.getAllTools(sorted: sorted, with: category)
     }
     
+    func getFeaturedLessons() -> [ResourceModel] {
+        return cache.getFeaturedLessons()
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         return cache.getResource(id: id)
     }
