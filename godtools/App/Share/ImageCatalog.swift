@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum ImageCatalog: String {
     
@@ -51,6 +52,10 @@ enum ImageCatalog: String {
     case tutorialPeople = "tutorial_people"
     case unfavoritedCircle = "unfavorited_circle"
     case unfavoriteIcon = "unfavorite_icon"
+    
+    var image: Image {
+        return Image(name)
+    }
     
     var uiImage: UIImage? {
         return UIImage(named: name)
