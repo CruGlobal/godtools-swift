@@ -124,7 +124,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
                 loadingImage.contentMode = .scaleAspectFit
                 loadingView.addSubview(loadingImage)
-                loadingImage.image = UIImage(named: "LaunchImage")
+                loadingImage.image = ImageCatalog.launchImage.uiImage
                 loadingView.backgroundColor = .white
                 window.addSubview(loadingView)
                 

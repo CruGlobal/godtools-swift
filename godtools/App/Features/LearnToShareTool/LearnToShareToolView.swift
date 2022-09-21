@@ -41,7 +41,7 @@ class LearnToShareToolView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .right,
-            image: UIImage(named: "nav_item_close"),
+            image: ImageCatalog.navClose.uiImage,
             color: nil,
             target: self,
             action: #selector(handleClose(barButtonItem:))

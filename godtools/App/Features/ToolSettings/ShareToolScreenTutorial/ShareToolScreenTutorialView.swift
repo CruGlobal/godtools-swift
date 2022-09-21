@@ -43,7 +43,7 @@ class ShareToolScreenTutorialView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .left,
-            image: UIImage(named: "nav_item_close"),
+            image: ImageCatalog.navClose.uiImage,
             color: nil,
             target: self,
             action: #selector(handleClose(barButtonItem:))

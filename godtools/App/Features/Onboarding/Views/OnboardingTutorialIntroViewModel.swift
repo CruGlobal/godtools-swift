@@ -27,9 +27,12 @@ class OnboardingTutorialIntroViewModel: OnboardingTutorialIntroViewModelType {
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
                 
-        logoImage = UIImage(named: "onboarding_welcome_logo")
+        logoImage = ImageCatalog.onboardingWelcomeLogo.uiImage
+        
         title = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title")
+        
         videoLinkLabel = localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
+        
         youtubeVideoId = "RvhZ_wuxAgE"
     }
     
