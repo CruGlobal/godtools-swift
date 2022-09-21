@@ -48,7 +48,7 @@ class VideoPlayerView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .right,
-            image: ImageCatalog.navClose.image,
+            image: ImageCatalog.navClose.uiImage,
             color: UIColor.white,
             target: self,
             action: #selector(handleClose)

@@ -52,8 +52,8 @@ enum ImageCatalog: String {
     case unfavoritedCircle = "unfavorited_circle"
     case unfavoriteIcon = "unfavorite_icon"
     
-    var image: UIImage? {
-        return UIImage(named: rawValue)
+    var uiImage: UIImage? {
+        return UIImage(named: name)
     }
     
     var name: String {
