@@ -38,9 +38,17 @@ GodTools
 
 
 #### Summary
-The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, an Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles(https://www.geeksforgeeks.org/solid-principle-in-programming-understand-with-real-life-examples/) .
+The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, an Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles.
 
 The purpose of this pattern is to create a clear separation of concerns and responsibilities.
+
+References:
+- Solid principles: 
+    - https://www.geeksforgeeks.org/solid-principle-in-programming-understand-with-real-life-examples/
+- Coordinator (Flow.swift): 
+    - https://khanlou.com/2015/01/the-coordinator/
+    - https://twittemb.github.io/posts/2017-11-08-RxFlow-Part1/
+    - https://twittemb.github.io/posts/2017-12-09-RxFlow-Part2/
 
 #### Presentation Layer
 
