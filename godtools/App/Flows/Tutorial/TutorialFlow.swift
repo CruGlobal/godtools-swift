@@ -9,9 +9,7 @@
 import UIKit
 
 class TutorialFlow: Flow {
-    
-    private let flowDiContainer: TutorialFlowDiContainer
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -26,7 +24,6 @@ class TutorialFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.flowDiContainer = TutorialFlowDiContainer(appDiContainer: appDiContainer)
         self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
              
         navigationController.modalPresentationStyle = .fullScreen
@@ -41,7 +38,7 @@ class TutorialFlow: Flow {
         
         let viewModel = TutorialViewModel(
             flowDelegate: self,
-            getTutorialUseCase: flowDiContainer.getTutorialUseCase(),
+            getTutorialUseCase: appDiContainer.domainLayer.getTutorialUseCase(),
             analytics: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )

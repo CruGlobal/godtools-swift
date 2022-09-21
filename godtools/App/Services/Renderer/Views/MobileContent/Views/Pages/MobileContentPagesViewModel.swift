@@ -12,12 +12,15 @@ import Combine
 
 class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     
+    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let startingPage: Int?
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private(set) var renderer: CurrentValueSubject<MobileContentRenderer, Never>
     private(set) var currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
@@ -33,11 +36,13 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(renderer: MobileContentRenderer, page: Int?, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
         self.startingPage = page
+        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -54,10 +59,100 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         }
         
         super.init()
+        
+        resourcesRepository.getResourcesChanged()
+            .receiveOnMain()
+            .sink { [weak self] _ in
+                self?.updateTranslationsIfNeeded()
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
 
+    }
+    
+    private func updateTranslationsIfNeeded() {
+        
+        var translationsNeededDownloading: [TranslationModel] = Array()
+                
+        for pageRenderer in renderer.value.pageRenderers {
+            
+            let resource: ResourceModel = pageRenderer.resource
+            let language: LanguageModel = pageRenderer.language
+            let currentTranslation: TranslationModel = pageRenderer.translation
+            
+            guard let latestTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+                continue
+            }
+            
+            guard latestTranslation.version > currentTranslation.version else {
+                continue
+            }
+            
+            translationsNeededDownloading.append(latestTranslation)
+        }
+        
+        guard !translationsNeededDownloading.isEmpty else {
+            return
+        }
+        
+        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, includeRelatedFiles: true)
+            .receiveOnMain()
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (manifestFileDataModels: [TranslationManifestFileDataModel]) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let currentRenderer: MobileContentRenderer = weakSelf.renderer.value
+                let currentPageRenderer: MobileContentPageRenderer = weakSelf.currentPageRenderer.value
+                
+                var languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+                                
+                for pageRenderer in currentRenderer.pageRenderers {
+                    
+                    let resource: ResourceModel = pageRenderer.resource
+                    let language: LanguageModel = pageRenderer.language
+                    let currentTranslation: TranslationModel = pageRenderer.translation
+                    
+                    let updatedManifest: Manifest
+                    let updatedTranslation: TranslationModel
+                    
+                    if let latestTranslation = self?.resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
+                        
+                        updatedManifest = manifestFileDataModel.manifest
+                        updatedTranslation = manifestFileDataModel.translation
+                    }
+                    else {
+                        
+                        updatedManifest = pageRenderer.manifest
+                        updatedTranslation = pageRenderer.translation
+                    }
+                    
+                    let languageTranslationManifest = MobileContentRendererLanguageTranslationManifest(
+                        manifest: updatedManifest,
+                        language: pageRenderer.language,
+                        translation: updatedTranslation
+                    )
+                    
+                    languageTranslationManifests.append(languageTranslationManifest)
+                }
+                
+                let toolTranslations = ToolTranslationsDomainModel(
+                    tool: currentRenderer.resource,
+                    languageTranslationManifests: languageTranslationManifests
+                )
+                
+                let updatedRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+                
+                let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
+                
+                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex)
+            }
+            .store(in: &cancellables)
     }
     
     private func getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: MobileContentPageRenderer) -> [Page] {

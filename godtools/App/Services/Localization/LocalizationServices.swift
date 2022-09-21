@@ -9,29 +9,21 @@
 import Foundation
 
 class LocalizationServices {
-    
-    private static let EnglishLocalizableStringsFile: String = "Base"
-        
+            
     let bundleLoader: LocalizationBundleLoader = LocalizationBundleLoader()
                  
     required init() {
             
     }
-    
-    func stringForLanguageElseSystem(language: LanguageModel?, key: String) -> String {
+
+    func stringForLocaleElseSystem(localeIdentifier: String?, key: String) -> String {
         
-        if let language = language {
-            
-            return stringForLanguage(language: language, key: key)
+        guard let localeIdentifier = localeIdentifier, !localeIdentifier.isEmpty else {
+            return stringForMainBundle(key: key)
         }
-        
-        return stringForMainBundle(key: key)
-    }
-    
-    func stringForLanguage(language: LanguageModel, key: String) -> String {
-        
+
         let localeLocalizationBundle: LocaleLocalizationBundle = LocaleLocalizationBundle(
-            localeIdentifier: language.code,
+            localeIdentifier: localeIdentifier,
             bundleLoader: bundleLoader
         )
         
@@ -110,8 +102,13 @@ class LocalizationServices {
         return key
     }
     
-    func toolCategoryStringForBundle(bundle: Bundle, attrCategory: String) -> String {
+    func toolCategoryStringForBundle(bundle: Bundle, category: String) -> String {
         
-        return stringForBundle(bundle: bundle, key: "tool_category_\(attrCategory)")
+        return stringForBundle(bundle: bundle, key: "tool_category_\(category)")
+    }
+    
+    func toolCategoryStringForLocale(localeIdentifier: String?, category: String) -> String {
+        
+        return stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "tool_category_\(category)")
     }
 }

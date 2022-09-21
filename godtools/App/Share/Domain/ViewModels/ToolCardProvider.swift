@@ -16,14 +16,14 @@ class ToolCardProvider: NSObject, ObservableObject {
     
     // MARK: - Published
     
-    @Published var tools: [ResourceModel] = []
+    @Published var tools: [ToolDomainModel] = []
     
     // MARK: - Public
     
-    func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         assertionFailure("This method should be overriden in the subclass")
         return BaseToolCardViewModel()
     }
     
-    func toolTapped(resource: ResourceModel) {}
+    func toolTapped(_ tool: ToolDomainModel) {}
 }

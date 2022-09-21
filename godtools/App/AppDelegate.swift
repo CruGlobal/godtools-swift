@@ -30,14 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                        
-        appDiContainer.config.logConfiguration()
+            
+        let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
-        if appDiContainer.config.build == .analyticsLogging {
+        if appConfig.build == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
+        
+        if appConfig.build == .release {
+                        
+            GodToolsParserLogger.shared.start()
+        }
                 
         appDiContainer.appsFlyer.configure()
         
@@ -65,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillResignActive(_ application: UIApplication) {
         
-        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
+        reloadShortcutItems(application: application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -79,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         
+        reloadShortcutItems(application: application)
+        
         AppEvents.activateApp()
         
         appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
@@ -86,6 +93,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
     
+    }
+}
+
+// MARK: - Shortcut Items
+
+extension AppDelegate {
+    
+    private func reloadShortcutItems(application: UIApplication) {
+        
+        application.shortcutItems = appDiContainer.domainLayer.getShortcutItemsUseCase().getShortcutItems()
     }
 }
 

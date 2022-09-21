@@ -94,6 +94,8 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil,
             url: url
         )
                         

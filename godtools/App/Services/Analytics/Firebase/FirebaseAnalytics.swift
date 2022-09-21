@@ -10,9 +10,9 @@ import Foundation
 import FirebaseAnalytics
 import GoogleAnalytics
 
-class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
+class FirebaseAnalytics: NSObject {
     
-    private let config: ConfigType
+    private let config: AppConfig
     private let userAuthentication: UserAuthenticationType
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
@@ -20,7 +20,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: ConfigType, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(config: AppConfig, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
         self.config = config
         self.userAuthentication = userAuthentication
@@ -66,12 +66,14 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: contentLanguage,
+            secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsEventScreenView,
             data: nil
@@ -79,24 +81,28 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, actionName: String, data: [String : Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil, actionName: String, data: [String : Any]?) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: contentLanguage,
+            secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
             eventName: actionName,
             data: data
         )
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: String) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String, secondaryContentLanguage: String?, url: String) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: contentLanguage,
+            secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
             eventName: AnalyticsConstants.Values.exitLink,
             data: [
@@ -111,7 +117,7 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         }
     }
     
-    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
+    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
         
         assertFailureIfNotConfigured()
         
@@ -125,6 +131,8 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
                 screenName: screenName,
                 siteSection: siteSection,
                 siteSubSection: siteSubSection,
+                contentLanguage: contentLanguage,
+                secondaryContentLanguage: secondaryContentLanguage,
                 previousScreenName: previousScreenName
             )
             
@@ -188,14 +196,14 @@ class FirebaseAnalytics: NSObject, FirebaseAnalyticsType {
         )
     }
     
-    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?) -> [String: String] {
+    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String?) -> [String: String] {
         assertFailureIfNotConfigured()
         
         var properties: [String: String] = [:]
                 
         properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
-        properties[AnalyticsConstants.Keys.contentLanguage] = languageSettingsService.primaryLanguage.value?.code
-        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = languageSettingsService.parallelLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage ?? languageSettingsService.primaryLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage ?? languageSettingsService.parallelLanguage.value?.code
         properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
         properties[AnalyticsConstants.Keys.screenNameFirebase] = screenName
         properties[AnalyticsConstants.Keys.siteSection] = siteSection

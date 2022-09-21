@@ -8,34 +8,57 @@
 
 import Foundation
 
-class ToolCategoryButtonViewModel: BaseToolCategoryButtonViewModel {
+class ToolCategoryButtonViewModel: ObservableObject {
     
     // MARK: - Properties
     
-    let attrCategory: String
-    let localizationServices: LocalizationServices
-    let languageSettingsService: LanguageSettingsService
+    let category: ToolCategoryDomainModel
+
+    // MARK: - Published
+    
+    @Published var categoryText: String = ""
+    @Published var greyOutText: Bool = false
+    @Published var showBorder: Bool = false
         
     // MARK: - Init
     
-    init(attrCategory: String, selectedAttrCategory: String?, localizationServices: LocalizationServices, languageSettingsService: LanguageSettingsService) {
-        self.attrCategory = attrCategory
-        self.localizationServices = localizationServices
-        self.languageSettingsService = languageSettingsService
+    init(category: ToolCategoryDomainModel, selectedCategoryId: String?) {
+        self.category = category
         
-        let bundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        let translatedCategory = localizationServices.toolCategoryStringForBundle(bundle: bundle, attrCategory: attrCategory)
+        categoryText = category.translatedName
         
-        let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
-        
-        super.init(categoryText: translatedCategory, buttonState: buttonState)                
+        let buttonState = ToolCategoryButtonState(categoryId: category.id, selectedCategoryId: selectedCategoryId)
+        setButtonState(buttonState)
     }
 
-    // MARK: - Overrides
+}
+
+// MARK: - Public
+
+extension ToolCategoryButtonViewModel {
     
-    override func updateStateWithSelectedCategory(_ selectedAttrCategory: String?) {
-        let buttonState = ToolCategoryButtonState(category: attrCategory, selectedCategory: selectedAttrCategory)
+    func updateStateWithSelectedCategory(_ selectedCategoryId: String?) {
+        let buttonState = ToolCategoryButtonState(categoryId: category.id, selectedCategoryId: selectedCategoryId)
         
         setButtonState(buttonState)
+    }
+}
+
+// MARK: - Private
+
+extension ToolCategoryButtonViewModel {
+    
+    private func setButtonState(_ state: ToolCategoryButtonState) {
+        
+        switch state {
+            
+        case .selected:
+            showBorder = true
+            greyOutText = false
+            
+        case .greyedOut:
+            showBorder = false
+            greyOutText = true
+        }
     }
 }

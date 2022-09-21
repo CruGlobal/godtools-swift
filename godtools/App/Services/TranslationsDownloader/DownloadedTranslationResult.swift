@@ -11,12 +11,7 @@ import Foundation
 @available(*, deprecated) // This should be removed in place of TranslationsRepository following GT-1448. ~Levi
 class DownloadedTranslationResult {
     
-    let translationId: String
-    let downloadError: TranslationDownloaderError?
-    
-    required init(translationId: String, downloadError: TranslationDownloaderError?) {
+    required init() {
         
-        self.translationId = translationId
-        self.downloadError = downloadError
     }
 }

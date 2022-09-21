@@ -13,7 +13,7 @@ use_frameworks!
 def shared_pods
   
   # CruGlobal pods
-  pod 'GodtoolsToolParser', '0.6.1'
+  pod 'GodtoolsToolParser', '0.7.0-SNAPSHOT'
 end
 
 target 'godtools' do
@@ -24,7 +24,6 @@ target 'godtools' do
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive', '~> 2.4.0'
     pod 'Starscream', '~> 4.0.0'
-    pod 'youtube-ios-player-helper', '~> 1.0.3'
     
     shared_pods
 end

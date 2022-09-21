@@ -10,9 +10,9 @@ import Foundation
 
 class ExitLinkAnalytics {
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalytics) {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
@@ -22,6 +22,8 @@ class ExitLinkAnalytics {
             screenName: exitLink.screenName,
             siteSection: exitLink.siteSection,
             siteSubSection: exitLink.siteSubSection,
+            contentLanguage: exitLink.contentLanguage,
+            secondaryContentLanguage: exitLink.secondaryContentLanguage,
             url: exitLink.url
         )        
     }

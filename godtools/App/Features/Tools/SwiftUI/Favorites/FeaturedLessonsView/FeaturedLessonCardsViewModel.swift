@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol FeaturedLessonCardsViewModelDelegate: LessonCardDelegate {
-    func lessonsAreLoading(_ isLoading: Bool)
-}
-
 class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Properties
@@ -19,9 +15,12 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
-    private weak var delegate: FeaturedLessonCardsViewModelDelegate?
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    
+    private weak var delegate: LessonCardDelegate?
     
     // MARK: - Published
     
@@ -29,12 +28,15 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: FeaturedLessonCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        
         self.delegate = delegate
         
         super.init()
@@ -52,13 +54,13 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     
     // MARK: - Overrides
     
-    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
-            resource: lesson,
+            lesson: lesson,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             delegate: delegate
         )
     }
@@ -82,7 +84,6 @@ extension FeaturedLessonCardsViewModel {
         
         dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(!cachedResourcesAvailable)
                 if cachedResourcesAvailable {
                     self?.reloadLessonsFromCache()
                 }
@@ -91,7 +92,6 @@ extension FeaturedLessonCardsViewModel {
         
         dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-                self?.delegate?.lessonsAreLoading(false)
                 if error == nil {
                     self?.reloadLessonsFromCache()
                 }
@@ -107,5 +107,6 @@ extension FeaturedLessonCardsViewModel {
     
     private func reloadLessonsFromCache() {
         lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted(andFilteredBy: { $0.attrSpotlight })
+            .map { LessonDomainModel(resource: $0) }
     }
 }

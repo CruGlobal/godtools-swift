@@ -15,7 +15,7 @@ class ArticleAemDownloader {
     private let session: URLSession
     private let maxAemJsonTreeLevels: Int = 10
         
-    required init(sharedSession: SharedSessionType) {
+    required init(sharedSession: SharedIgnoreCacheSession) {
         
         self.session = sharedSession.session
     }

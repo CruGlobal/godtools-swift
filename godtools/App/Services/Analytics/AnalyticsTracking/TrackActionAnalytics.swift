@@ -10,10 +10,10 @@ import Foundation
 
 class TrackActionAnalytics {
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
-    private let snowplowAnalytics: SnowplowAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
+    private let snowplowAnalytics: SnowplowAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics

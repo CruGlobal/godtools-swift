@@ -31,7 +31,7 @@ class MenuFlow: Flow {
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.primaryNavBar.uiColor,
+            backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
             titleColor: .white,
@@ -40,8 +40,7 @@ class MenuFlow: Flow {
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            config: appDiContainer.config,
-            deviceLanguage: appDiContainer.deviceLanguage,
+            config: appDiContainer.dataLayer.getAppConfig(),
             userAuthentication: appDiContainer.userAuthentication,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,

@@ -13,14 +13,14 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     private let toolDeepLink: ToolDeepLink
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let languageSettingsService: LanguageSettingsService
+    private let primaryLanguage: LanguageDomainModel?
         
-    required init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, languageSettingsService: LanguageSettingsService) {
+    required init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, primaryLanguage: LanguageDomainModel?) {
         
         self.toolDeepLink = toolDeepLink
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.languageSettingsService = languageSettingsService
+        self.primaryLanguage = primaryLanguage
     }
     
     func getResource() -> ResourceModel? {
@@ -57,9 +57,9 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         if let primaryTranslation = primaryTranslation {
             return primaryTranslation
         }
-        else if let primarySettingsLanguageId = languageSettingsService.primaryLanguage.value?.id, let primarySettingsTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primarySettingsLanguageId) {
+        else if let primaryLanguageId = primaryLanguage?.dataModelId, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) {
             
-            return primarySettingsTranslation
+            return primaryTranslation
         }
         else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
             

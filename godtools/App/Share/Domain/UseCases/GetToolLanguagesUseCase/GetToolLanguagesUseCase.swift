@@ -11,25 +11,17 @@ import Foundation
 class GetToolLanguagesUseCase {
     
     private let languagesRepository: LanguagesRepository
-    private let localizationServices: LocalizationServices
+    private let getLanguageUseCase: GetLanguageUseCase
     
-    required init(languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
+    required init(languagesRepository: LanguagesRepository, getLanguageUseCase: GetLanguageUseCase) {
         
         self.languagesRepository = languagesRepository
-        self.localizationServices = localizationServices
+        self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getToolLanguages(resource: ResourceModel) -> [ToolLanguageModel] {
+    func getToolLanguages(resource: ResourceModel) -> [LanguageDomainModel] {
         
-        let languages: [LanguageModel] = languagesRepository.getLanguages(ids: resource.languageIds)
-        
-        let toolLanguages: [ToolLanguageModel] = languages.map({
-            ToolLanguageModel(
-                id: $0.id,
-                name: LanguageViewModel(language: $0, localizationServices: localizationServices).translatedLanguageName
-            )
-        })
-        
-        return toolLanguages
+        return languagesRepository.getLanguages(ids: resource.languageIds)
+            .map({ getLanguageUseCase.getLanguage(language: $0) })
     }
 }

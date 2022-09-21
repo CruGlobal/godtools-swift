@@ -14,9 +14,9 @@ class MobileContentEventAnalyticsTracking {
     private static let actionContentEvent: String = "content_event"
     private static let paramEventId: String = "event_id"
     
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    private let firebaseAnalytics: FirebaseAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(firebaseAnalytics: FirebaseAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }
@@ -24,14 +24,15 @@ class MobileContentEventAnalyticsTracking {
     func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [
-            MobileContentEventAnalyticsTracking.paramEventId: eventId.description(),
-            AnalyticsConstants.Keys.contentLanguage: language.code
+            MobileContentEventAnalyticsTracking.paramEventId: eventId.description()
         ]
         
         firebaseAnalytics.trackAction(
             screenName: "",
             siteSection: resource.abbreviation,
             siteSubSection: "",
+            contentLanguage: language.code,
+            secondaryContentLanguage: nil,
             actionName: MobileContentEventAnalyticsTracking.actionContentEvent,
             data: data
         )

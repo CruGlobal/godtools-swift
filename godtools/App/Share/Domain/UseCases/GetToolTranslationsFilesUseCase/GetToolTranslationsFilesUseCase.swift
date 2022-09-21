@@ -11,9 +11,7 @@ import Combine
 import GodToolsToolParser
 
 class GetToolTranslationsFilesUseCase {
-    
-    typealias TranslationId = String
-    
+        
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
@@ -31,14 +29,17 @@ class GetToolTranslationsFilesUseCase {
     func getToolTranslationsFiles(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
                 
         let manifestParserType: TranslationManifestParserType
+        let includeRelatedFiles: Bool
+        
+        var translationsToDownload: [TranslationModel] = Array()
         
         switch filter {
-        case .downloadManifestAndRelatedFiles:
-            manifestParserType = .related
         case .downloadManifestAndRelatedFilesForRenderer:
             manifestParserType = .renderer
+            includeRelatedFiles = true
         case .downloadManifestForTipsCount:
-            manifestParserType = .tips(parsesRelatedFiles: false)
+            manifestParserType = .manifestOnly
+            includeRelatedFiles = false
         }
         
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
@@ -62,14 +63,32 @@ class GetToolTranslationsFilesUseCase {
                    
                 let translations: [TranslationModel] = result.translations
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType)
+                translationsToDownload = result.translations
+                
+                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                             .eraseToAnyPublisher()
                     })
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                
+                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
+                
+                for translation in translationsToDownload {
+                    
+                    guard let translationManifest = downloadedTranslations.first(where: {$0.translation.id == translation.id}) else {
+                        continue
+                    }
+                    
+                    maintainTranslationDownloadOrder.append(translationManifest)
+                }
+                
+                return Just(maintainTranslationDownloadOrder).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main) // NOTE: Need to switch to main queue and parse manifests again because Manifests can't be passed across threads at this time. ~Levi
@@ -77,7 +96,7 @@ class GetToolTranslationsFilesUseCase {
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })
                 
-                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType)
+                return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .mapError { error in
                         return .otherError(error: error)
                     }
@@ -100,7 +119,7 @@ class GetToolTranslationsFilesUseCase {
                         return nil
                     }
                     
-                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language)
+                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language, translation: $0.translation)
                 })
                 
                 let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)

@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 class DownloadedAttachmentResult {
     
     let attachmentFile: AttachmentFile

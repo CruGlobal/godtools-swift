@@ -15,7 +15,7 @@ protocol ToolNavBarViewModelType {
     var navBarControlColor: UIColor { get }
     var navBarFont: UIFont { get }
     var hidesChooseLanguageControl: Bool { get }
-    var navTitle: String { get }
+    var navTitle: String? { get }
     var numberOfLanguages: Int { get }
     var remoteShareIsActive: ObservableValue<Bool> { get }
     var selectedLanguage: ObservableValue<Int> { get }

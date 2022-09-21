@@ -45,6 +45,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
             resource: renderer.resource,
             primaryLanguage: renderer.primaryLanguage,
             page: page,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             trainingTipsEnabled: trainingTipsEnabled
         )

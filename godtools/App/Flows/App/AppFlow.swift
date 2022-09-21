@@ -231,7 +231,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            _ = navigationController.popViewController(animated: true)
+            navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
                         
             lessonFlow = nil
             
@@ -265,20 +265,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            var toolsMenuInNavigationStack: ToolsMenuView?
-            
-            for viewController in navigationController.viewControllers {
-                if let toolsMenu = viewController as? ToolsMenuView {
-                    toolsMenuInNavigationStack = toolsMenu
-                    break
-                }
-            }
-            
             if state == .userClosedTractToLessonsList {
                 
                 navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true)
             }
-            else if let toolsMenuInNavigationStack = toolsMenuInNavigationStack {
+            else if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
                
                 navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
             }
@@ -290,9 +281,20 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             tractFlow = nil
             
         case .chooseYourOwnAdventureFlowCompleted(let state):
+           
             switch state {
+            
             case .userClosedTool:
-                _ = navigationController.popViewController(animated: true)
+                
+                if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
+                   
+                    navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+                }
+                else {
+                    
+                    _ = navigationController.popViewController(animated: true)
+                }
+                
                 chooseYourOwnAdventureFlow = nil
             }
             
@@ -480,20 +482,37 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
+    private func getToolsMenuInNavigationStack() -> ToolsMenuView? {
+                
+        for viewController in navigationController.viewControllers {
+            if let toolsMenu = viewController as? ToolsMenuView {
+                return toolsMenu
+            }
+        }
+        
+        return nil
+    }
+    
+    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
         
         let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self,
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
+            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
@@ -510,7 +529,7 @@ extension AppFlow {
     
     private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let toolsMenu: ToolsMenuView = getToolsMenu(startingPage: startingPage)
+        let toolsMenu: ToolsMenuView = getNewToolsMenu(startingPage: startingPage)
         
         navigationController.setViewControllers([toolsMenu], animated: false)
         
@@ -576,8 +595,6 @@ extension AppFlow {
         
         case .tool(let toolDeepLink):
                
-            // TODO: Do we need to set starting toolbar item to lessons if deeplinking from a lesson? ~Levi
-
             navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
@@ -671,7 +688,9 @@ extension AppFlow {
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: self,
@@ -692,19 +711,17 @@ extension AppFlow {
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             resource: resource,
-            dataDownloader: appDiContainer.initialDataDownloader,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
             addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            languageSettingsService: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            getToolVersionsUseCase: appDiContainer.getToolVersionsUseCase(),
+            getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
             
         )
@@ -768,7 +785,7 @@ extension AppFlow {
             pageIndexReached: pageIndexReached,
             lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
             lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            languageSettings: appDiContainer.languageSettingsService,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             localization: appDiContainer.localizationServices
         )
         let view = LessonEvaluationView(viewModel: viewModel)
@@ -804,8 +821,7 @@ extension AppFlow {
             let viewModel = SetupParallelLanguageViewModel(
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
-                languageSettingsService: appDiContainer.languageSettingsService,
-                getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)
@@ -820,7 +836,7 @@ extension AppFlow {
         
         let viewModel = ParallelLanguageListViewModel(
             flowDelegate: self,
-            getLanguagesListUseCase: appDiContainer.domainLayer.getLanguagesListUseCase(),
+            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()

@@ -30,6 +30,38 @@ class RealmResourcesCache {
             .eraseToAnyPublisher()
     }
     
+    func getAllLessons() -> [ResourceModel] {
+        return getResources(sorted: true).filter { resource in
+            return resource.isLessonType && resource.isHidden == false
+        }
+    }
+    
+    func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
+        let metaTools = getResources(with: .metaTool)
+        let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
+        let defaultVariants = getResources(ids: defaultVariantIds)
+        
+        let resourcesExcludingVariants = getResources(with: ["", nil])
+        
+        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
+   
+        var allTools = combinedResourcesAndDefaultVariants.filter { resource in
+                        
+            if let category = category, resource.attrCategory != category {
+                return false
+            }
+            
+            return resource.isToolType && resource.isHidden == false
+            
+        }
+        
+        if sorted {
+            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
+        }
+        
+        return allTools
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
@@ -57,18 +89,26 @@ class RealmResourcesCache {
             }
     }
     
-    func getResources() -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
-            .map({ResourceModel(model: $0)})
-    }
-    
-    func getResourceLanguages(id: String) -> [LanguageModel] {
+    func getResources(sorted: Bool = false) -> [ResourceModel] {
+        var realmResources = realmDatabase.openRealm().objects(RealmResource.self)
         
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
-            return Array()
+        if sorted {
+            realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
         }
         
-        return realmResource.languages.map({LanguageModel(model: $0)})
+        return realmResources.map({ResourceModel(model: $0)})
+    }
+    
+    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
+            .map { ResourceModel(model: $0)}
+    }
+    
+    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .where { $0.resourceType == resourceType.rawValue }
+            .map { ResourceModel(model: $0) }
     }
     
     func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
@@ -99,6 +139,20 @@ class RealmResourcesCache {
         }
 
         return TranslationModel(model: realmTranslation)
+    }
+    
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
+        
+        return realmDatabase.openRealm().objects(RealmResource.self).filter(predicate).map({ResourceModel(model: $0)})
+    }
+    
+    func getSpotlightTools() -> [ResourceModel] {
+        return realmDatabase.openRealm().objects(RealmResource.self)
+            .where { $0.attrSpotlight == true && $0.isHidden == false }
+            .map { ResourceModel(model: $0) }
+            .filter { $0.isToolType }
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {

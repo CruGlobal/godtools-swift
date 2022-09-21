@@ -43,6 +43,8 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
             flowDelegate: self,
             renderer: renderer,
             page: nil,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             fontService: appDiContainer.getFontService(),

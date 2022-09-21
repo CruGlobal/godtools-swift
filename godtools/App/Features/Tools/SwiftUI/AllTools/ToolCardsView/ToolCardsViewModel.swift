@@ -6,7 +6,8 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import Combine
+import SwiftUI
 
 protocol ToolCardsViewModelDelegate: ToolCardViewModelDelegate {
     func toolsAreLoading(_ isLoading: Bool)
@@ -20,23 +21,28 @@ class ToolCardsViewModel: ToolCardProvider {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
+    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var delegate: ToolCardsViewModelDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
-    private var categoryFilterValue: String?
+    private let categoryFilterValuePublisher = CurrentValueSubject<String?, Never>(nil)
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase,  getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase,  getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         
+        self.getAllToolsUseCase = getAllToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         
         self.delegate = delegate
@@ -46,28 +52,23 @@ class ToolCardsViewModel: ToolCardProvider {
         setupBinding()
     }
     
-    deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-    }
-    
     // MARK: - Overrides
     
-    override func cardViewModel(for tool: ResourceModel) -> BaseToolCardViewModel {
+    override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
-            resource: tool,
+            tool: tool,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             delegate: delegate
         )
     }
     
-    override func toolTapped(resource: ResourceModel) {
-        delegate?.toolCardTapped(resource: resource)
+    override func toolTapped(_ tool: ToolDomainModel) {
+        delegate?.toolCardTapped(tool)
     }
 }
 
@@ -77,34 +78,17 @@ extension ToolCardsViewModel {
     
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+        getAllToolsUseCase.getToolsForCategoryPublisher(category: categoryFilterValuePublisher)
+            .receiveOnMain()
+            .sink { tools in
                 
-                self.delegate?.toolsAreLoading(!cachedResourcesAvailable)
-                if cachedResourcesAvailable {
-                    self.reloadResourcesFromCache()
+                self.delegate?.toolsAreLoading(tools.isEmpty)
+                
+                withAnimation {
+                    self.tools = tools
                 }
             }
-        }
-        
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadResourcesFromCache()
-                }
-            }
-        }
-    }
-    
-    private func reloadResourcesFromCache() {
-        if let categoryFilterValue = categoryFilterValue {
-            tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted(andFilteredBy: { $0.attrCategory == categoryFilterValue })
-        } else {
-            tools = dataDownloader.resourcesCache.getAllVisibleToolsSorted()
-        }
-        
-        self.delegate?.toolsAreLoading(false)
+            .store(in: &cancellables)
     }
 }
 
@@ -112,8 +96,7 @@ extension ToolCardsViewModel {
 
 extension ToolCardsViewModel {
     
-    func filterTools(with attrCategory: String?) {
-        categoryFilterValue = attrCategory
-        reloadResourcesFromCache()
+    func filterTools(with categoryId: String?) {
+        categoryFilterValuePublisher.value = categoryId
     }
 }

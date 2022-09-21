@@ -15,7 +15,7 @@ class EmailSignUpService: NSObject {
     private let emailSignUpsCache: RealmEmailSignUpsCache
     private let userAuthentication: UserAuthenticationType
     
-    required init(sharedSession: SharedSessionType, realmDatabase: RealmDatabase, userAuthentication: UserAuthenticationType) {
+    required init(sharedSession: SharedIgnoreCacheSession, realmDatabase: RealmDatabase, userAuthentication: UserAuthenticationType) {
         
         self.emailSignUpApi = EmailSignUpApi(sharedSession: sharedSession)
         self.emailSignUpsCache = RealmEmailSignUpsCache(realmDatabase: realmDatabase)

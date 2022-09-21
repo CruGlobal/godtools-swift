@@ -11,23 +11,23 @@ import SwiftUI
 import Combine
 
 protocol ToolCardViewModelDelegate: AnyObject {
-    func toolCardTapped(resource: ResourceModel)
-    func toolFavoriteButtonTapped(resource: ResourceModel)
-    func toolDetailsButtonTapped(resource: ResourceModel)
-    func openToolButtonTapped(resource: ResourceModel)
+    func toolCardTapped(_ tool: ToolDomainModel)
+    func toolFavoriteButtonTapped(_ tool: ToolDomainModel)
+    func toolDetailsButtonTapped(_ tool: ToolDomainModel)
+    func openToolButtonTapped(_ tool: ToolDomainModel)
 }
 
-class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress {
+class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgress {
     
     // MARK: - Properties
     
-    let resource: ResourceModel
+    let tool: ToolDomainModel
     let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var delegate: ToolCardViewModelDelegate?
@@ -39,17 +39,21 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
     
     private var cancellables = Set<AnyCancellable>()
     
+    var resourceId: String { tool.id }
+    
     // MARK: - Init
     
-    init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(tool: ToolDomainModel, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
         
-        self.resource = resource
+        self.tool = tool
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        
         self.delegate = delegate
         
         super.init()
@@ -63,26 +67,24 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
         
         attachmentsDownloadProgress.removeObserver(self)
         translationDownloadProgress.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
-        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     // MARK: - Overrides
  
     override func favoriteToolButtonTapped() {
-        delegate?.toolFavoriteButtonTapped(resource: resource)
+        delegate?.toolFavoriteButtonTapped(tool)
     }
     
     override func toolCardTapped() {
-        delegate?.toolCardTapped(resource: resource)
+        delegate?.toolCardTapped(tool)
     }
 
     override func toolDetailsButtonTapped() {
-        delegate?.toolDetailsButtonTapped(resource: resource)
+        delegate?.toolDetailsButtonTapped(tool)
     }
     
     override func openToolButtonTapped() {
-        delegate?.openToolButtonTapped(resource: resource)
+        delegate?.openToolButtonTapped(tool)
     }
 }
 
@@ -91,12 +93,8 @@ class ToolCardViewModel: BaseToolCardViewModel, ToolItemInitialDownloadProgress 
 extension ToolCardViewModel {
     
     private func setup() {
-        setupPublishedProperties()
+        setStrings()
         setupBinding()
-    }
-    
-    private func setupPublishedProperties() {
-        reloadDataForPrimaryLanguage()
     }
     
     private func setupBinding() {
@@ -111,7 +109,7 @@ extension ToolCardViewModel {
             }
         }
         
-        getBannerImageUseCase.getBannerImagePublisher(for: resource.attrBanner)
+        getBannerImageUseCase.getBannerImagePublisher(for: tool.bannerImageId)
             .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
@@ -124,65 +122,40 @@ extension ToolCardViewModel {
             }
         }
         
-        getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(tool: resource)
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] parallelLanguage in
+                self?.reloadParallelLanguageName(parallelLanguage)
+            }
+            .store(in: &cancellables)
+        
+        getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: tool.id)
             .receiveOnMain()
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
+    }
         
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadDataForPrimaryLanguage()
-            }
-        }
-        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadParallelLanguageName()
-            }
-        }
+    private func setStrings() {
+        title = tool.name
+        
+        let currentTranslationLanguage = tool.currentTranslationLanguage
+        let localeIdentifier = currentTranslationLanguage.localeIdentifier
+        
+        category = localizationServices.toolCategoryStringForLocale(localeIdentifier: localeIdentifier, category: tool.category)
+        detailsButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
+        openButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "open")
+        
+        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
     }
     
-    private func reloadDataForPrimaryLanguage() {
-        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
-        let bundleLoader = localizationServices.bundleLoader
-        
-        let toolName: String
-        let languageBundle: Bundle
-        let languageDirection: LanguageDirection
-        
-        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
-            
-            toolName = primaryTranslation.translatedName
-            languageBundle = bundleLoader.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
-            languageDirection = primaryLanguage.languageDirection
-        }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
-            
-            toolName = englishTranslation.translatedName
-            languageBundle = bundleLoader.englishBundle ?? Bundle.main
-            languageDirection = .leftToRight
-        }
-        else {
-            
-            toolName = resource.name
-            languageBundle = bundleLoader.englishBundle ?? Bundle.main
-            languageDirection = .leftToRight
-        }
-        
-        title = toolName
-        category = localizationServices.toolCategoryStringForBundle(bundle: languageBundle, attrCategory: resource.attrCategory)
-        detailsButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.details")
-        openButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "open")
-        layoutDirection = LayoutDirection.from(languageDirection: languageDirection)
-    }
-    
-    private func reloadParallelLanguageName() {
-        let parallelLanguage = languageSettingsService.parallelLanguage.value
-        
-        let getLanguageAvailability = getLanguageAvailabilityStringUseCase.getLanguageAvailability(for: resource, language: parallelLanguage)
+    private func reloadParallelLanguageName(_ parallelLanguage: LanguageDomainModel?) {
+        guard let parallelLanguage = parallelLanguage else { return }
+
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
         
         if getLanguageAvailability.isAvailable {
             
-            parallelLanguageName = getLanguageAvailability.string
+            parallelLanguageName = getLanguageAvailability.availabilityString
             
         } else {
             

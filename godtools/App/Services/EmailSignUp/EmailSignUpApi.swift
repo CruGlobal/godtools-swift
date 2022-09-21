@@ -17,7 +17,7 @@ class EmailSignUpApi {
     
     let session: URLSession
     
-    required init(sharedSession: SharedSessionType) {
+    required init(sharedSession: SharedIgnoreCacheSession) {
         
         session = sharedSession.session
     }

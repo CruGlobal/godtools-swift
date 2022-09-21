@@ -11,6 +11,7 @@ import RealmSwift
 
 typealias ResourceFilter = (ResourceModel) -> Bool
 
+@available(*, deprecated) // TODO: This should be phased out in place of ResourcesRepository / UseCases for Combine + Domain Layer refactoring. ~Levi
 class ResourcesCache {
     
     private let realmDatabase: RealmDatabase
@@ -62,10 +63,6 @@ class ResourcesCache {
         let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
         
         return combinedResourcesAndDefaultVariants.filterForToolTypes(andFilteredBy: additionalFilter)
-    }
-    
-    func getAllVisibleToolsSorted(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
-        return getAllVisibleTools(andFilteredBy: additionalFilter).sortedByDefaultOrder()
     }
     
     func getMetaTools() -> [ResourceModel] {
@@ -140,14 +137,5 @@ class ResourcesCache {
             translation = nil
         }
         return translation
-    }
-    
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
-        
-        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
-        
-        let realmResourceVariants: [RealmResource] = Array(realmDatabase.mainThreadRealm.objects(RealmResource.self).filter(predicate))
-        
-        return realmResourceVariants.map({ResourceModel(model: $0)})
     }
 }

@@ -102,7 +102,7 @@ class ToolSettingsViewModel: ObservableObject {
     
     private func pageRendererChanged(pageRenderer: MobileContentPageRenderer) {
         
-        hidesToggleTrainingTipsButton = pageRenderer.manifest.tips.isEmpty
+        hidesToggleTrainingTipsButton = !pageRenderer.manifest.hasTips
         hidesShareables = pageRenderer.manifest.shareables.isEmpty
         numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
