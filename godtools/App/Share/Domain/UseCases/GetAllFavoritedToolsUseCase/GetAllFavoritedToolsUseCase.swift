@@ -40,6 +40,14 @@ class GetAllFavoritedToolsUseCase {
             .eraseToAnyPublisher()
     }
     
+    func getFavoritedTools() -> [ToolDomainModel] {
+        
+        let favoritedResourceModels = getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModels()
+        let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        
+        return getFavoritedTools(from: favoritedResourceModels, with: primaryLanguage)
+    }
+    
     private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel], with primaryLanguage: LanguageDomainModel?) -> [ToolDomainModel] {
         
         let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }

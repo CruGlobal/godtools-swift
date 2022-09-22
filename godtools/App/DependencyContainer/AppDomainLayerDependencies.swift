@@ -133,7 +133,7 @@ class AppDomainLayerDependencies {
     
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()
