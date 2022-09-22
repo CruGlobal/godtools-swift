@@ -1,5 +1,5 @@
 //
-//  LessonsContentViewModel.swift
+//  LessonsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/13/22.
@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
-class LessonsContentViewModel: NSObject, ObservableObject {
+class LessonsViewModel: ObservableObject {
     
     // MARK: - Properties
     
@@ -23,22 +24,14 @@ class LessonsContentViewModel: NSObject, ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
-    private(set) lazy var lessonsListViewModel: LessonsListViewModel = {
-        return LessonsListViewModel(
-            dataDownloader: dataDownloader,
-            localizationServices: localizationServices,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getLessonsUseCase: getLessonsUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            delegate: self
-        )
-    }()
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
     @Published var isLoading: Bool = false
+    @Published var sectionTitle: String = ""
+    @Published var subtitle: String = ""
+    @Published var lessons: [LessonDomainModel] = []
     
     // MARK: - Init
     
@@ -54,24 +47,66 @@ class LessonsContentViewModel: NSObject, ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         
-        super.init()
+        setupBinding()
     }
 }
 
 // MARK: - Public
 
-extension LessonsContentViewModel {
+extension LessonsViewModel {
+    
+    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
+        return LessonCardViewModel(
+            lesson: lesson,
+            dataDownloader: dataDownloader,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            delegate: self
+        )
+    }
+    
     func refreshData() {
         dataDownloader.downloadInitialData()
     }
 }
 
-// MARK: - LessonsListViewModelDelegate
+// MARK: - Private
 
-extension LessonsContentViewModel: LessonsListViewModelDelegate {
-    func lessonsAreLoading(_ isLoading: Bool) {
-        self.isLoading = isLoading
+extension LessonsViewModel {
+    
+    private func setupBinding() {
+        
+        getLessonsUseCase.getLessonsPublisher()
+            .receiveOnMain()
+            .sink { [weak self] lessons in
+                
+                self?.isLoading = lessons.isEmpty
+                self?.lessons = lessons
+            }
+            .store(in: &cancellables)
+        
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                self?.setupTitle(with: primaryLanguage)
+            }
+            .store(in: &cancellables)
     }
+    
+    private func setupTitle(with language: LanguageDomainModel?) {
+        guard let language = language,
+              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
+        else { return }
+        
+        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
+    }
+}
+
+// MARK: - LessonCardDelegate
+
+extension LessonsViewModel: LessonCardDelegate {
     
     func lessonCardTapped(lesson: LessonDomainModel) {
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
@@ -81,7 +116,7 @@ extension LessonsContentViewModel: LessonsListViewModelDelegate {
 
 // MARK: - Analytics
 
-extension LessonsContentViewModel {
+extension LessonsViewModel {
     
     var analyticsScreenName: String {
         return "Lessons"
