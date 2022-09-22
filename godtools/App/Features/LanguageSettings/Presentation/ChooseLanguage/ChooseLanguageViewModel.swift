@@ -75,6 +75,23 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
                 self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage, settingsParallelLanguage: settingsParallelLanguage)
             }
             .store(in: &cancellables)
+        
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] (settingsParallelLanguage: LanguageDomainModel?) in
+                
+                let hidesDeleteLanguageButtonValue: Bool
+                
+                switch chooseLanguageType {
+                case .primary:
+                    hidesDeleteLanguageButtonValue = true
+                case .parallel:
+                    hidesDeleteLanguageButtonValue = settingsParallelLanguage == nil
+                }
+                
+                self?.hidesDeleteLanguageButton.accept(value: hidesDeleteLanguageButtonValue)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
