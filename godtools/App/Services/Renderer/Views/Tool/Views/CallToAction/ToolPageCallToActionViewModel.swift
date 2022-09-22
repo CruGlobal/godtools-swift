@@ -54,7 +54,7 @@ class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
     
     var nextButtonImage: UIImage? {
         
-        guard let buttonImage = UIImage(named: "right_arrow_blue") else {
+        guard let buttonImage = ImageCatalog.rightArrowBlue.uiImage else {
             return nil
         }
                         

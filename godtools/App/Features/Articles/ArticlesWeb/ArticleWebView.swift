@@ -43,7 +43,7 @@ class ArticleWebView: UIViewController {
         
         shareButton = addBarButtonItem(
             to: .right,
-            image: ImageCatalog.navShare.image,
+            image: ImageCatalog.navShare.uiImage,
             color: .white,
             target: self,
             action: #selector(handleShare(barButtonItem:))

@@ -41,7 +41,7 @@ class LearnToShareToolView: UIViewController {
         
         closeButton = addBarButtonItem(
             to: .right,
-            image: UIImage(named: "nav_item_close"),
+            image: ImageCatalog.navClose.uiImage,
             color: nil,
             target: self,
             action: #selector(handleClose(barButtonItem:))
@@ -97,7 +97,7 @@ class LearnToShareToolView: UIViewController {
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(
                 to: backButtonPosition,
-                image: ImageCatalog.navBack.image,
+                image: ImageCatalog.navBack.uiImage,
                 color: nil,
                 target: self,
                 action: #selector(handleBack(barButtonItem:))

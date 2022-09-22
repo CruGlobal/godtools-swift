@@ -200,7 +200,7 @@ extension LessonView {
         
         previousPageButton.translatesAutoresizingMaskIntoConstraints = false
         
-        previousPageButton.setImage(ImageCatalog.lessonPageLeftArrow.image, for: .normal)
+        previousPageButton.setImage(ImageCatalog.lessonPageLeftArrow.uiImage, for: .normal)
         
         let leading: NSLayoutConstraint = NSLayoutConstraint(
             item: previousPageButton,
@@ -237,7 +237,7 @@ extension LessonView {
         
         nextPageButton.translatesAutoresizingMaskIntoConstraints = false
         
-        nextPageButton.setImage(ImageCatalog.lessonPageRightArrow.image, for: .normal)
+        nextPageButton.setImage(ImageCatalog.lessonPageRightArrow.uiImage, for: .normal)
         
         let trailing: NSLayoutConstraint = NSLayoutConstraint(
             item: nextPageButton,
