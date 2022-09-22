@@ -11,28 +11,28 @@ import Combine
 
 class GetAllFavoritedToolsUseCase {
     
-    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolUseCase: GetToolUseCase
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository) {
         
-        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
+        self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
     }
     
     func getAllFavoritedToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModelsPublisher(),
+            favoritedResourcesRepository.getFavoritedResourcesChanged(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             )
-            .flatMap { favoritedResourceModels, primaryLanguage -> AnyPublisher<[ToolDomainModel], Never> in
+            .flatMap { _, primaryLanguage -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let favoritedTools = self.getFavoritedTools(from: favoritedResourceModels, with: primaryLanguage)
+                let favoritedTools = self.getFavoritedTools(with: primaryLanguage)
                 
                 return Just(favoritedTools)
                     .eraseToAnyPublisher()
@@ -42,14 +42,14 @@ class GetAllFavoritedToolsUseCase {
     
     func getFavoritedTools() -> [ToolDomainModel] {
         
-        let favoritedResourceModels = getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModels()
         let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
         
-        return getFavoritedTools(from: favoritedResourceModels, with: primaryLanguage)
+        return getFavoritedTools(with: primaryLanguage)
     }
     
-    private func getFavoritedTools(from favoritedResourceModels: [FavoritedResourceModel], with primaryLanguage: LanguageDomainModel?) -> [ToolDomainModel] {
+    private func getFavoritedTools(with primaryLanguage: LanguageDomainModel?) -> [ToolDomainModel] {
         
+        let favoritedResourceModels: [FavoritedResourceModel] = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
         let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
                 
         let favoritedResources = favoritedResourceIds
