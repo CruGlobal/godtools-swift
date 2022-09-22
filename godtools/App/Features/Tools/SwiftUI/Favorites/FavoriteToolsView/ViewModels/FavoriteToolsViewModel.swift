@@ -42,14 +42,14 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         maxNumberCardsToShow = maxNumberCardsShown
     }
     
-    override func setText(for languageBundle: Bundle) {
+    override func setText(for language: LanguageDomainModel?) {
         
-        viewAllButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.viewAll") + " >"
-        noFavoriteToolsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.title")
-        noFavoriteToolsDescription = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.description")
-        noFavoriteToolsButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.button")
+        viewAllButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.viewAll") + " >"
+        noFavoriteToolsTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.title")
+        noFavoriteToolsDescription = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.description")
+        noFavoriteToolsButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.button")
         
-        super.setText(for: languageBundle)
+        super.setText(for: language)
     }
 }
 

@@ -68,9 +68,9 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Public
     
-    func setText(for languageBundle: Bundle) {
+    func setText(for language: LanguageDomainModel?) {
         
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.title")
+        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.title")
     }
 }
 
@@ -93,11 +93,7 @@ extension BaseFavoriteToolsViewModel {
             .receiveOnMain()
             .sink { primaryLanguage in
                 
-                guard let primaryLanguage = primaryLanguage,
-                      let languageBundle = self.localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier)
-                else { return }
-                
-                self.setText(for: languageBundle)
+                self.setText(for: primaryLanguage)
             }
             .store(in: &cancellables)
     }
