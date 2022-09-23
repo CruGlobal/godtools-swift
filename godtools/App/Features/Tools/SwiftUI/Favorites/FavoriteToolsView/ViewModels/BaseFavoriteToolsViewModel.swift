@@ -29,6 +29,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Published
     
+    @Published var isInitialLoad: Bool = true
     @Published var sectionTitle: String = ""
     
     // MARK: - Init
@@ -85,6 +86,7 @@ extension BaseFavoriteToolsViewModel {
                 
                 withAnimation {
                     self.tools = favoritedTools
+                    self.isInitialLoad = false
                 }
             }
             .store(in: &cancellables)

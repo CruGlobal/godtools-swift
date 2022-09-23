@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class LessonsViewModel: ObservableObject {
     
@@ -81,8 +82,10 @@ extension LessonsViewModel {
             .receiveOnMain()
             .sink { [weak self] lessons in
                 
-                self?.isLoading = lessons.isEmpty
-                self?.lessons = lessons
+                withAnimation {
+                    self?.isLoading = lessons.isEmpty
+                    self?.lessons = lessons
+                }
             }
             .store(in: &cancellables)
         

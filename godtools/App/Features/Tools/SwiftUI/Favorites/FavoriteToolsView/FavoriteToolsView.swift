@@ -23,7 +23,11 @@ struct FavoriteToolsView: View {
             
             FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
-            if viewModel.tools.isEmpty {
+            if viewModel.isInitialLoad {
+                
+                EmptyView()
+                
+            } else if viewModel.tools.isEmpty {
                 
                 NoFavoriteToolsView(viewModel: viewModel)
                     .padding([.leading, .trailing], leadingPadding)
