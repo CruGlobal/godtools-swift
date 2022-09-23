@@ -69,7 +69,7 @@ extension ToolCategoriesViewModel {
             .receiveOnMain()
             .sink { language in
                 
-                self.reloadForLanguageChange(to: language)
+                self.setTitleText(with: language)
             }
             .store(in: &cancellables)
         
@@ -93,14 +93,8 @@ extension ToolCategoriesViewModel {
         }
     }
     
-    private func setTitleText(with language: LanguageDomainModel) {
-        guard let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier) else { return }
-        categoryTitleText = localizationServices.stringForBundle(bundle: languageBundle, key: "allTools.categories.title")
-    }
-    
-    private func reloadForLanguageChange(to language: LanguageDomainModel?) {
-        guard let language = language else { return }
-
-        setTitleText(with: language)
+    private func setTitleText(with language: LanguageDomainModel?) {
+        
+        categoryTitleText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "allTools.categories.title")
     }
 }
