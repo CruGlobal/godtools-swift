@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class FeaturedLessonCardsViewModel: LessonCardProvider {
+class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
@@ -28,6 +28,7 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
     // MARK: - Published
     
     @Published var sectionTitle: String = ""
+    @Published var lessons: [LessonDomainModel] = []
     
     // MARK: - Init
     
@@ -46,10 +47,13 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
                 
         setupBinding()
     }
+}
+
+// MARK: - Public
+
+extension FeaturedLessonCardsViewModel {
     
-    // MARK: - Overrides
-    
-    override func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
+    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
             lesson: lesson,
             dataDownloader: dataDownloader,
@@ -87,10 +91,7 @@ extension FeaturedLessonCardsViewModel {
     }
     
     private func setupTitle(with language: LanguageDomainModel?) {
-        guard let language = language,
-              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
-        else { return }
         
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
+        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteLessons.title")
     }
 }

@@ -47,7 +47,7 @@ class ToolsMenuView: UIViewController {
         
         _ = addBarButtonItem(
             to: .left,
-            image: ImageCatalog.navMenu.image,
+            image: ImageCatalog.navMenu.uiImage,
             color: .white,
             target: self,
             action: #selector(menuButtonTapped(barButtonItem:))
@@ -132,7 +132,7 @@ class ToolsMenuView: UIViewController {
             return favoritedToolsView
         
         case .lessons:
-            return LessonsView(contentView: LessonsContentView(viewModel: viewModel.lessonsWillAppear()))
+            return LessonsHostingView(contentView: LessonsView(viewModel: viewModel.lessonsWillAppear()))
             
         }
     }
@@ -208,7 +208,7 @@ class ToolsMenuView: UIViewController {
             
             chooseLanguageButton = addBarButtonItem(
                 to: .right,
-                image: ImageCatalog.navLanguage.image,
+                image: ImageCatalog.navLanguage.uiImage,
                 color: .white,
                 target: self,
                 action: #selector(chooseLanguageButtonTapped(barButtonItem:))

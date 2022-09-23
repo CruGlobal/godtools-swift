@@ -27,7 +27,15 @@ struct FeaturedLessonCardsView: View {
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, leadingPadding)
             
-            LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingPadding)
+            ForEach(viewModel.lessons) { lesson in
+                
+                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
+                    .listRowInsets(EdgeInsets())
+                    .contentShape(Rectangle())
+                    .padding([.top, .bottom], 8)
+                    .padding([.leading, .trailing], leadingPadding)
+                
+            }
         }
     }
 }

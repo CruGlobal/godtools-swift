@@ -94,7 +94,7 @@ class ToolNavBarView: NSObject {
         _ = parentViewController.addBarButtonItem(
             to: .right,
             index: RightNavbarPosition.toolSettings.rawValue,
-            image: ImageCatalog.navToolSettings.image,
+            image: ImageCatalog.navToolSettings.uiImage,
             color: navBarControlColor,
             target: self,
             action: #selector(toolSettingsTapped)
