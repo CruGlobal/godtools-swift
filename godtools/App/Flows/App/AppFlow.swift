@@ -106,7 +106,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             loadInitialData()
             
-            appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
+            appDiContainer.oktaUserAuthentication.refreshAuthenticationIfAvailable()
             
         case .appLaunchedFromBackgroundState:
             
@@ -132,7 +132,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                                 
                 loadInitialData()
                 
-                appDiContainer.userAuthentication.refreshAuthenticationIfAvailable()
+                appDiContainer.oktaUserAuthentication.refreshAuthenticationIfAvailable()
                 
                 UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
                     loadingView.alpha = 0

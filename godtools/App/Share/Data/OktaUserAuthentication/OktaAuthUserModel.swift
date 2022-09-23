@@ -1,5 +1,5 @@
 //
-//  AuthUserModel.swift
+//  OktaAuthUserModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AuthUserModel: AuthUserModelType {
+struct OktaAuthUserModel {
     
     let email: String
     let firstName: String?
