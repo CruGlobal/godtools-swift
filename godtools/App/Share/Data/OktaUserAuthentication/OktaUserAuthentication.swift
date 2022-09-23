@@ -13,8 +13,13 @@ class OktaUserAuthentication {
     
     private let oktaAuthentication: CruOktaAuthentication
         
+    // TODO: Deprecating these observers here.  Eventually we will need to refactor these observers out and provide use cases for authentication. ~Levi
+    
+    @available(*, deprecated)
     let authenticatedUser: ObservableValue<OktaAuthUserModel?> = ObservableValue(value: nil)
+    @available(*, deprecated)
     let didAuthenticateSignal: SignalValue<Result<OktaAuthUserModel, Error>> = SignalValue()
+    @available(*, deprecated)
     let didSignOutSignal: Signal = Signal()
     
     required init(oktaAuthentication: CruOktaAuthentication) {
