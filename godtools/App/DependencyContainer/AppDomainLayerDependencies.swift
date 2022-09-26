@@ -34,6 +34,7 @@ class AppDomainLayerDependencies {
             getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
         )
@@ -61,7 +62,9 @@ class AppDomainLayerDependencies {
     }
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase()
+        return GetDeviceLanguageUseCase(
+            getLanguageUseCase: getLanguageUseCase()
+        )
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
