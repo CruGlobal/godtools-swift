@@ -455,6 +455,9 @@
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */; };
 		457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199D27C6EA4C00BABD49 /* NSError+Error.swift */; };
+		457EF93528DDEFD700E1DEBC /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93128DDEFD700E1DEBC /* OktaUserAuthentication.swift */; };
+		457EF93728DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93328DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift */; };
+		457EF93928DDF01F00E1DEBC /* OktaAuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93828DDF01F00E1DEBC /* OktaAuthUserModel.swift */; };
 		457F6BDD28B0132F0055456C /* AttachmentsBundleCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F6BDC28B0132F0055456C /* AttachmentsBundleCache.swift */; };
 		4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581657526F4DD4D000D660F /* MobileContentRowView.swift */; };
 		45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BC7279CCB5300F6B5F3 /* MobileContentCardView.swift */; };
@@ -489,7 +492,6 @@
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
-		459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */; };
 		45A3A0C826B0BD54005DA490 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */; };
 		45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */; };
 		45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
@@ -628,7 +630,6 @@
 		45AD200025938A9800A096A0 /* ViewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EAE25938A9800A096A0 /* ViewsService.swift */; };
 		45AD200125938A9800A096A0 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EAF25938A9800A096A0 /* ResourceViewModel.swift */; };
 		45AD200225938A9800A096A0 /* RealmResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB025938A9800A096A0 /* RealmResourceView.swift */; };
-		45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */; };
 		45AD200725938A9800A096A0 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */; };
 		45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */; };
 		45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */; };
@@ -877,9 +878,6 @@
 		45E39ED527457CB5006A59E4 /* MobileContentAnimationViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED227457CB5006A59E4 /* MobileContentAnimationViewModelType.swift */; };
 		45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
-		45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */; };
-		45E3FABF2759898200D0CAFA /* AuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FABD2759898200D0CAFA /* AuthUserModel.swift */; };
-		45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */; };
 		45E6B9B12890716B0038B153 /* RealmLanguagesCacheSyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6B9B02890716B0038B153 /* RealmLanguagesCacheSyncResult.swift */; };
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
@@ -1074,8 +1072,8 @@
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
-		D4997E1028D8B87300205B4C /* GetFeaturedLessonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4997E0F28D8B87300205B4C /* GetFeaturedLessonsUseCase.swift */; };
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
+		D4997E1028D8B87300205B4C /* GetFeaturedLessonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4997E0F28D8B87300205B4C /* GetFeaturedLessonsUseCase.swift */; };
 		D49F80F527FCD63A001AE5B3 /* ToolCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F427FCD63A001AE5B3 /* ToolCardView.swift */; };
 		D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
@@ -1570,6 +1568,9 @@
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
 		457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		457E199D27C6EA4C00BABD49 /* NSError+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Error.swift"; sourceTree = "<group>"; };
+		457EF93128DDEFD700E1DEBC /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
+		457EF93328DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaAuthenticationConfiguration.swift; sourceTree = "<group>"; };
+		457EF93828DDF01F00E1DEBC /* OktaAuthUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaAuthUserModel.swift; sourceTree = "<group>"; };
 		457F6BDC28B0132F0055456C /* AttachmentsBundleCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsBundleCache.swift; sourceTree = "<group>"; };
 		4581657526F4DD4D000D660F /* MobileContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRowView.swift; sourceTree = "<group>"; };
 		45828BC7279CCB5300F6B5F3 /* MobileContentCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardView.swift; sourceTree = "<group>"; };
@@ -1601,7 +1602,6 @@
 		459BD089289AD4310075901B /* GetToolTranslationsFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolTranslationsFilesUseCase.swift; sourceTree = "<group>"; };
 		459C526E289418EB00DA9E95 /* TranslationManifestFileDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationManifestFileDataModel.swift; sourceTree = "<group>"; };
 		459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationFilesDataModel.swift; sourceTree = "<group>"; };
-		459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OktaUserAuthentication.swift; sourceTree = "<group>"; };
 		45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45A450912832F31400A3DB0E /* ToolSettingsToolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsToolType.swift; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
@@ -1738,7 +1738,6 @@
 		45AD1EAE25938A9800A096A0 /* ViewsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewsService.swift; sourceTree = "<group>"; };
 		45AD1EAF25938A9800A096A0 /* ResourceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceViewModel.swift; sourceTree = "<group>"; };
 		45AD1EB025938A9800A096A0 /* RealmResourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourceView.swift; sourceTree = "<group>"; };
-		45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthenticationType.swift; sourceTree = "<group>"; };
 		45AD1EBA25938A9800A096A0 /* DeepLinkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingService.swift; sourceTree = "<group>"; };
 		45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		45AD1EE225938A9800A096A0 /* LocaleLocalizationBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizationBundle.swift; sourceTree = "<group>"; };
@@ -1973,9 +1972,6 @@
 		45E39ED127457CB5006A59E4 /* MobileContentAnimationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModel.swift; sourceTree = "<group>"; };
 		45E39ED227457CB5006A59E4 /* MobileContentAnimationViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModelType.swift; sourceTree = "<group>"; };
 		45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolAssetContent.swift; sourceTree = "<group>"; };
-		45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaAuthenticationConfiguration.swift; sourceTree = "<group>"; };
-		45E3FABD2759898200D0CAFA /* AuthUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserModel.swift; sourceTree = "<group>"; };
-		45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserModelType.swift; sourceTree = "<group>"; };
 		45E6B9B02890716B0038B153 /* RealmLanguagesCacheSyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmLanguagesCacheSyncResult.swift; sourceTree = "<group>"; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
@@ -2458,6 +2454,7 @@
 				4554512328948D090072EC6E /* LanguageSettingsRepository */,
 				45D63E5F288F698C009B4610 /* LanguagesRepository */,
 				4533C4CC28AC2C4C00F9628B /* LaunchCountRepository */,
+				457EF92F28DDEFD700E1DEBC /* OktaUserAuthentication */,
 				D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */,
 				45D63E8C288F77D4009B4610 /* ResourcesRepository */,
 				45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */,
@@ -4204,6 +4201,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		457EF92F28DDEFD700E1DEBC /* OktaUserAuthentication */ = {
+			isa = PBXGroup;
+			children = (
+				457EF93328DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift */,
+				457EF93828DDF01F00E1DEBC /* OktaAuthUserModel.swift */,
+				457EF93128DDEFD700E1DEBC /* OktaUserAuthentication.swift */,
+			);
+			path = OktaUserAuthentication;
+			sourceTree = "<group>";
+		};
 		457F6BDB28B0131D0055456C /* Bundle */ = {
 			isa = PBXGroup;
 			children = (
@@ -4336,15 +4343,6 @@
 				459BD085289AD4310075901B /* DetermineToolTranslationsToDownloadType.swift */,
 			);
 			path = DetermineToolTranslationsToDownload;
-			sourceTree = "<group>";
-		};
-		459C93AE27581FC4006207D2 /* Okta */ = {
-			isa = PBXGroup;
-			children = (
-				45E3FAAC2759424900D0CAFA /* OktaAuthenticationConfiguration.swift */,
-				459C93AF27581FD0006207D2 /* OktaUserAuthentication.swift */,
-			);
-			path = Okta;
 			sourceTree = "<group>";
 		};
 		45A7BAF3252CBC5500D70465 /* Extensions */ = {
@@ -4777,7 +4775,6 @@
 				45AD1E4B25938A9800A096A0 /* TractRemoteShare */,
 				45B9874A283BFE5300E1DA7F /* TranslationsDownloader */,
 				45AD1DFE25938A9700A096A0 /* URLSession */,
-				45AD1EB125938A9800A096A0 /* UserAuthentication */,
 				45AD1EE825938A9800A096A0 /* UserDefaultsCache */,
 				45AD1DF425938A9700A096A0 /* ViewedTrainingTips */,
 				45AD1EAA25938A9800A096A0 /* Views */,
@@ -5067,25 +5064,6 @@
 				45AD1EAE25938A9800A096A0 /* ViewsService.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		45AD1EB125938A9800A096A0 /* UserAuthentication */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1EB225938A9800A096A0 /* UserAuthenticationType.swift */,
-				45AD1EB325938A9800A096A0 /* Models */,
-				459C93AE27581FC4006207D2 /* Okta */,
-			);
-			path = UserAuthentication;
-			sourceTree = "<group>";
-		};
-		45AD1EB325938A9800A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45E3FABD2759898200D0CAFA /* AuthUserModel.swift */,
-				45E3FABE2759898200D0CAFA /* AuthUserModelType.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45AD1EB825938A9800A096A0 /* DeepLinkingService */ = {
@@ -7761,7 +7739,6 @@
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
 				45D2073D28D5107900F38DD7 /* UILabel+Underline.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
-				45E3FAC02759898200D0CAFA /* AuthUserModelType.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */,
 				45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */,
@@ -7851,6 +7828,7 @@
 				45C93AE4261D310900592FFF /* RealmArticleAemData.swift in Sources */,
 				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
 				4567775A287DB02B0044AEB2 /* ContactUsWebContent.swift in Sources */,
+				457EF93728DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift in Sources */,
 				45C2596D28CAC71B005D2387 /* DeleteLanguageListItemViewModel.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
@@ -7934,7 +7912,6 @@
 				4599251B2704F36A008F7844 /* ChooseScaleSliderView.swift in Sources */,
 				45C2594228CAC3E8005D2387 /* ChooseLanguageView.swift in Sources */,
 				456777E9287DB42C0044AEB2 /* ToolSettingsOptionItemBackgroundType.swift in Sources */,
-				45E3FABF2759898200D0CAFA /* AuthUserModel.swift in Sources */,
 				45AE974E27C97A9500C2CB33 /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */,
 				45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */,
@@ -8090,7 +8067,6 @@
 				D41B38BB288EDA7A00BD5899 /* ShareableImageDomainModel.swift in Sources */,
 				D42600D1282C007500E7A520 /* ToolCardTitleView.swift in Sources */,
 				456777E8287DB42C0044AEB2 /* ToolSettingsOptionsView.swift in Sources */,
-				459C93B027581FD0006207D2 /* OktaUserAuthentication.swift in Sources */,
 				45AD1B1D25938A4E00A096A0 /* LearnToShareToolView.swift in Sources */,
 				4573134E28C1829E00481640 /* ToolDetailsMediaDomainModel.swift in Sources */,
 				45AD202925938A9800A096A0 /* LocalizationBundleLoader.swift in Sources */,
@@ -8114,7 +8090,6 @@
 				D471CFE328CFB86B00DCE61C /* GetLessonsUseCase.swift in Sources */,
 				45F88B0B2860BA8700C8027F /* TranslatedLanguage.swift in Sources */,
 				4502BD40279F3B6B000C544A /* MobileContentFlowItemViewModelType.swift in Sources */,
-				45AD200325938A9800A096A0 /* UserAuthenticationType.swift in Sources */,
 				45C2596E28CAC71B005D2387 /* LanguagesListItemViewModel.swift in Sources */,
 				D19D010325AF549B007C535B /* DeepLinkingServiceType.swift in Sources */,
 				D45922C42864ED9300904B87 /* AllFavoriteToolsViewModel.swift in Sources */,
@@ -8142,6 +8117,7 @@
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */,
 				45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */,
+				457EF93528DDEFD700E1DEBC /* OktaUserAuthentication.swift in Sources */,
 				451CEDCD282C31AB006E5105 /* LazyHList.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				4561AC9E279C4CDC003718C0 /* MobileContentCardCollectionPageViewModelType.swift in Sources */,
@@ -8380,6 +8356,7 @@
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				456777C1287DB3770044AEB2 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AE974827C97A9400C2CB33 /* Flow+MobileContentRenderableModel.swift in Sources */,
+				457EF93928DDF01F00E1DEBC /* OktaAuthUserModel.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45677863287DC5C90044AEB2 /* AccountActivityView.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,
@@ -8417,7 +8394,6 @@
 				456777E4287DB42C0044AEB2 /* ToolSettingsChooseLanguageView.swift in Sources */,
 				45FB160727DBDDB60009DF8E /* LessonFlowCompletedState.swift in Sources */,
 				456777FC287DB4E10044AEB2 /* AboutView.swift in Sources */,
-				45E3FAAD2759424900D0CAFA /* OktaAuthenticationConfiguration.swift in Sources */,
 				45C93AE8261D310900592FFF /* ArticleAemDataParser.swift in Sources */,
 				4567776A287DB1960044AEB2 /* TutorialModel.swift in Sources */,
 				D1D56918270632B200BBE2A6 /* OnboardingTutorialCustomViewBuilder.swift in Sources */,

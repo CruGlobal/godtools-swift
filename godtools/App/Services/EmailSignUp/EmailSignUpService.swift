@@ -13,13 +13,13 @@ class EmailSignUpService: NSObject {
     
     private let emailSignUpApi: EmailSignUpApi
     private let emailSignUpsCache: RealmEmailSignUpsCache
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     
-    required init(sharedSession: SharedIgnoreCacheSession, realmDatabase: RealmDatabase, userAuthentication: UserAuthenticationType) {
+    required init(sharedSession: SharedIgnoreCacheSession, realmDatabase: RealmDatabase, oktaUserAuthentication: OktaUserAuthentication) {
         
         self.emailSignUpApi = EmailSignUpApi(sharedSession: sharedSession)
         self.emailSignUpsCache = RealmEmailSignUpsCache(realmDatabase: realmDatabase)
-        self.userAuthentication = userAuthentication
+        self.oktaUserAuthentication = oktaUserAuthentication
         
         super.init()
         
@@ -28,7 +28,7 @@ class EmailSignUpService: NSObject {
     
     private func setupBinding() {
         
-        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (userAuth: AuthUserModelType?) in
+        oktaUserAuthentication.authenticatedUser.addObserver(self) { [weak self] (userAuth: OktaAuthUserModel?) in
             DispatchQueue.main.async { [weak self] in
                 if let userAuth = userAuth {
                     let emailSignUp = EmailSignUpModel(email: userAuth.email, firstName: userAuth.firstName, lastName: userAuth.lastName)
@@ -39,7 +39,7 @@ class EmailSignUpService: NSObject {
     }
     
     deinit {
-        userAuthentication.authenticatedUser.removeObserver(self)
+        oktaUserAuthentication.authenticatedUser.removeObserver(self)
     }
     
     func postNewEmailSignUpIfNeeded(emailSignUp: EmailSignUpModel) -> OperationQueue? {

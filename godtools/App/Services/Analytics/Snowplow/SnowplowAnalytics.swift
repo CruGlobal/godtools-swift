@@ -11,7 +11,7 @@ import SnowplowTracker
 
 class SnowplowAnalytics  {
    
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker
     private let loggingEnabled: Bool
@@ -23,9 +23,9 @@ class SnowplowAnalytics  {
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
 
-    required init(config: AppConfig, userAuthentication: UserAuthenticationType, loggingEnabled: Bool) {
+    required init(config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, loggingEnabled: Bool) {
         
-        self.userAuthentication = userAuthentication
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.loggingEnabled = loggingEnabled
         
         let urlEndpoint: String = "s.cru.org"
@@ -124,11 +124,11 @@ class SnowplowAnalytics  {
 
     private func idContext() -> SPSelfDescribingJson {
                 
-        let authUser: AuthUserModelType? = userAuthentication.authenticatedUser.value
+        let authUser: OktaAuthUserModel? = oktaUserAuthentication.authenticatedUser.value
         
         let grMasterPersonID: String = authUser?.grMasterPersonId ?? ""
         let ssoguid: String = authUser?.ssoGuid ?? ""
-        let isAuthenticated: Bool = userAuthentication.isAuthenticated
+        let isAuthenticated: Bool = oktaUserAuthentication.isAuthenticated
         
         log(
             method: "idContext()",
