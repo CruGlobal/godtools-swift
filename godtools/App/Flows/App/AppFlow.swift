@@ -150,8 +150,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromAllTools(let resource):
-            navigateToToolDetail(resource: resource)
-                        
+            
+            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
+                                    
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
@@ -171,7 +172,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromFavoritedTools(let resource):
-            navigateToToolDetail(resource: resource)
+            
+            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
             
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
@@ -706,7 +708,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToToolDetail(resource: ResourceModel) {
+    private func getToolDetails(resource: ResourceModel) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
@@ -726,9 +728,18 @@ extension AppFlow {
             
         )
         
-        let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))
+        let view = ToolDetailsView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
+        let hostingView = UIHostingController<ToolDetailsView>(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolDetails))
+        
+        return hostingView
+    }
+    
+    @objc private func backTappedFromToolDetails() {
+        
+        navigate(step: .backTappedFromToolDetails)
     }
 }
 
