@@ -23,18 +23,20 @@ struct FavoriteToolsView: View {
             
             FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
-            if viewModel.isInitialLoad {
+            switch viewModel.viewState {
+            case .loading:
                 
                 EmptyView()
                 
-            } else if viewModel.tools.isEmpty {
+            case .noTools:
                 
                 NoFavoriteToolsView(viewModel: viewModel)
                     .padding([.leading, .trailing], leadingPadding)
                 
-            } else {
+            case .tools:
                 
                 ToolCardsCarouselView(viewModel: viewModel, cardType: .squareWithNavButtons, width: width, leadingTrailingPadding: leadingPadding)
+                
             }
         }
     }

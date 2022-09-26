@@ -10,6 +10,12 @@ import SwiftUI
 import Combine
 
 class BaseFavoriteToolsViewModel: ToolCardProvider {
+    
+    enum ViewState {
+        case loading
+        case noTools
+        case tools
+    }
  
     // MARK: - Properties
     
@@ -29,7 +35,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Published
     
-    @Published var isInitialLoad: Bool = true
+    @Published var viewState: ViewState = .loading
     @Published var sectionTitle: String = ""
     
     // MARK: - Init
@@ -84,10 +90,8 @@ extension BaseFavoriteToolsViewModel {
             .receiveOnMain()
             .sink { favoritedTools in
                 
-                withAnimation {
-                    self.tools = favoritedTools
-                    self.isInitialLoad = false
-                }
+                self.tools = favoritedTools
+                self.viewState = favoritedTools.isEmpty ? .noTools : .tools
             }
             .store(in: &cancellables)
         
