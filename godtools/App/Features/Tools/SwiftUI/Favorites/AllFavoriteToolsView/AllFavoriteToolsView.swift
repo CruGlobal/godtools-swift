@@ -35,6 +35,7 @@ struct AllFavoriteToolsView: View {
                 }
                 .listRowInsets(EdgeInsets())
             } refreshHandler: {}
+                .animation(.default, value: viewModel.tools)
         }
         .onAppear {
             viewModel.pageViewed()
