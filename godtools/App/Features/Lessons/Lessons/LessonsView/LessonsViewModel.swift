@@ -82,10 +82,8 @@ extension LessonsViewModel {
             .receiveOnMain()
             .sink { [weak self] lessons in
                 
-                withAnimation {
-                    self?.isLoading = lessons.isEmpty
-                    self?.lessons = lessons
-                }
+                self?.isLoading = lessons.isEmpty
+                self?.lessons = lessons
             }
             .store(in: &cancellables)
         
