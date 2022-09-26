@@ -66,7 +66,7 @@ class LoadingView: UIViewController {
         
         if hidden, let closeButton = closeButton {
             
-            removeBarButtonItem(item: closeButton, barPosition: .right)
+            removeBarButtonItem(item: closeButton)
             
             self.closeButton = nil
         }
