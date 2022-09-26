@@ -150,8 +150,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromAllTools(let resource):
-            navigateToToolDetail(resource: resource)
-                        
+            
+            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
+                                    
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
@@ -162,7 +163,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavoritedTools:
-            navigateToAllToolFavorites()
+            
+            navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
         case .backTappedFromAllFavoriteTools:
             navigationController.popViewController(animated: true)
@@ -171,7 +173,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .aboutToolTappedFromFavoritedTools(let resource):
-            navigateToToolDetail(resource: resource)
+            
+            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
             
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
@@ -691,7 +694,8 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToAllToolFavorites() {
+    func getAllFavoriteTools() -> UIViewController {
+        
         let viewModel = AllFavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
@@ -706,8 +710,18 @@ extension AppFlow {
             analytics: appDiContainer.analytics
         )
         
-        let view = AllFavoriteToolsHostingView(view: AllFavoriteToolsView(viewModel: viewModel))
-        navigationController.pushViewController(view, animated: true)
+        let view = AllFavoriteToolsView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController<AllFavoriteToolsView>(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromAllFavoriteTools))
+        
+        return hostingView
+    }
+    
+    @objc private func backTappedFromAllFavoriteTools() {
+        
+        navigate(step: .backTappedFromAllFavoriteTools)
     }
 }
 
@@ -715,7 +729,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToToolDetail(resource: ResourceModel) {
+    private func getToolDetails(resource: ResourceModel) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
@@ -735,9 +749,18 @@ extension AppFlow {
             
         )
         
-        let view = ToolDetailsHostingView(view: ToolDetailsView(viewModel: viewModel))
+        let view = ToolDetailsView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
+        let hostingView = UIHostingController<ToolDetailsView>(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolDetails))
+        
+        return hostingView
+    }
+    
+    @objc private func backTappedFromToolDetails() {
+        
+        navigate(step: .backTappedFromToolDetails)
     }
 }
 

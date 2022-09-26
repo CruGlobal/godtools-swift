@@ -210,11 +210,6 @@ class ToolDetailsViewModel: ObservableObject {
 
 extension ToolDetailsViewModel {
     
-    func backButtonTapped() {
-        
-        flowDelegate?.navigate(step: .backTappedFromToolDetails)
-    }
-    
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection))

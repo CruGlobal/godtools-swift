@@ -201,7 +201,7 @@ class ToolsMenuView: UIViewController {
         
         if hidden, let chooseLanguageButton = self.chooseLanguageButton {
             
-            removeBarButtonItem(item: chooseLanguageButton, barPosition: .right)
+            removeBarButtonItem(item: chooseLanguageButton)
             self.chooseLanguageButton = nil
         }
         else if !hidden && chooseLanguageButton == nil {
