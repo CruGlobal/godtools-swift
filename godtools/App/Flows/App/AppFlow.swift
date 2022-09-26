@@ -231,7 +231,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
+            if let toolsMenu = getToolsMenuInNavigationStack() {
+                
+                toolsMenu.navigateToPage(pageType: .lessons, animated: false)
+                
+                navigationController.popToViewController(toolsMenu, animated: true)
+            }
+            else {
+                
+                navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
+            }
                         
             lessonFlow = nil
             

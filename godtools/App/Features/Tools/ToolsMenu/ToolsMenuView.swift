@@ -175,7 +175,7 @@ class ToolsMenuView: UIViewController {
         toolbarView.setSelectedToolbarItem(pageType: pageType)
     }
     
-    private func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
+    func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
         
         guard toolsListsScrollView != nil else {
             return
