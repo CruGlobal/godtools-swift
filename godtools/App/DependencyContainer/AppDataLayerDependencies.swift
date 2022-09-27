@@ -78,12 +78,19 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
+        return TrackDownloadedTranslationsRepository(
+            cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             appConfig: getAppConfig(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
-            resourcesFileCache: getResourcesFileCache()
+            resourcesFileCache: getResourcesFileCache(),
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
     }
 }
