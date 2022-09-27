@@ -83,7 +83,7 @@ class ChooseLanguageView: UIViewController {
             if let deleteLanguageButton = self?.deleteLanguageButton {
                 let barPosition: ButtonItemPosition = .right
                 if hidden {
-                    self?.removeBarButtonItem(item: deleteLanguageButton, barPosition: barPosition)
+                    self?.removeBarButtonItem(item: deleteLanguageButton)
                 }
                 else {
                     self?.addBarButtonItem(item: deleteLanguageButton, barPosition: barPosition)

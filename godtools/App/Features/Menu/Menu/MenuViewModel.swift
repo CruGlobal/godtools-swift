@@ -12,7 +12,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private let config: AppConfig
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
@@ -24,11 +24,11 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: AppConfig, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    required init(flowDelegate: FlowDelegate, config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.config = config
-        self.userAuthentication = userAuthentication
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
@@ -46,8 +46,8 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     deinit {
-        userAuthentication.didAuthenticateSignal.removeObserver(self)
-        userAuthentication.didSignOutSignal.removeObserver(self)
+        oktaUserAuthentication.didAuthenticateSignal.removeObserver(self)
+        oktaUserAuthentication.didSignOutSignal.removeObserver(self)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
@@ -72,13 +72,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func setupBinding() {
         
-        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<AuthUserModelType, Error>) in
+        oktaUserAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<OktaAuthUserModel, Error>) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
         }
         
-        userAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
+        oktaUserAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
@@ -87,7 +87,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func reloadMenuDataSource() {
         
-        let isAuthorized: Bool = userAuthentication.isAuthenticated
+        let isAuthorized: Bool = oktaUserAuthentication.isAuthenticated
         
         // TODO: Disabling the account section in the menu by hardcoding to false.
         // This is until we can provide a suitable option to delete an account due to Apple guideline. See GT-1700. ~Levi
@@ -210,15 +210,15 @@ extension MenuViewModel {
     }
     
     func logoutTapped(fromViewController: UIViewController) {
-        userAuthentication.signOut(fromViewController: fromViewController)
+        oktaUserAuthentication.signOut(fromViewController: fromViewController)
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        userAuthentication.authenticate(fromViewController: fromViewController)
+        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        userAuthentication.authenticate(fromViewController: fromViewController)
+        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func shareGodToolsTapped() {

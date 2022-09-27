@@ -36,6 +36,7 @@ struct AllFavoriteToolsView: View {
                 .listRowInsets(EdgeInsets())
             } refreshHandler: {}
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.pageViewed()
         }
