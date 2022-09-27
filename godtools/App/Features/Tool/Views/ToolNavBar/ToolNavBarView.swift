@@ -195,7 +195,7 @@ class ToolNavBarView: NSObject {
         let position: ButtonItemPosition = .right
         
         if hidden, let remoteShareActiveNavItem = self.remoteShareActiveNavItem {
-            parentViewController?.removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
+            parentViewController?.removeBarButtonItem(item: remoteShareActiveNavItem)
             self.remoteShareActiveNavItem = nil
         }
         else if !hidden && remoteShareActiveNavItem == nil {

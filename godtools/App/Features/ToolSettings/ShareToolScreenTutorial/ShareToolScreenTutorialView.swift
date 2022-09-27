@@ -108,7 +108,7 @@ class ShareToolScreenTutorialView: UIViewController {
             )
         }
         else if let skipButton = skipButton {
-            hidden ? removeBarButtonItem(item: skipButton, barPosition: buttonPosition) : addBarButtonItem(item: skipButton, barPosition: buttonPosition)
+            hidden ? removeBarButtonItem(item: skipButton) : addBarButtonItem(item: skipButton, barPosition: buttonPosition)
         }
     }
     

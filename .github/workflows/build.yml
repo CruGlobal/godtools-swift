@@ -53,7 +53,7 @@ jobs:
         run: bundle install
 
       - name: Pod install
-        run: bundle exec pod install
+        run: bundle exec pod install --repo-update
 
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests
@@ -91,4 +91,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: xcode-logs
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/godtools-*/**"
+          path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"

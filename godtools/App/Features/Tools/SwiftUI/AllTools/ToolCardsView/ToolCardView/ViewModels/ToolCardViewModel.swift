@@ -149,16 +149,14 @@ extension ToolCardViewModel {
     }
     
     private func reloadParallelLanguageName(_ parallelLanguage: LanguageDomainModel?) {
-        guard let parallelLanguage = parallelLanguage else { return }
-
-        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
         
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
+            
         if getLanguageAvailability.isAvailable {
             
             parallelLanguageName = getLanguageAvailability.availabilityString
             
         } else {
-            
             parallelLanguageName = ""
         }
     }

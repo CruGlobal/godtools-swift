@@ -106,7 +106,8 @@ class TutorialPagerView: UIViewController {
             }
         }
         else if let skipButton = skipButton {
-            hidden ? removeBarButtonItem(item: skipButton, barPosition: skipButtonPosition) : addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
+            
+            hidden ? removeBarButtonItem(item: skipButton) : addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
         }
     }
     

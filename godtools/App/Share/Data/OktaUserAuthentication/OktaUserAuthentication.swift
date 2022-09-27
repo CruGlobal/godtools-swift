@@ -9,12 +9,17 @@
 import UIKit
 import OktaAuthentication
 
-class OktaUserAuthentication: UserAuthenticationType {
+class OktaUserAuthentication {
     
     private let oktaAuthentication: CruOktaAuthentication
         
-    let authenticatedUser: ObservableValue<AuthUserModelType?> = ObservableValue(value: nil)
-    let didAuthenticateSignal: SignalValue<Result<AuthUserModelType, Error>> = SignalValue()
+    // TODO: Deprecating these observers here.  Eventually we will need to refactor these observers out and provide use cases for authentication. ~Levi
+    
+    @available(*, deprecated)
+    let authenticatedUser: ObservableValue<OktaAuthUserModel?> = ObservableValue(value: nil)
+    @available(*, deprecated)
+    let didAuthenticateSignal: SignalValue<Result<OktaAuthUserModel, Error>> = SignalValue()
+    @available(*, deprecated)
     let didSignOutSignal: Signal = Signal()
     
     required init(oktaAuthentication: CruOktaAuthentication) {
@@ -22,9 +27,13 @@ class OktaUserAuthentication: UserAuthenticationType {
         self.oktaAuthentication = oktaAuthentication
     }
     
+    var isAuthenticated: Bool {
+        return authenticatedUser.value != nil
+    }
+    
     private func handleAuthenticationCompleteWithAccessToken(accessToken: OktaAccessToken) {
         
-        getAuthenticatedUser { [weak self] (result: Result<AuthUserModelType, Error>) in
+        getAuthenticatedUser { [weak self] (result: Result<OktaAuthUserModel, Error>) in
             
             switch result {
            
@@ -105,7 +114,7 @@ class OktaUserAuthentication: UserAuthenticationType {
         }
     }
     
-    func getAuthenticatedUser(completion: @escaping ((_ result: Result<AuthUserModelType, Error>) -> Void)) {
+    func getAuthenticatedUser(completion: @escaping ((_ result: Result<OktaAuthUserModel, Error>) -> Void)) {
         
         oktaAuthentication.getAuthorizedUserJsonObject { [weak self] (result: Result<[String: Any], OktaAuthenticationError>) in
             
@@ -117,7 +126,7 @@ class OktaUserAuthentication: UserAuthenticationType {
             
             case .success(let userJson):
                 
-                let authUserModel = AuthUserModel(
+                let authUserModel = OktaAuthUserModel(
                     email: userJson["email"] as? String ?? "",
                     firstName: userJson["given_name"] as? String,
                     grMasterPersonId: userJson["grMasterPersonId"] as? String,
