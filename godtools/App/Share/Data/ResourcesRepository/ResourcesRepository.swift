@@ -87,7 +87,8 @@ class ResourcesRepository {
                     resourcesRemoved: [],
                     translationsRemoved: [],
                     attachmentsRemoved: [],
-                    latestAttachmentFiles: []
+                    latestAttachmentFiles: [],
+                    downloadedTranslationsRemoved: []
                 )
             })
             .catch({ (error: Error) in

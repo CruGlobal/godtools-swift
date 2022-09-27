@@ -182,10 +182,16 @@ class RealmResourcesCacheSync {
                     
                     return true
                 })
+                
+                //
+                
+                let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
+                let downloadedTranslationsToRemove: [RealmDownloadedTranslation] = Array(realm.objects(RealmDownloadedTranslation.self).filter("id IN %@", translationIdsToRemove))
 
                 let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
                 let translationsRemoved: [TranslationModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationModel(model: $0)})
                 let attachmentsRemoved: [AttachmentModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentModel(model: $0)})
+                let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(model: $0)})
                 
                 // delete realm objects that no longer exist
                 var realmObjectsToRemove: [Object] = Array()
@@ -193,7 +199,8 @@ class RealmResourcesCacheSync {
                 realmObjectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
                 realmObjectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
                 realmObjectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
-
+                realmObjectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
+                
                 do {
                     
                     try realm.write {
@@ -206,7 +213,8 @@ class RealmResourcesCacheSync {
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
                         attachmentsRemoved: attachmentsRemoved,
-                        latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)
+                        latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values),
+                        downloadedTranslationsRemoved: downloadedTranslationsRemoved
                     )
                     
                     promise(.success(syncResult))
