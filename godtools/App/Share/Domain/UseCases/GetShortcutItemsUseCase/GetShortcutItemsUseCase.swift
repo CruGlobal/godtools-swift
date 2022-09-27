@@ -12,19 +12,17 @@ import RealmSwift
 
 class GetShortcutItemsUseCase {
     
-    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
+    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let maxShortcutItems: Int = 4
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, translationsRepository: TranslationsRepository) {
      
-        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
+        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
     }
     
@@ -35,13 +33,9 @@ class GetShortcutItemsUseCase {
         let primaryLanguageCode: String = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier ?? "en"
         let parallelLanguageCode: String? = getSettingsParallelLanguageUseCase.getParallelLanguage()?.localeIdentifier
         
-        let favoritedResources: [FavoritedResourceModel] = getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModels()
+        let favoritedTools: [ToolDomainModel] = getAllFavoritedToolsUseCase.getFavoritedTools()
         
-        for favoritedResource in favoritedResources {
-                        
-            guard let resource = resourcesRepository.getResource(id: favoritedResource.resourceId) else {
-                continue
-            }
+        for favoritedTool in favoritedTools {
             
             guard shortcutItems.count < maxShortcutItems else {
                 break
@@ -49,7 +43,7 @@ class GetShortcutItemsUseCase {
             
             let shortcutItem = ToolShortcutItem.shortcutItem(
                 translationsRepository: translationsRepository,
-                resource: resource,
+                tool: favoritedTool,
                 primaryLanguageCode: primaryLanguageCode,
                 parallelLanguageCode: parallelLanguageCode
             )
