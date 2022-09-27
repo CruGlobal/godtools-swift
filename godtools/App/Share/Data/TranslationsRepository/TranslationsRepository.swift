@@ -35,6 +35,37 @@ class TranslationsRepository {
     func getTranslations(ids: [String]) -> [TranslationModel] {
         return cache.getTranslations(ids: ids)
     }
+    
+    func getLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
+    }
+    
+    func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
+        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
+    }
+    
+    private func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+        
+        let translationsSortedByLatestVersion: [TranslationModel] = cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)
+        
+        for translation in translationsSortedByLatestVersion {
+            
+            let translationIsDownloaded: Bool
+            
+            if let downloadedTranslation = trackDownloadedTranslationsRepository.getDownloadedTranslation(translationId: translation.id) {
+                translationIsDownloaded = downloadedTranslation.manifestAndRelatedFilesPersistedToDevice
+            }
+            else {
+                translationIsDownloaded = false
+            }
+            
+            if translationIsDownloaded {
+                return translation
+            }
+        }
+        
+        return nil
+    }
 }
 
 // MARK: - Fetching Translation Manifests and Related Files By Manifest Parser Type From Cache
@@ -87,10 +118,16 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
+    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
        
         let requests = translations.map {
-            self.getTranslationManifestFromRemote(translation: $0, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+            
+            self.getTranslationManifestFromRemote(
+                translation: $0,
+                manifestParserType: manifestParserType,
+                includeRelatedFiles: includeRelatedFiles,
+                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+            )
         }
         
         return Publishers.MergeMany(requests)
@@ -113,7 +150,7 @@ extension TranslationsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
+    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
         
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
@@ -149,16 +186,34 @@ extension TranslationsRepository {
                     .eraseToAnyPublisher()
             })
             .catch({ (error: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                
-                return self.downloadAndCacheTranslationZipFiles(translation: translation)
-                    .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                        return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                            .mapError({ error in
-                                return .otherError(error: error)
-                            })
-                            .eraseToAnyPublisher()
+                                
+                if includeRelatedFiles && shouldFallbackToLatestDownloadedTranslationIfRemoteFails,
+                   let resourceId = translation.resource?.id,
+                   let languageId = translation.language?.id,
+                   let latestDownloadedTranslation = self.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+                 
+                    return self.getTranslationManifestFromCache(
+                        translation: latestDownloadedTranslation,
+                        manifestParserType: manifestParserType,
+                        includeRelatedFiles: includeRelatedFiles
+                    )
+                    .mapError({ error in
+                        return URLResponseError.otherError(error: error)
                     })
                     .eraseToAnyPublisher()
+                }
+                else {
+                    
+                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                        .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                            return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                                .mapError({ error in
+                                    return .otherError(error: error)
+                                })
+                                .eraseToAnyPublisher()
+                        })
+                        .eraseToAnyPublisher()
+                }
             })
             .eraseToAnyPublisher()
     }

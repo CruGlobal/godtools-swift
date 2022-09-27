@@ -62,7 +62,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
             
             for language in languages {
                 
-                guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
+                guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
                     continue
                 }
                 

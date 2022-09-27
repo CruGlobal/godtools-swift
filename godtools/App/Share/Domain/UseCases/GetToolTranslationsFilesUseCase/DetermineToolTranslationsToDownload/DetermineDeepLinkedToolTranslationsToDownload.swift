@@ -13,13 +13,15 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     private let toolDeepLink: ToolDeepLink
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
+    private let translationsRepository: TranslationsRepository
     private let primaryLanguage: LanguageDomainModel?
         
-    required init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, primaryLanguage: LanguageDomainModel?) {
+    required init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, primaryLanguage: LanguageDomainModel?) {
         
         self.toolDeepLink = toolDeepLink
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
+        self.translationsRepository = translationsRepository
         self.primaryLanguage = primaryLanguage
     }
     
@@ -57,11 +59,11 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         if let primaryTranslation = primaryTranslation {
             return primaryTranslation
         }
-        else if let primaryLanguageId = primaryLanguage?.dataModelId, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) {
+        else if let primaryLanguageId = primaryLanguage?.dataModelId, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) {
             
             return primaryTranslation
         }
-        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
             
             return englishTranslation
         }
@@ -95,7 +97,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         
         for languageId in languageIds {
             
-            guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 continue
             }
             

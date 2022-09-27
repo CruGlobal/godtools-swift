@@ -26,6 +26,7 @@ extension ToolNavigationFlow {
             toolDeepLink: toolDeepLink,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             primaryLanguage: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()
         )
         
@@ -63,7 +64,8 @@ extension ToolNavigationFlow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
             languageIds: languageIds,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(

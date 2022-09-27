@@ -16,14 +16,16 @@ class GetShortcutItemsUseCase {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let maxShortcutItems: Int = 4
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
      
         self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
     func getShortcutItems() -> [UIApplicationShortcutItem] {
@@ -46,7 +48,7 @@ class GetShortcutItemsUseCase {
             }
             
             let shortcutItem = ToolShortcutItem.shortcutItem(
-                resourcesRepository: resourcesRepository,
+                translationsRepository: translationsRepository,
                 resource: resource,
                 primaryLanguageCode: primaryLanguageCode,
                 parallelLanguageCode: parallelLanguageCode
