@@ -17,13 +17,15 @@ class TranslationsRepository {
     private let api: MobileContentTranslationsApi
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
+    private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(appConfig: AppConfig, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(appConfig: AppConfig, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.appConfig = appConfig
         self.api = api
         self.cache = cache
         self.resourcesFileCache = resourcesFileCache
+        self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
     func getTranslation(id: String) -> TranslationModel? {
@@ -198,9 +200,11 @@ extension TranslationsRepository {
                 
                 return Publishers.MergeMany(requests)
                     .collect()
-                    .map { files in
-                        return TranslationFilesDataModel(files: files, translation: translation)
-                    }
+                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                        
+                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
+                            .eraseToAnyPublisher()
+                    })
                     .eraseToAnyPublisher()
             })
             .catch({ (error: URLResponseError) in
@@ -269,12 +273,34 @@ extension TranslationsRepository {
             .flatMap({ responseObject -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
                 
                 return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: responseObject.data)
-                    .mapError { error in
+                    .mapError({ error in
+                        
                         return .otherError(error: error)
-                    }
-                    .map { files in
-                        return TranslationFilesDataModel(files: files, translation: translation)
-                    }
+                    })
+                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                        
+                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
+                            .eraseToAnyPublisher()
+                    })
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Completed Downloading Translation And Related Files
+
+extension TranslationsRepository {
+    
+    private func didDownloadTranslationAndRelatedFiles(translation: TranslationModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, URLResponseError> {
+        
+        return trackDownloadedTranslationsRepository.trackTranslationDownloaded(translationId: translation.id)
+            .mapError({ error in
+                return .otherError(error: error)
+            })
+            .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                
+                return Just(TranslationFilesDataModel(files: files, translation: translation)).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
