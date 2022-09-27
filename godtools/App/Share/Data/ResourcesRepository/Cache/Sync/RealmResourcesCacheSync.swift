@@ -29,33 +29,36 @@ class RealmResourcesCacheSync {
 
             self.realmDatabase.background { (realm: Realm) in
                 
+                var newRealmObjectsToStore: [Object] = Array()
+                
                 var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
                 var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
                 
                 var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
                 
-                var realmObjectsToCache: [Object] = Array()
-                
                 // parse resources
                 
-                var resourceIdsRemoved: [String] = Array(realm.objects(RealmResource.self)).map({$0.id})
+                var existingResourcesMinusNewlyAddedResources: [RealmResource] = Array(realm.objects(RealmResource.self))
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.resources.isEmpty {
                     
-                    for resource in resourcesPlusLatestTranslationsAndAttachments.resources {
+                    for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                         
                         let realmResource = RealmResource()
-                        realmResource.mapFrom(model: resource)
+                        realmResource.mapFrom(model: newResource)
                         realmResourcesDictionary[realmResource.id] = realmResource
-                        realmObjectsToCache.append(realmResource)
                         
-                        if let index = resourceIdsRemoved.firstIndex(of: resource.id) {
-                            resourceIdsRemoved.remove(at: index)
+                        newRealmObjectsToStore.append(realmResource)
+                        
+                        if let index = existingResourcesMinusNewlyAddedResources.firstIndex(where: { $0.id == newResource.id }) {
+                            
+                            existingResourcesMinusNewlyAddedResources.remove(at: index)
                         }
                     }
                 }
                 else {
-                    resourceIdsRemoved = []
+                    
+                    existingResourcesMinusNewlyAddedResources = []
                 }
                 
                 // parse latest translations
@@ -78,7 +81,8 @@ class RealmResourcesCacheSync {
                         }
                         
                         realmTranslationsDictionary[realmTranslation.id] = realmTranslation
-                        realmObjectsToCache.append(realmTranslation)
+                        
+                        newRealmObjectsToStore.append(realmTranslation)
                         
                         if let index = translationIdsRemoved.firstIndex(of: translation.id) {
                             translationIdsRemoved.remove(at: index)
@@ -104,7 +108,7 @@ class RealmResourcesCacheSync {
                             realmAttachment.resource = realmResourcesDictionary[resourceId]
                         }
                         
-                        realmObjectsToCache.append(realmAttachment)
+                        newRealmObjectsToStore.append(realmAttachment)
                         
                         let sha256WithPathExtension: String = realmAttachment.sha256FileLocation.sha256WithPathExtension
                         
@@ -148,26 +152,28 @@ class RealmResourcesCacheSync {
                     }
                 }
                 
+                let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
+                
                 // delete realm objects that no longer exist
                 var realmObjectsToRemove: [Object] = Array()
                 
-                let resourcesToRemove: [RealmResource] = Array(realm.objects(RealmResource.self).filter("id IN %@", resourceIdsRemoved))
                 let translationsToRemove: [RealmTranslation] = Array(realm.objects(RealmTranslation.self).filter("id IN %@", translationIdsRemoved))
                 let attachmentsToRemove: [RealmAttachment] = Array(realm.objects(RealmAttachment.self).filter("id IN %@", attachmentIdsRemoved))
                 
-                realmObjectsToRemove.append(contentsOf: resourcesToRemove)
+                realmObjectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
                 realmObjectsToRemove.append(contentsOf: translationsToRemove)
                 realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
 
                 do {
+                    
                     try realm.write {
-                        realm.add(realmObjectsToCache, update: .all)
+                        realm.add(newRealmObjectsToStore, update: .all)
                         realm.delete(realmObjectsToRemove)
                     }
                     
                     let syncResult = RealmResourcesCacheSyncResult(
                         languagesSyncResult: languagesSyncResult,
-                        resourceIdsRemoved: resourceIdsRemoved,
+                        resourcesRemoved: resourcesRemoved,
                         translationIdsRemoved: translationIdsRemoved,
                         attachmentIdsRemoved: attachmentIdsRemoved,
                         latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)

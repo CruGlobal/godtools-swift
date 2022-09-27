@@ -11,7 +11,7 @@ import Foundation
 struct RealmResourcesCacheSyncResult {
     
     let languagesSyncResult: RealmLanguagesCacheSyncResult
-    let resourceIdsRemoved: [String]
+    let resourcesRemoved: [ResourceModel]
     let translationIdsRemoved: [String]
     let attachmentIdsRemoved: [String]
     let latestAttachmentFiles: [AttachmentFile]
