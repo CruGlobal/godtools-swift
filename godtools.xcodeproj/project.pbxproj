@@ -1063,7 +1063,6 @@
 		D471CFD528BD458B00DCE61C /* GetToolCategoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD428BD458B00DCE61C /* GetToolCategoriesUseCase.swift */; };
 		D471CFD828BD460300DCE61C /* ToolCategoryDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD728BD460300DCE61C /* ToolCategoryDomainModel.swift */; };
 		D471CFDA28CB867700DCE61C /* ToolCategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD928CB867700DCE61C /* ToolCategoryType.swift */; };
-		D471CFDF28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */; };
 		D471CFE328CFB86B00DCE61C /* GetLessonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */; };
 		D471CFE628CFBBAC00DCE61C /* GetLessonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE528CFBBAC00DCE61C /* GetLessonUseCase.swift */; };
 		D471CFE828CFBBD100DCE61C /* LessonDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */; };
@@ -2210,7 +2209,6 @@
 		D471CFD428BD458B00DCE61C /* GetToolCategoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolCategoriesUseCase.swift; sourceTree = "<group>"; };
 		D471CFD728BD460300DCE61C /* ToolCategoryDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoryDomainModel.swift; sourceTree = "<group>"; };
 		D471CFD928CB867700DCE61C /* ToolCategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCategoryType.swift; sourceTree = "<group>"; };
-		D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedResourceModelsUseCase.swift; sourceTree = "<group>"; };
 		D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsUseCase.swift; sourceTree = "<group>"; };
 		D471CFE528CFBBAC00DCE61C /* GetLessonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonUseCase.swift; sourceTree = "<group>"; };
 		D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDomainModel.swift; sourceTree = "<group>"; };
@@ -6071,7 +6069,6 @@
 			children = (
 				453C1BD92899A889007332E2 /* AddToolToFavoritesUseCase */,
 				D42FEBE2287617F70002FAD9 /* DisableOptInOnboardingBannerUseCase */,
-				D471CFE028CF7C4400DCE61C /* GetAllFavoritedResourceModelsUseCase */,
 				45D9608B289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase */,
 				45D96088289B871A001A5A3E /* GetAllFavoritedToolsUseCase */,
 				D471CFCD28B66E8400DCE61C /* GetAllToolsUseCase */,
@@ -6862,14 +6859,6 @@
 				D471CFD928CB867700DCE61C /* ToolCategoryType.swift */,
 			);
 			path = GetToolCategoriesUseCase;
-			sourceTree = "<group>";
-		};
-		D471CFE028CF7C4400DCE61C /* GetAllFavoritedResourceModelsUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D471CFDE28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift */,
-			);
-			path = GetAllFavoritedResourceModelsUseCase;
 			sourceTree = "<group>";
 		};
 		D471CFE128CFB85B00DCE61C /* GetLessonsUseCase */ = {
@@ -8329,7 +8318,6 @@
 				45AD1FDA25938A9800A096A0 /* WebArchiveOperation.swift in Sources */,
 				45AE973D27C97A9400C2CB33 /* MultiplatformCard.swift in Sources */,
 				45AD1FEA25938A9800A096A0 /* InitialDataDownloader.swift in Sources */,
-				D471CFDF28CF7BD800DCE61C /* GetAllFavoritedResourceModelsUseCase.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				45AD1BCE25938A4F00A096A0 /* Locale+Extensions.swift in Sources */,
 				45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
