@@ -13,6 +13,6 @@ struct RealmResourcesCacheSyncResult {
     let languagesSyncResult: RealmLanguagesCacheSyncResult
     let resourcesRemoved: [ResourceModel]
     let translationsRemoved: [TranslationModel]
-    let attachmentIdsRemoved: [String]
+    let attachmentsRemoved: [AttachmentModel]
     let latestAttachmentFiles: [AttachmentFile]
 }

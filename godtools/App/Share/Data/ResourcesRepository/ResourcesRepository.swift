@@ -86,7 +86,7 @@ class ResourcesRepository {
                     languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
                     resourcesRemoved: [],
                     translationsRemoved: [],
-                    attachmentIdsRemoved: [],
+                    attachmentsRemoved: [],
                     latestAttachmentFiles: []
                 )
             })

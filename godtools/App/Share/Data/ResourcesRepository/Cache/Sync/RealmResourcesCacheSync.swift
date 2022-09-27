@@ -97,16 +97,16 @@ class RealmResourcesCacheSync {
                 
                 // parse latest attachments
                 
-                var attachmentIdsRemoved: [String] = Array(realm.objects(RealmAttachment.self)).map({$0.id})
+                var existingAttachmentsMinusNewlyAddedAttachments: [RealmAttachment] = Array(realm.objects(RealmAttachment.self))
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.attachments.isEmpty {
                     
-                    for attachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
+                    for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                         
                         let realmAttachment = RealmAttachment()
-                        realmAttachment.mapFrom(model: attachment)
+                        realmAttachment.mapFrom(model: newAttachment)
                         
-                        if let resourceId = attachment.resource?.id {
+                        if let resourceId = newAttachment.resource?.id {
                             realmAttachment.resource = realmResourcesDictionary[resourceId]
                         }
                         
@@ -127,13 +127,15 @@ class RealmResourcesCacheSync {
                             attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] = attachmentFile
                         }
                         
-                        if let index = attachmentIdsRemoved.firstIndex(of: attachment.id) {
-                            attachmentIdsRemoved.remove(at: index)
+                        if let indexOfNewAttachment = existingAttachmentsMinusNewlyAddedAttachments.firstIndex(where: { $0.id == newAttachment.id }) {
+                            
+                            existingAttachmentsMinusNewlyAddedAttachments.remove(at: indexOfNewAttachment)
                         }
                     }
                 }
                 else {
-                    attachmentIdsRemoved = []
+                    
+                    existingAttachmentsMinusNewlyAddedAttachments = []
                 }
                 
                 // add latest translations and add languages to resource
@@ -156,15 +158,14 @@ class RealmResourcesCacheSync {
                 
                 let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
                 let translationsRemoved: [TranslationModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationModel(model: $0)})
+                let attachmentsRemoved: [AttachmentModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentModel(model: $0)})
                 
                 // delete realm objects that no longer exist
                 var realmObjectsToRemove: [Object] = Array()
-                
-                let attachmentsToRemove: [RealmAttachment] = Array(realm.objects(RealmAttachment.self).filter("id IN %@", attachmentIdsRemoved))
-                
+                                
                 realmObjectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
                 realmObjectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
-                realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
+                realmObjectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
 
                 do {
                     
@@ -177,7 +178,7 @@ class RealmResourcesCacheSync {
                         languagesSyncResult: languagesSyncResult,
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
-                        attachmentIdsRemoved: attachmentIdsRemoved,
+                        attachmentsRemoved: attachmentsRemoved,
                         latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)
                     )
                     
