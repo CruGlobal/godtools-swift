@@ -14,19 +14,19 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
+    private let getLanguageUseCase: GetLanguageUseCase
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     
     private var cancellables = Set<AnyCancellable>()
     private var downloadLatestTranslationsCancellable: AnyCancellable?
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getDeviceLanguageUseCase: GetDeviceLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getLanguageUseCase: GetLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
+        self.getLanguageUseCase = getLanguageUseCase
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         
@@ -50,9 +50,9 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
               
         downloadLatestTranslationsCancellable?.cancel()
         
-        let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguage()
+        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodes.english)
         
-        let languages: [LanguageDomainModel] = [deviceLanguage.language, primaryLanguage, parallelLanguage].compactMap({
+        let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage, parallelLanguage].compactMap({
             return $0
         })
         

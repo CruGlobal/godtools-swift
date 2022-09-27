@@ -34,7 +34,7 @@ class AppDomainLayerDependencies {
             getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
+            getLanguageUseCase: getLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
         )
