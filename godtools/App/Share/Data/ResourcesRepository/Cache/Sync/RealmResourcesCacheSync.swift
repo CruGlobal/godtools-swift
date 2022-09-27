@@ -63,20 +63,20 @@ class RealmResourcesCacheSync {
                 
                 // parse latest translations
                 
-                var translationIdsRemoved: [String] = Array(realm.objects(RealmTranslation.self)).map({$0.id})
+                var existingTranslationsMinusNewlyAddedTranslations: [RealmTranslation] = Array(realm.objects(RealmTranslation.self))
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.translations.isEmpty {
                     
-                    for translation in resourcesPlusLatestTranslationsAndAttachments.translations {
+                    for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                         
                         let realmTranslation = RealmTranslation()
-                        realmTranslation.mapFrom(model: translation)
+                        realmTranslation.mapFrom(model: newTranslation)
                         
-                        if let resourceId = translation.resource?.id {
+                        if let resourceId = newTranslation.resource?.id {
                             realmTranslation.resource = realmResourcesDictionary[resourceId]
                         }
                         
-                        if let languageId = translation.language?.id {
+                        if let languageId = newTranslation.language?.id {
                             realmTranslation.language = realm.object(ofType: RealmLanguage.self, forPrimaryKey: languageId)
                         }
                         
@@ -84,13 +84,15 @@ class RealmResourcesCacheSync {
                         
                         newRealmObjectsToStore.append(realmTranslation)
                         
-                        if let index = translationIdsRemoved.firstIndex(of: translation.id) {
-                            translationIdsRemoved.remove(at: index)
+                        if let indexOfNewTranslation = existingTranslationsMinusNewlyAddedTranslations.firstIndex(where: { $0.id == newTranslation.id }) {
+                            
+                            existingTranslationsMinusNewlyAddedTranslations.remove(at: indexOfNewTranslation)
                         }
                     }
                 }
                 else {
-                    translationIdsRemoved = []
+                    
+                    existingTranslationsMinusNewlyAddedTranslations = []
                 }
                 
                 // parse latest attachments
@@ -153,15 +155,15 @@ class RealmResourcesCacheSync {
                 }
                 
                 let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
+                let translationsRemoved: [TranslationModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationModel(model: $0)})
                 
                 // delete realm objects that no longer exist
                 var realmObjectsToRemove: [Object] = Array()
                 
-                let translationsToRemove: [RealmTranslation] = Array(realm.objects(RealmTranslation.self).filter("id IN %@", translationIdsRemoved))
                 let attachmentsToRemove: [RealmAttachment] = Array(realm.objects(RealmAttachment.self).filter("id IN %@", attachmentIdsRemoved))
                 
                 realmObjectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
-                realmObjectsToRemove.append(contentsOf: translationsToRemove)
+                realmObjectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
                 realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
 
                 do {
@@ -174,7 +176,7 @@ class RealmResourcesCacheSync {
                     let syncResult = RealmResourcesCacheSyncResult(
                         languagesSyncResult: languagesSyncResult,
                         resourcesRemoved: resourcesRemoved,
-                        translationIdsRemoved: translationIdsRemoved,
+                        translationsRemoved: translationsRemoved,
                         attachmentIdsRemoved: attachmentIdsRemoved,
                         latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)
                     )
