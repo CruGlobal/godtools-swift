@@ -44,7 +44,7 @@ class TranslationsRepository {
         return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
     }
     
-    private func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> TranslationModel? {
         
         let translationsSortedByLatestVersion: [TranslationModel] = cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)
         

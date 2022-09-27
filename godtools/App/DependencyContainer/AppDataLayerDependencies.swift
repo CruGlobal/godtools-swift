@@ -83,7 +83,10 @@ class AppDataLayerDependencies {
     
     func getResourcesRepository() -> ResourcesRepository {
         
-        let sync = RealmResourcesCacheSync(realmDatabase: sharedRealmDatabase)
+        let sync = RealmResourcesCacheSync(
+            realmDatabase: sharedRealmDatabase,
+            translationsRepository: getTranslationsRepository()
+        )
         
         let api = MobileContentResourcesApi(
             config: getAppConfig(),

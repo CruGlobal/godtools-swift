@@ -17,10 +17,12 @@ class RealmResourcesCacheSync {
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
+    private let translationsRepository: TranslationsRepository
     
-    required init(realmDatabase: RealmDatabase) {
+    required init(realmDatabase: RealmDatabase, translationsRepository: TranslationsRepository) {
         
         self.realmDatabase = realmDatabase
+        self.translationsRepository = translationsRepository
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
@@ -36,7 +38,7 @@ class RealmResourcesCacheSync {
                 
                 var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
                 
-                // parse resources
+                // sync new resourecs
                 
                 var existingResourcesMinusNewlyAddedResources: [RealmResource] = Array(realm.objects(RealmResource.self))
                 
@@ -61,7 +63,7 @@ class RealmResourcesCacheSync {
                     existingResourcesMinusNewlyAddedResources = []
                 }
                 
-                // parse latest translations
+                // sync new translations
                 
                 var existingTranslationsMinusNewlyAddedTranslations: [RealmTranslation] = Array(realm.objects(RealmTranslation.self))
                 
@@ -95,7 +97,7 @@ class RealmResourcesCacheSync {
                     existingTranslationsMinusNewlyAddedTranslations = []
                 }
                 
-                // parse latest attachments
+                // sync new attachments
                 
                 var existingAttachmentsMinusNewlyAddedAttachments: [RealmAttachment] = Array(realm.objects(RealmAttachment.self))
                 
@@ -138,7 +140,8 @@ class RealmResourcesCacheSync {
                     existingAttachmentsMinusNewlyAddedAttachments = []
                 }
                 
-                // add latest translations and add languages to resource
+                // attach latest translations and attach languages to newly added resources
+                
                 for ( _, realmResource) in realmResourcesDictionary {
                     for translationId in realmResource.latestTranslationIds {
                         
@@ -156,6 +159,30 @@ class RealmResourcesCacheSync {
                     }
                 }
                 
+                // filter latest downloaded translations from translations to delete
+                
+                existingTranslationsMinusNewlyAddedTranslations = existingTranslationsMinusNewlyAddedTranslations.filter({
+                                        
+                    guard let resourceId = $0.resource?.id else {
+                        return true
+                    }
+                    
+                    guard let languageId = $0.language?.id else {
+                        return true
+                    }
+                    
+                    let latestDownloadedTranslation: TranslationModel? = self.translationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                    
+                    let translationIsLatestDownloadedTranslation: Bool = latestDownloadedTranslation?.id == $0.id
+                    
+                    if translationIsLatestDownloadedTranslation {
+                        
+                        return false
+                    }
+                    
+                    return true
+                })
+
                 let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
                 let translationsRemoved: [TranslationModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationModel(model: $0)})
                 let attachmentsRemoved: [AttachmentModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentModel(model: $0)})
