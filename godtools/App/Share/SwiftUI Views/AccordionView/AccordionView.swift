@@ -16,12 +16,12 @@ struct AccordionView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 0) {
             
             SeparatorView()
             
             HStack {
-                Text("Conversation Starters")
+                Text(viewModel.sectionTitle)
                     .font(FontLibrary.sfProTextBold.font(size: 14))
                     .foregroundColor(ColorPalette.gtGrey.color)
                 
@@ -31,11 +31,19 @@ struct AccordionView: View {
                     .padding(.trailing, 15)
                 
             }
+            .padding([.top, .bottom], 15)
+            .onTapGesture {
+                viewModel.isExpanded.toggle()
+            }
+            
+            if viewModel.isExpanded {
+                Text(viewModel.sectionContents)
+                    .font(FontLibrary.sfProTextRegular.font(size: 15))
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .padding(.bottom, 15)
+            }
             
             SeparatorView()
-        }
-        .onTapGesture {
-            viewModel.isExpanded.toggle()
         }
         .animation(.default, value: viewModel.isExpanded)
     }
@@ -43,7 +51,12 @@ struct AccordionView: View {
 
 struct AccordionView_Previews: PreviewProvider {
     static var previews: some View {
-        AccordionView(viewModel: AccordionViewModel())
-            .padding()
+        VStack {
+            
+            AccordionView(viewModel: AccordionViewModel())
+                .padding()
+            
+            Spacer()
+        }
     }
 }
