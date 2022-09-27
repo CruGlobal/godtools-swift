@@ -19,15 +19,24 @@ struct ToolCategoryButtonView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             RoundedCardBackgroundView()
+                .frame(width: 160, height: 74)
             
-            Text(viewModel.categoryText)
-                .foregroundColor(viewModel.greyOutText ? Color.gray : ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextBold.font(size: 18))
-                .lineLimit(2)
-                .minimumScaleFactor(0.5)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding([.leading, .trailing], 20)
-                .padding([.top, .bottom], 15)
+            VStack {
+                Spacer(minLength: 0)
+                Spacer(minLength: 0)
+                
+                Text(viewModel.categoryText)
+                    .foregroundColor(viewModel.greyOutText ? Color.gray : ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextBold.font(size: 18))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.5)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding([.leading, .trailing], 20)
+                
+                Spacer(minLength: 0)
+                Spacer(minLength: 0)
+                Spacer(minLength: 0)
+            }
         }
         .frame(width: 160, height: 74)
         .modifier(OptionalRoundedBorder(showBorder: $viewModel.showBorder, color: ColorPalette.gtBlue.color))
