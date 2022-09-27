@@ -83,7 +83,7 @@ class ResourcesRepository {
             .map({ result in
                     
                 return RealmResourcesCacheSyncResult(
-                    languagesSyncResult: RealmLanguagesCacheSyncResult(languageIdsRemoved: []),
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
                     resourceIdsRemoved: [],
                     translationIdsRemoved: [],
                     attachmentIdsRemoved: [],

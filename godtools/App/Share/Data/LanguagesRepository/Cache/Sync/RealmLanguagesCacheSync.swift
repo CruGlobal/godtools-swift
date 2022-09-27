@@ -11,7 +11,7 @@ import RealmSwift
 import Combine
 
 class RealmLanguagesCacheSync {
-    
+        
     private let realmDatabase: RealmDatabase
 
     init(realmDatabase: RealmDatabase) {
@@ -26,7 +26,8 @@ class RealmLanguagesCacheSync {
             self.realmDatabase.background { (realm: Realm) in
                 
                 var newLanguagesToStore: [Object] = Array()
-                var existingLanguagesMinusNewlyAddedLanguages: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
+                
+                var existingLanguagesMinusNewlyAddedLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
                 
                 for newLanguage in languages {
                     
@@ -34,22 +35,21 @@ class RealmLanguagesCacheSync {
                     realmLanguage.mapFrom(model: newLanguage)
                     newLanguagesToStore.append(realmLanguage)
                     
-                    if let indexOfNewLanguage = existingLanguagesMinusNewlyAddedLanguages.firstIndex(of: newLanguage.id) {
+                    if let indexOfNewLanguage = existingLanguagesMinusNewlyAddedLanguages.firstIndex(where: { $0.id == newLanguage.id }) {
+                        
                         existingLanguagesMinusNewlyAddedLanguages.remove(at: indexOfNewLanguage)
                     }
                 }
-                
-                let languagesToRemove: [RealmLanguage] = Array(realm.objects(RealmLanguage.self).filter("id IN %@", existingLanguagesMinusNewlyAddedLanguages))
-                                
+                                                
                 do {
                     
                     try realm.write {
                         realm.add(newLanguagesToStore, update: .all)
-                        realm.delete(languagesToRemove)
+                        realm.delete(existingLanguagesMinusNewlyAddedLanguages)
                     }
                     
                     let result = RealmLanguagesCacheSyncResult(
-                        languageIdsRemoved: existingLanguagesMinusNewlyAddedLanguages
+                        languagesRemoved: existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
                     )
                     
                     promise(.success(result))
