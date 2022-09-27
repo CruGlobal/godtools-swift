@@ -48,9 +48,22 @@ class AppDataLayerDependencies {
     }
     
     func getLanguagesRepository() -> LanguagesRepository {
+        
+        let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
+        
+        let api = MobileContentLanguagesApi(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = RealmLanguagesCache(
+            realmDatabase: sharedRealmDatabase,
+            languagesSync: sync
+        )
+        
         return LanguagesRepository(
-            api: MobileContentLanguagesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
-            cache: RealmLanguagesCache(realmDatabase: sharedRealmDatabase)
+            api: api,
+            cache: cache
         )
     }
     
@@ -69,9 +82,22 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesRepository() -> ResourcesRepository {
+        
+        let sync = RealmResourcesCacheSync(realmDatabase: sharedRealmDatabase)
+        
+        let api = MobileContentResourcesApi(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = RealmResourcesCache(
+            realmDatabase: sharedRealmDatabase,
+            resourcesSync: sync
+        )
+        
         return ResourcesRepository(
-            api: MobileContentResourcesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
-            cache: RealmResourcesCache(realmDatabase: sharedRealmDatabase),
+            api: api,
+            cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             translationsRepository: getTranslationsRepository(),
             languagesRepository: getLanguagesRepository()

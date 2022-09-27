@@ -15,10 +15,10 @@ class RealmResourcesCache {
     private let realmDatabase: RealmDatabase
     private let resourcesSync: RealmResourcesCacheSync
         
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, resourcesSync: RealmResourcesCacheSync) {
         
         self.realmDatabase = realmDatabase
-        self.resourcesSync = RealmResourcesCacheSync(realmDatabase: realmDatabase)
+        self.resourcesSync = resourcesSync
     }
     
     var numberOfResources: Int {
