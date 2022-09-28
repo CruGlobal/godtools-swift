@@ -175,7 +175,7 @@ class ToolsMenuView: UIViewController {
         toolbarView.setSelectedToolbarItem(pageType: pageType)
     }
     
-    private func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
+    func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
         
         guard toolsListsScrollView != nil else {
             return
@@ -201,7 +201,7 @@ class ToolsMenuView: UIViewController {
         
         if hidden, let chooseLanguageButton = self.chooseLanguageButton {
             
-            removeBarButtonItem(item: chooseLanguageButton, barPosition: .right)
+            removeBarButtonItem(item: chooseLanguageButton)
             self.chooseLanguageButton = nil
         }
         else if !hidden && chooseLanguageButton == nil {

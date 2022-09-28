@@ -52,15 +52,6 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     }
 }
 
-// MARK: - Public
-
-extension AllFavoriteToolsViewModel {
-    
-    func backButtonTapped() {
-        closePage()
-    }
-}
-
 // MARK: - Private
 
 extension AllFavoriteToolsViewModel {

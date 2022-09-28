@@ -41,7 +41,7 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             config: appDiContainer.dataLayer.getAppConfig(),
-            userAuthentication: appDiContainer.userAuthentication,
+            oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
@@ -91,7 +91,7 @@ class MenuFlow: Flow {
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(
-                userAuthentication: appDiContainer.userAuthentication,
+                oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
                 globalActivityServices: appDiContainer.globalActivityServices,
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics

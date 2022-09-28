@@ -79,7 +79,7 @@ class ArticleWebView: UIViewController {
             if let shareButton = self?.shareButton {
                 let shareButtonPosition = ButtonItemPosition.right
                 if hidesShareButton {
-                    self?.removeBarButtonItem(item: shareButton, barPosition: shareButtonPosition)
+                    self?.removeBarButtonItem(item: shareButton)
                 }
                 else {
                     self?.addBarButtonItem(item: shareButton, barPosition: shareButtonPosition)

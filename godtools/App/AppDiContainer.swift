@@ -18,7 +18,7 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let userAuthentication: UserAuthenticationType
+    let oktaUserAuthentication: OktaUserAuthentication
     let favoritedResourcesCache: FavoritedResourcesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
@@ -43,7 +43,7 @@ class AppDiContainer {
         let config: AppConfig = dataLayer.getAppConfig()
         
         let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
-        userAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
+        oktaUserAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
         
@@ -76,8 +76,8 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, userAuthentication: userAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, userAuthentication: userAuthentication, loggingEnabled: analyticsLoggingEnabled)
+            firebaseAnalytics: FirebaseAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                                                      
         globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
@@ -86,7 +86,7 @@ class AppDiContainer {
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 
-        emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, userAuthentication: userAuthentication)
+        emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
     }
     
     static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {

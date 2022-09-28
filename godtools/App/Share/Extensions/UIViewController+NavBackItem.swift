@@ -22,14 +22,6 @@ extension UIViewController {
     
     func addDefaultNavBackItem(target: Any, action: Selector) -> UIBarButtonItem? {
             
-        guard let navigationController = navigationController else {
-            return nil
-        }
-        
-        guard navigationController.viewControllers.count > 1 else {
-            return nil
-        }
-        
         navigationItem.setHidesBackButton(true, animated: false)
                 
         return addBarButtonItem(

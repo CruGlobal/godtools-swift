@@ -23,17 +23,11 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAllFavoritedResourceModelsUseCase() -> GetAllFavoritedResourceModelsUseCase {
-        return GetAllFavoritedResourceModelsUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
     func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
         )
@@ -41,9 +35,9 @@ class AppDomainLayerDependencies {
     
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getToolUseCase: getToolUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
@@ -133,7 +127,7 @@ class AppDomainLayerDependencies {
     
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()

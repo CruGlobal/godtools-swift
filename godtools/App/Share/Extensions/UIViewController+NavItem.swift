@@ -15,20 +15,7 @@ enum ButtonItemPosition {
 }
 
 extension UIViewController {
-    
-    var rightItemsCount: Int {
-        return navigationItem.rightBarButtonItems?.count ?? 0
-    }
-    
-    func setNavBarLogo(image: UIImage?) {
-        navigationItem.titleView = UIImageView(image: image)
-    }
-    
-    func hideBackBarButtonItem() {
-        navigationItem.leftBarButtonItems = nil
-        navigationItem.setHidesBackButton(true, animated: false)
-    }
-        
+  
     func addBarButtonItem(to barPosition: ButtonItemPosition, index: Int? = nil, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
         let buttonStyle: UIBarButtonItem.Style = style ?? .plain
@@ -98,24 +85,6 @@ extension UIViewController {
         
         return item
     }
-        
-    func removeBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition, index: Int? = nil) {
-        switch barPosition {
-        case .left:
-            removeLeftBarButtonItem(item: item)
-        case .right:
-            removeRightBarButtonItem(item: item)
-        }
-    }
-    
-    func removeAllBarButtonItems() {
-        
-        navigationItem.leftBarButtonItem = nil
-        navigationItem.leftBarButtonItems = Array()
-        
-        navigationItem.rightBarButtonItem = nil
-        navigationItem.rightBarButtonItems = Array()
-    }
     
     private func addLeftBarButtonItem(item: UIBarButtonItem, index: Int?) {
         if var leftItems = navigationItem.leftBarButtonItems {
@@ -133,21 +102,7 @@ extension UIViewController {
             navigationItem.leftBarButtonItem = item
         }
     }
-    
-    private func removeLeftBarButtonItem(item: UIBarButtonItem) {
-        if var leftItems = navigationItem.leftBarButtonItems {
-            if leftItems.contains(item) {
-                if let index = leftItems.firstIndex(of: item) {
-                    leftItems.remove(at: index)
-                    navigationItem.leftBarButtonItems = leftItems
-                }
-            }
-        }
-        else {
-            navigationItem.leftBarButtonItem = nil
-        }
-    }
-    
+
     private func addRightBarButtonItem(item: UIBarButtonItem, index: Int?) {
         if var rightItems = navigationItem.rightBarButtonItems {
             if !rightItems.contains(item) {
@@ -164,17 +119,40 @@ extension UIViewController {
             navigationItem.rightBarButtonItem = item
         }
     }
+}
+
+// MARK: - Removing Button Items
+
+extension UIViewController {
     
-    private func removeRightBarButtonItem(item: UIBarButtonItem) {
-        if var rightItems = navigationItem.rightBarButtonItems {
-            if rightItems.contains(item) {
-                if let index = rightItems.firstIndex(of: item) {
-                    rightItems.remove(at: index)
-                    navigationItem.rightBarButtonItems = rightItems
-                }
-            }
+    func removeAllBarButtonItems() {
+        
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItems = Array()
+        
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItems = Array()
+    }
+    
+    func removeBarButtonItem(item: UIBarButtonItem) {
+        
+        if var leadingItems = navigationItem.leftBarButtonItems, let index = leadingItems.firstIndex(of: item) {
+            
+            leadingItems.remove(at: index)
+            navigationItem.leftBarButtonItems = leadingItems
         }
-        else {
+        else if navigationItem.leftBarButtonItem == item {
+            
+            navigationItem.leftBarButtonItem = nil
+        }
+        
+        if var trailingItems = navigationItem.rightBarButtonItems, let index = trailingItems.firstIndex(of: item) {
+            
+            trailingItems.remove(at: index)
+            navigationItem.rightBarButtonItems = trailingItems
+        }
+        else if navigationItem.rightBarButtonItem == item {
+            
             navigationItem.rightBarButtonItem = nil
         }
     }
