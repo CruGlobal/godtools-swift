@@ -33,6 +33,7 @@ struct AccordionView: View {
                 
             }
             .padding([.top, .bottom], 15)
+            .contentShape(Rectangle())
             .onTapGesture {
                 isExpanded.toggle()
             }
