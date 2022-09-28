@@ -34,23 +34,7 @@ struct ToolDetailsAboutView: View {
                 .frame(height: 20)
                 .foregroundColor(.clear)
             
-            Text(viewModel.availableLanguagesTitle)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextSemibold.font(size: 17))
-            
-            Rectangle()
-                .frame(height: 10)
-                .foregroundColor(.clear)
-            
-            SeparatorView()
-            
-            Rectangle()
-                .frame(height: 10)
-                .foregroundColor(.clear)
-            
-            Text(viewModel.availableLanguagesList)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
+            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList)
         }
     }
 }
