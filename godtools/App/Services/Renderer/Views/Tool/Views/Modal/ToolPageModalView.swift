@@ -88,13 +88,11 @@ class ToolPageModalView: MobileContentView, NibBased {
     }
     
     override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
-        
-        let isFollowUpEvent: Bool = eventId == EventId.Companion().FOLLOWUP
-                
-        if viewModel.listeners.contains(eventId) && !isFollowUpEvent {
+                        
+        if viewModel.listeners.contains(eventId) {
             delegate?.toolPageModalListenerActivated(modalView: self)
         }
-        else if viewModel.dismissListeners.contains(eventId) && !isFollowUpEvent {
+        else if viewModel.dismissListeners.contains(eventId) {
             delegate?.toolPageModalDismissListenerActivated(modalView: self)
         }
         
