@@ -37,6 +37,7 @@ struct AllFavoriteToolsView: View {
             } refreshHandler: {}
                 .animation(.default, value: viewModel.tools)
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.pageViewed()
         }

@@ -95,12 +95,9 @@ extension LessonsViewModel {
     }
     
     private func setupTitle(with language: LanguageDomainModel?) {
-        guard let language = language,
-              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
-        else { return }
         
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageTitle")
-        subtitle = localizationServices.stringForBundle(bundle: languageBundle, key: "lessons.pageSubtitle")
+        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "lessons.pageSubtitle")
     }
 }
 

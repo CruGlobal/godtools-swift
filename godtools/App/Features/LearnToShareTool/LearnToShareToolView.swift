@@ -104,7 +104,7 @@ class LearnToShareToolView: UIViewController {
             )
         }
         else if let backButton = backButton {
-            hidden ? removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : addBarButtonItem(item: backButton, barPosition: backButtonPosition)
+            hidden ? removeBarButtonItem(item: backButton) : addBarButtonItem(item: backButton, barPosition: backButtonPosition)
         }
     }
     

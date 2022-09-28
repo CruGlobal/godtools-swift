@@ -10,7 +10,7 @@ import Foundation
 
 class AccountViewModel: AccountViewModelType {
     
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let analytics: AnalyticsContainer
         
     let globalActivityServices: GlobalActivityServices
@@ -21,9 +21,9 @@ class AccountViewModel: AccountViewModelType {
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(userAuthentication: UserAuthenticationType, globalActivityServices: GlobalActivityServices, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(oktaUserAuthentication: OktaUserAuthentication, globalActivityServices: GlobalActivityServices, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
-        self.userAuthentication = userAuthentication
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.globalActivityServices = globalActivityServices
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -53,7 +53,7 @@ class AccountViewModel: AccountViewModelType {
         
         isLoadingProfile.accept(value: true)
         
-        userAuthentication.getAuthenticatedUser { [weak self] (result: Result<AuthUserModelType, Error>) in
+        oktaUserAuthentication.getAuthenticatedUser { [weak self] (result: Result<OktaAuthUserModel, Error>) in
             DispatchQueue.main.async { [weak self] in
                 
                 self?.isLoadingProfile.accept(value: false)

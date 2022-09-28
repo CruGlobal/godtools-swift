@@ -89,10 +89,7 @@ extension FeaturedLessonCardsViewModel {
     }
     
     private func setupTitle(with language: LanguageDomainModel?) {
-        guard let language = language,
-              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
-        else { return }
         
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
+        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteLessons.title")
     }
 }

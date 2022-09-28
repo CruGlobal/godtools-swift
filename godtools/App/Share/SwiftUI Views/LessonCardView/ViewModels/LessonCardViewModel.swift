@@ -80,13 +80,12 @@ extension LessonCardViewModel {
     }
     
     private func reloadTitle(for primaryLanguage: LanguageDomainModel?) {
-        guard let primaryLanguage = primaryLanguage else { return }
 
         let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let titleValue: String
         
-        if let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
         }

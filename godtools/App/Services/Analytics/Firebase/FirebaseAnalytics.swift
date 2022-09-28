@@ -13,17 +13,17 @@ import GoogleAnalytics
 class FirebaseAnalytics: NSObject {
     
     private let config: AppConfig
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: AppConfig, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
         self.config = config
-        self.userAuthentication = userAuthentication
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
         
@@ -31,7 +31,7 @@ class FirebaseAnalytics: NSObject {
     }
     
     deinit {
-        userAuthentication.authenticatedUser.removeObserver(self)
+        oktaUserAuthentication.authenticatedUser.removeObserver(self)
     }
     
     func configure() {
@@ -56,11 +56,11 @@ class FirebaseAnalytics: NSObject {
             value: config.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
-        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: AuthUserModelType?) in
+        oktaUserAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: OktaAuthUserModel?) in
             guard let weakSelf = self else {
                 return
             }
-            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.userAuthentication.isAuthenticated)
+            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.oktaUserAuthentication.isAuthenticated)
         }
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
@@ -175,7 +175,7 @@ class FirebaseAnalytics: NSObject {
         return string.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
     }
     
-    private func setUserProperties(authUser: AuthUserModelType?, isLoggedIn: Bool) {
+    private func setUserProperties(authUser: OktaAuthUserModel?, isLoggedIn: Bool) {
         assertFailureIfNotConfigured()
                                   
         let grMasterPersonID: String? = authUser?.grMasterPersonId

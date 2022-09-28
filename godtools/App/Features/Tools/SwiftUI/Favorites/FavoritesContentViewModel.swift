@@ -138,11 +138,8 @@ extension FavoritesContentViewModel {
     }
     
     private func setupTitle(with language: LanguageDomainModel?) {
-        guard let language = language,
-              let languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: language.localeIdentifier)
-        else { return }
 
-        pageTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.pageTitle")
+        pageTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.pageTitle")
     }
 }
 
