@@ -185,12 +185,58 @@ extension TranslationsRepository {
                     }
                     .eraseToAnyPublisher()
             })
-            .catch({ (error: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                                
-                if includeRelatedFiles && shouldFallbackToLatestDownloadedTranslationIfRemoteFails,
-                   let resourceId = translation.resource?.id,
-                   let languageId = translation.language?.id,
-                   let latestDownloadedTranslation = self.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+            .catch({ (urlResponseError: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                     
+                let error: Error = urlResponseError.getError()
+                
+                guard !error.requestCancelled else {
+                    
+                    return Fail(error: urlResponseError)
+                        .eraseToAnyPublisher()
+                }
+                
+                let shouldFallbackToLatestDownloadedTranslation: Bool = includeRelatedFiles && shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+                let latestDownloadedTranslation: TranslationModel?
+                
+                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resource?.id, let languageId = translation.language?.id {
+                    latestDownloadedTranslation = self.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                }
+                else {
+                    latestDownloadedTranslation = nil
+                }
+                
+                if !error.notConnectedToInternet {
+                    
+                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                        .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                            
+                            return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                                .mapError({ error in
+                                    return .otherError(error: error)
+                                })
+                                .eraseToAnyPublisher()
+                        })
+                        .catch({ (urlResponseError: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                            
+                            if let latestDownloadedTranslation = latestDownloadedTranslation {
+                             
+                                return self.getTranslationManifestFromCache(
+                                    translation: latestDownloadedTranslation,
+                                    manifestParserType: manifestParserType,
+                                    includeRelatedFiles: includeRelatedFiles
+                                )
+                                .mapError({ error in
+                                    return URLResponseError.otherError(error: error)
+                                })
+                                .eraseToAnyPublisher()
+                            }
+                            
+                            return Fail(error: urlResponseError)
+                                .eraseToAnyPublisher()
+                        })
+                        .eraseToAnyPublisher()
+                }
+                else if let latestDownloadedTranslation = latestDownloadedTranslation {
                  
                     return self.getTranslationManifestFromCache(
                         translation: latestDownloadedTranslation,
@@ -202,18 +248,9 @@ extension TranslationsRepository {
                     })
                     .eraseToAnyPublisher()
                 }
-                else {
-                    
-                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
-                        .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                            return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                                .mapError({ error in
-                                    return .otherError(error: error)
-                                })
-                                .eraseToAnyPublisher()
-                        })
-                        .eraseToAnyPublisher()
-                }
+                
+                return Fail(error: urlResponseError)
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
