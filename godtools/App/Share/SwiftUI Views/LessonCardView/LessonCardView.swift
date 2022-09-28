@@ -58,6 +58,7 @@ struct LessonCardView: View {
         .fixedSize(horizontal: true, vertical: true)
         // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
         .contentShape(Rectangle())
+        .animation(.default, value: viewModel.bannerImage)
         .onTapGesture {
             viewModel.lessonCardTapped()
         }

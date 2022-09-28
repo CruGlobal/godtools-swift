@@ -22,6 +22,8 @@ struct ToolDomainModel {
     let resource: ResourceModel
 }
 
+extension ToolDomainModel: Equatable {}
+
 extension ToolDomainModel: Identifiable {
     
     var id: String {

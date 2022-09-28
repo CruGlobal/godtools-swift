@@ -59,6 +59,7 @@ struct LessonsView: View {
                 } refreshHandler: {
                     viewModel.refreshData()
                 }
+                .animation(.default, value: viewModel.lessons)
             }
         }
     }

@@ -41,6 +41,8 @@ struct AllToolsContentView: View {
                     } refreshHandler: {
                         viewModel.refreshTools()
                     }
+                    .animation(.default, value: viewModel.toolCardsViewModel.tools)
+
                 }
             }
         }
