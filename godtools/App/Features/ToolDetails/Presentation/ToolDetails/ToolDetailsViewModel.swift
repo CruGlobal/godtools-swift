@@ -136,7 +136,7 @@ class ToolDetailsViewModel: ObservableObject {
         segments = segmentTypes.map({
             switch $0 {
             case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "about")
+                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
             case .versions:
                 return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
             }
