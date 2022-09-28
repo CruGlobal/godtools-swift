@@ -11,6 +11,7 @@ import Combine
 
 class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     
+    private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let favoritedResourcesRepository: FavoritedResourcesRepository
@@ -20,8 +21,9 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     private var cancellables = Set<AnyCancellable>()
     private var downloadLatestTranslationsCancellable: AnyCancellable?
     
-    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
+        self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.favoritedResourcesRepository = favoritedResourcesRepository
@@ -50,7 +52,9 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
               
         downloadLatestTranslationsCancellable?.cancel()
         
-        let languages: [LanguageDomainModel] = [primaryLanguage, parallelLanguage].compactMap({
+        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodes.english)
+        
+        let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage, parallelLanguage].compactMap({
             return $0
         })
         
