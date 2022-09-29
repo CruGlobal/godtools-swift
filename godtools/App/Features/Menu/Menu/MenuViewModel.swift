@@ -291,7 +291,7 @@ extension MenuViewModel {
             localizedKey = "language_settings"
             
         case .about:
-            localizedKey = "about"
+            localizedKey = "aboutApp.navTitle"
             
         case .help:
             localizedKey = "help"
