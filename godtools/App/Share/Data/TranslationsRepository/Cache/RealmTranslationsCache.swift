@@ -35,4 +35,31 @@ class RealmTranslationsCache {
                 TranslationModel(model: $0)
             }
     }
+    
+    func getTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [TranslationModel] {
+        
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+            
+            return Array()
+        }
+        
+        return realmResource.latestTranslations
+            .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
+            .map({ TranslationModel(model: $0 )})
+        
+    }
+    
+    func getTranslationsSortedByLatestVersion(resourceId: String, languageCode: String) -> [TranslationModel] {
+        
+        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+           
+            return Array()
+        }
+        
+        return realmResource.latestTranslations
+            .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
+            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
+            .map({ TranslationModel(model: $0 )})
+    }
 }

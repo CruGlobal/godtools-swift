@@ -13,10 +13,12 @@ import Combine
 class RealmLanguagesCache {
     
     private let realmDatabase: RealmDatabase
+    private let languagesSync: RealmLanguagesCacheSync
 
-    required init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, languagesSync: RealmLanguagesCacheSync) {
         
         self.realmDatabase = realmDatabase
+        self.languagesSync = languagesSync
     }
     
     var numberOfLanguages: Int {
@@ -67,45 +69,6 @@ class RealmLanguagesCache {
         
     func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
 
-        return Future() { promise in
-
-            self.realmDatabase.background { (realm: Realm) in
-                
-                var languagesToStore: [Object] = Array()
-                var languageIdsRemoved: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
-                
-                for language in languages {
-                    
-                    let realmLanguage: RealmLanguage = RealmLanguage()
-                    realmLanguage.mapFrom(model: language)
-                    languagesToStore.append(realmLanguage)
-                    
-                    if let index = languageIdsRemoved.firstIndex(of: language.id) {
-                        languageIdsRemoved.remove(at: index)
-                    }
-                }
-                
-                let languagesToRemove: [RealmLanguage] = Array(realm.objects(RealmLanguage.self).filter("id IN %@", languageIdsRemoved))
-                                
-                do {
-                    
-                    try realm.write {
-                        realm.add(languagesToStore, update: .all)
-                        realm.delete(languagesToRemove)
-                    }
-                    
-                    let result = RealmLanguagesCacheSyncResult(
-                        languageIdsRemoved: languageIdsRemoved
-                    )
-                    
-                    promise(.success(result))
-                }
-                catch let error {
-                    
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return languagesSync.syncLanguages(languages: languages)
     }
 }

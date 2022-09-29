@@ -13,12 +13,12 @@ class GetToolUseCase {
     
     private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     
-    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
         self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
     func getTool(resource: ResourceModel) -> ToolDomainModel {
@@ -40,11 +40,11 @@ class GetToolUseCase {
     
     private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel, translation: TranslationModel?)  {
                 
-        if let language = language, let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) {
+        if let language = language, let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) {
             
             return (language, translation)
             
-        } else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
+        } else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
             
             let englishLanguageDomainModel = getLanguageUseCase.getLanguage(language: englishLanguageModel)
             return (englishLanguageDomainModel, englishTranslation)
