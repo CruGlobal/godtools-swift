@@ -1,3 +1,8 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "About";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "About";
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Ireo Fitaovana";
 

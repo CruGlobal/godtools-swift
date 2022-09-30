@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "பற்றி";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "பற்றி";
+
 "training_tip_ask" = "கேளுங்கள்";
 "training_tip_consider" = "கவனியுங்கள்";
 "training_tip_prepare" = "தயார்";
