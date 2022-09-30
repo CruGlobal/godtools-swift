@@ -14,6 +14,8 @@ struct ToolDetailsAboutView: View {
     
     let width: CGFloat
     
+    @State private var isAccordionExpanded: Bool = false
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -34,7 +36,16 @@ struct ToolDetailsAboutView: View {
                 .frame(height: 20)
                 .foregroundColor(.clear)
             
-            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList)
+            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $isAccordionExpanded)
+            
+            if isAccordionExpanded {
+                Spacer()
+            } else {
+                Rectangle()
+                    .frame(height: 100)
+                    .foregroundColor(.clear)
+            }
         }
+        .animation(.default, value: isAccordionExpanded)
     }
 }
