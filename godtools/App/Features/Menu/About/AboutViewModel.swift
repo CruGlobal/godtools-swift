@@ -21,7 +21,7 @@ class AboutViewModel: AboutViewModelType {
         self.aboutTextProvider = aboutTextProvider
         self.analytics = analytics
         
-        navTitle.accept(value: localizationServices.stringForMainBundle(key: "about"))
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "aboutApp.navTitle"))
         
         aboutTexts.accept(value: aboutTextProvider.aboutTexts)
     }

@@ -25,6 +25,7 @@ class AppDomainLayerDependencies {
     
     func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
+            getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
@@ -38,7 +39,8 @@ class AppDomainLayerDependencies {
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getToolUseCase: getToolUseCase(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -55,7 +57,9 @@ class AppDomainLayerDependencies {
     }
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase()
+        return GetDeviceLanguageUseCase(
+            getLanguageUseCase: getLanguageUseCase()
+        )
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
@@ -130,7 +134,7 @@ class AppDomainLayerDependencies {
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -162,7 +166,8 @@ class AppDomainLayerDependencies {
         return GetToolCategoriesUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -189,13 +194,14 @@ class AppDomainLayerDependencies {
         return GetToolUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
     func getToolVersionsUseCase() -> GetToolVersionsUseCase {
         return GetToolVersionsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository(),
             localizationServices: dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),

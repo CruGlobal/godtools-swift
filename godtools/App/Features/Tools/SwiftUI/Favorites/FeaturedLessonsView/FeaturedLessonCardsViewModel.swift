@@ -75,9 +75,7 @@ extension FeaturedLessonCardsViewModel {
             .receiveOnMain()
             .sink { [weak self] featuredLessons in
                 
-                withAnimation {
-                    self?.lessons = featuredLessons
-                }
+                self?.lessons = featuredLessons
             }
             .store(in: &cancellables)
         

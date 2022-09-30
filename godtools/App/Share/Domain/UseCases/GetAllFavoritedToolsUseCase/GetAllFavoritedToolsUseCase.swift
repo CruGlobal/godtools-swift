@@ -15,13 +15,15 @@ class GetAllFavoritedToolsUseCase {
     private let getToolUseCase: GetToolUseCase
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     
-    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
     func getAllFavoritedToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
@@ -64,7 +66,7 @@ class GetAllFavoritedToolsUseCase {
         let sortedTools = favoritedResources.enumerated().sorted { resourceWithOrderNumber1, resourceWithOrderNumber2 in
             
             func resourceHasTranslation(_ resource: ResourceModel) -> Bool {
-                return resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
+                return translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
             }
             
             func isInOriginalOrder() -> Bool {

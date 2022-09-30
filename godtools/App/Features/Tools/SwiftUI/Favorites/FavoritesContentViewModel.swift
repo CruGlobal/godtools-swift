@@ -65,6 +65,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
+    @Published var isLoading: Bool = true
 
     // MARK: - Init
     
@@ -131,6 +132,7 @@ extension FavoritesContentViewModel {
             .sink { [weak self] primaryLanguage in
                 
                 self?.setupTitle(with: primaryLanguage)
+                self?.isLoading = false
             }
             .store(in: &cancellables)
     }

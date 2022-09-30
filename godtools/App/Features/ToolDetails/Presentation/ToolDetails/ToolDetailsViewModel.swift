@@ -13,6 +13,7 @@ import Combine
 class ToolDetailsViewModel: ObservableObject {
     
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
@@ -51,11 +52,12 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
@@ -97,13 +99,13 @@ class ToolDetailsViewModel: ObservableObject {
         let aboutDetailsValue: String
         let languageBundle: Bundle
         
-        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: "en") {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
             nameValue = englishTranslation.translatedName
             aboutDetailsValue = englishTranslation.translatedDescription
@@ -136,7 +138,7 @@ class ToolDetailsViewModel: ObservableObject {
         segments = segmentTypes.map({
             switch $0 {
             case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "about")
+                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
             case .versions:
                 return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
             }
@@ -167,7 +169,12 @@ class ToolDetailsViewModel: ObservableObject {
             return
         }
         
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: resourceId,
+            languageIds: [primaryLanguage.id],
+            resourcesRepository: resourcesRepository,
+            translationsRepository: translationsRepository
+        )
         
         hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             

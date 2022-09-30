@@ -25,6 +25,7 @@
 "toolSettings.languagesList.deleteLanguage.title" = "None";
 
 "toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
+"toolDetails.about.title" = "About";
 "toolDetails.versions.title" = "Versions";
 "toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
 "toolSettings.title" = "Tool Options";
@@ -212,7 +213,6 @@ If you don't receive this message until later, the link may not still work. We c
 "account_login" = "Account Login";
 
 // Tool Detail
-"about" = "About";
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
@@ -278,7 +278,8 @@ The app can be downloaded from https://godtoolsapp.com";
 
 "onboardingTutorial.getStartedButton.title" = "Get Started";
 
-// About
+// About App
+"aboutApp.navTitle" = "About";
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Watch";

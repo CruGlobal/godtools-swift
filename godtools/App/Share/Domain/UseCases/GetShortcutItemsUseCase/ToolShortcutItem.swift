@@ -12,11 +12,11 @@ class ToolShortcutItem: UIApplicationShortcutItem {
     
     private static let keyUserInfoTractUrl: String = "key_userinfo_tract_url"
     
-    static func shortcutItem(resourcesRepository: ResourcesRepository, tool: ToolDomainModel, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
+    static func shortcutItem(translationsRepository: TranslationsRepository, tool: ToolDomainModel, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
         
         let shortcutName: String
 
-        if let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: tool.id, languageCode: primaryLanguageCode) {
+        if let translation = translationsRepository.getLatestTranslation(resourceId: tool.id, languageCode: primaryLanguageCode) {
             shortcutName = translation.translatedName
         }
         else {

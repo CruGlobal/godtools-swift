@@ -11,14 +11,16 @@ import Foundation
 class GetToolVersionsUseCase {
     
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let localizationServices: LocalizationServices
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
     
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase) {
+    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase) {
         
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
@@ -55,13 +57,13 @@ class GetToolVersionsUseCase {
         let languageBundle: Bundle
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
-        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
             description = primaryTranslation.translatedTagline
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             description = englishTranslation.translatedTagline
