@@ -6618,7 +6618,7 @@
 		D44C69372804B6AF0000B970 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
-				D49D3CA028E381EA009F6532 /* AccordionView */,
+				D49D3CA128E381FE009F6532 /* AccordionView.swift */,
 				D44C69442809B6880000B970 /* ActivityIndicator.swift */,
 				45325F1B285CF8B40078D932 /* AnimatedSwiftUIView */,
 				D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */,
@@ -6887,14 +6887,6 @@
 				D4997E0F28D8B87300205B4C /* GetFeaturedLessonsUseCase.swift */,
 			);
 			path = GetFeaturedLessonsUseCase;
-			sourceTree = "<group>";
-		};
-		D49D3CA028E381EA009F6532 /* AccordionView */ = {
-			isa = PBXGroup;
-			children = (
-				D49D3CA128E381FE009F6532 /* AccordionView.swift */,
-			);
-			path = AccordionView;
 			sourceTree = "<group>";
 		};
 		D4D41A9C28DA4D5900D6E42F /* LessonsView */ = {
