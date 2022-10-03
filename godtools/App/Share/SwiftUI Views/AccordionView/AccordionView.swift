@@ -28,7 +28,7 @@ struct AccordionView: View {
                 
                 Spacer()
                 
-                Image(isExpanded ? "accordion_section_minus" : "accordion_section_plus")
+                Image(isExpanded ? ImageCatalog.accordionSectionMinus.name : ImageCatalog.accordionSectionPlus.name)
                     .padding(.trailing, 15)
                 
             }

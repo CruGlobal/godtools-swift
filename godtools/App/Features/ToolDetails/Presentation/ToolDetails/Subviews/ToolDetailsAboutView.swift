@@ -14,7 +14,7 @@ struct ToolDetailsAboutView: View {
     
     let width: CGFloat
     
-    @State private var isAccordionExpanded: Bool = false
+    @State private var accordionExpandedLanguageAvailability: Bool = false
     
     var body: some View {
         
@@ -36,9 +36,9 @@ struct ToolDetailsAboutView: View {
                 .frame(height: 20)
                 .foregroundColor(.clear)
             
-            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $isAccordionExpanded)
+            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
             
-            if isAccordionExpanded {
+            if accordionExpandedLanguageAvailability {
                 Spacer()
             } else {
                 Rectangle()
@@ -46,6 +46,6 @@ struct ToolDetailsAboutView: View {
                     .foregroundColor(.clear)
             }
         }
-        .animation(.default, value: isAccordionExpanded)
+        .animation(.default, value: accordionExpandedLanguageAvailability)
     }
 }
