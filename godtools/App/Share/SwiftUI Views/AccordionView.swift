@@ -47,7 +47,6 @@ struct AccordionView: View {
             
             SeparatorView()
         }
-        .animation(.default, value: isExpanded)
     }
 }
 

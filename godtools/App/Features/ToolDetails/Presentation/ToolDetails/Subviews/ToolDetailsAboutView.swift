@@ -14,6 +14,9 @@ struct ToolDetailsAboutView: View {
     
     let width: CGFloat
     
+    @State private var accordionExpandedConversationStarters: Bool = false
+    @State private var accordionExpandedOutline: Bool = false
+    @State private var accordionExpandedBibleReferences: Bool = false
     @State private var accordionExpandedLanguageAvailability: Bool = false
     
     var body: some View {
@@ -36,9 +39,17 @@ struct ToolDetailsAboutView: View {
                 .frame(height: 20)
                 .foregroundColor(.clear)
             
-            AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+            VStack(spacing: 20) {
+                AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
+                
+                AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+
+                AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
+
+                AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+            }
             
-            if accordionExpandedLanguageAvailability {
+            if accordionExpandedConversationStarters || accordionExpandedOutline || accordionExpandedBibleReferences || accordionExpandedLanguageAvailability {
                 Spacer()
             } else {
                 Rectangle()
