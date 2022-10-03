@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "ກ່ຽວກັບ";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "ກ່ຽວກັບ";
+
 "toolSettings.languagesAvailable.title" = "ພາສາທີ່ນຳໃຊ້ໄດ້";
 "toolDetails.versions.message" = "ເລືອກເວີຊັ່ນອື່ນຂອງເຄື່ອງມືທີ່ຢູ່ຂ້າງລຸ່ມນີ້. ແຕ່ລະເວີຊັ່ນມີຮູບແບບ ແລະ ເນື້ອໃນທີ່ເປັນເອກະລັກ ສະນັ້ນ ທ່ານຈິ່ງສາມາດຄົ້ນຫາເວີຊັ່ນທີ່ເຫັນວ່າເໝາະສົມກັບການສົນທະນາຂອງຕົນໄດ້ຫຼາຍທີ່ສຸດ. ທ່ານຍັງສາມາດຕັ້ງເປັນລາຍການທີ່ມັກໄດ້ຫຼາຍເວີຊັ່ນຂອງເຄື່ອງມືດຽວກັນໄດ້.";
 "favorites.noTools.title" = "ບໍ່ມີເຄື່ອງມືທີ່ມັກໃນລາຍການສະແດງ";

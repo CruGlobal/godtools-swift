@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "O tej aplikaciji";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "O orodju";
+
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ni na voljo v %@";
 

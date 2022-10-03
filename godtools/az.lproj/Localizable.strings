@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "Haqqında";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Haqqında";
+
 "toolSettings.languagesAvailable.title" = "Mövcud dillər";
 "toolDetails.versions.message" = "Bu alətin fərqli versiyasını aşağıdan seçin. Söhbətinizə ən uyğun olanını seçə bilməyiniz üçün hər versiyanın özünəməxsus stili və məzmunu var. Sİz eyni alətin bir neçə versiyasını sevimliləriniz arasına əlavə edə bilərsiniz.";
 "favorites.noTools.title" = "Göstərməyə sevimli alət yoxdur";
