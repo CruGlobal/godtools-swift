@@ -57,6 +57,5 @@ struct ToolDetailsAboutView: View {
                     .foregroundColor(.clear)
             }
         }
-        .animation(.default, value: accordionExpandedLanguageAvailability)
     }
 }

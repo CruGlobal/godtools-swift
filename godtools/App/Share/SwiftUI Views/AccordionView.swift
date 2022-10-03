@@ -35,7 +35,9 @@ struct AccordionView: View {
             .padding([.top, .bottom], 15)
             .contentShape(Rectangle())
             .onTapGesture {
-                isExpanded.toggle()
+                withAnimation {
+                    isExpanded.toggle()
+                }
             }
             
             if isExpanded {
