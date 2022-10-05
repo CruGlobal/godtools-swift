@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AppsFlyerLib
 import FBSDKCoreKit
 
 @UIApplicationMain
@@ -14,12 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         
-    private lazy var appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    private lazy var appDeepLinkingService: DeepLinkingService = {
+       
+        return appDiContainer.dataLayer.getDeepLinkingService()
+    }()
+    
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appDeepLinkingService: appDeepLinkingService)
+        
+        AppDiContainer()
     }()
     
     private lazy var appFlow: AppFlow = {
+        
         AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
     }()
     
@@ -44,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.appsFlyer.configure()
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(appsFlyerConfiguration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
@@ -111,15 +118,18 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        appDiContainer.appsFlyer.registerUninstall(deviceToken: deviceToken)
+       
+        appDiContainer.dataLayer.getSharedAppsFlyer().registerUninstall(deviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+       
+        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+        
+        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
 }
 
@@ -166,7 +176,7 @@ extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
+        appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
         
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
@@ -191,7 +201,7 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         
-        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
+        appDiContainer.dataLayer.getSharedAppsFlyer().continueUserActivity(userActivity: userActivity)
         
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
@@ -208,5 +218,19 @@ extension AppDelegate {
         }
         
         return false
+    }
+}
+
+// MARK: - AppsFlyer DeepLinkDelegate
+
+extension AppDelegate: DeepLinkDelegate {
+    
+    func didResolveDeepLink(_ result: DeepLinkResult) {
+        
+        guard let data = result.deepLink?.clickEvent else {
+            return
+        }
+        
+        _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
 }

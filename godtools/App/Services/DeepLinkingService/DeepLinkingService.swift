@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeepLinkingService: NSObject, DeepLinkingServiceType {
+class DeepLinkingService: NSObject {
     
     private let manifest: DeepLinkingManifestType
     
