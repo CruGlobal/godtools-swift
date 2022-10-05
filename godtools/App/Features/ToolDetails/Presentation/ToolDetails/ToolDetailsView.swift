@@ -23,28 +23,23 @@ struct ToolDetailsView: View {
         GeometryReader { geometry in
             
             let contentWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
-            
-            VStack(alignment: .leading, spacing: 0) {
+              
+            ScrollView(.vertical, showsIndicators: true) {
                 
-                ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
-                
-                ScrollView(.vertical, showsIndicators: true) {
+                if #available(iOS 14, *) {
                     
-                    if #available(iOS 14, *) {
-                        
-                        ScrollViewReader { scrollViewReader in
-                            
-                            getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
-                                
-                                scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
-                            }
-                        }
-                    }
-                    else {
+                    ScrollViewReader { scrollViewReader in
                         
                         getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
                             
+                            scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
                         }
+                    }
+                }
+                else {
+                    
+                    getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
+                        
                     }
                 }
             }
@@ -61,6 +56,8 @@ struct ToolDetailsView: View {
     private func getScrollViewContent(geometry: GeometryProxy, contentWidth: CGFloat, toolVersionTappedClosure: @escaping (() -> Void)) -> some View {
         
         VStack(alignment: .leading, spacing: 0) {
+            
+            ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
             
             VStack(alignment: .center, spacing: 0) {
                                          
@@ -80,6 +77,7 @@ struct ToolDetailsView: View {
              .background(Rectangle()
                  .fill(Color.white)
                  .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                 .mask(Rectangle().padding(.bottom, -8))
              )
              
              Rectangle()
