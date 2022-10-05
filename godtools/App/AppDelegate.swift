@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.dataLayer.getSharedAppsFlyer().configure(appsFlyerConfiguration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         

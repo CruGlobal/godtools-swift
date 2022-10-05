@@ -32,7 +32,7 @@ class AppsFlyer {
         }
     }
     
-    func configure(appsFlyerConfiguration: AppsFlyerConfiguration, deepLinkDelegate: DeepLinkDelegate) {
+    func configure(configuration: AppsFlyerConfiguration, deepLinkDelegate: DeepLinkDelegate) {
         
         guard !isConfigured else {
             return
@@ -40,11 +40,11 @@ class AppsFlyer {
         
         isConfigured = true
                 
-        appsFlyerLib.appsFlyerDevKey = appsFlyerConfiguration.appsFlyerDevKey
-        appsFlyerLib.appleAppID = appsFlyerConfiguration.appleAppId
+        appsFlyerLib.appsFlyerDevKey = configuration.appsFlyerDevKey
+        appsFlyerLib.appleAppID = configuration.appleAppId
         appsFlyerLib.oneLinkCustomDomains = ["get.godtoolsapp.com"]
         appsFlyerLib.deepLinkDelegate = deepLinkDelegate
-        appsFlyerLib.useUninstallSandbox = appsFlyerConfiguration.shouldUseUninstallSandbox
+        appsFlyerLib.useUninstallSandbox = configuration.shouldUseUninstallSandbox
     }
     
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
