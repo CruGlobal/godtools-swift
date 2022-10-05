@@ -14,6 +14,11 @@ struct ToolDetailsAboutView: View {
     
     let width: CGFloat
     
+    @State private var accordionExpandedConversationStarters: Bool = false
+    @State private var accordionExpandedOutline: Bool = false
+    @State private var accordionExpandedBibleReferences: Bool = false
+    @State private var accordionExpandedLanguageAvailability: Bool = false
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -34,23 +39,23 @@ struct ToolDetailsAboutView: View {
                 .frame(height: 20)
                 .foregroundColor(.clear)
             
-            Text(viewModel.availableLanguagesTitle)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextSemibold.font(size: 17))
+            VStack(spacing: 20) {
+                AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
+                
+                AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+
+                AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
+
+                AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+            }
             
-            Rectangle()
-                .frame(height: 10)
-                .foregroundColor(.clear)
-            
-            SeparatorView()
-            
-            Rectangle()
-                .frame(height: 10)
-                .foregroundColor(.clear)
-            
-            Text(viewModel.availableLanguagesList)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
+            if accordionExpandedConversationStarters || accordionExpandedOutline || accordionExpandedBibleReferences || accordionExpandedLanguageAvailability {
+                Spacer()
+            } else {
+                Rectangle()
+                    .frame(height: 100)
+                    .foregroundColor(.clear)
+            }
         }
     }
 }
