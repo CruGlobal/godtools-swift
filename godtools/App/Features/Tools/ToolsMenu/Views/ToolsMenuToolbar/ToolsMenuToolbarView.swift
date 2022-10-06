@@ -17,7 +17,7 @@ protocol ToolsMenuToolbarViewDelegate: AnyObject {
 
 class ToolsMenuToolbarView: UIView, NibBased {
     
-    private var viewModel: ToolsMenuToolbarViewModelType?
+    private var viewModel: ToolsMenuToolbarViewModel?
     private var selectedToolbarItem: ToolsMenuPageType = .lessons
     private(set) var pageItemsOrder: [ToolsMenuPageType] = Array()
     
@@ -31,7 +31,7 @@ class ToolsMenuToolbarView: UIView, NibBased {
         setupLayout()
     }
     
-    func configure(viewModel: ToolsMenuToolbarViewModelType, pageItemsOrder: [ToolsMenuPageType], delegate: ToolsMenuToolbarViewDelegate) {
+    func configure(viewModel: ToolsMenuToolbarViewModel, pageItemsOrder: [ToolsMenuPageType], delegate: ToolsMenuToolbarViewDelegate) {
         
         self.viewModel = viewModel
         self.pageItemsOrder = pageItemsOrder

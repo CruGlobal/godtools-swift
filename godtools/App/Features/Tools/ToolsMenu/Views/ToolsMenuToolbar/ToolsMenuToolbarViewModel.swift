@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolsMenuToolbarViewModel: ToolsMenuToolbarViewModelType {
+class ToolsMenuToolbarViewModel {
         
     private let localizationServices: LocalizationServices
     

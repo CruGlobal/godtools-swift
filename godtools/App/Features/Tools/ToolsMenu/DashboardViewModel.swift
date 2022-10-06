@@ -1,14 +1,14 @@
 //
-//  ToolsMenuViewModel.swift
+//  DashboardViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/26/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Rachael Skeath on 10/6/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class ToolsMenuViewModel: ToolsMenuViewModelType, ObservableObject {
+class DashboardViewModel: ObservableObject {
     
     private let initialDataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
@@ -33,9 +33,34 @@ class ToolsMenuViewModel: ToolsMenuViewModelType, ObservableObject {
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     
     private weak var flowDelegate: FlowDelegate?
-    
-    let navTitleFont: UIFont
+    private var unwrappedFlowDelegate: FlowDelegate {
+        guard let flowDelegate = self.flowDelegate else {
+            assertionFailure("FlowDelegate should not be nil.")
+            return self.flowDelegate!
+        }
+        return flowDelegate
+    }
         
+    lazy var allToolsViewModel: AllToolsContentViewModel = {
+        AllToolsContentViewModel(
+            flowDelegate: unwrappedFlowDelegate,
+            dataDownloader: initialDataDownloader,
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            favoritingToolMessageCache: favoritingToolMessageCache,
+            analytics: analytics,
+            getAllToolsUseCase: getAllToolsUseCase,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSpotlightToolsUseCase: getSpotlightToolsUseCase,
+            getToolCategoriesUseCase: getToolCategoriesUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
+        )
+    }()
+    
     required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
@@ -60,80 +85,5 @@ class ToolsMenuViewModel: ToolsMenuViewModelType, ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
-        
-        self.navTitleFont = fontService.getFont(size: 17, weight: .semibold)
-    }
-    
-    private func getFlowDelegate() -> FlowDelegate {
-        guard let flowDelegate = self.flowDelegate else {
-            assertionFailure("FlowDelegate should not be nil.")
-            return self.flowDelegate!
-        }
-        return flowDelegate
-    }
-    
-    func lessonsWillAppear() -> LessonsViewModel {
-        return LessonsViewModel(
-            flowDelegate: getFlowDelegate(),
-            dataDownloader: initialDataDownloader,
-            localizationServices: localizationServices,
-            analytics: analytics,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getLessonsUseCase: getLessonsUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
-        )
-    }
-    
-    func favoritedToolsWillAppear() -> FavoritesContentViewModel {
-        return FavoritesContentViewModel(
-            flowDelegate: getFlowDelegate(),
-            dataDownloader: initialDataDownloader,
-            localizationServices: localizationServices,
-            analytics: analytics,
-            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
-        )
-    }
-    
-    func allToolsWillAppear() -> AllToolsContentViewModel {
-        return AllToolsContentViewModel(
-            flowDelegate: getFlowDelegate(),
-            dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            favoritingToolMessageCache: favoritingToolMessageCache,
-            analytics: analytics,
-            getAllToolsUseCase: getAllToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getSpotlightToolsUseCase: getSpotlightToolsUseCase,
-            getToolCategoriesUseCase: getToolCategoriesUseCase,
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
-        )
-    }
-    
-    func toolbarWillAppear() -> ToolsMenuToolbarViewModel {
-        return ToolsMenuToolbarViewModel(localizationServices: localizationServices)
-    }
-    
-    func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromTools)
-    }
-    
-    func languageTapped() {
-        flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
 }

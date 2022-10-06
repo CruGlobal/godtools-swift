@@ -505,9 +505,9 @@ extension AppFlow {
         return nil
     }
     
-    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> ToolsMenuView {
+    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> UIHostingController<DashboardView> {
         
-        let toolsMenuViewModel = ToolsMenuViewModel(
+        let dashboardViewModel = DashboardViewModel(
             flowDelegate: self,
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
@@ -532,19 +532,21 @@ extension AppFlow {
             fontService: appDiContainer.getFontService()
         )
         
-        let toolsMenuView = ToolsMenuView(
-            viewModel: toolsMenuViewModel,
-            startingPage: startingPage ?? AppFlow.defaultStartingToolsMenuPage
-        )
+        let dashboardView = DashboardView(viewModel: dashboardViewModel)
+        let dashboardHostingController = UIHostingController(rootView: dashboardView)
+//        let toolsMenuView = ToolsMenuView(
+//            viewModel: toolsMenuViewModel,
+//            startingPage: startingPage ?? AppFlow.defaultStartingToolsMenuPage
+//        )
         
-        return toolsMenuView
+        return dashboardHostingController
     }
     
     private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let toolsMenu: ToolsMenuView = getNewToolsMenu(startingPage: startingPage)
+        let dashboard = getNewToolsMenu(startingPage: startingPage)
         
-        navigationController.setViewControllers([toolsMenu], animated: false)
+        navigationController.setViewControllers([dashboard], animated: false)
         
         closeMenu(animated: false)
         
