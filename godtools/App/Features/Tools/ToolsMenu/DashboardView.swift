@@ -15,7 +15,7 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        UITabBar.appearance().unselectedItemTintColor = ColorPalette.gtGrey.uiColor
+        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
         UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 16) as Any], for: .normal)
     }
     
@@ -53,7 +53,6 @@ struct DashboardView: View {
             VStack {
                 Image(imageName)
                 Text(tabName)
-                    .font(FontLibrary.sfProTextRegular.font(size: 16))
             }
         }
     }
