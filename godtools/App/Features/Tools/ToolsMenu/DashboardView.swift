@@ -12,8 +12,32 @@ struct DashboardView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
     
+    init(viewModel: DashboardViewModel) {
+        self.viewModel = viewModel
+        
+        UITabBar.appearance().backgroundColor = .white
+    }
+    
     var body: some View {
         TabView {
+            
+            LessonsView(viewModel: viewModel.lessonsViewModel)
+                .tabItem {
+                    if #available(iOS 14.0, *) {
+                        Label("Lessons", image: "something")
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                }
+            
+            FavoritesContentView(viewModel: viewModel.favoritesViewModel)
+                .tabItem {
+                    if #available(iOS 14.0, *) {
+                        Label("Favorites", image: "something")
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                }
             
             AllToolsContentView(viewModel: viewModel.allToolsViewModel)
                 .tabItem {

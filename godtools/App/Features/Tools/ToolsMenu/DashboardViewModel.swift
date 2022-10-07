@@ -61,6 +61,44 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
+    lazy var favoritesViewModel: FavoritesContentViewModel = {
+        let favoritesViewModel = FavoritesContentViewModel(
+            flowDelegate: unwrappedFlowDelegate,
+            dataDownloader: initialDataDownloader,
+            localizationServices: localizationServices,
+            analytics: analytics,
+            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
+        )
+        
+        favoritesViewModel.setDelegate(delegate: self)
+        
+        return favoritesViewModel
+    }()
+    
+    lazy var lessonsViewModel: LessonsViewModel = {
+        LessonsViewModel(
+            flowDelegate: unwrappedFlowDelegate,
+            dataDownloader: initialDataDownloader,
+            localizationServices: localizationServices,
+            analytics: analytics,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityUseCase:
+            getLanguageAvailabilityUseCase,
+            getLessonsUseCase: getLessonsUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+        )
+    }()
+    
     required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
@@ -85,5 +123,14 @@ class DashboardViewModel: ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
+    }
+}
+
+// MARK: - FavoritesContentViewModelDelegate
+
+extension DashboardViewModel: FavoritesContentViewModelDelegate {
+    
+    func favoriteToolsViewGoToToolsTapped() {
+        // TODO
     }
 }
