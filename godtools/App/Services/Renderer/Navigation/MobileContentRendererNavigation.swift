@@ -37,7 +37,7 @@ class MobileContentRendererNavigation {
             return
         }
         
-        let deepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+        let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if let deepLink = deepLink {

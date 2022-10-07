@@ -18,7 +18,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
-    private let deepLinkingService: DeepLinkingServiceType
+    private let deepLinkingService: DeepLinkingService
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -43,7 +43,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
         
-    init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingServiceType) {
+    init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
         self.window = window

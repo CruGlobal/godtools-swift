@@ -31,6 +31,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getDeepLinkingService() -> DeepLinkingService {
+        return DeepLinkingService(
+            manifest: GodToolsDeepLinkingManifest()
+        )
+    }
+    
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
             cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
@@ -105,6 +111,10 @@ class AppDataLayerDependencies {
             translationsRepository: getTranslationsRepository(),
             languagesRepository: getLanguagesRepository()
         )
+    }
+    
+    func getSharedAppsFlyer() -> AppsFlyer {
+        return AppsFlyer.shared
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
