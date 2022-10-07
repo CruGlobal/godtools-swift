@@ -10,8 +10,9 @@ import Foundation
 
 class AppConfig {
     
+    private static let appleAppId: String = "542773210"
+    
     let isDebug: Bool
-    let appleAppId: String
     
     init() {
         
@@ -24,8 +25,6 @@ class AppConfig {
             isDebug = false
             assertionFailure("In ( Build Settings > Other Swift Flags ) set either -DDEBUG or -DRELEASE for each scheme.")
         #endif
-        
-        appleAppId = "542773210"
     }
     
     var build: AppBuild {
@@ -43,6 +42,15 @@ class AppConfig {
             return .release
         }
     }
+    
+    var appsFlyerConfiguration: AppsFlyerConfiguration {
+            
+            return AppsFlyerConfiguration(
+                appleAppId: AppConfig.appleAppId,
+                appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
+                shouldUseUninstallSandbox: isDebug
+            )
+        }
     
     var mobileContentApiBaseUrl: String {
         

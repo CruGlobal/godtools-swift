@@ -16,8 +16,6 @@ class SwiftUIPreviewDiContainer {
     
     func getAppDiContainer() -> AppDiContainer {
         
-        return AppDiContainer(
-            appDeepLinkingService: AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
-        )
+        return AppDiContainer()
     }
 }

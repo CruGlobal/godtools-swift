@@ -9,20 +9,16 @@
 import UIKit
 import AppsFlyerLib
 
-class AppsFlyer: NSObject {
+class AppsFlyer {
+    
+    static let shared: AppsFlyer = AppsFlyer()
     
     private let sharedAppsFlyerLib: AppsFlyerLib = AppsFlyerLib.shared()
-    private let config: AppConfig
-    private let deepLinkingService: DeepLinkingServiceType
     
     private var isConfigured: Bool = false
     
-    required init(config: AppConfig, deepLinkingService: DeepLinkingServiceType) {
+    private init() {
         
-        self.config = config
-        self.deepLinkingService = deepLinkingService
-        
-        super.init()
     }
     
     var appsFlyerLib: AppsFlyerLib {
@@ -36,22 +32,19 @@ class AppsFlyer: NSObject {
         }
     }
     
-    func configure() {
+    func configure(configuration: AppsFlyerConfiguration, deepLinkDelegate: DeepLinkDelegate) {
         
-        if isConfigured {
+        guard !isConfigured else {
             return
         }
         
         isConfigured = true
                 
-        appsFlyerLib.appsFlyerDevKey = config.appsFlyerDevKey
-        appsFlyerLib.appleAppID = config.appleAppId
+        appsFlyerLib.appsFlyerDevKey = configuration.appsFlyerDevKey
+        appsFlyerLib.appleAppID = configuration.appleAppId
         appsFlyerLib.oneLinkCustomDomains = ["get.godtoolsapp.com"]
-        appsFlyerLib.deepLinkDelegate = self
-        
-        if config.isDebug {
-            appsFlyerLib.useUninstallSandbox = true
-        }
+        appsFlyerLib.deepLinkDelegate = deepLinkDelegate
+        appsFlyerLib.useUninstallSandbox = configuration.shouldUseUninstallSandbox
     }
     
     func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
@@ -68,19 +61,5 @@ class AppsFlyer: NSObject {
     
     func handlePushNotification(userInfo: [AnyHashable : Any]) {
         appsFlyerLib.handlePushNotification(userInfo)
-    }
-}
-
-// MARK: - DeepLinkDelegate
-
-extension AppsFlyer: DeepLinkDelegate {
-    
-    func didResolveDeepLink(_ result: DeepLinkResult) {
-        
-        guard let data = result.deepLink?.clickEvent else {
-            return
-        }
-        
-        _ = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
 }

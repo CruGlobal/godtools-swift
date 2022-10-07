@@ -29,13 +29,12 @@ class AppDiContainer {
     let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let emailSignUpService: EmailSignUpService
-    let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
         
-    required init(appDeepLinkingService: DeepLinkingServiceType) {
+    init() {
                         
         dataLayer = AppDataLayerDependencies()
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
@@ -68,14 +67,12 @@ class AppDiContainer {
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
         )
-                
-        appsFlyer = AppsFlyer(config: config, deepLinkingService: appDeepLinkingService)
-        
+                        
         firebaseInAppMessaging = FirebaseInAppMessaging()
                 
         let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
         analytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
+            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: dataLayer.getSharedAppsFlyer(), loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
@@ -87,13 +84,6 @@ class AppDiContainer {
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
-    }
-    
-    static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
-        
-        let manifest = GodToolsDeepLinkingManifest()
-        
-        return DeepLinkingService(manifest: manifest)
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -113,10 +103,6 @@ class AppDiContainer {
     
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
-    }
-    
-    func getDeepLinkingService() -> DeepLinkingServiceType {
-        return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
     }
     
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
