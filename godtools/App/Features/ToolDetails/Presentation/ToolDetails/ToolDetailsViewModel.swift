@@ -46,6 +46,12 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
+    @Published var conversationStartersTitle: String = ""
+    @Published var conversationStartersContent: String = ""
+    @Published var outlineTitle: String = ""
+    @Published var outlineContent: String = ""
+    @Published var bibleReferencesTitle: String = ""
+    @Published var bibleReferencesContent: String = ""
     @Published var availableLanguagesTitle: String = ""
     @Published var availableLanguagesList: String = ""
     @Published var versionsMessage: String = ""
@@ -69,6 +75,10 @@ class ToolDetailsViewModel: ObservableObject {
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
+        
+        self.conversationStartersTitle = localizationServices.stringForMainBundle(key: "toolDetails.conversationStarters.title")
+        self.outlineTitle = localizationServices.stringForMainBundle(key: "toolDetails.outline.title")
+        self.bibleReferencesTitle = localizationServices.stringForMainBundle(key: "toolDetails.bibleReferences.title")
         self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
