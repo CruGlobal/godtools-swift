@@ -15,7 +15,8 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        UITabBar.appearance().backgroundColor = .white
+        UITabBar.appearance().unselectedItemTintColor = ColorPalette.gtGrey.uiColor
+        UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 16) as Any], for: .normal)
     }
     
     var body: some View {
@@ -23,31 +24,37 @@ struct DashboardView: View {
             
             LessonsView(viewModel: viewModel.lessonsViewModel)
                 .tabItem {
-                    if #available(iOS 14.0, *) {
-                        Label("Lessons", image: "something")
-                    } else {
-                        // Fallback on earlier versions
-                    }
+                    makeTabItemView(tabName: "Lessons", imageName: ImageCatalog.toolsMenuLessons.name)
                 }
+                
             
             FavoritesContentView(viewModel: viewModel.favoritesViewModel)
                 .tabItem {
-                    if #available(iOS 14.0, *) {
-                        Label("Favorites", image: "something")
-                    } else {
-                        // Fallback on earlier versions
-                    }
+                    makeTabItemView(tabName: "Favorites", imageName: ImageCatalog.toolsMenuFavorites.name)
                 }
             
             AllToolsContentView(viewModel: viewModel.allToolsViewModel)
                 .tabItem {
-                    if #available(iOS 14.0, *) {
-                        Label("All Tools", image: "something")
-                    } else {
-                        // Fallback on earlier versions
-                    }
+                    makeTabItemView(tabName: "All Tools", imageName: ImageCatalog.toolsMenuAllTools.name)
                 }
             
+        }
+        .accentColor(ColorPalette.gtBlue.color)
+    }
+    
+    @ViewBuilder func makeTabItemView(tabName: String, imageName: String) -> some View {
+        
+        if #available(iOS 14.0, *) {
+
+            Label(tabName, image: imageName)
+
+        } else {
+            // TODO: - make sure this works
+            VStack {
+                Image(imageName)
+                Text(tabName)
+                    .font(FontLibrary.sfProTextRegular.font(size: 16))
+            }
         }
     }
 }
