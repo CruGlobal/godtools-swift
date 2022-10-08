@@ -40,6 +40,8 @@ class RealmLanguagesCacheSync {
                         existingLanguagesMinusNewlyAddedLanguages.remove(at: indexOfNewLanguage)
                     }
                 }
+                
+                let languagesRemoved: [LanguageModel] = existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
                                                 
                 do {
                     
@@ -49,7 +51,7 @@ class RealmLanguagesCacheSync {
                     }
                     
                     let result = RealmLanguagesCacheSyncResult(
-                        languagesRemoved: existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
+                        languagesRemoved: languagesRemoved
                     )
                     
                     promise(.success(result))
