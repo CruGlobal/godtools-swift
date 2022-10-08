@@ -16,6 +16,9 @@ class SwiftUIPreviewDiContainer {
     
     func getAppDiContainer() -> AppDiContainer {
         
-        return AppDiContainer()
+        let infoPlist: InfoPlist = InfoPlist()
+        let appBuild: AppBuild = AppBuild(infoPlist: infoPlist)
+        
+        return AppDiContainer(appBuild: appBuild, appConfig: AppConfig(appBuild: appBuild), infoPlist: infoPlist)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
-    private let config: AppConfig
+    private let infoPlist: InfoPlist
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     private let oktaUserAuthentication: OktaUserAuthentication
     private let localizationServices: LocalizationServices
@@ -24,10 +24,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    required init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, oktaUserAuthentication: OktaUserAuthentication, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.config = config
+        self.infoPlist = infoPlist
         self.oktaUserAuthentication = oktaUserAuthentication
         self.localizationServices = localizationServices
         self.analytics = analytics
@@ -333,7 +333,12 @@ extension MenuViewModel {
             localizedKey = "menu.tutorial"
             
         case .version:
-            return "v" + config.appVersion + " " + "(" + config.bundleVersion + ")"
+            
+            if let appVersion = infoPlist.appVersion, let bundleVersion = infoPlist.bundleVersion {
+                return "v" + appVersion + " " + "(" + bundleVersion + ")"
+            }
+            
+            return ""
         }
         
         return localizationServices.stringForMainBundle(key: localizedKey)

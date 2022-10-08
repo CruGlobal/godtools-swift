@@ -15,18 +15,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         
+    private lazy var appBuild: AppBuild = {
+       AppBuild(infoPlist: infoPlist)
+    }()
+    
+    private lazy var appConfig: AppConfig = {
+        AppConfig(appBuild: appBuild)
+    }()
+    
+    private lazy var infoPlist: InfoPlist = {
+        InfoPlist()
+    }()
+    
     private lazy var appDeepLinkingService: DeepLinkingService = {
-       
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        
-        AppDiContainer()
+        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
     }()
     
     private lazy var appFlow: AppFlow = {
-        
         AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
     }()
     
@@ -40,14 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
-        if appConfig.build == .analyticsLogging {
+        if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
         
-        if appConfig.build == .release {
-                        
+        if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()
         }
                 

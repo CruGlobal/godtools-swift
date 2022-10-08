@@ -10,16 +10,20 @@ import Foundation
 
 class AppDataLayerDependencies {
     
+    private let sharedAppConfig: AppConfig
+    private let sharedInfoPlist: InfoPlist
     private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
-    init() {
+    init(appConfig: AppConfig, infoPlist: InfoPlist) {
         
+        sharedAppConfig = appConfig
+        sharedInfoPlist = infoPlist
     }
     
     func getAppConfig() -> AppConfig {
-        return AppConfig()
+        return sharedAppConfig
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
@@ -45,6 +49,10 @@ class AppDataLayerDependencies {
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    func getInfoPlist() -> InfoPlist {
+        return sharedInfoPlist
     }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
@@ -125,7 +133,7 @@ class AppDataLayerDependencies {
     
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
-            appConfig: getAppConfig(),
+            infoPlist: getInfoPlist(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),

@@ -40,7 +40,7 @@ class MenuFlow: Flow {
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            config: appDiContainer.dataLayer.getAppConfig(),
+            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
             oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
