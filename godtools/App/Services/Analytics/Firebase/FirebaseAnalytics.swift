@@ -12,7 +12,7 @@ import GoogleAnalytics
 
 class FirebaseAnalytics: NSObject {
     
-    private let config: AppConfig
+    private let appBuild: AppBuild
     private let oktaUserAuthentication: OktaUserAuthentication
     private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
@@ -20,9 +20,9 @@ class FirebaseAnalytics: NSObject {
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    required init(appBuild: AppBuild, oktaUserAuthentication: OktaUserAuthentication, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
-        self.config = config
+        self.appBuild = appBuild
         self.oktaUserAuthentication = oktaUserAuthentication
         self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
@@ -44,7 +44,7 @@ class FirebaseAnalytics: NSObject {
         
         // gai
         if let gai = GAI.sharedInstance() {
-            if config.build == .analyticsLogging {
+            if appBuild.configuration == .analyticsLogging {
                 gai.dispatchInterval = 1
             }
             
@@ -53,7 +53,7 @@ class FirebaseAnalytics: NSObject {
                         
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
-            value: config.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
+            value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
         oktaUserAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: OktaAuthUserModel?) in

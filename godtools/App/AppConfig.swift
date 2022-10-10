@@ -12,35 +12,11 @@ class AppConfig {
     
     private static let appleAppId: String = "542773210"
     
-    let isDebug: Bool
+    private let appBuild: AppBuild
     
-    init() {
+    init(appBuild: AppBuild) {
         
-        // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
-        #if RELEASE
-            isDebug = false
-        #elseif DEBUG
-            isDebug = true
-        #else
-            isDebug = false
-            assertionFailure("In ( Build Settings > Other Swift Flags ) set either -DDEBUG or -DRELEASE for each scheme.")
-        #endif
-    }
-    
-    var build: AppBuild {
-        
-        if !isDebug {
-            return .release
-        }
-        else if let build = AppBuild(rawValue: configuration.lowercased()) {
-            return build
-        }
-        else if isDebug {
-            return.staging
-        }
-        else {
-            return .release
-        }
+        self.appBuild = appBuild
     }
     
     var appsFlyerConfiguration: AppsFlyerConfiguration {
@@ -48,7 +24,7 @@ class AppConfig {
             return AppsFlyerConfiguration(
                 appleAppId: AppConfig.appleAppId,
                 appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
-                shouldUseUninstallSandbox: isDebug
+                shouldUseUninstallSandbox: appBuild.isDebug
             )
         }
     
@@ -57,7 +33,7 @@ class AppConfig {
         let stagingUrl: String = "https://mobile-content-api-stage.cru.org"
         let productionUrl: String = "https://mobile-content-api.cru.org"
         
-        switch build {
+        switch appBuild.configuration {
             
         case .analyticsLogging:
             return productionUrl
@@ -92,7 +68,7 @@ class AppConfig {
         let debugFileName: String = "GoogleService-Info-Debug"
         let productionFileName: String = "GoogleService-Info"
         
-        switch build {
+        switch appBuild.configuration {
             
         case .analyticsLogging:
             return productionFileName
@@ -107,40 +83,6 @@ class AppConfig {
     
     var snowplowAppId: String {
         
-        let debugAppId: String = "godtools-dev"
-        let productionAppId: String = "godtools"
-
-        if isDebug {
-            return debugAppId
-        }
-        else {
-            return productionAppId
-        }
-    }
-    
-    // MARK: - Info.plist
-    
-    private var info: [String: Any] {
-        return Bundle.main.infoDictionary ?? [:]
-    }
-    
-    private var displayName: String {
-        return info["CFBundleDisplayName"] as? String ?? ""
-    }
-    
-    var appVersion: String {
-        return info["CFBundleShortVersionString"] as? String ?? ""
-    }
-    
-    private var bundleIdentifier: String {
-        return info["CFBundleIdentifier"] as? String ?? ""
-    }
-    
-    var bundleVersion: String {
-        return info["CFBundleVersion"] as? String ?? ""
-    }
-    
-    private var configuration: String {
-        return info["Configuration"] as? String ?? ""
+        return appBuild.isDebug ? "godtools-dev" : "godtools"
     }
 }
