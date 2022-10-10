@@ -41,6 +41,8 @@ class RealmLanguagesCacheSync {
                     }
                 }
                                                 
+                let languagesRemoved: [LanguageModel] = existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
+                                                
                 do {
                     
                     try realm.write {
@@ -49,7 +51,7 @@ class RealmLanguagesCacheSync {
                     }
                     
                     let result = RealmLanguagesCacheSyncResult(
-                        languagesRemoved: existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
+                        languagesRemoved: languagesRemoved
                     )
                     
                     promise(.success(result))
