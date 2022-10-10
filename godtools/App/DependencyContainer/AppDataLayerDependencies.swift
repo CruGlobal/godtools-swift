@@ -51,6 +51,23 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getFollowUpsService() -> FollowUpsService {
+        
+        let api = FollowUpsApi(
+            baseUrl: getAppConfig().mobileContentApiBaseUrl,
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = FailedFollowUpsCache(
+            realmDatabase: sharedRealmDatabase
+        )
+        
+        return FollowUpsService(
+            api: api,
+            cache: cache
+        )
+    }
+    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }

@@ -22,7 +22,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
-        let followUpsService: FollowUpsService = appDiContainer.followUpsService
+        let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
                 
         switch type {

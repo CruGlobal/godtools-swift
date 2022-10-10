@@ -13,13 +13,13 @@ class FailedFollowUpsCache {
     
     private let realmDatabase: RealmDatabase
     
-    required init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
     func getFailedFollowUps() -> [FollowUpModel] {
-        let realm: Realm = realmDatabase.mainThreadRealm
+        let realm: Realm = realmDatabase.openRealm()
         let realmFollowUps: [RealmFollowUp] = Array(realm.objects(RealmFollowUp.self))
         return realmFollowUps.map({FollowUpModel(model: $0)})
     }
