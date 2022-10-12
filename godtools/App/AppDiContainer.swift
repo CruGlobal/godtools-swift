@@ -27,7 +27,6 @@ class AppDiContainer {
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
     let globalActivityServices: GlobalActivityServices
-    let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let emailSignUpService: EmailSignUpService
     let firebaseInAppMessaging: FirebaseInAppMessagingType
@@ -79,8 +78,6 @@ class AppDiContainer {
         )
                                                                                      
         globalActivityServices = GlobalActivityServices(config: appConfig, sharedSession: sharedIgnoringCacheSession)
-        
-        followUpsService = FollowUpsService(config: appConfig, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 

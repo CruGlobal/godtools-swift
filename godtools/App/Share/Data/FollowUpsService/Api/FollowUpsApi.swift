@@ -15,10 +15,10 @@ class FollowUpsApi {
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession) {
+    init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
         
-        session = sharedSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        session = ignoreCacheSession.session
+        self.baseUrl = baseUrl
     }
     
     private func newFollowUpsRequest(followUp: FollowUpModelType) -> URLRequest {
