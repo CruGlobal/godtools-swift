@@ -68,6 +68,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getGlobalAnalyticsService() -> GlobalAnalyticsService {
+        return GlobalAnalyticsService(
+            api: MobileContentGlobalAnalyticsApi(baseUrl: getAppConfig().mobileContentApiBaseUrl, ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: GlobalAnalyticsUserDefaultsCache()
+        )
+    }
+    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }

@@ -26,7 +26,6 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let globalActivityServices: GlobalActivityServices
     let viewsService: ViewsService
     let emailSignUpService: EmailSignUpService
     let firebaseInAppMessaging: FirebaseInAppMessagingType
@@ -76,9 +75,7 @@ class AppDiContainer {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: appConfig, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
-                                                                                     
-        globalActivityServices = GlobalActivityServices(config: appConfig, sharedSession: sharedIgnoringCacheSession)
-        
+                                                                                             
         viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
