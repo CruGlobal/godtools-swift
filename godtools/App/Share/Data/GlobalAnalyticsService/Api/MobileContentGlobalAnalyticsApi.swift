@@ -1,5 +1,5 @@
 //
-//  GlobalActivityAnalyticsApi.swift
+//  MobileContentGlobalAnalyticsApi.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/28/20.
@@ -9,16 +9,16 @@
 import Foundation
 import RequestOperation
 
-class GlobalActivityAnalyticsApi {
+class MobileContentGlobalAnalyticsApi {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession) {
+    init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
         
-        session = sharedSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        session = ignoreCacheSession.session
+        self.baseUrl = baseUrl
     }
         
     private func newGlobalAnalyticsOperation() -> RequestOperation {
@@ -35,7 +35,7 @@ class GlobalActivityAnalyticsApi {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
 
-    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<MobileContentGlobalAnalyticsDataModel?, RequestResponseError<NoHttpClientErrorResponse>>) -> Void)) -> OperationQueue {
         
         let globalAnalyticsOperation = newGlobalAnalyticsOperation()
         
@@ -43,11 +43,11 @@ class GlobalActivityAnalyticsApi {
         
         globalAnalyticsOperation.setCompletionHandler { (response: RequestResponse) in
                         
-            let result: RequestResponseResult<GlobalActivityAnalytics, NoHttpClientErrorResponse> = response.getResult()
+            let result: RequestResponseResult<MobileContentGlobalAnalyticsDataModel, NoHttpClientErrorResponse> = response.getResult()
                         
             switch result {
-            case .success(let globalActivityAnalytics, let decodeError):
-                complete(.success(globalActivityAnalytics))
+            case .success(let dataModel, let decodeError):
+                complete(.success(dataModel))
                 if let decodeError = decodeError {
                     assertionFailure("GlobalActivityAnalyticsApi failed to decode global activity analytics with error: \(decodeError)")
                 }

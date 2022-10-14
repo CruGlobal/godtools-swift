@@ -1,5 +1,5 @@
 //
-//  GlobalActivityAnalyticsUserDefaultsCache.swift
+//  GlobalAnalyticsUserDefaultsCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/28/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GlobalActivityAnalyticsUserDefaultsCache: GlobalActivityAnalyticsCacheType {
+struct GlobalAnalyticsUserDefaultsCache {
     
     enum Attribute: String {
         case users = "users"
@@ -29,22 +29,22 @@ struct GlobalActivityAnalyticsUserDefaultsCache: GlobalActivityAnalyticsCacheTyp
         return defaults.object(forKey: attribute.rawValue) as? Int
     }
     
-    func getGlobalActivityAnalytics() -> GlobalActivityAnalytics? {
+    func getGlobalActivityAnalytics() -> MobileContentGlobalAnalyticsDataModel? {
           
         if let users = getAttributeValue(attribute: .users),
             let countries = getAttributeValue(attribute: .countries),
             let launches = getAttributeValue(attribute: .launches),
             let gospelPresentations = getAttributeValue(attribute: .gospelPresentations) {
             
-            let attributes = GlobalActivityAnalytics.Data.Attributes(
+            let attributes = MobileContentGlobalAnalyticsDataModel.Data.Attributes(
                 users: users,
                 countries: countries,
                 launches: launches,
                 gospelPresentations: gospelPresentations
             )
             
-            return GlobalActivityAnalytics(
-                data: GlobalActivityAnalytics.Data(
+            return MobileContentGlobalAnalyticsDataModel(
+                data: MobileContentGlobalAnalyticsDataModel.Data(
                     id: "",
                     type: "",
                     attributes: attributes
@@ -55,7 +55,7 @@ struct GlobalActivityAnalyticsUserDefaultsCache: GlobalActivityAnalyticsCacheTyp
         return nil
     }
     
-    func cacheGlobalActivityAnalytics(globalAnalytics: GlobalActivityAnalytics) {
+    func cacheGlobalActivityAnalytics(globalAnalytics: MobileContentGlobalAnalyticsDataModel) {
         
         let attributes = globalAnalytics.data.attributes
                 

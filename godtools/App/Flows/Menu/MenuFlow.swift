@@ -92,7 +92,7 @@ class MenuFlow: Flow {
             
             let viewModel = AccountViewModel(
                 oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
-                globalActivityServices: appDiContainer.globalActivityServices,
+                globalAnalyticsService: appDiContainer.dataLayer.getGlobalAnalyticsService(),
                 localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )

@@ -1,5 +1,5 @@
 //
-//  GlobalActivityAnalyticsGlobal.swift
+//  MobileContentGlobalAnalyticsDataModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/28/20.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct GlobalActivityAnalytics: Codable {
+struct MobileContentGlobalAnalyticsDataModel: Codable {
     
-    let data: GlobalActivityAnalytics.Data
+    let data: MobileContentGlobalAnalyticsDataModel.Data
     
     enum CodingKeys: String, CodingKey {
         case data = "data"
@@ -20,7 +20,7 @@ struct GlobalActivityAnalytics: Codable {
         
         let id: String
         let type: String
-        let attributes: GlobalActivityAnalytics.Data.Attributes
+        let attributes: MobileContentGlobalAnalyticsDataModel.Data.Attributes
         
         enum CodingKeys: String, CodingKey {
             case id = "id"
