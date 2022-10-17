@@ -43,6 +43,8 @@ class MenuFlow: Flow {
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
             oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
             localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics,
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
@@ -94,6 +96,8 @@ class MenuFlow: Flow {
                 oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
                 globalAnalyticsService: appDiContainer.dataLayer.getGlobalAnalyticsService(),
                 localizationServices: appDiContainer.localizationServices,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics
             )
             let view = AccountView(viewModel: viewModel)
@@ -109,6 +113,8 @@ class MenuFlow: Flow {
             let viewModel = AboutViewModel(
                 aboutTextProvider: aboutTextProvider,
                 localizationServices: appDiContainer.localizationServices,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics
             )
             let view = AboutView(viewModel: viewModel)
@@ -235,6 +241,8 @@ class MenuFlow: Flow {
     private func navigateToWebContentView(webContent: WebContentType) {
         
         let viewModel = WebContentViewModel(
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics,
             webContent: webContent
         )

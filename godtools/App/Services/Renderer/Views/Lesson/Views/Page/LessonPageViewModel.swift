@@ -16,7 +16,7 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
             
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext

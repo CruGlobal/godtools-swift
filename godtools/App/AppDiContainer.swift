@@ -72,7 +72,7 @@ class AppDiContainer {
         let analyticsLoggingEnabled: Bool = appBuild.configuration == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: dataLayer.getSharedAppsFlyer(), loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled),
             snowplowAnalytics: SnowplowAnalytics(config: appConfig, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
                                                                                              
@@ -186,6 +186,8 @@ class AppDiContainer {
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
         return OnboardingTutorialCustomViewBuilder(
             flowDelegate: flowDelegate,
+            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
             localizationServices: localizationServices,
             tutorialVideoAnalytics: getTutorialVideoAnalytics(),
             analyticsScreenName: "onboarding"

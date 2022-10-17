@@ -15,6 +15,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let renderedPageContext: MobileContentRenderedPageContext
     private let trainingTipId: String
     private let tipModel: Tip
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
@@ -29,12 +31,14 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
+    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.localizationServices = localizationServices
         self.viewedTrainingTips = viewedTrainingTips
@@ -188,8 +192,17 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func tipPageDidAppear(page: Int) {
+       
         setPage(page: page, animated: true)
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getTipPageAnalyticsScreenName(tipPage: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: getTipPageAnalyticsScreenName(tipPage: page),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

@@ -15,7 +15,7 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
     private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     
-    required init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
+    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
         self.renderedPageContext = renderedPageContext
@@ -41,6 +41,14 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection:analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
+        let trackScreen = TrackScreenModel(
+            screenName: getPageAnalyticsScreenName(),
+            siteSection:analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

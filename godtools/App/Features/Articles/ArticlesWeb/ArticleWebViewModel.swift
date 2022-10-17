@@ -12,6 +12,8 @@ import WebKit
 class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     
     private let aemCacheObject: ArticleAemCacheObject
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
     
@@ -21,10 +23,12 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
+    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
         self.flowDelegate = flowDelegate
         self.aemCacheObject = aemCacheObject
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.flowType = flowType
         
@@ -59,8 +63,16 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     }
 
     func pageViewed() {
+        
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
                 
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func sharedTapped() {
