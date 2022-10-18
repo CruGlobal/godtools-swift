@@ -12,7 +12,7 @@ import SwiftUI
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingToolsMenuPage: ToolsMenuPageType = .favoritedTools
+    private static let defaultStartingDashboardTab: DashboardTabType = .favorites
     
     private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
@@ -101,7 +101,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else {
                 
-                navigateToToolsMenu()
+                navigateToDashboard()
             }
             
             loadInitialData()
@@ -128,7 +128,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 loadingView.backgroundColor = .white
                 window.addSubview(loadingView)
                 
-                navigateToToolsMenu()
+                navigateToDashboard()
                                 
                 loadInitialData()
                 
@@ -242,7 +242,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else {
                 
-                navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
+                navigateToDashboard(startingTab: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
             }
                         
             lessonFlow = nil
@@ -279,7 +279,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             if state == .userClosedTractToLessonsList {
                 
-                navigateToToolsMenu(startingPage: .lessons, animatePopToToolsMenu: true)
+                navigateToDashboard(startingTab: .lessons, animatePopToToolsMenu: true)
             }
             else if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
                
@@ -322,7 +322,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .readArticles:
                    
-                navigateToToolsMenu()
+                navigateToDashboard()
                 
                 let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
                 
@@ -338,13 +338,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
                 
             case .tryLessons:
-                navigateToToolsMenu(startingPage: .lessons)
+                navigateToDashboard(startingTab: .lessons)
                 
             case .chooseTool:
-                navigateToToolsMenu(startingPage: .allTools)
+                navigateToDashboard(startingTab: .allTools)
                 
             default:
-                navigateToToolsMenu()
+                navigateToDashboard()
             }
             
             dismissOnboarding(animated: true)
@@ -505,7 +505,7 @@ extension AppFlow {
         return nil
     }
     
-    private func getNewToolsMenu(startingPage: ToolsMenuPageType?) -> UIHostingController<DashboardView> {
+    private func getNewDashboardView(startingTab: DashboardTabType?) -> UIHostingController<DashboardView> {
         
         let dashboardViewModel = DashboardViewModel(
             flowDelegate: self,
@@ -532,7 +532,7 @@ extension AppFlow {
             fontService: appDiContainer.getFontService()
         )
         
-        let dashboardView = DashboardView(viewModel: dashboardViewModel)
+        let dashboardView = DashboardView(viewModel: dashboardViewModel, startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab)
         let dashboardHostingController = UIHostingController(rootView: dashboardView)
         
         _ = dashboardHostingController.addBarButtonItem(
@@ -543,18 +543,12 @@ extension AppFlow {
             action: #selector(dashboardViewModel.menuTapped)
         )
         
-        // TODO: - implement starting page
-//        let toolsMenuView = ToolsMenuView(
-//            viewModel: toolsMenuViewModel,
-//            startingPage: startingPage ?? AppFlow.defaultStartingToolsMenuPage
-//        )
-        
         return dashboardHostingController
     }
     
-    private func navigateToToolsMenu(startingPage: ToolsMenuPageType = AppFlow.defaultStartingToolsMenuPage, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    private func navigateToDashboard(startingTab: DashboardTabType = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let dashboard = getNewToolsMenu(startingPage: startingPage)
+        let dashboard = getNewDashboardView(startingTab: startingTab)
         
         navigationController.setViewControllers([dashboard], animated: false)
         
@@ -630,14 +624,14 @@ extension AppFlow {
         
         case .tool(let toolDeepLink):
                
-            navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
+            navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             })
             
         case .article(let articleUri):
             
-            navigateToToolsMenu(startingPage: .favoritedTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
+            navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
                 guard let weakSelf = self else {
                     return
@@ -654,13 +648,13 @@ extension AppFlow {
             })
             
         case .lessonsList:
-            navigateToToolsMenu(startingPage: .lessons)
+            navigateToDashboard(startingTab: .lessons)
             
         case .favoritedToolsList:
-            navigateToToolsMenu(startingPage: .favoritedTools)
+            navigateToDashboard(startingTab: .favorites)
             
         case .allToolsList:
-            navigateToToolsMenu(startingPage: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+            navigateToDashboard(startingTab: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
         }
     }
 }
@@ -701,7 +695,7 @@ extension AppFlow {
     private func dismissTutorial() {
         
         if menuFlow != nil {
-            navigateToToolsMenu(startingPage: .favoritedTools)
+            navigateToDashboard(startingTab: .favorites)
             closeMenu(animated: true)
         }
         

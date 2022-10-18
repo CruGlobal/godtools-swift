@@ -11,9 +11,11 @@ import SwiftUI
 struct DashboardView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
+    @State var selectedTab: DashboardTabType
     
-    init(viewModel: DashboardViewModel) {
+    init(viewModel: DashboardViewModel, startingTab: DashboardTabType) {
         self.viewModel = viewModel
+        self.selectedTab = startingTab
         
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
@@ -21,25 +23,28 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             
             LessonsView(viewModel: viewModel.lessonsViewModel)
                 .tabItem {
                     Label("Lessons", image: ImageCatalog.toolsMenuLessons.name)
                 }
+                .tag(DashboardTabType.lessons)
                 
             
             FavoritesContentView(viewModel: viewModel.favoritesViewModel)
                 .tabItem {
                     Label("Favorites", image: ImageCatalog.toolsMenuFavorites.name)
                 }
+                .tag(DashboardTabType.favorites)
             
             AllToolsContentView(viewModel: viewModel.allToolsViewModel)
                 .tabItem {
                     Label("All Tools", image: ImageCatalog.toolsMenuAllTools.name)
                 }
-            
+                .tag(DashboardTabType.allTools)
         }
+        
         .accentColor(ColorPalette.gtBlue.color)
     }
 }
@@ -73,6 +78,6 @@ struct DashboardView_Previews: PreviewProvider {
             fontService: appDiContainer.getFontService()
         )
         
-        DashboardView(viewModel: viewModel)
+        DashboardView(viewModel: viewModel, startingTab: .favorites)
     }
 }
