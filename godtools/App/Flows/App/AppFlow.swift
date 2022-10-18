@@ -534,6 +534,8 @@ extension AppFlow {
         
         let dashboardView = DashboardView(viewModel: dashboardViewModel)
         let dashboardHostingController = UIHostingController(rootView: dashboardView)
+        
+        // TODO: - implement starting page
 //        let toolsMenuView = ToolsMenuView(
 //            viewModel: toolsMenuViewModel,
 //            startingPage: startingPage ?? AppFlow.defaultStartingToolsMenuPage
@@ -547,6 +549,16 @@ extension AppFlow {
         let dashboard = getNewToolsMenu(startingPage: startingPage)
         
         navigationController.setViewControllers([dashboard], animated: false)
+        
+        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: ColorPalette.gtBlue.uiColor,
+            controlColor: .white,
+            titleFont: appDiContainer.getFontService().getFont(size: 17, weight: .semibold),
+            titleColor: .white,
+            isTranslucent: false
+        )
         
         closeMenu(animated: false)
         

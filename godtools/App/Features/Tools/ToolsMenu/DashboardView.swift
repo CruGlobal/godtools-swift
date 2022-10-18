@@ -15,8 +15,9 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
+        UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
-        UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 16) as Any], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 12) as Any], for: .normal)
     }
     
     var body: some View {
@@ -24,37 +25,22 @@ struct DashboardView: View {
             
             LessonsView(viewModel: viewModel.lessonsViewModel)
                 .tabItem {
-                    makeTabItemView(tabName: "Lessons", imageName: ImageCatalog.toolsMenuLessons.name)
+                    Label("Lessons", image: ImageCatalog.toolsMenuLessons.name)
                 }
                 
             
             FavoritesContentView(viewModel: viewModel.favoritesViewModel)
                 .tabItem {
-                    makeTabItemView(tabName: "Favorites", imageName: ImageCatalog.toolsMenuFavorites.name)
+                    Label("Favorites", image: ImageCatalog.toolsMenuFavorites.name)
                 }
             
             AllToolsContentView(viewModel: viewModel.allToolsViewModel)
                 .tabItem {
-                    makeTabItemView(tabName: "All Tools", imageName: ImageCatalog.toolsMenuAllTools.name)
+                    Label("All Tools", image: ImageCatalog.toolsMenuAllTools.name)
                 }
             
         }
         .accentColor(ColorPalette.gtBlue.color)
-    }
-    
-    @ViewBuilder func makeTabItemView(tabName: String, imageName: String) -> some View {
-        
-        if #available(iOS 14.0, *) {
-
-            Label(tabName, image: imageName)
-
-        } else {
-            // TODO: - make sure this works
-            VStack {
-                Image(imageName)
-                Text(tabName)
-            }
-        }
     }
 }
 
