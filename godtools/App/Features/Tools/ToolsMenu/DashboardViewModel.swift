@@ -126,6 +126,14 @@ class DashboardViewModel: ObservableObject {
     }
 }
 
+// MARK: - Public
+
+extension DashboardViewModel {
+    @objc func menuTapped() {
+        flowDelegate?.navigate(step: .menuTappedFromTools)
+    }
+}
+
 // MARK: - FavoritesContentViewModelDelegate
 
 extension DashboardViewModel: FavoritesContentViewModelDelegate {

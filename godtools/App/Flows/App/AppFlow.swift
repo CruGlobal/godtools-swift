@@ -535,6 +535,14 @@ extension AppFlow {
         let dashboardView = DashboardView(viewModel: dashboardViewModel)
         let dashboardHostingController = UIHostingController(rootView: dashboardView)
         
+        _ = dashboardHostingController.addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navMenu.uiImage,
+            color: .white,
+            target: dashboardViewModel,
+            action: #selector(dashboardViewModel.menuTapped)
+        )
+        
         // TODO: - implement starting page
 //        let toolsMenuView = ToolsMenuView(
 //            viewModel: toolsMenuViewModel,
