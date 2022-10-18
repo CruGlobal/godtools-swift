@@ -8689,7 +8689,7 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -8871,7 +8871,7 @@
 				DISPLAY_NAME = "GodTools-Stage";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9052,7 +9052,7 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9234,7 +9234,7 @@
 				DISPLAY_NAME = GodTools;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9444,7 +9444,7 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
