@@ -19,7 +19,6 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private weak var delegate: FavoritesContentViewModelDelegate?
@@ -27,8 +26,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
@@ -39,9 +39,9 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
+            getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             delegate: self
@@ -50,7 +50,6 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
@@ -66,21 +65,22 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
+    @Published var isLoading: Bool = true
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.analytics = analytics
         
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
-        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -88,11 +88,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         
         super.init()
                         
-        setup()
-    }
-    
-    deinit {
-        languageSettingsService.primaryLanguage.removeObserver(self)
+        setupBinding()
     }
 }
 
@@ -108,9 +104,12 @@ extension FavoritesContentViewModel {
     }
     
     func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
+        
         return OpenTutorialBannerViewModel(
             flowDelegate: flowDelegate,
             localizationServices: localizationServices,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             analytics: analytics,
             delegate: self
         )
@@ -121,17 +120,7 @@ extension FavoritesContentViewModel {
 
 extension FavoritesContentViewModel {
     
-    private func setup() {
-        setupBinding()
-        setupTitle()
-    }
-    
     private func setupBinding() {
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setupTitle()
-            }
-        }
         
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
             .receiveOnMain()
@@ -140,11 +129,20 @@ extension FavoritesContentViewModel {
                 self?.hideTutorialBanner = !isEnabled
             }
             .store(in: &cancellables)
+        
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                
+                self?.setupTitle(with: primaryLanguage)
+                self?.isLoading = false
+            }
+            .store(in: &cancellables)
     }
     
-    private func setupTitle() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        pageTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.pageTitle")
+    private func setupTitle(with language: LanguageDomainModel?) {
+
+        pageTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.pageTitle")
     }
 }
 
@@ -224,52 +222,83 @@ extension FavoritesContentViewModel {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
         
-        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        
+        analytics.firebaseAnalytics.trackAction(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
+            data: nil
+        )
         
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
     private func trackFeaturedLessonTappedAnalytics(for lesson: LessonDomainModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+       
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
-                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                    AnalyticsConstants.Keys.tool: lesson.abbreviation
-                  ]
-        ))
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
+                AnalyticsConstants.Keys.tool: lesson.abbreviation
+              ]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+        
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+       
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

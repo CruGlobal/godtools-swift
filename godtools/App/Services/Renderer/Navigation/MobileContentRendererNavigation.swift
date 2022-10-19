@@ -37,7 +37,7 @@ class MobileContentRendererNavigation {
             return
         }
         
-        let deepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+        let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if let deepLink = deepLink {
@@ -123,6 +123,8 @@ class MobileContentRendererNavigation {
             renderedPageContext: event.renderedPageContext,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics,
             localizationServices: appDiContainer.localizationServices,
             viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),

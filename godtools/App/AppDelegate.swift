@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AppsFlyerLib
 import FBSDKCoreKit
 
 @UIApplicationMain
@@ -14,9 +15,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         
-    private lazy var appDeepLinkingService: DeepLinkingServiceType = AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
+    private lazy var appBuild: AppBuild = {
+       AppBuild(infoPlist: infoPlist)
+    }()
+    
+    private lazy var appConfig: AppConfig = {
+        AppConfig(appBuild: appBuild)
+    }()
+    
+    private lazy var infoPlist: InfoPlist = {
+        InfoPlist()
+    }()
+    
+    private lazy var appDeepLinkingService: DeepLinkingService = {
+        return appDiContainer.dataLayer.getDeepLinkingService()
+    }()
+    
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appDeepLinkingService: appDeepLinkingService)
+        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
     }()
     
     private lazy var appFlow: AppFlow = {
@@ -33,18 +49,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
-        if appConfig.build == .analyticsLogging {
+        if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
         
-        if appConfig.build == .release {
-                        
+        if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.appsFlyer.configure()
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
         
         appDiContainer.analytics.firebaseAnalytics.configure()
         
@@ -111,15 +126,18 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        appDiContainer.appsFlyer.registerUninstall(deviceToken: deviceToken)
+       
+        appDiContainer.dataLayer.getSharedAppsFlyer().registerUninstall(deviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+       
+        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        appDiContainer.appsFlyer.handlePushNotification(userInfo: userInfo)
+        
+        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
 }
 
@@ -142,9 +160,23 @@ extension AppDelegate {
             
         case .tool:
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
-                AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
-            ]))
+            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
+            
+            let trackAction = TrackActionModel(
+                screenName: "",
+                actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
+                siteSection: "",
+                siteSubSection: "",
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+                url: nil,
+                data: [
+                    AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
+                ]
+            )
+            
+            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
@@ -166,7 +198,7 @@ extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        appDiContainer.appsFlyer.handleOpenUrl(url: url, options: options)
+        appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
         
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
@@ -191,7 +223,7 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         
-        appDiContainer.appsFlyer.continueUserActivity(userActivity: userActivity)
+        appDiContainer.dataLayer.getSharedAppsFlyer().continueUserActivity(userActivity: userActivity)
         
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
@@ -208,5 +240,19 @@ extension AppDelegate {
         }
         
         return false
+    }
+}
+
+// MARK: - AppsFlyer DeepLinkDelegate
+
+extension AppDelegate: DeepLinkDelegate {
+    
+    func didResolveDeepLink(_ result: DeepLinkResult) {
+        
+        guard let data = result.deepLink?.clickEvent else {
+            return
+        }
+        
+        _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
 }

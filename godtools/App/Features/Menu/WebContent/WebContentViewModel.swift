@@ -10,14 +10,18 @@ import Foundation
 
 class WebContentViewModel: WebContentViewModelType {
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let webContent: WebContentType
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(analytics: AnalyticsContainer, webContent: WebContentType) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, webContent: WebContentType) {
         
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.webContent = webContent
         
@@ -39,6 +43,14 @@ class WebContentViewModel: WebContentViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

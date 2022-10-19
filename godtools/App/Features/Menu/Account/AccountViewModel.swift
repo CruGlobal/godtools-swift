@@ -10,10 +10,12 @@ import Foundation
 
 class AccountViewModel: AccountViewModelType {
     
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
         
-    let globalActivityServices: GlobalActivityServices
+    let globalAnalyticsService: GlobalAnalyticsService
     let localizationServices: LocalizationServices
     let navTitle: String
     let profileName: ObservableValue<AnimatableValue<String>> = ObservableValue(value: AnimatableValue(value: "", animated: false))
@@ -21,11 +23,13 @@ class AccountViewModel: AccountViewModelType {
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(userAuthentication: UserAuthenticationType, globalActivityServices: GlobalActivityServices, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(oktaUserAuthentication: OktaUserAuthentication, globalAnalyticsService: GlobalAnalyticsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
         
-        self.userAuthentication = userAuthentication
-        self.globalActivityServices = globalActivityServices
+        self.oktaUserAuthentication = oktaUserAuthentication
+        self.globalAnalyticsService = globalAnalyticsService
         self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
@@ -53,7 +57,7 @@ class AccountViewModel: AccountViewModelType {
         
         isLoadingProfile.accept(value: true)
         
-        userAuthentication.getAuthenticatedUser { [weak self] (result: Result<AuthUserModelType, Error>) in
+        oktaUserAuthentication.getAuthenticatedUser { [weak self] (result: Result<OktaAuthUserModel, Error>) in
             DispatchQueue.main.async { [weak self] in
                 
                 self?.isLoadingProfile.accept(value: false)
@@ -93,6 +97,14 @@ class AccountViewModel: AccountViewModelType {
 
     func accountPageDidAppear(page: Int) {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getAnalyticsScreenName(page: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: getAnalyticsScreenName(page: page),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

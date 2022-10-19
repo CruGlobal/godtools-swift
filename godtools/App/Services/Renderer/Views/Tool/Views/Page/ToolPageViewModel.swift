@@ -90,7 +90,15 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     func pageDidAppear() {
         mobileContentDidAppear()
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func didChangeCardPosition(cardPosition: Int?) {

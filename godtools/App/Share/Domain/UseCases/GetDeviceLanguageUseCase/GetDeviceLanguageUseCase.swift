@@ -9,9 +9,12 @@
 import Foundation
 
 class GetDeviceLanguageUseCase {
-            
-    init() {
+       
+    private let getLanguageUseCase: GetLanguageUseCase
+    
+    init(getLanguageUseCase: GetLanguageUseCase) {
         
+        self.getLanguageUseCase = getLanguageUseCase
     }
     
     func getDeviceLanguage() -> DeviceLanguageDomainModel {
@@ -24,6 +27,7 @@ class GetDeviceLanguageUseCase {
     private func getDeviceLanguage(for locale: Locale) -> DeviceLanguageDomainModel {
         
         return DeviceLanguageDomainModel(
+            language: getLanguageUseCase.getLanguage(locale: locale),
             locale: locale,
             localeIdentifier: locale.identifier,
             localeLanguageCode: (locale.languageCode ?? locale.identifier).lowercased()

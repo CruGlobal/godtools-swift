@@ -23,17 +23,12 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAllFavoritedResourceModelsUseCase() -> GetAllFavoritedResourceModelsUseCase {
-        return GetAllFavoritedResourceModelsUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
     func getAllFavoritedToolsLatestTranslationFilesUseCase() -> GetAllFavoritedToolsLatestTranslationFilesUseCase {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
+            getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
         )
@@ -41,10 +36,11 @@ class AppDomainLayerDependencies {
     
     func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
         return GetAllFavoritedToolsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getToolUseCase: getToolUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -61,7 +57,16 @@ class AppDomainLayerDependencies {
     }
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase()
+        return GetDeviceLanguageUseCase(
+            getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
+        return GetFeaturedLessonsUseCase(
+            getLessonUseCase: getLessonUseCase(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
     }
     
     func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
@@ -126,10 +131,10 @@ class AppDomainLayerDependencies {
     
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
-            getAllFavoritedResourceModelsUseCase: getAllFavoritedResourceModelsUseCase(),
+            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -161,7 +166,8 @@ class AppDomainLayerDependencies {
         return GetToolCategoriesUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
@@ -188,13 +194,14 @@ class AppDomainLayerDependencies {
         return GetToolUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     
     func getToolVersionsUseCase() -> GetToolVersionsUseCase {
         return GetToolVersionsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
+            translationsRepository: dataLayer.getTranslationsRepository(),
             localizationServices: dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),

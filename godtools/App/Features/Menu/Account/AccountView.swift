@@ -122,7 +122,7 @@ extension AccountView: PageNavigationCollectionViewDelegate {
             viewModel: AccountItemCellViewModel(
                 item: viewModel.accountItems.value[indexPath.row],
                 localizationServices: viewModel.localizationServices,
-                globalActivityServices: viewModel.globalActivityServices
+                globalAnalyticsService: viewModel.globalAnalyticsService
             ),
             delegate: self
         )

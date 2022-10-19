@@ -15,6 +15,8 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     private let renderedPageContext: MobileContentRenderedPageContext
     private let trainingTipId: String
     private let tipModel: Tip
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
     private let viewedTrainingTips: ViewedTrainingTipsService
@@ -29,12 +31,14 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
+    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.localizationServices = localizationServices
         self.viewedTrainingTips = viewedTrainingTips
@@ -96,26 +100,32 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     
     private func reloadTitleAndTipIcon(tipModel: Tip, trainingTipViewed: Bool) {
         
-        let tipBackgroundImageName: String = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
+        let tipBackgroundImageName: String = trainingTipViewed ? ImageCatalog.trainingTipRedSquareBg.name : ImageCatalog.trainingTipSquareBg.name
         let tipImageName: String
         let localizedTipTitle: String
         
         switch tipModel.type {
+        
         case .ask:
-            tipImageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
+            tipImageName = trainingTipViewed ? ImageCatalog.trainingTipAskFilledRed.name : ImageCatalog.trainingTipAsk.name
             localizedTipTitle = "training_tip_ask"
+        
         case .consider:
-            tipImageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
+            tipImageName = trainingTipViewed ? ImageCatalog.trainingTipConsiderFilledRed.name : ImageCatalog.trainingTipConsider.name
             localizedTipTitle = "training_tip_consider"
+        
         case .prepare:
-            tipImageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
+            tipImageName = trainingTipViewed ? ImageCatalog.trainingTipPrepareFilledRed.name : ImageCatalog.trainingTipPrepare.name
             localizedTipTitle = "training_tip_prepare"
+        
         case .quote:
-            tipImageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
+            tipImageName = trainingTipViewed ? ImageCatalog.trainingTipQuoteFilledRed.name : ImageCatalog.trainingTipQuote.name
             localizedTipTitle = "training_tip_quote"
+        
         case .tip:
-            tipImageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
+            tipImageName = trainingTipViewed ? ImageCatalog.trainingTipTipFilledRed.name : ImageCatalog.trainingTipTip.name
             localizedTipTitle = "training_tip_tip"
+        
         default:
             tipImageName = ""
             localizedTipTitle = ""
@@ -182,8 +192,17 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
     }
     
     func tipPageDidAppear(page: Int) {
+       
         setPage(page: page, animated: true)
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getTipPageAnalyticsScreenName(tipPage: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: getTipPageAnalyticsScreenName(tipPage: page),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

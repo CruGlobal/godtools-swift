@@ -15,7 +15,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
         
-    required init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.renderedPageContext = renderedPageContext
@@ -83,11 +83,27 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
     
     func pageDidAppear() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getPageAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
+        let trackScreen = TrackScreenModel(
+            screenName: getPageAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func cardDidAppear(card: Int) {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getCardAnalyticsScreenName(card: card), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
+        let trackScreen = TrackScreenModel(
+            screenName: getCardAnalyticsScreenName(card: card),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

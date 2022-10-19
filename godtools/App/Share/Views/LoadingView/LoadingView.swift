@@ -66,7 +66,7 @@ class LoadingView: UIViewController {
         
         if hidden, let closeButton = closeButton {
             
-            removeBarButtonItem(item: closeButton, barPosition: .right)
+            removeBarButtonItem(item: closeButton)
             
             self.closeButton = nil
         }
@@ -75,7 +75,7 @@ class LoadingView: UIViewController {
             closeButton = addBarButtonItem(
                 to: position,
                 index: 0,
-                image: ImageCatalog.navClose.image,
+                image: ImageCatalog.navClose.uiImage,
                 color: UIColor.black,
                 target: self,
                 action: #selector(handleClose(barButtonItem:))

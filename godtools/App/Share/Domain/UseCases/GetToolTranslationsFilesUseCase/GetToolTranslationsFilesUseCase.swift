@@ -70,7 +70,7 @@ class GetToolTranslationsFilesUseCase {
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()

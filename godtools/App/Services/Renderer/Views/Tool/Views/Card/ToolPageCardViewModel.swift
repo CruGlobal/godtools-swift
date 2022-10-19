@@ -166,10 +166,16 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         
     func cardDidAppear() {
         mobileContentDidAppear()
+                   
+        let trackScreen =  TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.code,
+            secondaryContentLanguage: nil
+        )
         
-        let screenName: String = analyticsScreenName
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: screenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.code, secondaryContentLanguage: nil))
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func cardDidDisappear() {

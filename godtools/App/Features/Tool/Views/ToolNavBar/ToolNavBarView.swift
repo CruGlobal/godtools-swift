@@ -94,7 +94,7 @@ class ToolNavBarView: NSObject {
         _ = parentViewController.addBarButtonItem(
             to: .right,
             index: RightNavbarPosition.toolSettings.rawValue,
-            image: ImageCatalog.navToolSettings.image,
+            image: ImageCatalog.navToolSettings.uiImage,
             color: navBarControlColor,
             target: self,
             action: #selector(toolSettingsTapped)
@@ -195,7 +195,7 @@ class ToolNavBarView: NSObject {
         let position: ButtonItemPosition = .right
         
         if hidden, let remoteShareActiveNavItem = self.remoteShareActiveNavItem {
-            parentViewController?.removeBarButtonItem(item: remoteShareActiveNavItem, barPosition: position)
+            parentViewController?.removeBarButtonItem(item: remoteShareActiveNavItem)
             self.remoteShareActiveNavItem = nil
         }
         else if !hidden && remoteShareActiveNavItem == nil {

@@ -49,6 +49,8 @@ struct OpenTutorialBannerView_Previews: PreviewProvider {
         let viewModel = OpenTutorialBannerViewModel(
             flowDelegate: MockFlowDelegate(),
             localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics,
             delegate: nil
         )

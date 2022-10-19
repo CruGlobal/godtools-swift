@@ -28,6 +28,15 @@ class GetLanguageUseCase {
         return getLanguage(language: language)
     }
     
+    func getLanguage(languageCode: String) -> LanguageDomainModel? {
+        
+        guard let language = languagesRepository.getLanguage(code: languageCode) else {
+            return nil
+        }
+        
+        return getLanguage(language: language)
+    }
+    
     func getLanguage(locale: Locale) -> LanguageDomainModel? {
         
         if let language = languagesRepository.getLanguage(code: locale.identifier) {

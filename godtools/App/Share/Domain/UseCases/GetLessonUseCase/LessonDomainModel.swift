@@ -31,6 +31,8 @@ extension LessonDomainModel {
     }
 }
 
+extension LessonDomainModel: Equatable {}
+
 extension LessonDomainModel: Identifiable {
     
     var id: String {

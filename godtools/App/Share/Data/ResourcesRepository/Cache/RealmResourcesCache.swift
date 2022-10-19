@@ -15,10 +15,10 @@ class RealmResourcesCache {
     private let realmDatabase: RealmDatabase
     private let resourcesSync: RealmResourcesCacheSync
         
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, resourcesSync: RealmResourcesCacheSync) {
         
         self.realmDatabase = realmDatabase
-        self.resourcesSync = RealmResourcesCacheSync(realmDatabase: realmDatabase)
+        self.resourcesSync = resourcesSync
     }
     
     var numberOfResources: Int {
@@ -60,6 +60,10 @@ class RealmResourcesCache {
         }
         
         return allTools
+    }
+    
+    func getFeaturedLessons() -> [ResourceModel] {
+        return getAllLessons().filter { $0.attrSpotlight == true }
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -109,36 +113,6 @@ class RealmResourcesCache {
         return realmDatabase.openRealm().objects(RealmResource.self)
             .where { $0.resourceType == resourceType.rawValue }
             .map { ResourceModel(model: $0) }
-    }
-    
-    func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
-        
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
-            return nil
-        }
-        
-        guard let realmTranslation = realmResource.latestTranslations
-            .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
-            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
-            return nil
-        }
-        
-        return TranslationModel(model: realmTranslation)
-    }
-    
-    func getResourceLanguageLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
-        
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
-            return nil
-        }
-        
-        guard let realmTranslation = realmResource.latestTranslations
-            .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
-            .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false).first else {
-            return nil
-        }
-
-        return TranslationModel(model: realmTranslation)
     }
     
     func getResourceVariants(resourceId: String) -> [ResourceModel] {

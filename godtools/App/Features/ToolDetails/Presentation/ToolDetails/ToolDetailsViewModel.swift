@@ -13,11 +13,13 @@ import Combine
 class ToolDetailsViewModel: ObservableObject {
     
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -45,28 +47,40 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
     @Published var aboutDetails: String = ""
+    @Published var conversationStartersTitle: String = ""
+    @Published var conversationStartersContent: String = ""
+    @Published var outlineTitle: String = ""
+    @Published var outlineContent: String = ""
+    @Published var bibleReferencesTitle: String = ""
+    @Published var bibleReferencesContent: String = ""
     @Published var availableLanguagesTitle: String = ""
     @Published var availableLanguagesList: String = ""
     @Published var versionsMessage: String = ""
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
+        
+        self.conversationStartersTitle = localizationServices.stringForMainBundle(key: "toolDetails.conversationStarters.title")
+        self.outlineTitle = localizationServices.stringForMainBundle(key: "toolDetails.outline.title")
+        self.bibleReferencesTitle = localizationServices.stringForMainBundle(key: "toolDetails.bibleReferences.title")
         self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
@@ -97,13 +111,13 @@ class ToolDetailsViewModel: ObservableObject {
         let aboutDetailsValue: String
         let languageBundle: Bundle
         
-        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
-        else if let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: "en") {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
             nameValue = englishTranslation.translatedName
             aboutDetailsValue = englishTranslation.translatedDescription
@@ -136,7 +150,7 @@ class ToolDetailsViewModel: ObservableObject {
         segments = segmentTypes.map({
             switch $0 {
             case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "about")
+                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
             case .versions:
                 return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
             }
@@ -167,7 +181,12 @@ class ToolDetailsViewModel: ObservableObject {
             return
         }
         
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(resourceId: resourceId, languageIds: [primaryLanguage.id], resourcesRepository: resourcesRepository)
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: resourceId,
+            languageIds: [primaryLanguage.id],
+            resourcesRepository: resourcesRepository,
+            translationsRepository: translationsRepository
+        )
         
         hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
@@ -192,17 +211,21 @@ class ToolDetailsViewModel: ObservableObject {
     
     private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }
 
@@ -210,29 +233,36 @@ class ToolDetailsViewModel: ObservableObject {
 
 extension ToolDetailsViewModel {
     
-    func backButtonTapped() {
-        
-        flowDelegate?.navigate(step: .backTappedFromToolDetails)
-    }
-    
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func openToolTapped() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
                 AnalyticsConstants.Keys.tool: resource.abbreviation
-            ])
+            ]
         )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
 
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }

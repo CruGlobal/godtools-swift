@@ -12,26 +12,24 @@ import GoogleAnalytics
 
 class FirebaseAnalytics: NSObject {
     
-    private let config: AppConfig
-    private let userAuthentication: UserAuthenticationType
-    private let languageSettingsService: LanguageSettingsService
+    private let appBuild: AppBuild
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(config: AppConfig, userAuthentication: UserAuthenticationType, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    init(appBuild: AppBuild, oktaUserAuthentication: OktaUserAuthentication, loggingEnabled: Bool) {
         
-        self.config = config
-        self.userAuthentication = userAuthentication
-        self.languageSettingsService = languageSettingsService
+        self.appBuild = appBuild
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.loggingEnabled = loggingEnabled
         
         super.init()
     }
     
     deinit {
-        userAuthentication.authenticatedUser.removeObserver(self)
+        oktaUserAuthentication.authenticatedUser.removeObserver(self)
     }
     
     func configure() {
@@ -44,7 +42,7 @@ class FirebaseAnalytics: NSObject {
         
         // gai
         if let gai = GAI.sharedInstance() {
-            if config.build == .analyticsLogging {
+            if appBuild.configuration == .analyticsLogging {
                 gai.dispatchInterval = 1
             }
             
@@ -53,20 +51,20 @@ class FirebaseAnalytics: NSObject {
                         
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
-            value: config.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
+            value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
-        userAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: AuthUserModelType?) in
+        oktaUserAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: OktaAuthUserModel?) in
             guard let weakSelf = self else {
                 return
             }
-            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.userAuthentication.isAuthenticated)
+            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.oktaUserAuthentication.isAuthenticated)
         }
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil) {
+    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -81,7 +79,7 @@ class FirebaseAnalytics: NSObject {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil, actionName: String, data: [String : Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String : Any]?) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -95,7 +93,7 @@ class FirebaseAnalytics: NSObject {
         )
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String, secondaryContentLanguage: String?, url: String) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -175,7 +173,7 @@ class FirebaseAnalytics: NSObject {
         return string.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
     }
     
-    private func setUserProperties(authUser: AuthUserModelType?, isLoggedIn: Bool) {
+    private func setUserProperties(authUser: OktaAuthUserModel?, isLoggedIn: Bool) {
         assertFailureIfNotConfigured()
                                   
         let grMasterPersonID: String? = authUser?.grMasterPersonId
@@ -202,8 +200,8 @@ class FirebaseAnalytics: NSObject {
         var properties: [String: String] = [:]
                 
         properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
-        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage ?? languageSettingsService.primaryLanguage.value?.code
-        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage ?? languageSettingsService.parallelLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage
+        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage
         properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
         properties[AnalyticsConstants.Keys.screenNameFirebase] = screenName
         properties[AnalyticsConstants.Keys.siteSection] = siteSection

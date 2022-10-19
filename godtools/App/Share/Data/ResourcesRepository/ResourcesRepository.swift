@@ -44,6 +44,10 @@ class ResourcesRepository {
         return cache.getAllTools(sorted: sorted, with: category)
     }
     
+    func getFeaturedLessons() -> [ResourceModel] {
+        return cache.getFeaturedLessons()
+    }
+    
     func getResource(id: String) -> ResourceModel? {
         return cache.getResource(id: id)
     }
@@ -64,14 +68,6 @@ class ResourcesRepository {
         return cache.getResources(with: resourceType)
     }
     
-    func getResourceLanguageLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
-        return cache.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId)
-    }
-    
-    func getResourceLanguageLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
-        return cache.getResourceLanguageLatestTranslation(resourceId: resourceId, languageCode: languageCode)
-    }
-    
     func getResourceVariants(resourceId: String) -> [ResourceModel] {
         
         return cache.getResourceVariants(resourceId: resourceId)
@@ -87,11 +83,12 @@ class ResourcesRepository {
             .map({ result in
                     
                 return RealmResourcesCacheSyncResult(
-                    languagesSyncResult: RealmLanguagesCacheSyncResult(languageIdsRemoved: []),
-                    resourceIdsRemoved: [],
-                    translationIdsRemoved: [],
-                    attachmentIdsRemoved: [],
-                    latestAttachmentFiles: []
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
+                    resourcesRemoved: [],
+                    translationsRemoved: [],
+                    attachmentsRemoved: [],
+                    latestAttachmentFiles: [],
+                    downloadedTranslationsRemoved: []
                 )
             })
             .catch({ (error: Error) in

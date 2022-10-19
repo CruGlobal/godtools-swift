@@ -83,10 +83,7 @@ extension ToolCardsViewModel {
             .sink { tools in
                 
                 self.delegate?.toolsAreLoading(tools.isEmpty)
-                
-                withAnimation {
-                    self.tools = tools
-                }
+                self.tools = tools
             }
             .store(in: &cancellables)
     }

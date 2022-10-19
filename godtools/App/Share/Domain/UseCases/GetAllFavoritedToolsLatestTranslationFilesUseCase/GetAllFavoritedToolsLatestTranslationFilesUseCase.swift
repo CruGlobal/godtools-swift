@@ -11,29 +11,33 @@ import Combine
 
 class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     
-    private let getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase
+    private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     
     private var cancellables = Set<AnyCancellable>()
     private var downloadLatestTranslationsCancellable: AnyCancellable?
     
-    init(getAllFavoritedResourceModelsUseCase: GetAllFavoritedResourceModelsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
-        self.getAllFavoritedResourceModelsUseCase = getAllFavoritedResourceModelsUseCase
+        self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         
         Publishers.CombineLatest4(
             resourcesRepository.getResourcesChanged(),
-            getAllFavoritedResourceModelsUseCase.getAllFavoritedResourceModelsPublisher(),
+            favoritedResourcesRepository.getFavoritedResourcesChanged(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(),
             getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
-            .sink { [weak self] (resourcesChanged: Void, favoritedTools: [FavoritedResourceModel], primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
+            .sink { [weak self] (resourcesChanged: Void, _, primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
+                
+                let favoritedTools = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
                 
                 self?.downloadLatestTranslationsForAllFavoritedTools(
                     favoritedTools: favoritedTools,
@@ -48,7 +52,9 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
               
         downloadLatestTranslationsCancellable?.cancel()
         
-        let languages: [LanguageDomainModel] = [primaryLanguage, parallelLanguage].compactMap({
+        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodes.english)
+        
+        let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage, parallelLanguage].compactMap({
             return $0
         })
         
@@ -62,7 +68,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
             
             for language in languages {
                 
-                guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
+                guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
                     continue
                 }
                 

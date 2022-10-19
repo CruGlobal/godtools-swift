@@ -33,23 +33,23 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
         
         self.delegate = delegate
         
-        super.init(dataDownloader: dataDownloader, languageSettingsService: languageSettingsService, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: delegate)
+        super.init(dataDownloader: dataDownloader, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: delegate)
         
         maxNumberCardsToShow = maxNumberCardsShown
     }
     
-    override func setText(for languageBundle: Bundle) {
+    override func setText(for language: LanguageDomainModel?) {
         
-        viewAllButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteTools.viewAll") + " >"
-        noFavoriteToolsTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.title")
-        noFavoriteToolsDescription = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.description")
-        noFavoriteToolsButtonText = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.noTools.button")
+        viewAllButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.viewAll") + " >"
+        noFavoriteToolsTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.title")
+        noFavoriteToolsDescription = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.description")
+        noFavoriteToolsButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.button")
         
-        super.setText(for: languageBundle)
+        super.setText(for: language)
     }
 }
 

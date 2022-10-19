@@ -27,6 +27,7 @@ struct AllToolsList: View {
             
             ToolCategoriesView(viewModel: viewModel.categoriesViewModel, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
+                .animation(.default, value: viewModel.categoriesViewModel.selectedCategoryId)
             
             SeparatorView()
                 .listRowInsets(EdgeInsets())

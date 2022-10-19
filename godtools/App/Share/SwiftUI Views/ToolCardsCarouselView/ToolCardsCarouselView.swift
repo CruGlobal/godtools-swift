@@ -45,6 +45,7 @@ struct ToolCardsCarouselView: View {
                 }
             }
             .padding([.leading, .trailing], leadingTrailingPadding)
+            .animation(.default, value: viewModel.tools)
         }
     }
     

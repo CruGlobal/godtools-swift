@@ -82,6 +82,8 @@ class ToolSettingsFlow: Flow {
                 language: language,
                 pageNumber: toolData.pageNumber,
                 localizationServices: appDiContainer.localizationServices,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics
             )
             
@@ -157,6 +159,8 @@ class ToolSettingsFlow: Flow {
                 let viewModel = ShareToolRemoteSessionURLViewModel(
                     toolRemoteShareUrl: remoteShareUrl,
                     localizationServices: appDiContainer.localizationServices,
+                    getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                    getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                     analytics: appDiContainer.analytics
                 )
                 let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
@@ -212,6 +216,8 @@ class ToolSettingsFlow: Flow {
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics,
                 shareableImageDomainModel: shareableImageDomainModel,
                 localizationServices: appDiContainer.localizationServices
@@ -257,6 +263,8 @@ class ToolSettingsFlow: Flow {
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
             resource: toolData.renderer.value.resource,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analyticsContainer: appDiContainer.analytics,
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
@@ -390,7 +398,8 @@ class ToolSettingsFlow: Flow {
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,
             languageIds: languageIds,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository()
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
         )
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in

@@ -50,10 +50,6 @@ class ToolViewModel: MobileContentPagesViewModel, ToolViewModelType {
         setupBinding()
     }
     
-    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
-        fatalError("init(renderer:page:resourcesRepository:translationsRepository:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
-    }
-    
     deinit {
                 
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
@@ -160,9 +156,20 @@ extension ToolViewModel {
     
     private func trackShareScreenOpened() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.shareScreenOpened, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: [
-            AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
-        ]))
+        let trackAction = TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            contentLanguage: nil,
+            secondaryContentLanguage: nil,
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
+            ]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func subscribeToLiveShareStreamIfNeeded() {

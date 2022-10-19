@@ -12,20 +12,20 @@ class ToolShortcutItem: UIApplicationShortcutItem {
     
     private static let keyUserInfoTractUrl: String = "key_userinfo_tract_url"
     
-    static func shortcutItem(resourcesRepository: ResourcesRepository, resource: ResourceModel, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
+    static func shortcutItem(translationsRepository: TranslationsRepository, tool: ToolDomainModel, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
         
         let shortcutName: String
 
-        if let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageCode: primaryLanguageCode) {
+        if let translation = translationsRepository.getLatestTranslation(resourceId: tool.id, languageCode: primaryLanguageCode) {
             shortcutName = translation.translatedName
         }
         else {
-            shortcutName = resource.name
+            shortcutName = tool.name
         }
         
         let urlString: String
         
-        let primaryUrlString: String = "godtools://knowgod.com/" + primaryLanguageCode + "/" + resource.abbreviation + "/0"
+        let primaryUrlString: String = "godtools://knowgod.com/" + primaryLanguageCode + "/" + tool.abbreviation + "/0"
         if let parallelLanguageCode = parallelLanguageCode {
             urlString = primaryUrlString + "?parallelLanguage=" + parallelLanguageCode
         }

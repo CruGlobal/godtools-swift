@@ -13,12 +13,14 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     private let resourceId: String
     private let languageIds: [String]
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
         
-    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository) {
+    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
     func getResource() -> ResourceModel? {
@@ -37,14 +39,14 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
                 
         for languageId in supportedLanguageIds {
             
-            guard let translation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 return .failure(.failedToFetchTranslationFromCache)
             }
             
             translations.append(translation)
         }
         
-        if translations.isEmpty, let englishTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
+        if translations.isEmpty, let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
             translations = [englishTranslation]
         }
     

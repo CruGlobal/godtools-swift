@@ -10,16 +10,20 @@ import Foundation
 
 class AppDataLayerDependencies {
     
+    private let sharedAppConfig: AppConfig
+    private let sharedInfoPlist: InfoPlist
     private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
-    init() {
+    init(appConfig: AppConfig, infoPlist: InfoPlist) {
         
+        sharedAppConfig = appConfig
+        sharedInfoPlist = infoPlist
     }
     
     func getAppConfig() -> AppConfig {
-        return AppConfig()
+        return sharedAppConfig
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
@@ -28,6 +32,12 @@ class AppDataLayerDependencies {
             cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             bundle: AttachmentsBundleCache()
+        )
+    }
+    
+    func getDeepLinkingService() -> DeepLinkingService {
+        return DeepLinkingService(
+            manifest: GodToolsDeepLinkingManifest()
         )
     }
     
@@ -40,6 +50,34 @@ class AppDataLayerDependencies {
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
+    
+    func getFollowUpsService() -> FollowUpsService {
+        
+        let api = FollowUpsApi(
+            baseUrl: getAppConfig().mobileContentApiBaseUrl,
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = FailedFollowUpsCache(
+            realmDatabase: sharedRealmDatabase
+        )
+        
+        return FollowUpsService(
+            api: api,
+            cache: cache
+        )
+    }
+    
+    func getGlobalAnalyticsService() -> GlobalAnalyticsService {
+        return GlobalAnalyticsService(
+            api: MobileContentGlobalAnalyticsApi(baseUrl: getAppConfig().mobileContentApiBaseUrl, ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: GlobalAnalyticsUserDefaultsCache()
+        )
+    }
+    
+    func getInfoPlist() -> InfoPlist {
+        return sharedInfoPlist
+    }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
@@ -48,9 +86,22 @@ class AppDataLayerDependencies {
     }
     
     func getLanguagesRepository() -> LanguagesRepository {
+        
+        let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
+        
+        let api = MobileContentLanguagesApi(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = RealmLanguagesCache(
+            realmDatabase: sharedRealmDatabase,
+            languagesSync: sync
+        )
+        
         return LanguagesRepository(
-            api: MobileContentLanguagesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
-            cache: RealmLanguagesCache(realmDatabase: sharedRealmDatabase)
+            api: api,
+            cache: cache
         )
     }
     
@@ -69,21 +120,48 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesRepository() -> ResourcesRepository {
+        
+        let sync = RealmResourcesCacheSync(
+            realmDatabase: sharedRealmDatabase,
+            translationsRepository: getTranslationsRepository()
+        )
+        
+        let api = MobileContentResourcesApi(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = RealmResourcesCache(
+            realmDatabase: sharedRealmDatabase,
+            resourcesSync: sync
+        )
+        
         return ResourcesRepository(
-            api: MobileContentResourcesApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
-            cache: RealmResourcesCache(realmDatabase: sharedRealmDatabase),
+            api: api,
+            cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             translationsRepository: getTranslationsRepository(),
             languagesRepository: getLanguagesRepository()
         )
     }
     
+    func getSharedAppsFlyer() -> AppsFlyer {
+        return AppsFlyer.shared
+    }
+    
+    func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
+        return TrackDownloadedTranslationsRepository(
+            cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
-            appConfig: getAppConfig(),
+            infoPlist: getInfoPlist(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
-            resourcesFileCache: getResourcesFileCache()
+            resourcesFileCache: getResourcesFileCache(),
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
     }
 }

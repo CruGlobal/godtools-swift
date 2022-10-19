@@ -10,6 +10,8 @@ import Foundation
 
 class TutorialPagerViewModel: TutorialPagerViewModelType {
     
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analyticsContainer: AnalyticsContainer
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
@@ -24,9 +26,11 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, tutorialItems: [TutorialItemType], tutorialPagerAnalyticsModel: TutorialPagerAnalytics, skipButtonTitle: String) {
         
         self.flowDelegate = flowDelegate
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analyticsContainer = analyticsContainer
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.tutorialPagerAnalyticsModel = tutorialPagerAnalyticsModel
@@ -54,7 +58,14 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
         
-        return TutorialCellViewModel(item: tutorialItems[index], customViewBuilder: customViewBuilder, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index))
+        return TutorialCellViewModel(
+            item: tutorialItems[index],
+            customViewBuilder: customViewBuilder,
+            tutorialVideoAnalytics: tutorialVideoAnalytics,
+            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase
+        )
     }
     
     func skipTapped() {
@@ -92,13 +103,16 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
         
         if !analyticsScreenName.isEmpty {
-            analyticsContainer.pageViewedAnalytics.trackPageView(
-                trackScreen: TrackScreenModel(
-                    screenName: analyticsScreenName,
-                    siteSection: tutorialPagerAnalyticsModel.siteSection,
-                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection
-                )
+            
+            let trackScreen = TrackScreenModel(
+                screenName: analyticsScreenName,
+                siteSection: tutorialPagerAnalyticsModel.siteSection,
+                siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
             )
+            
+            analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         }
     }
     
@@ -107,16 +121,19 @@ class TutorialPagerViewModel: TutorialPagerViewModelType {
         let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
         
         if !analyticsScreenName.isEmpty, !tutorialPagerAnalyticsModel.continueButtonTappedActionName.isEmpty {
-            analyticsContainer.trackActionAnalytics.trackAction(
-                trackAction: TrackActionModel(
-                    screenName: analyticsScreenName,
-                    actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
-                    siteSection: tutorialPagerAnalyticsModel.siteSection,
-                    siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
-                    url: nil,
-                    data: tutorialPagerAnalyticsModel.continueButtonTappedData
-                )
+            
+            let trackAction = TrackActionModel(
+                screenName: analyticsScreenName,
+                actionName: tutorialPagerAnalyticsModel.continueButtonTappedActionName,
+                siteSection: tutorialPagerAnalyticsModel.siteSection,
+                siteSubSection: tutorialPagerAnalyticsModel.siteSubsection,
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+                url: nil,
+                data: tutorialPagerAnalyticsModel.continueButtonTappedData
             )
+            
+            analyticsContainer.trackActionAnalytics.trackAction(trackAction: trackAction)
         }
     }
 }

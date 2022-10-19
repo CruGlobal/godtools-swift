@@ -16,8 +16,9 @@ class SwiftUIPreviewDiContainer {
     
     func getAppDiContainer() -> AppDiContainer {
         
-        return AppDiContainer(
-            appDeepLinkingService: AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
-        )
+        let infoPlist: InfoPlist = InfoPlist()
+        let appBuild: AppBuild = AppBuild(infoPlist: infoPlist)
+        
+        return AppDiContainer(appBuild: appBuild, appConfig: AppConfig(appBuild: appBuild), infoPlist: infoPlist)
     }
 }
