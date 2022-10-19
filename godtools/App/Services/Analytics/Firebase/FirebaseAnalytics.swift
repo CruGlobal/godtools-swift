@@ -14,17 +14,15 @@ class FirebaseAnalytics: NSObject {
     
     private let appBuild: AppBuild
     private let oktaUserAuthentication: OktaUserAuthentication
-    private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    required init(appBuild: AppBuild, oktaUserAuthentication: OktaUserAuthentication, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
+    init(appBuild: AppBuild, oktaUserAuthentication: OktaUserAuthentication, loggingEnabled: Bool) {
         
         self.appBuild = appBuild
         self.oktaUserAuthentication = oktaUserAuthentication
-        self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
         
         super.init()
@@ -66,7 +64,7 @@ class FirebaseAnalytics: NSObject {
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil) {
+    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -81,7 +79,7 @@ class FirebaseAnalytics: NSObject {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String? = nil, secondaryContentLanguage: String? = nil, actionName: String, data: [String : Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String : Any]?) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -95,7 +93,7 @@ class FirebaseAnalytics: NSObject {
         )
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String, secondaryContentLanguage: String?, url: String) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -202,8 +200,8 @@ class FirebaseAnalytics: NSObject {
         var properties: [String: String] = [:]
                 
         properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
-        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage ?? languageSettingsService.primaryLanguage.value?.code
-        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage ?? languageSettingsService.parallelLanguage.value?.code
+        properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage
+        properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage
         properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName
         properties[AnalyticsConstants.Keys.screenNameFirebase] = screenName
         properties[AnalyticsConstants.Keys.siteSection] = siteSection

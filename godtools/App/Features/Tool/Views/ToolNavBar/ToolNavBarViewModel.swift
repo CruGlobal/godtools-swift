@@ -28,7 +28,7 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let selectedLanguage: ObservableValue<Int>
     
-    required init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
+    init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
@@ -126,7 +126,17 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
             AnalyticsConstants.Keys.contentLanguageSecondary: language.code,
         ]
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled, siteSection: analyticsSiteSection, siteSubSection: "", url: nil, data: data)
+        let trackAction = TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            contentLanguage: language.code,
+            secondaryContentLanguage: nil,
+            url: nil,
+            data: data
         )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

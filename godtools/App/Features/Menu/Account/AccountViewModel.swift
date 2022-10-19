@@ -11,6 +11,8 @@ import Foundation
 class AccountViewModel: AccountViewModelType {
     
     private let oktaUserAuthentication: OktaUserAuthentication
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
         
     let globalAnalyticsService: GlobalAnalyticsService
@@ -21,11 +23,13 @@ class AccountViewModel: AccountViewModelType {
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(oktaUserAuthentication: OktaUserAuthentication, globalAnalyticsService: GlobalAnalyticsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(oktaUserAuthentication: OktaUserAuthentication, globalAnalyticsService: GlobalAnalyticsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
         
         self.oktaUserAuthentication = oktaUserAuthentication
         self.globalAnalyticsService = globalAnalyticsService
         self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
@@ -93,6 +97,14 @@ class AccountViewModel: AccountViewModelType {
 
     func accountPageDidAppear(page: Int) {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getAnalyticsScreenName(page: page), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: getAnalyticsScreenName(page: page),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

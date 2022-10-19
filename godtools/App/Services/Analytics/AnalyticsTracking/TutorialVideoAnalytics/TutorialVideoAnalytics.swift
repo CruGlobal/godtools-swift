@@ -12,22 +12,24 @@ class TutorialVideoAnalytics {
     
     private let trackActionAnalytics: TrackActionAnalytics
     
-    required init(trackActionAnalytics: TrackActionAnalytics) {
+    init(trackActionAnalytics: TrackActionAnalytics) {
         
         self.trackActionAnalytics = trackActionAnalytics
     }
     
-    func trackVideoPlayed(videoId: String, screenName: String) {
+    func trackVideoPlayed(videoId: String, screenName: String, contentLanguage: String?, secondaryContentLanguage: String?) {
             
-        trackActionAnalytics.trackAction(
-            trackAction: TrackActionModel(
-                screenName: screenName,
-                actionName: AnalyticsConstants.ActionNames.tutorialVideo,
-                siteSection: "",
-                siteSubSection: "",
-                url: nil,
-                data: [AnalyticsConstants.Keys.tutorialVideo: 1, AnalyticsConstants.Keys.tutorialVideoId: videoId]
-            )
+        let trackAction = TrackActionModel(
+            screenName: screenName,
+            actionName: AnalyticsConstants.ActionNames.tutorialVideo,
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: contentLanguage,
+            secondaryContentLanguage: secondaryContentLanguage,
+            url: nil,
+            data: [AnalyticsConstants.Keys.tutorialVideo: 1, AnalyticsConstants.Keys.tutorialVideoId: videoId]
         )
+        
+        trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

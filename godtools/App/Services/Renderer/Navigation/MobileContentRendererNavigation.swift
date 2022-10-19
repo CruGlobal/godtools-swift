@@ -123,6 +123,8 @@ class MobileContentRendererNavigation {
             renderedPageContext: event.renderedPageContext,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics,
             localizationServices: appDiContainer.localizationServices,
             viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),

@@ -18,7 +18,10 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     // MARK: - Properties
     
     private let localizationServices: LocalizationServices
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
+    
     private weak var flowDelegate: FlowDelegate?
     private weak var delegate: OpenTutorialBannerViewModelDelegate?
     
@@ -29,10 +32,12 @@ class OpenTutorialBannerViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
+    init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.delegate = delegate
         
@@ -64,6 +69,18 @@ extension OpenTutorialBannerViewModel {
     }
     
     private func trackCloseTapped() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss, siteSection: "", siteSubSection: "", url: nil, data: [AnalyticsConstants.Keys.tutorialDismissed: 1]))
+        
+        let trackAction = TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.tutorialHomeDismiss,
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: [AnalyticsConstants.Keys.tutorialDismissed: 1]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

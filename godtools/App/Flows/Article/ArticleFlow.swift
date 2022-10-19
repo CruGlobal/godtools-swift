@@ -31,6 +31,8 @@ class ArticleFlow: Flow {
             articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
             manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
             localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.analytics
         )
         
@@ -60,6 +62,8 @@ class ArticleFlow: Flow {
                 manifest: manifest,
                 articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
                 localizationServices: appDiContainer.localizationServices,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics,
                 currentArticleDownloadReceipt: currentArticleDownloadReceipt
             )
@@ -72,6 +76,8 @@ class ArticleFlow: Flow {
             let viewModel = ArticleWebViewModel(
                 flowDelegate: self,
                 aemCacheObject: aemCacheObject,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics,
                 flowType: .tool(resource: resource)
             )
@@ -84,6 +90,8 @@ class ArticleFlow: Flow {
             
             let viewModel = ShareArticleViewModel(
                 articleAemData: articleAemData,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.analytics
             )
             
