@@ -20,7 +20,6 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let oktaUserAuthentication: OktaUserAuthentication
-    let favoritedResourcesCache: FavoritedResourcesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
@@ -48,9 +47,7 @@ class AppDiContainer {
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-        
-        favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
-                                              
+                                                      
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
             resourcesCache: resourcesCache
