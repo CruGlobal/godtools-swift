@@ -15,7 +15,6 @@ class ToolsMenuView: UIViewController {
     private let pageOrder: [ToolsMenuPageType] = [.lessons, .favoritedTools, .allTools]
     
     private var startingPage: ToolsMenuPageType = .favoritedTools
-    private var pages: [ToolsMenuPageType: ToolsMenuPageView] = Dictionary()
     private var isAnimatingNavigationToPage: Bool = false
     private var chooseLanguageButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
@@ -58,43 +57,6 @@ class ToolsMenuView: UIViewController {
 
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard !didLayoutSubviews else {
-            return
-        }
-        didLayoutSubviews = true
-        
-        for index in 0 ..< pageOrder.count {
-            
-            let pageType: ToolsMenuPageType = pageOrder[index]
-            let page: ToolsMenuPageView = getNewPageViewInstance(pageType: pageType)
-            
-            pages[pageType] = page
-                        
-            page.view.frame = CGRect(
-                x: CGFloat(index) * toolsListsScrollView.bounds.size.width,
-                y: 0,
-                width: toolsListsScrollView.bounds.size.width,
-                height: toolsListsScrollView.bounds.size.height
-            )
-                        
-            toolsListsScrollView.addSubview(page.view)
-            
-            toolsListsScrollView.contentSize = CGSize(
-                width: toolsListsScrollView.bounds.size.width * CGFloat(index + 1),
-                height: toolsListsScrollView.bounds.size.height
-            )
-        }
-                
-        toolsListsScrollView.delegate = self
-        
-        toolbarView.configure(viewModel: viewModel.toolbarWillAppear(), pageItemsOrder: pageOrder, delegate: self)
-                                
-        navigateToPage(pageType: startingPage, animated: false)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -117,26 +79,6 @@ class ToolsMenuView: UIViewController {
         viewModel.languageTapped()
     }
     
-    private func getNewPageViewInstance(pageType: ToolsMenuPageType) -> ToolsMenuPageView {
-        
-        switch pageType {
-        
-        case .allTools:
-            return AllToolsView(contentView: AllToolsContentView(viewModel: viewModel.allToolsWillAppear()))
-            
-        case .favoritedTools:
-            let viewModel = viewModel.favoritedToolsWillAppear()
-            viewModel.setDelegate(delegate: self)
-            
-            let favoritedToolsView = FavoritedToolsView(contentView: FavoritesContentView(viewModel: viewModel))
-            return favoritedToolsView
-        
-        case .lessons:
-            return LessonsHostingView(contentView: LessonsView(viewModel: viewModel.lessonsWillAppear()))
-            
-        }
-    }
-    
     private func configureNavigationBarAppearance(shouldAnimateNavigationBarHiddenState: Bool) {
                 
         AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
@@ -154,7 +96,6 @@ class ToolsMenuView: UIViewController {
         
     private func toolsMenuPageDidAppear(pageType: ToolsMenuPageType) {
         
-        pages[pageType]?.pageViewed()
     }
     
     private func didChangeToolbarItem(pageType: ToolsMenuPageType) {

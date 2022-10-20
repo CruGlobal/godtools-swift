@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPageView {
+class FavoritedToolsView: UIHostingController<FavoritesContentView> {
     
     private let contentView: FavoritesContentView
     
@@ -22,9 +22,5 @@ class FavoritedToolsView: UIHostingController<FavoritesContentView>, ToolsMenuPa
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func pageViewed() {
-        contentView.viewModel.pageViewed()
     }
 }

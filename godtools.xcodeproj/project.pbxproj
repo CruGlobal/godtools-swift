@@ -22,7 +22,6 @@
 		4505C68A282B4A0A0047951D /* ToolsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C678282B4A0A0047951D /* ToolsMenuView.swift */; };
 		4505C68B282B4A0B0047951D /* ToolsMenuPageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C67A282B4A0A0047951D /* ToolsMenuPageType.swift */; };
 		4505C68C282B4A0B0047951D /* ToolsMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4505C67B282B4A0A0047951D /* ToolsMenuView.xib */; };
-		4505C68D282B4A0B0047951D /* ToolsMenuPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C67C282B4A0A0047951D /* ToolsMenuPageView.swift */; };
 		4505C68F282B4A0B0047951D /* ToolsMenuToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4505C680282B4A0A0047951D /* ToolsMenuToolbarView.xib */; };
 		4505C690282B4A0B0047951D /* ToolsMenuToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C681282B4A0A0047951D /* ToolsMenuToolbarViewModel.swift */; };
 		4505C691282B4A0B0047951D /* ToolsMenuToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505C683282B4A0A0047951D /* ToolsMenuToolbarItemView.swift */; };
@@ -1133,7 +1132,6 @@
 		4505C678282B4A0A0047951D /* ToolsMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuView.swift; sourceTree = "<group>"; };
 		4505C67A282B4A0A0047951D /* ToolsMenuPageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuPageType.swift; sourceTree = "<group>"; };
 		4505C67B282B4A0A0047951D /* ToolsMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolsMenuView.xib; sourceTree = "<group>"; };
-		4505C67C282B4A0A0047951D /* ToolsMenuPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuPageView.swift; sourceTree = "<group>"; };
 		4505C680282B4A0A0047951D /* ToolsMenuToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolsMenuToolbarView.xib; sourceTree = "<group>"; };
 		4505C681282B4A0A0047951D /* ToolsMenuToolbarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuToolbarViewModel.swift; sourceTree = "<group>"; };
 		4505C683282B4A0A0047951D /* ToolsMenuToolbarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsMenuToolbarItemView.swift; sourceTree = "<group>"; };
@@ -2372,7 +2370,6 @@
 		4505C676282B4A0A0047951D /* ToolsMenu */ = {
 			isa = PBXGroup;
 			children = (
-				4505C67C282B4A0A0047951D /* ToolsMenuPageView.swift */,
 				4505C678282B4A0A0047951D /* ToolsMenuView.swift */,
 				4505C67B282B4A0A0047951D /* ToolsMenuView.xib */,
 				4505C677282B4A0A0047951D /* ToolsMenuViewModel.swift */,
@@ -8430,7 +8427,6 @@
 				45677870287DC60F0044AEB2 /* AccountItemViewType.swift in Sources */,
 				456777D3287DB3770044AEB2 /* ShareShareableViewModel.swift in Sources */,
 				D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */,
-				4505C68D282B4A0B0047951D /* ToolsMenuPageView.swift in Sources */,
 				45FB161127DBDDB60009DF8E /* ToolNavigationFlow.swift in Sources */,
 				45AE975627C97A9500C2CB33 /* Spacer+MobileContentRenderableModel.swift in Sources */,
 				D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-class LessonsHostingView: UIHostingController<LessonsView>, ToolsMenuPageView {
+class LessonsHostingView: UIHostingController<LessonsView> {
     
     private let contentView: LessonsView
     
@@ -22,9 +22,5 @@ class LessonsHostingView: UIHostingController<LessonsView>, ToolsMenuPageView {
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func pageViewed() {
-        contentView.viewModel.pageViewed()
     }
 }

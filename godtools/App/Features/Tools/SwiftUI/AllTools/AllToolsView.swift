@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class AllToolsView: UIHostingController<AllToolsContentView>, ToolsMenuPageView {
+class AllToolsView: UIHostingController<AllToolsContentView> {
     
     private let contentView: AllToolsContentView
     
@@ -22,9 +22,5 @@ class AllToolsView: UIHostingController<AllToolsContentView>, ToolsMenuPageView 
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func pageViewed() {
-        contentView.viewModel.pageViewed()
     }
 }
