@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import Combine
 
 class DashboardViewModel: ObservableObject {
     
@@ -40,6 +42,9 @@ class DashboardViewModel: ObservableObject {
         }
         return flowDelegate
     }
+    
+    private var chooseLanguageButton: UIBarButtonItem?
+    var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(Bool, UIBarButtonItem?), Never>((false, nil))
         
     lazy var allToolsViewModel: AllToolsContentViewModel = {
         AllToolsContentViewModel(
@@ -129,8 +134,44 @@ class DashboardViewModel: ObservableObject {
 // MARK: - Public
 
 extension DashboardViewModel {
+    
     @objc func menuTapped() {
         flowDelegate?.navigate(step: .menuTappedFromTools)
+    }
+    
+    func tabChanged(to tab: DashboardTabType) {
+        
+        let shouldShowLanguageSettingsButton: Bool
+        switch tab {
+        case .favorites, .allTools:
+            shouldShowLanguageSettingsButton = true
+        case .lessons:
+            shouldShowLanguageSettingsButton = false
+        }
+        
+        if shouldShowLanguageSettingsBarButtonItemPublisher.value.0 != shouldShowLanguageSettingsButton {
+            
+            if shouldShowLanguageSettingsButton {
+    
+                chooseLanguageButton = UIBarButtonItem()
+                chooseLanguageButton?.image = ImageCatalog.navLanguage.uiImage
+                chooseLanguageButton?.tintColor = .white
+                chooseLanguageButton?.target = self
+                chooseLanguageButton?.action = #selector(languageBarButtonItemTapped)
+                
+                shouldShowLanguageSettingsBarButtonItemPublisher.send((true, chooseLanguageButton))
+                
+            } else {
+                
+                shouldShowLanguageSettingsBarButtonItemPublisher.send((false, chooseLanguageButton))
+                chooseLanguageButton = nil
+            }
+        }
+
+    }
+            
+    @objc func languageBarButtonItemTapped() {
+        flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
 }
 

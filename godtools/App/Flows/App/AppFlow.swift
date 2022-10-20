@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import SwiftUI
+import Combine
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
@@ -42,6 +43,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
+    
+    private var cancellables = Set<AnyCancellable>()
         
     init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingService) {
         
@@ -542,6 +545,23 @@ extension AppFlow {
             target: dashboardViewModel,
             action: #selector(dashboardViewModel.menuTapped)
         )
+
+        dashboardViewModel.shouldShowLanguageSettingsBarButtonItemPublisher
+            .receiveOnMain()
+            .sink { shouldShowBarButtonItem, barButtonItem in
+                
+                guard let barButtonItem = barButtonItem else { return }
+                
+                if shouldShowBarButtonItem {
+                    
+                    dashboardHostingController.addBarButtonItem(item: barButtonItem, barPosition: .right)
+                    
+                } else {
+                    
+                    dashboardHostingController.removeBarButtonItem(item: barButtonItem)
+                }
+            }
+            .store(in: &cancellables)
         
         return dashboardHostingController
     }

@@ -20,6 +20,8 @@ struct DashboardView: View {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
         UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 12) as Any], for: .normal)
+        
+        viewModel.tabChanged(to: startingTab)
     }
     
     var body: some View {
@@ -44,8 +46,11 @@ struct DashboardView: View {
                 }
                 .tag(DashboardTabType.allTools)
         }
-        
         .accentColor(ColorPalette.gtBlue.color)
+        .onChange(of: selectedTab) { newValue in
+            
+            viewModel.tabChanged(to: newValue)
+        }
     }
 }
 
