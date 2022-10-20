@@ -13,6 +13,8 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     private let item: TutorialItemType
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     
@@ -20,11 +22,13 @@ class TutorialCellViewModel: TutorialCellViewModelType {
     let title: String
     let message: String
     
-    required init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
+    init(item: TutorialItemType, customViewBuilder: CustomViewBuilderType?, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase) {
         
         self.item = item
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         
         if let imageName = item.imageName, !imageName.isEmpty, let image = UIImage(named: imageName) {
             
@@ -79,7 +83,12 @@ class TutorialCellViewModel: TutorialCellViewModelType {
             
             trackedAnalyticsForYouTubeVideoIds.append(videoId)
             
-            tutorialVideoAnalytics.trackVideoPlayed(videoId: videoId, screenName: analyticsScreenName)
+            tutorialVideoAnalytics.trackVideoPlayed(
+                videoId: videoId,
+                screenName: analyticsScreenName,
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            )
         }
     }
 }

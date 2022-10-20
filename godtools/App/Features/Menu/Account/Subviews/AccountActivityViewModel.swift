@@ -17,17 +17,17 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     let globalActivityResults: ObservableValue<GlobalActivityResults> = ObservableValue(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: []))
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServices) {
+    required init(localizationServices: LocalizationServices, globalAnalyticsService: GlobalAnalyticsService) {
         
         self.localizationServices = localizationServices
         
-        let cachedAttributes: GlobalActivityAnalytics.Data.Attributes? = globalActivityServices.cachedGlobalAnalytics?.data.attributes
+        let cachedAttributes: MobileContentGlobalAnalyticsDataModel.Data.Attributes? = globalAnalyticsService.cachedGlobalAnalytics?.data.attributes
         
         let globalActivityAttributes: [GlobalActivityAttribute] = createGlobalActivityAttributes(attributes: cachedAttributes ?? nil)
         
         globalActivityResults.accept(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: globalActivityAttributes))
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (result: Result<GlobalActivityAnalytics?, RequestResponseError<NoHttpClientErrorResponse>>) in
+        getGlobalAnalyticsOperation = globalAnalyticsService.getGlobalAnalytics(complete: { [weak self] (result: Result<MobileContentGlobalAnalyticsDataModel?, RequestResponseError<NoHttpClientErrorResponse>>) in
             DispatchQueue.main.async { [weak self] in
                 
                 switch result {
@@ -57,7 +57,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         getGlobalAnalyticsOperation?.cancelAllOperations()
     }
     
-    private func createGlobalActivityAttributes(attributes: GlobalActivityAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
+    private func createGlobalActivityAttributes(attributes: MobileContentGlobalAnalyticsDataModel.Data.Attributes?) -> [GlobalActivityAttribute] {
         if let attributes = attributes {
             return [
                 GlobalActivityAttribute(activityType: .users, count: attributes.users),

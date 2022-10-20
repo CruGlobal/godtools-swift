@@ -15,6 +15,8 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     private let tutorialItemsProvider: ShareToolScreenTutorialItemProvider
     private let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache
     private let resource: ResourceModel
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analyticsContainer: AnalyticsContainer
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     
@@ -26,13 +28,15 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     let continueTitle: String
     let shareLinkTitle: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: ShareToolScreenTutorialItemProvider, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialItemsProvider: ShareToolScreenTutorialItemProvider, shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache, resource: ResourceModel, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.tutorialItemsProvider = tutorialItemsProvider
         self.shareToolScreenTutorialNumberOfViewsCache = shareToolScreenTutorialNumberOfViewsCache
         self.resource = resource
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analyticsContainer = analyticsContainer
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.customViewBuilder = ShareToolScreenCustomTutorialViewBuilder()
@@ -49,7 +53,14 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
     
     func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
                 
-        return TutorialCellViewModel(item: tutorialItems.value[index], customViewBuilder: customViewBuilder, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: analyticsScreenName)
+        return TutorialCellViewModel(
+            item: tutorialItems.value[index],
+            customViewBuilder: customViewBuilder,
+            tutorialVideoAnalytics: tutorialVideoAnalytics,
+            analyticsScreenName: analyticsScreenName,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase
+        )
     }
     
     func closeTapped() {

@@ -15,18 +15,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         
+    private lazy var appBuild: AppBuild = {
+       AppBuild(infoPlist: infoPlist)
+    }()
+    
+    private lazy var appConfig: AppConfig = {
+        AppConfig(appBuild: appBuild)
+    }()
+    
+    private lazy var infoPlist: InfoPlist = {
+        InfoPlist()
+    }()
+    
     private lazy var appDeepLinkingService: DeepLinkingService = {
-       
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        
-        AppDiContainer()
+        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
     }()
     
     private lazy var appFlow: AppFlow = {
-        
         AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
     }()
     
@@ -40,14 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
-        if appConfig.build == .analyticsLogging {
+        if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
                 
         appDiContainer.getFirebaseConfiguration().configure()
         
-        if appConfig.build == .release {
-                        
+        if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()
         }
                 
@@ -152,9 +160,23 @@ extension AppDelegate {
             
         case .tool:
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut, siteSection: "", siteSubSection: "", url: nil, data: [
-                AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
-            ]))
+            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
+            
+            let trackAction = TrackActionModel(
+                screenName: "",
+                actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
+                siteSection: "",
+                siteSubSection: "",
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+                url: nil,
+                data: [
+                    AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
+                ]
+            )
+            
+            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))

@@ -21,10 +21,6 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
     }
 
-    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
-        fatalError("init(renderer:page:resourcesRepository:translationsRepository:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
-    }
-    
     override func handleDismissToolEvent() {
         super.handleDismissToolEvent()
         

@@ -80,7 +80,7 @@ class DownloadToolTranslationsFlow: Flow {
             return
         }
         
-        let favoritedResourcesCache: FavoritedResourcesCache = appDiContainer.favoritedResourcesCache
+        let favoritedResourcesRepository: FavoritedResourcesRepository = appDiContainer.dataLayer.getFavoritedResourcesRepository()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let resource: ResourceModel? = determineToolTranslationsToDownload.getResource()
         
@@ -90,7 +90,7 @@ class DownloadToolTranslationsFlow: Flow {
         
         if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
             
-            let isFavoritedResource: Bool = favoritedResourcesCache.isFavorited(resourceId: resourceId)
+            let isFavoritedResource: Bool = favoritedResourcesRepository.getResourceIsFavorited(resourceId: resourceId)
             
             downloadMessage = isFavoritedResource ? localizationServices.stringForMainBundle(key: "loading_favorited_tool") : localizationServices.stringForMainBundle(key: "loading_unfavorited_tool")
         }

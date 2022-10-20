@@ -11,6 +11,7 @@ import OktaAuthentication
 
 class AppDiContainer {
         
+    private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
@@ -19,14 +20,11 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let oktaUserAuthentication: OktaUserAuthentication
-    let favoritedResourcesCache: FavoritedResourcesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
     let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let globalActivityServices: GlobalActivityServices
-    let followUpsService: FollowUpsService
     let viewsService: ViewsService
     let emailSignUpService: EmailSignUpService
     let firebaseInAppMessaging: FirebaseInAppMessagingType
@@ -34,14 +32,14 @@ class AppDiContainer {
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
         
-    init() {
-                        
-        dataLayer = AppDataLayerDependencies()
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
+               
+        self.appBuild = appBuild
+        
+        dataLayer = AppDataLayerDependencies(appConfig: appConfig, infoPlist: infoPlist)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-        
-        let config: AppConfig = dataLayer.getAppConfig()
-        
-        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
+                
+        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(appBuild: appBuild)
         oktaUserAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
@@ -49,9 +47,7 @@ class AppDiContainer {
         resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-        
-        favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
-                                              
+                                                      
         initialDataDownloader = InitialDataDownloader(
             resourcesRepository: dataLayer.getResourcesRepository(),
             resourcesCache: resourcesCache
@@ -70,18 +66,14 @@ class AppDiContainer {
                         
         firebaseInAppMessaging = FirebaseInAppMessaging()
                 
-        let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
+        let analyticsLoggingEnabled: Bool = appBuild.configuration == .analyticsLogging
         analytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: dataLayer.getSharedAppsFlyer(), loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled),
+            snowplowAnalytics: SnowplowAnalytics(config: appConfig, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
         )
-                                                                                     
-        globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
-        
-        followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
-        
-        viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
+                                                                                             
+        viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
                 
         emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
     }
@@ -191,6 +183,8 @@ class AppDiContainer {
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
         return OnboardingTutorialCustomViewBuilder(
             flowDelegate: flowDelegate,
+            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
             localizationServices: localizationServices,
             tutorialVideoAnalytics: getTutorialVideoAnalytics(),
             analyticsScreenName: "onboarding"
@@ -253,8 +247,8 @@ class AppDiContainer {
         return TractRemoteSharePublisher(
             config: config,
             webSocket: webSocket,
-            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: config.isDebug),
-            loggingEnabled: config.isDebug
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
+            loggingEnabled: appBuild.isDebug
         )
     }
     
@@ -264,8 +258,8 @@ class AppDiContainer {
         return TractRemoteShareSubscriber(
             config: config,
             webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
-            loggingEnabled: config.isDebug
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
+            loggingEnabled: appBuild.isDebug
         )
     }
     

@@ -11,31 +11,31 @@ import RequestOperation
 
 class FollowUpsService {
     
-    private let followUpsApi: FollowUpsApi
-    private let failedFollowUpsCache: FailedFollowUpsCache
-    
-    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession, failedFollowUpsCache: FailedFollowUpsCache) {
-        
-        self.followUpsApi = FollowUpsApi(config: config, sharedSession: sharedSession)
-        self.failedFollowUpsCache = failedFollowUpsCache
+    private let api: FollowUpsApi
+    private let cache: FailedFollowUpsCache
+            
+    init(api: FollowUpsApi, cache: FailedFollowUpsCache) {
+
+        self.api = api
+        self.cache = cache
     }
     
     func postNewFollowUp(followUp: FollowUpModel) -> OperationQueue {
         
-        return followUpsApi.postFollowUp(followUp: followUp) { [weak self] (response: RequestResponse) in
+        return api.postFollowUp(followUp: followUp) { [weak self] (response: RequestResponse) in
             
             let httpStatusCode: Int = response.httpStatusCode ?? -1
             let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
             
             if httpStatusCodeFailed {
-                self?.failedFollowUpsCache.cacheFailedFollowUps(followUps: [followUp])
+                self?.cache.cacheFailedFollowUps(followUps: [followUp])
             }
         }
     }
     
     func postFailedFollowUpsIfNeeded() -> OperationQueue? {
         
-        let failedFollowUps: [FollowUpModel] = failedFollowUpsCache.getFailedFollowUps()
+        let failedFollowUps: [FollowUpModel] = cache.getFailedFollowUps()
         
         guard !failedFollowUps.isEmpty else {
             return nil
@@ -48,7 +48,7 @@ class FollowUpsService {
                 
         for followUp in failedFollowUps {
             
-            let operation: RequestOperation = followUpsApi.newFollowUpsOperation(followUp: followUp)
+            let operation: RequestOperation = api.newFollowUpsOperation(followUp: followUp)
             
             operations.append(operation)
             
@@ -65,7 +65,7 @@ class FollowUpsService {
                 }
                 
                 if queue.operations.isEmpty {
-                    self?.failedFollowUpsCache.deleteFollowUps(followUps: successfulPostedFollowUps)
+                    self?.cache.deleteFollowUps(followUps: successfulPostedFollowUps)
                 }
             }
         }

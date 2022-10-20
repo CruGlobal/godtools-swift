@@ -15,13 +15,13 @@ class OktaAuthenticationConfiguration {
         
     }
     
-    func configureAndCreateNewOktaAuthentication(config: AppConfig) -> CruOktaAuthentication {
+    func configureAndCreateNewOktaAuthentication(appBuild: AppBuild) -> CruOktaAuthentication {
                 
         let signInPath: String = "auth"
         let signOutPath: String = "auth/logout"
         let redirectBaseUrl: String
         
-        if config.isDebug {
+        if appBuild.isDebug {
             redirectBaseUrl = "org.cru.godtools.debug"
         }
         else {

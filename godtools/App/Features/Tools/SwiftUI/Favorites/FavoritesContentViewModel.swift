@@ -104,9 +104,12 @@ extension FavoritesContentViewModel {
     }
     
     func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
+        
         return OpenTutorialBannerViewModel(
             flowDelegate: flowDelegate,
             localizationServices: localizationServices,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             analytics: analytics,
             delegate: self
         )
@@ -219,52 +222,83 @@ extension FavoritesContentViewModel {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
         
-        analytics.firebaseAnalytics.trackAction(screenName: "", siteSection: "", siteSubSection: "", actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction, data: nil)
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        
+        analytics.firebaseAnalytics.trackAction(
+            screenName: "",
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
+            data: nil
+        )
         
         flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
     private func trackFeaturedLessonTappedAnalytics(for lesson: LessonDomainModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+       
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
-                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                    AnalyticsConstants.Keys.tool: lesson.abbreviation
-                  ]
-        ))
+                AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
+                AnalyticsConstants.Keys.tool: lesson.abbreviation
+              ]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+        
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+       
+        let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

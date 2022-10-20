@@ -10,12 +10,16 @@ import Foundation
 
 class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType {
         
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     
     let shareMessage: String
     
-    required init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    required init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
               
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         
         shareMessage = String.localizedStringWithFormat(
@@ -26,8 +30,19 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
     
     func pageViewed() {
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: "", actionName: AnalyticsConstants.ActionNames.shareScreenEngaged, siteSection: "", siteSubSection: "", url: nil, data: [
-            AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
-        ]))
+        let trackAction = TrackActionModel(
+            screenName: "",
+            actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: [
+                AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
+            ]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

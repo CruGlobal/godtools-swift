@@ -19,13 +19,19 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         ParserConfigKt.FEATURE_MULTISELECT
     ]
         
-    init(appConfig: AppConfig, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) {
             
+        let appVersion: String? = infoPlist.appVersion
+        
+        if appVersion == nil {
+            assertionFailure("Failed to get appVersion from plist, should not be null.")
+        }
+        
         let parserConfig = ParserConfig()
             .withParsePages(enabled: true)
             .withParseTips(enabled: true)
             .withSupportedFeatures(features: Set(ParseTranslationManifestForRenderer.enabledFeatures))
-            .withAppVersion(deviceType: .ios, version: appConfig.appVersion)
+            .withAppVersion(deviceType: .ios, version: appVersion)
         
         super.init(
             parserConfig: parserConfig,

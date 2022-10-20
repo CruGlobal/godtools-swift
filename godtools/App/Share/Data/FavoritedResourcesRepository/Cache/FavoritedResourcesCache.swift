@@ -13,15 +13,8 @@ import Combine
 class FavoritedResourcesCache {
         
     private let realmDatabase: RealmDatabase
-    
-    @available(*, deprecated)
-    let resourceFavorited: SignalValue<String> = SignalValue()
-    @available(*, deprecated)
-    let resourceUnfavorited: SignalValue<String> = SignalValue()
-    @available(*, deprecated)
-    let resourceSorted: SignalValue<String> = SignalValue()
-    
-    required init(realmDatabase: RealmDatabase) {
+        
+    init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
@@ -103,65 +96,5 @@ class FavoritedResourcesCache {
             
             return .failure(error)
         }
-    }
-    
-    // MARK: -
-    
-    @available(*, deprecated)
-    func getSortedFavoritedResources() -> [FavoritedResourceModel] {
-        let realm: Realm = realmDatabase.mainThreadRealm
-        return getSortedFavoritedResources(realm: realm)
-    }
-    
-    @available(*, deprecated)
-    func getSortedFavoritedResources(realm: Realm) -> [FavoritedResourceModel] {
-        let realmFavoritedResource = realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: false)
-        return Array(realmFavoritedResource.map({FavoritedResourceModel(model: $0)}))
-        
-    }
-    
-    @available(*, deprecated)
-    func isFavorited(resourceId: String) -> Bool {
-        let realm: Realm = realmDatabase.mainThreadRealm
-        return realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil
-    }
-    
-    @available(*, deprecated)
-    func toggleFavorited(resourceId: String) {
-        
-        if isFavorited(resourceId: resourceId) {
-            removeFromFavorites(resourceId: resourceId)
-        }
-        else {
-            addToFavorites(resourceId: resourceId)
-        }
-    }
-    
-    @available(*, deprecated)
-    func addToFavorites(resourceId: String) {
-        
-        storeFavoritedResource(resourceId: resourceId)
-        
-        resourceFavorited.accept(value: resourceId)
-    }
-    
-    @available(*, deprecated)
-    func removeFromFavorites(resourceId: String) {
-        
-        deleteFavoritedResource(resourceId: resourceId)
-        
-        resourceUnfavorited.accept(value: resourceId)
-    }
-    
-    @available(*, deprecated)
-    func setSortOrder(resourceId: String, newSortOrder: Int) {
-        
-        resourceSorted.accept(value: resourceId)
-    }
-    
-    @available(*, deprecated)
-    private func flattenSortOrder(realm: Realm, startSortOrder: Int) -> Error? {
-        
-        return nil
     }
 }
