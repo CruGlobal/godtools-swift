@@ -13,6 +13,7 @@ struct AllToolsContentView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: AllToolsContentViewModel
+    let leadingTrailingPadding: CGFloat
     
     // MARK: - Init
     
@@ -36,7 +37,7 @@ struct AllToolsContentView: View {
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
-                        AllToolsList(viewModel: viewModel, width: width)
+                        AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
                         
                     } refreshHandler: {
                         viewModel.refreshTools()
@@ -78,6 +79,6 @@ struct AllToolsContentView_Previews: PreviewProvider {
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
         )
         
-        AllToolsContentView(viewModel: viewModel)
+        AllToolsContentView(viewModel: viewModel, leadingTrailingPadding: 20)
     }
 }

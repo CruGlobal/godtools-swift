@@ -13,6 +13,7 @@ struct FavoritesContentView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: FavoritesContentViewModel
+    let leadingTrailingPadding: CGFloat
     
     // MARK: - Body
     
@@ -32,7 +33,6 @@ struct FavoritesContentView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
@@ -85,6 +85,6 @@ struct FavoritesContentView_Previews: PreviewProvider {
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
         )
         
-        FavoritesContentView(viewModel: viewModel)
+        FavoritesContentView(viewModel: viewModel, leadingTrailingPadding: 20)
     }
 }

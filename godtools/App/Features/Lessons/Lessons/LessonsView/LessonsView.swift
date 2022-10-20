@@ -13,6 +13,7 @@ struct LessonsView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: LessonsViewModel
+    let leadingTrailingPadding: CGFloat
     
     // MARK: - Body
     
@@ -27,7 +28,6 @@ struct LessonsView: View {
                 
                 GeometryReader { geo in
                     let width = geo.size.width
-                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                     
                     BackwardCompatibleList(rootViewType: Self.self) {
                         
@@ -87,6 +87,6 @@ struct LessonsView_Previews: PreviewProvider {
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
         )
         
-        LessonsView(viewModel: viewModel)
+        LessonsView(viewModel: viewModel, leadingTrailingPadding: 20)
     }
 }

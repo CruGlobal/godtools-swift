@@ -14,11 +14,11 @@ struct AllToolsList: View {
     
     @ObservedObject var viewModel: AllToolsContentViewModel
     let width: CGFloat
+    let leadingTrailingPadding: CGFloat
     
     // MARK: - Body
     
     var body: some View {
-        let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
         
         Group {
             
@@ -69,7 +69,7 @@ struct AllToolsList_Previews: PreviewProvider {
         
         GeometryReader { geo in
             VStack {
-                AllToolsList(viewModel: viewModel, width: geo.size.width)
+                AllToolsList(viewModel: viewModel, width: geo.size.width, leadingTrailingPadding: 20)
             }
         }
     }

@@ -13,6 +13,8 @@ struct DashboardView: View {
     @ObservedObject var viewModel: DashboardViewModel
     @State var selectedTab: DashboardTabType
     
+    private static let marginMultiplier: CGFloat = 15/375
+    
     init(viewModel: DashboardViewModel, startingTab: DashboardTabType) {
         self.viewModel = viewModel
         self.selectedTab = startingTab
@@ -25,32 +27,45 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        GeometryReader { geo in
             
-            LessonsView(viewModel: viewModel.lessonsViewModel)
-                .tabItem {
-                    Label("Lessons", image: ImageCatalog.toolsMenuLessons.name)
-                }
-                .tag(DashboardTabType.lessons)
+            let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
+            
+            TabView(selection: $selectedTab) {
                 
-            
-            FavoritesContentView(viewModel: viewModel.favoritesViewModel)
-                .tabItem {
-                    Label("Favorites", image: ImageCatalog.toolsMenuFavorites.name)
-                }
-                .tag(DashboardTabType.favorites)
-            
-            AllToolsContentView(viewModel: viewModel.allToolsViewModel)
-                .tabItem {
-                    Label("All Tools", image: ImageCatalog.toolsMenuAllTools.name)
-                }
-                .tag(DashboardTabType.allTools)
+                LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                    .tabItem {
+                        Label("Lessons", image: ImageCatalog.toolsMenuLessons.name)
+                    }
+                    .tag(DashboardTabType.lessons)
+                
+                
+                FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                    .tabItem {
+                        Label("Favorites", image: ImageCatalog.toolsMenuFavorites.name)
+                    }
+                    .tag(DashboardTabType.favorites)
+                
+                AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                    .tabItem {
+                        Label("All Tools", image: ImageCatalog.toolsMenuAllTools.name)
+                    }
+                    .tag(DashboardTabType.allTools)
+            }
+            .accentColor(ColorPalette.gtBlue.color)
+            .onChange(of: selectedTab) { newValue in
+                
+                viewModel.tabChanged(to: newValue)
+            }
         }
-        .accentColor(ColorPalette.gtBlue.color)
-        .onChange(of: selectedTab) { newValue in
-            
-            viewModel.tabChanged(to: newValue)
-        }
+    }
+    
+    func navigateToTab(_ tab: DashboardTabType) {
+        selectedTab = tab
+    }
+    
+    static func getMargin(for width: CGFloat) -> CGFloat {
+        return marginMultiplier * width
     }
 }
 

@@ -237,11 +237,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            if let toolsMenu = getToolsMenuInNavigationStack() {
+            if let dashboard = getDashboardInNavigationStack() {
                 
-                toolsMenu.navigateToPage(pageType: .lessons, animated: false)
+                dashboard.rootView.navigateToTab(.lessons)
                 
-                navigationController.popToViewController(toolsMenu, animated: true)
+                navigationController.popToViewController(dashboard, animated: true)
             }
             else {
                 
@@ -284,9 +284,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 
                 navigateToDashboard(startingTab: .lessons, animatePopToToolsMenu: true)
             }
-            else if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
-               
-                navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+            else if let dashboardInNavigationStack = getDashboardInNavigationStack() {
+                
+                navigationController.popToViewController(dashboardInNavigationStack, animated: true)
             }
             else {
                 
@@ -301,9 +301,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .userClosedTool:
                 
-                if let toolsMenuInNavigationStack = getToolsMenuInNavigationStack() {
-                   
-                    navigationController.popToViewController(toolsMenuInNavigationStack, animated: true)
+                if let dashboardInNavigationStack = getDashboardInNavigationStack() {
+                    
+                    navigationController.popToViewController(dashboardInNavigationStack, animated: true)
                 }
                 else {
                     
@@ -497,11 +497,11 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolsMenuInNavigationStack() -> ToolsMenuView? {
-                
+    private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
+        
         for viewController in navigationController.viewControllers {
-            if let toolsMenu = viewController as? ToolsMenuView {
-                return toolsMenu
+            if let dashboardView = viewController as? UIHostingController<DashboardView> {
+                return dashboardView
             }
         }
         
