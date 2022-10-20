@@ -186,16 +186,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 self?.navigationController.dismiss(animated: true, completion: nil)
             }
             
+            let translationsRepository: TranslationsRepository = appDiContainer.dataLayer.getTranslationsRepository()
             let localizationServices: LocalizationServices = appDiContainer.localizationServices
             let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
-            let resourcesCache: ResourcesCache = appDiContainer.initialDataDownloader.resourcesCache
             
             let toolName: String
             
-            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
                 toolName = primaryTranslation.translatedName
             }
-            else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
                 toolName = englishTranslation.translatedName
             }
             else {
@@ -514,6 +514,7 @@ extension AppFlow {
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),

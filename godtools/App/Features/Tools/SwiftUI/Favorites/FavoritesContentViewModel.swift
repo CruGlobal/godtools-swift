@@ -21,6 +21,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
+    private let translationsRepository: TranslationsRepository
     private weak var delegate: FavoritesContentViewModelDelegate?
     
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
@@ -44,6 +45,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
             getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            translationsRepository: translationsRepository,
             delegate: self
         )
     }()
@@ -69,11 +71,12 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
 
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, translationsRepository: TranslationsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         self.analytics = analytics
+        self.translationsRepository = translationsRepository
         
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
