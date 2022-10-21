@@ -35,20 +35,20 @@ struct DashboardView: View {
                 
                 LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
-                        Label("Lessons", image: ImageCatalog.toolsMenuLessons.name)
+                        Label(viewModel.lessonsTabTitle, image: ImageCatalog.toolsMenuLessons.name)
                     }
                     .tag(DashboardTabType.lessons)
                 
                 
                 FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
-                        Label("Favorites", image: ImageCatalog.toolsMenuFavorites.name)
+                        Label(viewModel.favoritesTabTitle, image: ImageCatalog.toolsMenuFavorites.name)
                     }
                     .tag(DashboardTabType.favorites)
                 
                 AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
-                        Label("All Tools", image: ImageCatalog.toolsMenuAllTools.name)
+                        Label(viewModel.allToolsTabTitle, image: ImageCatalog.toolsMenuAllTools.name)
                     }
                     .tag(DashboardTabType.allTools)
             }

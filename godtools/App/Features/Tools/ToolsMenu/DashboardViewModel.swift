@@ -45,7 +45,11 @@ class DashboardViewModel: ObservableObject {
     
     private var chooseLanguageButton: UIBarButtonItem?
     var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(Bool, UIBarButtonItem?), Never>((false, nil))
-        
+    
+    @Published var lessonsTabTitle: String
+    @Published var favoritesTabTitle: String
+    @Published var allToolsTabTitle: String
+    
     lazy var allToolsViewModel: AllToolsContentViewModel = {
         AllToolsContentViewModel(
             flowDelegate: unwrappedFlowDelegate,
@@ -128,6 +132,10 @@ class DashboardViewModel: ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
+        
+        lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
+        favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
+        allToolsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.tools")
     }
 }
 
