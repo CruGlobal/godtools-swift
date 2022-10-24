@@ -7,36 +7,45 @@
 //
 
 import Foundation
+import Combine
 
 class AccountViewModel: AccountViewModelType {
     
-    private let oktaUserAuthentication: OktaUserAuthentication
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
     private let analytics: AnalyticsContainer
+    
+    private var cancellables: Set<AnyCancellable> = Set()
         
     let globalAnalyticsService: GlobalAnalyticsService
     let localizationServices: LocalizationServices
     let navTitle: String
     let profileName: ObservableValue<AnimatableValue<String>> = ObservableValue(value: AnimatableValue(value: "", animated: false))
-    let isLoadingProfile: ObservableValue<Bool> = ObservableValue(value: false)
+    let isLoadingProfile: ObservableValue<Bool> = ObservableValue(value: true)
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(oktaUserAuthentication: OktaUserAuthentication, globalAnalyticsService: GlobalAnalyticsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(globalAnalyticsService: GlobalAnalyticsService, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, analytics: AnalyticsContainer) {
         
-        self.oktaUserAuthentication = oktaUserAuthentication
         self.globalAnalyticsService = globalAnalyticsService
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getUserAccountProfileNameUseCase = getUserAccountProfileNameUseCase
         self.analytics = analytics
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
-        
-        reloadUserProfile()
-        
+                
         reloadAccountItems()
+        
+        getUserAccountProfileNameUseCase.getProfileNamePublisher()
+            .receiveOnMain()
+            .sink { [weak self] (profileNameDomainModel: AccountProfileNameDomainModel) in
+                self?.isLoadingProfile.accept(value: false)
+                self?.profileName.accept(value: AnimatableValue(value: profileNameDomainModel.value, animated: true))
+            }
+            .store(in: &cancellables)
     }
     
     private func getAnalyticsScreenName (page: Int) -> String {
@@ -51,31 +60,6 @@ class AccountViewModel: AccountViewModelType {
     
     private var analyticsSiteSubSection: String {
         return ""
-    }
-    
-    private func reloadUserProfile() {
-        
-        isLoadingProfile.accept(value: true)
-        
-        oktaUserAuthentication.getAuthenticatedUser { [weak self] (result: Result<OktaAuthUserModel, Error>) in
-            DispatchQueue.main.async { [weak self] in
-                
-                self?.isLoadingProfile.accept(value: false)
-                                
-                switch result {
-                
-                case .success(let authUser):
-                    
-                    if let firstName = authUser.firstName, let lastName = authUser.lastName {
-                        let profileNameValue: String = firstName + " " + lastName
-                        self?.profileName.accept(value: AnimatableValue(value: profileNameValue, animated: true))
-                    }
-                
-                case .failure(let error):
-                    break
-                }
-            }
-        }
     }
     
     private func reloadAccountItems() {

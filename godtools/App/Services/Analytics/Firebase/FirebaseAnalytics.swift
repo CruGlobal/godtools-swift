@@ -10,26 +10,18 @@ import Foundation
 import FirebaseAnalytics
 import GoogleAnalytics
 
-class FirebaseAnalytics: NSObject {
+class FirebaseAnalytics {
     
     private let appBuild: AppBuild
-    private let oktaUserAuthentication: OktaUserAuthentication
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    init(appBuild: AppBuild, oktaUserAuthentication: OktaUserAuthentication, loggingEnabled: Bool) {
+    init(appBuild: AppBuild, loggingEnabled: Bool) {
         
         self.appBuild = appBuild
-        self.oktaUserAuthentication = oktaUserAuthentication
         self.loggingEnabled = loggingEnabled
-        
-        super.init()
-    }
-    
-    deinit {
-        oktaUserAuthentication.authenticatedUser.removeObserver(self)
     }
     
     func configure() {
@@ -54,14 +46,18 @@ class FirebaseAnalytics: NSObject {
             value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
-        oktaUserAuthentication.authenticatedUser.addObserver(self) { [weak self] (authUser: OktaAuthUserModel?) in
-            guard let weakSelf = self else {
-                return
-            }
-            weakSelf.setUserProperties(authUser: authUser, isLoggedIn: weakSelf.oktaUserAuthentication.isAuthenticated)
-        }
-        
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
+    }
+    
+    func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
+        assertFailureIfNotConfigured()
+        
+        let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
+        
+        Analytics.setUserID(isLoggedIn ? userId : nil)
+        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
+        setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: isLoggedIn ? loggedInUserProperties?.grMasterPersonId : nil)
+        setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: isLoggedIn ? loggedInUserProperties?.ssoguid : nil)
     }
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?) {
@@ -171,19 +167,6 @@ class FirebaseAnalytics: NSObject {
     
     private func transformStringForFirebase(string: String) -> String {
         return string.replacingOccurrences(of: "(-|\\.|\\ )", with: "_", options: .regularExpression).lowercased()
-    }
-    
-    private func setUserProperties(authUser: OktaAuthUserModel?, isLoggedIn: Bool) {
-        assertFailureIfNotConfigured()
-                                  
-        let grMasterPersonID: String? = authUser?.grMasterPersonId
-        let ssoguid: String? = authUser?.ssoGuid
-        let userId: String? = grMasterPersonID ?? ssoguid
-        
-        Analytics.setUserID(userId)
-        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
-        setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: grMasterPersonID)
-        setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: ssoguid)
     }
     
     private func setUserProperty(key: String, value: String?) {

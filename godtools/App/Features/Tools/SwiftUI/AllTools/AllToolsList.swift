@@ -55,7 +55,7 @@ struct AllToolsList_Previews: PreviewProvider {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

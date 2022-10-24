@@ -19,14 +19,11 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let oktaUserAuthentication: OktaUserAuthentication
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
-    let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
     let viewsService: ViewsService
-    let emailSignUpService: EmailSignUpService
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
@@ -36,11 +33,8 @@ class AppDiContainer {
                
         self.appBuild = appBuild
         
-        dataLayer = AppDataLayerDependencies(appConfig: appConfig, infoPlist: infoPlist)
+        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-                
-        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(appBuild: appBuild)
-        oktaUserAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
         
@@ -65,17 +59,8 @@ class AppDiContainer {
         )
                         
         firebaseInAppMessaging = FirebaseInAppMessaging()
-                
-        let analyticsLoggingEnabled: Bool = appBuild.configuration == .analyticsLogging
-        analytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: dataLayer.getSharedAppsFlyer(), loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: appConfig, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
-        )
                                                                                              
         viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-                
-        emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -102,7 +87,7 @@ class AppDiContainer {
     }
     
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
-        return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
+        return ExitLinkAnalytics(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
@@ -133,7 +118,7 @@ class AppDiContainer {
     
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
         return LessonFeedbackAnalytics(
-            firebaseAnalytics: analytics.firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
@@ -142,11 +127,11 @@ class AppDiContainer {
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
-        return MobileContentAnalytics(analytics: analytics)
+        return MobileContentAnalytics(analytics: dataLayer.getAnalytics())
     }
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
-        return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
+        return MobileContentEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -232,7 +217,7 @@ class AppDiContainer {
     }
     
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
+        return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
@@ -276,7 +261,7 @@ class AppDiContainer {
     
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
-            trackActionAnalytics: analytics.trackActionAnalytics
+            trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics
         )
     }
     

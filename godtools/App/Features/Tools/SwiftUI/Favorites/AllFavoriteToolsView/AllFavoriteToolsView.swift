@@ -60,7 +60,7 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: nil,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
         AllFavoriteToolsView(viewModel: viewModel)

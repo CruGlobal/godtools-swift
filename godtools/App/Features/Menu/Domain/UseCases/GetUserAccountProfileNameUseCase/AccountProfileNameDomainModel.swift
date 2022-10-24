@@ -1,5 +1,5 @@
 //
-//  LogOutUseCase.swift
+//  AccountProfileNameDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/24/22.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-class LogOutUseCase {
+struct AccountProfileNameDomainModel {
     
-    init() {
-        
-    }
+    let value: String
 }

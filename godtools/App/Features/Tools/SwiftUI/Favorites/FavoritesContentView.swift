@@ -72,7 +72,7 @@ struct FavoritesContentView_Previews: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
