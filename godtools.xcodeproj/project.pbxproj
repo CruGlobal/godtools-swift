@@ -2337,16 +2337,6 @@
 			path = ContentParagraph;
 			sourceTree = "<group>";
 		};
-		4505C676282B4A0A0047951D /* ToolsMenu */ = {
-			isa = PBXGroup;
-			children = (
-				D473468E28FF423600579463 /* DashboardTabType.swift */,
-				D48018BF28EF650700389565 /* DashboardView.swift */,
-				D48018C128EF6A7100389565 /* DashboardViewModel.swift */,
-			);
-			path = ToolsMenu;
-			sourceTree = "<group>";
-		};
 		450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -4484,38 +4474,20 @@
 			children = (
 				45AD17BB25938A4D00A096A0 /* Articles */,
 				45750835279A408100943197 /* ChooseYourOwnAdventure */,
+				D473469029072A0D00579463 /* Dashboard */,
 				451550EC2791E3DE00526CF2 /* DownloadTool */,
 				45C2592C28CAC3E8005D2387 /* LanguageSettings */,
 				45AD17DB25938A4D00A096A0 /* LearnToShareTool */,
-				45CB9FB6261F918A0036BEB3 /* Lessons */,
+				45CB9FB6261F918A0036BEB3 /* Lesson */,
 				45AD180425938A4D00A096A0 /* Menu */,
 				45AD184625938A4E00A096A0 /* Onboarding */,
 				D1D1753E2797428F00330BBE /* SetupParallel */,
 				45AD186B25938A4E00A096A0 /* Tool */,
 				45AD183E25938A4E00A096A0 /* ToolDetails */,
-				45AD176A25938A4D00A096A0 /* Tools */,
 				451CEDCF282C31C6006E5105 /* ToolSettings */,
 				4581C58D285A5C7A0078425B /* ToolTraining */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		45AD176A25938A4D00A096A0 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				D44C692F280478FC0000B970 /* SwiftUI */,
-				4505C676282B4A0A0047951D /* ToolsMenu */,
-				45AD177F25938A4D00A096A0 /* Views */,
-			);
-			path = Tools;
-			sourceTree = "<group>";
-		};
-		45AD177F25938A4D00A096A0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				45CB9F99261F8BA80036BEB3 /* Tool */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		45AD17BB25938A4D00A096A0 /* Articles */ = {
@@ -5748,22 +5720,13 @@
 			path = RealmCache;
 			sourceTree = "<group>";
 		};
-		45CB9F99261F8BA80036BEB3 /* Tool */ = {
-			isa = PBXGroup;
-			children = (
-				45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */,
-			);
-			path = Tool;
-			sourceTree = "<group>";
-		};
-		45CB9FB6261F918A0036BEB3 /* Lessons */ = {
+		45CB9FB6261F918A0036BEB3 /* Lesson */ = {
 			isa = PBXGroup;
 			children = (
 				45CB9FED261FB0BE0036BEB3 /* Lesson */,
 				4513C2E6270467E600614F79 /* LessonEvaluation */,
-				45CB9FEE261FB0BE0036BEB3 /* Lessons */,
 			);
-			path = Lessons;
+			path = Lesson;
 			sourceTree = "<group>";
 		};
 		45CB9FED261FB0BE0036BEB3 /* Lesson */ = {
@@ -5775,14 +5738,6 @@
 				45714AC92621009D00EF41FB /* Views */,
 			);
 			path = Lesson;
-			sourceTree = "<group>";
-		};
-		45CB9FEE261FB0BE0036BEB3 /* Lessons */ = {
-			isa = PBXGroup;
-			children = (
-				D4D41A9C28DA4D5900D6E42F /* LessonsView */,
-			);
-			path = Lessons;
 			sourceTree = "<group>";
 		};
 		45D5433128B4001400C4E70F /* Scripts */ = {
@@ -6613,15 +6568,6 @@
 			path = DisableOptInOnboardingBannerUseCase;
 			sourceTree = "<group>";
 		};
-		D44C692F280478FC0000B970 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				D4F719EC2817276C00E079DA /* AllTools */,
-				D44F3AD828624E100008390D /* Favorites */,
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
 		D44C69372804B6AF0000B970 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -6688,19 +6634,6 @@
 				D44F3ACA284E79BB0008390D /* ToolCardsViewModel.swift */,
 			);
 			path = ToolCardsView;
-			sourceTree = "<group>";
-		};
-		D44F3AD828624E100008390D /* Favorites */ = {
-			isa = PBXGroup;
-			children = (
-				D45922C02864EC2500904B87 /* AllFavoriteToolsView */,
-				D44F3AD928624E5D0008390D /* FavoritesContentView.swift */,
-				D44F3AE028625B130008390D /* FavoritesContentViewModel.swift */,
-				D44F3AE428625C1E0008390D /* FavoriteToolsView */,
-				D45922E1286A374C00904B87 /* FeaturedLessonsView */,
-				D45922D92869F82100904B87 /* OpenTutorialBannerView */,
-			);
-			path = Favorites;
 			sourceTree = "<group>";
 		};
 		D44F3ADF286259850008390D /* ToolCardsCarouselView */ = {
@@ -6887,21 +6820,86 @@
 			path = GetLessonUseCase;
 			sourceTree = "<group>";
 		};
+		D473469029072A0D00579463 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				D473469129072A1800579463 /* Domain */,
+				D473469229072A1E00579463 /* Presentation */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		D473469129072A1800579463 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D473469229072A1E00579463 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				D473469329072A3300579463 /* Dashboard */,
+				D473469429072A7600579463 /* Lessons */,
+				D473469529072A8200579463 /* Home */,
+				D473469629072A8700579463 /* Tools */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D473469329072A3300579463 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				D473468E28FF423600579463 /* DashboardTabType.swift */,
+				D48018BF28EF650700389565 /* DashboardView.swift */,
+				D48018C128EF6A7100389565 /* DashboardViewModel.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		D473469429072A7600579463 /* Lessons */ = {
+			isa = PBXGroup;
+			children = (
+				D41B38A6287DFF1F00BD5899 /* LessonsView.swift */,
+				D41B38AD287F149900BD5899 /* LessonsViewModel.swift */,
+			);
+			path = Lessons;
+			sourceTree = "<group>";
+		};
+		D473469529072A8200579463 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D45922C02864EC2500904B87 /* AllFavoriteToolsView */,
+				D44F3AD928624E5D0008390D /* FavoritesContentView.swift */,
+				D44F3AE028625B130008390D /* FavoritesContentViewModel.swift */,
+				D44F3AE428625C1E0008390D /* FavoriteToolsView */,
+				D45922E1286A374C00904B87 /* FeaturedLessonsView */,
+				D45922D92869F82100904B87 /* OpenTutorialBannerView */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D473469629072A8700579463 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
+				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
+				D47C49D7280EF0B10084F4DE /* AllToolsList.swift */,
+				45AC60182624BAB100253217 /* ToolItemInitialDownloadProgress.swift */,
+				D45D68C5281C21F90007A223 /* FavoritingToolBannerView */,
+				D44F3AC9284E79910008390D /* ToolCardsView */,
+				D44F3AAD283581370008390D /* ToolCategoriesView */,
+				D420DA2E282AEEA00035ABCB /* ToolSpotlightView */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		D4997E1128D8B87B00205B4C /* GetFeaturedLessonsUseCase */ = {
 			isa = PBXGroup;
 			children = (
 				D4997E0F28D8B87300205B4C /* GetFeaturedLessonsUseCase.swift */,
 			);
 			path = GetFeaturedLessonsUseCase;
-			sourceTree = "<group>";
-		};
-		D4D41A9C28DA4D5900D6E42F /* LessonsView */ = {
-			isa = PBXGroup;
-			children = (
-				D41B38A6287DFF1F00BD5899 /* LessonsView.swift */,
-				D41B38AD287F149900BD5899 /* LessonsViewModel.swift */,
-			);
-			path = LessonsView;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -6920,20 +6918,6 @@
 				D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */,
 			);
 			path = Subviews;
-			sourceTree = "<group>";
-		};
-		D4F719EC2817276C00E079DA /* AllTools */ = {
-			isa = PBXGroup;
-			children = (
-				D49F80F627FDC610001AE5B3 /* AllToolsContentView.swift */,
-				D44C693E2805AE910000B970 /* AllToolsContentViewModel.swift */,
-				D47C49D7280EF0B10084F4DE /* AllToolsList.swift */,
-				D45D68C5281C21F90007A223 /* FavoritingToolBannerView */,
-				D44F3AC9284E79910008390D /* ToolCardsView */,
-				D44F3AAD283581370008390D /* ToolCategoriesView */,
-				D420DA2E282AEEA00035ABCB /* ToolSpotlightView */,
-			);
-			path = AllTools;
 			sourceTree = "<group>";
 		};
 		D4F719ED2817278600E079DA /* ToolCardView */ = {
