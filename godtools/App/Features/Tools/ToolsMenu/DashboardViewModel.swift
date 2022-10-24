@@ -143,6 +143,30 @@ class DashboardViewModel: ObservableObject {
         
         tabChanged()
     }
+    
+    private func createLanguageBarButtonItem() -> UIBarButtonItem {
+        let languageBarButtonItem = UIBarButtonItem()
+        languageBarButtonItem.image = ImageCatalog.navLanguage.uiImage
+        languageBarButtonItem.tintColor = .white
+        languageBarButtonItem.target = self
+        languageBarButtonItem.action = #selector(languageBarButtonItemTapped)
+        
+        return languageBarButtonItem
+    }
+    
+    private func publishNewLanguageSettingsBarButtonItemState(shouldShowButton: Bool) {
+        
+        if shouldShowButton {
+
+            chooseLanguageButton = createLanguageBarButtonItem()
+            shouldShowLanguageSettingsBarButtonItemPublisher.send((true, chooseLanguageButton))
+            
+        } else {
+            
+            shouldShowLanguageSettingsBarButtonItemPublisher.send((false, chooseLanguageButton))
+            chooseLanguageButton = nil
+        }
+    }
 }
 
 // MARK: - Public
@@ -164,23 +188,10 @@ extension DashboardViewModel {
             shouldShowLanguageSettingsButton = false
         }
         
-        if shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton != shouldShowLanguageSettingsButton {
+        let languageButtonCurrentlyShowing = shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton
+        if languageButtonCurrentlyShowing != shouldShowLanguageSettingsButton {
             
-            if shouldShowLanguageSettingsButton {
-    
-                chooseLanguageButton = UIBarButtonItem()
-                chooseLanguageButton?.image = ImageCatalog.navLanguage.uiImage
-                chooseLanguageButton?.tintColor = .white
-                chooseLanguageButton?.target = self
-                chooseLanguageButton?.action = #selector(languageBarButtonItemTapped)
-                
-                shouldShowLanguageSettingsBarButtonItemPublisher.send((true, chooseLanguageButton))
-                
-            } else {
-                
-                shouldShowLanguageSettingsBarButtonItemPublisher.send((false, chooseLanguageButton))
-                chooseLanguageButton = nil
-            }
+            publishNewLanguageSettingsBarButtonItemState(shouldShowButton: shouldShowLanguageSettingsButton)
         }
 
     }
