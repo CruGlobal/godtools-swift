@@ -27,6 +27,7 @@ class DashboardViewModel: ObservableObject {
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
@@ -104,14 +105,14 @@ class DashboardViewModel: ObservableObject {
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase:
-            getLanguageAvailabilityUseCase,
+                getLanguageAvailabilityUseCase,
             getLessonsUseCase: getLessonsUseCase,
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
         )
     }()
     
-    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -129,6 +130,7 @@ class DashboardViewModel: ObservableObject {
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getShouldShowLanguageSettingsBarButtonUseCase = getShouldShowLanguageSettingsBarButtonUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -142,15 +144,21 @@ class DashboardViewModel: ObservableObject {
         
         tabChanged()
     }
+}
+
+// MARK: - Private
+
+extension DashboardViewModel {
     
-    private func createLanguageBarButtonItem() -> UIBarButtonItem {
-        let languageBarButtonItem = UIBarButtonItem()
-        languageBarButtonItem.image = ImageCatalog.navLanguage.uiImage
-        languageBarButtonItem.tintColor = .white
-        languageBarButtonItem.target = self
-        languageBarButtonItem.action = #selector(languageBarButtonItemTapped)
+    private func tabChanged() {
         
-        return languageBarButtonItem
+        let shouldShowLanguageSettingsButton = getShouldShowLanguageSettingsBarButtonUseCase.getShouldShowLanguageSettingsBarButton(for: selectedTab)
+        
+        let languageButtonCurrentlyShowing = shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton
+        if languageButtonCurrentlyShowing != shouldShowLanguageSettingsButton {
+            
+            publishNewLanguageSettingsBarButtonItemState(shouldShowButton: shouldShowLanguageSettingsButton)
+        }
     }
     
     private func publishNewLanguageSettingsBarButtonItemState(shouldShowButton: Bool) {
@@ -166,6 +174,16 @@ class DashboardViewModel: ObservableObject {
             chooseLanguageButton = nil
         }
     }
+    
+    private func createLanguageBarButtonItem() -> UIBarButtonItem {
+        let languageBarButtonItem = UIBarButtonItem()
+        languageBarButtonItem.image = ImageCatalog.navLanguage.uiImage
+        languageBarButtonItem.tintColor = .white
+        languageBarButtonItem.target = self
+        languageBarButtonItem.action = #selector(languageBarButtonItemTapped)
+        
+        return languageBarButtonItem
+    }
 }
 
 // MARK: - Public
@@ -174,25 +192,6 @@ extension DashboardViewModel {
     
     @objc func menuTapped() {
         flowDelegate?.navigate(step: .menuTappedFromTools)
-    }
-    
-    func tabChanged() {
-        
-        let shouldShowLanguageSettingsButton: Bool
-        
-        switch selectedTab {
-        case .favorites, .allTools:
-            shouldShowLanguageSettingsButton = true
-        case .lessons:
-            shouldShowLanguageSettingsButton = false
-        }
-        
-        let languageButtonCurrentlyShowing = shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton
-        if languageButtonCurrentlyShowing != shouldShowLanguageSettingsButton {
-            
-            publishNewLanguageSettingsBarButtonItemState(shouldShowButton: shouldShowLanguageSettingsButton)
-        }
-
     }
             
     @objc func languageBarButtonItemTapped() {

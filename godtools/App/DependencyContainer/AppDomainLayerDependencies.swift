@@ -138,6 +138,10 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
+        return GetShouldShowLanguageSettingsBarButtonUseCase()
+    }
+    
     func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
         return GetSpotlightToolsUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
