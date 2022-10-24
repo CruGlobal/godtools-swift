@@ -20,6 +20,7 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     let lesson: LessonDomainModel
     let dataDownloader: InitialDataDownloader
     
+    private let translationsRepository: TranslationsRepository
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -39,10 +40,11 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     
     // MARK: - Init
     
-    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
+    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.lesson = lesson
         self.dataDownloader = dataDownloader
         
+        self.translationsRepository = translationsRepository
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
@@ -80,16 +82,14 @@ extension LessonCardViewModel {
     }
     
     private func reloadTitle(for primaryLanguage: LanguageDomainModel?) {
-
-        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
              
         let titleValue: String
         
-        if let primaryLanguage = primaryLanguage, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
+        if let primaryLanguage = primaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
             
             titleValue = primaryTranslation.translatedName
         }
-        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: lesson.id, languageCode: "en") {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: lesson.id, languageCode: LanguageCodes.english) {
             
             titleValue = englishTranslation.translatedName
         }
