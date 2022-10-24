@@ -64,7 +64,6 @@ struct AllToolsContentView_Previews: PreviewProvider {
         let viewModel = AllToolsContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,

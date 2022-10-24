@@ -15,7 +15,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -54,7 +53,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     private(set) lazy var toolCardsViewModel: ToolCardsViewModel = {
         ToolCardsViewModel(
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             getAllToolsUseCase: getAllToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
@@ -72,10 +70,9 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics

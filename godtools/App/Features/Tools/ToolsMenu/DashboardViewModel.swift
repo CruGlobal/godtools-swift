@@ -14,7 +14,6 @@ import SwiftUI
 class DashboardViewModel: ObservableObject {
     
     private let initialDataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
@@ -60,7 +59,6 @@ class DashboardViewModel: ObservableObject {
         AllToolsContentViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             favoritingToolMessageCache: favoritingToolMessageCache,
             analytics: analytics,
@@ -114,11 +112,10 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
-    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
+    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics

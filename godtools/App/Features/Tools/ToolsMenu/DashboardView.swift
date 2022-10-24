@@ -69,7 +69,6 @@ struct DashboardView_Previews: PreviewProvider {
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
             initialDataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.analytics,
