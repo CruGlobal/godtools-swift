@@ -139,9 +139,8 @@
 		452441952906CDF900D64A32 /* AccountViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524414A2906CDF900D64A32 /* AccountViewModelType.swift */; };
 		452441962906CDF900D64A32 /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4524414B2906CDF900D64A32 /* AccountView.xib */; };
 		452441972906CDF900D64A32 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524414C2906CDF900D64A32 /* AccountView.swift */; };
-		4524419E2906CEB600D64A32 /* CreateAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524419D2906CEB600D64A32 /* CreateAccountUseCase.swift */; };
-		452441A02906CEC800D64A32 /* LogInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524419F2906CEC800D64A32 /* LogInUseCase.swift */; };
 		452441A22906CED300D64A32 /* LogOutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452441A12906CED300D64A32 /* LogOutUseCase.swift */; };
+		452441A52906CF9A00D64A32 /* AuthenticateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452441A42906CF9A00D64A32 /* AuthenticateUseCase.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
 		4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96B2893440E0011F16B /* TranslationManifestParser.swift */; };
 		4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96D289345480011F16B /* TranslationManifestParserType.swift */; };
@@ -460,7 +459,6 @@
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
 		457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */; };
 		457E199E27C6EA4C00BABD49 /* NSError+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199D27C6EA4C00BABD49 /* NSError+Error.swift */; };
-		457EF93528DDEFD700E1DEBC /* OktaUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93128DDEFD700E1DEBC /* OktaUserAuthentication.swift */; };
 		457EF93728DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93328DDEFD700E1DEBC /* OktaAuthenticationConfiguration.swift */; };
 		457EF93928DDF01F00E1DEBC /* OktaAuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EF93828DDF01F00E1DEBC /* OktaAuthUserModel.swift */; };
 		457F6BDD28B0132F0055456C /* AttachmentsBundleCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F6BDC28B0132F0055456C /* AttachmentsBundleCache.swift */; };
@@ -1251,9 +1249,8 @@
 		4524414A2906CDF900D64A32 /* AccountViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModelType.swift; sourceTree = "<group>"; };
 		4524414B2906CDF900D64A32 /* AccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountView.xib; sourceTree = "<group>"; };
 		4524414C2906CDF900D64A32 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		4524419D2906CEB600D64A32 /* CreateAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountUseCase.swift; sourceTree = "<group>"; };
-		4524419F2906CEC800D64A32 /* LogInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInUseCase.swift; sourceTree = "<group>"; };
 		452441A12906CED300D64A32 /* LogOutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutUseCase.swift; sourceTree = "<group>"; };
+		452441A42906CF9A00D64A32 /* AuthenticateUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUseCase.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
@@ -2840,8 +2837,7 @@
 		452441992906CEAA00D64A32 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				4524419C2906CEAA00D64A32 /* CreateAccountUseCase */,
-				4524419B2906CEAA00D64A32 /* LogInUseCase */,
+				452441A32906CF9A00D64A32 /* AuthenticateUseCase */,
 				4524419A2906CEAA00D64A32 /* LogOutUseCase */,
 			);
 			path = UseCases;
@@ -2855,20 +2851,12 @@
 			path = LogOutUseCase;
 			sourceTree = "<group>";
 		};
-		4524419B2906CEAA00D64A32 /* LogInUseCase */ = {
+		452441A32906CF9A00D64A32 /* AuthenticateUseCase */ = {
 			isa = PBXGroup;
 			children = (
-				4524419F2906CEC800D64A32 /* LogInUseCase.swift */,
+				452441A42906CF9A00D64A32 /* AuthenticateUseCase.swift */,
 			);
-			path = LogInUseCase;
-			sourceTree = "<group>";
-		};
-		4524419C2906CEAA00D64A32 /* CreateAccountUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				4524419D2906CEB600D64A32 /* CreateAccountUseCase.swift */,
-			);
-			path = CreateAccountUseCase;
+			path = AuthenticateUseCase;
 			sourceTree = "<group>";
 		};
 		45267B7325F196FD004DB4C4 /* Renderer */ = {
@@ -7997,6 +7985,7 @@
 				D182CA2727274B1F00ABAAC8 /* UIButton+SetInsets.swift in Sources */,
 				4555833C269F2C7B00C3FF14 /* ToolPageModalViewModelType.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
+				452441A52906CF9A00D64A32 /* AuthenticateUseCase.swift in Sources */,
 				452441852906CDF900D64A32 /* GlobalActivityResults.swift in Sources */,
 				D44F3AB328368A330008390D /* OptionalRoundedBorder.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
@@ -8237,7 +8226,6 @@
 				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */,
 				45D266E9277499AD00960990 /* UIViewController+DismissPresented.swift in Sources */,
-				457EF93528DDEFD700E1DEBC /* OktaUserAuthentication.swift in Sources */,
 				451CEDCD282C31AB006E5105 /* LazyHList.swift in Sources */,
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				4561AC9E279C4CDC003718C0 /* MobileContentCardCollectionPageViewModelType.swift in Sources */,
@@ -8273,7 +8261,6 @@
 				45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */,
 				45AD1FF425938A9800A096A0 /* DownloadAttachmentsReceipt.swift in Sources */,
 				D44C69432809B1150000B970 /* LayoutDirection+LanguageDirection.swift in Sources */,
-				452441A02906CEC800D64A32 /* LogInUseCase.swift in Sources */,
 				D44F3ACB284E79BB0008390D /* ToolCardsViewModel.swift in Sources */,
 				4524417A2906CDF900D64A32 /* MenuSectionHeaderViewModelType.swift in Sources */,
 				455582E4269F2C1000C3FF14 /* TrainingTipViewModel.swift in Sources */,
@@ -8541,7 +8528,6 @@
 				45558416269F2F6100C3FF14 /* MobileContentAnalyticsSystem.swift in Sources */,
 				45558326269F2C7B00C3FF14 /* ToolPageFormView.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
-				4524419E2906CEB600D64A32 /* CreateAccountUseCase.swift in Sources */,
 				458EFEDE26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift in Sources */,
 				45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  CreateAccountUseCase.swift
+//  AuthenticateUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/24/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CreateAccountUseCase {
+class AuthenticateUseCase {
     
     init() {
         
