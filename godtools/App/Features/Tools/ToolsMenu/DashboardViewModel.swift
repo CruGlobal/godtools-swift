@@ -44,7 +44,7 @@ class DashboardViewModel: ObservableObject {
     }
     
     private var chooseLanguageButton: UIBarButtonItem?
-    var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(Bool, UIBarButtonItem?), Never>((false, nil))
+    var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(shouldShowButton: Bool, barButtonItem: UIBarButtonItem?), Never>((false, nil))
     
     @Published var allToolsTabTitle: String
     @Published var favoritesTabTitle: String
@@ -140,6 +140,8 @@ class DashboardViewModel: ObservableObject {
         favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
         lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
         selectedTab = startingTab
+        
+        tabChanged()
     }
 }
 
@@ -154,6 +156,7 @@ extension DashboardViewModel {
     func tabChanged() {
         
         let shouldShowLanguageSettingsButton: Bool
+        
         switch selectedTab {
         case .favorites, .allTools:
             shouldShowLanguageSettingsButton = true
@@ -161,7 +164,7 @@ extension DashboardViewModel {
             shouldShowLanguageSettingsButton = false
         }
         
-        if shouldShowLanguageSettingsBarButtonItemPublisher.value.0 != shouldShowLanguageSettingsButton {
+        if shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton != shouldShowLanguageSettingsButton {
             
             if shouldShowLanguageSettingsButton {
     
