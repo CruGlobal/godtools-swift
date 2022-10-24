@@ -280,10 +280,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                 
+                setupNavBar()
                 navigationController.popToViewController(dashboardInNavigationStack, animated: true)
             }
             else {
                 
+                setupNavBar()
                 _ = navigationController.popViewController(animated: true)
             }
             
@@ -297,10 +299,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 
                 if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                     
+                    setupNavBar()
                     navigationController.popToViewController(dashboardInNavigationStack, animated: true)
                 }
                 else {
                     
+                    setupNavBar()
                     _ = navigationController.popViewController(animated: true)
                 }
                 
@@ -562,10 +566,11 @@ extension AppFlow {
     }
     
     private func navigateToDashboard(startingTab: DashboardTabType = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+        
         if let dashboard = getDashboardInNavigationStack() {
             
             dashboard.rootView.navigateToTab(startingTab)
-            navigationController.setNavigationBarHidden(false, animated: false)
+            setupNavBar()
             navigationController.popToViewController(dashboard, animated: true)
         }
         else {
@@ -574,12 +579,7 @@ extension AppFlow {
         }
     }
     
-    private func buildNewDashboard(startingTab: DashboardTabType, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
-        
-        let dashboard = getNewDashboardView(startingTab: startingTab)
-        
-        navigationController.setViewControllers([dashboard], animated: false)
-        
+    private func setupNavBar() {
         AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
         navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.navigationBar.setupNavigationBarAppearance(
@@ -589,7 +589,15 @@ extension AppFlow {
             titleColor: .white,
             isTranslucent: false
         )
+    }
+    
+    private func buildNewDashboard(startingTab: DashboardTabType, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
         
+        let dashboard = getNewDashboardView(startingTab: startingTab)
+        
+        navigationController.setViewControllers([dashboard], animated: false)
+        
+        setupNavBar()
         closeMenu(animated: false)
         
         onboardingFlow = nil
