@@ -179,6 +179,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
             
+        case .allToolsTappedFromFavoritedTools:
+            navigateToDashboard(startingTab: .allTools)
+            
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
             
@@ -237,16 +240,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 return
             }
             
-            if let dashboard = getDashboardInNavigationStack() {
-                
-                dashboard.rootView.navigateToTab(.lessons)
-                
-                navigationController.popToViewController(dashboard, animated: true)
-            }
-            else {
-                
-                navigateToDashboard(startingTab: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
-            }
+            navigateToDashboard(startingTab: .lessons, animatePopToToolsMenu: true, animateDismissingPresentedView: true, didCompleteDismissingPresentedView: nil)
                         
             lessonFlow = nil
             
@@ -511,6 +505,7 @@ extension AppFlow {
     private func getNewDashboardView(startingTab: DashboardTabType?) -> UIHostingController<DashboardView> {
         
         let dashboardViewModel = DashboardViewModel(
+            startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
@@ -535,7 +530,7 @@ extension AppFlow {
             fontService: appDiContainer.getFontService()
         )
         
-        let dashboardView = DashboardView(viewModel: dashboardViewModel, startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab)
+        let dashboardView = DashboardView(viewModel: dashboardViewModel)
         let dashboardHostingController = UIHostingController(rootView: dashboardView)
         
         _ = dashboardHostingController.addBarButtonItem(
@@ -567,6 +562,19 @@ extension AppFlow {
     }
     
     private func navigateToDashboard(startingTab: DashboardTabType = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+        if let dashboard = getDashboardInNavigationStack() {
+            
+            dashboard.rootView.navigateToTab(startingTab)
+            navigationController.setNavigationBarHidden(false, animated: false)
+            navigationController.popToViewController(dashboard, animated: true)
+        }
+        else {
+            
+            buildNewDashboard(startingTab: startingTab, animatePopToToolsMenu: animatePopToToolsMenu, animateDismissingPresentedView: animateDismissingPresentedView, didCompleteDismissingPresentedView: didCompleteDismissingPresentedView)
+        }
+    }
+    
+    private func buildNewDashboard(startingTab: DashboardTabType, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
         
         let dashboard = getNewDashboardView(startingTab: startingTab)
         

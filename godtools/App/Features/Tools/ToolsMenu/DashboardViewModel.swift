@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Combine
+import SwiftUI
 
 class DashboardViewModel: ObservableObject {
     
@@ -46,9 +47,14 @@ class DashboardViewModel: ObservableObject {
     private var chooseLanguageButton: UIBarButtonItem?
     var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(Bool, UIBarButtonItem?), Never>((false, nil))
     
-    @Published var lessonsTabTitle: String
-    @Published var favoritesTabTitle: String
     @Published var allToolsTabTitle: String
+    @Published var favoritesTabTitle: String
+    @Published var lessonsTabTitle: String
+    @Published var selectedTab: DashboardTabType {
+        didSet {
+            tabChanged()
+        }
+    }
     
     lazy var allToolsViewModel: AllToolsContentViewModel = {
         AllToolsContentViewModel(
@@ -108,7 +114,7 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
+    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -133,9 +139,10 @@ class DashboardViewModel: ObservableObject {
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
-        lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
-        favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
         allToolsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.tools")
+        favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
+        lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
+        selectedTab = startingTab
     }
 }
 
@@ -147,10 +154,10 @@ extension DashboardViewModel {
         flowDelegate?.navigate(step: .menuTappedFromTools)
     }
     
-    func tabChanged(to tab: DashboardTabType) {
+    func tabChanged() {
         
         let shouldShowLanguageSettingsButton: Bool
-        switch tab {
+        switch selectedTab {
         case .favorites, .allTools:
             shouldShowLanguageSettingsButton = true
         case .lessons:
@@ -188,6 +195,6 @@ extension DashboardViewModel {
 extension DashboardViewModel: FavoritesContentViewModelDelegate {
     
     func favoriteToolsViewGoToToolsTapped() {
-        // TODO
+        flowDelegate?.navigate(step: .allToolsTappedFromFavoritedTools)
     }
 }

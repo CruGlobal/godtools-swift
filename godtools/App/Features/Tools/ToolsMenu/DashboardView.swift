@@ -11,19 +11,15 @@ import SwiftUI
 struct DashboardView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
-    @State var selectedTab: DashboardTabType
     
     private static let marginMultiplier: CGFloat = 15/375
     
-    init(viewModel: DashboardViewModel, startingTab: DashboardTabType) {
+    init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
-        self.selectedTab = startingTab
         
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
         UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 12) as Any], for: .normal)
-        
-        viewModel.tabChanged(to: startingTab)
     }
     
     var body: some View {
@@ -31,7 +27,7 @@ struct DashboardView: View {
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
             
-            TabView(selection: $selectedTab) {
+            TabView(selection: $viewModel.selectedTab) {
                 
                 LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
@@ -53,19 +49,15 @@ struct DashboardView: View {
                     .tag(DashboardTabType.allTools)
             }
             .accentColor(ColorPalette.gtBlue.color)
-            .onChange(of: selectedTab) { newValue in
-                
-                viewModel.tabChanged(to: newValue)
-            }
         }
-    }
-    
-    func navigateToTab(_ tab: DashboardTabType) {
-        selectedTab = tab
     }
     
     static func getMargin(for width: CGFloat) -> CGFloat {
         return marginMultiplier * width
+    }
+    
+    func navigateToTab(_ tab: DashboardTabType) {
+        viewModel.selectedTab = tab
     }
 }
 
@@ -74,6 +66,7 @@ struct DashboardView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = DashboardViewModel(
+            startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
             initialDataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
@@ -98,6 +91,6 @@ struct DashboardView_Previews: PreviewProvider {
             fontService: appDiContainer.getFontService()
         )
         
-        DashboardView(viewModel: viewModel, startingTab: .favorites)
+        DashboardView(viewModel: viewModel)
     }
 }
