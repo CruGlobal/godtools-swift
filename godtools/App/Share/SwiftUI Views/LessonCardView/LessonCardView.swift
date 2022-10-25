@@ -74,6 +74,7 @@ struct LessonCardView_Previews: PreviewProvider {
         let viewModel = LessonCardViewModel(
             lesson: lesson,
             dataDownloader: appDiContainer.initialDataDownloader,
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),

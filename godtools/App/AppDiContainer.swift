@@ -15,7 +15,6 @@ class AppDiContainer {
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
-    private let resourcesCache: ResourcesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
@@ -37,15 +36,10 @@ class AppDiContainer {
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-        
-        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-        
+                
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
                                                       
-        initialDataDownloader = InitialDataDownloader(
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            resourcesCache: resourcesCache
-        )
+        initialDataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository())
         
         languageSettingsService = LanguageSettingsService(
             languagesRepository: dataLayer.getLanguagesRepository(),
