@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOwnAdventureViewModelType {
     
-    private static let navHomeImage: UIImage? = ImageCatalog.navHome.image
+    private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
     
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
@@ -58,10 +58,6 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         
         super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled)
     }
-
-    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
-        fatalError("init(renderer:page:resourcesRepository:translationsRepository:mobileContentEventAnalytics:initialPageRenderingType:trainingTipsEnabled:) has not been implemented")
-    }
     
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
@@ -73,7 +69,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
             navBackImage = ChooseYourOwnAdventureViewModel.navHomeImage
         }
         else {
-            navBackImage = ImageCatalog.navBack.image
+            navBackImage = ImageCatalog.navBack.uiImage
         }
         
         backButtonImage.accept(value: navBackImage)

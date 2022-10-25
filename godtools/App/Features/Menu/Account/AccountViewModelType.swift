@@ -10,7 +10,7 @@ import Foundation
 
 protocol AccountViewModelType {
     
-    var globalActivityServices: GlobalActivityServices { get }
+    var globalAnalyticsService: GlobalAnalyticsService { get }
     var localizationServices: LocalizationServices { get }
     var navTitle: String { get }
     var profileName: ObservableValue<AnimatableValue<String>> { get }

@@ -15,13 +15,17 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
+    private let translationsRepository: TranslationsRepository
     
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getLessonsUseCase: GetLessonsUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
-    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
@@ -33,7 +37,7 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     let navTitleFont: UIFont
         
-    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
+    required init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, translationsRepository: TranslationsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, fontService: FontService) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -41,13 +45,17 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         self.localizationServices = localizationServices
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
+        self.translationsRepository = translationsRepository
         
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
+        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getLessonsUseCase = getLessonsUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
-        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
@@ -66,15 +74,18 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return flowDelegate
     }
     
-    func lessonsWillAppear() -> LessonsContentViewModel {
-        return LessonsContentViewModel(
+    func lessonsWillAppear() -> LessonsViewModel {
+        return LessonsViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getLessonsUseCase: getLessonsUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            translationsRepository: translationsRepository
         )
     }
     
@@ -82,14 +93,16 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         return FavoritesContentViewModel(
             flowDelegate: getFlowDelegate(),
             dataDownloader: initialDataDownloader,
-            languageSettingsService: languageSettingsService,
             localizationServices: localizationServices,
             analytics: analytics,
+            translationsRepository: translationsRepository,
+            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
+            getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
-            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
@@ -106,7 +119,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
             analytics: analytics,
             getAllToolsUseCase: getAllToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getSpotlightToolsUseCase: getSpotlightToolsUseCase,
             getToolCategoriesUseCase: getToolCategoriesUseCase,

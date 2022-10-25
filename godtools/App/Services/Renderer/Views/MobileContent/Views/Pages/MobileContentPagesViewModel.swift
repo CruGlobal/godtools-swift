@@ -36,7 +36,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     
-    required init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -82,7 +82,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             let language: LanguageModel = pageRenderer.language
             let currentTranslation: TranslationModel = pageRenderer.translation
             
-            guard let latestTranslation = resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+            guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
                 continue
             }
             
@@ -97,7 +97,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             return
         }
         
-        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, includeRelatedFiles: true)
+        translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, includeRelatedFiles: true, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false)
             .receiveOnMain()
             .sink { _ in
                 
@@ -121,7 +121,7 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
                     let updatedManifest: Manifest
                     let updatedTranslation: TranslationModel
                     
-                    if let latestTranslation = self?.resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
+                    if let latestTranslation = self?.translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
                         
                         updatedManifest = manifestFileDataModel.manifest
                         updatedTranslation = manifestFileDataModel.translation

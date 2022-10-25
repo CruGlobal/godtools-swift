@@ -23,7 +23,7 @@ jobs:
       - name: Pod install
         run: bundle exec pod install
       - name: Configure Deploy Key
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.RENOVATE_REPAIR_DEPLOY_KEY }}
       - name: Commit Podfile.lock

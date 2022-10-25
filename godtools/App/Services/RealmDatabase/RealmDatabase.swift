@@ -12,14 +12,14 @@ import RealmSwift
 class RealmDatabase {
     
     private static let config: Realm.Configuration = RealmDatabase.createConfig
-    private static let schemaVersion: UInt64 = 13
+    private static let schemaVersion: UInt64 = 14
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     
     @available(*, deprecated) // TODO: Would like to move away from using the mainThreadRealm and instead use the func openRealm() since realm instances cant be shared across threads. ~Levi
     let mainThreadRealm: Realm
     
-    required init() {
+    init() {
         
         do {
             self.mainThreadRealm = try Realm(configuration: RealmDatabase.config)

@@ -34,9 +34,9 @@ struct ToolDetailsMediaView: View {
                 
                 AnimatedSwiftUIView(
                     viewModel: viewModel,
-                    frameSize: mediaViewSize,
                     contentMode: .scaleAspectFill
                 )
+                .frame(width: mediaViewSize.width, height: mediaViewSize.height)
             
             case .image(let image):
                 

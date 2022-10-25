@@ -26,6 +26,11 @@ class FavoritedResourcesRepository {
         return cache.getFavoritedResourcesChanged()
     }
     
+    func getResourceIsFavorited(resourceId: String) -> Bool {
+        
+        return cache.getFavoritedResource(resourceId: resourceId) != nil
+    }
+    
     func getFavoritedResource(resourceId: String) -> FavoritedResourceModel? {
         
         return cache.getFavoritedResource(resourceId: resourceId)

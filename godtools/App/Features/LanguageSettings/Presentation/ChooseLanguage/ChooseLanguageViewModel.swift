@@ -43,7 +43,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     let numberOfLanguages: ObservableValue<Int> = ObservableValue(value: 0)
     let selectedLanguageIndex: ObservableValue<Int?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase,  userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, userDidDeleteSettingsParallelLanguageUseCase: UserDidDeleteSettingsParallelLanguageUseCase, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase,  userDidSetSettingsPrimaryLanguageUseCase: UserDidSetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, userDidDeleteSettingsParallelLanguageUseCase: UserDidDeleteSettingsParallelLanguageUseCase, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
@@ -73,6 +73,23 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
                 self?.settingsPrimaryLanguage = settingsPrimaryLanguage
                 self?.settingsParallelLanguage = settingsParallelLanguage
                 self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage, settingsParallelLanguage: settingsParallelLanguage)
+            }
+            .store(in: &cancellables)
+        
+        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] (settingsParallelLanguage: LanguageDomainModel?) in
+                
+                let hidesDeleteLanguageButtonValue: Bool
+                
+                switch chooseLanguageType {
+                case .primary:
+                    hidesDeleteLanguageButtonValue = true
+                case .parallel:
+                    hidesDeleteLanguageButtonValue = settingsParallelLanguage == nil
+                }
+                
+                self?.hidesDeleteLanguageButton.accept(value: hidesDeleteLanguageButtonValue)
             }
             .store(in: &cancellables)
     }
@@ -124,7 +141,15 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func deleteLanguageTapped() {

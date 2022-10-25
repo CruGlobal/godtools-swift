@@ -12,6 +12,8 @@ class TutorialViewModel: TutorialViewModelType {
         
     private let getTutorialUseCase: GetTutorialUseCase
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     
@@ -24,10 +26,12 @@ class TutorialViewModel: TutorialViewModelType {
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
     let continueTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.getTutorialUseCase = getTutorialUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
@@ -59,7 +63,9 @@ class TutorialViewModel: TutorialViewModelType {
             item: tutorialItems[index],
             customViewBuilder: nil,
             tutorialVideoAnalytics: tutorialVideoAnalytics,
-            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index)
+            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase
         )
     }
     
@@ -98,16 +104,32 @@ class TutorialViewModel: TutorialViewModelType {
         let analyticsSiteSection = tutorialPagerAnalyticsModel.siteSection
         let analyticsSiteSubSection = tutorialPagerAnalyticsModel.siteSubsection
         
-        let trackScreenData = TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection)
-        let trackActionData = TrackActionModel(screenName: analyticsScreenName, actionName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: nil)
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenData)
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+                
+        let trackAction = TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: nil
+        )
         
         if isFirstPage {
-            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
         }
         else if isLastPage {
-            analytics.appsFlyerAnalytics.trackAction(actionName: trackActionData.actionName, data: trackActionData.data)
+            analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
         }
     }
     

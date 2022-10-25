@@ -10,18 +10,19 @@ import Foundation
 
 class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     
+    private let quickStartItems: [OnboardingQuickStartItem]
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let trackActionAnalytics: TrackActionAnalytics
+    
+    private weak var flowDelegate: FlowDelegate?
+    
     let title: String
     let skipButtonTitle: String
     let endTutorialButtonTitle: String
     let quickStartItemCount: Int
     
-    private let quickStartItems: [OnboardingQuickStartItem]
-    
-    private let trackActionAnalytics: TrackActionAnalytics
-    
-    private weak var flowDelegate: FlowDelegate?
-    
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, trackActionAnalytics: TrackActionAnalytics) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, trackActionAnalytics: TrackActionAnalytics) {
         
         title = localizationServices.stringForMainBundle(key: "onboardingQuickStart.title")
         skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
@@ -29,6 +30,8 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         
         self.flowDelegate = flowDelegate
         
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.trackActionAnalytics = trackActionAnalytics
         
         quickStartItems = [
@@ -67,7 +70,18 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     func quickStartCellTapped(index: Int) {
         let item = quickStartItems[index]
         
-        trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: analyticsScreenName, actionName: item.linkButtonAnalyticsAction, siteSection: "", siteSubSection: "", url: nil, data: nil))
+        let trackAction = TrackActionModel(
+            screenName: analyticsScreenName,
+            actionName: item.linkButtonAnalyticsAction,
+            siteSection: "",
+            siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: nil
+        )
+        
+        trackActionAnalytics.trackAction(trackAction: trackAction)
         
         flowDelegate?.navigate(step: item.linkButtonFlowStep)
     }

@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "About";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "About";
+
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Not available in %@";
 
@@ -9,6 +15,9 @@
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
+"toolDetails.conversationStarters.title" = "Conversation starters";
+"toolDetails.outline.title" = "Outline";
+"toolDetails.bibleReferences.title" = "Bible references";
 "toolSettings.languagesAvailable.title" = "Languages available";
 "toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
 "favorites.noTools.title" = "No favorite tools to display";

@@ -27,7 +27,15 @@ struct FeaturedLessonCardsView: View {
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, leadingPadding)
             
-            LessonCardsView(viewModel: viewModel, width: width, leadingPadding: leadingPadding)
+            ForEach(viewModel.lessons) { lesson in
+                
+                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding)
+                    .listRowInsets(EdgeInsets())
+                    .contentShape(Rectangle())
+                    .padding([.top, .bottom], 8)
+                    .padding([.leading, .trailing], leadingPadding)
+                
+            }
         }
     }
 }
@@ -39,10 +47,12 @@ struct FeaturedLessonCardsView_Previews: PreviewProvider {
         
         let viewModel = FeaturedLessonCardsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             delegate: nil
         )
         

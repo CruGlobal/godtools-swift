@@ -23,14 +23,20 @@ struct FavoriteToolsView: View {
             
             FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
-            if viewModel.tools.isEmpty {
+            switch viewModel.viewState {
+            case .loading:
+                
+                EmptyView()
+                
+            case .noTools:
                 
                 NoFavoriteToolsView(viewModel: viewModel)
                     .padding([.leading, .trailing], leadingPadding)
                 
-            } else {
+            case .tools:
                 
                 ToolCardsCarouselView(viewModel: viewModel, cardType: .squareWithNavButtons, width: width, leadingTrailingPadding: leadingPadding)
+                
             }
         }
     }
@@ -43,11 +49,11 @@ struct FavoriteToolsView_Previews: PreviewProvider {
 
         let viewModel = FavoriteToolsViewModel(
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             delegate: nil

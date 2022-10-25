@@ -7,54 +7,62 @@
 //
 
 import Foundation
+import SwiftUI
+import Combine
 
-class FeaturedLessonCardsViewModel: LessonCardProvider {
+class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Properties
     
     private let dataDownloader: InitialDataDownloader
-    private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
+    
     private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
+    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let translationsRepository: TranslationsRepository
+    
     private weak var delegate: LessonCardDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Published
     
     @Published var sectionTitle: String = ""
+    @Published var lessons: [LessonDomainModel] = []
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityStringUseCase: GetLanguageAvailabilityStringUseCase, delegate: LessonCardDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
-        self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
+        
         self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityStringUseCase = getLanguageAvailabilityStringUseCase
+        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
+        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.translationsRepository = translationsRepository
+        
         self.delegate = delegate
         
         super.init()
-        
-        reloadLessonsFromCache()
-        
-        setup()
+                
+        setupBinding()
     }
+}
+
+// MARK: - Public
+
+extension FeaturedLessonCardsViewModel {
     
-    deinit {
-        dataDownloader.cachedResourcesAvailable.removeObserver(self)
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
-        languageSettingsService.primaryLanguage.removeObserver(self)
-    }
-    
-    // MARK: - Overrides
-    
-    override func cardViewModel(for lesson: ResourceModel) -> BaseLessonCardViewModel {
+    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
         return LessonCardViewModel(
-            resource: lesson,
+            lesson: lesson,
             dataDownloader: dataDownloader,
-            languageSettingsService: languageSettingsService,
+            translationsRepository: translationsRepository,
             getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityStringUseCase: getLanguageAvailabilityStringUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             delegate: delegate
         )
     }
@@ -64,42 +72,27 @@ class FeaturedLessonCardsViewModel: LessonCardProvider {
 
 extension FeaturedLessonCardsViewModel {
     
-    private func setup() {
-        setupTitle()
-        setupBinding()
-    }
-    
-    private func setupTitle() {
-        let languageBundle = localizationServices.bundleLoader.bundleForPrimaryLanguageOrFallback(in: languageSettingsService)
-        sectionTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "favorites.favoriteLessons.title")
-    }
-    
     private func setupBinding() {
         
-        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                if cachedResourcesAvailable {
-                    self?.reloadLessonsFromCache()
-                }
+        getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
+            .receiveOnMain()
+            .sink { [weak self] featuredLessons in
+                
+                self?.lessons = featuredLessons
             }
-        }
+            .store(in: &cancellables)
         
-        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
-            DispatchQueue.main.async { [weak self] in
-                if error == nil {
-                    self?.reloadLessonsFromCache()
-                }
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receiveOnMain()
+            .sink { [weak self] primaryLanguage in
+                
+                self?.setupTitle(with: primaryLanguage)
             }
-        }
-        
-        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.setupTitle()
-            }
-        }
+            .store(in: &cancellables)
     }
     
-    private func reloadLessonsFromCache() {
-        lessons = dataDownloader.resourcesCache.getAllVisibleLessonsSorted(andFilteredBy: { $0.attrSpotlight })
+    private func setupTitle(with language: LanguageDomainModel?) {
+        
+        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteLessons.title")
     }
 }

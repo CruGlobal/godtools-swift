@@ -41,6 +41,8 @@ struct AllToolsContentView: View {
                     } refreshHandler: {
                         viewModel.refreshTools()
                     }
+                    .animation(.default, value: viewModel.toolCardsViewModel.tools)
+
                 }
             }
         }
@@ -64,7 +66,8 @@ struct AllToolsContentView_Previews: PreviewProvider {
             analytics: appDiContainer.analytics,
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
             getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),

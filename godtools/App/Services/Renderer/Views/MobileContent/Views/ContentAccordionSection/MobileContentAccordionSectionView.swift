@@ -117,7 +117,7 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
             contentAlpha = 0
             contentStackContainerBottomToView.isActive = false
             headerContainerBottomToView.isActive = true
-            accordionStateImage = ImageCatalog.accordionSectionPlus.image
+            accordionStateImage = ImageCatalog.accordionSectionPlus.uiImage
             viewModel.sectionClosed()
         }
         else {
@@ -125,7 +125,7 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
             contentAlpha = 1
             headerContainerBottomToView.isActive = false
             contentStackContainerBottomToView.isActive = true
-            accordionStateImage = ImageCatalog.accordionSectionMinus.image
+            accordionStateImage = ImageCatalog.accordionSectionMinus.uiImage
             viewModel.sectionOpened()
         }
         

@@ -1,3 +1,9 @@
+/* This About refers to the whole app. */
+"aboutApp.navTitle" = "À propos";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "À propos";
+
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Non disponible en %@";
 

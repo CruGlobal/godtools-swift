@@ -24,29 +24,36 @@ struct FavoritesContentView: View {
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
             }
             
-            GeometryReader { geo in
-                let width = geo.size.width
-                let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
+            if viewModel.isLoading {
                 
-                BackwardCompatibleList(rootViewType: Self.self) {
+                ActivityIndicator(style: .medium, isAnimating: .constant(true))
+                
+            } else {
+                
+                GeometryReader { geo in
+                    let width = geo.size.width
+                    let leadingTrailingPadding = ToolsMenuView.getMargin(for: width)
                     
-                    Text(viewModel.pageTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 30))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .padding(.top, 12)
-                        .padding(.bottom, 15)
-                    
-                    FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                        .listRowInsets(EdgeInsets())
-                        .padding(.bottom, 10)
-                    
-                    FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                        .listRowInsets(EdgeInsets())
+                    BackwardCompatibleList(rootViewType: Self.self) {
                         
-                    Spacer()
-                    
-                } refreshHandler: {
-                    viewModel.refreshData()
+                        Text(viewModel.pageTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 30))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.top, 12)
+                            .padding(.bottom, 15)
+                        
+                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                            .padding(.bottom, 10)
+                        
+                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                            .listRowInsets(EdgeInsets())
+                        
+                        Spacer()
+                        
+                    } refreshHandler: {
+                        viewModel.refreshData()
+                    }
                 }
             }
         }
@@ -64,14 +71,16 @@ struct FavoritesContentView_Previews: PreviewProvider {
         let viewModel = FavoritesContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.initialDataDownloader,
-            languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
+            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getLanguageAvailabilityStringUseCase: appDiContainer.getLanguageAvailabilityStringUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()

@@ -13,11 +13,13 @@ class GetToolCategoriesUseCase {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
         
-    init( getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init( getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
     func getToolCategoriesPublisher() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
@@ -30,7 +32,7 @@ class GetToolCategoriesUseCase {
                 
                 let categoryIds = self.resourcesRepository
                     .getAllTools(sorted: false)
-                    .sortedByPrimaryLanguageAvailable(primaryLanguage: primaryLanguage, resourcesRepository: self.resourcesRepository)
+                    .sortedByPrimaryLanguageAvailable(primaryLanguage: primaryLanguage, resourcesRepository: self.resourcesRepository, translationsRepository: self.translationsRepository)
                     .getUniqueCategoryIds()
                 
                 let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage)
@@ -70,13 +72,13 @@ class GetToolCategoriesUseCase {
 
 private extension Array where Element == ResourceModel {
     
-    func sortedByPrimaryLanguageAvailable(primaryLanguage: LanguageDomainModel?, resourcesRepository: ResourcesRepository) -> [ResourceModel] {
+    func sortedByPrimaryLanguageAvailable(primaryLanguage: LanguageDomainModel?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) -> [ResourceModel] {
         guard let primaryLanguageId = primaryLanguage?.id else { return self }
         
         return sorted(by: { resource1, resource2 in
                         
             func resourceHasTranslation(_ resource: ResourceModel) -> Bool {
-                return resourcesRepository.getResourceLanguageLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
+                return translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) != nil
             }
             
             func isInDefaultOrder() -> Bool {

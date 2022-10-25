@@ -17,6 +17,8 @@ struct LanguageDomainModel {
     let translatedName: String
 }
 
+extension LanguageDomainModel: Equatable {}
+
 extension LanguageDomainModel: Identifiable {
     var id: String {
         return dataModelId

@@ -43,7 +43,7 @@ class ArticleWebView: UIViewController {
         
         shareButton = addBarButtonItem(
             to: .right,
-            image: ImageCatalog.navShare.image,
+            image: ImageCatalog.navShare.uiImage,
             color: .white,
             target: self,
             action: #selector(handleShare(barButtonItem:))
@@ -79,7 +79,7 @@ class ArticleWebView: UIViewController {
             if let shareButton = self?.shareButton {
                 let shareButtonPosition = ButtonItemPosition.right
                 if hidesShareButton {
-                    self?.removeBarButtonItem(item: shareButton, barPosition: shareButtonPosition)
+                    self?.removeBarButtonItem(item: shareButton)
                 }
                 else {
                     self?.addBarButtonItem(item: shareButton, barPosition: shareButtonPosition)

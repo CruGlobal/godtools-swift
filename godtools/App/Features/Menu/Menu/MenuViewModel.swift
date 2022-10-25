@@ -10,10 +10,12 @@ import UIKit
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
-    private let config: AppConfig
+    private let infoPlist: InfoPlist
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
-    private let userAuthentication: UserAuthenticationType
+    private let oktaUserAuthentication: OktaUserAuthentication
     private let localizationServices: LocalizationServices
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
@@ -24,12 +26,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    required init(flowDelegate: FlowDelegate, config: AppConfig, userAuthentication: UserAuthenticationType, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, oktaUserAuthentication: OktaUserAuthentication, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.config = config
-        self.userAuthentication = userAuthentication
+        self.infoPlist = infoPlist
+        self.oktaUserAuthentication = oktaUserAuthentication
         self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
@@ -46,8 +50,8 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     deinit {
-        userAuthentication.didAuthenticateSignal.removeObserver(self)
-        userAuthentication.didSignOutSignal.removeObserver(self)
+        oktaUserAuthentication.didAuthenticateSignal.removeObserver(self)
+        oktaUserAuthentication.didSignOutSignal.removeObserver(self)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
@@ -72,13 +76,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func setupBinding() {
         
-        userAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<AuthUserModelType, Error>) in
+        oktaUserAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<OktaAuthUserModel, Error>) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
         }
         
-        userAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
+        oktaUserAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadMenuDataSource()
             }
@@ -87,7 +91,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func reloadMenuDataSource() {
         
-        let isAuthorized: Bool = userAuthentication.isAuthenticated
+        let isAuthorized: Bool = oktaUserAuthentication.isAuthenticated
         
         // TODO: Disabling the account section in the menu by hardcoding to false.
         // This is until we can provide a suitable option to delete an account due to Apple guideline. See GT-1700. ~Levi
@@ -172,7 +176,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getMenuAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        let trackScreen = TrackScreenModel(
+            screenName: getMenuAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func doneTapped() {
@@ -210,31 +223,58 @@ extension MenuViewModel {
     }
     
     func logoutTapped(fromViewController: UIViewController) {
-        userAuthentication.signOut(fromViewController: fromViewController)
+        oktaUserAuthentication.signOut(fromViewController: fromViewController)
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        userAuthentication.authenticate(fromViewController: fromViewController)
+        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        userAuthentication.authenticate(fromViewController: fromViewController)
+        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
     }
     
     func shareGodToolsTapped() {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(screenName: getShareAppAnalyticsScreenName(), actionName: AnalyticsConstants.ActionNames.shareIconEngaged, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, url: nil, data: [AnalyticsConstants.Keys.shareAction: 1]))
+        let trackAction = TrackActionModel(
+            screenName: getShareAppAnalyticsScreenName(),
+            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: [AnalyticsConstants.Keys.shareAction: 1]
+        )
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getShareAppAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+        
+        let trackScreen = TrackScreenModel(
+            screenName: getShareAppAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: getShareStoryAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: getShareStoryAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func termsOfUseTapped() {
@@ -291,7 +331,7 @@ extension MenuViewModel {
             localizedKey = "language_settings"
             
         case .about:
-            localizedKey = "about"
+            localizedKey = "aboutApp.navTitle"
             
         case .help:
             localizedKey = "help"
@@ -333,7 +373,12 @@ extension MenuViewModel {
             localizedKey = "menu.tutorial"
             
         case .version:
-            return "v" + config.appVersion + " " + "(" + config.bundleVersion + ")"
+            
+            if let appVersion = infoPlist.appVersion, let bundleVersion = infoPlist.bundleVersion {
+                return "v" + appVersion + " " + "(" + bundleVersion + ")"
+            }
+            
+            return ""
         }
         
         return localizationServices.stringForMainBundle(key: localizedKey)

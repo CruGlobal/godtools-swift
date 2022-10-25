@@ -11,17 +11,21 @@ import Foundation
 class AboutViewModel: AboutViewModelType {
     
     private let aboutTextProvider: AboutTextProviderType
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let aboutTexts: ObservableValue<[AboutTextModel]> = ObservableValue(value: [])
     
-    required init(aboutTextProvider: AboutTextProviderType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(aboutTextProvider: AboutTextProviderType, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
         
         self.aboutTextProvider = aboutTextProvider
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         
-        navTitle.accept(value: localizationServices.stringForMainBundle(key: "about"))
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "aboutApp.navTitle"))
         
         aboutTexts.accept(value: aboutTextProvider.aboutTexts)
     }
@@ -39,6 +43,15 @@ class AboutViewModel: AboutViewModelType {
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

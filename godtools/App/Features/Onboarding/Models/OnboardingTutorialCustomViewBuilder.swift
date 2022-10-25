@@ -10,17 +10,20 @@ import UIKit
 
 class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
 
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let localizationServices: LocalizationServices
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let analyticsScreenName: String
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, tutorialVideoAnalytics: TutorialVideoAnalytics, analyticsScreenName: String) {
         
         self.flowDelegate = flowDelegate
 
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.analyticsScreenName = analyticsScreenName
@@ -29,7 +32,15 @@ class OnboardingTutorialCustomViewBuilder: CustomViewBuilderType {
     func buildCustomView(customViewId: String) -> UIView? {
 
         if let onboardingFlowDelegate = flowDelegate, customViewId == "onboarding-0" {
-            let viewModel = OnboardingTutorialIntroViewModel(flowDelegate: onboardingFlowDelegate, localizationServices: localizationServices, tutorialVideoAnalytics: tutorialVideoAnalytics, analyticsScreenName: analyticsScreenName)
+            
+            let viewModel = OnboardingTutorialIntroViewModel(
+                flowDelegate: onboardingFlowDelegate,
+                getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
+                getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
+                localizationServices: localizationServices,
+                tutorialVideoAnalytics: tutorialVideoAnalytics,
+                analyticsScreenName: analyticsScreenName
+            )
 
             let view = OnboardingTutorialIntroView()
 

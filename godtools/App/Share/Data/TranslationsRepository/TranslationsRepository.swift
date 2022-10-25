@@ -13,17 +13,19 @@ import RequestOperation
 
 class TranslationsRepository {
         
-    private let appConfig: AppConfig
+    private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
+    private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    init(appConfig: AppConfig, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache) {
+    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
-        self.appConfig = appConfig
+        self.infoPlist = infoPlist
         self.api = api
         self.cache = cache
         self.resourcesFileCache = resourcesFileCache
+        self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
     func getTranslation(id: String) -> TranslationModel? {
@@ -32,6 +34,37 @@ class TranslationsRepository {
     
     func getTranslations(ids: [String]) -> [TranslationModel] {
         return cache.getTranslations(ids: ids)
+    }
+    
+    func getLatestTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
+    }
+    
+    func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
+        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
+    }
+    
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> TranslationModel? {
+        
+        let translationsSortedByLatestVersion: [TranslationModel] = cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)
+        
+        for translation in translationsSortedByLatestVersion {
+            
+            let translationIsDownloaded: Bool
+            
+            if let downloadedTranslation = trackDownloadedTranslationsRepository.getDownloadedTranslation(translationId: translation.id) {
+                translationIsDownloaded = downloadedTranslation.manifestAndRelatedFilesPersistedToDevice
+            }
+            else {
+                translationIsDownloaded = false
+            }
+            
+            if translationIsDownloaded {
+                return translation
+            }
+        }
+        
+        return nil
     }
 }
 
@@ -52,7 +85,7 @@ extension TranslationsRepository {
     
     func getTranslationManifestFromCache(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
         
-        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, appConfig: appConfig, resourcesFileCache: resourcesFileCache)
+        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: infoPlist, resourcesFileCache: resourcesFileCache)
         
         return manifestParser.parse(manifestName: translation.manifestName).publisher
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
@@ -85,23 +118,44 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
+    func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> {
        
         let requests = translations.map {
-            self.getTranslationManifestFromRemote(translation: $0, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+            
+            self.getTranslationManifestFromRemote(
+                translation: $0,
+                manifestParserType: manifestParserType,
+                includeRelatedFiles: includeRelatedFiles,
+                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+            )
         }
         
         return Publishers.MergeMany(requests)
             .collect()
+            .map({ downloadedTranslationManifestFileDataModels in
+                
+                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
+                
+                for translation in translations {
+                    
+                    guard let translationManifest = downloadedTranslationManifestFileDataModels.first(where: {$0.translation.id == translation.id}) else {
+                        continue
+                    }
+                    
+                    maintainTranslationDownloadOrder.append(translationManifest)
+                }
+                
+                return maintainTranslationDownloadOrder
+            })
             .eraseToAnyPublisher()
     }
     
-    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
+    func getTranslationManifestFromRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> {
         
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in
@@ -131,16 +185,71 @@ extension TranslationsRepository {
                     }
                     .eraseToAnyPublisher()
             })
-            .catch({ (error: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+            .catch({ (urlResponseError: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                     
+                let error: Error = urlResponseError.getError()
                 
-                return self.downloadAndCacheTranslationZipFiles(translation: translation)
-                    .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
-                        return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                            .mapError({ error in
-                                return .otherError(error: error)
-                            })
-                            .eraseToAnyPublisher()
+                guard !error.requestCancelled else {
+                    
+                    return Fail(error: urlResponseError)
+                        .eraseToAnyPublisher()
+                }
+                
+                let shouldFallbackToLatestDownloadedTranslation: Bool = includeRelatedFiles && shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+                let latestDownloadedTranslation: TranslationModel?
+                
+                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resource?.id, let languageId = translation.language?.id {
+                    latestDownloadedTranslation = self.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                }
+                else {
+                    latestDownloadedTranslation = nil
+                }
+                
+                if !error.notConnectedToInternet {
+                    
+                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                        .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                            
+                            return self.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+                                .mapError({ error in
+                                    return .otherError(error: error)
+                                })
+                                .eraseToAnyPublisher()
+                        })
+                        .catch({ (urlResponseError: URLResponseError) -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
+                            
+                            if let latestDownloadedTranslation = latestDownloadedTranslation {
+                             
+                                return self.getTranslationManifestFromCache(
+                                    translation: latestDownloadedTranslation,
+                                    manifestParserType: manifestParserType,
+                                    includeRelatedFiles: includeRelatedFiles
+                                )
+                                .mapError({ error in
+                                    return URLResponseError.otherError(error: error)
+                                })
+                                .eraseToAnyPublisher()
+                            }
+                            
+                            return Fail(error: urlResponseError)
+                                .eraseToAnyPublisher()
+                        })
+                        .eraseToAnyPublisher()
+                }
+                else if let latestDownloadedTranslation = latestDownloadedTranslation {
+                 
+                    return self.getTranslationManifestFromCache(
+                        translation: latestDownloadedTranslation,
+                        manifestParserType: manifestParserType,
+                        includeRelatedFiles: includeRelatedFiles
+                    )
+                    .mapError({ error in
+                        return URLResponseError.otherError(error: error)
                     })
+                    .eraseToAnyPublisher()
+                }
+                
+                return Fail(error: urlResponseError)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -167,7 +276,7 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, URLResponseError> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, appConfig: self.appConfig, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
                 return manifestParser.parse(manifestName: translation.manifestName).publisher
                     .mapError({ error in
@@ -183,9 +292,11 @@ extension TranslationsRepository {
                 
                 return Publishers.MergeMany(requests)
                     .collect()
-                    .map { files in
-                        return TranslationFilesDataModel(files: files, translation: translation)
-                    }
+                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                        
+                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
+                            .eraseToAnyPublisher()
+                    })
                     .eraseToAnyPublisher()
             })
             .catch({ (error: URLResponseError) in
@@ -254,12 +365,34 @@ extension TranslationsRepository {
             .flatMap({ responseObject -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
                 
                 return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: responseObject.data)
-                    .mapError { error in
+                    .mapError({ error in
+                        
                         return .otherError(error: error)
-                    }
-                    .map { files in
-                        return TranslationFilesDataModel(files: files, translation: translation)
-                    }
+                    })
+                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                        
+                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
+                            .eraseToAnyPublisher()
+                    })
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Completed Downloading Translation And Related Files
+
+extension TranslationsRepository {
+    
+    private func didDownloadTranslationAndRelatedFiles(translation: TranslationModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, URLResponseError> {
+        
+        return trackDownloadedTranslationsRepository.trackTranslationDownloaded(translationId: translation.id)
+            .mapError({ error in
+                return .otherError(error: error)
+            })
+            .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, URLResponseError> in
+                
+                return Just(TranslationFilesDataModel(files: files, translation: translation)).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

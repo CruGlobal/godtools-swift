@@ -47,7 +47,7 @@ class ToolsMenuView: UIViewController {
         
         _ = addBarButtonItem(
             to: .left,
-            image: ImageCatalog.navMenu.image,
+            image: ImageCatalog.navMenu.uiImage,
             color: .white,
             target: self,
             action: #selector(menuButtonTapped(barButtonItem:))
@@ -132,7 +132,7 @@ class ToolsMenuView: UIViewController {
             return favoritedToolsView
         
         case .lessons:
-            return LessonsView(contentView: LessonsContentView(viewModel: viewModel.lessonsWillAppear()))
+            return LessonsHostingView(contentView: LessonsView(viewModel: viewModel.lessonsWillAppear()))
             
         }
     }
@@ -175,7 +175,7 @@ class ToolsMenuView: UIViewController {
         toolbarView.setSelectedToolbarItem(pageType: pageType)
     }
     
-    private func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
+    func navigateToPage(pageType: ToolsMenuPageType, animated: Bool) {
         
         guard toolsListsScrollView != nil else {
             return
@@ -201,14 +201,14 @@ class ToolsMenuView: UIViewController {
         
         if hidden, let chooseLanguageButton = self.chooseLanguageButton {
             
-            removeBarButtonItem(item: chooseLanguageButton, barPosition: .right)
+            removeBarButtonItem(item: chooseLanguageButton)
             self.chooseLanguageButton = nil
         }
         else if !hidden && chooseLanguageButton == nil {
             
             chooseLanguageButton = addBarButtonItem(
                 to: .right,
-                image: ImageCatalog.navLanguage.image,
+                image: ImageCatalog.navLanguage.uiImage,
                 color: .white,
                 target: self,
                 action: #selector(chooseLanguageButtonTapped(barButtonItem:))
