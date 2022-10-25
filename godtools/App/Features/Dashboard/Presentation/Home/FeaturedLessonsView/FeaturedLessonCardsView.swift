@@ -52,6 +52,7 @@ struct FeaturedLessonCardsView_Previews: PreviewProvider {
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             delegate: nil
         )
         

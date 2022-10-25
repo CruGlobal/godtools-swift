@@ -23,6 +23,7 @@ class LessonsViewModel: ObservableObject {
     private let getLessonsUseCase: GetLessonsUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let translationsRepository: TranslationsRepository
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -35,7 +36,7 @@ class LessonsViewModel: ObservableObject {
     
     // MARK: - Init
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
@@ -46,6 +47,7 @@ class LessonsViewModel: ObservableObject {
         self.getLessonsUseCase = getLessonsUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.translationsRepository = translationsRepository
         
         setupBinding()
     }
@@ -59,6 +61,7 @@ extension LessonsViewModel {
         return LessonCardViewModel(
             lesson: lesson,
             dataDownloader: dataDownloader,
+            translationsRepository: translationsRepository,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,

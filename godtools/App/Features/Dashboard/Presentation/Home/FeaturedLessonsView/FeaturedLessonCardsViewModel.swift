@@ -21,6 +21,7 @@ class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let translationsRepository: TranslationsRepository
     
     private weak var delegate: LessonCardDelegate?
     private var cancellables = Set<AnyCancellable>()
@@ -32,7 +33,7 @@ class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
+    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         
@@ -40,6 +41,7 @@ class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.translationsRepository = translationsRepository
         
         self.delegate = delegate
         
@@ -57,6 +59,7 @@ extension FeaturedLessonCardsViewModel {
         return LessonCardViewModel(
             lesson: lesson,
             dataDownloader: dataDownloader,
+            translationsRepository: translationsRepository,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,

@@ -73,6 +73,7 @@ struct FavoritesContentView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
