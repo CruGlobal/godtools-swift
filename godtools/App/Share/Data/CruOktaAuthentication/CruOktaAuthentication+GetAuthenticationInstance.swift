@@ -17,7 +17,7 @@ extension CruOktaAuthentication {
         let signOutPath: String = "auth/logout"
         let redirectBaseUrl: String
         
-        // TODO: Change back redirectBaseUrl. ~Levi
+        // TODO: Investigate why debug redirect url is no longer working. ~Levi https://jira.cru.org/browse/GT-1845
         /*
         if appBuild.isDebug {
             redirectBaseUrl = "org.cru.godtools.debug"
