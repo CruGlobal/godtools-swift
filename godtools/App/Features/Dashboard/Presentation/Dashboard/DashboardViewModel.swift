@@ -45,7 +45,7 @@ class DashboardViewModel: ObservableObject {
     }
     
     private var chooseLanguageButton: UIBarButtonItem?
-    var shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(shouldShowButton: Bool, barButtonItem: UIBarButtonItem?), Never>((false, nil))
+    let shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(shouldShowButton: Bool, barButtonItem: UIBarButtonItem?), Never>((false, nil))
     
     @Published var allToolsTabTitle: String
     @Published var favoritesTabTitle: String
@@ -190,7 +190,7 @@ extension DashboardViewModel {
     }
 }
 
-// MARK: - Public
+// MARK: - Inputs
 
 extension DashboardViewModel {
     
