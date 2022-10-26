@@ -50,7 +50,7 @@ class DashboardViewModel: ObservableObject {
     @Published var allToolsTabTitle: String
     @Published var favoritesTabTitle: String
     @Published var lessonsTabTitle: String
-    @Published var selectedTab: DashboardTabType {
+    @Published var selectedTab: DashboardTabTypeDomainModel {
         didSet {
             tabChanged()
         }
@@ -115,7 +115,7 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
-    required init(startingTab: DashboardTabType, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    required init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader

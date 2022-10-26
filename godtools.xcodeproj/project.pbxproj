@@ -1053,7 +1053,7 @@
 		D471CFE328CFB86B00DCE61C /* GetLessonsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */; };
 		D471CFE628CFBBAC00DCE61C /* GetLessonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE528CFBBAC00DCE61C /* GetLessonUseCase.swift */; };
 		D471CFE828CFBBD100DCE61C /* LessonDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */; };
-		D473468F28FF423600579463 /* DashboardTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D473468E28FF423600579463 /* DashboardTabType.swift */; };
+		D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D473468E28FF423600579463 /* DashboardTabTypeDomainModel.swift */; };
 		D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
@@ -2191,7 +2191,7 @@
 		D471CFE228CFB86B00DCE61C /* GetLessonsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsUseCase.swift; sourceTree = "<group>"; };
 		D471CFE528CFBBAC00DCE61C /* GetLessonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonUseCase.swift; sourceTree = "<group>"; };
 		D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDomainModel.swift; sourceTree = "<group>"; };
-		D473468E28FF423600579463 /* DashboardTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabType.swift; sourceTree = "<group>"; };
+		D473468E28FF423600579463 /* DashboardTabTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabTypeDomainModel.swift; sourceTree = "<group>"; };
 		D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShouldShowLanguageSettingsBarButtonUseCase.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
@@ -6831,8 +6831,7 @@
 		D473469129072A1800579463 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				D473468E28FF423600579463 /* DashboardTabType.swift */,
-				D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */,
+				D47346BE29098C4400579463 /* GetShouldShowLanguageSettingsBarButtonUseCase */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -6892,6 +6891,15 @@
 				D420DA2E282AEEA00035ABCB /* ToolSpotlightView */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		D47346BE29098C4400579463 /* GetShouldShowLanguageSettingsBarButtonUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D473468E28FF423600579463 /* DashboardTabTypeDomainModel.swift */,
+				D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */,
+			);
+			path = GetShouldShowLanguageSettingsBarButtonUseCase;
 			sourceTree = "<group>";
 		};
 		D4997E1128D8B87B00205B4C /* GetFeaturedLessonsUseCase */ = {
@@ -7916,7 +7924,7 @@
 				45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */,
 				455583DC269F2DA500C3FF14 /* MobileContentAccordionViewModelType.swift in Sources */,
 				45AD1B9625938A4F00A096A0 /* ToolNavBarView.swift in Sources */,
-				D473468F28FF423600579463 /* DashboardTabType.swift in Sources */,
+				D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */,
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,

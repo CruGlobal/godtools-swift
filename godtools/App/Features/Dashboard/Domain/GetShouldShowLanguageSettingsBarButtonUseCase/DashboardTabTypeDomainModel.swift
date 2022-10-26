@@ -1,5 +1,5 @@
 //
-//  DashboardTabType.swift
+//  DashboardTabTypeDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 10/18/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DashboardTabType {
+enum DashboardTabTypeDomainModel {
     case lessons
     case favorites
     case allTools

@@ -13,7 +13,7 @@ import Combine
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingDashboardTab: DashboardTabType = .favorites
+    private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
     private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
@@ -506,7 +506,7 @@ extension AppFlow {
         return nil
     }
     
-    private func getNewDashboardView(startingTab: DashboardTabType?) -> UIHostingController<DashboardView> {
+    private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIHostingController<DashboardView> {
         
         let dashboardViewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
@@ -565,7 +565,7 @@ extension AppFlow {
         return dashboardHostingController
     }
     
-    private func navigateToDashboard(startingTab: DashboardTabType = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    private func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
         if let dashboard = getDashboardInNavigationStack() {
             
@@ -591,7 +591,7 @@ extension AppFlow {
         )
     }
     
-    private func buildNewDashboard(startingTab: DashboardTabType, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
+    private func buildNewDashboard(startingTab: DashboardTabTypeDomainModel, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
         
         let dashboard = getNewDashboardView(startingTab: startingTab)
         

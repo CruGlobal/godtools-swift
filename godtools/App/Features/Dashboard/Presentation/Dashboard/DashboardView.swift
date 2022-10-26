@@ -33,20 +33,20 @@ struct DashboardView: View {
                     .tabItem {
                         Label(viewModel.lessonsTabTitle, image: ImageCatalog.toolsMenuLessons.name)
                     }
-                    .tag(DashboardTabType.lessons)
+                    .tag(DashboardTabTypeDomainModel.lessons)
                 
                 
                 FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
                         Label(viewModel.favoritesTabTitle, image: ImageCatalog.toolsMenuFavorites.name)
                     }
-                    .tag(DashboardTabType.favorites)
+                    .tag(DashboardTabTypeDomainModel.favorites)
                 
                 AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
                     .tabItem {
                         Label(viewModel.allToolsTabTitle, image: ImageCatalog.toolsMenuAllTools.name)
                     }
-                    .tag(DashboardTabType.allTools)
+                    .tag(DashboardTabTypeDomainModel.allTools)
             }
             .accentColor(ColorPalette.gtBlue.color)
         }
@@ -56,7 +56,7 @@ struct DashboardView: View {
         return marginMultiplier * width
     }
     
-    func navigateToTab(_ tab: DashboardTabType) {
+    func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
         viewModel.selectedTab = tab
     }
 }

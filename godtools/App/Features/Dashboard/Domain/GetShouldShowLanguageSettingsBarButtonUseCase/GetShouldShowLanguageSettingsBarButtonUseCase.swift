@@ -10,7 +10,7 @@ import Foundation
 
 class GetShouldShowLanguageSettingsBarButtonUseCase {
     
-    func getShouldShowLanguageSettingsBarButton(for tab: DashboardTabType) -> Bool {
+    func getShouldShowLanguageSettingsBarButton(for tab: DashboardTabTypeDomainModel) -> Bool {
         
         switch tab {
         case .favorites, .allTools:
