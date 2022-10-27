@@ -25,7 +25,29 @@ class AuthenticateUserUseCase {
         self.snowplowAnalytics = snowplowAnalytics
     }
     
-    private func authenticate(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<OktaAccessToken, Error> {
+    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
+        
+        return authenticateByAuthTypePublisher(authType: authType)
+            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
+                
+                return self.cruOktaAuthentication.getAuthUserPublisher()
+                    .mapError { oktaError in
+                        return oktaError.getError()
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<Bool, Error> in
+                
+                self.postEmailSignUp(authUser: authUser)
+                self.setAnalyticsUserProperties(authUser: authUser)
+                
+                return Just(true).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<OktaAccessToken, Error> {
         
         switch authType {
             
@@ -57,28 +79,6 @@ class AuthenticateUserUseCase {
                 })
                 .eraseToAnyPublisher()
         }
-    }
-    
-    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
-        
-        return authenticate(authType: authType)
-            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
-                
-                return self.cruOktaAuthentication.getAuthUserPublisher()
-                    .mapError { oktaError in
-                        return oktaError.getError()
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<Bool, Error> in
-                
-                self.postEmailSignUp(authUser: authUser)
-                self.setAnalyticsUserProperties(authUser: authUser)
-                
-                return Just(true).setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
     }
     
     private func postEmailSignUp(authUser: CruOktaUserDataModel) {
