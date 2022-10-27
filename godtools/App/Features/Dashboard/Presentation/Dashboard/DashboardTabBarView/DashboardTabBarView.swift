@@ -17,34 +17,52 @@ struct DashboardTabBarView: View {
             
             HStack {
                 
-                Spacer()
+                doubleSpacer()
                 
                 DashboardTabItem(title: "Lessons", imageName: ImageCatalog.toolsMenuLessons.name, isSelected: viewModel.selectedTab == .lessons)
                     .onTapGesture {
                         viewModel.selectedTab = DashboardTabTypeDomainModel.lessons
                     }
                 
-                Spacer()
-                Spacer()
+                tripleSpacer()
                 
                 DashboardTabItem(title: "Favorites", imageName: ImageCatalog.toolsMenuFavorites.name, isSelected: viewModel.selectedTab == .favorites)
                     .onTapGesture {
                         viewModel.selectedTab = DashboardTabTypeDomainModel.favorites
                     }
                 
-                Spacer()
-                Spacer()
+                tripleSpacer()
                 
                 DashboardTabItem(title: "All Tools", imageName: ImageCatalog.toolsMenuAllTools.name, isSelected: viewModel.selectedTab == .allTools)
                     .onTapGesture {
                         viewModel.selectedTab = DashboardTabTypeDomainModel.allTools
                     }
                 
-                Spacer()
+                doubleSpacer()
             }
-            .padding()
+            .padding(.top, 16)
+            .padding(.bottom, 8)
             .frame(maxWidth: .infinity)
-            .background(Color.white.edgesIgnoringSafeArea(.bottom))
+            .background(
+                Color.white
+                    .edgesIgnoringSafeArea(.bottom)
+                    .shadow(color: .black.opacity(0.35), radius: 4, y: 0)
+            )
+        }
+    }
+    
+    @ViewBuilder func doubleSpacer() -> some View {
+        Group {
+            Spacer()
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder func tripleSpacer() -> some View {
+        Group {
+            Spacer()
+            Spacer()
+            Spacer()
         }
     }
 }
