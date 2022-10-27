@@ -13,30 +13,21 @@ struct DashboardTabBarView: View {
     @ObservedObject var viewModel: DashboardViewModel
     
     var body: some View {
+        
         ZStack {
-            
             HStack {
                 
                 doubleSpacer()
                 
-                DashboardTabItem(title: "Lessons", imageName: ImageCatalog.toolsMenuLessons.name, isSelected: viewModel.selectedTab == .lessons)
-                    .onTapGesture {
-                        viewModel.selectedTab = DashboardTabTypeDomainModel.lessons
-                    }
+                DashboardTabItem(tabType: .lessons, title: viewModel.lessonsTabTitle, imageName: ImageCatalog.toolsMenuLessons.name, selectedTab: $viewModel.selectedTab)
                 
                 tripleSpacer()
                 
-                DashboardTabItem(title: "Favorites", imageName: ImageCatalog.toolsMenuFavorites.name, isSelected: viewModel.selectedTab == .favorites)
-                    .onTapGesture {
-                        viewModel.selectedTab = DashboardTabTypeDomainModel.favorites
-                    }
+                DashboardTabItem(tabType: .favorites, title: viewModel.favoritesTabTitle, imageName: ImageCatalog.toolsMenuFavorites.name, selectedTab: $viewModel.selectedTab)
                 
                 tripleSpacer()
                 
-                DashboardTabItem(title: "All Tools", imageName: ImageCatalog.toolsMenuAllTools.name, isSelected: viewModel.selectedTab == .allTools)
-                    .onTapGesture {
-                        viewModel.selectedTab = DashboardTabTypeDomainModel.allTools
-                    }
+                DashboardTabItem(tabType: .allTools, title: viewModel.allToolsTabTitle, imageName: ImageCatalog.toolsMenuAllTools.name, selectedTab: $viewModel.selectedTab)
                 
                 doubleSpacer()
             }
