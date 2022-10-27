@@ -25,7 +25,7 @@ class AuthenticateUserUseCase {
         self.snowplowAnalytics = snowplowAnalytics
     }
     
-    private func authenticate(authType: AuthenticateUserAuthType) -> AnyPublisher<OktaAccessToken, Error> {
+    private func authenticate(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<OktaAccessToken, Error> {
         
         switch authType {
             
@@ -59,7 +59,7 @@ class AuthenticateUserUseCase {
         }
     }
     
-    func authenticatePublisher(authType: AuthenticateUserAuthType) -> AnyPublisher<Bool, Error> {
+    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
         
         return authenticate(authType: authType)
             .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in

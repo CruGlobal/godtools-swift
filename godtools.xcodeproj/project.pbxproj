@@ -880,7 +880,7 @@
 		45F71665290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */; };
 		45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */; };
 		45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */; };
-		45F71668290A12D70019B715 /* AuthenticateUserAuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161B290A12D70019B715 /* AuthenticateUserAuthType.swift */; };
+		45F71668290A12D70019B715 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161B290A12D70019B715 /* AuthenticateUserAuthTypeDomainModel.swift */; };
 		45F71669290A12D70019B715 /* AuthenticateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */; };
 		45F7166A290A12D70019B715 /* LogOutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */; };
 		45F71676290A13530019B715 /* EmailSignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7166C290A13530019B715 /* EmailSignUpService.swift */; };
@@ -1970,7 +1970,7 @@
 		45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserIsAuthenticatedUseCase.swift; sourceTree = "<group>"; };
 		45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserAccountProfileNameUseCase.swift; sourceTree = "<group>"; };
 		45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProfileNameDomainModel.swift; sourceTree = "<group>"; };
-		45F7161B290A12D70019B715 /* AuthenticateUserAuthType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserAuthType.swift; sourceTree = "<group>"; };
+		45F7161B290A12D70019B715 /* AuthenticateUserAuthTypeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserAuthTypeDomainModel.swift; sourceTree = "<group>"; };
 		45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserUseCase.swift; sourceTree = "<group>"; };
 		45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutUserUseCase.swift; sourceTree = "<group>"; };
 		45F7166C290A13530019B715 /* EmailSignUpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpService.swift; sourceTree = "<group>"; };
@@ -6083,7 +6083,7 @@
 		45F7161A290A12D70019B715 /* AuthenticateUserUseCase */ = {
 			isa = PBXGroup;
 			children = (
-				45F7161B290A12D70019B715 /* AuthenticateUserAuthType.swift */,
+				45F7161B290A12D70019B715 /* AuthenticateUserAuthTypeDomainModel.swift */,
 				45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */,
 			);
 			path = AuthenticateUserUseCase;
@@ -8290,7 +8290,7 @@
 				45F71622290A12D70019B715 /* TutorialView.swift in Sources */,
 				45AE974527C97A9400C2CB33 /* CallToAction+MobileContentRenderableModel.swift in Sources */,
 				45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */,
-				45F71668290A12D70019B715 /* AuthenticateUserAuthType.swift in Sources */,
+				45F71668290A12D70019B715 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */,
 				45AD1B9725938A4F00A096A0 /* ToolLanguageSegmentViewModel.swift in Sources */,
 				4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */,
 				45E39ED327457CB5006A59E4 /* MobileContentAnimationView.swift in Sources */,

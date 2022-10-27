@@ -1,5 +1,5 @@
 //
-//  AuthenticateUserAuthType.swift
+//  AuthenticateUserAuthTypeDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/24/22.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum AuthenticateUserAuthType {
+enum AuthenticateUserAuthTypeDomainModel {
     
     case attemptToRenewAuthenticationElseAuthenticate(fromViewController: UIViewController)
     case attemptToRenewAuthenticationOnly
