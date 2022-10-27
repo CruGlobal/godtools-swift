@@ -1055,6 +1055,7 @@
 		D471CFE828CFBBD100DCE61C /* LessonDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */; };
 		D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D473468E28FF423600579463 /* DashboardTabTypeDomainModel.swift */; };
 		D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */; };
+		D47346C12909CDF000579463 /* DashboardTabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47346C02909CDF000579463 /* DashboardTabItem.swift */; };
 		D47C49D8280EF0B10084F4DE /* AllToolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D7280EF0B10084F4DE /* AllToolsList.swift */; };
 		D47C49DA28104E0B0084F4DE /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49D928104E0B0084F4DE /* OptionalImage.swift */; };
 		D47C49E02816EEBD0084F4DE /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */; };
@@ -2193,6 +2194,7 @@
 		D471CFE728CFBBD100DCE61C /* LessonDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDomainModel.swift; sourceTree = "<group>"; };
 		D473468E28FF423600579463 /* DashboardTabTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabTypeDomainModel.swift; sourceTree = "<group>"; };
 		D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShouldShowLanguageSettingsBarButtonUseCase.swift; sourceTree = "<group>"; };
+		D47346C02909CDF000579463 /* DashboardTabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabItem.swift; sourceTree = "<group>"; };
 		D47C49D7280EF0B10084F4DE /* AllToolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllToolsList.swift; sourceTree = "<group>"; };
 		D47C49D928104E0B0084F4DE /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		D47C49DF2816EEBD0084F4DE /* MockFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
@@ -6850,6 +6852,7 @@
 		D473469329072A3300579463 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				D47346BF2909CDAC00579463 /* DashboardTabBarView */,
 				D48018BF28EF650700389565 /* DashboardView.swift */,
 				D48018C128EF6A7100389565 /* DashboardViewModel.swift */,
 			);
@@ -6900,6 +6903,14 @@
 				D473469729072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */,
 			);
 			path = GetShouldShowLanguageSettingsBarButtonUseCase;
+			sourceTree = "<group>";
+		};
+		D47346BF2909CDAC00579463 /* DashboardTabBarView */ = {
+			isa = PBXGroup;
+			children = (
+				D47346C02909CDF000579463 /* DashboardTabItem.swift */,
+			);
+			path = DashboardTabBarView;
 			sourceTree = "<group>";
 		};
 		D4997E1128D8B87B00205B4C /* GetFeaturedLessonsUseCase */ = {
@@ -7532,6 +7543,7 @@
 				D471CFD528BD458B00DCE61C /* GetToolCategoriesUseCase.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				45677735287DAFC70044AEB2 /* MenuViewModel.swift in Sources */,
+				D47346C12909CDF000579463 /* DashboardTabItem.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,

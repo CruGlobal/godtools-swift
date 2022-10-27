@@ -17,38 +17,47 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
-        UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 12) as Any], for: .normal)
+        // TODO: - find a better way to hide the default tab bar
+        UITabBar.appearance().isHidden = true
     }
     
     var body: some View {
         GeometryReader { geo in
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
-            
-            TabView(selection: $viewModel.selectedTab) {
+            ZStack(alignment: .bottom) {
                 
-                LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.lessonsTabTitle, image: ImageCatalog.toolsMenuLessons.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.lessons)
+                TabView(selection: $viewModel.selectedTab) {
+                    
+                    LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                        .tag(DashboardTabTypeDomainModel.lessons)
+                    
+                    
+                    FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                        .tag(DashboardTabTypeDomainModel.favorites)
+                    
+                    AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
+                        .tag(DashboardTabTypeDomainModel.allTools)
+                }
+                .accentColor(ColorPalette.gtBlue.color)
                 
-                
-                FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.favoritesTabTitle, image: ImageCatalog.toolsMenuFavorites.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.favorites)
-                
-                AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.allToolsTabTitle, image: ImageCatalog.toolsMenuAllTools.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.allTools)
+                HStack {
+                    DashboardTabItem(title: "Lessons", imageName: ImageCatalog.toolsMenuLessons.name, isSelected: viewModel.selectedTab == .lessons)
+                        .onTapGesture {
+                            viewModel.selectedTab = DashboardTabTypeDomainModel.lessons
+                        }
+                    
+                    DashboardTabItem(title: "Favorites", imageName: ImageCatalog.toolsMenuFavorites.name, isSelected: viewModel.selectedTab == .favorites)
+                        .onTapGesture {
+                            viewModel.selectedTab = DashboardTabTypeDomainModel.favorites
+                        }
+                    
+                    DashboardTabItem(title: "All Tools", imageName: ImageCatalog.toolsMenuAllTools.name, isSelected: viewModel.selectedTab == .allTools)
+                        .onTapGesture {
+                            viewModel.selectedTab = DashboardTabTypeDomainModel.allTools
+                        }
+                }
             }
-            .accentColor(ColorPalette.gtBlue.color)
         }
     }
     
