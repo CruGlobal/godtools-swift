@@ -12,17 +12,21 @@ import SwiftUI
 class ReviewShareShareableViewModel: ObservableObject {
     
     private let imageToShare: UIImage
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let analytics: AnalyticsContainer
+    private let shareableImageDomainModel: ShareableImageDomainModel
     
     private weak var flowDelegate: FlowDelegate?
-    private let analytics: AnalyticsContainer
     
-    private let shareableImageDomainModel: ShareableImageDomainModel
     let imagePreview: Image
     let shareImageButtonTitle: String
     
-    init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, shareableImageDomainModel: ShareableImageDomainModel, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, shareableImageDomainModel: ShareableImageDomainModel, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         self.shareableImageDomainModel = shareableImageDomainModel
         self.imageToShare = shareableImageDomainModel.image
@@ -42,13 +46,18 @@ class ReviewShareShareableViewModel: ObservableObject {
     }
     
     private func trackShareImageTappedAnalytics() {
-        analytics.trackActionAnalytics.trackAction(trackAction: TrackActionModel(
+        
+        let trackAction = TrackActionModel(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareShareable,
             siteSection: shareableImageDomainModel.toolAbbreviation ?? "",
             siteSubSection: "",
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
             url: nil,
             data: [AnalyticsConstants.Keys.shareableId: shareableImageDomainModel.imageId ?? ""]
-        ))
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

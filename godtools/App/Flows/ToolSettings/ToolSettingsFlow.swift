@@ -82,7 +82,9 @@ class ToolSettingsFlow: Flow {
                 language: language,
                 pageNumber: toolData.pageNumber,
                 localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             
             let view = ShareToolView(viewModel: viewModel)
@@ -157,7 +159,9 @@ class ToolSettingsFlow: Flow {
                 let viewModel = ShareToolRemoteSessionURLViewModel(
                     toolRemoteShareUrl: remoteShareUrl,
                     localizationServices: appDiContainer.localizationServices,
-                    analytics: appDiContainer.analytics
+                    getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                    getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                    analytics: appDiContainer.dataLayer.getAnalytics()
                 )
                 let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
                 
@@ -212,7 +216,9 @@ class ToolSettingsFlow: Flow {
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
-                analytics: appDiContainer.analytics,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 shareableImageDomainModel: shareableImageDomainModel,
                 localizationServices: appDiContainer.localizationServices
             )
@@ -257,7 +263,9 @@ class ToolSettingsFlow: Flow {
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
             resource: toolData.renderer.value.resource,
-            analyticsContainer: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
 

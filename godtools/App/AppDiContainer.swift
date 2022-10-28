@@ -11,52 +11,35 @@ import OktaAuthentication
 
 class AppDiContainer {
         
+    private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase = RealmDatabase()
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
-    private let resourcesCache: ResourcesCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let oktaUserAuthentication: OktaUserAuthentication
-    let favoritedResourcesCache: FavoritedResourcesCache
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
-    let analytics: AnalyticsContainer
     let localizationServices: LocalizationServices = LocalizationServices()
-    let globalActivityServices: GlobalActivityServices
-    let followUpsService: FollowUpsService
     let viewsService: ViewsService
-    let emailSignUpService: EmailSignUpService
-    let appsFlyer: AppsFlyer
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
         
-    required init(appDeepLinkingService: DeepLinkingServiceType) {
-                        
-        dataLayer = AppDataLayerDependencies()
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
+               
+        self.appBuild = appBuild
+        
+        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-        
-        let config: AppConfig = dataLayer.getAppConfig()
-        
-        let oktaAuthentication: CruOktaAuthentication = OktaAuthenticationConfiguration().configureAndCreateNewOktaAuthentication(config: config)
-        oktaUserAuthentication = OktaUserAuthentication(oktaAuthentication: oktaAuthentication)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-        
-        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-        
+                
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-        
-        favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
-                                              
-        initialDataDownloader = InitialDataDownloader(
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            resourcesCache: resourcesCache
-        )
+                                                      
+        initialDataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository())
         
         languageSettingsService = LanguageSettingsService(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -68,32 +51,10 @@ class AppDiContainer {
             isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
             determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
         )
-                
-        appsFlyer = AppsFlyer(config: config, deepLinkingService: appDeepLinkingService)
-        
+                        
         firebaseInAppMessaging = FirebaseInAppMessaging()
-                
-        let analyticsLoggingEnabled: Bool = config.build == .analyticsLogging
-        analytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: appsFlyer, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, languageSettingsService: languageSettingsService, loggingEnabled: analyticsLoggingEnabled),
-            snowplowAnalytics: SnowplowAnalytics(config: config, oktaUserAuthentication: oktaUserAuthentication, loggingEnabled: analyticsLoggingEnabled)
-        )
-                                                                                     
-        globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
-        
-        followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
-        
-        viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
-                
-        emailSignUpService = EmailSignUpService(sharedSession: sharedIgnoringCacheSession, realmDatabase: realmDatabase, oktaUserAuthentication: oktaUserAuthentication)
-    }
-    
-    static func getNewDeepLinkingService(loggingEnabled: Bool) -> DeepLinkingServiceType {
-        
-        let manifest = GodToolsDeepLinkingManifest()
-        
-        return DeepLinkingService(manifest: manifest)
+                                                                                             
+        viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -115,16 +76,12 @@ class AppDiContainer {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
     
-    func getDeepLinkingService() -> DeepLinkingServiceType {
-        return AppDiContainer.getNewDeepLinkingService(loggingEnabled: false)
-    }
-    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
     }
     
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
-        return ExitLinkAnalytics(firebaseAnalytics: analytics.firebaseAnalytics)
+        return ExitLinkAnalytics(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
@@ -155,7 +112,7 @@ class AppDiContainer {
     
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
         return LessonFeedbackAnalytics(
-            firebaseAnalytics: analytics.firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
@@ -164,11 +121,11 @@ class AppDiContainer {
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
-        return MobileContentAnalytics(analytics: analytics)
+        return MobileContentAnalytics(analytics: dataLayer.getAnalytics())
     }
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
-        return MobileContentEventAnalyticsTracking(firebaseAnalytics: analytics.firebaseAnalytics)
+        return MobileContentEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -205,6 +162,8 @@ class AppDiContainer {
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
         return OnboardingTutorialCustomViewBuilder(
             flowDelegate: flowDelegate,
+            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
             localizationServices: localizationServices,
             tutorialVideoAnalytics: getTutorialVideoAnalytics(),
             analyticsScreenName: "onboarding"
@@ -252,7 +211,7 @@ class AppDiContainer {
     }
     
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: analytics.appsFlyerAnalytics)
+        return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
@@ -267,8 +226,8 @@ class AppDiContainer {
         return TractRemoteSharePublisher(
             config: config,
             webSocket: webSocket,
-            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: config.isDebug),
-            loggingEnabled: config.isDebug
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
+            loggingEnabled: appBuild.isDebug
         )
     }
     
@@ -278,8 +237,8 @@ class AppDiContainer {
         return TractRemoteShareSubscriber(
             config: config,
             webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
-            loggingEnabled: config.isDebug
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
+            loggingEnabled: appBuild.isDebug
         )
     }
     
@@ -296,7 +255,7 @@ class AppDiContainer {
     
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
-            trackActionAnalytics: analytics.trackActionAnalytics
+            trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics
         )
     }
     

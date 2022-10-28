@@ -10,6 +10,8 @@ import Foundation
 
 extension Array where Element == ResourceModel {
     
+    typealias ResourceFilter = (ResourceModel) -> Bool
+    
     func filterForToolTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
         return self.filter { resource in
             

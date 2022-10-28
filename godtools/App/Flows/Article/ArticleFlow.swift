@@ -31,7 +31,9 @@ class ArticleFlow: Flow {
             articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
             manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
@@ -60,7 +62,9 @@ class ArticleFlow: Flow {
                 manifest: manifest,
                 articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
                 localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 currentArticleDownloadReceipt: currentArticleDownloadReceipt
             )
             let view = ArticlesView(viewModel: viewModel)
@@ -72,7 +76,9 @@ class ArticleFlow: Flow {
             let viewModel = ArticleWebViewModel(
                 flowDelegate: self,
                 aemCacheObject: aemCacheObject,
-                analytics: appDiContainer.analytics,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 flowType: .tool(resource: resource)
             )
             
@@ -84,7 +90,9 @@ class ArticleFlow: Flow {
             
             let viewModel = ShareArticleViewModel(
                 articleAemData: articleAemData,
-                analytics: appDiContainer.analytics
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             
             let view = ShareArticleView(viewModel: viewModel)

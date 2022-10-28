@@ -17,12 +17,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
-        let analytics: AnalyticsContainer = appDiContainer.analytics
+        let analytics: AnalyticsContainer = appDiContainer.dataLayer.getAnalytics()
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
-        let followUpsService: FollowUpsService = appDiContainer.followUpsService
+        let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
                 
         switch type {

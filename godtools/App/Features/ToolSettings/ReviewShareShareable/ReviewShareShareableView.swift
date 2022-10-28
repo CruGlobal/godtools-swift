@@ -74,7 +74,9 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
                 
         return ReviewShareShareableViewModel(
             flowDelegate: MockFlowDelegate(),
-            analytics: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             shareableImageDomainModel: ShareableImageDomainModel(image: UIImage(), imageId: nil, toolAbbreviation: nil),
             localizationServices: appDiContainer.localizationServices
         )

@@ -82,7 +82,9 @@ class ArticleDeepLinkFlow: Flow {
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             aemCacheObject: aemCacheObject,
-            analytics: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             flowType: .deeplink
         )
     

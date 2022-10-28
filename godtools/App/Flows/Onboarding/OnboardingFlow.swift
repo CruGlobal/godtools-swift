@@ -42,7 +42,9 @@ class OnboardingFlow: Flow {
         
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
-            analyticsContainer: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
@@ -74,7 +76,14 @@ class OnboardingFlow: Flow {
         
         if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
             
-            let viewModel = OnboardingQuickStartViewModel(flowDelegate: self, localizationServices: appDiContainer.localizationServices, trackActionAnalytics: appDiContainer.analytics.trackActionAnalytics)
+            let viewModel = OnboardingQuickStartViewModel(
+                flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices,
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
+            )
+            
             let view = OnboardingQuickStartView(viewModel: viewModel)
             
             navigationController.setViewControllers([view], animated: true)

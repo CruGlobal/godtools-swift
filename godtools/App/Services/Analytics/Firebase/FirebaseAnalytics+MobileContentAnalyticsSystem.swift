@@ -11,6 +11,15 @@ import Foundation
 extension FirebaseAnalytics: MobileContentAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
-        trackAction(screenName: screenName, siteSection: siteSection, siteSubSection: "", actionName: action, data: data)
+        
+        trackAction(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: "",
+            contentLanguage: nil,
+            secondaryContentLanguage: nil,
+            actionName: action,
+            data: data
+        )
     }
 }

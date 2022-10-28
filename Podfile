@@ -3,7 +3,7 @@ source 'https://cdn.cocoapods.org/'
 source 'https://github.com/CruGlobal/cocoapods-specs.git'
 
 # Uncomment this line to define a global platform for your project
-platform :ios, '13.1'
+platform :ios, '14.0'
 
 use_frameworks!
 
@@ -13,7 +13,7 @@ use_frameworks!
 def shared_pods
   
   # CruGlobal pods
-  pod 'GodtoolsToolParser', '0.7.0'
+  pod 'GodtoolsToolParser', '0.8.0-SNAPSHOT'
 end
 
 target 'godtools' do

@@ -23,34 +23,30 @@ struct ToolDetailsView: View {
         GeometryReader { geometry in
             
             let contentWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
-            
-            VStack(alignment: .leading, spacing: 0) {
+              
+            ScrollView(.vertical, showsIndicators: true) {
                 
-                ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
-                
-                ScrollView(.vertical, showsIndicators: true) {
+                if #available(iOS 14, *) {
                     
-                    if #available(iOS 14, *) {
-                        
-                        ScrollViewReader { scrollViewReader in
-                            
-                            getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
-                                
-                                scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
-                            }
-                        }
-                    }
-                    else {
+                    ScrollViewReader { scrollViewReader in
                         
                         getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
                             
+                            scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
                         }
+                    }
+                }
+                else {
+                    
+                    getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
+                        
                     }
                 }
             }
         }
         .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
         .background(Color(.sRGB, red: 245 / 255, green: 245 / 255, blue: 245 / 255, opacity: 1))
+        .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.pageViewed()
         }
@@ -60,6 +56,8 @@ struct ToolDetailsView: View {
     private func getScrollViewContent(geometry: GeometryProxy, contentWidth: CGFloat, toolVersionTappedClosure: @escaping (() -> Void)) -> some View {
         
         VStack(alignment: .leading, spacing: 0) {
+            
+            ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
             
             VStack(alignment: .center, spacing: 0) {
                                          
@@ -79,6 +77,7 @@ struct ToolDetailsView: View {
              .background(Rectangle()
                  .fill(Color.white)
                  .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                 .mask(Rectangle().padding(.bottom, -8))
              )
              
              Rectangle()
@@ -115,7 +114,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
-            resource: appDiContainer.initialDataDownloader.resourcesCache.getResource(id: "1")!,
+            resource: appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
@@ -123,9 +122,10 @@ struct ToolDetailsView_Preview: PreviewProvider {
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()

@@ -7,19 +7,37 @@
 //
 
 import Foundation
+import OktaAuthentication
 
 class AppDataLayerDependencies {
     
+    private let sharedAppBuild: AppBuild
+    private let sharedAppConfig: AppConfig
+    private let sharedInfoPlist: InfoPlist
     private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
+    private let sharedAnalytics: AnalyticsContainer
     
-    init() {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
         
+        sharedAppBuild = appBuild
+        sharedAppConfig = appConfig
+        sharedInfoPlist = infoPlist
+        
+        sharedAnalytics = AnalyticsContainer(
+            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging),
+            snowplowAnalytics: SnowplowAnalytics(config: appConfig, loggingEnabled: appBuild.configuration == .analyticsLogging)
+        )
+    }
+    
+    func getAnalytics() -> AnalyticsContainer {
+        return sharedAnalytics
     }
     
     func getAppConfig() -> AppConfig {
-        return AppConfig()
+        return sharedAppConfig
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
@@ -31,6 +49,23 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getCruOktaAuthentication() -> CruOktaAuthentication {
+        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
+    }
+    
+    func getDeepLinkingService() -> DeepLinkingService {
+        return DeepLinkingService(
+            manifest: GodToolsDeepLinkingManifest()
+        )
+    }
+    
+    func getEmailSignUpService() -> EmailSignUpService {
+        return EmailSignUpService(
+            api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
             cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
@@ -39,6 +74,34 @@ class AppDataLayerDependencies {
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    func getFollowUpsService() -> FollowUpsService {
+        
+        let api = FollowUpsApi(
+            baseUrl: getAppConfig().mobileContentApiBaseUrl,
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+        
+        let cache = FailedFollowUpsCache(
+            realmDatabase: sharedRealmDatabase
+        )
+        
+        return FollowUpsService(
+            api: api,
+            cache: cache
+        )
+    }
+    
+    func getGlobalAnalyticsService() -> GlobalAnalyticsService {
+        return GlobalAnalyticsService(
+            api: MobileContentGlobalAnalyticsApi(baseUrl: getAppConfig().mobileContentApiBaseUrl, ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: GlobalAnalyticsUserDefaultsCache()
+        )
+    }
+    
+    func getInfoPlist() -> InfoPlist {
+        return sharedInfoPlist
     }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
@@ -107,6 +170,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getSharedAppsFlyer() -> AppsFlyer {
+        return AppsFlyer.shared
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
@@ -115,7 +182,7 @@ class AppDataLayerDependencies {
     
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
-            appConfig: getAppConfig(),
+            infoPlist: getInfoPlist(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),

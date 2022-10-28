@@ -18,6 +18,8 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
     private let manifestResourcesCache: ManifestResourcesCache
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
     
     private var categories: [GodToolsToolParser.Category] = Array()
@@ -28,7 +30,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -37,6 +39,8 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         self.articleManifestAemRepository = articleManifestAemRepository
         self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.analytics = analytics
         
         super.init()
@@ -89,7 +93,15 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
 
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: TrackScreenModel(screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection))
+        let trackScreen = TrackScreenModel(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
     }
     

@@ -40,10 +40,14 @@ class MenuFlow: Flow {
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            config: appDiContainer.dataLayer.getAppConfig(),
-            oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
+            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
         )
@@ -91,10 +95,12 @@ class MenuFlow: Flow {
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(
-                oktaUserAuthentication: appDiContainer.oktaUserAuthentication,
-                globalActivityServices: appDiContainer.globalActivityServices,
+                globalAnalyticsService: appDiContainer.dataLayer.getGlobalAnalyticsService(),
                 localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                getUserAccountProfileNameUseCase: appDiContainer.domainLayer.getUserAccountProfileNameUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             let view = AccountView(viewModel: viewModel)
             
@@ -109,7 +115,9 @@ class MenuFlow: Flow {
             let viewModel = AboutViewModel(
                 aboutTextProvider: aboutTextProvider,
                 localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             let view = AboutView(viewModel: viewModel)
             
@@ -235,7 +243,9 @@ class MenuFlow: Flow {
     private func navigateToWebContentView(webContent: WebContentType) {
         
         let viewModel = WebContentViewModel(
-            analytics: appDiContainer.analytics,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             webContent: webContent
         )
         let view = WebContentView(viewModel: viewModel)
