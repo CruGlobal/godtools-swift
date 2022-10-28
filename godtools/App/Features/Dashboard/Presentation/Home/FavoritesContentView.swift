@@ -27,7 +27,9 @@ struct FavoritesContentView: View {
             
             if viewModel.isLoading {
                 
+                Spacer()
                 ActivityIndicator(style: .medium, isAnimating: .constant(true))
+                Spacer()
                 
             } else {
                 
