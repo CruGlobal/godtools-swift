@@ -52,6 +52,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
+        return AuthenticateUserUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            emailSignUpService: dataLayer.getEmailSignUpService(),
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+        )
+    }
+    
     func getBannerImageUseCase() -> GetBannerImageUseCase {
         return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
     }
@@ -90,6 +99,14 @@ class AppDomainLayerDependencies {
         return GetLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
+    func getLogOutUserUseCase() -> LogOutUserUseCase {
+        return LogOutUserUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
         )
     }
     
@@ -243,6 +260,18 @@ class AppDomainLayerDependencies {
     func getUserDidSetSettingsPrimaryLanguageUseCase() -> UserDidSetSettingsPrimaryLanguageUseCase {
         return UserDidSetSettingsPrimaryLanguageUseCase(
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
+        )
+    }
+    
+    func getUserAccountProfileNameUseCase() -> GetUserAccountProfileNameUseCase {
+        return GetUserAccountProfileNameUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+        )
+    }
+    
+    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
+        return GetUserIsAuthenticatedUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
         )
     }
 }

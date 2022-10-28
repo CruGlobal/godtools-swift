@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Combine
 
-class MenuViewModel: NSObject, MenuViewModelType {
+class MenuViewModel: MenuViewModelType {
     
     private let infoPlist: InfoPlist
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
-    private let oktaUserAuthentication: OktaUserAuthentication
+    private let authenticateUserUseCase: AuthenticateUserUseCase
+    private let logOutUserUseCase: LogOutUserUseCase
+    private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let localizationServices: LocalizationServices
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -20,17 +23,21 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, oktaUserAuthentication: OktaUserAuthentication, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, authenticateUserUseCase: AuthenticateUserUseCase, logOutUserUseCase: LogOutUserUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.infoPlist = infoPlist
-        self.oktaUserAuthentication = oktaUserAuthentication
+        self.authenticateUserUseCase = authenticateUserUseCase
+        self.logOutUserUseCase = logOutUserUseCase
+        self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
@@ -39,19 +46,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         
         navDoneButtonTitle = localizationServices.stringForMainBundle(key: "done")
-        
-        super.init()
-        
+                
         navTitle.accept(value: localizationServices.stringForMainBundle(key: "settings"))
                 
         reloadMenuDataSource()
-        
-        setupBinding()
-    }
-    
-    deinit {
-        oktaUserAuthentication.didAuthenticateSignal.removeObserver(self)
-        oktaUserAuthentication.didSignOutSignal.removeObserver(self)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
@@ -74,24 +72,21 @@ class MenuViewModel: NSObject, MenuViewModelType {
         return ""
     }
     
-    private func setupBinding() {
+    private func authenticateUser(fromViewController: UIViewController) {
         
-        oktaUserAuthentication.didAuthenticateSignal.addObserver(self) { [weak self] (result: Result<OktaAuthUserModel, Error>) in
-            DispatchQueue.main.async { [weak self] in
+        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationElseAuthenticate(fromViewController: fromViewController))
+            .receiveOnMain()
+            .sink { _ in
+            
+            } receiveValue: { [weak self] _ in
                 self?.reloadMenuDataSource()
             }
-        }
-        
-        oktaUserAuthentication.didSignOutSignal.addObserver(self) { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadMenuDataSource()
-            }
-        }
+            .store(in: &cancellables)
     }
     
     private func reloadMenuDataSource() {
         
-        let isAuthorized: Bool = oktaUserAuthentication.isAuthenticated
+        let isAuthorized: Bool = getUserIsAuthenticatedUseCase.getUserIsAuthenticated()
         
         // TODO: Disabling the account section in the menu by hardcoding to false.
         // This is until we can provide a suitable option to delete an account due to Apple guideline. See GT-1700. ~Levi
@@ -223,15 +218,21 @@ extension MenuViewModel {
     }
     
     func logoutTapped(fromViewController: UIViewController) {
-        oktaUserAuthentication.signOut(fromViewController: fromViewController)
+        
+        logOutUserUseCase.logOutPublisher(fromViewController: fromViewController)
+            .receiveOnMain()
+            .sink { [weak self] (finished: Bool) in
+                self?.reloadMenuDataSource()
+            }
+            .store(in: &cancellables)
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
+        authenticateUser(fromViewController: fromViewController)
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        oktaUserAuthentication.authenticate(fromViewController: fromViewController)
+        authenticateUser(fromViewController: fromViewController)
     }
     
     func shareGodToolsTapped() {

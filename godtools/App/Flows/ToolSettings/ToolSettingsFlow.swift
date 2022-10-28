@@ -84,7 +84,7 @@ class ToolSettingsFlow: Flow {
                 localizationServices: appDiContainer.localizationServices,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.analytics
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             
             let view = ShareToolView(viewModel: viewModel)
@@ -161,7 +161,7 @@ class ToolSettingsFlow: Flow {
                     localizationServices: appDiContainer.localizationServices,
                     getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                     getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                    analytics: appDiContainer.analytics
+                    analytics: appDiContainer.dataLayer.getAnalytics()
                 )
                 let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
                 
@@ -218,7 +218,7 @@ class ToolSettingsFlow: Flow {
                 flowDelegate: self,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.analytics,
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 shareableImageDomainModel: shareableImageDomainModel,
                 localizationServices: appDiContainer.localizationServices
             )
@@ -265,7 +265,7 @@ class ToolSettingsFlow: Flow {
             resource: toolData.renderer.value.resource,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analyticsContainer: appDiContainer.analytics,
+            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
 

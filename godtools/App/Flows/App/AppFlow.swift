@@ -33,6 +33,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var observersAdded: Bool = false
     private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
+    private var cancellables: Set<AnyCancellable> = Set()
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
@@ -43,9 +44,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
-    
-    private var cancellables = Set<AnyCancellable>()
-        
+            
     init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
@@ -85,6 +84,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         _ = followUpsService.postFailedFollowUpsIfNeeded()
         
         _ = viewsService.postFailedResourceViewsIfNeeded()
+        
+        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+
+        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
+            .sink { finished in
+
+            } receiveValue: { success in
+
+            }
+            .store(in: &cancellables)
     }
     
     func navigate(step: FlowStep) {
@@ -108,9 +117,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             loadInitialData()
-            
-            appDiContainer.oktaUserAuthentication.refreshAuthenticationIfAvailable()
-            
+                        
         case .appLaunchedFromBackgroundState:
             
             guard let resignedActiveDate = self.resignedActiveDate else {
@@ -134,9 +141,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 navigateToDashboard()
                                 
                 loadInitialData()
-                
-                appDiContainer.oktaUserAuthentication.refreshAuthenticationIfAvailable()
-                
+                                
                 UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
                     loadingView.alpha = 0
                 }, completion: {(finished: Bool) in
@@ -515,7 +520,7 @@ extension AppFlow {
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
@@ -759,7 +764,7 @@ extension AppFlow {
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             flowDelegate: self,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
         let view = AllFavoriteToolsView(viewModel: viewModel)
@@ -796,7 +801,7 @@ extension AppFlow {
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()

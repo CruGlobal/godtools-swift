@@ -1,14 +1,14 @@
 //
-//  OktaAuthUserModel.swift
+//  CruOktaUserDataModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/22/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 10/24/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct OktaAuthUserModel {
+struct CruOktaUserDataModel {
     
     let email: String
     let firstName: String?

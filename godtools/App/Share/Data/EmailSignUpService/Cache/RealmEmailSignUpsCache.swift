@@ -13,7 +13,7 @@ class RealmEmailSignUpsCache {
     
     private let realmDatabase: RealmDatabase
     
-    required init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }

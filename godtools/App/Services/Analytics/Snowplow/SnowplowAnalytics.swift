@@ -11,7 +11,8 @@ import SnowplowTracker
 
 class SnowplowAnalytics  {
    
-    private let oktaUserAuthentication: OktaUserAuthentication
+    private static var sharedLoggedInUserProperties: SnowplowAnalyticsLoggedInUserProperties?
+    
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker
     private let loggingEnabled: Bool
@@ -23,9 +24,8 @@ class SnowplowAnalytics  {
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
 
-    required init(config: AppConfig, oktaUserAuthentication: OktaUserAuthentication, loggingEnabled: Bool) {
+    init(config: AppConfig, loggingEnabled: Bool) {
         
-        self.oktaUserAuthentication = oktaUserAuthentication
         self.loggingEnabled = loggingEnabled
         
         let urlEndpoint: String = "s.cru.org"
@@ -81,6 +81,11 @@ class SnowplowAnalytics  {
             assertionFailure("Snowplow has not been configured.  Call configure() on application didFinishLaunching.")
         }
     }
+    
+    func setLoggedInStateIdContextProperties(isLoggedIn: Bool, loggedInUserProperties: SnowplowAnalyticsLoggedInUserProperties?) {
+        
+        SnowplowAnalytics.sharedLoggedInUserProperties = isLoggedIn ? loggedInUserProperties : nil
+    }
 
     func trackScreenView(screenName: String) {
            
@@ -123,26 +128,22 @@ class SnowplowAnalytics  {
     }
 
     private func idContext() -> SPSelfDescribingJson {
-                
-        let authUser: OktaAuthUserModel? = oktaUserAuthentication.authenticatedUser.value
-        
-        let grMasterPersonID: String = authUser?.grMasterPersonId ?? ""
-        let ssoguid: String = authUser?.ssoGuid ?? ""
-        let isAuthenticated: Bool = oktaUserAuthentication.isAuthenticated
+                     
+        let grMasterPersonId: String = SnowplowAnalytics.sharedLoggedInUserProperties?.grMasterPersonId ?? ""
+        let ssoguid: String = SnowplowAnalytics.sharedLoggedInUserProperties?.ssoguid ?? ""
         
         log(
             method: "idContext()",
             label: nil,
             labelValue: nil,
             data: [
-                "grMasterPersonID": grMasterPersonID,
-                "ssoguid": ssoguid,
-                "isAuthenticated": isAuthenticated
+                "grMasterPersonID": grMasterPersonId,
+                "ssoguid": ssoguid
             ]
         )
         
         return SPSelfDescribingJson(schema: idSchema, andData: [
-            "gr_master_person_id": grMasterPersonID,
+            "gr_master_person_id": grMasterPersonId,
             "sso_guid": ssoguid,
         ] as NSObject)
     }

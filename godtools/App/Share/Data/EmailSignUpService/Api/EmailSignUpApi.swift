@@ -17,9 +17,9 @@ class EmailSignUpApi {
     
     let session: URLSession
     
-    required init(sharedSession: SharedIgnoreCacheSession) {
+    init(ignoreCacheSession: IgnoreCacheSession) {
         
-        session = sharedSession.session
+        session = ignoreCacheSession.session
     }
     
     private func newEmailSignUpRequest(emailSignUp: EmailSignUpModelType) -> URLRequest {
