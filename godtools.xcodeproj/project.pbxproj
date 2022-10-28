@@ -7017,8 +7017,8 @@
 		D47346BF2909CDAC00579463 /* DashboardTabBarView */ = {
 			isa = PBXGroup;
 			children = (
-				D47346C02909CDF000579463 /* DashboardTabItem.swift */,
 				D4B05FF1290ACFBA005852D0 /* DashboardTabBarView.swift */,
+				D47346C02909CDF000579463 /* DashboardTabItem.swift */,
 			);
 			path = DashboardTabBarView;
 			sourceTree = "<group>";
@@ -7651,7 +7651,6 @@
 				453C1BD82899A523007332E2 /* FavoritedResourcesRepository.swift in Sources */,
 				D471CFD528BD458B00DCE61C /* GetToolCategoriesUseCase.swift in Sources */,
 				45AD1FFB25938A9800A096A0 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
-				45677735287DAFC70044AEB2 /* MenuViewModel.swift in Sources */,
 				D47346C12909CDF000579463 /* DashboardTabItem.swift in Sources */,
 				45F71651290A12D70019B715 /* AccountItemId.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,

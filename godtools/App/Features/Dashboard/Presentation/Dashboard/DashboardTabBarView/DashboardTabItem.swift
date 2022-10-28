@@ -16,16 +16,18 @@ struct DashboardTabItem: View {
     
     @Binding var selectedTab: DashboardTabTypeDomainModel
     
-    let unSelectedColor = Color(red: 170 / 255, green: 170 / 255, blue: 170 / 255)
-    let selectedColor = ColorPalette.gtBlue.color
+    private let unSelectedColor = Color(red: 170 / 255, green: 170 / 255, blue: 170 / 255)
+    private let selectedColor = ColorPalette.gtBlue.color
     
     var body: some View {
         
         let isSelected = selectedTab == tabType
         
         VStack(spacing: 5) {
+            
             Image(imageName)
                 .foregroundColor(isSelected ? selectedColor : unSelectedColor)
+            
             Text(title)
                 .font(FontLibrary.sfProTextRegular.font(size: 12))
                 .foregroundColor(isSelected ? selectedColor : unSelectedColor)
