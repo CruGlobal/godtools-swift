@@ -42,14 +42,14 @@ struct DashboardTabBarView: View {
         }
     }
     
-    @ViewBuilder func doubleSpacer() -> some View {
+    @ViewBuilder private func doubleSpacer() -> some View {
         Group {
             Spacer()
             Spacer()
         }
     }
     
-    @ViewBuilder func tripleSpacer() -> some View {
+    @ViewBuilder private func tripleSpacer() -> some View {
         Group {
             Spacer()
             Spacer()
