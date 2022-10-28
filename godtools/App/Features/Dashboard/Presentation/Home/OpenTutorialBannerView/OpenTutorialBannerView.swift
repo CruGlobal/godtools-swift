@@ -51,7 +51,7 @@ struct OpenTutorialBannerView_Previews: PreviewProvider {
             localizationServices: appDiContainer.localizationServices,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             delegate: nil
         )
         

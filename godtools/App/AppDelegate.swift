@@ -61,13 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
         
-        appDiContainer.analytics.firebaseAnalytics.configure()
+        appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         
-        appDiContainer.analytics.appsFlyerAnalytics.configure()
+        appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
         
         appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
         
-        appDiContainer.analytics.snowplowAnalytics.configure()
+        appDiContainer.dataLayer.getAnalytics().snowplowAnalytics.configure()
                 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppEvents.activateApp()
         
-        appDiContainer.analytics.appsFlyerAnalytics.trackAppLaunch()
+        appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.trackAppLaunch()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -176,7 +176,7 @@ extension AppDelegate {
                 ]
             )
             
-            appDiContainer.analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+            appDiContainer.dataLayer.getAnalytics().trackActionAnalytics.trackAction(trackAction: trackAction)
             
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))

@@ -7,19 +7,33 @@
 //
 
 import Foundation
+import OktaAuthentication
 
 class AppDataLayerDependencies {
     
+    private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
     private let sharedInfoPlist: InfoPlist
     private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
+    private let sharedAnalytics: AnalyticsContainer
     
-    init(appConfig: AppConfig, infoPlist: InfoPlist) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
         
+        sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
+        
+        sharedAnalytics = AnalyticsContainer(
+            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging),
+            snowplowAnalytics: SnowplowAnalytics(config: appConfig, loggingEnabled: appBuild.configuration == .analyticsLogging)
+        )
+    }
+    
+    func getAnalytics() -> AnalyticsContainer {
+        return sharedAnalytics
     }
     
     func getAppConfig() -> AppConfig {
@@ -35,9 +49,20 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getCruOktaAuthentication() -> CruOktaAuthentication {
+        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
+    }
+    
     func getDeepLinkingService() -> DeepLinkingService {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
+        )
+    }
+    
+    func getEmailSignUpService() -> EmailSignUpService {
+        return EmailSignUpService(
+            api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
+            cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
     }
     

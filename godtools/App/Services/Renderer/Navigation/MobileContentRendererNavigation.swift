@@ -125,7 +125,7 @@ class MobileContentRendererNavigation {
             tipModel: event.tipModel,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             localizationServices: appDiContainer.localizationServices,
             viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
             closeTappedClosure: { [weak self] in

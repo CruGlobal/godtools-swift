@@ -26,7 +26,7 @@ class LanguageSettingsFlow: Flow {
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
         let view = LanguageSettingsView(viewModel: viewModel)
@@ -70,7 +70,7 @@ class LanguageSettingsFlow: Flow {
             userDidDeleteSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteSettingsParallelLanguageUseCase(),
             getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
             localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             chooseLanguageType: chooseLanguageType
         )
         let view = ChooseLanguageView(viewModel: viewModel)

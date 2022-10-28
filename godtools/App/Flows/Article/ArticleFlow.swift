@@ -33,7 +33,7 @@ class ArticleFlow: Flow {
             localizationServices: appDiContainer.localizationServices,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
@@ -64,7 +64,7 @@ class ArticleFlow: Flow {
                 localizationServices: appDiContainer.localizationServices,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.analytics,
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 currentArticleDownloadReceipt: currentArticleDownloadReceipt
             )
             let view = ArticlesView(viewModel: viewModel)
@@ -78,7 +78,7 @@ class ArticleFlow: Flow {
                 aemCacheObject: aemCacheObject,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.analytics,
+                analytics: appDiContainer.dataLayer.getAnalytics(),
                 flowType: .tool(resource: resource)
             )
             
@@ -92,7 +92,7 @@ class ArticleFlow: Flow {
                 articleAemData: articleAemData,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.analytics
+                analytics: appDiContainer.dataLayer.getAnalytics()
             )
             
             let view = ShareArticleView(viewModel: viewModel)

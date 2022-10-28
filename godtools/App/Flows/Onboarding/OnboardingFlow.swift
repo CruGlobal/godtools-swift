@@ -44,7 +44,7 @@ class OnboardingFlow: Flow {
             flowDelegate: self,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analyticsContainer: appDiContainer.analytics,
+            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
             onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
@@ -81,7 +81,7 @@ class OnboardingFlow: Flow {
                 localizationServices: appDiContainer.localizationServices,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                trackActionAnalytics: appDiContainer.analytics.trackActionAnalytics
+                trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
             )
             
             let view = OnboardingQuickStartView(viewModel: viewModel)

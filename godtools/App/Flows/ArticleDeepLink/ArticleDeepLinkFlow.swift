@@ -84,7 +84,7 @@ class ArticleDeepLinkFlow: Flow {
             aemCacheObject: aemCacheObject,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             flowType: .deeplink
         )
     

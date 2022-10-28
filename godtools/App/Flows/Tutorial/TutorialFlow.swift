@@ -41,7 +41,7 @@ class TutorialFlow: Flow {
             getTutorialUseCase: appDiContainer.domainLayer.getTutorialUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.analytics,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
         )
         let view = TutorialView(viewModel: viewModel)
