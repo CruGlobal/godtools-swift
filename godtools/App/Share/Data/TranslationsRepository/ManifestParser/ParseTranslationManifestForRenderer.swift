@@ -13,10 +13,10 @@ import Combine
 class ParseTranslationManifestForRenderer: TranslationManifestParser {
     
     private static let enabledFeatures: [String] = [
-        ParserConfigKt.FEATURE_ANIMATION,
-        ParserConfigKt.FEATURE_CONTENT_CARD,
-        ParserConfigKt.FEATURE_FLOW,
-        ParserConfigKt.FEATURE_MULTISELECT
+        ParserConfig.companion.FEATURE_ANIMATION,
+        ParserConfig.companion.FEATURE_CONTENT_CARD,
+        ParserConfig.companion.FEATURE_FLOW,
+        ParserConfig.companion.FEATURE_MULTISELECT
     ]
         
     init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) {
