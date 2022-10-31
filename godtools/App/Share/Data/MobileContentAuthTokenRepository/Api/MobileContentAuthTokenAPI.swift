@@ -1,5 +1,5 @@
 //
-//  MobileContentAccessTokenAPI.swift
+//  MobileContentAuthTokenAPI.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 10/31/22.
@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-class MobileContentAccessTokenAPI {
+class MobileContentAuthTokenAPI {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -21,5 +21,28 @@ class MobileContentAccessTokenAPI {
         self.baseURL = config.mobileContentApiBaseUrl
     }
     
-    func getAccessToken(okta)
+    func getAuthTokenRequest(oktaAccessToken: String) -> URLRequest {
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
+        ]
+        
+        let body: [String: Any] = [
+            "data": [
+                "type": "auth-token-request",
+                "attributes": [
+                    "okta_access_token": oktaAccessToken
+                ]
+            ]
+        ]
+        
+        return requestBuilder.build(
+            session: session,
+            urlString: baseURL + "/auth",
+            method: .post,
+            headers: headers,
+            httpBody: body,
+            queryItems: nil
+        )
+    }
 }
