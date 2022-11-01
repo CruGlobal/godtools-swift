@@ -1077,6 +1077,7 @@
 		D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FF429106212005852D0 /* MobileContentAuthTokenRepository.swift */; };
 		D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */; };
 		D4B05FFB2911633F005852D0 /* RefreshMobileContentAuthTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FFA2911633F005852D0 /* RefreshMobileContentAuthTokenUseCase.swift */; };
+		D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
@@ -2227,6 +2228,7 @@
 		D4B05FF429106212005852D0 /* MobileContentAuthTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenRepository.swift; sourceTree = "<group>"; };
 		D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenAPI.swift; sourceTree = "<group>"; };
 		D4B05FFA2911633F005852D0 /* RefreshMobileContentAuthTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshMobileContentAuthTokenUseCase.swift; sourceTree = "<group>"; };
+		D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
@@ -7038,6 +7040,7 @@
 			isa = PBXGroup;
 			children = (
 				D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */,
+				D4B05FFD2911BA9C005852D0 /* Models */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -7048,6 +7051,14 @@
 				D4B05FFA2911633F005852D0 /* RefreshMobileContentAuthTokenUseCase.swift */,
 			);
 			path = RefreshMobileContentAuthTokenUseCase;
+			sourceTree = "<group>";
+		};
+		D4B05FFD2911BA9C005852D0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -8488,6 +8499,7 @@
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				456777C1287DB3770044AEB2 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AE974827C97A9400C2CB33 /* Flow+MobileContentRenderableModel.swift in Sources */,
+				D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,
 				D182CA25272745BE00ABAAC8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */,

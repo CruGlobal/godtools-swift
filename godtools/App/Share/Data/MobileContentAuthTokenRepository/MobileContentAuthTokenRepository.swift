@@ -35,7 +35,7 @@ class MobileContentAuthTokenRepository {
     }
     
     
-    func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<[String: [String: String]], URLResponseError> {
+    func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
         
         return api.getAuthToken(oktaAccessToken: accessToken)
     }

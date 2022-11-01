@@ -48,7 +48,7 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func getAuthToken(oktaAccessToken: OktaAccessToken) -> AnyPublisher<[String: [String: String]], URLResponseError> {
+    func getAuthToken(oktaAccessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
         
         return session.dataTaskPublisher(for: getAuthTokenRequest(oktaAccessToken: oktaAccessToken))
             .tryMap {
@@ -65,8 +65,7 @@ class MobileContentAuthTokenAPI {
             .mapError {
                 return URLResponseError.requestError(error: $0 as Error)
             }
-            // TODO: - decode this correctly
-            .decode(type: [String: [String: String]].self, decoder: JSONDecoder())
+            .decode(type: MobileContentAuthTokenDataModel.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
             }
