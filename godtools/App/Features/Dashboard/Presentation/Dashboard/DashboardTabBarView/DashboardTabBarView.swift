@@ -1,95 +1,64 @@
 //
-//  DashboardView.swift
+//  DashboardTabBarView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 10/6/22.
+//  Created by Rachael Skeath on 10/27/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct DashboardView: View {
+struct DashboardTabBarView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
     
-    private static let marginMultiplier: CGFloat = 15/375
-    
-    init(viewModel: DashboardViewModel) {
-        self.viewModel = viewModel
-        
-        if #available(iOS 16.0, *) { } else {
-            UITabBar.appearance().isHidden = true
-        }
-    }
-    
     var body: some View {
-        GeometryReader { geo in
-            
-            let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
-            
-            ZStack(alignment: .bottom) {
+        
+        ZStack {
+            HStack {
                 
-                if #available(iOS 16.0, *) {
-                    
-                    tabViewWithDefaultBarHidden(padding: leadingTrailingPadding)
-                    
-                } else {
-                    
-                    tabView(padding: leadingTrailingPadding)
-                }
+                doubleSpacer()
                 
-                DashboardTabBarView(viewModel: viewModel)
+                DashboardTabItem(tabType: .lessons, title: viewModel.lessonsTabTitle, imageName: ImageCatalog.toolsMenuLessons.name, selectedTab: $viewModel.selectedTab)
+                
+                tripleSpacer()
+                
+                DashboardTabItem(tabType: .favorites, title: viewModel.favoritesTabTitle, imageName: ImageCatalog.toolsMenuFavorites.name, selectedTab: $viewModel.selectedTab)
+                
+                tripleSpacer()
+                
+                DashboardTabItem(tabType: .allTools, title: viewModel.allToolsTabTitle, imageName: ImageCatalog.toolsMenuAllTools.name, selectedTab: $viewModel.selectedTab)
+                
+                doubleSpacer()
             }
+            .padding(.top, 16)
+            .padding(.bottom, 8)
+            .frame(maxWidth: .infinity)
+            .background(
+                Color.white
+                    .edgesIgnoringSafeArea(.bottom)
+                    .shadow(color: .black.opacity(0.35), radius: 4, y: 0)
+            )
         }
     }
     
-    @available(iOS 16.0, *)
-    @ViewBuilder private func tabViewWithDefaultBarHidden(padding: CGFloat) -> some View {
-        
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-                .toolbar(.hidden, for: .tabBar)
-        }
-    }
-    
-    @ViewBuilder private func tabView(padding: CGFloat) -> some View {
-        
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-        }
-    }
-    
-    @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {
-        
+    @ViewBuilder private func doubleSpacer() -> some View {
         Group {
-            LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.lessons)
-            
-            FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.favorites)
-            
-            AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.allTools)
+            Spacer()
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder private func tripleSpacer() -> some View {
+        Group {
+            Spacer()
+            Spacer()
+            Spacer()
         }
     }
 }
 
-// MARK: - Inputs
-    
-extension DashboardView {
-    
-    static func getMargin(for width: CGFloat) -> CGFloat {
-        return marginMultiplier * width
-    }
-    
-    func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
-        viewModel.selectedTab = tab
-    }
-}
-
-// MARK: - Preview
-
-struct DashboardView_Previews: PreviewProvider {
+struct DashboardTabBarView_Previews: PreviewProvider {
     static var previews: some View {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
@@ -119,6 +88,6 @@ struct DashboardView_Previews: PreviewProvider {
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
         )
         
-        DashboardView(viewModel: viewModel)
+        DashboardTabBarView(viewModel: viewModel)
     }
 }
