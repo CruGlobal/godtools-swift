@@ -8,6 +8,8 @@
 
 import Foundation
 import RequestOperation
+import OktaAuthentication
+import Combine
 
 class MobileContentAuthTokenAPI {
     
@@ -21,7 +23,7 @@ class MobileContentAuthTokenAPI {
         self.baseURL = config.mobileContentApiBaseUrl
     }
     
-    func getAuthTokenRequest(oktaAccessToken: String) -> URLRequest {
+    private func getAuthTokenRequest(oktaAccessToken: OktaAccessToken) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -31,7 +33,7 @@ class MobileContentAuthTokenAPI {
             "data": [
                 "type": "auth-token-request",
                 "attributes": [
-                    "okta_access_token": oktaAccessToken
+                    "okta_access_token": oktaAccessToken.value
                 ]
             ]
         ]
@@ -44,5 +46,30 @@ class MobileContentAuthTokenAPI {
             httpBody: body,
             queryItems: nil
         )
+    }
+    
+    func getAuthToken(oktaAccessToken: OktaAccessToken) -> AnyPublisher<[String: [String: String]], URLResponseError> {
+        
+        return session.dataTaskPublisher(for: getAuthTokenRequest(oktaAccessToken: oktaAccessToken))
+            .tryMap {
+                
+                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
+                
+                guard urlResponseObject.isSuccessHttpStatusCode else {
+                    
+                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
+                }
+                
+                return urlResponseObject.data
+            }
+            .mapError {
+                return URLResponseError.requestError(error: $0 as Error)
+            }
+            // TODO: - decode this correctly
+            .decode(type: [String: [String: String]].self, decoder: JSONDecoder())
+            .mapError {
+                return URLResponseError.decodeError(error: $0)
+            }
+            .eraseToAnyPublisher()
     }
 }

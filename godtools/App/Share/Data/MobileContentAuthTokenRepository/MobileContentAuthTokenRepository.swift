@@ -7,8 +7,17 @@
 //
 
 import Foundation
+import OktaAuthentication
+import Combine
 
 class MobileContentAuthTokenRepository {
+    
+    private let api: MobileContentAuthTokenAPI
+    
+    init(api: MobileContentAuthTokenAPI) {
+        
+        self.api = api
+    }
     
     func getAuthToken() -> String {
         
@@ -25,9 +34,9 @@ class MobileContentAuthTokenRepository {
         return nil
     }
     
-    private func requestAuthTokenFromMobileContentAPI() {
-        // TODO: - stuff
+    
+    func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<[String: [String: String]], URLResponseError> {
         
-        storeAuthTokenInKeychain("something")
+        return api.getAuthToken(oktaAccessToken: accessToken)
     }
 }
