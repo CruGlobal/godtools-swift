@@ -57,7 +57,7 @@ class AppDomainLayerDependencies {
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            refreshMobileContentAuthTokenUseCase: getRefreshMobileContentAuthTokenUseCase(),
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository(),
             snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
         )
     }
@@ -115,10 +115,6 @@ class AppDomainLayerDependencies {
         return GetOnboardingQuickLinksEnabledUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
-    }
-    
-    func getRefreshMobileContentAuthTokenUseCase() -> RefreshMobileContentAuthTokenUseCase {
-        return RefreshMobileContentAuthTokenUseCase(mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository())
     }
     
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {

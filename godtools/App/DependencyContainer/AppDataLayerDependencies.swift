@@ -142,7 +142,11 @@ class AppDataLayerDependencies {
     
     func getMobileContentAuthTokenRepository() -> MobileContentAuthTokenRepository {
         return MobileContentAuthTokenRepository(
-            api: MobileContentAuthTokenAPI(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession)
+            api: MobileContentAuthTokenAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: MobileContentAuthTokenCache()
         )
     }
     

@@ -13,30 +13,39 @@ import Combine
 class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPI
+    private let cache: MobileContentAuthTokenCache
     
-    init(api: MobileContentAuthTokenAPI) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(api: MobileContentAuthTokenAPI, cache: MobileContentAuthTokenCache) {
         
         self.api = api
+        self.cache = cache
     }
     
-    func getAuthToken() -> String {
+    func refreshAuthToken(oktaAccessToken: OktaAccessToken) {
         
-        // TODO: - fetch from keychain, otherwise request new one
-        
-        return ""
+        requestAuthTokenPublisher(oktaAccessToken)
+            .sink { _ in
+                
+                // TODO: - error handling
+                
+            } receiveValue: { authTokenDataModel in
+                
+                self.storeAuthToken(authTokenDataModel)
+            }
+            .store(in: &cancellables)
+
     }
     
-    private func storeAuthTokenInKeychain(_ accessToken: String) {
-        
-    }
-    
-    private func getAuthTokenFromKeychain() -> String? {
-        return nil
-    }
-    
-    
-    func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
+    private func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
         
         return api.getAuthToken(oktaAccessToken: accessToken)
     }
+    
+    private func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
+        
+        cache.storeAuthToken(authTokenDataModel)
+    }
+    
 }
