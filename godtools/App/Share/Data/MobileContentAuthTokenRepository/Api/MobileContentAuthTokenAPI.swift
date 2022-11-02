@@ -48,7 +48,7 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func getAuthToken(oktaAccessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
+    func fetchAuthTokenPublisher(oktaAccessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
         
         return session.dataTaskPublisher(for: getAuthTokenRequest(oktaAccessToken: oktaAccessToken))
             .tryMap {

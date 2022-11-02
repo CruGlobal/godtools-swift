@@ -25,27 +25,16 @@ class MobileContentAuthTokenRepository {
     
     func refreshAuthToken(oktaAccessToken: OktaAccessToken) {
         
-        requestAuthTokenPublisher(oktaAccessToken)
+        api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .sink { _ in
                 
                 // TODO: - error handling
                 
             } receiveValue: { authTokenDataModel in
                 
-                self.storeAuthToken(authTokenDataModel)
+                self.cache.storeAuthToken(authTokenDataModel)
             }
             .store(in: &cancellables)
 
     }
-    
-    private func requestAuthTokenPublisher(_ accessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
-        
-        return api.getAuthToken(oktaAccessToken: accessToken)
-    }
-    
-    private func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
-        
-        cache.storeAuthToken(authTokenDataModel)
-    }
-    
 }
