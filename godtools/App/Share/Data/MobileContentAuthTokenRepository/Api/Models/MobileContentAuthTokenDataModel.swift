@@ -12,7 +12,7 @@ struct MobileContentAuthTokenDataModel: Decodable {
     
     let token: String
     let expirationDate: String
-    let userId: Int?
+    let userId: Int
     
     enum RootKeys: String, CodingKey {
         case data
@@ -37,6 +37,6 @@ struct MobileContentAuthTokenDataModel: Decodable {
         
         token = try attributesContainer.decodeIfPresent(String.self, forKey: .token) ?? ""
         expirationDate = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
-        userId = try attributesContainer.decodeIfPresent(Int.self, forKey: .userId)
+        userId = try attributesContainer.decode(Int.self, forKey: .userId)
     }
 }

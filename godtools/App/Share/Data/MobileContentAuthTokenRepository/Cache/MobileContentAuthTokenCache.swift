@@ -10,9 +10,15 @@ import Foundation
 
 class MobileContentAuthTokenCache {
     
+    let keychainService: KeychainService
+    
+    init(keychainService: KeychainService) {
+        
+        self.keychainService = keychainService
+    }
+    
     func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
         
-        // TODO: - store in keychain
-        print("todo")
+        keychainService.saveMobileContentAuthToken(authTokenDataModel)
     }
 }

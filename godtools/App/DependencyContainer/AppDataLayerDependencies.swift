@@ -103,6 +103,10 @@ class AppDataLayerDependencies {
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
+    
+    func getKeychainService() -> KeychainService {
+        return KeychainService()
+    }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
@@ -146,7 +150,7 @@ class AppDataLayerDependencies {
                 config: getAppConfig(),
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
-            cache: MobileContentAuthTokenCache()
+            cache: MobileContentAuthTokenCache(keychainService: getKeychainService())
         )
     }
     
