@@ -19,6 +19,13 @@ class MobileContentAuthTokenCache {
     
     func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
         
-        keychainService.saveMobileContentAuthToken(authTokenDataModel)
+        do {
+            
+            try keychainService.saveMobileContentAuthToken(authTokenDataModel)
+            
+        } catch let error {
+            
+            print(error.localizedDescription)
+        }
     }
 }
