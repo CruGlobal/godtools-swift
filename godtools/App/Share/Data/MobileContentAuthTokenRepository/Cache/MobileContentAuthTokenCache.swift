@@ -25,7 +25,7 @@ class MobileContentAuthTokenCache {
             
         } catch let error {
             
-            print(error.localizedDescription)
+            assertionFailure("Keychain store failed with error: \(error.localizedDescription)")
         }
     }
 }

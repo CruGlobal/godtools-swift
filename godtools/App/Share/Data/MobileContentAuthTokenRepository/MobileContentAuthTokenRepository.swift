@@ -26,15 +26,21 @@ class MobileContentAuthTokenRepository {
     func refreshAuthToken(oktaAccessToken: OktaAccessToken) {
         
         api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
-            .sink { _ in
+            .sink { completed in
                 
-                // TODO: - error handling
+                switch completed {
+                case .finished:
+                    break
+                    
+                case .failure(let error):
+                    
+                    assertionFailure("Refresh auth token failed with error: \(error.localizedDescription)")
+                }
                 
-            } receiveValue: { authTokenDataModel in
+            } receiveValue: { [weak self] authTokenDataModel in
                 
-                self.cache.storeAuthToken(authTokenDataModel)
+                self?.cache.storeAuthToken(authTokenDataModel)
             }
             .store(in: &cancellables)
-
     }
 }
