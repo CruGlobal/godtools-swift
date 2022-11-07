@@ -35,7 +35,7 @@ struct MobileContentAuthTokenDataModel: Decodable {
         let dataContainer = try container.nestedContainer(keyedBy: DataKeys.self, forKey: .data)
         let attributesContainer = try dataContainer.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
-        token = try attributesContainer.decodeIfPresent(String.self, forKey: .token) ?? ""
+        token = try attributesContainer.decode(String.self, forKey: .token)
         expirationDate = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
         userId = try attributesContainer.decode(Int.self, forKey: .userId)
     }
