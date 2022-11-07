@@ -10,13 +10,18 @@ import Foundation
 import Security
 
 class KeychainService {
-
+    
     enum Service: String {
         case moileContentAuthToken
     }
+}
 
+// MARK: - Inputs
+
+extension KeychainService {
+    
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
-
+        
         let saveQuery = buildSaveQueryFromAuthToken(authTokenDataModel)
         let saveStatus = SecItemAdd(saveQuery, nil)
         
@@ -36,6 +41,31 @@ class KeychainService {
             throw error
         }
     }
+    
+    func getMobileContentAuthToken(userId: Int) -> String? {
+        
+        let getQuery = buildGetQueryForAuthToken(userId: userId)
+        
+        var getResult: AnyObject?
+        let getStatus = SecItemCopyMatching(getQuery, &getResult)
+        let getResponse = KeychainServiceResponse(osStatus: getStatus)
+        
+        switch getResponse {
+            
+        case .success:
+            
+            return decodeAuthToken(from: getResult)
+            
+        default:
+            
+            return nil
+        }
+    }
+}
+
+// MARK: - Private
+ 
+extension KeychainService {
     
     private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
@@ -81,5 +111,21 @@ class KeychainService {
         ] as CFDictionary
         
         return (updateQuery, updateAttributes)
+    }
+    
+    private func buildGetQueryForAuthToken(userId: Int) -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.moileContentAuthToken.rawValue,
+            kSecAttrAccount as String: "\(userId)",
+            kSecReturnData as String: true
+        ] as CFDictionary
+    }
+    
+    private func decodeAuthToken(from result: AnyObject?) -> String? {
+        
+        guard let resultData = result as? Data else { return nil }
+        return String(data: resultData, encoding: .utf8)
     }
 }

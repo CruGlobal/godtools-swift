@@ -28,4 +28,9 @@ class MobileContentAuthTokenCache {
             assertionFailure("Keychain store failed with error: \(error.localizedDescription)")
         }
     }
+    
+    func getAuthToken(for userId: Int) -> String? {
+        
+        return keychainService.getMobileContentAuthToken(userId: userId)
+    }
 }

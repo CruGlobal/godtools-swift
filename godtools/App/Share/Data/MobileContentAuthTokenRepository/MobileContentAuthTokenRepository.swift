@@ -43,4 +43,23 @@ class MobileContentAuthTokenRepository {
             }
             .store(in: &cancellables)
     }
+    
+    func getAuthTokenPublisher(for userId: Int) -> AnyPublisher<String?, URLResponseError> {
+        
+        if let authToken = cache.getAuthToken(for: userId) {
+            
+            return Just(authToken)
+                .setFailureType(to: URLResponseError.self)
+                .eraseToAnyPublisher()
+            
+        } else {
+            
+            // TODO: - if cached auth token doesn't exist, fetch a new token.  Will need the ability to get a fresh token on demand from CruOktaAuthentication.
+            
+            return Just(nil)
+                .setFailureType(to: URLResponseError.self)
+                .eraseToAnyPublisher()
+        }
+        
+    }
 }
