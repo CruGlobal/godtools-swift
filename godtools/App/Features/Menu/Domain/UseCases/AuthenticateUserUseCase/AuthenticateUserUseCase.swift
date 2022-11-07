@@ -15,15 +15,13 @@ class AuthenticateUserUseCase {
     private let cruOktaAuthentication: CruOktaAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
-    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     private let snowplowAnalytics: SnowplowAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, snowplowAnalytics: SnowplowAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
-        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.snowplowAnalytics = snowplowAnalytics
     }
     
@@ -31,9 +29,7 @@ class AuthenticateUserUseCase {
         
         return authenticateByAuthTypePublisher(authType: authType)
             .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
-                
-                self.mobileContentAuthTokenRepository.refreshAuthToken(oktaAccessToken: accessToken)
-                
+                                
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in
                         return oktaError.getError()

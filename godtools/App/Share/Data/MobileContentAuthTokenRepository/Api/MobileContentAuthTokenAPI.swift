@@ -23,7 +23,7 @@ class MobileContentAuthTokenAPI {
         self.baseURL = config.mobileContentApiBaseUrl
     }
     
-    private func getAuthTokenRequest(oktaAccessToken: OktaAccessToken) -> URLRequest {
+    private func getAuthTokenRequest(oktaAccessToken: String) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -33,7 +33,7 @@ class MobileContentAuthTokenAPI {
             "data": [
                 "type": "auth-token-request",
                 "attributes": [
-                    "okta_access_token": oktaAccessToken.value
+                    "okta_access_token": oktaAccessToken
                 ]
             ]
         ]
@@ -48,7 +48,7 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(oktaAccessToken: OktaAccessToken) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
+    func fetchAuthTokenPublisher(oktaAccessToken: String) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
         
         return session.dataTaskPublisher(for: getAuthTokenRequest(oktaAccessToken: oktaAccessToken))
             .tryMap {

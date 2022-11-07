@@ -23,30 +23,9 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func refreshAuthToken(oktaAccessToken: OktaAccessToken) {
+    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
-        api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
-            .sink { completed in
-                
-                switch completed {
-                case .finished:
-                    break
-                    
-                case .failure(let error):
-                    
-                    assertionFailure("Refresh auth token failed with error: \(error.localizedDescription)")
-                }
-                
-            } receiveValue: { [weak self] authTokenDataModel in
-                
-                self?.cache.storeAuthToken(authTokenDataModel)
-            }
-            .store(in: &cancellables)
-    }
-    
-    func getAuthTokenPublisher(for userId: Int) -> AnyPublisher<String?, URLResponseError> {
-        
-        if let authToken = cache.getAuthToken(for: userId) {
+        if let authToken = getCachedAuthToken(for: userId) {
             
             return Just(authToken)
                 .setFailureType(to: URLResponseError.self)
@@ -54,12 +33,29 @@ class MobileContentAuthTokenRepository {
             
         } else {
             
-            // TODO: - if cached auth token doesn't exist, fetch a new token.  Will need the ability to get a fresh token on demand from CruOktaAuthentication.
-            
-            return Just(nil)
-                .setFailureType(to: URLResponseError.self)
-                .eraseToAnyPublisher()
+            return fetchAuthToken(oktaAccessToken: oktaAccessToken)
         }
+    }
+
+    private func getCachedAuthToken(for userId: Int?) -> String? {
         
+        guard let userId = userId else { return nil }
+        
+        return cache.getAuthToken(for: userId)
+    }
+    
+    private func fetchAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
+        
+        return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+            .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
+                                
+                self?.cache.storeAuthToken(authTokenDataModel)
+                
+                return Just(authTokenDataModel.token)
+                    .setFailureType(to: URLResponseError.self)
+                    .eraseToAnyPublisher()
+                
+            })
+            .eraseToAnyPublisher()
     }
 }
