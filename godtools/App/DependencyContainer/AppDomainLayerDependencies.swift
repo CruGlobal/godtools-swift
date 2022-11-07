@@ -57,6 +57,7 @@ class AppDomainLayerDependencies {
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            getMobileContentAuthToken: getMobileContentAuthTokenUseCase(),
             snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
         )
     }
@@ -107,6 +108,13 @@ class AppDomainLayerDependencies {
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
             snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+        )
+    }
+    
+    func getMobileContentAuthTokenUseCase() -> GetMobileContentAuthTokenUseCase {
+        return GetMobileContentAuthTokenUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
     }
     
