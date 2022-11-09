@@ -14,9 +14,7 @@ class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPI
     private let cache: MobileContentAuthTokenCache
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     init(api: MobileContentAuthTokenAPI, cache: MobileContentAuthTokenCache) {
         
         self.api = api
