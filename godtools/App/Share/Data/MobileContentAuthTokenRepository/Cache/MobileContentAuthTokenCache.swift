@@ -10,18 +10,18 @@ import Foundation
 
 class MobileContentAuthTokenCache {
     
-    let keychainService: KeychainService
+    let keychainAccessor: MobileContentAuthTokenKeychainAccessor
     
-    init(keychainService: KeychainService) {
+    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessor) {
         
-        self.keychainService = keychainService
+        self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
     }
     
     func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
         
         do {
             
-            try keychainService.saveMobileContentAuthToken(authTokenDataModel)
+            try keychainAccessor.saveMobileContentAuthToken(authTokenDataModel)
             
         } catch let error {
             
@@ -31,6 +31,6 @@ class MobileContentAuthTokenCache {
     
     func getAuthToken(for userId: Int) -> String? {
         
-        return keychainService.getMobileContentAuthToken(userId: userId)
+        return keychainAccessor.getMobileContentAuthToken(userId: userId)
     }
 }

@@ -1080,7 +1080,7 @@
 		D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */; };
 		D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift */; };
 		D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */; };
-		D4B060042913096A005852D0 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060032913096A005852D0 /* KeychainService.swift */; };
+		D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */; };
 		D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060062915647B005852D0 /* KeychainServiceResponse.swift */; };
 		D4B0600A2919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060092919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
@@ -2236,7 +2236,7 @@
 		D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenAPI.swift; sourceTree = "<group>"; };
 		D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenCache.swift; sourceTree = "<group>"; };
-		D4B060032913096A005852D0 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenKeychainAccessor.swift; sourceTree = "<group>"; };
 		D4B060062915647B005852D0 /* KeychainServiceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceResponse.swift; sourceTree = "<group>"; };
 		D4B060092919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMobileContentAuthTokenUseCase.swift; sourceTree = "<group>"; };
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -4669,7 +4669,6 @@
 				45AD1D4225938A9700A096A0 /* FontService */,
 				45AD1E9125938A9800A096A0 /* InitialDataDownloader */,
 				45AD1EA425938A9800A096A0 /* IsNewUser */,
-				D4B060052913096F005852D0 /* KeychainService */,
 				45AD1DE525938A9700A096A0 /* LanguageDirection */,
 				45AD1DE825938A9700A096A0 /* LanguageSettings */,
 				45D6D0282708B8FF0063C38A /* LessonEvaluation */,
@@ -7078,18 +7077,11 @@
 		D4B060002912C323005852D0 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				D4B060062915647B005852D0 /* KeychainServiceResponse.swift */,
 				D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */,
+				D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */,
 			);
 			path = Cache;
-			sourceTree = "<group>";
-		};
-		D4B060052913096F005852D0 /* KeychainService */ = {
-			isa = PBXGroup;
-			children = (
-				D4B060032913096A005852D0 /* KeychainService.swift */,
-				D4B060062915647B005852D0 /* KeychainServiceResponse.swift */,
-			);
-			path = KeychainService;
 			sourceTree = "<group>";
 		};
 		D4B060082919A6E0005852D0 /* GetMobileContentAuthTokenUseCase */ = {
@@ -8439,7 +8431,7 @@
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
 				45AD1BCF25938A4F00A096A0 /* ImageCatalog.swift in Sources */,
-				D4B060042913096A005852D0 /* KeychainService.swift in Sources */,
+				D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */,
 				459BD08F289AD4310075901B /* ToolTranslationsDomainModel.swift in Sources */,
 				D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */,
 				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,

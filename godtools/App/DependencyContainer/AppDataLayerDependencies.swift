@@ -103,10 +103,6 @@ class AppDataLayerDependencies {
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
-    
-    func getKeychainService() -> KeychainService {
-        return KeychainService()
-    }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
@@ -144,13 +140,19 @@ class AppDataLayerDependencies {
         return LocalizationServices()
     }
     
+    func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
+        return MobileContentAuthTokenKeychainAccessor()
+    }
+    
     func getMobileContentAuthTokenRepository() -> MobileContentAuthTokenRepository {
         return MobileContentAuthTokenRepository(
             api: MobileContentAuthTokenAPI(
                 config: getAppConfig(),
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
-            cache: MobileContentAuthTokenCache(keychainService: getKeychainService())
+            cache: MobileContentAuthTokenCache(
+                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
+            )
         )
     }
     
