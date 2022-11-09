@@ -15,15 +15,15 @@ class AuthenticateUserUseCase {
     private let cruOktaAuthentication: CruOktaAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
-    private let getMobileContentAuthToken: GetMobileContentAuthTokenUseCase
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     private let snowplowAnalytics: SnowplowAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, getMobileContentAuthToken: GetMobileContentAuthTokenUseCase, snowplowAnalytics: SnowplowAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, snowplowAnalytics: SnowplowAnalytics) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
-        self.getMobileContentAuthToken = getMobileContentAuthToken
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.snowplowAnalytics = snowplowAnalytics
     }
     
@@ -32,7 +32,8 @@ class AuthenticateUserUseCase {
         return authenticateByAuthTypePublisher(authType: authType)
             .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
                 
-                self.getMobileContentAuthToken.refreshAuthToken(with: accessToken.value)
+                // TODO: - how to include this in the publisher chain?
+                _ = self.mobileContentAuthTokenRepository.fetchRemoteAuthToken(oktaAccessToken: accessToken.value)
                                 
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in

@@ -33,18 +33,11 @@ class MobileContentAuthTokenRepository {
             
         } else {
             
-            return fetchAuthToken(oktaAccessToken: oktaAccessToken)
+            return fetchRemoteAuthToken(oktaAccessToken: oktaAccessToken)
         }
     }
-
-    private func getCachedAuthToken(for userId: Int?) -> String? {
-        
-        guard let userId = userId else { return nil }
-        
-        return cache.getAuthToken(for: userId)
-    }
     
-    private func fetchAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
+    func fetchRemoteAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
         return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
@@ -57,5 +50,12 @@ class MobileContentAuthTokenRepository {
                 
             })
             .eraseToAnyPublisher()
+    }
+    
+    private func getCachedAuthToken(for userId: Int?) -> String? {
+        
+        guard let userId = userId else { return nil }
+        
+        return cache.getAuthToken(for: userId)
     }
 }

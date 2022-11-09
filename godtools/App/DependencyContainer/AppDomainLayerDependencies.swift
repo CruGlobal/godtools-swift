@@ -57,7 +57,7 @@ class AppDomainLayerDependencies {
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            getMobileContentAuthToken: getMobileContentAuthTokenUseCase(),
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository(),
             snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
         )
     }
