@@ -30,10 +30,15 @@ class AuthenticateUserUseCase {
     func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
         
         return authenticateByAuthTypePublisher(authType: authType)
-            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
+            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<String?, Error> in
                 
-                // TODO: - how to include this in the publisher chain?
-                _ = self.mobileContentAuthTokenRepository.fetchRemoteAuthToken(oktaAccessToken: accessToken.value)
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthToken(oktaAccessToken: accessToken.value)
+                    .mapError { urlResponseError in
+                        return urlResponseError.getError()
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ _ -> AnyPublisher<CruOktaUserDataModel, Error> in
                                 
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in
