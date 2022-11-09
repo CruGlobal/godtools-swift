@@ -1,5 +1,5 @@
 //
-//  KeychainService.swift
+//  MobileContentAuthTokenKeychainAccessor.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/2/22.
@@ -9,16 +9,11 @@
 import Foundation
 import Security
 
-class KeychainService {
+class MobileContentAuthTokenKeychainAccessor {
     
     enum Service: String {
         case moileContentAuthToken
     }
-}
-
-// MARK: - Inputs
-
-extension KeychainService {
     
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
@@ -65,7 +60,7 @@ extension KeychainService {
 
 // MARK: - Private
  
-extension KeychainService {
+extension MobileContentAuthTokenKeychainAccessor {
     
     private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
