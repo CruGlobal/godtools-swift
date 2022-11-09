@@ -111,13 +111,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getMobileContentAuthTokenUseCase() -> GetMobileContentAuthTokenUseCase {
-        return GetMobileContentAuthTokenUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
-            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
-        )
-    }
-    
     func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
         return GetOnboardingQuickLinksEnabledUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()

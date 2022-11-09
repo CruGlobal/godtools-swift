@@ -1082,7 +1082,6 @@
 		D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */; };
 		D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */; };
 		D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060062915647B005852D0 /* KeychainServiceResponse.swift */; };
-		D4B0600A2919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B060092919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
@@ -2238,7 +2237,6 @@
 		D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenCache.swift; sourceTree = "<group>"; };
 		D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenKeychainAccessor.swift; sourceTree = "<group>"; };
 		D4B060062915647B005852D0 /* KeychainServiceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceResponse.swift; sourceTree = "<group>"; };
-		D4B060092919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMobileContentAuthTokenUseCase.swift; sourceTree = "<group>"; };
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
@@ -6176,7 +6174,6 @@
 				451FB9332896B3DE00423865 /* GetLanguageUseCase */,
 				D471CFE128CFB85B00DCE61C /* GetLessonsUseCase */,
 				D471CFE428CFBB9F00DCE61C /* GetLessonUseCase */,
-				D4B060082919A6E0005852D0 /* GetMobileContentAuthTokenUseCase */,
 				4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */,
 				D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase */,
 				D42FEBDF28760A1C0002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase */,
@@ -7082,14 +7079,6 @@
 				D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */,
 			);
 			path = Cache;
-			sourceTree = "<group>";
-		};
-		D4B060082919A6E0005852D0 /* GetMobileContentAuthTokenUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				D4B060092919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift */,
-			);
-			path = GetMobileContentAuthTokenUseCase;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -8299,7 +8288,6 @@
 				45C93ADB261D310900592FFF /* ArticleAemCacheErrorData.swift in Sources */,
 				45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */,
 				45F71664290A12D70019B715 /* AccountView.swift in Sources */,
-				D4B0600A2919A705005852D0 /* GetMobileContentAuthTokenUseCase.swift in Sources */,
 				45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */,
 				4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */,
 				4513C2EC2704681F00614F79 /* SetupParallelLanguageViewModelType.swift in Sources */,
