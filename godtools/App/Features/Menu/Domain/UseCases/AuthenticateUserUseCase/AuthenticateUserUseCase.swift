@@ -15,30 +15,20 @@ class AuthenticateUserUseCase {
     private let cruOktaAuthentication: CruOktaAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
-    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     private let snowplowAnalytics: SnowplowAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, snowplowAnalytics: SnowplowAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
-        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.snowplowAnalytics = snowplowAnalytics
     }
     
     func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
         
         return authenticateByAuthTypePublisher(authType: authType)
-            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<String?, Error> in
-                
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthToken(oktaAccessToken: accessToken.value)
-                    .mapError { urlResponseError in
-                        return urlResponseError.getError()
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ _ -> AnyPublisher<CruOktaUserDataModel, Error> in
+            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
                                 
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in
