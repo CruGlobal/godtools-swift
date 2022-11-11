@@ -140,6 +140,22 @@ class AppDataLayerDependencies {
         return LocalizationServices()
     }
     
+    func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
+        return MobileContentAuthTokenKeychainAccessor()
+    }
+    
+    func getMobileContentAuthTokenRepository() -> MobileContentAuthTokenRepository {
+        return MobileContentAuthTokenRepository(
+            api: MobileContentAuthTokenAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: MobileContentAuthTokenCache(
+                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
+            )
+        )
+    }
+    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }

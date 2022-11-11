@@ -29,7 +29,7 @@ class AuthenticateUserUseCase {
         
         return authenticateByAuthTypePublisher(authType: authType)
             .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
-                
+                                
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in
                         return oktaError.getError()
