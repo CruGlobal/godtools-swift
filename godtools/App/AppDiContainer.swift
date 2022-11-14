@@ -12,7 +12,7 @@ import OktaAuthentication
 class AppDiContainer {
         
     private let appBuild: AppBuild
-    private let realmDatabase: RealmDatabase = RealmDatabase()
+    private let realmDatabase: RealmDatabase
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -28,11 +28,12 @@ class AppDiContainer {
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
                
         self.appBuild = appBuild
+        self.realmDatabase = realmDatabase
         
-        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
+        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
                                         
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
