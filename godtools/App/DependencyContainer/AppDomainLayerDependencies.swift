@@ -78,6 +78,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getGlobalActivityThisWeekUseCase() -> GetGlobalActivityThisWeekUseCase {
+        return GetGlobalActivityThisWeekUseCase(
+            globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
         return GetLanguageAvailabilityUseCase(
             localizationServices: dataLayer.getLocalizationServices()
