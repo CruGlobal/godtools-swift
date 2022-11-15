@@ -18,10 +18,9 @@ struct AccountUserDetailsView: View {
             
             if viewModel.isLoadingProfile {
                 
-                /*
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
-                    .foregroundColor(Color.black)*/
+                    .foregroundColor(Color.black)
             }
             else {
              

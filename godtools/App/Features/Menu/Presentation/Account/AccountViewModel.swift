@@ -26,6 +26,7 @@ class AccountViewModel: ObservableObject {
     
     @Published var navTitle: String
     @Published var isLoadingProfile: Bool = true
+    @Published var isLoadingGlobalActivityThisWeek: Bool = true
     @Published var profileName: String = ""
     @Published var activityButtonTitle: String
     @Published var globalActivityButtonTitle: String
@@ -70,8 +71,8 @@ class AccountViewModel: ObservableObject {
             .receiveOnMain()
             .sink { [weak self] (globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel]) in
                 
+                self?.isLoadingGlobalActivityThisWeek = false
                 self?.globalActivityThisWeekDomainModels = globalActivityThisWeekDomainModels
-                
                 self?.numberOfGlobalActivityThisWeekItems = globalActivityThisWeekDomainModels.count
             }
             .store(in: &cancellables)
