@@ -7,29 +7,27 @@
 //
 
 import Foundation
+import Combine
 
 struct GlobalAnalyticsUserDefaultsCache {
     
-    enum Attribute: String {
-        case users = "users"
-        case countries = "countries"
-        case launches = "launches"
-        case gospelPresentations = "gospel_presentations"
+    init() {
+        
     }
     
     private var defaults: UserDefaults {
         return UserDefaults.standard
     }
     
-    private func setAttributeValue(attribute: Attribute, value: Int) {
+    private func setAttributeValue(attribute: GlobalAnalyticsAttributeType, value: Int) {
         defaults.set(value, forKey: attribute.rawValue)
     }
     
-    private func getAttributeValue(attribute: Attribute) -> Int? {
+    private func getAttributeValue(attribute: GlobalAnalyticsAttributeType) -> Int? {
         return defaults.object(forKey: attribute.rawValue) as? Int
     }
     
-    func getGlobalActivityAnalytics() -> MobileContentGlobalAnalyticsDataModel? {
+    func getGlobalAnalytics() -> MobileContentGlobalAnalyticsDataModel? {
           
         if let users = getAttributeValue(attribute: .users),
             let countries = getAttributeValue(attribute: .countries),
@@ -55,7 +53,13 @@ struct GlobalAnalyticsUserDefaultsCache {
         return nil
     }
     
-    func cacheGlobalActivityAnalytics(globalAnalytics: MobileContentGlobalAnalyticsDataModel) {
+    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDataModel?, Never> {
+        
+        return Just(getGlobalAnalytics())
+            .eraseToAnyPublisher()
+    }
+    
+    func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDataModel) -> AnyPublisher<MobileContentGlobalAnalyticsDataModel, Never> {
         
         let attributes = globalAnalytics.data.attributes
                 
@@ -65,5 +69,8 @@ struct GlobalAnalyticsUserDefaultsCache {
         setAttributeValue(attribute: .gospelPresentations, value: attributes.gospelPresentations)
         
         defaults.synchronize()
+        
+        return Just(globalAnalytics)
+            .eraseToAnyPublisher()
     }
 }
