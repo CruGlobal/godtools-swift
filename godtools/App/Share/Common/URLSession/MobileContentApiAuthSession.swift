@@ -23,29 +23,59 @@ class MobileContentApiAuthSession {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func sendDataRequest(with urlString: String) -> AnyPublisher<Data?, Error> {
+    func sendDataRequest(with urlString: String) -> AnyPublisher<Data?, URLResponseError> {
         
+        // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retreive the cached token rather than requesting a new one
         return mobileContentAuthTokenRepository.getAuthTokenPublisher()
-            .flatMap { authToken -> AnyPublisher<Data?, Error> in
+            .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
 
-                guard let authToken = authToken else {
-                    assertionFailure("Auth token shouldn't be nil")
-                    
-                    return Fail(outputType: Data?.self, failure: MobileContentAuthTokenError.nilAuthToken as Error)
-                        .eraseToAnyPublisher()
-                }
-
-                let urlRequest = self.buildAuthenticatedRequest(for: urlString, authToken: authToken)
-
-                return self.attemptDataTask(with: urlRequest)
-                    .mapError { urlResponseError in
-                        return urlResponseError.getError()
-                    }
-                    .eraseToAnyPublisher()
+                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
                 
             }
-            .eraseToAnyPublisher()
+            .catch({ urlResponseError -> AnyPublisher<Data?, URLResponseError> in
+                
+                switch urlResponseError {
+                case .statusCode(let urlResponseObject):
+                    
+                    if urlResponseObject.httpStatusCode == 401 {
+                        
+                        return self.fetchFreshAuthTokenAndReattemptDataTask(urlString: urlString)
+                    }
+                    
+                default:
+                    break
+                }
 
+                return Fail(outputType: Data?.self, failure: urlResponseError)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchFreshAuthTokenAndReattemptDataTask(urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+        
+        return mobileContentAuthTokenRepository.fetchRemoteAuthToken()
+            .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
+            
+                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func attemptDataTaskWithAuthToken(_ authToken: String?, urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+        
+        guard let authToken = authToken else {
+            assertionFailure("Auth token shouldn't be nil")
+            
+            let error = URLResponseError.otherError(error: MobileContentAuthTokenError.nilAuthToken)
+            return Fail(outputType: Data?.self, failure: error)
+                .eraseToAnyPublisher()
+        }
+
+        let urlRequest = self.buildAuthenticatedRequest(for: urlString, authToken: authToken)
+
+        return self.attemptDataTask(with: urlRequest)
+            .eraseToAnyPublisher()
     }
     
     private func attemptDataTask(with urlRequest: URLRequest) -> AnyPublisher<Data?, URLResponseError> {

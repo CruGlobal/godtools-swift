@@ -152,7 +152,8 @@ class AppDataLayerDependencies {
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
-            )
+            ),
+            cruOktaAuthentication: getCruOktaAuthentication()
         )
     }
     
