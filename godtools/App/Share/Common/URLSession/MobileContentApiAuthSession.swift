@@ -34,31 +34,16 @@ class MobileContentApiAuthSession {
             }
             .catch({ urlResponseError -> AnyPublisher<Data?, URLResponseError> in
                 
-                switch urlResponseError {
-                case .statusCode(let urlResponseObject):
+                if urlResponseError.is401Error {
                     
-                    if urlResponseObject.httpStatusCode == 401 {
-                        
-                        return self.fetchFreshAuthTokenAndReattemptDataTask(urlString: urlString)
-                    }
+                    return self.fetchFreshAuthTokenAndReattemptDataTask(urlString: urlString)
                     
-                default:
-                    break
+                } else {
+                    
+                    return Fail(outputType: Data?.self, failure: urlResponseError)
+                        .eraseToAnyPublisher()
                 }
-
-                return Fail(outputType: Data?.self, failure: urlResponseError)
-                    .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
-    }
-    
-    private func fetchFreshAuthTokenAndReattemptDataTask(urlString: String) -> AnyPublisher<Data?, URLResponseError> {
-        
-        return mobileContentAuthTokenRepository.fetchRemoteAuthToken()
-            .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
-            
-                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
-            }
             .eraseToAnyPublisher()
     }
     
@@ -93,6 +78,16 @@ class MobileContentApiAuthSession {
             }
             .mapError {
                 return URLResponseError.requestError(error: $0 as Error)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchFreshAuthTokenAndReattemptDataTask(urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+        
+        return mobileContentAuthTokenRepository.fetchRemoteAuthToken()
+            .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
+            
+                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
             }
             .eraseToAnyPublisher()
     }
