@@ -14,7 +14,7 @@ struct ToolDetailsView: View {
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
     
-    @State private var selectedSegmentIndex: Int? = 0
+    @State private var selectedSegmentIndex: Int = 0
     
     @ObservedObject var viewModel: ToolDetailsViewModel
     
