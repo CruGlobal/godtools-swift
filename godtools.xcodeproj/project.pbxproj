@@ -376,6 +376,8 @@
 		45828BD1279CCBD200F6B5F3 /* MobileContentFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */; };
 		45828BD2279CCBD200F6B5F3 /* MobileContentFlowViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BCF279CCBD200F6B5F3 /* MobileContentFlowViewModelType.swift */; };
 		45828BD3279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BD0279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift */; };
+		458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */; };
+		458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */; };
 		4585E0692706560600DD6608 /* TransparentModalCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585E0682706560600DD6608 /* TransparentModalCustomView.swift */; };
 		45860A512923E73A0089C836 /* AccountUserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A502923E73A0089C836 /* AccountUserDetailsView.swift */; };
 		45860A562923E7B30089C836 /* FixedHorizontalSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A532923E7B30089C836 /* FixedHorizontalSpacer.swift */; };
@@ -1485,6 +1487,8 @@
 		45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowView.swift; sourceTree = "<group>"; };
 		45828BCF279CCBD200F6B5F3 /* MobileContentFlowViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowViewModelType.swift; sourceTree = "<group>"; };
 		45828BD0279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowViewModel.swift; sourceTree = "<group>"; };
+		458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountCreationIsSupportedUseCase.swift; sourceTree = "<group>"; };
+		458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationIsSupportedDomainModel.swift; sourceTree = "<group>"; };
 		4585E0682706560600DD6608 /* TransparentModalCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomView.swift; sourceTree = "<group>"; };
 		45860A502923E73A0089C836 /* AccountUserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserDetailsView.swift; sourceTree = "<group>"; };
 		45860A532923E7B30089C836 /* FixedHorizontalSpacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedHorizontalSpacer.swift; sourceTree = "<group>"; };
@@ -4018,6 +4022,15 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */,
+				458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */,
+			);
+			path = GetAccountCreationIsSupportedUseCase;
+			sourceTree = "<group>";
+		};
 		45860A4F2923E7340089C836 /* AccountUserDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -6088,6 +6101,7 @@
 			isa = PBXGroup;
 			children = (
 				45F7161A290A12D70019B715 /* AuthenticateUserUseCase */,
+				458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
 				45F71615290A12D70019B715 /* GetUserIsAuthenticatedUseCase */,
@@ -8012,6 +8026,7 @@
 				456777EA287DB42C0044AEB2 /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */,
 				45AE975227C97A9500C2CB33 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
+				458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45AC60192624BAB100253217 /* ToolItemInitialDownloadProgress.swift in Sources */,
 				D49F80F727FDC610001AE5B3 /* AllToolsContentView.swift in Sources */,
@@ -8093,6 +8108,7 @@
 				45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */,
 				45AD1BD525938A4F00A096A0 /* PageNavigationCollectionView.swift in Sources */,
 				45AD20EC259391B000A096A0 /* JsonServicesType.swift in Sources */,
+				458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */,
 				45D63EA4288F77D4009B4610 /* ResourceType.swift in Sources */,
 				45F71679290A13530019B715 /* EmailSignUpApi.swift in Sources */,
 				45C93AE1261D310900592FFF /* ArticleAemCacheResult.swift in Sources */,

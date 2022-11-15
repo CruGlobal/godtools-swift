@@ -17,6 +17,12 @@ class AppDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
+        return GetAccountCreationIsSupportedUseCase(
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
+        )
+    }
+    
     func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
         return AddToolToFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()

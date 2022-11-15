@@ -41,6 +41,7 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
