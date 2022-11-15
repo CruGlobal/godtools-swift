@@ -28,32 +28,27 @@ class MobileContentAuthTokenRepository {
         self.cruOktaAuthentication = cruOktaAuthentication
     }
     
-    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String? = nil) -> AnyPublisher<String?, Error> {
+    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
         
         if let authToken = getCachedAuthToken(for: userId) {
             
             return Just(authToken)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-            
-        } else if let oktaAccessToken = oktaAccessToken ?? cruOktaAuthentication.getAccessTokenFromPersistentStore() {
-            // TODO: -  `getAccessTokenFromPersistentStore` should be updated to `withFreshTokenPerformAction` based on https://github.com/okta/okta-oidc-ios/blob/e5450a3aab5c194a7470addeef176e769a374650/Sources/AppAuth/OKTAuthState.m#L90-L93
-            
-            return fetchRemoteAuthToken(oktaAccessToken: oktaAccessToken)
-                .mapError { urlResponseError in
-                    return urlResponseError.getError()
-                }
+                .setFailureType(to: URLResponseError.self)
                 .eraseToAnyPublisher()
             
         } else {
             
-            return Fail(outputType: String?.self, failure: MobileContentAuthTokenError.missingOktaToken)
-                .eraseToAnyPublisher()
-                
+            return fetchRemoteAuthToken(oktaAccessToken: oktaAccessToken)
         }
     }
     
-    func fetchRemoteAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
+    func fetchRemoteAuthToken(oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
+        
+        // TODO: -  `getAccessTokenFromPersistentStore` should be updated to `withFreshTokenPerformAction` based on https://github.com/okta/okta-oidc-ios/blob/e5450a3aab5c194a7470addeef176e769a374650/Sources/AppAuth/OKTAuthState.m#L90-L93
+        guard let oktaAccessToken = oktaAccessToken ?? cruOktaAuthentication.getAccessTokenFromPersistentStore() else {
+            
+            return missingOktaTokenFailure()
+        }
         
         return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
@@ -73,5 +68,11 @@ class MobileContentAuthTokenRepository {
         guard let userId = userId else { return nil }
         
         return cache.getAuthToken(for: userId)
+    }
+    
+    private func missingOktaTokenFailure() -> AnyPublisher<String?, URLResponseError> {
+        let error = URLResponseError.otherError(error: MobileContentAuthTokenError.missingOktaToken)
+        return Fail(outputType: String?.self, failure: error)
+            .eraseToAnyPublisher()
     }
 }
