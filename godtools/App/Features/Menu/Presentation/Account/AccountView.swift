@@ -2,156 +2,95 @@
 //  AccountView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/17/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 11/15/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class AccountView: UIViewController {
+struct AccountView: View {
     
-    private let viewModel: AccountViewModelType
-        
-    @IBOutlet weak private var headerView: UIView!
-    @IBOutlet weak private var nameLabel: UILabel!
-    @IBOutlet weak private var loadingProfileView: UIActivityIndicatorView!
-    @IBOutlet weak private var accountItemsPagesView: PageNavigationCollectionView!
-    @IBOutlet weak private var itemsControl: GTSegmentedControl!
+    static let sectionTitleFont: Font = FontLibrary.sfProTextRegular.font(size: 22)
+    static let sectionTitleColor: Color = ColorPalette.gtGrey.color
     
-    required init(viewModel: AccountViewModelType) {
-        self.viewModel = viewModel
-        super.init(nibName: String(describing: AccountView.self), bundle: nil)
-    }
+    private let sections: [AccountSectionType] = [.activity, .globalActivity]
+    private let sectionHorizontalPadding: CGFloat = 20
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    @ObservedObject var viewModel: AccountViewModel
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("view didload: \(type(of: self))")
+    @State private var selectedSegmentIndex: Int = 0
         
-        setupLayout()
-        setupBinding()
+    var body: some View {
         
-        addDefaultNavBackItem()
-        
-        accountItemsPagesView.delegate = self
-    }
-    
-    private func setupLayout() {
-        
-        nameLabel.text = ""
-        
-        itemsControl.layer.shadowColor = UIColor.black.cgColor
-        itemsControl.layer.shadowOffset = CGSize(width: 0, height: 1)
-        itemsControl.layer.shadowRadius = 5
-        itemsControl.layer.shadowOpacity = 0.3
-        
-        accountItemsPagesView.registerPageCell(
-            nib: UINib(nibName: AccountItemCell.nibName, bundle: nil),
-            cellReuseIdentifier: AccountItemCell.reuseIdentifier
-        )
-
-        // TODO: Add navigation gear icon in the future.  Disabling for now.  02/24/20.
-//        _ = addBarButtonItem(
-//            to: .right,
-//            image: ImageCatalog.navSettings.image,
-//            color: nil,
-//            target: self,
-//            action: #selector(handleSettings(barButtonItem:))
-//        )
-    }
-    
-    private func setupBinding() {
-        
-        title = viewModel.navTitle
-        
-        viewModel.profileName.addObserver(self) { [weak self] (animatableValue: AnimatableValue<String>) in
+        GeometryReader { geometry in
             
-            self?.nameLabel.text = animatableValue.value
-            self?.nameLabel.alpha = 1
-            
-            if animatableValue.animated {
-                self?.nameLabel.alpha = 0
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                    self?.nameLabel.alpha = 1
-                }, completion: nil)
-            }
-        }
-        
-        viewModel.isLoadingProfile.addObserver(self) { [weak self] (isLoading: Bool) in
-            isLoading ? self?.loadingProfileView.startAnimating() : self?.loadingProfileView.stopAnimating()
-        }
-        
-        viewModel.accountItems.addObserver(self) { [weak self] (items: [AccountItem]) in
-            
-            self?.itemsControl.configure(
-                segments: items,
-                delegate: nil
-            )
-            
-            self?.accountItemsPagesView.reloadData()
-        }
-    }
-    
-    @objc func handleSettings(barButtonItem: UIBarButtonItem) {
-        viewModel.settingsTapped()
-    }
-}
-
-// MARK: - PageNavigationCollectionViewDelegate
-
-extension AccountView: PageNavigationCollectionViewDelegate {
-    
-    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return viewModel.accountItems.value.count
-    }
-    
-    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell: AccountItemCell = accountItemsPagesView.getReusablePageCell(
-            cellReuseIdentifier: AccountItemCell.reuseIdentifier,
-            indexPath: indexPath) as! AccountItemCell
-        
-        cell.configure(
-            viewModel: AccountItemCellViewModel(
-                item: viewModel.accountItems.value[indexPath.row],
-                localizationServices: viewModel.localizationServices,
-                globalAnalyticsService: viewModel.globalAnalyticsService
-            ),
-            delegate: self
-        )
-        
-        cell.backgroundColor = .systemPink
-        
-        return cell
-    }
-    
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        viewModel.accountPageDidAppear(page: page)
-    }
-}
-
-// MARK: - AccountItemCellDelegate
-
-extension AccountView: AccountItemCellDelegate {
-    
-    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessageType) {
-        
-        let viewModel = AlertMessageViewModel(
-            title: alertMessage.title,
-            message: alertMessage.message,
-            cancelTitle: nil,
-            acceptTitle: "OK",
-            acceptHandler: nil
-        )
-        let view = AlertMessageView(viewModel: viewModel)
-        
-        present(view.controller, animated: true, completion: nil)
-    }
+            ScrollView(.vertical, showsIndicators: false) {
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    VStack(alignment: .center, spacing: 0) {
+                        
+                        FixedVerticalSpacer(height: 40)
+                        
+                        AccountUserDetailsView(viewModel: viewModel)
+                        
+                        FixedVerticalSpacer(height: 32)
+                        
+                        let segmentTitles: [String] = sections.map({
+                            switch $0 {
+                            case .activity:
+                                return viewModel.activityButtonTitle
+                            case .globalActivity:
+                                return viewModel.globalActivityButtonTitle
+                            }
+                        })
+                        
+                        SegmentControl(selectedIndex: $selectedSegmentIndex, segments: segmentTitles, segmentTappedClosure: { (index: Int) in
+                            
+                            switch sections[selectedSegmentIndex] {
+                            case .activity:
+                                viewModel.activityTapped()
+                            case .globalActivity:
+                                viewModel.globalActivityTapped()
+                            }
+                        })
+                    }
+                    .background(Rectangle()
+                        .fill(Color.white)
+                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                        .mask(Rectangle().padding(.bottom, -8))
+                    )
+                    
+                    FixedVerticalSpacer(height: 20)
+                }
+                
+                let sectionFrameWidth: CGFloat = geometry.size.width - (sectionHorizontalPadding * 2)
+                
+                VStack(alignment: .leading, spacing: 0) {
+                 
+                    switch sections[selectedSegmentIndex] {
+                        
+                    case .activity:
+                        
+                        Rectangle()
+                            .fill(Color.red)
+                            .frame(height: 500)
+                        
+                    case .globalActivity:
+                        
+                        AccountGlobalActivity(
+                            viewModel: viewModel,
+                            sectionFrameWidth: sectionFrameWidth
+                        )
+                    }
+                }
+                .frame(width: sectionFrameWidth, alignment: .leading)
+                .padding(EdgeInsets(top: 32, leading: sectionHorizontalPadding, bottom: 20, trailing: sectionHorizontalPadding))
+            }//end ScrollView
+        }//end Geometry
+        .navigationTitle(viewModel.navTitle)
+        .navigationBarBackButtonHidden(true)
+        .background(ColorPalette.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
+        .edgesIgnoringSafeArea(.bottom)
+    }//end body
 }
