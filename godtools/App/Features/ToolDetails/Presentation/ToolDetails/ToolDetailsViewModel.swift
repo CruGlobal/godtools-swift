@@ -78,10 +78,6 @@ class ToolDetailsViewModel: ObservableObject {
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
         
-        self.conversationStartersTitle = localizationServices.stringForMainBundle(key: "toolDetails.conversationStarters.title")
-        self.outlineTitle = localizationServices.stringForMainBundle(key: "toolDetails.outline.title")
-        self.bibleReferencesTitle = localizationServices.stringForMainBundle(key: "toolDetails.bibleReferences.title")
-        self.availableLanguagesTitle = localizationServices.stringForMainBundle(key: "toolSettings.languagesAvailable.title")
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
         reloadToolDetails(resource: resource)
@@ -137,6 +133,10 @@ class ToolDetailsViewModel: ObservableObject {
         addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
         removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
         aboutDetails = aboutDetailsValue
+        conversationStartersTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.conversationStarters.title")
+        outlineTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.outline.title")
+        bibleReferencesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.bibleReferences.title")
+        availableLanguagesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolSettings.languagesAvailable.title")
                         
         availableLanguagesList = getToolLanguagesUseCase.getToolLanguages(resource: resource).map({$0.translatedName}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
