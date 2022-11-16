@@ -17,7 +17,7 @@ class MobileContentApiAuthSession {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
      
         self.session = ignoreCacheSession.session
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
@@ -25,7 +25,7 @@ class MobileContentApiAuthSession {
     
     func sendDataRequest(with urlString: String) -> AnyPublisher<Data?, URLResponseError> {
         
-        // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retreive the cached token rather than requesting a new one
+        // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retrieve the cached token rather than requesting a new one
         return mobileContentAuthTokenRepository.getAuthTokenPublisher()
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
 

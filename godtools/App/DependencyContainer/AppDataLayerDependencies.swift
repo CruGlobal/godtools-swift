@@ -157,6 +157,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
+        return MobileContentApiAuthSession(
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
+        )
+    }
+    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
