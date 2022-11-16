@@ -11,6 +11,7 @@ import RealmSwift
 
 class RealmDatabase {
     
+    private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
         
@@ -19,6 +20,7 @@ class RealmDatabase {
     
     init(databaseConfiguration: RealmDatabaseConfiguration) {
         
+        self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
         
         do {

@@ -17,20 +17,12 @@ extension RealmDatabaseConfiguration {
         
         switch cacheType {
             
-        case .disk(let fileName):
+        case .disk(let fileName, let migrationBlock):
             
             realmConfig = Realm.Configuration()
             realmConfig.fileURL = realmConfig.fileURL?.deletingLastPathComponent().appendingPathComponent(fileName)
             realmConfig.schemaVersion = schemaVersion
-            
-            realmConfig.migrationBlock = { migration, oldSchemaVersion in
-                
-                if (oldSchemaVersion < 1) {
-                    // Nothing to do!
-                    // Realm will automatically detect new properties and removed properties
-                    // And will update the schema on disk automatically
-                }
-            }
+            realmConfig.migrationBlock = migrationBlock
         
         case .inMemory(let identifier):
             
