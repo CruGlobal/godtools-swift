@@ -57,9 +57,9 @@ class MobileContentApiAuthSession {
                 .eraseToAnyPublisher()
         }
 
-        let urlRequest = self.buildAuthenticatedRequest(for: urlString, authToken: authToken)
+        let urlRequest = buildAuthenticatedRequest(for: urlString, authToken: authToken)
 
-        return self.attemptDataTask(with: urlRequest)
+        return attemptDataTask(with: urlRequest)
             .eraseToAnyPublisher()
     }
     
