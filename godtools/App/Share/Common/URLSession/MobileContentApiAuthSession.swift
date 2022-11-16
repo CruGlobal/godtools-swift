@@ -76,8 +76,13 @@ class MobileContentApiAuthSession {
                 
                 return urlResponseObject.data
             }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
+            .mapError { error in
+                if let urlResponseError = error as? URLResponseError {
+                    return urlResponseError
+               
+                } else {
+                    return URLResponseError.requestError(error: error as Error)
+                }
             }
             .eraseToAnyPublisher()
     }
