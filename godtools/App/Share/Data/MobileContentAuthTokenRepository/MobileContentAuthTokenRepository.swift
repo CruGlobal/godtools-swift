@@ -10,11 +10,6 @@ import Foundation
 import OktaAuthentication
 import Combine
 
-enum MobileContentAuthTokenError: Error {
-    case missingOktaToken
-    case nilAuthToken
-}
-
 class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPI
@@ -71,7 +66,7 @@ class MobileContentAuthTokenRepository {
     }
     
     private func missingOktaTokenFailure() -> AnyPublisher<String?, URLResponseError> {
-        let error = URLResponseError.otherError(error: MobileContentAuthTokenError.missingOktaToken)
+        let error = URLResponseError.otherError(error: MobileContentAuthTokenError.nilOktaToken)
         return Fail(outputType: String?.self, failure: error)
             .eraseToAnyPublisher()
     }
