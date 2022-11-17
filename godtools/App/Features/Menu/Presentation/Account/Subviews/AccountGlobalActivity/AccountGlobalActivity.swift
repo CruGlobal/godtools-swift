@@ -21,8 +21,8 @@ struct AccountGlobalActivity: View {
         VStack(alignment: .leading, spacing: 0) {
             
             Text(viewModel.globalActivityTitle)
-                .font(AccountView.sectionTitleFont)
-                .foregroundColor(AccountView.sectionTitleColor)
+                .font(AccountSectionsView.sectionTitleFont)
+                .foregroundColor(AccountSectionsView.sectionTitleColor)
                 .multilineTextAlignment(.leading)
             
             FixedVerticalSpacer(height: 15)

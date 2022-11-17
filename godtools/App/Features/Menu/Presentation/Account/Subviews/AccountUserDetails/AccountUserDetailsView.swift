@@ -18,12 +18,21 @@ struct AccountUserDetailsView: View {
             
             if viewModel.isLoadingProfile {
                 
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .foregroundColor(Color.black)
+                ZStack(alignment: .center) {
+                    HStack(alignment: .center, spacing: 0) {
+                        Spacer()
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(Color.black)
+                        Spacer()
+                    }
+                }
+                .frame(height: 100)
             }
             else {
              
+                FixedVerticalSpacer(height: 45)
+                
                 Text(viewModel.profileName)
                     .font(FontLibrary.sfProTextSemibold.font(size: 25))
                     .foregroundColor(ColorPalette.gtGrey.color)
@@ -35,7 +44,10 @@ struct AccountUserDetailsView: View {
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
+                
+                FixedVerticalSpacer(height: 35)
             }
         }
+        .background(Color.white)
     }
 }
