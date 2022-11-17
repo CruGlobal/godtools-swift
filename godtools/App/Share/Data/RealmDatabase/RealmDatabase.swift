@@ -11,27 +11,29 @@ import RealmSwift
 
 class RealmDatabase {
     
-    private static let config: Realm.Configuration = RealmDatabase.createConfig
-    private static let schemaVersion: UInt64 = 14
-    
+    private let databaseConfiguration: RealmDatabaseConfiguration
+    private let config: Realm.Configuration
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
-    
+        
     @available(*, deprecated) // TODO: Would like to move away from using the mainThreadRealm and instead use the func openRealm() since realm instances cant be shared across threads. ~Levi
     let mainThreadRealm: Realm
     
-    init() {
+    init(databaseConfiguration: RealmDatabaseConfiguration) {
+        
+        self.databaseConfiguration = databaseConfiguration
+        config = databaseConfiguration.getRealmConfig()
         
         do {
-            self.mainThreadRealm = try Realm(configuration: RealmDatabase.config)
+            self.mainThreadRealm = try Realm(configuration: config)
         }
         catch let error {
             assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-            self.mainThreadRealm = try! Realm(configuration: RealmDatabase.config)
+            self.mainThreadRealm = try! Realm(configuration: config)
         }
     }
-    
+
     func openRealm() -> Realm {
-        return try! Realm(configuration: RealmDatabase.config)
+        return try! Realm(configuration: config)
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
@@ -42,33 +44,15 @@ class RealmDatabase {
                 let realm: Realm
                
                 do {
-                    realm = try Realm(configuration: RealmDatabase.config)
+                    realm = try Realm(configuration: self.config)
                 }
                 catch let error {
                     assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: RealmDatabase.config)
+                    realm = try! Realm(configuration: self.config)
                 }
                 
                 async(realm)
             }
         }
-    }
-    
-    private static var createConfig: Realm.Configuration {
-        
-        var config = Realm.Configuration()
-        config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("godtools_realm")
-        config.schemaVersion = RealmDatabase.schemaVersion
-        
-        config.migrationBlock = { migration, oldSchemaVersion in
-            
-            if (oldSchemaVersion < 1) {
-                // Nothing to do!
-                // Realm will automatically detect new properties and removed properties
-                // And will update the schema on disk automatically
-            }
-        }
-        
-        return config
     }
 }

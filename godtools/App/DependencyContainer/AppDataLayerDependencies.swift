@@ -14,16 +14,17 @@ class AppDataLayerDependencies {
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
     private let sharedInfoPlist: InfoPlist
-    private let sharedRealmDatabase: RealmDatabase = RealmDatabase()
+    private let sharedRealmDatabase: RealmDatabase
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
+        sharedRealmDatabase = realmDatabase
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
