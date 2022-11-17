@@ -13,30 +13,30 @@ import Combine
 class MobileContentApiAuthSession {
     
     let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
-    let session: URLSession
+    let ignoreCacheSession: URLSession
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
     init(ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
      
-        self.session = ignoreCacheSession.session
+        self.ignoreCacheSession = ignoreCacheSession.session
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func sendDataRequest(with urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+    func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
         // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retrieve the cached token rather than requesting a new one
         return mobileContentAuthTokenRepository.getAuthTokenPublisher()
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
 
-                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
+                return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
                 
             }
             .catch({ urlResponseError -> AnyPublisher<Data?, URLResponseError> in
                 
                 if urlResponseError.is401Error {
                     
-                    return self.fetchFreshAuthTokenAndReattemptDataTask(urlString: urlString)
+                    return self.fetchFreshAuthTokenAndReattemptDataTask(urlRequest: urlRequest, session: urlSession)
                     
                 } else {
                     
@@ -47,7 +47,21 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTaskWithAuthToken(_ authToken: String?, urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+    func sendGetRequestIgnoringCache(with urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+        
+        let urlRequest = requestBuilder.build(
+            session: ignoreCacheSession,
+            urlString: urlString,
+            method: .get,
+            headers: nil,
+            httpBody: nil,
+            queryItems: nil
+        )
+        
+        return sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+    }
+    
+    private func attemptDataTaskWithAuthToken(_ authToken: String?, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
         guard let authToken = authToken else {
             assertionFailure("Auth token shouldn't be nil")
@@ -57,13 +71,13 @@ class MobileContentApiAuthSession {
                 .eraseToAnyPublisher()
         }
 
-        let urlRequest = buildAuthenticatedRequest(for: urlString, authToken: authToken)
+        let authenticatedRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
 
-        return attemptDataTask(with: urlRequest)
+        return attemptDataTask(with: authenticatedRequest, session: session)
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTask(with urlRequest: URLRequest) -> AnyPublisher<Data?, URLResponseError> {
+    private func attemptDataTask(with urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
         return session.dataTaskPublisher(for: urlRequest)
             .tryMap {
@@ -87,29 +101,29 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func fetchFreshAuthTokenAndReattemptDataTask(urlString: String) -> AnyPublisher<Data?, URLResponseError> {
+    private func fetchFreshAuthTokenAndReattemptDataTask(urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
         return mobileContentAuthTokenRepository.fetchRemoteAuthToken()
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
             
-                return self.attemptDataTaskWithAuthToken(authToken, urlString: urlString)
+                return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: session)
             }
             .eraseToAnyPublisher()
     }
     
-    private func buildAuthenticatedRequest(for urlString: String, authToken: String) -> URLRequest {
+    private func buildAuthenticatedRequest(from urlRequest: URLRequest, authToken: String) -> URLRequest {
         
-        let headers: [String: String] = [
-            "Authorization": authToken
-        ]
+        var authenticatedRequest = urlRequest
         
-        return requestBuilder.build(
-            session: session,
-            urlString: urlString,
-            method: .get,
-            headers: headers,
-            httpBody: nil,
-            queryItems: nil
-        )
+        var headers = [String: String]()
+        if let existingHeaders = authenticatedRequest.allHTTPHeaderFields {
+            
+            headers = existingHeaders
+        }
+        
+        headers["Authorization"] = authToken
+        authenticatedRequest.allHTTPHeaderFields = headers
+        
+        return authenticatedRequest
     }
 }
