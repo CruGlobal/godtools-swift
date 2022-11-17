@@ -1,3 +1,10 @@
+"toolDetails.conversationStarters.title" = "Conversation starters";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Outline";
+
+"toolDetails.bibleReferences.title" = "Bible references";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "About";
 
@@ -15,9 +22,6 @@
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
-"toolDetails.conversationStarters.title" = "Conversation starters";
-"toolDetails.outline.title" = "Outline";
-"toolDetails.bibleReferences.title" = "Bible references";
 "toolSettings.languagesAvailable.title" = "Languages available";
 "toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
 "favorites.noTools.title" = "No favorite tools to display";
@@ -327,6 +331,7 @@ Press the About button on any tool for more info.";
 "card_status2" = "Next";
 
 "account.activity.title" = "Activity";
+"account.globalActivity.title" = "Global Activity";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";

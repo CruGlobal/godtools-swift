@@ -12,7 +12,7 @@ import Combine
 class MenuViewModel: MenuViewModelType {
     
     private let infoPlist: InfoPlist
-    private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
+    private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
     private let authenticateUserUseCase: AuthenticateUserUseCase
     private let logOutUserUseCase: LogOutUserUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
@@ -31,10 +31,11 @@ class MenuViewModel: MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, authenticateUserUseCase: AuthenticateUserUseCase, logOutUserUseCase: LogOutUserUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, authenticateUserUseCase: AuthenticateUserUseCase, logOutUserUseCase: LogOutUserUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.infoPlist = infoPlist
+        self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
         self.authenticateUserUseCase = authenticateUserUseCase
         self.logOutUserUseCase = logOutUserUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
@@ -88,9 +89,7 @@ class MenuViewModel: MenuViewModelType {
         
         let isAuthorized: Bool = getUserIsAuthenticatedUseCase.getUserIsAuthenticated()
         
-        // TODO: Disabling the account section in the menu by hardcoding to false.
-        // This is until we can provide a suitable option to delete an account due to Apple guideline. See GT-1700. ~Levi
-        let accountCreationIsSupported: Bool = false//supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
+        let accountCreationIsSupported: Bool = getAccountCreationIsSupportedUseCase.getAccountCreationIsSupported().isSupported
        
         let tutorialIsAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()
         

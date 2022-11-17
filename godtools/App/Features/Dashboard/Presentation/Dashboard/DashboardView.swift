@@ -17,9 +17,9 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 170 / 255, green: 170 / 255, blue: 170 / 255, alpha: 1)
-        UITabBarItem.appearance().setTitleTextAttributes([.font: FontLibrary.sfProTextRegular.uiFont(size: 12) as Any], for: .normal)
+        if #available(iOS 16.0, *) { } else {
+            UITabBar.appearance().isHidden = true
+        }
     }
     
     var body: some View {
@@ -27,30 +27,56 @@ struct DashboardView: View {
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
             
-            TabView(selection: $viewModel.selectedTab) {
+            ZStack(alignment: .bottom) {
                 
-                LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.lessonsTabTitle, image: ImageCatalog.toolsMenuLessons.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.lessons)
+                if #available(iOS 16.0, *) {
+                    
+                    tabViewWithDefaultBarHidden(padding: leadingTrailingPadding)
+                    
+                } else {
+                    
+                    tabView(padding: leadingTrailingPadding)
+                }
                 
-                
-                FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.favoritesTabTitle, image: ImageCatalog.toolsMenuFavorites.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.favorites)
-                
-                AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: leadingTrailingPadding)
-                    .tabItem {
-                        Label(viewModel.allToolsTabTitle, image: ImageCatalog.toolsMenuAllTools.name)
-                    }
-                    .tag(DashboardTabTypeDomainModel.allTools)
+                DashboardTabBarView(viewModel: viewModel)
             }
-            .accentColor(ColorPalette.gtBlue.color)
         }
     }
+    
+    @available(iOS 16.0, *)
+    @ViewBuilder private func tabViewWithDefaultBarHidden(padding: CGFloat) -> some View {
+        
+        TabView(selection: $viewModel.selectedTab) {
+            makeTabs(padding: padding)
+                .toolbar(.hidden, for: .tabBar)
+        }
+    }
+    
+    @ViewBuilder private func tabView(padding: CGFloat) -> some View {
+        
+        TabView(selection: $viewModel.selectedTab) {
+            makeTabs(padding: padding)
+        }
+    }
+    
+    @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {
+        
+        Group {
+            LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: padding)
+                .tag(DashboardTabTypeDomainModel.lessons)
+            
+            FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
+                .tag(DashboardTabTypeDomainModel.favorites)
+            
+            AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: padding)
+                .tag(DashboardTabTypeDomainModel.allTools)
+        }
+    }
+}
+
+// MARK: - Inputs
+    
+extension DashboardView {
     
     static func getMargin(for width: CGFloat) -> CGFloat {
         return marginMultiplier * width
@@ -60,6 +86,8 @@ struct DashboardView: View {
         viewModel.selectedTab = tab
     }
 }
+
+// MARK: - Preview
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {

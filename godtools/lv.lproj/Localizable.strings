@@ -1,3 +1,10 @@
+"toolDetails.conversationStarters.title" = "Sarunas uzsākšanai";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Galvenie punkti";
+
+"toolDetails.bibleReferences.title" = "Bībeles rakstu vietas";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Par lietotni";
 
@@ -15,7 +22,7 @@
 "tool_menu_item.tools" = "Rīki";
 "lessons.pageTitle" = "Nodarbības, kas pielāgotas tev";
 "lessons.pageSubtitle" = "Praktiskas idejas attiecību veidošanai un nozīmīgu sarunu uzsākšanai.";
-"toolSettings.languagesAvailable.title" = "Atbalstītās valodas";
+"toolSettings.languagesAvailable.title" = "Pieejamās valodas";
 "toolDetails.versions.message" = "Tālāk vari izvēlēties citu šī rīka versiju. Katrai versijai ir unikāls stils un saturs, lai tu varētu atrast savai sarunai vispiemērotāko. Vari pievienot izlasei vairākas viena un tā paša rīka versijas.";
 "favorites.noTools.title" = "Nav iecienīto rīku, ko parādīt";
 "favorites.noTools.description" = "Nospiežot sirds ikonu, rīks tiks pievienots izlasei un būs pieejams bezsaistē.";
