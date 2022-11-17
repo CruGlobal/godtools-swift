@@ -11,7 +11,7 @@ struct SegmentControl: View {
     
     private let segmentSpacing: CGFloat = 30
     
-    @Binding var selectedIndex: Int?
+    @Binding var selectedIndex: Int
     
     let segments: [String]
     let segmentTappedClosure: ((_ index: Int) -> Void)

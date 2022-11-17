@@ -1,5 +1,5 @@
 //
-//  ProgressView.swift
+//  DownloadProgressView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class ProgressView: UIControl, NibBased {
+class DownloadProgressView: UIControl, NibBased {
     
     private var isLoaded: Bool = false
     

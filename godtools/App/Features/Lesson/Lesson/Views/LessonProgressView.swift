@@ -19,7 +19,7 @@ class LessonProgressView: UIView, NibBased {
     
     let height: CGFloat
     
-    @IBOutlet weak private var progressView: ProgressView!
+    @IBOutlet weak private var progressView: DownloadProgressView!
     @IBOutlet weak private var closeButton: UIButton!
     
     required init() {
