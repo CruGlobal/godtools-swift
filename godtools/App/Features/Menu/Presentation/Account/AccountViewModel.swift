@@ -111,7 +111,7 @@ extension AccountViewModel {
         trackSectionViewedAnalytics(sectionName: "Global Dashboard")
     }
     
-    func globalActivityAnalyticsItemWillAppear(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
+    func getGlobalActivityAnalyticsItem(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
         
         return AccountGlobalActivityAnalyticsItemViewModel(globalActivity: globalActivityThisWeekDomainModels[index])
     }

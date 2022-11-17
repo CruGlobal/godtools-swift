@@ -64,12 +64,12 @@ struct AccountGlobalActivity: View {
                                 let leftIndex: Int = index
                                 let rightIndex: Int = index + 1
                                 
-                                AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.globalActivityAnalyticsItemWillAppear(index: leftIndex))
+                                AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.getGlobalActivityAnalyticsItem(index: leftIndex))
                                     .frame(width: itemSize.width, height: itemSize.height)
                                                             
                                 if rightIndex < viewModel.numberOfGlobalActivityThisWeekItems {
                                     
-                                    AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.globalActivityAnalyticsItemWillAppear(index: rightIndex))
+                                    AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.getGlobalActivityAnalyticsItem(index: rightIndex))
                                         .frame(width: itemSize.width, height: itemSize.height)
                                 }
                             }
