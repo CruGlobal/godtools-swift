@@ -2459,6 +2459,7 @@
 				4554512328948D090072EC6E /* LanguageSettingsRepository */,
 				45D63E5F288F698C009B4610 /* LanguagesRepository */,
 				4533C4CC28AC2C4C00F9628B /* LaunchCountRepository */,
+				D409F2AB2928042100D9D2FE /* MobileContentApiAuthSession */,
 				D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */,
 				D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */,
 				45D63E8C288F77D4009B4610 /* ResourcesRepository */,
@@ -5584,7 +5585,6 @@
 			isa = PBXGroup;
 			children = (
 				45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */,
-				D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */,
 			);
 			path = URLSession;
 			sourceTree = "<group>";
@@ -6587,6 +6587,14 @@
 				D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */,
 			);
 			path = FirebaseInAppMessages;
+			sourceTree = "<group>";
+		};
+		D409F2AB2928042100D9D2FE /* MobileContentApiAuthSession */ = {
+			isa = PBXGroup;
+			children = (
+				D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */,
+			);
+			path = MobileContentApiAuthSession;
 			sourceTree = "<group>";
 		};
 		D41B38B62885BEA100BD5899 /* GetLanguageAvailabilityUseCase */ = {
