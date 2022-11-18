@@ -39,13 +39,11 @@ class MobileContentAuthTokenRepository {
     
     func fetchRemoteAuthToken(oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
         
-        // TODO: GT-1869 - `getAccessTokenFromPersistentStore` should be updated to use `renewAccessTokenPublisher()' https://github.com/okta/okta-oidc-ios/blob/e5450a3aab5c194a7470addeef176e769a374650/Sources/AppAuth/OKTAuthState.m#L90-L93
-        guard let oktaAccessToken = oktaAccessToken ?? cruOktaAuthentication.getAccessTokenFromPersistentStore() else {
-            
-            return missingOktaTokenFailure()
-        }
-        
-        return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+        return getOktaAccessTokenPublisher(oktaAccessToken: oktaAccessToken)
+            .flatMap ({ oktaAccessToken -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> in
+                
+                return self.api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+            })
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
                                 
                 self?.cache.storeAuthToken(authTokenDataModel)
@@ -54,6 +52,39 @@ class MobileContentAuthTokenRepository {
                     .setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
                 
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func getOktaAccessTokenPublisher(oktaAccessToken: String? = nil) -> AnyPublisher<String, URLResponseError> {
+        
+        if let oktaAccessToken = oktaAccessToken {
+            
+            return Just(oktaAccessToken)
+                .setFailureType(to: URLResponseError.self)
+                .eraseToAnyPublisher()
+            
+        } else {
+            
+            return renewOktaAccessTokenPublisher()
+        }
+    }
+    
+    private func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {
+        
+        return cruOktaAuthentication.renewAccessTokenPublisher()
+            .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, URLResponseError> in
+                
+                return response.result.publisher
+                    .mapError { oktaError in
+                        return URLResponseError.otherError(error: oktaError.getError())
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ oktaAccessToken in
+                
+                return Just(oktaAccessToken.value)
+                    .setFailureType(to: URLResponseError.self)
             })
             .eraseToAnyPublisher()
     }
