@@ -39,7 +39,7 @@ class MobileContentAuthTokenRepository {
     
     func fetchRemoteAuthToken(oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
         
-        // TODO: -  `getAccessTokenFromPersistentStore` should be updated to `withFreshTokenPerformAction` based on https://github.com/okta/okta-oidc-ios/blob/e5450a3aab5c194a7470addeef176e769a374650/Sources/AppAuth/OKTAuthState.m#L90-L93
+        // TODO: GT-1869 - `getAccessTokenFromPersistentStore` should be updated to use `renewAccessTokenPublisher()' https://github.com/okta/okta-oidc-ios/blob/e5450a3aab5c194a7470addeef176e769a374650/Sources/AppAuth/OKTAuthState.m#L90-L93
         guard let oktaAccessToken = oktaAccessToken ?? cruOktaAuthentication.getAccessTokenFromPersistentStore() else {
             
             return missingOktaTokenFailure()
