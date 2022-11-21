@@ -114,6 +114,16 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getMobileContentUserDetailsRepository() -> MobileContentUserDetailsRepository {
+        return MobileContentUserDetailsRepository(
+            api: MobileContentUserDetailsAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            )
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         
         let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)

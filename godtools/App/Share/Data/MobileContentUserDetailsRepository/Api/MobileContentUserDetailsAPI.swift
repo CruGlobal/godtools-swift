@@ -40,10 +40,15 @@ class MobileContentUserDetailsAPI {
         )
     }
     
-    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<Data?, URLResponseError> {
+    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<UserDataModel, URLResponseError> {
         
         let urlRequest = getUserDetailsRequest(userId: userId)
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+            .decode(type: UserDataModel.self, decoder: JSONDecoder())
+            .mapError {
+                return URLResponseError.decodeError(error: $0)
+            }
+            .eraseToAnyPublisher()
     }
 }

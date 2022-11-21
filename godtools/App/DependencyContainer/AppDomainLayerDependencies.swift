@@ -287,4 +287,8 @@ class AppDomainLayerDependencies {
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
         )
     }
+    
+    func getUserDetailsUseCase() -> GetMobileContentUserDetails {
+        return GetMobileContentUserDetails(repository: dataLayer.getMobileContentUserDetailsRepository())
+    }
 }

@@ -19,7 +19,7 @@ class GetMobileContentUserDetails {
     }
     
     
-    func getUserDetailsPublisher() -> AnyPublisher<Data?, URLResponseError> {
+    func getUserDetailsPublisher() -> AnyPublisher<UserDataModel, URLResponseError> {
         
         return repository.fetchRemoteUserDetails()
     }

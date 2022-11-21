@@ -17,7 +17,7 @@ class MobileContentUserDetailsRepository {
         self.api = api
     }
     
-    func fetchRemoteUserDetails() -> AnyPublisher<Data?, URLResponseError> {
+    func fetchRemoteUserDetails() -> AnyPublisher<UserDataModel, URLResponseError> {
         
         return api.fetchUserDetailsPublisher()
     }
