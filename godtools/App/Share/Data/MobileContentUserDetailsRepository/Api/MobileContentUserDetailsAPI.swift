@@ -13,18 +13,18 @@ import Combine
 class MobileContentUserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
+    private let baseURL: String
     private let ignoreCacheSession: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let baseURL: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.ignoreCacheSession = ignoreCacheSession.session
         self.baseURL = config.mobileContentApiBaseUrl
+        self.ignoreCacheSession = ignoreCacheSession.session
         self.authSession = mobileContentApiAuthSession
     }
     
-    private func getUserDetailsRequest(userId: String) -> URLRequest {
+    private func getUserDetailsRequest(userId: String? = nil) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -32,7 +32,7 @@ class MobileContentUserDetailsAPI {
         
         return requestBuilder.build(
             session: ignoreCacheSession,
-            urlString: baseURL + "/users/" + userId,
+            urlString: baseURL + "/users/me",
             method: .get,
             headers: headers,
             httpBody: nil,
@@ -40,7 +40,7 @@ class MobileContentUserDetailsAPI {
         )
     }
     
-    func fetchUserDetailsPublisher(userId: String) -> AnyPublisher<Data?, URLResponseError> {
+    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<Data?, URLResponseError> {
         
         let urlRequest = getUserDetailsRequest(userId: userId)
         

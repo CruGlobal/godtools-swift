@@ -985,6 +985,8 @@
 		D409F2A8291D9C2300D9D2FE /* MobileContentApiAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */; };
 		D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */; };
 		D409F2AD2928110E00D9D2FE /* MobileContentUserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2AC2928110E00D9D2FE /* MobileContentUserDetailsAPI.swift */; };
+		D409F2B1292BEC3300D9D2FE /* MobileContentUserDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B0292BEC3300D9D2FE /* MobileContentUserDetailsRepository.swift */; };
+		D409F2B3292BEDEC00D9D2FE /* GetMobileContentUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B2292BEDEC00D9D2FE /* GetMobileContentUserDetails.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AC287F0FDD00BD5899 /* FeaturedLessonCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */; };
@@ -2143,6 +2145,8 @@
 		D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiAuthSession.swift; sourceTree = "<group>"; };
 		D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenError.swift; sourceTree = "<group>"; };
 		D409F2AC2928110E00D9D2FE /* MobileContentUserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentUserDetailsAPI.swift; sourceTree = "<group>"; };
+		D409F2B0292BEC3300D9D2FE /* MobileContentUserDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentUserDetailsRepository.swift; sourceTree = "<group>"; };
+		D409F2B2292BEDEC00D9D2FE /* GetMobileContentUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMobileContentUserDetails.swift; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsView.swift; sourceTree = "<group>"; };
@@ -6182,6 +6186,7 @@
 				451FB9332896B3DE00423865 /* GetLanguageUseCase */,
 				D471CFE128CFB85B00DCE61C /* GetLessonsUseCase */,
 				D471CFE428CFBB9F00DCE61C /* GetLessonUseCase */,
+				D409F2B4292BEDF100D9D2FE /* GetMobileContentUserDetails */,
 				4531C7F028662023001C8C00 /* GetOnboardingQuickLinksEnabledUseCase */,
 				D42FEBDE28760A0D0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase */,
 				D42FEBDF28760A1C0002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase */,
@@ -6611,9 +6616,18 @@
 		D409F2AF2928115600D9D2FE /* MobileContentUserDetailsRepository */ = {
 			isa = PBXGroup;
 			children = (
+				D409F2B0292BEC3300D9D2FE /* MobileContentUserDetailsRepository.swift */,
 				D409F2AE2928111300D9D2FE /* Api */,
 			);
 			path = MobileContentUserDetailsRepository;
+			sourceTree = "<group>";
+		};
+		D409F2B4292BEDF100D9D2FE /* GetMobileContentUserDetails */ = {
+			isa = PBXGroup;
+			children = (
+				D409F2B2292BEDEC00D9D2FE /* GetMobileContentUserDetails.swift */,
+			);
+			path = GetMobileContentUserDetails;
 			sourceTree = "<group>";
 		};
 		D41B38B62885BEA100BD5899 /* GetLanguageAvailabilityUseCase */ = {
@@ -8158,6 +8172,7 @@
 				D471CFD828BD460300DCE61C /* ToolCategoryDomainModel.swift in Sources */,
 				45677788287DB3520044AEB2 /* ShareToolScreenTutorialItemProvider.swift in Sources */,
 				D44F3ADE286256EB0008390D /* ToolCardProvider.swift in Sources */,
+				D409F2B1292BEC3300D9D2FE /* MobileContentUserDetailsRepository.swift in Sources */,
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
 				45F71631290A12D70019B715 /* MailViewModel.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
@@ -8531,6 +8546,7 @@
 				D41B38C228906B3200BD5899 /* DeviceLanguageDomainModel.swift in Sources */,
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
+				D409F2B3292BEDEC00D9D2FE /* GetMobileContentUserDetails.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,
