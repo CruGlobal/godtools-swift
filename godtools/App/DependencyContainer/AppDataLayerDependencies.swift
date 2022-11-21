@@ -156,7 +156,15 @@ class AppDataLayerDependencies {
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
-            )
+            ),
+            cruOktaAuthentication: getCruOktaAuthentication()
+        )
+    }
+    
+    func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
+        return MobileContentApiAuthSession(
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
     
