@@ -18,7 +18,7 @@ struct Segment: View {
     
     let text: String
     let index: Int
-    @Binding var selectedIndex: Int?
+    @Binding var selectedIndex: Int
     let tappedClosure: ((_ index: Int) -> Void)
     
     var body: some View {

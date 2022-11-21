@@ -14,7 +14,7 @@ class DownloadToolView: UIViewController {
         
     @IBOutlet weak private var messageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
-    @IBOutlet weak private var progressView: ProgressView!
+    @IBOutlet weak private var progressView: DownloadProgressView!
     @IBOutlet weak private var progressLabel: UILabel!
     
     required init(viewModel: DownloadToolViewModelType) {

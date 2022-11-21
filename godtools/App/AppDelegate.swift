@@ -27,12 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InfoPlist()
     }()
     
+    private lazy var realmDatabase: RealmDatabase = {
+        RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+    }()
+    
     private lazy var appDeepLinkingService: DeepLinkingService = {
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist)
+        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
     }()
     
     private lazy var appFlow: AppFlow = {

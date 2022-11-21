@@ -331,6 +331,7 @@ Press the About button on any tool for more info.";
 "card_status2" = "Next";
 
 "account.activity.title" = "Activity";
+"account.globalActivity.title" = "Global Activity";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
