@@ -29,6 +29,7 @@ class AccountViewModel: ObservableObject {
     @Published var isLoadingProfile: Bool = true
     @Published var isLoadingGlobalActivityThisWeek: Bool = true
     @Published var profileName: String = ""
+    @Published var joinedOnText: String = ""
     @Published var activityButtonTitle: String
     @Published var globalActivityButtonTitle: String
     @Published var globalActivityTitle: String
@@ -69,12 +70,11 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserDetailsUseCase.getUserDetailsPublisher()
+        getUserDetailsUseCase.getUserPublisher()
             .receiveOnMain()
-            .sink { error in
-                print(error)
-            } receiveValue: { data in
-                print(data)
+            .sink { [weak self] user in
+                
+                self?.joinedOnText = user?.joinedOnString ?? ""
             }
             .store(in: &cancellables)
 

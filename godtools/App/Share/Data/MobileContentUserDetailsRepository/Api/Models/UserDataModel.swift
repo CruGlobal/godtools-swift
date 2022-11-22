@@ -39,6 +39,12 @@ struct UserDataModel: Decodable {
         createdAt = UserDataModel.parseCreatedAtDateFromString(createdAtDateString)
     }
     
+    init(realmUser: RealmUser) {
+        
+        id = realmUser.id
+        createdAt = realmUser.createdAt
+    }
+    
     private static func parseCreatedAtDateFromString(_ dateString: String) -> Date? {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [

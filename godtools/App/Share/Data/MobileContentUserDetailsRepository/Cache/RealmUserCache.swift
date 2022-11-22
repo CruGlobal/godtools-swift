@@ -21,6 +21,19 @@ class RealmUserCache {
         self.userSync = userSync
     }
     
+    func getUserChanged() -> AnyPublisher<Void, Never> {
+        
+        return realmDatabase.openRealm().objects(RealmUser.self)
+            .objectWillChange
+            .eraseToAnyPublisher()
+    }
+    
+    func getUser() -> UserDataModel? {
+        guard let realmUser = realmDatabase.openRealm().objects(RealmUser.self).first else { return nil }
+        
+        return UserDataModel(realmUser: realmUser)
+    }
+    
     func syncUser(_ user: UserDataModel) -> AnyPublisher<UserDataModel, Error> {
         
         return userSync.syncUser(user: user)

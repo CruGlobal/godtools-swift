@@ -19,6 +19,16 @@ class MobileContentUserDetailsRepository {
         self.cache = cache
     }
     
+    func getUserChanged() -> AnyPublisher<Void, Never> {
+        
+        return cache.getUserChanged()
+    }
+    
+    func getUser() -> UserDataModel? {
+        
+        return cache.getUser()
+    }
+    
     func fetchRemoteUserDetails() -> AnyPublisher<UserDataModel, URLResponseError> {
         
         return api.fetchUserDetailsPublisher()

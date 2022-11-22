@@ -38,6 +38,8 @@ struct AccountUserDetailsView: View {
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                 
+                Text(viewModel.joinedOnText)
+                
                 FixedVerticalSpacer(height: 9)
                 
                 Text("")
