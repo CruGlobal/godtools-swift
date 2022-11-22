@@ -12,13 +12,24 @@ import Combine
 class MobileContentUserDetailsRepository {
     
     private let api: MobileContentUserDetailsAPI
+    private let cache: RealmUserCache
     
-    init(api: MobileContentUserDetailsAPI) {
+    init(api: MobileContentUserDetailsAPI, cache: RealmUserCache) {
         self.api = api
+        self.cache = cache
     }
     
     func fetchRemoteUserDetails() -> AnyPublisher<UserDataModel, URLResponseError> {
         
         return api.fetchUserDetailsPublisher()
+            .flatMap { user in
+                
+                return self.cache.syncUser(user)
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -9,14 +9,18 @@
 import Foundation
 import RealmSwift
 
-//class RealmUser: Object {
-//    
-//    @objc dynamic var id: String
-//    @objc dynamic var createdAt: Date
-//    
-//    init(model: UserDataModel) {
-//        
-//        id = model.id
-//        createdAt = model.createdAt
-//    }
-//}
+class RealmUser: Object {
+    
+    @objc dynamic var id: String = ""
+    @objc dynamic var createdAt: Date?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func mapFrom(model: UserDataModel) {
+        
+        id = model.id
+        createdAt = model.createdAt
+    }
+}
