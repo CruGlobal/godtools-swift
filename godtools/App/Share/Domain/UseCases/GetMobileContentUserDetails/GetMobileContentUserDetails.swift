@@ -12,10 +12,12 @@ import Combine
 class GetMobileContentUserDetails {
     
     private let repository: MobileContentUserDetailsRepository
+    private let localizationServices: LocalizationServices
     
-    init(repository: MobileContentUserDetailsRepository) {
+    init(repository: MobileContentUserDetailsRepository, localizationServices: LocalizationServices) {
         
         self.repository = repository
+        self.localizationServices = localizationServices
     }
     
     
@@ -37,7 +39,12 @@ class GetMobileContentUserDetails {
                     dateFormatter.dateStyle = .medium
                     dateFormatter.timeStyle = .none
                     
-                    joinedOnString = dateFormatter.string(from: createdAt)
+                    let joinedOnDateString = dateFormatter.string(from: createdAt)
+                    
+                    joinedOnString = String.localizedStringWithFormat(
+                        self.localizationServices.stringForMainBundle(key: "account.joinedOn"),
+                        joinedOnDateString
+                    )
                 }
                 
                 return Just(UserDomainModel(joinedOnString: joinedOnString))

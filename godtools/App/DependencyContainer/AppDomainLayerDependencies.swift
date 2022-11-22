@@ -289,6 +289,9 @@ class AppDomainLayerDependencies {
     }
     
     func getUserDetailsUseCase() -> GetMobileContentUserDetails {
-        return GetMobileContentUserDetails(repository: dataLayer.getMobileContentUserDetailsRepository())
+        return GetMobileContentUserDetails(
+            repository: dataLayer.getMobileContentUserDetailsRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
+        )
     }
 }

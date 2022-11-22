@@ -1,3 +1,5 @@
+"account.joinedOn" = "Joined %@";
+
 "toolDetails.conversationStarters.title" = "Conversation starters";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
