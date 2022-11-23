@@ -104,6 +104,9 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case deleteAccountTappedFromMenu
     
+    // my account
+    case backTappedFromMyAccount
+    
     // delete account
     case backTappedFromDeleteAccount
     case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount

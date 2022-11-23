@@ -41,6 +41,7 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
@@ -93,18 +94,10 @@ class MenuFlow: Flow {
             flowDelegate?.navigate(step: .doneTappedFromMenu)
                         
         case .myAccountTappedFromMenu:
+            navigationController.pushViewController(getAccountView(), animated: true)
             
-            let viewModel = AccountViewModel(
-                globalAnalyticsService: appDiContainer.dataLayer.getGlobalAnalyticsService(),
-                localizationServices: appDiContainer.localizationServices,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                getUserAccountProfileNameUseCase: appDiContainer.domainLayer.getUserAccountProfileNameUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
-            )
-            let view = AccountView(viewModel: viewModel)
-            
-            navigationController.pushViewController(view, animated: true)
+        case .backTappedFromMyAccount:
+            navigationController.popViewController(animated: true)
             
         case .aboutTappedFromMenu:
             
@@ -240,7 +233,31 @@ class MenuFlow: Flow {
         }
     }
     
-    private func navigateToWebContentView(webContent: WebContentType) {
+    private func getAccountView() -> UIViewController {
+        
+        let viewModel = AccountViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getUserAccountProfileNameUseCase: appDiContainer.domainLayer.getUserAccountProfileNameUseCase(),
+            getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics()
+        )
+        
+        let view = AccountView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<AccountView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return hostingView
+    }
+    
+    private func getWebContentView(webContent: WebContentType) -> UIViewController {
         
         let viewModel = WebContentViewModel(
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
@@ -248,9 +265,15 @@ class MenuFlow: Flow {
             analytics: appDiContainer.dataLayer.getAnalytics(),
             webContent: webContent
         )
+        
         let view = WebContentView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
+        return view
+    }
+    
+    private func navigateToWebContentView(webContent: WebContentType) {
+        
+        navigationController.pushViewController(getWebContentView(webContent: webContent), animated: true)
     }
 }
 

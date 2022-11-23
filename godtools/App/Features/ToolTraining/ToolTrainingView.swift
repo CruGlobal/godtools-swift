@@ -22,7 +22,7 @@ class ToolTrainingView: UIViewController {
     @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var tipPagesNavigationView: PageNavigationCollectionView!
     @IBOutlet weak private var closeButton: UIButton!
-    @IBOutlet weak private var progressView: ProgressView!
+    @IBOutlet weak private var progressView: DownloadProgressView!
     @IBOutlet weak private var tipIconContainerView: UIView!
     @IBOutlet weak private var tipBackgroundImageView: UIImageView!
     @IBOutlet weak private var tipForegroundImageView: UIImageView!
