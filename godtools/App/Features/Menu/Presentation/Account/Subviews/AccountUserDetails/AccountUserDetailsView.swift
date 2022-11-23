@@ -37,7 +37,7 @@ struct AccountUserDetailsView: View {
                     .font(FontLibrary.sfProTextSemibold.font(size: 25))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
-                                
+                
                 FixedVerticalSpacer(height: 9)
                 
                 Text(viewModel.joinedOnText)
