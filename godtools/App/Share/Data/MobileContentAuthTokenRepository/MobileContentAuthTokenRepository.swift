@@ -7,23 +7,20 @@
 //
 
 import Foundation
-import OktaAuthentication
 import Combine
 
 class MobileContentAuthTokenRepository {
     
     private let api: MobileContentAuthTokenAPI
     private let cache: MobileContentAuthTokenCache
-    private let cruOktaAuthentication: CruOktaAuthentication
         
-    init(api: MobileContentAuthTokenAPI, cache: MobileContentAuthTokenCache, cruOktaAuthentication: CruOktaAuthentication) {
+    init(api: MobileContentAuthTokenAPI, cache: MobileContentAuthTokenCache) {
         
         self.api = api
         self.cache = cache
-        self.cruOktaAuthentication = cruOktaAuthentication
     }
     
-    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
+    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
         if let authToken = getCachedAuthToken(for: userId) {
             
@@ -37,13 +34,9 @@ class MobileContentAuthTokenRepository {
         }
     }
     
-    func fetchRemoteAuthToken(oktaAccessToken: String? = nil) -> AnyPublisher<String?, URLResponseError> {
+    func fetchRemoteAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
-        return getOktaAccessTokenPublisher(oktaAccessToken: oktaAccessToken)
-            .flatMap ({ oktaAccessToken -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> in
-                
-                return self.api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
-            })
+        return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
                                 
                 self?.cache.storeAuthToken(authTokenDataModel)
@@ -56,49 +49,10 @@ class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getOktaAccessTokenPublisher(oktaAccessToken: String? = nil) -> AnyPublisher<String, URLResponseError> {
-        
-        if let oktaAccessToken = oktaAccessToken {
-            
-            return Just(oktaAccessToken)
-                .setFailureType(to: URLResponseError.self)
-                .eraseToAnyPublisher()
-            
-        } else {
-            
-            return renewOktaAccessTokenPublisher()
-        }
-    }
-    
-    private func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {
-        
-        return cruOktaAuthentication.renewAccessTokenPublisher()
-            .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, URLResponseError> in
-                
-                return response.result.publisher
-                    .mapError { oktaError in
-                        return URLResponseError.otherError(error: oktaError.getError())
-                    }
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ oktaAccessToken in
-                
-                return Just(oktaAccessToken.value)
-                    .setFailureType(to: URLResponseError.self)
-            })
-            .eraseToAnyPublisher()
-    }
-    
     private func getCachedAuthToken(for userId: Int?) -> String? {
         
         guard let userId = userId else { return nil }
         
         return cache.getAuthToken(for: userId)
-    }
-    
-    private func missingOktaTokenFailure() -> AnyPublisher<String?, URLResponseError> {
-        let error = URLResponseError.otherError(error: MobileContentAuthTokenError.nilOktaToken)
-        return Fail(outputType: String?.self, failure: error)
-            .eraseToAnyPublisher()
     }
 }

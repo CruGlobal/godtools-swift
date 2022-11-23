@@ -12,21 +12,27 @@ import Combine
 
 class MobileContentApiAuthSession {
     
-    let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     let ignoreCacheSession: URLSession
+    let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
+    let userAuthentication: UserAuthentication
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
      
         self.ignoreCacheSession = ignoreCacheSession.session
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
+        self.userAuthentication = userAuthentication
     }
     
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
-        // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retrieve the cached token rather than requesting a new one
-        return mobileContentAuthTokenRepository.getAuthTokenPublisher()
+        return userAuthentication.renewOktaAccessTokenPublisher()
+            .flatMap { oktaAccessToken in
+                
+                // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retrieve the cached token rather than requesting a new one
+                return self.mobileContentAuthTokenRepository.getAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+            }
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
 
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
@@ -103,7 +109,11 @@ class MobileContentApiAuthSession {
     
     private func fetchFreshAuthTokenAndReattemptDataTask(urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data?, URLResponseError> {
         
-        return mobileContentAuthTokenRepository.fetchRemoteAuthToken()
+        return userAuthentication.renewOktaAccessTokenPublisher()
+            .flatMap { oktaAccessToken in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthToken(oktaAccessToken: oktaAccessToken)
+            }
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in
             
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: session)
