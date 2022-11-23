@@ -26,26 +26,13 @@ class GetUserDetailsUseCase {
         return Publishers.CombineLatest(fetchRemoteUserDetailsPublisher(), repository.getUserDetailsChanged())
             .flatMap { _ in
                 
-                guard let realmUserDetails = self.repository.getUserDetails() else {
+                guard let userDetails = self.repository.getUserDetails() else {
                     
                     return Just<UserDetailsDomainModel?>(nil)
                         .eraseToAnyPublisher()
                 }
                 
-                var joinedOnString = ""
-                if let createdAt = realmUserDetails.createdAt {
-                    
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .medium
-                    dateFormatter.timeStyle = .none
-                    
-                    let joinedOnDateString = dateFormatter.string(from: createdAt)
-                    
-                    joinedOnString = String.localizedStringWithFormat(
-                        self.localizationServices.stringForMainBundle(key: "account.joinedOn"),
-                        joinedOnDateString
-                    )
-                }
+                let joinedOnString = self.buildJoinedOnString(from: userDetails)
                 
                 return Just(UserDetailsDomainModel(joinedOnString: joinedOnString))
                     .eraseToAnyPublisher()
@@ -70,5 +57,23 @@ class GetUserDetailsUseCase {
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func buildJoinedOnString(from userDetails: UserDetailsDataModel) -> String {
+        
+        guard let createdAt = userDetails.createdAt else { return "" }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        
+        let joinedOnDateString = dateFormatter.string(from: createdAt)
+        
+        let joinedOnString = String.localizedStringWithFormat(
+            self.localizationServices.stringForMainBundle(key: "account.joinedOn"),
+            joinedOnDateString
+        )
+        
+        return joinedOnString
     }
 }
