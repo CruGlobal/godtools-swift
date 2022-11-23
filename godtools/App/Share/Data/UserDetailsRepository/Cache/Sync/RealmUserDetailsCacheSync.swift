@@ -1,5 +1,5 @@
 //
-//  RealmUserCacheSync.swift
+//  RealmUserDetailsCacheSync.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/21/22.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-struct RealmUserCacheSync {
+struct RealmUserDetailsCacheSync {
     
     private let realmDatabase: RealmDatabase
     
@@ -19,22 +19,22 @@ struct RealmUserCacheSync {
         self.realmDatabase = realmDatabase
     }
     
-    func syncUser(user: UserDataModel) -> AnyPublisher<UserDataModel, Error> {
+    func syncUserDetails(_ userDetails: UserDetailsDataModel) -> AnyPublisher<UserDetailsDataModel, Error> {
         
         return Future() { promise in
             
             self.realmDatabase.background { realm in
                 
-                let newUser: RealmUser = RealmUser()
-                newUser.mapFrom(model: user)
+                let newUserDetails: RealmUserDetails = RealmUserDetails()
+                newUserDetails.mapFrom(model: userDetails)
                 
                 do {
                     
                     try realm.write {
-                        realm.add(newUser, update: .all)
+                        realm.add(newUserDetails, update: .all)
                     }
                     
-                    promise(.success(user))
+                    promise(.success(userDetails))
                     
                 } catch let error {
                     

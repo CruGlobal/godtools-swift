@@ -1,5 +1,5 @@
 //
-//  UserDomainModel.swift
+//  UserDetailsDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/22/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserDomainModel {
+struct UserDetailsDomainModel {
     
     let joinedOnString: String
 }

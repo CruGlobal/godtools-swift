@@ -16,7 +16,7 @@ class AccountViewModel: ObservableObject {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
-    private let getUserDetailsUseCase: GetMobileContentUserDetails
+    private let getUserDetailsUseCase: GetUserDetailsUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let analytics: AnalyticsContainer
     
@@ -35,7 +35,7 @@ class AccountViewModel: ObservableObject {
     @Published var globalActivityTitle: String
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserDetailsUseCase: GetMobileContentUserDetails, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserDetailsUseCase: GetUserDetailsUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -70,11 +70,11 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserDetailsUseCase.getUserPublisher()
+        getUserDetailsUseCase.getUserDetailsPublisher()
             .receiveOnMain()
-            .sink { [weak self] user in
+            .sink { [weak self] userDetails in
                 
-                self?.joinedOnText = user?.joinedOnString ?? ""
+                self?.joinedOnText = userDetails?.joinedOnString ?? ""
             }
             .store(in: &cancellables)
 

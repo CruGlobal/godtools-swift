@@ -1,5 +1,5 @@
 //
-//  UserDataModel.swift
+//  UserDetailsDataModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/21/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserDataModel: Decodable {
+struct UserDetailsDataModel: Decodable {
     
     let id: String
     let createdAt: Date?
@@ -36,13 +36,13 @@ struct UserDataModel: Decodable {
         let attributesContainer = try dataContainer.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         let createdAtDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .createdAt) ?? ""
-        createdAt = UserDataModel.parseCreatedAtDateFromString(createdAtDateString)
+        createdAt = UserDetailsDataModel.parseCreatedAtDateFromString(createdAtDateString)
     }
     
-    init(realmUser: RealmUser) {
+    init(realmUserDetails: RealmUserDetails) {
         
-        id = realmUser.id
-        createdAt = realmUser.createdAt
+        id = realmUserDetails.id
+        createdAt = realmUserDetails.createdAt
     }
     
     private static func parseCreatedAtDateFromString(_ dateString: String) -> Date? {

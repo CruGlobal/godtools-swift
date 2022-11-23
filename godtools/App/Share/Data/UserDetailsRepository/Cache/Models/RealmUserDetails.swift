@@ -1,5 +1,5 @@
 //
-//  RealmUser.swift
+//  RealmUserDetails.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/21/22.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmUser: Object {
+class RealmUserDetails: Object {
     
     @objc dynamic var id: String = ""
     @objc dynamic var createdAt: Date?
@@ -18,7 +18,7 @@ class RealmUser: Object {
         return "id"
     }
     
-    func mapFrom(model: UserDataModel) {
+    func mapFrom(model: UserDetailsDataModel) {
         
         id = model.id
         createdAt = model.createdAt

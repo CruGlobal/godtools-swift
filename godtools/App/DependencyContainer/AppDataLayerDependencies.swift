@@ -114,20 +114,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getMobileContentUserDetailsRepository() -> MobileContentUserDetailsRepository {
-        return MobileContentUserDetailsRepository(
-            api: MobileContentUserDetailsAPI(
-                config: getAppConfig(),
-                ignoreCacheSession: sharedIgnoreCacheSession,
-                mobileContentApiAuthSession: getMobileContentApiAuthSession()
-            ),
-            cache: RealmUserCache(
-                realmDatabase: sharedRealmDatabase,
-                userSync: RealmUserCacheSync(realmDatabase: sharedRealmDatabase)
-            )
-        )
-    }
-    
     func getLanguagesRepository() -> LanguagesRepository {
         
         let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
@@ -229,6 +215,20 @@ class AppDataLayerDependencies {
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+        )
+    }
+    
+    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsRepository(
+            api: UserDetailsAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserDetailsCache(
+                realmDatabase: sharedRealmDatabase,
+                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase)
+            )
         )
     }
 }

@@ -282,16 +282,16 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
-        return GetUserIsAuthenticatedUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+    func getUserDetailsUseCase() -> GetUserDetailsUseCase {
+        return GetUserDetailsUseCase(
+            repository: dataLayer.getUserDetailsRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
-    func getUserDetailsUseCase() -> GetMobileContentUserDetails {
-        return GetMobileContentUserDetails(
-            repository: dataLayer.getMobileContentUserDetailsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
+    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
+        return GetUserIsAuthenticatedUseCase(
+            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
         )
     }
 }

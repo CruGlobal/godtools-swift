@@ -1,5 +1,5 @@
 //
-//  MobileContentUserDetailsAPI.swift
+//  UserDetailsAPI.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/18/22.
@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentUserDetailsAPI {
+class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
@@ -40,12 +40,12 @@ class MobileContentUserDetailsAPI {
         )
     }
     
-    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<UserDataModel, URLResponseError> {
+    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
         
         let urlRequest = getUserDetailsRequest(userId: userId)
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: UserDataModel.self, decoder: JSONDecoder())
+            .decode(type: UserDetailsDataModel.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
             }
