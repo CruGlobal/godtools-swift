@@ -30,7 +30,6 @@ class MobileContentApiAuthSession {
         return userAuthentication.renewOktaAccessTokenPublisher()
             .flatMap { oktaAccessToken in
                 
-                // TODO: - pass a user ID in the `getAuthTokenPublisher` call so that we retrieve the cached token rather than requesting a new one
                 return self.mobileContentAuthTokenRepository.getAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             }
             .flatMap { authToken -> AnyPublisher<Data?, URLResponseError> in

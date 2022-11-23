@@ -20,9 +20,9 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
+    func getAuthTokenPublisher(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
-        if let authToken = getCachedAuthToken(for: userId) {
+        if let authToken = getCachedAuthToken() {
             
             return Just(authToken)
                 .setFailureType(to: URLResponseError.self)
@@ -49,10 +49,8 @@ class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getCachedAuthToken(for userId: Int?) -> String? {
-        
-        guard let userId = userId else { return nil }
-        
-        return cache.getAuthToken(for: userId)
+    private func getCachedAuthToken() -> String? {
+                
+        return cache.getAuthToken()
     }
 }
