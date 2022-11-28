@@ -11,9 +11,8 @@ import Security
 
 class MobileContentAuthTokenKeychainAccessor {
     
-    enum Service: String {
-        case moileContentAuthToken
-    }
+    private let serviceName = "mobileContent"
+    private let accountName = "authToken"
     
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
@@ -37,9 +36,9 @@ class MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    func getMobileContentAuthToken(userId: Int) -> String? {
+    func getMobileContentAuthToken() -> String? {
         
-        let getQuery = buildGetQueryForAuthToken(userId: userId)
+        let getQuery = buildGetQueryForAuthToken()
         
         var getResult: AnyObject?
         let getStatus = SecItemCopyMatching(getQuery, &getResult)
@@ -87,8 +86,8 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.moileContentAuthToken.rawValue,
-            kSecAttrAccount as String: "\(authTokenDataModel.userId)",
+            kSecAttrService as String: serviceName,
+            kSecAttrAccount as String: accountName,
             kSecValueData as String: Data(authTokenDataModel.token.utf8)
         ] as CFDictionary
     }
@@ -97,23 +96,23 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         let updateQuery = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.moileContentAuthToken.rawValue
+            kSecAttrService as String: serviceName
         ] as CFDictionary
         
         let updateAttributes = [
-            kSecAttrAccount as String: "\(authTokenDataModel.userId)",
+            kSecAttrAccount as String: accountName,
             kSecValueData as String: Data(authTokenDataModel.token.utf8)
         ] as CFDictionary
         
         return (updateQuery, updateAttributes)
     }
     
-    private func buildGetQueryForAuthToken(userId: Int) -> CFDictionary {
+    private func buildGetQueryForAuthToken() -> CFDictionary {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.moileContentAuthToken.rawValue,
-            kSecAttrAccount as String: "\(userId)",
+            kSecAttrService as String: serviceName,
+            kSecAttrAccount as String: accountName,
             kSecReturnData as String: true
         ] as CFDictionary
     }

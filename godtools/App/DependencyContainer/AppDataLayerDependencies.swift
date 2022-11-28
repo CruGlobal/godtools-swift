@@ -156,15 +156,15 @@ class AppDataLayerDependencies {
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
-            ),
-            cruOktaAuthentication: getCruOktaAuthentication()
+            )
         )
     }
     
     func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
         return MobileContentApiAuthSession(
             ignoreCacheSession: sharedIgnoreCacheSession,
-            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
+            userAuthentication: getUserAuthentication()
         )
     }
     
@@ -216,6 +216,10 @@ class AppDataLayerDependencies {
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
+    }
+    
+    func getUserAuthentication() -> UserAuthentication {
+        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
     }
     
     func getUserDetailsRepository() -> UserDetailsRepository {
