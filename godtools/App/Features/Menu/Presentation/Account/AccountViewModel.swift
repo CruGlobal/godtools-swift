@@ -77,7 +77,6 @@ class AccountViewModel: ObservableObject {
                 self?.joinedOnText = userDetails?.joinedOnString ?? ""
             }
             .store(in: &cancellables)
-
         
         getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher()
             .receiveOnMain()
