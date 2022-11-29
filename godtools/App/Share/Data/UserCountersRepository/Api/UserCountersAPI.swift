@@ -26,12 +26,12 @@ class UserCountersAPI {
     
     func fetchUserCountersPublisher() -> AnyPublisher<Data, URLResponseError> {
         
-        let urlRequest = getUserCountersRequest(userId: "14")
+        let urlRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
     }
     
-    private func getUserCountersRequest(userId: String) -> URLRequest {
+    private func getUserCountersRequest() -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -39,7 +39,7 @@ class UserCountersAPI {
         
         return requestBuilder.build(
             session: ignoreCacheSession,
-            urlString: baseURL + "/users/" + userId + "/counters",
+            urlString: baseURL + "/users/me/counters",
             method: .get,
             headers: headers,
             httpBody: nil,

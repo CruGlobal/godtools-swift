@@ -222,6 +222,16 @@ class AppDataLayerDependencies {
         return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
     }
     
+    func getUserCountersRepository() -> UserCountersRepository {
+        return UserCountersRepository(
+            api: UserCountersAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            )
+        )
+    }
+    
     func getUserDetailsRepository() -> UserDetailsRepository {
         return UserDetailsRepository(
             api: UserDetailsAPI(
