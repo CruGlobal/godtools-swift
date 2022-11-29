@@ -994,6 +994,7 @@
 		D409F2CD29367CFB00D9D2FE /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */; };
 		D409F2CF2936866F00D9D2FE /* UserCounterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */; };
 		D409F2D22936891C00D9D2FE /* IncrementUserCounterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */; };
+		D409F2D429368FEB00D9D2FE /* GetUserCountersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AC287F0FDD00BD5899 /* FeaturedLessonCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */; };
@@ -2161,6 +2162,7 @@
 		D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
 		D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDataModel.swift; sourceTree = "<group>"; };
 		D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterResponse.swift; sourceTree = "<group>"; };
+		D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserCountersResponse.swift; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AB287F0FDD00BD5899 /* FeaturedLessonCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedLessonCardsView.swift; sourceTree = "<group>"; };
@@ -6789,6 +6791,7 @@
 			children = (
 				D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */,
 				D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */,
+				D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8234,6 +8237,7 @@
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
 				45F7162F290A12D70019B715 /* MailView.swift in Sources */,
 				D44F3AB328368A330008390D /* OptionalRoundedBorder.swift in Sources */,
+				D409F2D429368FEB00D9D2FE /* GetUserCountersResponse.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,

@@ -24,11 +24,16 @@ class UserCountersAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher() -> AnyPublisher<Data, URLResponseError> {
+    func fetchUserCountersPublisher() -> AnyPublisher<GetUserCountersResponse, URLResponseError> {
         
         let fetchRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
+            .decode(type: GetUserCountersResponse.self, decoder: JSONDecoder())
+            .mapError {
+                return URLResponseError.decodeError(error: $0)
+            }
+            .eraseToAnyPublisher()
     }
     
     func incrementCounterPublisher(counterId: Int, incrementValue: Int) -> AnyPublisher<IncrementUserCounterResponse, URLResponseError> {
