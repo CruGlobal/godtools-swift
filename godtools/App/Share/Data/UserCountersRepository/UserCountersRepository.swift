@@ -21,4 +21,9 @@ class UserCountersRepository {
         
         return api.fetchUserCountersPublisher()
     }
+    
+    func incrementUserCounter(id: Int, value: Int) -> AnyPublisher<Data, URLResponseError> {
+        
+        return api.incrementCounterPublisher(counterId: id, incrementValue: value)
+    }
 }

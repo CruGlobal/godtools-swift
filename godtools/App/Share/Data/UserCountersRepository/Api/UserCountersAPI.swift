@@ -26,9 +26,16 @@ class UserCountersAPI {
     
     func fetchUserCountersPublisher() -> AnyPublisher<Data, URLResponseError> {
         
-        let urlRequest = getUserCountersRequest()
+        let fetchRequest = getUserCountersRequest()
         
-        return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
+    }
+    
+    func incrementCounterPublisher(counterId: Int, incrementValue: Int) -> AnyPublisher<Data, URLResponseError> {
+        
+        let incrementRequest = getIncrementUserCountersRequest(counterId: counterId, incrementValue: incrementValue)
+        
+        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
     }
     
     private func getUserCountersRequest() -> URLRequest {
@@ -43,6 +50,31 @@ class UserCountersAPI {
             method: .get,
             headers: headers,
             httpBody: nil,
+            queryItems: nil
+        )
+    }
+    
+    private func getIncrementUserCountersRequest(counterId: Int, incrementValue: Int) -> URLRequest {
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
+        ]
+        
+        let body: [String: Any] = [
+            "data": [
+                "type": "user-counters",
+                "attributes": [
+                    "increment": incrementValue
+                ]
+            ]
+        ]
+        
+        return requestBuilder.build(
+            session: ignoreCacheSession,
+            urlString: baseURL + "/users/me/counters/\(counterId)",
+            method: .patch,
+            headers: headers,
+            httpBody: body,
             queryItems: nil
         )
     }
