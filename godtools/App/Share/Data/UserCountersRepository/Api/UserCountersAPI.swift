@@ -1,8 +1,8 @@
 //
-//  UserDetailsAPI.swift
+//  UserCountersAPI.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 11/18/22.
+//  Created by Rachael Skeath on 11/29/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class UserDetailsAPI {
+class UserCountersAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
@@ -24,19 +24,14 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchUserCountersPublisher() -> AnyPublisher<Data, URLResponseError> {
         
-        let urlRequest = getUserDetailsRequest()
+        let urlRequest = getUserCountersRequest(userId: "14")
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: UserDetailsDataModel.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
-            .eraseToAnyPublisher()
     }
     
-    private func getUserDetailsRequest() -> URLRequest {
+    private func getUserCountersRequest(userId: String) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -44,7 +39,7 @@ class UserDetailsAPI {
         
         return requestBuilder.build(
             session: ignoreCacheSession,
-            urlString: baseURL + "/users/me",
+            urlString: baseURL + "/users/" + userId + "/counters",
             method: .get,
             headers: headers,
             httpBody: nil,
