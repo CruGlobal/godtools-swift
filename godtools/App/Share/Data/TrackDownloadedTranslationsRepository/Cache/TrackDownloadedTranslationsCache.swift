@@ -19,19 +19,28 @@ class TrackDownloadedTranslationsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getDownloadedTranslation(translationId: String) -> DownloadedTranslationDataModel? {
+    private func getDownloadedTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [DownloadedTranslationDataModel] {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        guard let realmDownloadedTranslation = realm.object(ofType: RealmDownloadedTranslation.self, forPrimaryKey: translationId) else {
-            
-            return nil
-        }
+        let resourceIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.resourceId)) == %@", resourceId)
+        let languageIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.languageId)) == %@", languageId)
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [resourceIdPredicate, languageIdPredicate])
+                
+        let latestTranslations: [DownloadedTranslationDataModel] = realm.objects(RealmDownloadedTranslation.self)
+            .filter(filterPredicate)
+            .sorted(byKeyPath: #keyPath(RealmDownloadedTranslation.version), ascending: false)
+            .map({ DownloadedTranslationDataModel(model: $0) })
         
-        return DownloadedTranslationDataModel(model: realmDownloadedTranslation)
+        return latestTranslations
     }
     
-    func trackTranslationDownloaded(translationId: String) -> AnyPublisher<String, Error> {
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
+        
+        return getDownloadedTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
+    }
+    
+    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<DownloadedTranslationDataModel, Error> {
         
         return Future() { promise in
                 
@@ -39,8 +48,23 @@ class TrackDownloadedTranslationsCache {
                 
                 let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
                 
-                downloadedTranslation.translationId = translationId
+                guard let languageId = translation.language?.id, !languageId.isEmpty,
+                      let resourceId = translation.resource?.id, !resourceId.isEmpty else {
+                    
+                    let error: Error = NSError.errorWithDescription(description: "Tracking downloaded translations requires a relationship to a resourceId and languageId.")
+                    
+                    assertionFailure(error.localizedDescription)
+                    
+                    promise(.failure(error))
+                    
+                    return
+                }
+                
+                downloadedTranslation.languageId = languageId
                 downloadedTranslation.manifestAndRelatedFilesPersistedToDevice = true
+                downloadedTranslation.resourceId = resourceId
+                downloadedTranslation.translationId = translation.id
+                downloadedTranslation.version = translation.version
                 
                 do {
                     
@@ -48,7 +72,7 @@ class TrackDownloadedTranslationsCache {
                         realm.add(downloadedTranslation, update: .all)
                     }
                                         
-                    promise(.success(translationId))
+                    promise(.success(DownloadedTranslationDataModel(model: downloadedTranslation)))
                 }
                 catch let error {
                     
