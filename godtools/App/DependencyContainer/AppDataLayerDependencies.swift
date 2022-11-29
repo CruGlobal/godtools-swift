@@ -228,6 +228,10 @@ class AppDataLayerDependencies {
                 config: getAppConfig(),
                 ignoreCacheSession: sharedIgnoreCacheSession,
                 mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserCountersCache(
+                realmDatabase: sharedRealmDatabase,
+                userCountersSync: RealmUserCountersCacheSync(realmDatabase: sharedRealmDatabase)
             )
         )
     }

@@ -41,6 +41,14 @@ struct UserCounterDataModel: Decodable {
         lastDecay = UserCounterDataModel.parseLastDecayDateFromString(lastDecayDateString)
     }
     
+    init(realmUserCounter: RealmUserCounter) {
+        
+        id = realmUserCounter.id
+        count = realmUserCounter.count
+        decayedCount = realmUserCounter.decayedCount
+        lastDecay = realmUserCounter.lastDecay
+    }
+    
     private static func parseLastDecayDateFromString(_ dateString: String) -> Date? {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [
