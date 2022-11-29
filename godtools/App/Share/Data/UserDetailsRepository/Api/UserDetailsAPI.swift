@@ -24,7 +24,7 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    private func getUserDetailsRequest(userId: String? = nil) -> URLRequest {
+    private func getUserDetailsRequest() -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -40,9 +40,9 @@ class UserDetailsAPI {
         )
     }
     
-    func fetchUserDetailsPublisher(userId: String? = nil) -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
         
-        let urlRequest = getUserDetailsRequest(userId: userId)
+        let urlRequest = getUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
             .decode(type: UserDetailsDataModel.self, decoder: JSONDecoder())
