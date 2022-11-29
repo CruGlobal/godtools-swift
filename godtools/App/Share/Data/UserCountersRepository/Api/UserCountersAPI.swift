@@ -31,11 +31,16 @@ class UserCountersAPI {
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
     }
     
-    func incrementCounterPublisher(counterId: Int, incrementValue: Int) -> AnyPublisher<Data, URLResponseError> {
+    func incrementCounterPublisher(counterId: Int, incrementValue: Int) -> AnyPublisher<IncrementUserCounterResponse, URLResponseError> {
         
         let incrementRequest = getIncrementUserCountersRequest(counterId: counterId, incrementValue: incrementValue)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
+            .decode(type: IncrementUserCounterResponse.self, decoder: JSONDecoder())
+            .mapError {
+                return URLResponseError.decodeError(error: $0)
+            }
+            .eraseToAnyPublisher()
     }
     
     private func getUserCountersRequest() -> URLRequest {
