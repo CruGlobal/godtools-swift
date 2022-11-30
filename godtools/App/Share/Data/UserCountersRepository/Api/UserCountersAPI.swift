@@ -36,9 +36,9 @@ class UserCountersAPI {
             .eraseToAnyPublisher()
     }
     
-    func incrementCounterPublisher(counterId: Int, incrementValue: Int) -> AnyPublisher<IncrementUserCounterResponse, URLResponseError> {
+    func incrementCounterPublisher(_ userCounter: UserCounterDataModel) -> AnyPublisher<IncrementUserCounterResponse, URLResponseError> {
         
-        let incrementRequest = getIncrementUserCountersRequest(counterId: counterId, incrementValue: incrementValue)
+        let incrementRequest = getIncrementUserCountersRequest(userCounter: userCounter)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
             .decode(type: IncrementUserCounterResponse.self, decoder: JSONDecoder())
@@ -64,7 +64,7 @@ class UserCountersAPI {
         )
     }
     
-    private func getIncrementUserCountersRequest(counterId: Int, incrementValue: Int) -> URLRequest {
+    private func getIncrementUserCountersRequest(userCounter: UserCounterDataModel) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -74,14 +74,14 @@ class UserCountersAPI {
             "data": [
                 "type": "user-counters",
                 "attributes": [
-                    "increment": incrementValue
+                    "increment": userCounter.incrementValue
                 ]
             ]
         ]
         
         return requestBuilder.build(
             session: ignoreCacheSession,
-            urlString: baseURL + "/users/me/counters/\(counterId)",
+            urlString: baseURL + "/users/me/counters/\(userCounter.id)",
             method: .patch,
             headers: headers,
             httpBody: body,

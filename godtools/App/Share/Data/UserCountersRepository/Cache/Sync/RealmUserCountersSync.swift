@@ -18,7 +18,7 @@ struct RealmUserCountersCacheSync {
         self.realmDatabase = realmDatabase
     }
     
-    func syncUserCounters(_ userCounters: [UserCounterDataModel]) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func syncUserCounters(_ userCounters: [UserCounterDataModel]) -> AnyPublisher<[RealmUserCounter], Error> {
         
         return Future() { promise in
             
@@ -29,6 +29,11 @@ struct RealmUserCountersCacheSync {
                     let realmUserCounter = RealmUserCounter()
                     realmUserCounter.mapFrom(model: userCounterDataModel)
                     
+                    if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: userCounterDataModel.id) {
+                        
+                        realmUserCounter.incrementValue = existingCounter.incrementValue
+                    }
+                    
                     return realmUserCounter
                 }
                 
@@ -38,7 +43,7 @@ struct RealmUserCountersCacheSync {
                         realm.add(newUserCounters, update: .all)
                     }
                     
-                    promise(.success(userCounters))
+                    promise(.success(newUserCounters))
                     
                 } catch let error {
                     
@@ -50,7 +55,7 @@ struct RealmUserCountersCacheSync {
         
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDataModel) -> AnyPublisher<UserCounterDataModel, Error> {
+    func syncUserCounter(_ userCounter: UserCounterDataModel, oldIncrementValue: Int) -> AnyPublisher<RealmUserCounter, Error> {
         
         return Future() { promise in
             
@@ -59,13 +64,19 @@ struct RealmUserCountersCacheSync {
                 let newUserCounter: RealmUserCounter = RealmUserCounter()
                 newUserCounter.mapFrom(model: userCounter)
                 
+                if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: userCounter.id) {
+                    
+                    // it's possible the existing counter was incremented since the remote sync started, so subtract rather than setting to 0
+                    newUserCounter.incrementValue = existingCounter.incrementValue - oldIncrementValue
+                }
+                
                 do {
                     
                     try realm.write {
                         realm.add(newUserCounter, update: .all)
                     }
                     
-                    promise(.success(userCounter))
+                    promise(.success(newUserCounter))
                     
                 } catch let error {
                     
