@@ -13,7 +13,7 @@ protocol MobileContentPageViewModelType {
     var backgroundColor: UIColor { get }
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel?
-    func buttonWithUrlTapped(url: String)
+    func buttonWithUrlTapped(url: URL)
     func trainingTipTapped(event: TrainingTipEvent)
     func errorOccurred(error: MobileContentErrorViewModel)
 }

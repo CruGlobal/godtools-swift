@@ -230,7 +230,7 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
 // MARK: - TrainingPageViewDelegate
 
 extension ToolTrainingView: TrainingPageViewDelegate {
-    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String) {
+    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL) {
         viewModel.buttonWithUrlTapped(url: url)
     }
 }

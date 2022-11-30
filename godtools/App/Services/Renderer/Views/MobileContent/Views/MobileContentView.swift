@@ -229,11 +229,11 @@ class MobileContentView: UIView {
     
     // MARK: - Url Events
     
-    func sendButtonWithUrlEventToRootView(url: String) {
+    func sendButtonWithUrlEventToRootView(url: URL) {
         getRootView().didReceiveButtonWithUrlEvent(url: url)
     }
     
-    func didReceiveButtonWithUrlEvent(url: String) {
+    func didReceiveButtonWithUrlEvent(url: URL) {
         
     }
     

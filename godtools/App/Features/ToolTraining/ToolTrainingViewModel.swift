@@ -160,7 +160,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    func buttonWithUrlTapped(url: String) {
+    func buttonWithUrlTapped(url: URL) {
         
         let exitLink = ExitLinkModel(
             screenName: getExitAnalyticsScreenName(),

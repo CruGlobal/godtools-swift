@@ -24,7 +24,7 @@ class ExitLinkAnalytics {
             siteSubSection: exitLink.siteSubSection,
             contentLanguage: exitLink.contentLanguage,
             secondaryContentLanguage: exitLink.secondaryContentLanguage,
-            url: exitLink.url
+            url: exitLink.url.absoluteString
         )        
     }
 }

@@ -81,7 +81,7 @@ class MobileContentPageView: MobileContentView, NibBased {
         return delegate?.pageViewDidReceiveEvent(pageView: self, eventId: eventId)
     }
     
-    override func didReceiveButtonWithUrlEvent(url: String) {
+    override func didReceiveButtonWithUrlEvent(url: URL) {
         super.didReceiveButtonWithUrlEvent(url: url)
         
         viewModel.buttonWithUrlTapped(url: url)

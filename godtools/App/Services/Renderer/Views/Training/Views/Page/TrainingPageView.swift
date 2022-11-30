@@ -10,7 +10,7 @@ import UIKit
 
 protocol TrainingPageViewDelegate: AnyObject {
     
-    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String)
+    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL)
 }
 
 class TrainingPageView: MobileContentView, NibBased {
@@ -81,7 +81,7 @@ class TrainingPageView: MobileContentView, NibBased {
         contentStackView.renderChild(childView: childView)
     }
     
-    override func didReceiveButtonWithUrlEvent(url: String) {
+    override func didReceiveButtonWithUrlEvent(url: URL) {
         delegate?.trainingPageButtonWithUrlTapped(trainingPage: self, url: url)
     }
     

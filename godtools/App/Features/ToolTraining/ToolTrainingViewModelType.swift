@@ -21,7 +21,7 @@ protocol ToolTrainingViewModelType {
     func overlayTapped()
     func closeTapped()
     func continueTapped()
-    func buttonWithUrlTapped(url: String)
+    func buttonWithUrlTapped(url: URL)
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView?
     func tipPageDidChange(page: Int)
     func tipPageDidAppear(page: Int)
