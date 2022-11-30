@@ -13,13 +13,15 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
     private let animationModel: Animation
     private let renderedPageContext: MobileContentRenderedPageContext
+    private let mobileContentAnalytics: MobileContentAnalytics
     
     let animatedViewModel: AnimatedViewModelType?
     
-    required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext) {
+    required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.animationModel = animationModel
         self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
                 
         if let resource = animationModel.resource {
             
@@ -43,7 +45,19 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
         }
     }
     
+    var animationEvents: [EventId] {
+        return animationModel.events
+    }
+    
+    var rendererState: State {
+        return renderedPageContext.rendererState
+    }
+    
+    func getClickableUrl() -> URL? {
+        return getClickableUrl(model: animationModel)
+    }
+    
     func animationTapped() {
-        
+        trackClickableEvents(model: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

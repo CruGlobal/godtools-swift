@@ -134,15 +134,15 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
         return buttonModel.events
     }
     
-    var buttonUrl: String {
-        return buttonModel.url?.absoluteString ?? ""
-    }
-    
     var rendererState: State {
         return renderedPageContext.rendererState
     }
     
+    func getClickableUrl() -> URL? {
+        return getClickableUrl(model: buttonModel)
+    }
+    
     func buttonTapped() {
-        mobileContentAnalytics.trackEvents(events: buttonModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
+        trackClickableEvents(model: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

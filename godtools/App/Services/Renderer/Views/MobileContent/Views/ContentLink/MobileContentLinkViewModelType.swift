@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-protocol MobileContentLinkViewModelType {
+protocol MobileContentLinkViewModelType: ClickableMobileContentViewModel {
     
     var backgroundColor: UIColor { get }
     var font: UIFont { get }

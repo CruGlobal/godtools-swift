@@ -13,11 +13,13 @@ class MobileContentCardViewModel: MobileContentCardViewModelType {
     
     private let contentCard: Card
     private let renderedPageContext: MobileContentRenderedPageContext
+    private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(contentCard: Card, renderedPageContext: MobileContentRenderedPageContext) {
+    required init(contentCard: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.contentCard = contentCard
         self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
     }
     
     var events: [EventId] {
@@ -26,5 +28,13 @@ class MobileContentCardViewModel: MobileContentCardViewModelType {
     
     var rendererState: State {
         return renderedPageContext.rendererState
+    }
+    
+    func getClickableUrl() -> URL? {
+        return getClickableUrl(model: contentCard)
+    }
+    
+    func cardTapped() {
+        trackClickableEvents(model: contentCard, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

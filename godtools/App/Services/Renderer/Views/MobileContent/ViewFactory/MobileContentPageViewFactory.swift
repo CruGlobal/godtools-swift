@@ -49,7 +49,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentImageView(viewModel: viewModel)
@@ -73,7 +74,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentCardViewModel(
                 contentCard: contentCard,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentCardView(viewModel: viewModel)
@@ -150,7 +152,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)

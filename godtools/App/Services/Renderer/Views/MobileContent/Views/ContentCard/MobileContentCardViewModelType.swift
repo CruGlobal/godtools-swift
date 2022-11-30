@@ -9,8 +9,10 @@
 import Foundation
 import GodToolsToolParser
 
-protocol MobileContentCardViewModelType {
+protocol MobileContentCardViewModelType: ClickableMobileContentViewModel {
     
     var events: [EventId] { get }
     var rendererState: State { get }
+    
+    func cardTapped()
 }

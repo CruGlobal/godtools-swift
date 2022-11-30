@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
-protocol MobileContentAnimationViewModelType {
+protocol MobileContentAnimationViewModelType: ClickableMobileContentViewModel {
     
     var animatedViewModel: AnimatedViewModelType? { get }
+    var animationEvents: [EventId] { get }
+    var rendererState: State { get }
     
     func animationTapped()
 }

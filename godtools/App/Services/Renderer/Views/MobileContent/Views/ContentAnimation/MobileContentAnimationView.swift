@@ -55,6 +55,12 @@ class MobileContentAnimationView: MobileContentView {
     @objc private func touchAreaTapped() {
         
         viewModel.animationTapped()
+        
+        super.sendEventsToAllViews(eventIds: viewModel.animationEvents, rendererState: viewModel.rendererState)
+        
+        if let clickableUrl = viewModel.getClickableUrl() {
+            super.sendButtonWithUrlEventToRootView(url: clickableUrl)
+        }
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {

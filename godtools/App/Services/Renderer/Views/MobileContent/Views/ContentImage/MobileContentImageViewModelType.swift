@@ -9,10 +9,12 @@
 import UIKit
 import GodToolsToolParser
 
-protocol MobileContentImageViewModelType {
+protocol MobileContentImageViewModelType: ClickableMobileContentViewModel {
     
     var image: UIImage? { get }
     var imageEvents: [EventId] { get }
     var rendererState: State { get }
     var imageWidth: MobileContentViewWidth { get }
+    
+    func imageTapped()
 }

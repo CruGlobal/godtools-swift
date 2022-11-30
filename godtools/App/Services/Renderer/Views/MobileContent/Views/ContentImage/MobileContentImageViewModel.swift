@@ -14,14 +14,16 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     private let imageModel: Image
     private let renderedPageContext: MobileContentRenderedPageContext
+    private let mobileContentAnalytics: MobileContentAnalytics
     
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
-    required init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext) {
+    required init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.imageModel = imageModel
         self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
                 
         if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getUIImage(resource: resource) {
@@ -38,5 +40,13 @@ class MobileContentImageViewModel: MobileContentImageViewModelType {
     
     var rendererState: State {
         return renderedPageContext.rendererState
+    }
+    
+    func getClickableUrl() -> URL? {
+        return getClickableUrl(model: imageModel)
+    }
+    
+    func imageTapped() {
+        trackClickableEvents(model: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

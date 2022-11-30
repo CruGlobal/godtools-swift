@@ -201,7 +201,10 @@ class MobileContentButtonView: MobileContentView {
             super.sendEventsToAllViews(eventIds: viewModel.buttonEvents, rendererState: viewModel.rendererState)
         
         case .url:
-            super.sendButtonWithUrlEventToRootView(url: viewModel.buttonUrl)
+            
+            if let clickableUrl = viewModel.getClickableUrl() {
+                super.sendButtonWithUrlEventToRootView(url: clickableUrl)
+            }
        
         case .unknown:
             break

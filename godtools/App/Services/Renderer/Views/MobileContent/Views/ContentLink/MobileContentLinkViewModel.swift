@@ -49,8 +49,11 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
         return renderedPageContext.rendererState
     }
     
+    func getClickableUrl() -> URL? {
+        return getClickableUrl(model: linkModel)
+    }
+    
     func linkTapped() {
-                        
-        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
+        trackClickableEvents(model: linkModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

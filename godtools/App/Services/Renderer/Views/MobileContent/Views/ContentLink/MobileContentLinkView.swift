@@ -61,8 +61,14 @@ class MobileContentLinkView: MobileContentView {
     }
     
     @objc func handleLinkTapped() {
+        
         viewModel.linkTapped()
+        
         super.sendEventsToAllViews(eventIds: viewModel.linkEvents, rendererState: viewModel.rendererState)
+        
+        if let clickableUrl = viewModel.getClickableUrl() {
+            super.sendButtonWithUrlEventToRootView(url: clickableUrl)
+        }
     }
     
     // MARK: - MobileContentView
