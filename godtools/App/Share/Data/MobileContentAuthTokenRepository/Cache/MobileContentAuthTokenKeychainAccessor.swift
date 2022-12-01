@@ -12,8 +12,12 @@ import Security
 class MobileContentAuthTokenKeychainAccessor {
     
     enum Service: String {
+        case mobileContent
         case mobileContentAuthToken
-        case mobileContentUserId
+    }
+    
+    enum Account: String {
+        case userId
     }
     
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
@@ -161,8 +165,8 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.mobileContentUserId.rawValue,
-            kSecAttrAccount as String: Service.mobileContentUserId.rawValue,
+            kSecAttrService as String: Service.mobileContent.rawValue,
+            kSecAttrAccount as String: Account.userId.rawValue,
             kSecValueData as String: Data(userId.utf8)
         ] as CFDictionary
     }
@@ -186,11 +190,11 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         let updateQuery = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.mobileContentUserId.rawValue
+            kSecAttrService as String: Service.mobileContent.rawValue
         ] as CFDictionary
         
         let updateAttributes = [
-            kSecAttrAccount as String: Service.mobileContentUserId.rawValue,
+            kSecAttrAccount as String: Account.userId.rawValue,
             kSecValueData as String: Data(userId.utf8)
         ] as CFDictionary
         
@@ -211,8 +215,8 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Service.mobileContentUserId.rawValue,
-            kSecAttrAccount as String: Service.mobileContentUserId.rawValue,
+            kSecAttrService as String: Service.mobileContent.rawValue,
+            kSecAttrAccount as String: Account.userId.rawValue,
             kSecReturnData as String: true
         ] as CFDictionary
     }
