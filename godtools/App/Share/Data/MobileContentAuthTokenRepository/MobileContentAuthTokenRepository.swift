@@ -24,7 +24,8 @@ class MobileContentAuthTokenRepository {
         
         return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
-                                
+                
+                self?.cache.storeUserId(authTokenDataModel.userId)
                 self?.cache.storeAuthToken(authTokenDataModel)
                 
                 return Just(authTokenDataModel.token)
@@ -36,7 +37,9 @@ class MobileContentAuthTokenRepository {
     }
     
     func getCachedAuthToken() -> String? {
-                
-        return cache.getAuthToken()
+        
+        guard let userId = cache.getUserId() else { return nil }
+        
+        return cache.getAuthToken(for: userId)
     }
 }

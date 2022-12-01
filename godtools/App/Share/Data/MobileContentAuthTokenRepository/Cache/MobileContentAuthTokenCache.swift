@@ -29,8 +29,25 @@ class MobileContentAuthTokenCache {
         }
     }
     
-    func getAuthToken() -> String? {
+    func getAuthToken(for userId: Int) -> String? {
         
-        return keychainAccessor.getMobileContentAuthToken()
+        return keychainAccessor.getMobileContentAuthToken(userId: userId)
+    }
+    
+    func storeUserId(_ userId: Int) {
+        
+        do {
+            
+            try keychainAccessor.saveMobileContentUserId(userId)
+            
+        } catch let error {
+            
+            assertionFailure("Keychain store failed with error: \(error.localizedDescription)")
+        }
+    }
+    
+    func getUserId() -> Int? {
+        
+        return keychainAccessor.getMobileContentUserId()
     }
 }
