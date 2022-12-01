@@ -29,12 +29,12 @@ class MobileContentAuthTokenCache {
         }
     }
     
-    func getAuthToken(for userId: Int) -> String? {
+    func getAuthToken(for userId: String) -> String? {
         
         return keychainAccessor.getMobileContentAuthToken(userId: userId)
     }
     
-    func storeUserId(_ userId: Int) {
+    func storeUserId(_ userId: String) {
         
         do {
             
@@ -46,7 +46,7 @@ class MobileContentAuthTokenCache {
         }
     }
     
-    func getUserId() -> Int? {
+    func getUserId() -> String? {
         
         return keychainAccessor.getMobileContentUserId()
     }
