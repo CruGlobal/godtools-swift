@@ -38,8 +38,13 @@ class MobileContentAuthTokenRepository {
     
     func getCachedAuthToken() -> String? {
         
-        guard let userId = cache.getUserId() else { return nil }
+        guard let userId = getUserId() else { return nil }
         
         return cache.getAuthToken(for: userId)
+    }
+    
+    func getUserId() -> String? {
+        
+        return cache.getUserId()
     }
 }

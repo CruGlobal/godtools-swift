@@ -231,7 +231,8 @@ class AppDataLayerDependencies {
             ),
             cache: RealmUserDetailsCache(
                 realmDatabase: sharedRealmDatabase,
-                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase)
+                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
+                authTokenRepository: getMobileContentAuthTokenRepository()
             )
         )
     }
