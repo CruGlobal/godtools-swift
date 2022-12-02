@@ -36,7 +36,7 @@ class UserCountersAPI {
             .eraseToAnyPublisher()
     }
     
-    func incrementCounterPublisher(_ userCounter: UserCounterDataModel) -> AnyPublisher<IncrementUserCounterResponse, URLResponseError> {
+    func incrementCounterPublisher(_ userCounter: UserCounterDataModel) -> AnyPublisher<UserCounterDataModel, URLResponseError> {
         
         let incrementRequest = getIncrementUserCountersRequest(userCounter: userCounter)
         
@@ -44,6 +44,12 @@ class UserCountersAPI {
             .decode(type: IncrementUserCounterResponse.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .flatMap { incrementUserCounterResponse in
+                
+                return Just(incrementUserCounterResponse.userCounter)
+                    .setFailureType(to: URLResponseError.self)
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

@@ -35,22 +35,38 @@ class UserCountersRepository {
     
     func incrementUserCounter(_ userCounter: UserCounterDataModel) -> AnyPublisher<RealmUserCounter, URLResponseError> {
         
+        let incrementValueBeforeSyncAttempt = userCounter.incrementValue
+        
         return api.incrementCounterPublisher(userCounter)
-            .flatMap { incrementUserCounterResponse in
+            .flatMap { updatedUserCounterFromRemote in
                 
-                return self.cache.syncUserCounter(incrementUserCounterResponse.userCounter, incrementValueBeforeSuccessfulRemoteUpdate: userCounter.incrementValue)
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
-                    .eraseToAnyPublisher()
+                return self.userCounterPublisher(value: updatedUserCounterFromRemote, remoteSyncSuccess: true)
             }
-            .catch { urlResponse in
+            .catch { _ in
                 
-                return self.cache.syncUserCounter(userCounter)
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
-                    .eraseToAnyPublisher()
+                return self.userCounterPublisher(value: userCounter, remoteSyncSuccess: false)
+            }
+            .flatMap { userCounter, remoteSyncSuccess in
+                
+                return self.syncUserCounter(userCounter, remoteSyncSuccess: remoteSyncSuccess, incrementValueBeforeSyncAttempt: incrementValueBeforeSyncAttempt)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func userCounterPublisher(value: UserCounterDataModel, remoteSyncSuccess: Bool) -> AnyPublisher<(userCounter: UserCounterDataModel, remoteSyncSuccess: Bool), URLResponseError> {
+        
+        return Just((value, remoteSyncSuccess))
+            .setFailureType(to: URLResponseError.self)
+            .eraseToAnyPublisher()
+    }
+    
+    private func syncUserCounter(_ userCounter: UserCounterDataModel, remoteSyncSuccess: Bool, incrementValueBeforeSyncAttempt: Int) -> AnyPublisher<RealmUserCounter, URLResponseError>  {
+        
+        let incrementValueBeforeSuccessfulRemoteUpdate = remoteSyncSuccess ? incrementValueBeforeSyncAttempt : nil
+        
+        return cache.syncUserCounter(userCounter, incrementValueBeforeSuccessfulRemoteUpdate: incrementValueBeforeSuccessfulRemoteUpdate)
+            .mapError { error in
+                return URLResponseError.otherError(error: error)
             }
             .eraseToAnyPublisher()
     }
