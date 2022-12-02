@@ -38,7 +38,15 @@ class UserCountersRepository {
         return api.incrementCounterPublisher(userCounter)
             .flatMap { incrementUserCounterResponse in
                 
-                return self.cache.syncUserCounter(incrementUserCounterResponse.userCounter, oldIncrementValue: userCounter.incrementValue)
+                return self.cache.syncUserCounter(incrementUserCounterResponse.userCounter, incrementValueBeforeSuccessfulRemoteUpdate: userCounter.incrementValue)
+                    .mapError { error in
+                        return URLResponseError.otherError(error: error)
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .catch { urlResponse in
+                
+                return self.cache.syncUserCounter(userCounter)
                     .mapError { error in
                         return URLResponseError.otherError(error: error)
                     }

@@ -55,7 +55,7 @@ struct RealmUserCountersCacheSync {
         
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDataModel, oldIncrementValue: Int) -> AnyPublisher<RealmUserCounter, Error> {
+    func syncUserCounter(_ userCounter: UserCounterDataModel, incrementValueBeforeSuccessfulRemoteUpdate: Int? = nil) -> AnyPublisher<RealmUserCounter, Error> {
         
         return Future() { promise in
             
@@ -64,10 +64,10 @@ struct RealmUserCountersCacheSync {
                 let newUserCounter: RealmUserCounter = RealmUserCounter()
                 newUserCounter.mapFrom(model: userCounter)
                 
-                if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: userCounter.id) {
+                if let incrementValueBeforeSuccessfulRemoteUpdate = incrementValueBeforeSuccessfulRemoteUpdate, let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: userCounter.id) {
                     
-                    // it's possible the existing counter was incremented since the remote sync started, so subtract rather than setting to 0
-                    newUserCounter.incrementValue = existingCounter.incrementValue - oldIncrementValue
+                    // During a remote sync, it's possible the existing counter was incremented since the remote request started, so subtract initial value rather than setting to 0
+                    newUserCounter.incrementValue = existingCounter.incrementValue - incrementValueBeforeSuccessfulRemoteUpdate
                 }
                 
                 do {
