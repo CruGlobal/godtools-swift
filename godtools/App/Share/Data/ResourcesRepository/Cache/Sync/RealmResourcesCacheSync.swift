@@ -17,12 +17,12 @@ class RealmResourcesCacheSync {
     typealias TranslationId = String
     
     private let realmDatabase: RealmDatabase
-    private let translationsRepository: TranslationsRepository
+    private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    required init(realmDatabase: RealmDatabase, translationsRepository: TranslationsRepository) {
+    required init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.realmDatabase = realmDatabase
-        self.translationsRepository = translationsRepository
+        self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
@@ -171,9 +171,9 @@ class RealmResourcesCacheSync {
                         return true
                     }
                     
-                    let latestDownloadedTranslation: TranslationModel? = self.translationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                    let latestTrackedDownloadedTranslation: DownloadedTranslationDataModel? = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
                     
-                    let translationIsLatestDownloadedTranslation: Bool = latestDownloadedTranslation?.id == $0.id
+                    let translationIsLatestDownloadedTranslation: Bool = latestTrackedDownloadedTranslation?.translationId == $0.id
                     
                     if translationIsLatestDownloadedTranslation {
                         
