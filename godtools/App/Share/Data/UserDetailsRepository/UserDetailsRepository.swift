@@ -24,9 +24,9 @@ class UserDetailsRepository {
         return cache.getUserDetailsChanged()
     }
     
-    func getUserDetails() -> UserDetailsDataModel? {
+    func getAuthUserDetails() -> UserDetailsDataModel? {
         
-        return cache.getUserDetails()
+        return cache.getAuthUserDetails()
     }
     
     func fetchRemoteUserDetails() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {

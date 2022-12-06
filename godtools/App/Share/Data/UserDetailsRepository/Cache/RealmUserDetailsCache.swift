@@ -14,11 +14,13 @@ class RealmUserDetailsCache {
     
     private let realmDatabase: RealmDatabase
     private let userDetailsSync: RealmUserDetailsCacheSync
+    private let authTokenRepository: MobileContentAuthTokenRepository
     
-    init(realmDatabase: RealmDatabase, userDetailsSync: RealmUserDetailsCacheSync) {
+    init(realmDatabase: RealmDatabase, userDetailsSync: RealmUserDetailsCacheSync, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.realmDatabase = realmDatabase
         self.userDetailsSync = userDetailsSync
+        self.authTokenRepository = authTokenRepository
     }
     
     func getUserDetailsChanged() -> AnyPublisher<Void, Never> {
@@ -28,8 +30,9 @@ class RealmUserDetailsCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserDetails() -> UserDetailsDataModel? {
-        guard let realmUserDetails = realmDatabase.openRealm().objects(RealmUserDetails.self).first else { return nil }
+    func getAuthUserDetails() -> UserDetailsDataModel? {
+        guard let userId = authTokenRepository.getUserId() else { return nil }
+        guard let realmUserDetails = realmDatabase.openRealm().object(ofType: RealmUserDetails.self, forPrimaryKey: userId) else { return nil }
         
         return UserDetailsDataModel(realmUserDetails: realmUserDetails)
     }

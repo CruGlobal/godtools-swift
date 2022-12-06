@@ -176,7 +176,7 @@ class AppDataLayerDependencies {
         
         let sync = RealmResourcesCacheSync(
             realmDatabase: sharedRealmDatabase,
-            translationsRepository: getTranslationsRepository()
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         let api = MobileContentResourcesApi(
@@ -245,7 +245,8 @@ class AppDataLayerDependencies {
             ),
             cache: RealmUserDetailsCache(
                 realmDatabase: sharedRealmDatabase,
-                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase)
+                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
+                authTokenRepository: getMobileContentAuthTokenRepository()
             )
         )
     }
