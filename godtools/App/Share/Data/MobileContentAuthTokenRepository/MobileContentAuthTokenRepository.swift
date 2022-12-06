@@ -25,7 +25,6 @@ class MobileContentAuthTokenRepository {
         return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
                 
-                self?.cache.storeUserId(authTokenDataModel.userId)
                 self?.cache.storeAuthToken(authTokenDataModel)
                 
                 return Just(authTokenDataModel.token)

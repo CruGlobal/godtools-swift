@@ -22,46 +22,8 @@ class MobileContentAuthTokenKeychainAccessor {
     
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
-        let saveQuery = buildSaveQueryFromAuthToken(authTokenDataModel)
-        let saveStatus = SecItemAdd(saveQuery, nil)
-        
-        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
-        
-        switch saveResponse {
-            
-        case .success:
-            return
-            
-        case .duplicateItem:
-            
-            try updateExistingMobileContentAuthToken(authTokenDataModel)
-            
-        case .unhandledError(let error):
-            
-            throw error
-        }
-    }
-    
-    func saveMobileContentUserId(_ userId: String) throws {
-        
-        let saveQuery = buildSaveQueryFromUserId(userId)
-        let saveStatus = SecItemAdd(saveQuery, nil)
-        
-        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
-        
-        switch saveResponse {
-            
-        case .success:
-            return
-            
-        case .duplicateItem:
-            
-            try updateExistingMobileContentUserId(userId)
-            
-        case .unhandledError(let error):
-            
-            throw error
-        }
+        try saveUserId(authTokenDataModel.userId)
+        try saveAuthToken(authTokenDataModel)
     }
     
     func getMobileContentAuthToken(userId: String) -> String? {
@@ -108,6 +70,50 @@ class MobileContentAuthTokenKeychainAccessor {
 // MARK: - Private
  
 extension MobileContentAuthTokenKeychainAccessor {
+    
+    private func saveAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
+        
+        let saveQuery = buildSaveQueryFromAuthToken(authTokenDataModel)
+        let saveStatus = SecItemAdd(saveQuery, nil)
+        
+        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
+        
+        switch saveResponse {
+            
+        case .success:
+            return
+            
+        case .duplicateItem:
+            
+            try updateExistingMobileContentAuthToken(authTokenDataModel)
+            
+        case .unhandledError(let error):
+            
+            throw error
+        }
+    }
+    
+    private func saveUserId(_ userId: String) throws {
+        
+        let saveQuery = buildSaveQueryFromUserId(userId)
+        let saveStatus = SecItemAdd(saveQuery, nil)
+        
+        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
+        
+        switch saveResponse {
+            
+        case .success:
+            return
+            
+        case .duplicateItem:
+            
+            try updateExistingMobileContentUserId(userId)
+            
+        case .unhandledError(let error):
+            
+            throw error
+        }
+    }
     
     private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
