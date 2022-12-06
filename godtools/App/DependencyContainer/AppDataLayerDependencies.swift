@@ -176,7 +176,7 @@ class AppDataLayerDependencies {
         
         let sync = RealmResourcesCacheSync(
             realmDatabase: sharedRealmDatabase,
-            translationsRepository: getTranslationsRepository()
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         let api = MobileContentResourcesApi(
