@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RealmUserCountersCacheSync {
+class RealmUserCountersCacheSync {
     
     private let realmDatabase: RealmDatabase
     
