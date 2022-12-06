@@ -30,7 +30,7 @@ class RealmUserDetailsCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserDetails() -> UserDetailsDataModel? {
+    func getAuthUserDetails() -> UserDetailsDataModel? {
         guard let userId = authTokenRepository.getUserId() else { return nil }
         guard let realmUserDetails = realmDatabase.openRealm().object(ofType: RealmUserDetails.self, forPrimaryKey: userId) else { return nil }
         
