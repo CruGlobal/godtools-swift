@@ -29,7 +29,7 @@ struct DashboardTabItem: View {
                 .foregroundColor(isSelected ? selectedColor : unSelectedColor)
             
             Text(title)
-                .font(FontLibrary.sfProTextRegular.font(size: 12))
+                .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(isSelected ? selectedColor : unSelectedColor)
         }
         .onTapGesture {
