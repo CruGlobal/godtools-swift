@@ -27,7 +27,7 @@ class RealmTranslation: Object, TranslationModelType {
         return "id"
     }
     
-    func mapFrom(model: TranslationModel) {
+    func mapFrom(model: TranslationModelType) {
         
         id = model.id
         isPublished = model.isPublished
