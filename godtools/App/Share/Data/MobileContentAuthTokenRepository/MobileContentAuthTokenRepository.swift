@@ -35,15 +35,23 @@ class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    func getCachedAuthToken() -> String? {
-        
-        guard let userId = getUserId() else { return nil }
-        
-        return cache.getAuthToken(for: userId)
-    }
-    
     func getUserId() -> String? {
         
         return cache.getUserId()
+    }
+    
+    func getCachedAuthTokenModel() -> MobileContentAuthTokenRepoModel? {
+        
+        guard
+            let userId = getUserId(),
+            let token = cache.getAuthToken(for: userId)
+        else { return nil }
+        
+        return MobileContentAuthTokenRepoModel(userId: userId, token: token)
+    }
+    
+    func getCachedAuthToken() -> String? {
+        
+        return getCachedAuthTokenModel()?.token
     }
 }
