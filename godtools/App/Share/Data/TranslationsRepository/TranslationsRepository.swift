@@ -43,29 +43,6 @@ class TranslationsRepository {
     func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
     }
-    
-    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> TranslationModel? {
-        
-        let translationsSortedByLatestVersion: [TranslationModel] = cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId)
-        
-        for translation in translationsSortedByLatestVersion {
-            
-            let translationIsDownloaded: Bool
-            
-            if let downloadedTranslation = trackDownloadedTranslationsRepository.getDownloadedTranslation(translationId: translation.id) {
-                translationIsDownloaded = downloadedTranslation.manifestAndRelatedFilesPersistedToDevice
-            }
-            else {
-                translationIsDownloaded = false
-            }
-            
-            if translationIsDownloaded {
-                return translation
-            }
-        }
-        
-        return nil
-    }
 }
 
 // MARK: - Fetching Translation Manifests and Related Files By Manifest Parser Type From Cache
@@ -196,10 +173,15 @@ extension TranslationsRepository {
                 }
                 
                 let shouldFallbackToLatestDownloadedTranslation: Bool = includeRelatedFiles && shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+                
                 let latestDownloadedTranslation: TranslationModel?
                 
-                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resource?.id, let languageId = translation.language?.id {
-                    latestDownloadedTranslation = self.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
+                if shouldFallbackToLatestDownloadedTranslation,
+                   let resourceId = translation.resource?.id,
+                   let languageId = translation.language?.id,
+                   let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+                    
+                    latestDownloadedTranslation = self.getTranslation(id: latestTrackedDownloadedTranslation.translationId)
                 }
                 else {
                     latestDownloadedTranslation = nil
@@ -386,7 +368,7 @@ extension TranslationsRepository {
     
     private func didDownloadTranslationAndRelatedFiles(translation: TranslationModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, URLResponseError> {
         
-        return trackDownloadedTranslationsRepository.trackTranslationDownloaded(translationId: translation.id)
+        return trackDownloadedTranslationsRepository.trackTranslationDownloaded(translation: translation)
             .mapError({ error in
                 return .otherError(error: error)
             })

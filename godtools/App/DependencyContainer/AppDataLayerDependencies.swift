@@ -160,6 +160,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
+        return MobileContentApiAuthSession(
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
+            userAuthentication: getUserAuthentication()
+        )
+    }
+    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
@@ -168,7 +176,7 @@ class AppDataLayerDependencies {
         
         let sync = RealmResourcesCacheSync(
             realmDatabase: sharedRealmDatabase,
-            translationsRepository: getTranslationsRepository()
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         let api = MobileContentResourcesApi(
@@ -208,5 +216,9 @@ class AppDataLayerDependencies {
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
+    }
+    
+    func getUserAuthentication() -> UserAuthentication {
+        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
     }
 }

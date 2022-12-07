@@ -46,4 +46,14 @@ enum URLResponseError: Error {
             return "HTTP status code error.\n httpStatusCode: \(String(describing: urlResponseObject.httpStatusCode))"
         }
     }
+    
+    var is401Error: Bool {
+        
+        if case .statusCode(let urlResponseObject) = self, urlResponseObject.httpStatusCode == 401 {
+            
+            return true
+        }
+       
+        return false
+    }
 }

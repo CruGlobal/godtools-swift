@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OktaAuthentication
 import Combine
 
 class MobileContentAuthTokenRepository {
@@ -21,21 +20,7 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func getAuthTokenPublisher(for userId: Int? = nil, oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
-        
-        if let authToken = getCachedAuthToken(for: userId) {
-            
-            return Just(authToken)
-                .setFailureType(to: URLResponseError.self)
-                .eraseToAnyPublisher()
-            
-        } else {
-            
-            return fetchRemoteAuthToken(oktaAccessToken: oktaAccessToken)
-        }
-    }
-    
-    func fetchRemoteAuthToken(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
+    func fetchRemoteAuthTokenPublisher(oktaAccessToken: String) -> AnyPublisher<String?, URLResponseError> {
         
         return api.fetchAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
             .flatMap({ [weak self] authTokenDataModel -> AnyPublisher<String?, URLResponseError> in
@@ -50,10 +35,8 @@ class MobileContentAuthTokenRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getCachedAuthToken(for userId: Int?) -> String? {
-        
-        guard let userId = userId else { return nil }
-        
-        return cache.getAuthToken(for: userId)
+    func getCachedAuthToken() -> String? {
+                
+        return cache.getAuthToken()
     }
 }

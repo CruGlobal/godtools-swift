@@ -13,7 +13,7 @@ use_frameworks!
 def shared_pods
   
   # CruGlobal pods
-  pod 'GodtoolsToolParser', '0.8.0-SNAPSHOT'
+  pod 'GodToolsShared', '0.8.0-SNAPSHOT'
 end
 
 target 'godtools' do
