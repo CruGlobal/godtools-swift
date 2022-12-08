@@ -54,7 +54,7 @@ class MobileContentAnimationView: MobileContentView {
     
     @objc private func touchAreaTapped() {
         
-        super.viewTapped()
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {

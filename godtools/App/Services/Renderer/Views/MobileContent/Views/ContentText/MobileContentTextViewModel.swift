@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModelType {
+class MobileContentTextViewModel: MobileContentViewModel {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
@@ -100,7 +100,7 @@ class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModel
         
     private func getLanguageTextAlign() -> Text.Align {
         
-        if language.languageDirection == .rightToLeft {
+        if renderedPageContext.language.languageDirection == .rightToLeft {
             
             if textModel.textAlign == .start {
                 return .end
@@ -151,18 +151,5 @@ class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModel
             size: fontSizeToScale * getFontScale(),
             weight: fontWeightElseUseTextDefault ?? getFontWeight()
         )
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension MobileContentTextViewModel {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return []
     }
 }

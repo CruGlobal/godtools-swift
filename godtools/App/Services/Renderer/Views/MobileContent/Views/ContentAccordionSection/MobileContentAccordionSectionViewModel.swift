@@ -30,28 +30,15 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     }
 }
 
-// MARK: - MobileContentViewModelType
-
-extension MobileContentAccordionSectionViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
-    }
-}
-
 // MARK: - Inputs
 
 extension MobileContentAccordionSectionViewModel {
     
     func sectionOpened() {
-        mobileContentDidAppear()
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
     }
     
     func sectionClosed() {
-        mobileContentDidDisappear()
+        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
     }
 }

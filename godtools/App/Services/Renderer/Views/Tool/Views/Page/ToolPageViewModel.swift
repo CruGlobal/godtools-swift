@@ -87,8 +87,9 @@ extension ToolPageViewModel {
     }
     
     func pageDidAppear() {
-        mobileContentDidAppear()
         
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+                
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -102,18 +103,5 @@ extension ToolPageViewModel {
     
     func didChangeCardPosition(cardPosition: Int?) {
         self.cardPosition = cardPosition
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
     }
 }

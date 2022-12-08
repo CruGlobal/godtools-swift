@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MobileContentViewModel: NSObject {
@@ -43,5 +43,75 @@ class MobileContentViewModel: NSObject {
     
     var rendererState: State {
         return renderedPageContext.rendererState
+    }
+    
+    var languageTextAlignment: NSTextAlignment {
+        return renderedPageContext.language.languageDirection == .leftToRight ? .left : .right
+    }
+    
+    func viewDidAppear(analyticsEvents: [MobileContentAnalyticsEvent]) {
+        
+        for event in analyticsEvents {
+            
+            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
+
+            if trigger == .visible {
+                event.trigger()
+            }
+        }
+    }
+    
+    func viewDidDisappear(analyticsEvents: [MobileContentAnalyticsEvent]) {
+        
+        for event in analyticsEvents {
+            
+            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
+            
+            if trigger == .visible {
+                event.cancel()
+            }
+        }
+    }
+}
+
+// MARK: - Clickable
+
+extension MobileContentViewModel {
+    
+    func viewTapped(mobileContentAnalytics: MobileContentAnalytics) {
+                
+        mobileContentAnalytics.trackEvents(
+            events: getClickableAnalyticsEvents(),
+            renderedPageContext: renderedPageContext
+        )
+    }
+    
+    func getClickableAnalyticsEvents() -> [AnalyticsEvent] {
+        
+        guard let clickableModel = baseModel as? Clickable, clickableModel.isClickable,
+              let modelHasAnalyticsEvents = clickableModel as? HasAnalyticsEvents else {
+            
+            return Array()
+        }
+        
+        return modelHasAnalyticsEvents.getAnalyticsEvents(type: .clicked)
+    }
+    
+    func getClickableEvents() -> [EventId] {
+        
+        guard let clickableModel = baseModel as? Clickable, clickableModel.isClickable else {
+            return Array()
+        }
+        
+        return clickableModel.events
+    }
+    
+    func getClickableUrl() -> URL? {
+        
+        guard let clickableModel = baseModel as? Clickable, clickableModel.isClickable else {
+            return nil
+        }
+        
+        return clickableModel.url
     }
 }

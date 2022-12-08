@@ -9,16 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentCardViewModel: MobileContentClickableViewModel {
+class MobileContentCardViewModel: MobileContentViewModel {
     
     private let cardModel: Card
-    private let mobileContentAnalytics: MobileContentAnalytics
+    
+    let mobileContentAnalytics: MobileContentAnalytics
     
     init(cardModel: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.cardModel = cardModel
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext)
     }
 }

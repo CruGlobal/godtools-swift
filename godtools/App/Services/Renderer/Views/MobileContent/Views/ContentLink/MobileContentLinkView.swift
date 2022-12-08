@@ -62,7 +62,7 @@ class MobileContentLinkView: MobileContentView {
     
     @objc func handleLinkTapped() {
         
-        super.viewTapped()
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

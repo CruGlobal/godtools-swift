@@ -9,18 +9,18 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentButtonViewModel: MobileContentClickableViewModel {
+class MobileContentButtonViewModel: MobileContentViewModel {
     
     private let maxAllowedIconSize = 40
     
     private let buttonModel: Button
-    private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
     private var visibilityFlowWatcher: FlowWatcher?
     
+    let mobileContentAnalytics: MobileContentAnalytics
     let backgroundColor: UIColor
     let buttonWidth: MobileContentViewWidth
     let titleColor: UIColor
@@ -28,7 +28,7 @@ class MobileContentButtonViewModel: MobileContentClickableViewModel {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    required init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -75,7 +75,7 @@ class MobileContentButtonViewModel: MobileContentClickableViewModel {
             self.icon = nil
         }
         
-        super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext)
         
         visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             

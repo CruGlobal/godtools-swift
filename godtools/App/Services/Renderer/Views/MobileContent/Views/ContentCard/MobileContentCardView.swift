@@ -76,6 +76,6 @@ class MobileContentCardView: MobileContentStackView {
     
     @objc private func cardTapped() {
         
-        super.viewTapped()
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
 }

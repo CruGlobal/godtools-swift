@@ -10,11 +10,11 @@ import UIKit
 import GodToolsToolParser
 import RealmSwift
 
-class MobileContentImageViewModel: MobileContentClickableViewModel {
+class MobileContentImageViewModel: MobileContentViewModel {
     
     private let imageModel: Image
-    private let mobileContentAnalytics: MobileContentAnalytics
-    
+
+    let mobileContentAnalytics: MobileContentAnalytics
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
@@ -31,6 +31,6 @@ class MobileContentImageViewModel: MobileContentClickableViewModel {
             self.image = nil
         }
         
-        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext)
     }
 }

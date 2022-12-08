@@ -195,7 +195,7 @@ class MobileContentButtonView: MobileContentView {
     
     @objc private func buttonTapped() {
         
-        super.viewTapped()
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

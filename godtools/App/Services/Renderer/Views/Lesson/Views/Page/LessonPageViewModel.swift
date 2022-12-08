@@ -35,8 +35,9 @@ class LessonPageViewModel: MobileContentPageViewModel {
 extension LessonPageViewModel {
     
     func pageDidAppear() {
-        mobileContentDidAppear()
         
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+                
         let trackScreenModel = TrackScreenModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -46,18 +47,5 @@ extension LessonPageViewModel {
         )
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenModel)
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension LessonPageViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
     }
 }

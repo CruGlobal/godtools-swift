@@ -9,11 +9,11 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAnimationViewModel: MobileContentClickableViewModel {
+class MobileContentAnimationViewModel: MobileContentViewModel {
     
     private let animationModel: Animation
-    private let mobileContentAnalytics: MobileContentAnalytics
     
+    let mobileContentAnalytics: MobileContentAnalytics
     let animatedViewModel: AnimatedViewModelType?
     
     init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
@@ -42,6 +42,6 @@ class MobileContentAnimationViewModel: MobileContentClickableViewModel {
             animatedViewModel = nil
         }
         
-        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext)
     }
 }

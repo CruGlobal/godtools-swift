@@ -78,17 +78,3 @@ class ToolPageHeaderViewModel: MobileContentViewModel {
         )
     }
 }
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageHeaderViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return []
-    }
-}
-

@@ -37,23 +37,10 @@ class ToolPageHeroViewModel: MobileContentViewModel {
 extension ToolPageHeroViewModel {
     
     func heroDidAppear() {
-        mobileContentDidAppear()
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
     }
     
     func heroDidDisappear() {
-        mobileContentDidDisappear()
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageHeroViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
+        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
     }
 }

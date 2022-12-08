@@ -116,25 +116,21 @@ class MobileContentView: UIView {
     
     // MARK: - View Tapped
     
-    func viewTapped() {
+    func viewTapped(mobileContentAnalytics: MobileContentAnalytics) {
         
         guard let viewModel = self.viewModel else {
             return
         }
         
-        guard let clickableViewModel = viewModel as? MobileContentClickableViewModel else {
-            return
+        viewModel.viewTapped(mobileContentAnalytics: mobileContentAnalytics)
+        
+        let clickableEvents: [EventId] = viewModel.getClickableEvents()
+        
+        if !clickableEvents.isEmpty {
+            sendEventsToAllViews(eventIds: clickableEvents, rendererState: viewModel.rendererState)
         }
         
-        clickableViewModel.viewTapped()
-        
-        let events: [EventId] = clickableViewModel.getEvents()
-        
-        if !events.isEmpty {
-            sendEventsToAllViews(eventIds: events, rendererState: viewModel.rendererState)
-        }
-        
-        if let clickableUrl = clickableViewModel.getClickableUrl() {
+        if let clickableUrl = viewModel.getClickableUrl() {
             sendButtonWithUrlEventToRootView(url: clickableUrl)
         }
     }

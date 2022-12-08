@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageCardViewModel: MobileContentViewModel, MobileContentViewModelType {
+class ToolPageCardViewModel: MobileContentViewModel {
     
     private let cardModel: TractPage.Card
     private let analytics: AnalyticsContainer
@@ -178,8 +178,9 @@ extension ToolPageCardViewModel {
     }
         
     func cardDidAppear() {
-        mobileContentDidAppear()
-                   
+        
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+                           
         let trackScreen =  TrackScreenModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -192,19 +193,7 @@ extension ToolPageCardViewModel {
     }
     
     func cardDidDisappear() {
-        mobileContentDidDisappear()
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageCardViewModel {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
+        
+        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
     }
 }

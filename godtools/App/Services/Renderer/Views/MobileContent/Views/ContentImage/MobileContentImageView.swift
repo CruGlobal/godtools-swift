@@ -45,7 +45,7 @@ class MobileContentImageView: MobileContentView {
     
     @objc func handleImageTapped() {
         
-        super.viewTapped()
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView
