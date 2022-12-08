@@ -12,14 +12,12 @@ import GodToolsToolParser
 class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
     
     private let videoModel: Video
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     init(videoModel: Video, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.videoModel = videoModel
-        self.renderedPageContext = renderedPageContext
         
-        super.init(baseModel: videoModel)
+        super.init(baseModel: videoModel, renderedPageContext: renderedPageContext)
     }
     
     var videoId: String {

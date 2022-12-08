@@ -14,7 +14,6 @@ class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModel
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let textModel: Text
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     private let fontSize: CGFloat = 18
         
@@ -23,12 +22,11 @@ class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModel
     init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.textModel = textModel
-        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
         self.textColor = textModel.textColor
         
-        super.init(baseModel: textModel)
+        super.init(baseModel: textModel, renderedPageContext: renderedPageContext)
     }
     
     var startImage: UIImage? {

@@ -10,10 +10,9 @@ import UIKit
 import GodToolsToolParser
 import RealmSwift
 
-class MobileContentImageViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
+class MobileContentImageViewModel: MobileContentClickableViewModel {
     
     private let imageModel: Image
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
     let image: UIImage?
@@ -22,7 +21,6 @@ class MobileContentImageViewModel: MobileContentViewModel, ClickableMobileConten
     init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.imageModel = imageModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
                 
@@ -33,27 +31,6 @@ class MobileContentImageViewModel: MobileContentViewModel, ClickableMobileConten
             self.image = nil
         }
         
-        super.init(baseModel: imageModel)
-    }
-    
-    var imageEvents: [EventId] {
-        return imageModel.events
-    }
-    
-    var rendererState: State {
-        return renderedPageContext.rendererState
-    }
-    
-    func getClickableUrl() -> URL? {
-        return getClickableUrl(model: imageModel)
-    }
-}
-
-// MARK: - Inputs
-
-extension MobileContentImageViewModel {
-    
-    func imageTapped() {
-        trackClickableEvents(model: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

@@ -12,13 +12,11 @@ import GodToolsToolParser
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
         
     init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)

@@ -12,14 +12,12 @@ import GodToolsToolParser
 class MobileContentMultiSelectViewModel: MobileContentViewModel {
     
     private let multiSelectModel: Multiselect
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     init(multiSelectModel: Multiselect, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.multiSelectModel = multiSelectModel
-        self.renderedPageContext = renderedPageContext
         
-        super.init(baseModel: multiSelectModel)
+        super.init(baseModel: multiSelectModel, renderedPageContext: renderedPageContext)
     }
     
     var numberOfColumnsForOptions: Int {

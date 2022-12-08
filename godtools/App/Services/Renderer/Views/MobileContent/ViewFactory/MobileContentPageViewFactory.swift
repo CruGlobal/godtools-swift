@@ -98,7 +98,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let cardCollectionPageCard = renderableModel as? CardCollectionPage.Card {
             
             let viewModel = MobileContentCardCollectionPageCardViewModel(
-                card: cardCollectionPageCard
+                card: cardCollectionPageCard,
+                renderedPageContext: renderedPageContext
             )
             
             let view = MobileContentCardCollectionPageCardView(viewModel: viewModel)
@@ -143,7 +144,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let contentModel = renderableModel as? MultiplatformContent {
             
             return MobileContentStackView(
-                viewModel: MobileContentViewModel(baseModels: contentModel.content),
+                viewModel: MobileContentViewModel(baseModels: contentModel.content, renderedPageContext: renderedPageContext),
                 contentInsets: contentModel.contentInsets,
                 itemSpacing: contentModel.itemSpacing,
                 scrollIsEnabled: contentModel.scrollIsEnabled

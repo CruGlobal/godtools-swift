@@ -12,14 +12,12 @@ import GodToolsToolParser
 class MobileContentTabsViewModel: MobileContentViewModel {
     
     private let tabsModel: Tabs
-    private let renderedPageContext: MobileContentRenderedPageContext
         
     init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.tabsModel = tabsModel
-        self.renderedPageContext = renderedPageContext
         
-        super.init(baseModel: tabsModel)
+        super.init(baseModel: tabsModel, renderedPageContext: renderedPageContext)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

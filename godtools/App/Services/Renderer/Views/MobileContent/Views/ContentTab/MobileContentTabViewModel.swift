@@ -12,16 +12,14 @@ import GodToolsToolParser
 class MobileContentTabViewModel: MobileContentViewModel {
     
     private let tabModel: Tabs.Tab
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
     init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabModel = tabModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        super.init(baseModel: tabModel)
+        super.init(baseModel: tabModel, renderedPageContext: renderedPageContext)
     }
     
     var labelText: String? {

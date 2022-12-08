@@ -114,6 +114,31 @@ class MobileContentView: UIView {
         children.removeAll()
     }
     
+    // MARK: - View Tapped
+    
+    func viewTapped() {
+        
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        
+        guard let clickableViewModel = viewModel as? MobileContentClickableViewModel else {
+            return
+        }
+        
+        clickableViewModel.viewTapped()
+        
+        let events: [EventId] = clickableViewModel.getEvents()
+        
+        if !events.isEmpty {
+            sendEventsToAllViews(eventIds: events, rendererState: viewModel.rendererState)
+        }
+        
+        if let clickableUrl = clickableViewModel.getClickableUrl() {
+            sendButtonWithUrlEventToRootView(url: clickableUrl)
+        }
+    }
+    
     // MARK: - View Did Appear
     
     func notifyViewAndAllChildrenViewDidAppear() {

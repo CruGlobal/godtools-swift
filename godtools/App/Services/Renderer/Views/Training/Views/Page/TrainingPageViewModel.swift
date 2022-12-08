@@ -12,13 +12,11 @@ import GodToolsToolParser
 class TrainingPageViewModel: MobileContentViewModel {
     
     private let pageModel: TipPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     required init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
         
-        super.init(baseModel: pageModel)
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext)
     }
 }

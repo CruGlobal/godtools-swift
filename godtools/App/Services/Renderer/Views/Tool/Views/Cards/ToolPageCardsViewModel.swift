@@ -12,7 +12,6 @@ import GodToolsToolParser
 class ToolPageCardsViewModel: MobileContentViewModel {
     
     private let cards: [TractPage.Card]
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let cardJumpService: CardJumpService
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
@@ -22,10 +21,9 @@ class ToolPageCardsViewModel: MobileContentViewModel {
         let visibleCards: [TractPage.Card] = cards.filter({!$0.isHidden})
         
         self.cards = cards
-        self.renderedPageContext = renderedPageContext
         self.cardJumpService = cardJumpService
         
-        super.init(baseModels: cards)
+        super.init(baseModels: cards, renderedPageContext: renderedPageContext)
         
         setupBinding()
         

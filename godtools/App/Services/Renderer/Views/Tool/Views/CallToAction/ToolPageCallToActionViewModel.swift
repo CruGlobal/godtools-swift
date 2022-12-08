@@ -12,16 +12,14 @@ import GodToolsToolParser
 class ToolPageCallToActionViewModel: MobileContentViewModel {
     
     private let callToActionModel: CallToAction?
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
         
     required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
-        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
-        super.init(baseModel: callToActionModel)
+        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

@@ -12,7 +12,6 @@ import GodToolsToolParser
 class MobileContentFlowItemViewModel: MobileContentViewModel {
     
     private let flowItem: GodToolsToolParser.Flow.Item
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     private var visibilityFlowWatcher: FlowWatcher?
     
@@ -21,7 +20,6 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
     init(flowItem: GodToolsToolParser.Flow.Item, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.flowItem = flowItem
-        self.renderedPageContext = renderedPageContext
         
         let visibility: MobileContentViewVisibilityState
         
@@ -37,7 +35,7 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
         
         visibilityState = ObservableValue(value: visibility)
         
-        super.init(baseModel: flowItem)
+        super.init(baseModel: flowItem, renderedPageContext: renderedPageContext)
         
         visibilityFlowWatcher = flowItem.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             

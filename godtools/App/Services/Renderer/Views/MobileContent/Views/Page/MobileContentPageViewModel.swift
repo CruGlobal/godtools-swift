@@ -13,16 +13,14 @@ import SwiftUI
 class MobileContentPageViewModel: MobileContentViewModel {
     
     private let pageModel: Page
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let hidesBackgroundImage: Bool
         
     init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
         self.hidesBackgroundImage = hidesBackgroundImage
         
-        super.init(baseModel: pageModel)
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext)
     }
     
     var analyticsScreenName: String {

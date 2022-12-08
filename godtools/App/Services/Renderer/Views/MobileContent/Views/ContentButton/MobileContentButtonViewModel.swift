@@ -9,12 +9,11 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentButtonViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
+class MobileContentButtonViewModel: MobileContentClickableViewModel {
     
     private let maxAllowedIconSize = 40
     
     private let buttonModel: Button
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
@@ -32,7 +31,6 @@ class MobileContentButtonViewModel: MobileContentViewModel, ClickableMobileConte
     required init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         
@@ -77,7 +75,7 @@ class MobileContentButtonViewModel: MobileContentViewModel, ClickableMobileConte
             self.icon = nil
         }
         
-        super.init(baseModel: buttonModel)
+        super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
@@ -124,30 +122,5 @@ class MobileContentButtonViewModel: MobileContentViewModel, ClickableMobileConte
             return nil
         }
         return 1
-    }
-    
-    var buttonType: Button.Type_ {
-        return buttonModel.type
-    }
-    
-    var buttonEvents: [EventId] {
-        return buttonModel.events
-    }
-    
-    var rendererState: State {
-        return renderedPageContext.rendererState
-    }
-    
-    func getClickableUrl() -> URL? {
-        return getClickableUrl(model: buttonModel)
-    }
-}
-
-// MARK: - Inputs
-
-extension MobileContentButtonViewModel {
-    
-    func buttonTapped() {
-        trackClickableEvents(model: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

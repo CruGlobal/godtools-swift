@@ -12,7 +12,6 @@ import GodToolsToolParser
 class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
@@ -23,7 +22,6 @@ class ToolPageViewModel: MobileContentPageViewModel {
     init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
                 
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
                 

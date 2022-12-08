@@ -12,14 +12,12 @@ import GodToolsToolParser
 class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
             
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
         self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(

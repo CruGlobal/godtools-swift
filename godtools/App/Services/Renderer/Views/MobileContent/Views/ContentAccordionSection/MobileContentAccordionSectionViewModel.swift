@@ -12,14 +12,12 @@ import GodToolsToolParser
 class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     
     private let sectionModel: Accordion.Section
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.sectionModel = sectionModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         
         self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
@@ -28,7 +26,7 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(baseModel: sectionModel)
+        super.init(baseModel: sectionModel, renderedPageContext: renderedPageContext)
     }
 }
 

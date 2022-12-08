@@ -76,12 +76,6 @@ class MobileContentCardView: MobileContentStackView {
     
     @objc private func cardTapped() {
         
-        viewModel.cardTapped()
-        
-        super.sendEventsToAllViews(eventIds: viewModel.events, rendererState: viewModel.rendererState)
-        
-        if let clickableUrl = viewModel.getClickableUrl() {
-            super.sendButtonWithUrlEventToRootView(url: clickableUrl)
-        }
+        super.viewTapped()
     }
 }

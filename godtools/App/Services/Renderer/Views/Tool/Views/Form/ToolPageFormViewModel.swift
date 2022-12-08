@@ -11,7 +11,6 @@ import GodToolsToolParser
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
@@ -20,15 +19,10 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     
     init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
-        self.renderedPageContext = renderedPageContext
         self.followUpService = followUpService
         self.localizationServices = localizationServices
         
         super.init(formModel: formModel, renderedPageContext: renderedPageContext)
-    }
-
-    var rendererState: State {
-        return renderedPageContext.rendererState
     }
     
     // MARK: - Follow Up

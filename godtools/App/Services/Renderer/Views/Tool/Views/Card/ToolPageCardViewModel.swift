@@ -11,7 +11,6 @@ import GodToolsToolParser
 
 class ToolPageCardViewModel: MobileContentViewModel, MobileContentViewModelType {
     
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let cardModel: TractPage.Card
     private let analytics: AnalyticsContainer
     private let fontService: FontService
@@ -29,7 +28,6 @@ class ToolPageCardViewModel: MobileContentViewModel, MobileContentViewModelType 
     init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -64,7 +62,7 @@ class ToolPageCardViewModel: MobileContentViewModel, MobileContentViewModelType 
             hidesHeaderTrainingTip = !hasTrainingTip
         }
         
-        super.init(baseModel: cardModel)
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext)
     }
     
     private var analyticsScreenName: String {

@@ -12,14 +12,12 @@ import GodToolsToolParser
 class MobileContentSpacerViewModel: MobileContentViewModel {
     
     private let spacerModel: Spacer
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     let height: MobileContentSpacerHeight
     
     init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.spacerModel = spacerModel
-        self.renderedPageContext = renderedPageContext
         
         switch spacerModel.mode {
         case .auto_:
@@ -30,6 +28,6 @@ class MobileContentSpacerViewModel: MobileContentViewModel {
             height = .auto
         }
         
-        super.init(baseModel: spacerModel)
+        super.init(baseModel: spacerModel, renderedPageContext: renderedPageContext)
     }
 }

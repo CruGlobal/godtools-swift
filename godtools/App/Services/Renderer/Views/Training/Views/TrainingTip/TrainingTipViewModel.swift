@@ -12,7 +12,6 @@ import GodToolsToolParser
 class TrainingTipViewModel: MobileContentViewModel {
     
     private let tipModel: Tip
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var viewType: TrainingTipViewType = .rounded
@@ -23,11 +22,10 @@ class TrainingTipViewModel: MobileContentViewModel {
     required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
-        self.renderedPageContext = renderedPageContext
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
             
-        super.init(baseModel: tipModel)
+        super.init(baseModel: tipModel, renderedPageContext: renderedPageContext)
         
         let trainingTipViewed: Bool = getTrainingTipViewed()
         

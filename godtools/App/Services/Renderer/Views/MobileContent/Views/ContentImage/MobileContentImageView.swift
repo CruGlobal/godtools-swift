@@ -45,13 +45,7 @@ class MobileContentImageView: MobileContentView {
     
     @objc func handleImageTapped() {
         
-        viewModel.imageTapped()
-        
-        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
-        
-        if let clickableUrl = viewModel.getClickableUrl() {
-            super.sendButtonWithUrlEventToRootView(url: clickableUrl)
-        }
+        super.viewTapped()
     }
     
     // MARK: - MobileContentView
