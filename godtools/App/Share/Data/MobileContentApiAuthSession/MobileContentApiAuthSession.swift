@@ -41,7 +41,7 @@ class MobileContentApiAuthSession {
     
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, URLResponseError> {
         
-        return fetchRemoteAuthToken()
+        return getAuthToken()
             .flatMap { authToken -> AnyPublisher<Data, URLResponseError> in
 
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
@@ -92,15 +92,7 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTaskWithAuthToken(_ authToken: String?, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, URLResponseError> {
-        
-        guard let authToken = authToken else {
-            assertionFailure("Auth token shouldn't be nil")
-            
-            let error = URLResponseError.otherError(error: MobileContentAuthTokenError.nilAuthToken)
-            return Fail(outputType: Data.self, failure: error)
-                .eraseToAnyPublisher()
-        }
+    private func attemptDataTaskWithAuthToken(_ authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, URLResponseError> {
 
         let authenticatedRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
 
