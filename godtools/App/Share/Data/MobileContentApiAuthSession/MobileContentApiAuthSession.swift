@@ -41,7 +41,7 @@ class MobileContentApiAuthSession {
     
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, URLResponseError> {
         
-        return getAuthToken()
+        return fetchRemoteAuthToken()
             .flatMap { authToken -> AnyPublisher<Data, URLResponseError> in
 
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
@@ -62,7 +62,7 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func getAuthToken() -> AnyPublisher<String?, URLResponseError> {
+    private func getAuthToken() -> AnyPublisher<String, URLResponseError> {
         
         if let cachedAuthToken = mobileContentAuthTokenRepository.getCachedAuthToken() {
             
@@ -76,13 +76,18 @@ class MobileContentApiAuthSession {
         }
     }
     
-    private func fetchRemoteAuthToken() -> AnyPublisher<String?, URLResponseError> {
+    private func fetchRemoteAuthToken() -> AnyPublisher<String, URLResponseError> {
         
         return userAuthentication.renewOktaAccessTokenPublisher()
             .flatMap { oktaAccessToken in
                 
                 return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
                    .eraseToAnyPublisher()
+            }
+            .flatMap { authTokenDataModel in
+                
+                return Just(authTokenDataModel.token)
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
