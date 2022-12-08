@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
+class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -20,7 +20,7 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     let hidesCallToAction: Bool
     
-    required init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
                 
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
@@ -34,10 +34,6 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
         )
         
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
-    }
-    
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
-        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {
@@ -72,6 +68,11 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     var page: Int {
         return renderedPageContext.page
     }
+}
+
+// MARK: - Inputs
+
+extension ToolPageViewModel {
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
         

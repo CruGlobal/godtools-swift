@@ -18,7 +18,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.renderedPageContext = renderedPageContext
         self.followUpService = followUpService
@@ -26,11 +26,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
         
         super.init(formModel: formModel, renderedPageContext: renderedPageContext)
     }
-    
-    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
-        fatalError("init(formModel:renderedPageContext:) has not been implemented")
-    }
-    
+
     var rendererState: State {
         return renderedPageContext.rendererState
     }

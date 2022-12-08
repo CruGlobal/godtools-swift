@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileContentContentPageViewModelType {
+class MobileContentContentPageViewModel: MobileContentPageViewModel {
     
     private let contentPage: Page
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -24,10 +24,6 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
         super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
     
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
-        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
-    }
-    
     private func getPageAnalyticsScreenName() -> String {
         
         let resource: ResourceModel = renderedPageContext.resource
@@ -38,6 +34,11 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel, MobileConte
         
         return screenName
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentContentPageViewModel {
     
     func pageDidAppear() {
         

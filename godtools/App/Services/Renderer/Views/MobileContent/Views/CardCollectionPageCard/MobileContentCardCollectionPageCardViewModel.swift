@@ -9,15 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentCardCollectionPageCardViewModel: MobileContentCardCollectionPageCardViewModelType {
+class MobileContentCardCollectionPageCardViewModel: MobileContentViewModel {
     
-    private let card: CardCollectionPage.Card
+    private let cardModel: CardCollectionPage.Card
     
     let pageNumber: String
     
-    required init(card: CardCollectionPage.Card) {
+    init(card: CardCollectionPage.Card) {
                 
-        self.card = card
+        self.cardModel = card
         pageNumber = "\(card.position + 1)/\(card.page.cards.count)"
+        
+        super.init(baseModel: card)
     }
 }

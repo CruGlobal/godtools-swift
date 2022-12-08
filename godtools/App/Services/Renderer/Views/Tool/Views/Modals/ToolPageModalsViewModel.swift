@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class ToolPageModalsViewModel: ToolPageModalsViewModelType {
+class ToolPageModalsViewModel: MobileContentViewModel {
     
     private let modals: [Modal]
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -18,5 +18,7 @@ class ToolPageModalsViewModel: ToolPageModalsViewModelType {
         
         self.modals = modals
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModels: modals)
     }
 }

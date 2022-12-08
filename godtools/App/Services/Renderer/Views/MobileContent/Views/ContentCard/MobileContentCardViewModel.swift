@@ -9,21 +9,23 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentCardViewModel: MobileContentCardViewModelType {
+class MobileContentCardViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
     
-    private let contentCard: Card
+    private let cardModel: Card
     private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(contentCard: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(cardModel: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
-        self.contentCard = contentCard
+        self.cardModel = cardModel
         self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
+        
+        super.init(baseModel: cardModel)
     }
     
     var events: [EventId] {
-        return contentCard.events
+        return cardModel.events
     }
     
     var rendererState: State {
@@ -31,10 +33,15 @@ class MobileContentCardViewModel: MobileContentCardViewModelType {
     }
     
     func getClickableUrl() -> URL? {
-        return getClickableUrl(model: contentCard)
+        return getClickableUrl(model: cardModel)
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentCardViewModel {
     
     func cardTapped() {
-        trackClickableEvents(model: contentCard, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        trackClickableEvents(model: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

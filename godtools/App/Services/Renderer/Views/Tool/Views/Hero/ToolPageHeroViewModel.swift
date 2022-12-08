@@ -9,13 +9,13 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageHeroViewModel: ToolPageHeroViewModelType {
+class ToolPageHeroViewModel: MobileContentViewModel {
     
     private let heroModel: Hero
     private let renderedPageContext: MobileContentRenderedPageContext
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroModel = heroModel
         self.renderedPageContext = renderedPageContext
@@ -25,11 +25,18 @@ class ToolPageHeroViewModel: ToolPageHeroViewModelType {
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
+        
+        super.init(baseModel: heroModel)
     }
     
     deinit {
 
     }
+}
+
+// MARK: - Inputs
+
+extension ToolPageHeroViewModel {
     
     func heroDidAppear() {
         mobileContentDidAppear()

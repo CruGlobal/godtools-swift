@@ -10,15 +10,15 @@ import UIKit
 
 class MobileContentAnimationView: MobileContentView {
     
-    private let viewModel: MobileContentAnimationViewModelType
+    private let viewModel: MobileContentAnimationViewModel
     private let animatedView: AnimatedView = AnimatedView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     private let touchAreaButton: UIButton = UIButton(type: .custom)
     
-    required init(viewModel: MobileContentAnimationViewModelType) {
+    init(viewModel: MobileContentAnimationViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()

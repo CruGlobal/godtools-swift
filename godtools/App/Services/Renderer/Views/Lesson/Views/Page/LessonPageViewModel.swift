@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
+class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -30,10 +30,11 @@ class LessonPageViewModel: MobileContentPageViewModel, LessonPageViewModelType {
         
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
     }
-    
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
-        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
-    }
+}
+
+// MARK: - Inputs
+
+extension LessonPageViewModel {
     
     func pageDidAppear() {
         mobileContentDidAppear()

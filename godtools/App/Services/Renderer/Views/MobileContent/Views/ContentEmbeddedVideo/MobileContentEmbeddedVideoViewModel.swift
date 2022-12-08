@@ -9,15 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentEmbeddedVideoViewModel: MobileContentEmbeddedVideoViewModelType {
+class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
     
     private let videoModel: Video
     private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(videoModel: Video, renderedPageContext: MobileContentRenderedPageContext) {
+    init(videoModel: Video, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.videoModel = videoModel
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: videoModel)
     }
     
     var videoId: String {

@@ -9,15 +9,17 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageModalViewModel: ToolPageModalViewModelType {
+class ToolPageModalViewModel: MobileContentViewModel {
     
     private let modalModel: Modal
     private let renderedPageContext: MobileContentRenderedPageContext
             
-    required init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext) {
+    init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.modalModel = modalModel
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: modalModel)
     }
     
     var backgroundColor: UIColor {

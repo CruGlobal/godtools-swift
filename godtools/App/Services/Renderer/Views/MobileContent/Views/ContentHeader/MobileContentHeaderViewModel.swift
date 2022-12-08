@@ -9,15 +9,17 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentHeaderViewModel: MobileContentHeaderViewModelType {
+class MobileContentHeaderViewModel: MobileContentViewModel {
     
-    private let header: Text
+    private let headerModel: Text
     private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(header: Text, renderedPageContext: MobileContentRenderedPageContext) {
+    init(headerModel: Text, renderedPageContext: MobileContentRenderedPageContext) {
         
-        self.header = header
+        self.headerModel = headerModel
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: headerModel)
     }
     
     var fontSize: CGFloat {

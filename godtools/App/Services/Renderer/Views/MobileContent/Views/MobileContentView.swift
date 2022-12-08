@@ -17,11 +17,24 @@ class MobileContentView: UIView {
         case walkingUpViewHierarchy
     }
     
+    private let viewModel: MobileContentViewModel?
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
     private(set) var visibilityState: MobileContentViewVisibilityState = .visible
     private(set) var drawsShadow: Bool = false
+    
+    init(viewModel: MobileContentViewModel?, frame: CGRect?) {
+        
+        self.viewModel = viewModel
+        
+        super.init(frame: frame ?? UIScreen.main.bounds)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     var paddingInsets: UIEdgeInsets {
         return .zero

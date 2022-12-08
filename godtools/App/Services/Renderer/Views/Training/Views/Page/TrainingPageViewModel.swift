@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class TrainingPageViewModel: TrainingPageViewModelType {
+class TrainingPageViewModel: MobileContentViewModel {
     
     private let pageModel: TipPage
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -18,5 +18,7 @@ class TrainingPageViewModel: TrainingPageViewModelType {
         
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: pageModel)
     }
 }

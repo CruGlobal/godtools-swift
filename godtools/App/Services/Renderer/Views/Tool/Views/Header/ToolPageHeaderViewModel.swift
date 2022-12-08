@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
+class ToolPageHeaderViewModel: MobileContentViewModel {
     
     private let headerModel: Header
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -20,6 +20,8 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         
         self.headerModel = headerModel
         self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: headerModel)
         
         for factory in renderedPageContext.pageViewFactories.factories {
             if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {

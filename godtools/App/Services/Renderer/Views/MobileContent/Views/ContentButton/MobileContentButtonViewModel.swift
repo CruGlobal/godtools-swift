@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
+class MobileContentButtonViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
     
     private let maxAllowedIconSize = 40
     
@@ -77,7 +77,7 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
             self.icon = nil
         }
         
-        super.init()
+        super.init(baseModel: buttonModel)
         
         visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
@@ -141,6 +141,11 @@ class MobileContentButtonViewModel: NSObject, MobileContentButtonViewModelType {
     func getClickableUrl() -> URL? {
         return getClickableUrl(model: buttonModel)
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentButtonViewModel {
     
     func buttonTapped() {
         trackClickableEvents(model: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)

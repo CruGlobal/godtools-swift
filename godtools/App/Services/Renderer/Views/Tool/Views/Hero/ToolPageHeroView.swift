@@ -10,21 +10,17 @@ import UIKit
 
 class ToolPageHeroView: MobileContentStackView {
     
-    private let viewModel: ToolPageHeroViewModelType
+    private let viewModel: ToolPageHeroViewModel
                     
-    required init(viewModel: ToolPageHeroViewModelType) {
+    init(viewModel: ToolPageHeroViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: 20, scrollIsEnabled: true)
+        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20, scrollIsEnabled: true)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     // MARK: - MobileContentView

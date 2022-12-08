@@ -10,17 +10,19 @@ import UIKit
 import GodToolsToolParser
 import SwiftUI
 
-class MobileContentPageViewModel: MobileContentPageViewModelType {
+class MobileContentPageViewModel: MobileContentViewModel {
     
     private let pageModel: Page
     private let renderedPageContext: MobileContentRenderedPageContext
     private let hidesBackgroundImage: Bool
         
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.renderedPageContext = renderedPageContext
         self.hidesBackgroundImage = hidesBackgroundImage
+        
+        super.init(baseModel: pageModel)
     }
     
     var analyticsScreenName: String {
@@ -45,6 +47,11 @@ class MobileContentPageViewModel: MobileContentPageViewModelType {
     var backgroundColor: UIColor {
         return pageModel.backgroundColor
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentPageViewModel {
     
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
                

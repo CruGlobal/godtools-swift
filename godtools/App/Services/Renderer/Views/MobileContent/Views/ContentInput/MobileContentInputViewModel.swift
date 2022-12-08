@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentInputViewModel: MobileContentInputViewModelType {
+class MobileContentInputViewModel: MobileContentViewModel {
     
     private let inputModel: Input
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -20,7 +20,7 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     let inputLabel: String?
     let placeholder: String?
     
-    required init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.inputModel = inputModel
         self.renderedPageContext = renderedPageContext
@@ -28,6 +28,8 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
         
         inputLabel = inputModel.label?.text
         placeholder = inputModel.placeholder?.text
+        
+        super.init(baseModel: inputModel)
     }
     
     var isHidden: Bool {
@@ -36,10 +38,6 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
     
     var isRequired: Bool {
         return inputModel.isRequired
-    }
-    
-    func inputChanged(text: String?) {
-        inputValue = text
     }
     
     func getInputName() -> String? {
@@ -53,5 +51,14 @@ class MobileContentInputViewModel: MobileContentInputViewModelType {
         }
         
         return inputValue
+    }
+}
+
+// MARK: - Inputs
+
+extension MobileContentInputViewModel {
+    
+    func inputChanged(text: String?) {
+        inputValue = text
     }
 }

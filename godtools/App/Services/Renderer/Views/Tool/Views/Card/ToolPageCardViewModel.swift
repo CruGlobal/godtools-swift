@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageCardViewModel: ToolPageCardViewModelType {
+class ToolPageCardViewModel: MobileContentViewModel, MobileContentViewModelType {
     
     private let renderedPageContext: MobileContentRenderedPageContext
     private let cardModel: TractPage.Card
@@ -26,7 +26,7 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    required init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.renderedPageContext = renderedPageContext
@@ -63,6 +63,8 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
             let hasTrainingTip: Bool = cardModel.tips.count > 0
             hidesHeaderTrainingTip = !hasTrainingTip
         }
+        
+        super.init(baseModel: cardModel)
     }
     
     private var analyticsScreenName: String {
@@ -145,6 +147,19 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
         return renderedPageContext.language.languageDirection.semanticContentAttribute
     }
     
+    func containsDismissListener(eventId: EventId) -> Bool {
+        return cardModel.dismissListeners.contains(eventId)
+    }
+    
+    func containsListener(eventId: EventId) -> Bool {
+        return cardModel.listeners.contains(eventId)
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolPageCardViewModel {
+    
     func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
         
         guard let backgroundImageResource = cardModel.backgroundImage else {
@@ -181,19 +196,11 @@ class ToolPageCardViewModel: ToolPageCardViewModelType {
     func cardDidDisappear() {
         mobileContentDidDisappear()
     }
-    
-    func containsDismissListener(eventId: EventId) -> Bool {
-        return cardModel.dismissListeners.contains(eventId)
-    }
-    
-    func containsListener(eventId: EventId) -> Bool {
-        return cardModel.listeners.contains(eventId)
-    }
 }
 
 // MARK: - MobileContentViewModelType
 
-extension ToolPageCardViewModel: MobileContentViewModelType {
+extension ToolPageCardViewModel {
     
     var language: LanguageModel {
         return renderedPageContext.language

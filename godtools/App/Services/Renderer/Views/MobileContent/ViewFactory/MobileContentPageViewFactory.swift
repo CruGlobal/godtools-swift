@@ -73,7 +73,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let contentCard = renderableModel as? Card {
             
             let viewModel = MobileContentCardViewModel(
-                contentCard: contentCard,
+                cardModel: contentCard,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics
             )
@@ -132,7 +132,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headingModel = renderableModel as? MultiplatformHeading {
             
             let viewModel = MobileContentHeadingViewModel(
-                heading: headingModel.text,
+                headingModel: headingModel.text,
                 renderedPageContext: renderedPageContext
             )
             
@@ -143,6 +143,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let contentModel = renderableModel as? MultiplatformContent {
             
             return MobileContentStackView(
+                viewModel: MobileContentViewModel(baseModels: contentModel.content),
                 contentInsets: contentModel.contentInsets,
                 itemSpacing: contentModel.itemSpacing,
                 scrollIsEnabled: contentModel.scrollIsEnabled
@@ -231,7 +232,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headerModel = renderableModel as? MultiplatformContentHeader {
             
             let viewModel = MobileContentHeaderViewModel(
-                header: headerModel.text,
+                headerModel: headerModel.text,
                 renderedPageContext: renderedPageContext
             )
             

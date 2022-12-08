@@ -13,7 +13,7 @@ class MobileContentButtonView: MobileContentView {
     
     private static let buttonHeight: CGFloat = 50
     
-    private let viewModel: MobileContentButtonViewModelType
+    private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
@@ -22,11 +22,11 @@ class MobileContentButtonView: MobileContentView {
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     
-    required init(viewModel: MobileContentButtonViewModelType) {
+    init(viewModel: MobileContentButtonViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()

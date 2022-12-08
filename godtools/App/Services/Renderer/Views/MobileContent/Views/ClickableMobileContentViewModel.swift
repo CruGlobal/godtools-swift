@@ -16,7 +16,7 @@ protocol ClickableMobileContentViewModel {
 
 extension ClickableMobileContentViewModel {
     
-    func getClickableEvents(model: Clickable) -> [AnalyticsEvent] {
+    func getClickableAnalyticsEvents(model: Clickable) -> [AnalyticsEvent] {
         
         guard let modelHasAnalyticsEvents = model as? HasAnalyticsEvents else {
             return Array()
@@ -32,7 +32,7 @@ extension ClickableMobileContentViewModel {
     func trackClickableEvents(model: Clickable, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         mobileContentAnalytics.trackEvents(
-            events: getClickableEvents(model: model),
+            events: getClickableAnalyticsEvents(model: model),
             renderedPageContext: renderedPageContext
         )
     }

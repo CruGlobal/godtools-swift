@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentLinkViewModel: MobileContentLinkViewModelType {
+class MobileContentLinkViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
     
     private let linkModel: Link
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -20,13 +20,15 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     let titleColor: UIColor
     
-    required init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
         self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.titleColor = linkModel.text.textColor
+        
+        super.init(baseModel: linkModel)
     }
     
     var backgroundColor: UIColor {
@@ -52,6 +54,11 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     func getClickableUrl() -> URL? {
         return getClickableUrl(model: linkModel)
     }
+}
+
+// MARK: - Inpits
+
+extension MobileContentLinkViewModel {
     
     func linkTapped() {
         trackClickableEvents(model: linkModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)

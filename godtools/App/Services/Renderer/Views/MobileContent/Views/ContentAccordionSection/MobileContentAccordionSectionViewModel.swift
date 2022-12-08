@@ -9,14 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewModelType {
+class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     
     private let sectionModel: Accordion.Section
     private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.sectionModel = sectionModel
         self.renderedPageContext = renderedPageContext
@@ -27,14 +27,8 @@ class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewM
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
-    }
-    
-    func sectionOpened() {
-        mobileContentDidAppear()
-    }
-    
-    func sectionClosed() {
-        mobileContentDidDisappear()
+        
+        super.init(baseModel: sectionModel)
     }
 }
 
@@ -51,3 +45,15 @@ extension MobileContentAccordionSectionViewModel: MobileContentViewModelType {
     }
 }
 
+// MARK: - Inputs
+
+extension MobileContentAccordionSectionViewModel {
+    
+    func sectionOpened() {
+        mobileContentDidAppear()
+    }
+    
+    func sectionClosed() {
+        mobileContentDidDisappear()
+    }
+}

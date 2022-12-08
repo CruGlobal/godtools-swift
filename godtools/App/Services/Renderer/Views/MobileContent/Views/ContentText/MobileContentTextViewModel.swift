@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentTextViewModel: MobileContentTextViewModelType {
+class MobileContentTextViewModel: MobileContentViewModel, MobileContentViewModelType {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
@@ -20,13 +20,15 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     let textColor: UIColor
     
-    required init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.textModel = textModel
         self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
         self.textColor = textModel.textColor
+        
+        super.init(baseModel: textModel)
     }
     
     var startImage: UIImage? {
@@ -156,7 +158,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
 
 // MARK: - MobileContentViewModelType
 
-extension MobileContentTextViewModel: MobileContentViewModelType {
+extension MobileContentTextViewModel {
     
     var language: LanguageModel {
         return renderedPageContext.language

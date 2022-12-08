@@ -10,12 +10,12 @@ import UIKit
 
 class ChooseYourOwnAdventureView: MobileContentPagesView {
     
-    private let viewModel: ChooseYourOwnAdventureViewModelType
+    private let viewModel: ChooseYourOwnAdventureViewModel
     
     private var backButtonItem: UIBarButtonItem?
     private var languageSelector: NavBarSelectorView?
     
-    required init(viewModel: ChooseYourOwnAdventureViewModelType) {
+    init(viewModel: ChooseYourOwnAdventureViewModel) {
         
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
@@ -23,10 +23,6 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPagesViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
     }
     
     deinit {

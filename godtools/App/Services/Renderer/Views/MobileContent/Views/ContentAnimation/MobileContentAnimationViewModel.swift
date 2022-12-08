@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
+class MobileContentAnimationViewModel: MobileContentViewModel, ClickableMobileContentViewModel {
     
     private let animationModel: Animation
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -17,7 +17,7 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     
     let animatedViewModel: AnimatedViewModelType?
     
-    required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.animationModel = animationModel
         self.renderedPageContext = renderedPageContext
@@ -43,6 +43,8 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
         else {
             animatedViewModel = nil
         }
+        
+        super.init(baseModel: animationModel)
     }
     
     var animationEvents: [EventId] {
@@ -56,6 +58,11 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
     func getClickableUrl() -> URL? {
         return getClickableUrl(model: animationModel)
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentAnimationViewModel {
     
     func animationTapped() {
         trackClickableEvents(model: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)

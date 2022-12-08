@@ -10,15 +10,15 @@ import UIKit
 
 class MobileContentHeaderView: MobileContentView {
     
-    private let viewModel: MobileContentHeaderViewModelType
+    private let viewModel: MobileContentHeaderViewModel
     
     private var textView: MobileContentTextView?
     
-    required init(viewModel: MobileContentHeaderViewModelType) {
+    init(viewModel: MobileContentHeaderViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
