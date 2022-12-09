@@ -26,7 +26,7 @@ class GetUserDetailsUseCase {
         return Publishers.CombineLatest(fetchRemoteUserDetailsPublisher(), repository.getUserDetailsChanged())
             .flatMap { _ in
                 
-                guard let userDetails = self.repository.getAuthUserDetails() else {
+                guard let userDetails = self.repository.getCachedAuthUserDetails() else {
                     
                     return Just<UserDetailsDomainModel?>(nil)
                         .eraseToAnyPublisher()

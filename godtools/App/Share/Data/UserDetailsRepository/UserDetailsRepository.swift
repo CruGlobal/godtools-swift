@@ -24,7 +24,7 @@ class UserDetailsRepository {
         return cache.getUserDetailsChanged()
     }
     
-    func getAuthUserDetails() -> UserDetailsDataModel? {
+    func getCachedAuthUserDetails() -> UserDetailsDataModel? {
         
         return cache.getAuthUserDetails()
     }
