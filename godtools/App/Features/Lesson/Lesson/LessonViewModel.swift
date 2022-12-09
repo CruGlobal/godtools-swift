@@ -8,13 +8,13 @@
 
 import UIKit
 
-class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
+class LessonViewModel: MobileContentPagesViewModel {
         
     private weak var flowDelegate: FlowDelegate?
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageModel, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, trainingTipsEnabled: Bool) {
                 
         self.flowDelegate = flowDelegate
         
@@ -42,6 +42,11 @@ class LessonViewModel: MobileContentPagesViewModel, LessonViewModelType {
         
         progress.accept(value: AnimatableValue(value: newProgress, animated: true))
     }
+}
+
+// MARK: - Inputs
+
+extension LessonViewModel {
     
     func lessonMostVisiblePageDidChange(page: Int) {
         updateProgress(page: page)

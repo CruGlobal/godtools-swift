@@ -9,17 +9,17 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
+class ToolPageHeaderViewModel: MobileContentViewModel {
     
     private let headerModel: Header
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     private var mobileContentPageViewFactory: MobileContentPageViewFactory?
             
     required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
-        self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: headerModel, renderedPageContext: renderedPageContext)
         
         for factory in renderedPageContext.pageViewFactories.factories {
             if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {
@@ -78,17 +78,3 @@ class ToolPageHeaderViewModel: ToolPageHeaderViewModelType {
         )
     }
 }
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageHeaderViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return []
-    }
-}
-

@@ -15,18 +15,18 @@ protocol ToolPageCallToActionViewDelegate: AnyObject {
 
 class ToolPageCallToActionView: MobileContentView, NibBased {
         
-    let viewModel: ToolPageCallToActionViewModelType
+    let viewModel: ToolPageCallToActionViewModel
         
     private weak var delegate: ToolPageCallToActionViewDelegate?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var nextButton: UIButton!
     
-    required init(viewModel: ToolPageCallToActionViewModelType) {
+    required init(viewModel: ToolPageCallToActionViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         let rootNibView: UIView? = loadNib()
         rootNibView?.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute

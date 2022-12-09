@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class LessonPageView: MobileContentPageView {
     
-    private let viewModel: LessonPageViewModelType
+    private let viewModel: LessonPageViewModel
     private let safeArea: UIEdgeInsets
     
     private var contentView: MobileContentStackView?
@@ -23,7 +23,7 @@ class LessonPageView: MobileContentPageView {
     @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: LessonPageViewModelType, safeArea: UIEdgeInsets) {
+    required init(viewModel: LessonPageViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea
@@ -33,10 +33,6 @@ class LessonPageView: MobileContentPageView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
-        fatalError("init(viewModel:nibName:) has not been implemented")
     }
     
     deinit {

@@ -10,12 +10,12 @@ import UIKit
 
 class LessonView: MobileContentPagesView {
     
-    private let viewModel: LessonViewModelType
+    private let viewModel: LessonViewModel
     private let progressView: LessonProgressView = LessonProgressView()
     private let previousPageButton: UIButton = UIButton(type: .custom)
     private let nextPageButton: UIButton = UIButton(type: .custom)
     
-    required init(viewModel: LessonViewModelType) {
+    required init(viewModel: LessonViewModel) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
         
@@ -24,10 +24,6 @@ class LessonView: MobileContentPagesView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPagesViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
     }
     
     deinit {

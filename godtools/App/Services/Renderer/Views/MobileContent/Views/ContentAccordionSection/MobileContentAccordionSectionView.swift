@@ -15,7 +15,7 @@ protocol MobileContentAccordionSectionViewDelegate: AnyObject {
 
 class MobileContentAccordionSectionView: MobileContentView, NibBased {
  
-    private let viewModel: MobileContentAccordionSectionViewModelType
+    private let viewModel: MobileContentAccordionSectionViewModel
     private let contentStack: MobileContentStackView
     private let viewCornerRadius: CGFloat = 10
     
@@ -34,17 +34,18 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     @IBOutlet private var contentStackContainerBottomToView: NSLayoutConstraint!
     @IBOutlet weak private var textStateImageTrailing: NSLayoutConstraint!
     
-    required init(viewModel: MobileContentAccordionSectionViewModelType) {
+    init(viewModel: MobileContentAccordionSectionViewModel) {
         
         self.viewModel = viewModel
         
         self.contentStack = MobileContentStackView(
+            viewModel: viewModel,
             contentInsets: UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20),
             itemSpacing: 10,
             scrollIsEnabled: false
         )
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         setupLayout()

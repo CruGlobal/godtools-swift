@@ -15,7 +15,7 @@ protocol ToolPageViewDelegate: AnyObject {
 
 class ToolPageView: MobileContentPageView {
     
-    private let viewModel: ToolPageViewModelType
+    private let viewModel: ToolPageViewModel
     private let safeArea: UIEdgeInsets
     private let panGestureToControlPageCollectionViewPanningSensitivity: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
@@ -39,7 +39,7 @@ class ToolPageView: MobileContentPageView {
     @IBOutlet weak private var callToActionBottom: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageViewModelType, safeArea: UIEdgeInsets) {
+    init(viewModel: ToolPageViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea
@@ -52,10 +52,6 @@ class ToolPageView: MobileContentPageView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
-        fatalError("init(viewModel:nibName:) has not been implemented")
     }
     
     deinit {

@@ -11,17 +11,17 @@ import GodToolsToolParser
 
 class MobileContentSpacerView: MobileContentView {
     
-    private let viewModel: MobileContentSpacerViewModelType
+    private let viewModel: MobileContentSpacerViewModel
     
     private var heightConstraint: NSLayoutConstraint!
     
-    required init(viewModel: MobileContentSpacerViewModelType) {
+    init(viewModel: MobileContentSpacerViewModel) {
         
         self.viewModel = viewModel
         
         let height: CGFloat = viewModel.height.fixedHeightValue
     
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height))
+        super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height))
         
         heightConstraint = NSLayoutConstraint(
             item: self,

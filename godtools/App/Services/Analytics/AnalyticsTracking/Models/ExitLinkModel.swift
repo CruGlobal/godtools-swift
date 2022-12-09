@@ -15,5 +15,5 @@ struct ExitLinkModel {
     let siteSubSection: String
     let contentLanguage: String
     let secondaryContentLanguage: String?
-    let url: String
+    let url: URL
 }

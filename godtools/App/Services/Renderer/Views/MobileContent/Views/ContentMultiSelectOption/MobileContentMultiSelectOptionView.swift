@@ -10,16 +10,16 @@ import UIKit
 
 class MobileContentMultiSelectOptionView: MobileContentStackView {
     
-    private let viewModel: MobileContentMultiSelectOptionViewModelType
+    private let viewModel: MobileContentMultiSelectOptionViewModel
     
     private let shadowView: UIView = UIView()
     private let overlayButton: UIButton = UIButton(type: .custom)
                     
-    required init(viewModel: MobileContentMultiSelectOptionViewModelType) {
+    init(viewModel: MobileContentMultiSelectOptionViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12), itemSpacing: 10, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12), itemSpacing: 10, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -29,10 +29,6 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupLayout() {

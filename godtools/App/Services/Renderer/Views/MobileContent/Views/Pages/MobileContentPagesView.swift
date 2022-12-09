@@ -13,7 +13,7 @@ class MobileContentPagesView: UIViewController {
     
     typealias PageNumber = Int
     
-    private let viewModel: MobileContentPagesViewModelType
+    private let viewModel: MobileContentPagesViewModel
     
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var currentNavigation: MobileContentPagesNavigationModel?
@@ -23,7 +23,7 @@ class MobileContentPagesView: UIViewController {
     @IBOutlet weak private(set) var safeAreaView: UIView!
     @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
         
-    required init(viewModel: MobileContentPagesViewModelType) {
+    init(viewModel: MobileContentPagesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil)
     }

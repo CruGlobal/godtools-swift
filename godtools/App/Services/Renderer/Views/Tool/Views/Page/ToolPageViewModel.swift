@@ -9,10 +9,9 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
+class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
@@ -20,10 +19,9 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     let hidesCallToAction: Bool
     
-    required init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
                 
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
                 
@@ -34,10 +32,6 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
         )
         
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
-    }
-    
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
-        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
     }
     
     override var analyticsScreenName: String {
@@ -72,6 +66,11 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     var page: Int {
         return renderedPageContext.page
     }
+}
+
+// MARK: - Inputs
+
+extension ToolPageViewModel {
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
         
@@ -88,8 +87,9 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     }
     
     func pageDidAppear() {
-        mobileContentDidAppear()
         
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+                
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -103,18 +103,5 @@ class ToolPageViewModel: MobileContentPageViewModel, ToolPageViewModelType {
     
     func didChangeCardPosition(cardPosition: Int?) {
         self.cardPosition = cardPosition
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
     }
 }
