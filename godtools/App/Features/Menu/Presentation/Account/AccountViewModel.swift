@@ -74,7 +74,7 @@ class AccountViewModel: ObservableObject {
             .receiveOnMain()
             .sink { [weak self] userDetails in
                 
-                self?.joinedOnText = userDetails?.joinedOnString ?? ""
+                self?.joinedOnText = userDetails.joinedOnString
             }
             .store(in: &cancellables)
         

@@ -21,14 +21,14 @@ class GetUserDetailsUseCase {
     }
     
     
-    func getUserDetailsPublisher() -> AnyPublisher<UserDetailsDomainModel?, Never> {
+    func getUserDetailsPublisher() -> AnyPublisher<UserDetailsDomainModel, Never> {
         
         return Publishers.CombineLatest(fetchRemoteUserDetailsPublisher(), repository.getUserDetailsChanged())
             .flatMap { _ in
                 
                 guard let userDetails = self.repository.getCachedAuthUserDetails() else {
                     
-                    return Just<UserDetailsDomainModel?>(nil)
+                    return Just(self.getDefaultUserDetails())
                         .eraseToAnyPublisher()
                 }
                 
@@ -57,6 +57,13 @@ class GetUserDetailsUseCase {
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getDefaultUserDetails() -> UserDetailsDomainModel {
+        
+        return UserDetailsDomainModel(
+            joinedOnString: ""
+        )
     }
     
     private func buildJoinedOnString(from userDetails: UserDetailsDataModel) -> String {
