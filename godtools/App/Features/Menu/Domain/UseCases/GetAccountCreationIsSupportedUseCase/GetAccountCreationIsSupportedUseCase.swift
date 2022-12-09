@@ -10,20 +10,22 @@ import Foundation
 
 class GetAccountCreationIsSupportedUseCase {
     
+    private let appBuild: AppBuild
     private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     
-    init(getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
+    init(appBuild: AppBuild, getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
         
+        self.appBuild = appBuild
         self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
     }
     
     func getAccountCreationIsSupported() -> AccountCreationIsSupportedDomainModel {
         
-        return AccountCreationIsSupportedDomainModel(isSupported: false)
+        // TODO: Currently disabled for release builds until we can remove Okta and support social authentication. ~Levi
         
-        // TODO: Currently disabled until we can remove Okta and support social authentication. ~Levi
-        
-        /*
+        guard appBuild.configuration != .release else {
+            return AccountCreationIsSupportedDomainModel(isSupported: false)
+        }
         
         let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguage()
         
@@ -35,6 +37,6 @@ class GetAccountCreationIsSupportedUseCase {
             isSupported: deviceSystemLanguageIsInSupportedLanguageCodes
         )
         
-        return domainModel*/
+        return domainModel
     }
 }
