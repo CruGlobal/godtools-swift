@@ -76,23 +76,11 @@ For example in this screenshot the following features LanguageSettings and ToolD
 
 ![alt text](ReadMeAssets/features_presentation.png)
 
-Under each Feature folder should be the screens (Views) that make up that feature.  Each screen (View) should be placed in a directory name pertaining to that screen.  For example, the Lessons feature has the following screens (Views) associated with it. Lesson, LessonEvaluation, and LessonList.  There would then be a directory for each screen like so.
+Any smaller view components that help in creating the parent view should go in a Subviews directory. 
 
-Feature/Lessons/Lesson
-Feature/Lessons/LessonEvaluation
-Feature/Lessons/LessonList
+For example in this screenshot the ToolDetails view folder contains a Subviews folder containing all the subviews that help make up ToolDetailsView.swift.
 
-Under each screen (View) folder in a feature should be the View and associated ViewModel that make up that screen.  The Lesson screen (View) would then have LessonView and LessonViewModel.
-
-Feature/Lessons/Lesson/LessonView.swift
-Feature/Lessons/Lesson/LessonViewModel.swift
-
-Any smaller view components that help in creating the screen (View) should go in a Subviews directory.  From the above example, if we built some smaller subview components that help make up the LessonView.swift, those would go in the following:
-
-Feature/Lessons/Lesson/Subviews
-
-If there are any views or subviews that are shared across screens (Views) or shared across Features.  Those should go in the following:
-App/Share/SwiftUI Views
+![alt text](ReadMeAssets/features_view_subviews.png)
 
 ##### Views
 
