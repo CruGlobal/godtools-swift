@@ -72,7 +72,7 @@ For example the GodTools App/Features/ folder currently contains the following f
 
 Each Feature Folder is broken into views that make up that feature.  Typically each view that makes up a feature represents an entire screen area of the app and are navigated between.  Each of these views that make up a feature should be placed in a directory that matches the name of the view.  These would fall under Features/{FeatureName}/Presentation/.
 
-For example in this screenshot the following features LanguageSettings and ToolDetails are expanded.  The views that make up the LanguageSettings feature are ChooseLanguage and LanguageSettings.  The views that make up the ToolDetails fature are ToolDetails.
+For example in this screenshot the following features LanguageSettings and ToolDetails are expanded.  The views that make up the LanguageSettings feature are ChooseLanguage and LanguageSettings.  The views that make up the ToolDetails feature are ToolDetails.
 
 ![alt text](ReadMeAssets/features_presentation.png)
 
@@ -125,10 +125,13 @@ Responsibilities:
 - Operates on the data layer classes and other use cases to perform a single task and applies the business rules.
 
 File Naming and Organization:
-- Use cases should be stored in Share/Domain/UseCases folder.
+- Use cases are typically stored by feature under Features/Domain/UseCases/ folder.  Use cases should be specific to the business use case for a feature.  In some situations Use cases can be shared across features and those should be stored in Share/Domain/UseCases. 
 - Each UseCase should have it's own folder named the same as the use case.  
-- If a UseCase provides a domain model, that model should be included in the same folder as the use case and suffixed with DomainModel.  For example, if the GetAllToolsUseCase were to provide tools, the domain model could be ToolDomainModel.
+- If a UseCase provides a domain model, that model should be included in the same folder as the use case and suffixed with DomainModel.
 
+In this screenshot the ToolDetails feature Use cases are expanded.  These are all of the Use cases that make up that feature.  Each Use case is in a directory that matches the Use case name and contains a domain model with DomainModel suffix.
+
+![alt text](ReadMeAssets/features_domain_use_cases.png)
 
 #### Data Layer
 
