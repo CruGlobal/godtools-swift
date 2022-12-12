@@ -72,7 +72,7 @@ For example the GodTools App/Features/ folder currently contains the following f
 
 Each Feature Folder is broken into views that make up that feature.  Typically each view that makes up a feature represents an entire screen area of the app and are navigated between.  Each of these views that make up a feature should be placed in a directory that matches the name of the view.  These would fall under Features/{FeatureName}/Presentation/.
 
-For example in this screenshot the features LanguageSettings and ToolDetails are expanded where ChooseLanguage and LanguageSettings make up the LanguageSettings feature and ToolDetails view makes up the ToolDetails feature. 
+For example in this screenshot the following features LanguageSettings and ToolDetails are expanded.  The views that make up the LanguageSettings feature are ChooseLanguageView and LanguageSettingsView.  The views that make up the ToolDetails fature are ToolDetails.
 
 ![alt text](ReadMeAssets/features_presentation.png)
 
@@ -98,7 +98,7 @@ App/Share/SwiftUI Views
 
 Views are what a user visually sees and interacts with.
 
-##### View Responsibilities:
+###### View Responsibilities:
 - Render logic.
 - Animation logic.
 - Owns a ViewModel (reference to ViewModel).
@@ -115,7 +115,7 @@ File Naming and Organization:
 
 ViewModels are considered a view representation.  They're the data backing of a view.
 
-##### ViewModel Responsibilities:
+###### ViewModel Responsibilities:
 - Provides data outputs to the View which the View can observe and react to.
 - Each data output connects to a UseCase (Domain Layer) which computes data.  Computing can also happen directly in the ViewModel although UseCases are preferred.
 
