@@ -6,7 +6,7 @@ GodTools
 
 ### Requirements
 
-- Xcode 13.4.1
+- Xcode 14.0
 - Bundler
 - Cocoapods
 - Fastlane
@@ -60,10 +60,11 @@ The presentation layer makes up the Views and ViewModels.  In the GodTools app V
 
 ##### File Naming and Organization
 
-The presentation layer will make up Views and ViewModels and those are stored in the App/Features folder.  The Features folder attempts to group presentation files by feature type. For example:
-Features/Lessons
-Features/Onboarding
-Features/ToolSettings
+The presentation layer will make up Views and ViewModels and those are stored in the App/Features folder.  The Features folder attempts to group presentation files by feature type. 
+
+For example the GodTools App/Features/ folder currently contains the following features:
+
+![alt text](ReadMeAssets/features.png)
 
 Where Lessons, Onboarding, and ToolSettings are app features and falling under each feature directory make up the screens (Views) pertaining to that feature.
 
@@ -89,10 +90,10 @@ App/Share/SwiftUI Views
 
 Views are what a user visually sees and interacts with.
 
-Responsibilities:
-- Rendering logic.
+##### View Responsibilities:
+- Render logic.
 - Animation logic.
-- Owns a ViewModel.
+- Owns a ViewModel (reference to ViewModel).
 - Observes ViewModel output.  In SwiftUI this is a combination of @ObservedObject and @Published properties.
 - Send inputs to the ViewModel (button tap, entering text input, etc.).
 
@@ -106,7 +107,7 @@ File Naming and Organization:
 
 ViewModels are considered a view representation.  They're the data backing of a view.
 
-Responsibilities:
+##### ViewModel Responsibilities:
 - Provides data outputs to the View which the View can observe and react to.
 - Each data output connects to a UseCase (Domain Layer) which computes data.  Computing can also happen directly in the ViewModel although UseCases are preferred.
 
@@ -152,5 +153,6 @@ A Repository has the following responsibilities:
 
 The Coorindator is responsible for the navigation decisions, dependency injection, and the navigation between views. In GodTools, any class that implements the Flow protocol is a class that implements the coordinator pattern. 
 The Coordinator is the decision maker when it comes to navigation. For example, say a user taps a button to login, the coordinater (Flow) receives this as a step enumeration (describes an action) and determines where to navigate based on that action. Once navigation is determined, the coordinator will instantiate the view, viewModel, inject any dependencies, and then perform navigation.
+
 
 
