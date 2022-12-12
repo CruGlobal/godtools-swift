@@ -60,13 +60,21 @@ The presentation layer makes up the Views and ViewModels.  In the GodTools app V
 
 ##### File Naming and Organization
 
+###### Features Folder
+
 The presentation layer will make up Views and ViewModels and those are stored in the App/Features folder.  The Features folder attempts to group presentation files by feature type. 
 
 For example the GodTools App/Features/ folder currently contains the following features:
 
 ![alt text](ReadMeAssets/features.png)
 
-Where Lessons, Onboarding, and ToolSettings are app features and falling under each feature directory make up the screens (Views) pertaining to that feature.
+###### Feature Folder
+
+Each Feature Folder is broken into views that make up that feature.  Typically each view that makes up a feature represents an entire screen area of the app and are navigated between.  Each of these views that make up a feature should be placed in a directory that matches the name of the view.  These would fall under Features/{FeatureName}/Presentation/.
+
+For example in this screenshot the features LanguageSettings and ToolDetails are expanded where ChooseLanguage and LanguageSettings make up the LanguageSettings feature and ToolDetails view makes up the ToolDetails feature. 
+
+![alt text](ReadMeAssets/features_presentation.png)
 
 Under each Feature folder should be the screens (Views) that make up that feature.  Each screen (View) should be placed in a directory name pertaining to that screen.  For example, the Lessons feature has the following screens (Views) associated with it. Lesson, LessonEvaluation, and LessonList.  There would then be a directory for each screen like so.
 
