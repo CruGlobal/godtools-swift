@@ -10,18 +10,18 @@ import UIKit
 
 class MobileContentCardCollectionPageCardView: MobileContentView, NibBased {
     
-    private let viewModel: MobileContentCardCollectionPageCardViewModelType
+    private let viewModel: MobileContentCardCollectionPageCardViewModel
     
     private var contentStackView: MobileContentStackView?
     
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var pageNumberLabel: UILabel!
     
-    required init(viewModel: MobileContentCardCollectionPageCardViewModelType) {
+    required init(viewModel: MobileContentCardCollectionPageCardViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         setupLayout()

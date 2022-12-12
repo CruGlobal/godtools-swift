@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
+class ToolTrainingViewModel: NSObject {
     
     private let pageRenderer: MobileContentPageRenderer
     private let renderedPageContext: MobileContentRenderedPageContext
@@ -137,6 +137,11 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
         title.accept(value: tipTitle)
     }
+}
+
+// MARK: - Inputs
+
+extension ToolTrainingViewModel {
     
     func viewLoaded() {
         viewedTrainingTips.storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
@@ -160,7 +165,7 @@ class ToolTrainingViewModel: NSObject, ToolTrainingViewModelType {
         }
     }
     
-    func buttonWithUrlTapped(url: String) {
+    func buttonWithUrlTapped(url: URL) {
         
         let exitLink = ExitLinkModel(
             screenName: getExitAnalyticsScreenName(),

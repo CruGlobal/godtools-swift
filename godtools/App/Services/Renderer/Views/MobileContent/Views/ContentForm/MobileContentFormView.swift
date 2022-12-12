@@ -10,18 +10,18 @@ import UIKit
 
 class MobileContentFormView: MobileContentStackView {
     
-    private let viewModel: MobileContentFormViewModelType
+    private let viewModel: MobileContentFormViewModel
     
     private var inputViews: [MobileContentInputView] = Array()
     private var currentEditedTextField: UITextField?
             
     @IBOutlet weak private var contentContainerView: UIView!
     
-    required init(viewModel: MobileContentFormViewModelType) {
+    init(viewModel: MobileContentFormViewModel) {
         
         self.viewModel = viewModel
             
-        super.init(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()        
@@ -29,10 +29,6 @@ class MobileContentFormView: MobileContentStackView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupLayout() {

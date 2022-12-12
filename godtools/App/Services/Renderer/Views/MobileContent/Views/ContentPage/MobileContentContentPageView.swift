@@ -10,13 +10,13 @@ import UIKit
 
 class MobileContentContentPageView: MobileContentPageView {
     
-    private let viewModel: MobileContentContentPageViewModelType
+    private let viewModel: MobileContentContentPageViewModel
     private let contentInsets: UIEdgeInsets
     private let itemSpacing: CGFloat
     
     private var contentStackView: MobileContentStackView?
     
-    required init(viewModel: MobileContentContentPageViewModelType, contentInsets: UIEdgeInsets, itemSpacing: CGFloat) {
+    init(viewModel: MobileContentContentPageViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat) {
         
         self.viewModel = viewModel
         self.contentInsets = contentInsets
@@ -27,10 +27,6 @@ class MobileContentContentPageView: MobileContentPageView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
-        fatalError("init(viewModel:nibName:) has not been implemented")
     }
     
     override func renderChild(childView: MobileContentView) {

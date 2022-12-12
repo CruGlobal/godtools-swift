@@ -15,7 +15,7 @@ protocol MobileContentFlowItemViewDelegate: AnyObject {
 
 class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowItem {
     
-    private let viewModel: MobileContentFlowItemViewModelType
+    private let viewModel: MobileContentFlowItemViewModel
     
     private weak var delegate: MobileContentFlowItemViewDelegate?
     
@@ -24,11 +24,11 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
     }
     var widthConstraint: NSLayoutConstraint?
     
-    required init(viewModel: MobileContentFlowItemViewModelType) {
+    init(viewModel: MobileContentFlowItemViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
         
         setupBinding()
     }
@@ -36,11 +36,7 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
-    }
-    
+
     private func setupBinding() {
         
         viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in            

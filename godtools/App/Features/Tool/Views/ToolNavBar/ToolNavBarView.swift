@@ -24,7 +24,7 @@ class ToolNavBarView: NSObject {
     
     private let chooseLanguageControl: UISegmentedControl = UISegmentedControl()
     
-    private var viewModel: ToolNavBarViewModelType?
+    private var viewModel: ToolNavBarViewModel?
     private var remoteShareActiveNavItem: UIBarButtonItem?
     
     private weak var parentViewController: UIViewController?
@@ -40,7 +40,7 @@ class ToolNavBarView: NSObject {
         )
     }
     
-    func configure(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType, delegate: ToolNavBarViewDelegate) {
+    func configure(parentViewController: UIViewController, viewModel: ToolNavBarViewModel, delegate: ToolNavBarViewDelegate) {
         
         if let currentViewModel = self.viewModel {
             removeBinding(viewModel: currentViewModel)
@@ -64,7 +64,7 @@ class ToolNavBarView: NSObject {
         setupNavigationBar(parentViewController: parentViewController, viewModel: viewModel)
     }
     
-    private func setupNavigationBar(parentViewController: UIViewController, viewModel: ToolNavBarViewModelType) {
+    private func setupNavigationBar(parentViewController: UIViewController, viewModel: ToolNavBarViewModel) {
         
         let navigationController: UINavigationController? = parentViewController.navigationController
         let navBarColor: UIColor = viewModel.navBarColor
@@ -139,12 +139,12 @@ class ToolNavBarView: NSObject {
         chooseLanguageControl.selectedSegmentIndex = viewModel.selectedLanguage.value
     }
     
-    private func removeBinding(viewModel: ToolNavBarViewModelType) {
+    private func removeBinding(viewModel: ToolNavBarViewModel) {
         viewModel.remoteShareIsActive.removeObserver(self)
         viewModel.selectedLanguage.removeObserver(self)
     }
     
-    private func setupBinding(viewModel: ToolNavBarViewModelType) {
+    private func setupBinding(viewModel: ToolNavBarViewModel) {
             
         viewModel.remoteShareIsActive.addObserver(self) { [weak self] (isActive: Bool) in
             self?.setRemoteShareActiveNavItem(hidden: !isActive)

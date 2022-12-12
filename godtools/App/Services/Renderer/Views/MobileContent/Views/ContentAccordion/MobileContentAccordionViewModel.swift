@@ -9,14 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAccordionViewModel: MobileContentAccordionViewModelType {
+class MobileContentAccordionViewModel: MobileContentViewModel {
     
     private let accordionModel: Accordion
-    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(accordionModel: Accordion, renderedPageContext: MobileContentRenderedPageContext) {
+    init(accordionModel: Accordion, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.accordionModel = accordionModel
-        self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: accordionModel, renderedPageContext: renderedPageContext)
     }
 }

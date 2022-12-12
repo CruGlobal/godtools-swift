@@ -10,19 +10,19 @@ import UIKit
 
 class ToolPageModalsView: MobileContentView {
     
-    private let viewModel: ToolPageModalsViewModelType
+    private let viewModel: ToolPageModalsViewModel
     
     private var modalViews: [ToolPageModalView] = Array()
     private var presentedModalView: ToolPageModalView?
     
     private weak var windowViewController: UIViewController?
     
-    required init(viewModel: ToolPageModalsViewModelType, windowViewController: UIViewController) {
+    required init(viewModel: ToolPageModalsViewModel, windowViewController: UIViewController) {
         
         self.viewModel = viewModel
         self.windowViewController = windowViewController
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()

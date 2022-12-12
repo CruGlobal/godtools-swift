@@ -9,10 +9,9 @@
 import Foundation
 import GodToolsToolParser
 
-class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
+class ToolPageCardsViewModel: MobileContentViewModel {
     
     private let cards: [TractPage.Card]
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let cardJumpService: CardJumpService
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
@@ -22,10 +21,9 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
         let visibleCards: [TractPage.Card] = cards.filter({!$0.isHidden})
         
         self.cards = cards
-        self.renderedPageContext = renderedPageContext
         self.cardJumpService = cardJumpService
         
-        super.init()
+        super.init(baseModels: cards, renderedPageContext: renderedPageContext)
         
         setupBinding()
         
@@ -43,6 +41,11 @@ class ToolPageCardsViewModel: NSObject, ToolPageCardsViewModelType {
             self?.hidesCardJump.accept(value: true)
         }
     }
+}
+
+// MARK: - Inputs
+
+extension ToolPageCardsViewModel {
     
     func cardHeaderTapped() {
         cardJumpService.saveDidShowCardJump()

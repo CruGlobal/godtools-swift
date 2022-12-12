@@ -11,8 +11,7 @@ import GodToolsToolParser
 
 class MultiplatformContent {
     
-    private let content: [Content]
-    
+    let content: [Content]
     let contentInsets: UIEdgeInsets
     let itemSpacing: CGFloat
     let scrollIsEnabled: Bool

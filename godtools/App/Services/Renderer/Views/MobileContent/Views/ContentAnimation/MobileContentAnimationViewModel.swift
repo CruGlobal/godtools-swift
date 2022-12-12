@@ -9,17 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
+class MobileContentAnimationViewModel: MobileContentViewModel {
     
     private let animationModel: Animation
-    private let renderedPageContext: MobileContentRenderedPageContext
     
+    let mobileContentAnalytics: MobileContentAnalytics
     let animatedViewModel: AnimatedViewModelType?
     
-    required init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext) {
+    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.animationModel = animationModel
-        self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
                 
         if let resource = animationModel.resource {
             
@@ -34,16 +34,14 @@ class MobileContentAnimationViewModel: MobileContentAnimationViewModelType {
                     loop: animationModel.loop
                 )
             
-            case .failure(let error):
+            case .failure( _):
                 animatedViewModel = nil
             }
         }
         else {
             animatedViewModel = nil
         }
-    }
-    
-    func animationTapped() {
         
+        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext)
     }
 }

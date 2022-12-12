@@ -15,7 +15,7 @@ class ToolTrainingView: UIViewController {
         case hidden
     }
     
-    private let viewModel: ToolTrainingViewModelType
+    private let viewModel: ToolTrainingViewModel
     private let overlayAlpha: CGFloat = 0.7
             
     @IBOutlet weak private var overlayButton: UIButton!
@@ -31,7 +31,7 @@ class ToolTrainingView: UIViewController {
     
     @IBOutlet weak private var contentViewBottom: NSLayoutConstraint!
     
-    required init(viewModel: ToolTrainingViewModelType) {
+    required init(viewModel: ToolTrainingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ToolTrainingView.self), bundle: nil)
         
@@ -230,7 +230,7 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
 // MARK: - TrainingPageViewDelegate
 
 extension ToolTrainingView: TrainingPageViewDelegate {
-    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String) {
+    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL) {
         viewModel.buttonWithUrlTapped(url: url)
     }
 }

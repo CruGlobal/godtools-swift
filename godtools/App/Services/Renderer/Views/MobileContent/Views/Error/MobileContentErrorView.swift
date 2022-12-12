@@ -12,7 +12,7 @@ class MobileContentErrorView {
     
     let controller: UIAlertController
     
-    required init(viewModel: MobileContentErrorViewModel) {
+    init(viewModel: MobileContentErrorViewModel) {
                         
         controller = UIAlertController(
             title: viewModel.title,

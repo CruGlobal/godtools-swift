@@ -10,14 +10,14 @@ import UIKit
 
 class MobileContentLinkView: MobileContentView {
     
-    private let viewModel: MobileContentLinkViewModelType
+    private let viewModel: MobileContentLinkViewModel
     private let linkButton: UIButton = UIButton(type: .custom)
     
-    required init(viewModel: MobileContentLinkViewModelType) {
+    required init(viewModel: MobileContentLinkViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
@@ -61,8 +61,8 @@ class MobileContentLinkView: MobileContentView {
     }
     
     @objc func handleLinkTapped() {
-        viewModel.linkTapped()
-        super.sendEventsToAllViews(eventIds: viewModel.linkEvents, rendererState: viewModel.rendererState)
+        
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOwnAdventureViewModelType {
+class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
     
@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    required init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
@@ -83,6 +83,11 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel, ChooseYourOw
         }
         return languageTitles
     }
+}
+
+// MARK: - Inpits
+
+extension ChooseYourOwnAdventureViewModel {
     
     func navBackTapped() {
         

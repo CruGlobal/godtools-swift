@@ -10,14 +10,15 @@ import UIKit
 import YouTubeiOSPlayerHelper
 
 class MobileContentEmbeddedVideoView: MobileContentView {
-    private let viewModel: MobileContentEmbeddedVideoViewModelType
+    
+    private let viewModel: MobileContentEmbeddedVideoViewModel
     private let videoView: YTPlayerView = YTPlayerView()
     
-    required init(viewModel: MobileContentEmbeddedVideoViewModelType) {
+    init(viewModel: MobileContentEmbeddedVideoViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
