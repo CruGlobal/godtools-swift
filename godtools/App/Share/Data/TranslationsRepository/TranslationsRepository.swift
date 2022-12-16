@@ -115,7 +115,19 @@ extension TranslationsRepository {
                 
                 for translation in translations {
                     
-                    guard let translationManifest = downloadedTranslationManifestFileDataModels.first(where: {$0.translation.id == translation.id}) else {
+                    let translationManifest: TranslationManifestFileDataModel?
+                    
+                    if let downloadedTranslationManifest = downloadedTranslationManifestFileDataModels.first(where: {$0.translation.id == translation.id}) {
+                        translationManifest = downloadedTranslationManifest
+                    }
+                    else if let downloadedTranslationManifest = downloadedTranslationManifestFileDataModels.first(where: {$0.translation.resource?.id == translation.resource?.id && $0.translation.language?.id == translation.language?.id}) {
+                        translationManifest = downloadedTranslationManifest
+                    }
+                    else {
+                        translationManifest = nil
+                    }
+                    
+                    guard let translationManifest = translationManifest else {
                         continue
                     }
                     
