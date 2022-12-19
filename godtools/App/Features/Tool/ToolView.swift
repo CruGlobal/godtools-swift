@@ -10,20 +10,16 @@ import UIKit
 
 class ToolView: MobileContentPagesView {
     
-    private let viewModel: ToolViewModelType
+    private let viewModel: ToolViewModel
     private let navBarView: ToolNavBarView = ToolNavBarView()
                     
-    required init(viewModel: ToolViewModelType) {
+    required init(viewModel: ToolViewModel) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPagesViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
     }
     
     deinit {
@@ -42,7 +38,7 @@ class ToolView: MobileContentPagesView {
     override func setupBinding() {
         super.setupBinding()
         
-        viewModel.navBarViewModel.addObserver(self) { [weak self] (navBarViewModel: ToolNavBarViewModelType) in
+        viewModel.navBarViewModel.addObserver(self) { [weak self] (navBarViewModel: ToolNavBarViewModel) in
             
             guard let weakSelf = self else {
                 return

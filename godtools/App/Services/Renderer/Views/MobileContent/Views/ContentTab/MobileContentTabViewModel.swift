@@ -9,17 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentTabViewModel: MobileContentTabViewModelType {
+class MobileContentTabViewModel: MobileContentViewModel {
     
     private let tabModel: Tabs.Tab
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
-    required init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabModel = tabModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
+        
+        super.init(baseModel: tabModel, renderedPageContext: renderedPageContext)
     }
     
     var labelText: String? {
@@ -29,6 +29,11 @@ class MobileContentTabViewModel: MobileContentTabViewModelType {
     var tabListeners: [EventId] {
         return Array(tabModel.listeners)
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentTabViewModel {
     
     func tabTapped() {
         

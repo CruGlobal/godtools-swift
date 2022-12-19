@@ -10,23 +10,19 @@ import UIKit
 
 class MobileContentParagraphView: MobileContentStackView {
     
-    private let viewModel: MobileContentParagraphViewModelType
+    private let viewModel: MobileContentParagraphViewModel
     
-    required init(viewModel: MobileContentParagraphViewModelType, contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    init(viewModel: MobileContentParagraphViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
+        super.init(viewModel: viewModel, contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
         
         setupBinding()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupBinding() {

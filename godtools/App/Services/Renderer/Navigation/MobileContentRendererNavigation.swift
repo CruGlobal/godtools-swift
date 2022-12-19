@@ -31,11 +31,7 @@ class MobileContentRendererNavigation {
         self.appDiContainer = appDiContainer
     }
     
-    func buttonWithUrlTapped(url: String, exitLink: ExitLinkModel) {
-        
-        guard let url = URL(string: url) else {
-            return
-        }
+    func buttonWithUrlTapped(url: URL, exitLink: ExitLinkModel) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))

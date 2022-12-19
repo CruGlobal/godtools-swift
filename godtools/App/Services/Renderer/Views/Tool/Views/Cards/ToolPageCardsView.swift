@@ -17,7 +17,7 @@ protocol ToolPageCardsViewDelegate: AnyObject {
 
 class ToolPageCardsView: MobileContentView {
     
-    private let viewModel: ToolPageCardsViewModelType
+    private let viewModel: ToolPageCardsViewModel
     private let safeArea: UIEdgeInsets
     private let keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
@@ -33,12 +33,12 @@ class ToolPageCardsView: MobileContentView {
     private weak var renderedCardsParentView: UIView?
     private weak var delegate: ToolPageCardsViewDelegate?
     
-    required init(viewModel: ToolPageCardsViewModelType, safeArea: UIEdgeInsets) {
+    init(viewModel: ToolPageCardsViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()

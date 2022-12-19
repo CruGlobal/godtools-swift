@@ -9,24 +9,24 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentTextViewModel: MobileContentTextViewModelType {
+class MobileContentTextViewModel: MobileContentViewModel {
     
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let textModel: Text
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
     private let fontSize: CGFloat = 18
         
     let textColor: UIColor
     
-    required init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
         
         self.textModel = textModel
-        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
         
         self.textColor = textModel.textColor
+        
+        super.init(baseModel: textModel, renderedPageContext: renderedPageContext)
     }
     
     var startImage: UIImage? {
@@ -100,7 +100,7 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
         
     private func getLanguageTextAlign() -> Text.Align {
         
-        if language.languageDirection == .rightToLeft {
+        if renderedPageContext.language.languageDirection == .rightToLeft {
             
             if textModel.textAlign == .start {
                 return .end
@@ -151,18 +151,5 @@ class MobileContentTextViewModel: MobileContentTextViewModelType {
             size: fontSizeToScale * getFontScale(),
             weight: fontWeightElseUseTextDefault ?? getFontWeight()
         )
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension MobileContentTextViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return []
     }
 }

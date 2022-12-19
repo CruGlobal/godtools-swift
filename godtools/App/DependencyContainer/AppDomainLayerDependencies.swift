@@ -19,6 +19,7 @@ class AppDomainLayerDependencies {
     
     func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
         return GetAccountCreationIsSupportedUseCase(
+            appBuild: dataLayer.getAppBuild(),
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }

@@ -9,10 +9,9 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionViewModelType {
+class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
     
     private let multiSelectOptionModel: Multiselect.Option
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     
     private var isSelectedFlowWatcher: FlowWatcher?
@@ -20,15 +19,16 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     let backgroundColor: ObservableValue<UIColor>
     let hidesShadow: Bool
     
-    required init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         
         backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
         
         hidesShadow = multiSelectOptionModel.style == .flat
+        
+        super.init(baseModel: multiSelectOptionModel, renderedPageContext: renderedPageContext)
         
         isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
 
@@ -45,6 +45,11 @@ class MobileContentMultiSelectOptionViewModel: MobileContentMultiSelectOptionVie
     deinit {
         isSelectedFlowWatcher?.close()
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentMultiSelectOptionViewModel {
     
     func multiSelectOptionTapped() {
         

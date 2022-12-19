@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import GodToolsToolParser
 
 class AccountViewModel: ObservableObject {
     
@@ -89,10 +90,10 @@ class AccountViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func trackSectionViewedAnalytics(sectionName: String) {
-        
+    private func trackSectionViewedAnalytics(screenName: String) {
+                        
         let trackScreen = TrackScreenModel(
-            screenName: sectionName,
+            screenName: screenName,
             siteSection: "account",
             siteSubSection: "",
             contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
@@ -111,15 +112,14 @@ extension AccountViewModel {
         flowDelegate?.navigate(step: .backTappedFromMyAccount)
     }
     
-    func activityTapped() {
+    func activityViewed() {
         
-        // TODO: Ensure this is the correct page name for when Activity section is viewed. GT-1861 ~Levi
-        trackSectionViewedAnalytics(sectionName: "Activity")
+        trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_ACTIVITY)
     }
     
-    func globalActivityTapped() {
+    func globalActivityViewed() {
         
-        trackSectionViewedAnalytics(sectionName: "Global Dashboard")
+        trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_GLOBAL_ACTIVITY)
     }
     
     func getGlobalActivityAnalyticsItem(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {

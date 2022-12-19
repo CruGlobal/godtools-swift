@@ -21,7 +21,7 @@ class MobileContentTextView: MobileContentView, NibBased {
     private let viewType: ViewType
     private let additionalLabelAttributes: MobileContentTextLabelAttributes?
     
-    let viewModel: MobileContentTextViewModelType
+    let viewModel: MobileContentTextViewModel
         
     @IBOutlet weak private var startImageView: UIImageView!
     @IBOutlet weak private var textLabel: UILabel!
@@ -36,7 +36,7 @@ class MobileContentTextView: MobileContentView, NibBased {
     @IBOutlet weak private var endImageViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var endImageViewHeight: NSLayoutConstraint!
         
-    required init(viewModel: MobileContentTextViewModelType, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) {
+    init(viewModel: MobileContentTextViewModel, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) {
         
         self.viewModel = viewModel
 
@@ -52,7 +52,7 @@ class MobileContentTextView: MobileContentView, NibBased {
         
         self.additionalLabelAttributes = additionalLabelAttributes
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         // If content text doesn't have any images we will just instaniate a label rather than the entire nib.
         // Might help with performance since content:text is frequently used. ~Levi

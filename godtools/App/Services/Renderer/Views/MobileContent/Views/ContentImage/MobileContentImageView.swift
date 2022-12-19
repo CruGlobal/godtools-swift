@@ -10,16 +10,16 @@ import UIKit
 
 class MobileContentImageView: MobileContentView {
     
-    private let viewModel: MobileContentImageViewModelType
+    private let viewModel: MobileContentImageViewModel
     
     private var imageView: UIImageView?
     private var emptyView: UIView?
     
-    required init(viewModel: MobileContentImageViewModelType) {
+    init(viewModel: MobileContentImageViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
@@ -45,7 +45,7 @@ class MobileContentImageView: MobileContentView {
     
     @objc func handleImageTapped() {
         
-        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
+        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

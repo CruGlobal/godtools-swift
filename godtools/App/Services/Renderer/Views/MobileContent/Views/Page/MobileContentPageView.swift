@@ -16,18 +16,18 @@ protocol MobileContentPageViewDelegate: AnyObject {
 
 class MobileContentPageView: MobileContentView, NibBased {
     
-    private let viewModel: MobileContentPageViewModelType
+    private let viewModel: MobileContentPageViewModel
     
     private var backgroundImageParent: UIView?
     private var backgroundImageView: MobileContentBackgroundImageView?
     
     private weak var delegate: MobileContentPageViewDelegate?
     
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
+    init(viewModel: MobileContentPageViewModel, nibName: String?) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         if let nibName = nibName {
             loadNib(nibName: nibName)
@@ -81,7 +81,7 @@ class MobileContentPageView: MobileContentView, NibBased {
         return delegate?.pageViewDidReceiveEvent(pageView: self, eventId: eventId)
     }
     
-    override func didReceiveButtonWithUrlEvent(url: String) {
+    override func didReceiveButtonWithUrlEvent(url: URL) {
         super.didReceiveButtonWithUrlEvent(url: url)
         
         viewModel.buttonWithUrlTapped(url: url)

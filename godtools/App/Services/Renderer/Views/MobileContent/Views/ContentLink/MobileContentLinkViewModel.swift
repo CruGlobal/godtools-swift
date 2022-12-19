@@ -9,24 +9,24 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentLinkViewModel: MobileContentLinkViewModelType {
+class MobileContentLinkViewModel: MobileContentViewModel {
     
     private let linkModel: Link
-    private let renderedPageContext: MobileContentRenderedPageContext
-    private let mobileContentAnalytics: MobileContentAnalytics
     private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
+    let mobileContentAnalytics: MobileContentAnalytics
     let titleColor: UIColor
     
-    required init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.titleColor = linkModel.text.textColor
+        
+        super.init(baseModel: linkModel, renderedPageContext: renderedPageContext)
     }
     
     var backgroundColor: UIColor {
@@ -39,18 +39,5 @@ class MobileContentLinkViewModel: MobileContentLinkViewModelType {
     
     var title: String? {
         return linkModel.text.text
-    }
-    
-    var linkEvents: [EventId] {
-        return linkModel.events
-    }
-    
-    var rendererState: State {
-        return renderedPageContext.rendererState
-    }
-    
-    func linkTapped() {
-                        
-        mobileContentAnalytics.trackEvents(events: linkModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }

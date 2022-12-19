@@ -9,17 +9,15 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewModelType {
+class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     
     private let sectionModel: Accordion.Section
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let mobileContentAnalytics: MobileContentAnalytics
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.sectionModel = sectionModel
-        self.renderedPageContext = renderedPageContext
         self.mobileContentAnalytics = mobileContentAnalytics
         
         self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
@@ -27,27 +25,20 @@ class MobileContentAccordionSectionViewModel: MobileContentAccordionSectionViewM
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
+        
+        super.init(baseModel: sectionModel, renderedPageContext: renderedPageContext)
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentAccordionSectionViewModel {
     
     func sectionOpened() {
-        mobileContentDidAppear()
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
     }
     
     func sectionClosed() {
-        mobileContentDidDisappear()
+        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
     }
 }
-
-// MARK: - MobileContentViewModelType
-
-extension MobileContentAccordionSectionViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
-    }
-}
-

@@ -11,18 +11,18 @@ import GodToolsToolParser
 
 class MobileContentTabsView: MobileContentView, NibBased {
     
-    private let viewModel: MobileContentTabsViewModelType
+    private let viewModel: MobileContentTabsViewModel
     
     private var tabViews: [MobileContentTabView] = Array()
     
     @IBOutlet weak private var tabsControl: UISegmentedControl!
     @IBOutlet weak private var tabContentContainerView: UIView!
     
-    required init(viewModel: MobileContentTabsViewModelType) {
+    init(viewModel: MobileContentTabsViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         setupLayout()

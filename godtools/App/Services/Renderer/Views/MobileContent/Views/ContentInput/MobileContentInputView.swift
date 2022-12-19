@@ -10,16 +10,16 @@ import UIKit
 
 class MobileContentInputView: MobileContentView, NibBased {
     
-    let viewModel: MobileContentInputViewModelType
+    let viewModel: MobileContentInputViewModel
         
     @IBOutlet weak private var inputLabel: UILabel!
     @IBOutlet weak private var inputTextField: UITextField!
     
-    required init(viewModel: MobileContentInputViewModelType) {
+    init(viewModel: MobileContentInputViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         setupLayout()

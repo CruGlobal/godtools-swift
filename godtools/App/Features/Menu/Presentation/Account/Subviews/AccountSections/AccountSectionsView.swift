@@ -45,9 +45,9 @@ struct AccountSectionsView: View {
                     
                     switch sections[selectedSegmentIndex] {
                     case .activity:
-                        viewModel.activityTapped()
+                        viewModel.activityViewed()
                     case .globalActivity:
-                        viewModel.globalActivityTapped()
+                        viewModel.globalActivityViewed()
                     }
                 })
             }
@@ -78,6 +78,14 @@ struct AccountSectionsView: View {
             }
             .frame(width: sectionFrameWidth, alignment: .leading)
             .padding(EdgeInsets(top: 20, leading: sectionHorizontalPadding, bottom: 20, trailing: sectionHorizontalPadding))
+            .onAppear {
+                switch sections[selectedSegmentIndex] {
+                case .activity:
+                    viewModel.activityViewed()
+                case .globalActivity:
+                    viewModel.globalActivityViewed()
+                }
+            }
         }
     }
 }

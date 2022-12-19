@@ -10,14 +10,14 @@ import UIKit
 
 class MobileContentMultiSelectView: MobileContentStackView {
         
-    private let viewModel: MobileContentMultiSelectViewModelType
+    private let viewModel: MobileContentMultiSelectViewModel
     private let itemSpacing: CGFloat
     private let isSingleColumn: Bool
     
     private var multiSelectOptionRows: [MobileContentRowView] = Array()
     private var optionViewsAdded: Bool = false
             
-    required init(viewModel: MobileContentMultiSelectViewModelType) {
+    init(viewModel: MobileContentMultiSelectViewModel) {
         
         let isSingleColumn: Bool = viewModel.numberOfColumnsForOptions == 1
         let itemSpacing: CGFloat = 15
@@ -26,17 +26,13 @@ class MobileContentMultiSelectView: MobileContentStackView {
         self.itemSpacing = itemSpacing
         self.isSingleColumn = isSingleColumn
         
-        super.init(contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
         
         setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     private func setupLayout() {

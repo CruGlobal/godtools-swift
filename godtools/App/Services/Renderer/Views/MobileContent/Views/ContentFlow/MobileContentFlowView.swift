@@ -11,24 +11,20 @@ import GodToolsToolParser
 
 class MobileContentFlowView: MobileContentStackView {
     
-    private let viewModel: MobileContentFlowViewModelType
+    private let viewModel: MobileContentFlowViewModel
     
     private var flowItemRows: [MobileContentFlowRow] = Array()
     private var flowItemViews: [MobileContentFlowItemView] = Array()
     
-    required init(viewModel: MobileContentFlowViewModelType) {
+    init(viewModel: MobileContentFlowViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     override func layoutSubviews() {

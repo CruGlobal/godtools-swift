@@ -37,6 +37,10 @@ class AppDataLayerDependencies {
         return sharedAnalytics
     }
     
+    func getAppBuild() -> AppBuild {
+        return sharedAppBuild
+    }
+    
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
     }

@@ -11,28 +11,18 @@ import GodToolsToolParser
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let followUpService: FollowUpsService
     private let localizationServices: LocalizationServices
     
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
-        self.renderedPageContext = renderedPageContext
         self.followUpService = followUpService
         self.localizationServices = localizationServices
         
         super.init(formModel: formModel, renderedPageContext: renderedPageContext)
-    }
-    
-    required init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
-        fatalError("init(formModel:renderedPageContext:) has not been implemented")
-    }
-    
-    var rendererState: State {
-        return renderedPageContext.rendererState
     }
     
     // MARK: - Follow Up

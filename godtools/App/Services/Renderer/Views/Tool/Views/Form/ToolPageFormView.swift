@@ -13,7 +13,7 @@ class ToolPageFormView: MobileContentFormView {
         
     private let pageFormViewModel: ToolPageFormViewModel
     
-    required init(viewModel: ToolPageFormViewModel) {
+    init(viewModel: ToolPageFormViewModel) {
         
         self.pageFormViewModel = viewModel
         
@@ -25,15 +25,7 @@ class ToolPageFormView: MobileContentFormView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    required init(viewModel: MobileContentFormViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
-    }
-    
+
     private func setupBinding() {
         
         pageFormViewModel.didSendFollowUpSignal.addObserver(self) { [weak self] (eventIds: [EventId]) in
