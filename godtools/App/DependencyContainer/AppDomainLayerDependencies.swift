@@ -283,8 +283,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getUserDetailsUseCase() -> GetUserDetailsUseCase {
-        return GetUserDetailsUseCase(
+    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
+        return GetUserAccountDetailsUseCase(
             repository: dataLayer.getUserDetailsRepository(),
             localizationServices: dataLayer.getLocalizationServices()
         )

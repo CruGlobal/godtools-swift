@@ -940,12 +940,12 @@
 		D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */; };
 		D409F2AD2928110E00D9D2FE /* UserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */; };
 		D409F2B1292BEC3300D9D2FE /* UserDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B0292BEC3300D9D2FE /* UserDetailsRepository.swift */; };
-		D409F2B3292BEDEC00D9D2FE /* GetUserDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B2292BEDEC00D9D2FE /* GetUserDetailsUseCase.swift */; };
+		D409F2B3292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B2292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift */; };
 		D409F2B7292C014700D9D2FE /* RealmUserDetailsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B6292C014700D9D2FE /* RealmUserDetailsCache.swift */; };
 		D409F2BA292C017C00D9D2FE /* RealmUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */; };
 		D409F2BD292C023500D9D2FE /* UserDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2BC292C023500D9D2FE /* UserDetailsDataModel.swift */; };
 		D409F2C0292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2BF292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift */; };
-		D409F2C2292D4FF600D9D2FE /* UserDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserDetailsDomainModel.swift */; };
+		D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */; };
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
@@ -2061,12 +2061,12 @@
 		D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenError.swift; sourceTree = "<group>"; };
 		D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsAPI.swift; sourceTree = "<group>"; };
 		D409F2B0292BEC3300D9D2FE /* UserDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsRepository.swift; sourceTree = "<group>"; };
-		D409F2B2292BEDEC00D9D2FE /* GetUserDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDetailsUseCase.swift; sourceTree = "<group>"; };
+		D409F2B2292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsUseCase.swift; sourceTree = "<group>"; };
 		D409F2B6292C014700D9D2FE /* RealmUserDetailsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetailsCache.swift; sourceTree = "<group>"; };
 		D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetails.swift; sourceTree = "<group>"; };
 		D409F2BC292C023500D9D2FE /* UserDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModel.swift; sourceTree = "<group>"; };
 		D409F2BF292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetailsCacheSync.swift; sourceTree = "<group>"; };
-		D409F2C1292D4FF600D9D2FE /* UserDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDomainModel.swift; sourceTree = "<group>"; };
+		D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDetailsDomainModel.swift; sourceTree = "<group>"; };
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
@@ -6040,6 +6040,7 @@
 				45F7161A290A12D70019B715 /* AuthenticateUserUseCase */,
 				458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
+				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
 				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
 				45F71615290A12D70019B715 /* GetUserIsAuthenticatedUseCase */,
 				45F7161D290A12D70019B715 /* LogOutUserUseCase */,
@@ -6154,7 +6155,6 @@
 				D471CFD128B80B9F00DCE61C /* GetToolUseCase */,
 				45F88AFB2860BA8700C8027F /* GetTranslatedLanguageUseCase */,
 				45677766287DB1960044AEB2 /* GetTutorialUseCase */,
-				D409F2B4292BEDF100D9D2FE /* GetUserDetailsUseCase */,
 				453C1BDA2899A889007332E2 /* RemoveToolFromFavoritesUseCase */,
 				4533C4C928AC2C1600F9628B /* StoreInitialFavoritedToolsUseCase */,
 				D46BBE2528A312230025EB79 /* ToggleToolFavoritedUseCase */,
@@ -6579,13 +6579,13 @@
 			path = UserDetailsRepository;
 			sourceTree = "<group>";
 		};
-		D409F2B4292BEDF100D9D2FE /* GetUserDetailsUseCase */ = {
+		D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */ = {
 			isa = PBXGroup;
 			children = (
-				D409F2B2292BEDEC00D9D2FE /* GetUserDetailsUseCase.swift */,
-				D409F2C1292D4FF600D9D2FE /* UserDetailsDomainModel.swift */,
+				D409F2B2292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift */,
+				D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */,
 			);
-			path = GetUserDetailsUseCase;
+			path = GetUserAccountDetailsUseCase;
 			sourceTree = "<group>";
 		};
 		D409F2B5292C012D00D9D2FE /* Cache */ = {
@@ -8510,7 +8510,7 @@
 				D41B38C228906B3200BD5899 /* DeviceLanguageDomainModel.swift in Sources */,
 				45AD21632593A62800A096A0 /* AppDiContainer.swift in Sources */,
 				45C93AF5261D310900592FFF /* ArticleManifestAemRepository.swift in Sources */,
-				D409F2B3292BEDEC00D9D2FE /* GetUserDetailsUseCase.swift in Sources */,
+				D409F2B3292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				45C93AEE261D310900592FFF /* ArticleAemData.swift in Sources */,
 				45AD1FD525938A9800A096A0 /* WebArchiveError.swift in Sources */,
@@ -8583,7 +8583,7 @@
 				45860A77292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift in Sources */,
 				45AE975827C97A9500C2CB33 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
 				4533A928270E2567009B1AF5 /* UINavigationBar+Appearance.swift in Sources */,
-				D409F2C2292D4FF600D9D2FE /* UserDetailsDomainModel.swift in Sources */,
+				D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */,
 				45AD1BCB25938A4F00A096A0 /* UIViewController+Containment.swift in Sources */,
 				45C93ADD261D310900592FFF /* ArticleAemWebArchiveFileCache.swift in Sources */,
 				45AD1BA825938A4F00A096A0 /* AppRootController.swift in Sources */,

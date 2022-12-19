@@ -1,5 +1,5 @@
 //
-//  GetUserDetailsUserCase.swift
+//  GetUserAccountDetailsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/21/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetUserDetailsUseCase {
+class GetUserAccountDetailsUseCase {
     
     private let repository: UserDetailsRepository
     private let localizationServices: LocalizationServices
@@ -21,26 +21,26 @@ class GetUserDetailsUseCase {
     }
     
     
-    func getUserDetailsPublisher() -> AnyPublisher<UserDetailsDomainModel, Never> {
+    func getUserAccountDetailsPublisher() -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
-        return Publishers.CombineLatest(fetchRemoteUserDetailsPublisher(), repository.getUserDetailsChanged())
+        return Publishers.CombineLatest(fetchRemoteUserAccountDetailsPublisher(), repository.getUserDetailsChanged())
             .flatMap { _ in
                 
                 guard let userDetails = self.repository.getCachedAuthUserDetails() else {
                     
-                    return Just(self.getDefaultUserDetails())
+                    return Just(self.getDefaultUserAccountDetails())
                         .eraseToAnyPublisher()
                 }
                 
                 let joinedOnString = self.buildJoinedOnString(from: userDetails)
                 
-                return Just(UserDetailsDomainModel(joinedOnString: joinedOnString))
+                return Just(UserAccountDetailsDomainModel(joinedOnString: joinedOnString))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    private func fetchRemoteUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
+    private func fetchRemoteUserAccountDetailsPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return repository.fetchRemoteUserDetails()
             .flatMap({ userDetailsDataModel -> AnyPublisher<UserDetailsDataModel?, URLResponseError> in
@@ -59,9 +59,9 @@ class GetUserDetailsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getDefaultUserDetails() -> UserDetailsDomainModel {
+    private func getDefaultUserAccountDetails() -> UserAccountDetailsDomainModel {
         
-        return UserDetailsDomainModel(
+        return UserAccountDetailsDomainModel(
             joinedOnString: ""
         )
     }
