@@ -19,10 +19,9 @@ class RealmUserCounter: Object {
         return "id"
     }
     
-    func mapFrom(model: UserCounterDataModel) {
+    func mapFrom(model: UserCounterDecodable) {
         
         id = model.id
-        latestCountFromAPI = model.latestCountFromAPI
-        incrementValue = model.incrementValue
+        latestCountFromAPI = model.count
     }
 }

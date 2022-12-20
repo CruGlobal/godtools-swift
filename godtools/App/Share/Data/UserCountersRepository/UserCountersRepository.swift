@@ -33,18 +33,19 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounter(_ userCounter: UserCounterDataModel) -> AnyPublisher<RealmUserCounter, URLResponseError> {
+    func incrementUserCounter(id: String, increment: Int) -> AnyPublisher<RealmUserCounter, URLResponseError> {
         
-        let incrementValueBeforeSyncAttempt = userCounter.incrementValue
+        let incrementValueBeforeSyncAttempt = increment
         
-        return api.incrementCounterPublisher(userCounter)
+        return api.incrementCounterPublisher(id: id, increment: increment)
             .flatMap { updatedUserCounterFromRemote in
                 
-                return self.userCounterPublisher(value: updatedUserCounterFromRemote, remoteSyncSuccess: true)
+                return self.userCounterDecodablePublisher(value: updatedUserCounterFromRemote, remoteSyncSuccess: true)
             }
             .catch { _ in
                 
-                return self.userCounterPublisher(value: userCounter, remoteSyncSuccess: false)
+                let incrementCounterAfterSyncFail = UserCounterDecodable(id: id, count: increment)
+                return self.userCounterDecodablePublisher(value: incrementCounterAfterSyncFail, remoteSyncSuccess: false)
             }
             .flatMap { userCounter, remoteSyncSuccess in
                 
@@ -53,14 +54,14 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    private func userCounterPublisher(value: UserCounterDataModel, remoteSyncSuccess: Bool) -> AnyPublisher<(userCounter: UserCounterDataModel, remoteSyncSuccess: Bool), URLResponseError> {
+    private func userCounterDecodablePublisher(value: UserCounterDecodable, remoteSyncSuccess: Bool) -> AnyPublisher<(userCounter: UserCounterDecodable, remoteSyncSuccess: Bool), URLResponseError> {
         
         return Just((value, remoteSyncSuccess))
             .setFailureType(to: URLResponseError.self)
             .eraseToAnyPublisher()
     }
     
-    private func syncUserCounter(_ userCounter: UserCounterDataModel, remoteSyncSuccess: Bool, incrementValueBeforeSyncAttempt: Int) -> AnyPublisher<RealmUserCounter, URLResponseError>  {
+    private func syncUserCounter(_ userCounter: UserCounterDecodable, remoteSyncSuccess: Bool, incrementValueBeforeSyncAttempt: Int) -> AnyPublisher<RealmUserCounter, URLResponseError>  {
         
         let incrementValueBeforeSuccessfulRemoteUpdate = remoteSyncSuccess ? incrementValueBeforeSyncAttempt : nil
         

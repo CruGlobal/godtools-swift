@@ -10,7 +10,7 @@ import Foundation
 
 struct GetUserCountersResponse: Decodable {
     
-    let userCounters: [UserCounterDataModel]
+    let userCounters: [UserCounterDecodable]
     
     enum RootKeys: String, CodingKey {
         case data
@@ -20,6 +20,6 @@ struct GetUserCountersResponse: Decodable {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
         
-        userCounters = try container.decode([UserCounterDataModel].self, forKey: .data)
+        userCounters = try container.decode([UserCounterDecodable].self, forKey: .data)
     }
 }

@@ -949,7 +949,7 @@
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D409F2CA293679D200D9D2FE /* UserCountersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C9293679D200D9D2FE /* UserCountersAPI.swift */; };
 		D409F2CD29367CFB00D9D2FE /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */; };
-		D409F2CF2936866F00D9D2FE /* UserCounterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */; };
+		D409F2CF2936866F00D9D2FE /* UserCounterDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */; };
 		D409F2D22936891C00D9D2FE /* IncrementUserCounterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */; };
 		D409F2D429368FEB00D9D2FE /* GetUserCountersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */; };
 		D409F2D72936915000D9D2FE /* RealmUserCountersCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D62936915000D9D2FE /* RealmUserCountersCache.swift */; };
@@ -1060,6 +1060,7 @@
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
 		D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */; };
+		D4F1DE8B29525A7600A2F674 /* UserCounterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1DE8A29525A7600A2F674 /* UserCounterDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2078,7 +2079,7 @@
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D409F2C9293679D200D9D2FE /* UserCountersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCountersAPI.swift; sourceTree = "<group>"; };
 		D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
-		D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDataModel.swift; sourceTree = "<group>"; };
+		D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDecodable.swift; sourceTree = "<group>"; };
 		D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterResponse.swift; sourceTree = "<group>"; };
 		D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserCountersResponse.swift; sourceTree = "<group>"; };
 		D409F2D62936915000D9D2FE /* RealmUserCountersCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserCountersCache.swift; sourceTree = "<group>"; };
@@ -2189,6 +2190,7 @@
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
 		D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightTitleView.swift; sourceTree = "<group>"; };
+		D4F1DE8A29525A7600A2F674 /* UserCounterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDataModel.swift; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
@@ -6650,6 +6652,7 @@
 		D409F2C8293679B800D9D2FE /* UserCountersRepository */ = {
 			isa = PBXGroup;
 			children = (
+				D4F1DE8A29525A7600A2F674 /* UserCounterDataModel.swift */,
 				D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */,
 				D409F2CB29367CDD00D9D2FE /* Api */,
 				D409F2D52936914000D9D2FE /* Cache */,
@@ -6669,9 +6672,9 @@
 		D409F2D02936867600D9D2FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D409F2CE2936866F00D9D2FE /* UserCounterDataModel.swift */,
-				D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */,
 				D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */,
+				D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */,
+				D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -7812,7 +7815,7 @@
 				D44F3ABA283BC7DB0008390D /* ToolCategoriesViewModel.swift in Sources */,
 				4567782D287DC1F30044AEB2 /* ArticleWebView.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
-				D409F2CF2936866F00D9D2FE /* UserCounterDataModel.swift in Sources */,
+				D409F2CF2936866F00D9D2FE /* UserCounterDecodable.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
 				453C1BD82899A523007332E2 /* FavoritedResourcesRepository.swift in Sources */,
 				D471CFD528BD458B00DCE61C /* GetToolCategoriesUseCase.swift in Sources */,
@@ -8428,6 +8431,7 @@
 				4573133D28C1821100481640 /* ToolDetailsAboutView.swift in Sources */,
 				45B212AF2922972300C9A94D /* RealmDatabaseConfiguration.swift in Sources */,
 				45AD1FDB25938A9800A096A0 /* WebArchiveQueue.swift in Sources */,
+				D4F1DE8B29525A7600A2F674 /* UserCounterDataModel.swift in Sources */,
 				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				45C93AEB261D310900592FFF /* ArticleJcrContent.swift in Sources */,
 				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,

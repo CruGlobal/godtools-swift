@@ -1,5 +1,5 @@
 //
-//  UserCounterDataModel.swift
+//  UserCounterDecodable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -8,11 +8,10 @@
 
 import Foundation
 
-struct UserCounterDataModel: Decodable {
+struct UserCounterDecodable: Decodable {
     
     let id: String
-    let latestCountFromAPI: Int
-    let incrementValue: Int
+    let count: Int
     
     enum RootKeys: String, CodingKey {
         case id
@@ -31,14 +30,12 @@ struct UserCounterDataModel: Decodable {
         
         let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
-        latestCountFromAPI = try attributesContainer.decode(Int.self, forKey: .count)
-        incrementValue = 0
+        count = try attributesContainer.decode(Int.self, forKey: .count)
     }
     
-    init(realmUserCounter: RealmUserCounter) {
+    init(id: String, count: Int) {
         
-        id = realmUserCounter.id
-        latestCountFromAPI = realmUserCounter.latestCountFromAPI
-        incrementValue = realmUserCounter.incrementValue
+        self.id = id
+        self.count = count
     }
 }

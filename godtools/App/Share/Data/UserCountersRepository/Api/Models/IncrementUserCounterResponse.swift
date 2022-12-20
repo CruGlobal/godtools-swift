@@ -10,7 +10,7 @@ import Foundation
 
 struct IncrementUserCounterResponse: Decodable {
     
-    let userCounter: UserCounterDataModel
+    let userCounter: UserCounterDecodable
     
     enum RootKeys: String, CodingKey {
         case data
@@ -20,6 +20,6 @@ struct IncrementUserCounterResponse: Decodable {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
         
-        userCounter = try container.decode(UserCounterDataModel.self, forKey: .data)
+        userCounter = try container.decode(UserCounterDecodable.self, forKey: .data)
     }
 }
