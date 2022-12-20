@@ -43,11 +43,6 @@ class MobileContentImageView: MobileContentView {
         }
     }
     
-    @objc func handleImageTapped() {
-        
-        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
-    }
-    
     // MARK: - MobileContentView
 
     override var heightConstraintType: MobileContentViewHeightConstraintType {
@@ -92,12 +87,6 @@ extension MobileContentImageView {
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.constrainEdgesToView(view: self)
-                
-        // add image tap gesture
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(handleImageTapped))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGesture)
     }
 }
 

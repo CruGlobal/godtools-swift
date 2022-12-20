@@ -45,37 +45,4 @@ class MobileContentCardView: MobileContentStackView {
     private func setupBinding() {
         
     }
-    
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-        
-        addButtonOverlay()
-    }
-    
-    private func addButtonOverlay() {
-        
-        if let buttonOverlay = self.buttonOverlay {
-            buttonOverlay.removeTarget(self, action: #selector(cardTapped), for: .touchUpInside)
-            buttonOverlay.removeFromSuperview()
-            self.buttonOverlay = nil
-        }
-        
-        let button = UIButton(type: .custom)
-        
-        addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.constrainEdgesToView(view: self)
-        
-        button.backgroundColor = .clear
-        button.setTitle(nil, for: .normal)
-        
-        button.addTarget(self, action: #selector(cardTapped), for: .touchUpInside)
-        
-        self.buttonOverlay = button
-    }
-    
-    @objc private func cardTapped() {
-        
-        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
-    }
 }

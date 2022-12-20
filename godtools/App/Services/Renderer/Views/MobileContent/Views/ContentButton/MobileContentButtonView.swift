@@ -18,7 +18,6 @@ class MobileContentButtonView: MobileContentView {
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     
-    private var tapGesture: UITapGestureRecognizer?
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     
@@ -30,11 +29,6 @@ class MobileContentButtonView: MobileContentView {
         
         setupLayout()
         setupBinding()
-        
-        // tapGesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
-        addGestureRecognizer(tapGesture)
-        self.tapGesture = tapGesture
     }
     
     required init?(coder: NSCoder) {
@@ -191,11 +185,6 @@ class MobileContentButtonView: MobileContentView {
         case .points(let value):
             break
         }
-    }
-    
-    @objc private func buttonTapped() {
-        
-        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView
