@@ -31,6 +31,6 @@ class MobileContentImageViewModel: MobileContentViewModel {
             self.image = nil
         }
         
-        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

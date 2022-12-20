@@ -19,6 +19,8 @@ class MobileContentView: UIView {
     
     private let viewModel: MobileContentViewModel?
     
+    private var tapGesture: UITapGestureRecognizer?
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
@@ -30,6 +32,12 @@ class MobileContentView: UIView {
         self.viewModel = viewModel
         
         super.init(frame: frame ?? UIScreen.main.bounds)
+        
+        if isClickable {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+            addGestureRecognizer(tapGesture)
+            self.tapGesture = tapGesture
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -38,6 +46,10 @@ class MobileContentView: UIView {
     
     var paddingInsets: UIEdgeInsets {
         return .zero
+    }
+    
+    var isClickable: Bool {
+        return viewModel?.getIsClickable() ?? false
     }
             
     private func getRootView() -> MobileContentView {
@@ -116,13 +128,13 @@ class MobileContentView: UIView {
     
     // MARK: - View Tapped
     
-    func viewTapped(mobileContentAnalytics: MobileContentAnalytics) {
-        
+    @objc private func tapped() {
+
         guard let viewModel = self.viewModel else {
             return
         }
         
-        viewModel.viewTapped(mobileContentAnalytics: mobileContentAnalytics)
+        viewModel.viewTapped()
         
         let clickableEvents: [EventId] = viewModel.getClickableEvents()
         

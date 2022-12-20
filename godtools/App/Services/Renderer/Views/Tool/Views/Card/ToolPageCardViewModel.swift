@@ -62,7 +62,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
             hidesHeaderTrainingTip = !hasTrainingTip
         }
         
-        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     private var analyticsScreenName: String {

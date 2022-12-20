@@ -14,12 +14,12 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel {
     private let contentPage: Page
     private let analytics: AnalyticsContainer
     
-    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
+    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
         self.analytics = analytics
         
-        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
+        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
     private func getPageAnalyticsScreenName() -> String {

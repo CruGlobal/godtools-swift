@@ -11,11 +11,13 @@ import GodToolsToolParser
 
 class MobileContentViewModel: NSObject {
     
+    private let mobileContentAnalytics: MobileContentAnalytics
+    
     let baseModel: BaseModel?
     let baseModels: [BaseModel]
     let renderedPageContext: MobileContentRenderedPageContext
     
-    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext) {
+    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.baseModel = baseModel
         
@@ -27,16 +29,18 @@ class MobileContentViewModel: NSObject {
         }
         
         self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
                 
         super.init()
     }
     
-    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext) {
+    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.baseModel = baseModels.first
         self.baseModels = baseModels
         
         self.renderedPageContext = renderedPageContext
+        self.mobileContentAnalytics = mobileContentAnalytics
         
         super.init()
     }
@@ -78,12 +82,21 @@ class MobileContentViewModel: NSObject {
 
 extension MobileContentViewModel {
     
-    func viewTapped(mobileContentAnalytics: MobileContentAnalytics) {
+    func viewTapped() {
                 
         mobileContentAnalytics.trackEvents(
             events: getClickableAnalyticsEvents(),
             renderedPageContext: renderedPageContext
         )
+    }
+    
+    func getIsClickable() -> Bool {
+        
+        guard let clickableModel = baseModel as? Clickable else {
+            return false
+        }
+        
+        return clickableModel.isClickable
     }
     
     func getClickableAnalyticsEvents() -> [AnalyticsEvent] {

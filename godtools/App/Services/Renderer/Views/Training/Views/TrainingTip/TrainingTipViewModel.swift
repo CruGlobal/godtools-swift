@@ -19,13 +19,13 @@ class TrainingTipViewModel: MobileContentViewModel {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
             
-        super.init(baseModel: tipModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: tipModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         let trainingTipViewed: Bool = getTrainingTipViewed()
         

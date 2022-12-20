@@ -31,7 +31,7 @@ class ToolPageViewModel: MobileContentPageViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
     override var analyticsScreenName: String {

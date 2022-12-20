@@ -15,11 +15,11 @@ class ToolPageHeaderViewModel: MobileContentViewModel {
     
     private var mobileContentPageViewFactory: MobileContentPageViewFactory?
             
-    required init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    init(headerModel: Header, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.headerModel = headerModel
         
-        super.init(baseModel: headerModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: headerModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         for factory in renderedPageContext.pageViewFactories.factories {
             if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {

@@ -13,11 +13,11 @@ class MobileContentHeadingViewModel: MobileContentViewModel {
     
     private let headingModel: Text
     
-    init(headingModel: Text, renderedPageContext: MobileContentRenderedPageContext) {
+    init(headingModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.headingModel = headingModel
         
-        super.init(baseModel: headingModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: headingModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var fontSize: CGFloat {

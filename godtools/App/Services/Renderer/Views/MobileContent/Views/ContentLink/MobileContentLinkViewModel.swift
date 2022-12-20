@@ -26,7 +26,7 @@ class MobileContentLinkViewModel: MobileContentViewModel {
         self.fontService = fontService
         self.titleColor = linkModel.text.textColor
         
-        super.init(baseModel: linkModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: linkModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var backgroundColor: UIColor {

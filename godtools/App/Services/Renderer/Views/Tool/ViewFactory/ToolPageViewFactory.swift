@@ -61,6 +61,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
 
@@ -85,6 +86,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageCardsViewModel(
                 cards: cardsModel.cards,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 cardJumpService: cardJumpService
             )
             
@@ -100,6 +102,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageFormViewModel(
                 formModel: formModel,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 followUpService: followUpService,
                 localizationServices: localizationServices
             )
@@ -112,7 +115,8 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageModalViewModel(
                 modalModel: modalModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = ToolPageModalView(viewModel: viewModel)
@@ -123,7 +127,8 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = ToolPageModalsViewModel(
                 modals: modalsModel.modals,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = ToolPageModalsView(
@@ -158,6 +163,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         let viewModel = ToolPageCallToActionViewModel(
             callToActionModel: callToActionModel,
             renderedPageContext: renderedPageContext,
+            mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
         

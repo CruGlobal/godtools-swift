@@ -14,12 +14,12 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     private let callToActionModel: CallToAction?
     private let fontService: FontService
         
-    required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
         self.fontService = fontService
         
-        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

@@ -13,11 +13,11 @@ class ToolPageModalViewModel: MobileContentViewModel {
     
     private let modalModel: Modal
             
-    init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext) {
+    init(modalModel: Modal, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.modalModel = modalModel
         
-        super.init(baseModel: modalModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: modalModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var backgroundColor: UIColor {
