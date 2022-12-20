@@ -19,7 +19,7 @@ class UserCountersRepository {
         self.cache = cache
     }
     
-    func fetchRemoteUserCounters() -> AnyPublisher<[RealmUserCounter], URLResponseError> {
+    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
         
         return api.fetchUserCountersPublisher()
             .flatMap { userCountersResponse in
@@ -30,10 +30,16 @@ class UserCountersRepository {
                     }
                     .eraseToAnyPublisher()
             }
+            .flatMap { realmUserCounters in
+                
+                let userCounterDataModels = realmUserCounters.map{ UserCounterDataModel(realmUserCounter: $0) }
+                
+                return Just(userCounterDataModels)
+            }
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounter(id: String, increment: Int) -> AnyPublisher<RealmUserCounter, URLResponseError> {
+    func incrementUserCounter(id: String, increment: Int) -> AnyPublisher<UserCounterDataModel, URLResponseError> {
         
         let incrementValueBeforeSyncAttempt = increment
         
@@ -50,6 +56,10 @@ class UserCountersRepository {
             .flatMap { userCounter, remoteSyncSuccess in
                 
                 return self.syncUserCounter(userCounter, remoteSyncSuccess: remoteSyncSuccess, incrementValueBeforeSyncAttempt: incrementValueBeforeSyncAttempt)
+            }
+            .flatMap { realmUserCounter in
+                
+                return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
             }
             .eraseToAnyPublisher()
     }
