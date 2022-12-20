@@ -1,52 +1,54 @@
 //
-//  MobileContentAuthTokenDataModel.swift
+//  UserDetailsDataModel.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 11/1/22.
+//  Created by Rachael Skeath on 11/21/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct MobileContentAuthTokenDataModel: Decodable {
+struct UserDetailsDataModel: Decodable {
     
-    let token: String
-    let expirationDate: Date?
-    let userId: Int
+    let id: String
+    let createdAt: Date?
     
     enum RootKeys: String, CodingKey {
         case data
     }
     
     enum DataKeys: String, CodingKey {
+        case id
         case attributes
     }
     
     enum AttributesKeys: String, CodingKey {
-        case token
-        case expiration
-        case userId = "user-id"
+        case createdAt = "created-at"
     }
     
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
-        
         let dataContainer = try container.nestedContainer(keyedBy: DataKeys.self, forKey: .data)
+        
+        id = try dataContainer.decode(String.self, forKey: .id)
+        
         let attributesContainer = try dataContainer.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
-        token = try attributesContainer.decode(String.self, forKey: .token)
-        userId = try attributesContainer.decode(Int.self, forKey: .userId)
-        
-        let expirationDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
-        expirationDate = MobileContentAuthTokenDataModel.parseExpirationDateFromString(expirationDateString)
+        let createdAtDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .createdAt) ?? ""
+        createdAt = UserDetailsDataModel.parseCreatedAtDateFromString(createdAtDateString)
     }
     
-    private static func parseExpirationDateFromString(_ dateString: String) -> Date? {
+    init(realmUserDetails: RealmUserDetails) {
+        
+        id = realmUserDetails.id
+        createdAt = realmUserDetails.createdAt
+    }
+    
+    private static func parseCreatedAtDateFromString(_ dateString: String) -> Date? {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [
-            .withInternetDateTime,
-            .withFractionalSeconds
+            .withInternetDateTime
         ]
         
         return dateFormatter.date(from: dateString)

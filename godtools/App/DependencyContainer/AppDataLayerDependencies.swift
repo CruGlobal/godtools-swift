@@ -225,4 +225,19 @@ class AppDataLayerDependencies {
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
     }
+    
+    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsRepository(
+            api: UserDetailsAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserDetailsCache(
+                realmDatabase: sharedRealmDatabase,
+                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
+                authTokenRepository: getMobileContentAuthTokenRepository()
+            )
+        )
+    }
 }
