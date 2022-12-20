@@ -9,15 +9,15 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentFlowViewModel: MobileContentFlowViewModelType {
+class MobileContentFlowViewModel: MobileContentViewModel {
     
     private let contentFlow: GodToolsToolParser.Flow
-    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext) {
+    init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.contentFlow = contentFlow
-        self.renderedPageContext = renderedPageContext        
+        
+        super.init(baseModel: contentFlow, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var rowGravity: Gravity.Horizontal {

@@ -29,7 +29,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         
             let viewModel = MobileContentParagraphViewModel(
                 paragraphModel: paragraphModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
@@ -49,7 +50,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentImageView(viewModel: viewModel)
@@ -72,8 +74,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let contentCard = renderableModel as? Card {
             
             let viewModel = MobileContentCardViewModel(
-                contentCard: contentCard,
-                renderedPageContext: renderedPageContext
+                cardModel: contentCard,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentCardView(viewModel: viewModel)
@@ -96,7 +99,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let cardCollectionPageCard = renderableModel as? CardCollectionPage.Card {
             
             let viewModel = MobileContentCardCollectionPageCardViewModel(
-                card: cardCollectionPageCard
+                card: cardCollectionPageCard,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentCardCollectionPageCardView(viewModel: viewModel)
@@ -108,6 +113,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentContentPageViewModel(
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 analytics: analytics
             )
             
@@ -120,6 +126,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentCardCollectionPageViewModel(
                 cardCollectionPage: cardCollectionPage,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 analytics: analytics
             )
             
@@ -130,8 +137,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headingModel = renderableModel as? MultiplatformHeading {
             
             let viewModel = MobileContentHeadingViewModel(
-                heading: headingModel.text,
-                renderedPageContext: renderedPageContext
+                headingModel: headingModel.text,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentHeadingView(viewModel: viewModel)
@@ -140,7 +148,14 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         }
         else if let contentModel = renderableModel as? MultiplatformContent {
             
+            let viewModel = MobileContentViewModel(
+                baseModels: contentModel.content,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
+            )
+            
             return MobileContentStackView(
+                viewModel: viewModel,
                 contentInsets: contentModel.contentInsets,
                 itemSpacing: contentModel.itemSpacing,
                 scrollIsEnabled: contentModel.scrollIsEnabled
@@ -150,7 +165,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentAnimationView(viewModel: viewModel)
@@ -161,7 +177,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentEmbeddedVideoViewModel(
                 videoModel: videoModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentEmbeddedVideoView(viewModel: viewModel)
@@ -184,7 +201,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
 
             let viewModel = MobileContentTabsViewModel(
                 tabsModel: tabsModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentTabsView(viewModel: viewModel)
@@ -196,6 +214,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService
             )
             
@@ -207,7 +226,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentFormView(viewModel: viewModel)
@@ -218,7 +238,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentSpacerView(viewModel: viewModel)
@@ -228,8 +249,9 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         else if let headerModel = renderableModel as? MultiplatformContentHeader {
             
             let viewModel = MobileContentHeaderViewModel(
-                header: headerModel.text,
-                renderedPageContext: renderedPageContext
+                headerModel: headerModel.text,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentHeaderView(viewModel: viewModel)
@@ -240,7 +262,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentFlowView(viewModel: viewModel)
@@ -251,7 +274,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowItemViewModel(
                 flowItem: contentFlowItem,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentFlowItemView(viewModel: viewModel)
@@ -274,7 +298,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentMultiSelectViewModel(
                 multiSelectModel: multiSelectModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentMultiSelectView(viewModel: viewModel)
@@ -297,7 +322,8 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentAccordionViewModel(
                 accordionModel: accordionModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
@@ -313,6 +339,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
             renderedPageContext: renderedPageContext,
+            mobileContentAnalytics: mobileContentAnalytics,
             fontService: fontService
         )
         

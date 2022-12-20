@@ -10,19 +10,17 @@ import UIKit
 
 class MobileContentLinkView: MobileContentView {
     
-    private let viewModel: MobileContentLinkViewModelType
+    private let viewModel: MobileContentLinkViewModel
     private let linkButton: UIButton = UIButton(type: .custom)
     
-    required init(viewModel: MobileContentLinkViewModelType) {
+    required init(viewModel: MobileContentLinkViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
-        
-        linkButton.addTarget(self, action: #selector(handleLinkTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -58,11 +56,6 @@ class MobileContentLinkView: MobileContentView {
         linkButton.titleLabel?.font = viewModel.font
         linkButton.setTitle(viewModel.title, for: .normal)
         linkButton.setTitleColor(viewModel.titleColor, for: .normal)
-    }
-    
-    @objc func handleLinkTapped() {
-        viewModel.linkTapped()
-        super.sendEventsToAllViews(eventIds: viewModel.linkEvents, rendererState: viewModel.rendererState)
     }
     
     // MARK: - MobileContentView

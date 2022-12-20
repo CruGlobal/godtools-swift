@@ -62,7 +62,7 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func getAuthToken() -> AnyPublisher<String?, URLResponseError> {
+    private func getAuthToken() -> AnyPublisher<String, URLResponseError> {
         
         if let cachedAuthToken = mobileContentAuthTokenRepository.getCachedAuthToken() {
             
@@ -76,7 +76,7 @@ class MobileContentApiAuthSession {
         }
     }
     
-    private func fetchRemoteAuthToken() -> AnyPublisher<String?, URLResponseError> {
+    private func fetchRemoteAuthToken() -> AnyPublisher<String, URLResponseError> {
         
         return userAuthentication.renewOktaAccessTokenPublisher()
             .flatMap { oktaAccessToken in
@@ -84,18 +84,15 @@ class MobileContentApiAuthSession {
                 return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
                    .eraseToAnyPublisher()
             }
+            .flatMap { authTokenDataModel in
+                
+                return Just(authTokenDataModel.token)
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTaskWithAuthToken(_ authToken: String?, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, URLResponseError> {
-        
-        guard let authToken = authToken else {
-            assertionFailure("Auth token shouldn't be nil")
-            
-            let error = URLResponseError.otherError(error: MobileContentAuthTokenError.nilAuthToken)
-            return Fail(outputType: Data.self, failure: error)
-                .eraseToAnyPublisher()
-        }
+    private func attemptDataTaskWithAuthToken(_ authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, URLResponseError> {
 
         let authenticatedRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
 

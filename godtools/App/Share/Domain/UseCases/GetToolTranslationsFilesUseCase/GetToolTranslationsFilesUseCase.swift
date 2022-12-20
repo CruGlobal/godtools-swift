@@ -79,9 +79,21 @@ class GetToolTranslationsFilesUseCase {
                 
                 var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
                 
-                for translation in translationsToDownload {
+                for translationToDownload in translationsToDownload {
                     
-                    guard let translationManifest = downloadedTranslations.first(where: {$0.translation.id == translation.id}) else {
+                    let translationManifest: TranslationManifestFileDataModel?
+                    
+                    if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.id == translationToDownload.id}) {
+                        translationManifest = downloadedTranslationManifest
+                    }
+                    else if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.resource?.id == translationToDownload.resource?.id && $0.translation.language?.id == translationToDownload.language?.id}) {
+                        translationManifest = downloadedTranslationManifest
+                    }
+                    else {
+                        translationManifest = nil
+                    }
+                    
+                    guard let translationManifest = translationManifest else {
                         continue
                     }
                     

@@ -9,15 +9,15 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentTabsViewModel: MobileContentTabsViewModelType {
+class MobileContentTabsViewModel: MobileContentViewModel {
     
     private let tabsModel: Tabs
-    private let renderedPageContext: MobileContentRenderedPageContext
         
-    required init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext) {
+    init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabsModel = tabsModel
-        self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: tabsModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

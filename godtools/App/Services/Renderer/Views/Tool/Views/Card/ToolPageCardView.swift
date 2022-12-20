@@ -20,12 +20,12 @@ protocol ToolPageCardViewDelegate: AnyObject {
 
 class ToolPageCardView: MobileContentView, NibBased {
         
-    private let viewModel: ToolPageCardViewModelType
+    private let viewModel: ToolPageCardViewModel
     private let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
     private let swipeUpGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let swipeDownGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     private let bottomGradientLayer: CAGradientLayer = CAGradientLayer()
-    private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
+    private let contentStackView: MobileContentStackView
     
     private lazy var keyboardObserver: KeyboardNotificationObserver = KeyboardNotificationObserver(loggingEnabled: false)
     
@@ -53,11 +53,12 @@ class ToolPageCardView: MobileContentView, NibBased {
     
     @IBOutlet weak private var headerTrainingTipTrailing: NSLayoutConstraint!
     
-    required init(viewModel: ToolPageCardViewModelType) {
+    init(viewModel: ToolPageCardViewModel) {
                 
         self.viewModel = viewModel
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
                 
         let rootNibView: UIView? = loadNib()
         rootNibView?.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute

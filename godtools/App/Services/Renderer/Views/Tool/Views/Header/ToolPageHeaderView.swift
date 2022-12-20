@@ -33,13 +33,13 @@ class ToolPageHeaderView: MobileContentView, NibBased {
     
     private var numberLabelWidthConstraint: NSLayoutConstraint?
     
-    let viewModel: ToolPageHeaderViewModelType
+    let viewModel: ToolPageHeaderViewModel
                 
-    required init(viewModel: ToolPageHeaderViewModelType) {
+    init(viewModel: ToolPageHeaderViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         

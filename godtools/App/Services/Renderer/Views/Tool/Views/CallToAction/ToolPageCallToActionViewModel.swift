@@ -9,17 +9,17 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageCallToActionViewModel: ToolPageCallToActionViewModelType {
+class ToolPageCallToActionViewModel: MobileContentViewModel {
     
     private let callToActionModel: CallToAction?
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let fontService: FontService
         
-    required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
-        self.renderedPageContext = renderedPageContext
         self.fontService = fontService
+        
+        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

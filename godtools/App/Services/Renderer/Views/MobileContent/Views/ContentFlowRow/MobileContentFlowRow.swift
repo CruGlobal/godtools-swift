@@ -21,7 +21,7 @@ class MobileContentFlowRow: MobileContentView {
         
         self.rowGravity = rowGravity
         
-        super.init(frame: frame)
+        super.init(viewModel: nil, frame: frame)
         
         setupLayout()
     }

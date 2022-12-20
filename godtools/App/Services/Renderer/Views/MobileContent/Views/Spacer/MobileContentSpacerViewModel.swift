@@ -9,17 +9,15 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
+class MobileContentSpacerViewModel: MobileContentViewModel {
     
     private let spacerModel: Spacer
-    private let renderedPageContext: MobileContentRenderedPageContext
     
     let height: MobileContentSpacerHeight
     
-    required init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext) {
+    init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.spacerModel = spacerModel
-        self.renderedPageContext = renderedPageContext
         
         switch spacerModel.mode {
         case .auto_:
@@ -29,5 +27,7 @@ class MobileContentSpacerViewModel: MobileContentSpacerViewModelType {
         default:
             height = .auto
         }
+        
+        super.init(baseModel: spacerModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

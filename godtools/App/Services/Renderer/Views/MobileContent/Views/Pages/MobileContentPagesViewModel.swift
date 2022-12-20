@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
+class MobileContentPagesViewModel: NSObject {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -54,12 +54,12 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
             pageNavigationSemanticContentAttribute = .forceRightToLeft
         }
         
+        super.init()
+        
         if let page = page {
             currentPage = page
         }
-        
-        super.init()
-        
+                
         resourcesRepository.getResourcesChanged()
             .receiveOnMain()
             .sink { [weak self] _ in
@@ -290,30 +290,6 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         return renderer.value.resource
     }
     
-    func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
-        
-        self.window = window
-        self.safeArea = safeArea
-        
-        guard let pageRenderer = renderer.value.pageRenderers.first else {
-            return
-        }
-        
-        if let startingPage = startingPage {
-            
-            let navigationModel = MobileContentPagesNavigationModel(
-                willReloadData: true,
-                page: startingPage,
-                pagePositions: nil,
-                animated: false
-            )
-            
-            pageNavigation.accept(value: navigationModel)
-        }
-        
-        setPageRenderer(pageRenderer: pageRenderer)
-    }
-    
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
             
         let pageRenderer: MobileContentPageRenderer?
@@ -375,6 +351,51 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
         self.pageModels = pageModelsToRender
         
         numberOfPages.accept(value: pageModels.count)
+    }
+    
+    func handleDismissToolEvent() {
+        
+        let event = DismissToolEvent(
+            resource: resource,
+            highestPageNumberViewed: highestPageNumberViewed
+        )
+        
+        renderer.value.navigation.dismissTool(event: event)
+    }
+    
+    func setTrainingTipsEnabled(enabled: Bool) {
+        
+        guard trainingTipsEnabled != enabled else {
+            return
+        }
+        
+        trainingTipsEnabled = enabled
+        
+        setPageRenderer(pageRenderer: currentPageRenderer.value)
+    }
+    
+    func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
+        
+        self.window = window
+        self.safeArea = safeArea
+        
+        guard let pageRenderer = renderer.value.pageRenderers.first else {
+            return
+        }
+        
+        if let startingPage = startingPage {
+            
+            let navigationModel = MobileContentPagesNavigationModel(
+                willReloadData: true,
+                page: startingPage,
+                pagePositions: nil,
+                animated: false
+            )
+            
+            pageNavigation.accept(value: navigationModel)
+        }
+        
+        setPageRenderer(pageRenderer: pageRenderer)
     }
     
     func pageWillAppear(page: Int) -> MobileContentView? {
@@ -455,26 +476,5 @@ class MobileContentPagesViewModel: NSObject, MobileContentPagesViewModelType {
     func didChangeMostVisiblePage(page: Int) {
         
         currentPage = page
-    }
-    
-    func handleDismissToolEvent() {
-        
-        let event = DismissToolEvent(
-            resource: resource,
-            highestPageNumberViewed: highestPageNumberViewed
-        )
-        
-        renderer.value.navigation.dismissTool(event: event)
-    }
-    
-    func setTrainingTipsEnabled(enabled: Bool) {
-        
-        guard trainingTipsEnabled != enabled else {
-            return
-        }
-        
-        trainingTipsEnabled = enabled
-        
-        setPageRenderer(pageRenderer: currentPageRenderer.value)
     }
 }

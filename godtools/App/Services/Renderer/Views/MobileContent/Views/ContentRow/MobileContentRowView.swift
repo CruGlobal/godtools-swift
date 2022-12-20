@@ -18,14 +18,14 @@ class MobileContentRowView: MobileContentView {
     private var childViews: [MobileContentView] = Array()
     private var horizontalStackViewTrailing: NSLayoutConstraint?
     
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, numberOfColumns: Int) {
+    init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, numberOfColumns: Int) {
         
         self.horizontalStackView = UIStackView(frame: UIScreen.main.bounds)
         self.contentInsets = contentInsets
         self.itemSpacing = itemSpacing
         self.numberOfColumns = numberOfColumns
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: nil, frame: UIScreen.main.bounds)
         
         setupLayout()
     }

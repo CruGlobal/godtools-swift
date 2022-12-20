@@ -10,16 +10,16 @@ import UIKit
 
 class MobileContentImageView: MobileContentView {
     
-    private let viewModel: MobileContentImageViewModelType
+    private let viewModel: MobileContentImageViewModel
     
     private var imageView: UIImageView?
     private var emptyView: UIView?
     
-    required init(viewModel: MobileContentImageViewModelType) {
+    init(viewModel: MobileContentImageViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
@@ -41,11 +41,6 @@ class MobileContentImageView: MobileContentView {
         else {
             addEmptySpace()
         }
-    }
-    
-    @objc func handleImageTapped() {
-        
-        super.sendEventsToAllViews(eventIds: viewModel.imageEvents, rendererState: viewModel.rendererState)
     }
     
     // MARK: - MobileContentView
@@ -92,12 +87,6 @@ extension MobileContentImageView {
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.constrainEdgesToView(view: self)
-                
-        // add image tap gesture
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(handleImageTapped))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGesture)
     }
 }
 

@@ -9,10 +9,9 @@
 import UIKit
 import GodToolsToolParser
 
-class TrainingTipViewModel: TrainingTipViewModelType {
+class TrainingTipViewModel: MobileContentViewModel {
     
     private let tipModel: Tip
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let viewedTrainingTipsService: ViewedTrainingTipsService
     
     private var viewType: TrainingTipViewType = .rounded
@@ -20,13 +19,14 @@ class TrainingTipViewModel: TrainingTipViewModelType {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    required init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
         
         self.tipModel = tipModel
-        self.renderedPageContext = renderedPageContext
         self.viewType = viewType
         self.viewedTrainingTipsService = viewedTrainingTipsService
             
+        super.init(baseModel: tipModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+        
         let trainingTipViewed: Bool = getTrainingTipViewed()
         
         reloadTipIcon(
@@ -94,6 +94,11 @@ class TrainingTipViewModel: TrainingTipViewModelType {
             trainingTipViewed: getTrainingTipViewed()
         )
     }
+}
+
+// MARK: - Inputs
+
+extension TrainingTipViewModel {
     
     func tipTapped() -> TrainingTipEvent? {
                

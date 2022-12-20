@@ -304,7 +304,7 @@ extension ToolDetailsViewModel {
             siteSubSection: siteSubSection,
             contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
             secondaryContentLanguage: nil,
-            url: url.absoluteString
+            url: url
         )
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))

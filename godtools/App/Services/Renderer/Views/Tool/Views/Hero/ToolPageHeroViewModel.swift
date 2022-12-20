@@ -9,46 +9,38 @@
 import UIKit
 import GodToolsToolParser
 
-class ToolPageHeroViewModel: ToolPageHeroViewModelType {
+class ToolPageHeroViewModel: MobileContentViewModel {
     
     private let heroModel: Hero
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
     
-    required init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(heroModel: Hero, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.heroModel = heroModel
-        self.renderedPageContext = renderedPageContext
                 
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: heroModel.analyticsEvents,
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
+        
+        super.init(baseModel: heroModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     deinit {
 
     }
+}
+
+// MARK: - Inputs
+
+extension ToolPageHeroViewModel {
     
     func heroDidAppear() {
-        mobileContentDidAppear()
+        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
     }
     
     func heroDidDisappear() {
-        mobileContentDidDisappear()
-    }
-}
-
-// MARK: - MobileContentViewModelType
-
-extension ToolPageHeroViewModel: MobileContentViewModelType {
-    
-    var language: LanguageModel {
-        return renderedPageContext.language
-    }
-    
-    var analyticsEvents: [MobileContentAnalyticsEvent] {
-        return analyticsEventsObjects
+        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
     }
 }

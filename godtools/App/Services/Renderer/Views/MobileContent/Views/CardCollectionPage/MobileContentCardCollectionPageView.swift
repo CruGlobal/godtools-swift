@@ -10,7 +10,7 @@ import UIKit
 
 class MobileContentCardCollectionPageView: MobileContentPageView {
     
-    private let viewModel: MobileContentCardCollectionPageViewModelType
+    private let viewModel: MobileContentCardCollectionPageViewModel
     private let cardPageNavigationView: PageNavigationCollectionView
     private let cardCollectionLayout: HorizontallyCenteredCollectionViewLayout = HorizontallyCenteredCollectionViewLayout()
     private let previousCardButton: UIButton = UIButton(type: .custom)
@@ -20,7 +20,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private var cards: [MobileContentCardCollectionPageCardView] = Array()
     
-    required init(viewModel: MobileContentCardCollectionPageViewModelType) {
+    required init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
         self.cardPageNavigationView = PageNavigationCollectionView(layout: cardCollectionLayout)
@@ -35,10 +35,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(viewModel: MobileContentPageViewModelType, nibName: String?) {
-        fatalError("init(viewModel:nibName:) has not been implemented")
     }
     
     override func setupLayout() {

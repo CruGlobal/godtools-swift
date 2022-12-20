@@ -15,7 +15,7 @@ protocol MobileContentAccordionViewDelegate: AnyObject {
 
 class MobileContentAccordionView: MobileContentView {
     
-    private let viewModel: MobileContentAccordionViewModelType
+    private let viewModel: MobileContentAccordionViewModel
     private let allowsOnlyOneExpandedSectionAtATime: Bool = true
     
     private var sectionViews: [MobileContentAccordionSectionView] = Array()
@@ -24,11 +24,11 @@ class MobileContentAccordionView: MobileContentView {
     
     private weak var delegate: MobileContentAccordionViewDelegate?
         
-    required init(viewModel: MobileContentAccordionViewModelType) {
+    init(viewModel: MobileContentAccordionViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
     }

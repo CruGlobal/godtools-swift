@@ -9,23 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, MobileContentCardCollectionPageViewModelType {
+class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     private let analytics: AnalyticsContainer
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
-        self.renderedPageContext = renderedPageContext
         self.analytics = analytics
         
-        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
-    }
-    
-    required init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
-        fatalError("init(pageModel:renderedPageContext:hidesBackgroundImage:) has not been implemented")
+        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
     private func getPageAnalyticsScreenName() -> String {
@@ -80,6 +74,11 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel, Mobi
         
         return nil
     }
+}
+
+// MARK: - Inputs
+
+extension MobileContentCardCollectionPageViewModel {
     
     func pageDidAppear() {
         

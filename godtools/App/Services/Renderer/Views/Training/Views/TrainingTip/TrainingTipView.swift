@@ -10,16 +10,16 @@ import UIKit
 
 class TrainingTipView: MobileContentView, NibBased {
     
-    private let viewModel: TrainingTipViewModelType
+    private let viewModel: TrainingTipViewModel
     
     @IBOutlet weak private var tipButton: UIButton!
     @IBOutlet weak private var tipImage: UIImageView!
     
-    required init(viewModel: TrainingTipViewModelType) {
+    required init(viewModel: TrainingTipViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
         loadNib()
         setupLayout()

@@ -9,14 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-class TrainingPageViewModel: TrainingPageViewModelType {
+class TrainingPageViewModel: MobileContentViewModel {
     
     private let pageModel: TipPage
-    private let renderedPageContext: MobileContentRenderedPageContext
     
-    required init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext) {
+    init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.pageModel = pageModel
-        self.renderedPageContext = renderedPageContext
+        
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

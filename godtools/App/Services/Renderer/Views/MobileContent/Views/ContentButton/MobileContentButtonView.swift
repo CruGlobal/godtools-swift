@@ -13,28 +13,22 @@ class MobileContentButtonView: MobileContentView {
     
     private static let buttonHeight: CGFloat = 50
     
-    private let viewModel: MobileContentButtonViewModelType
+    private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     
-    private var tapGesture: UITapGestureRecognizer?
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     
-    required init(viewModel: MobileContentButtonViewModelType) {
+    init(viewModel: MobileContentButtonViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
         setupBinding()
-        
-        // tapGesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
-        addGestureRecognizer(tapGesture)
-        self.tapGesture = tapGesture
     }
     
     required init?(coder: NSCoder) {
@@ -191,25 +185,6 @@ class MobileContentButtonView: MobileContentView {
         case .points(let value):
             break
         }
-    }
-    
-    @objc private func buttonTapped() {
-        
-        switch viewModel.buttonType {
-        
-        case .event:
-            super.sendEventsToAllViews(eventIds: viewModel.buttonEvents, rendererState: viewModel.rendererState)
-        
-        case .url:
-            super.sendButtonWithUrlEventToRootView(url: viewModel.buttonUrl)
-       
-        case .unknown:
-            break
-        default:
-            break
-        }
-        
-        viewModel.buttonTapped()
     }
     
     // MARK: - MobileContentView

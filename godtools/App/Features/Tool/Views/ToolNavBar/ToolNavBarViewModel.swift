@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import SwiftUI
 
-class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
+class ToolNavBarViewModel: NSObject {
     
     private let backButtonImageType: ToolBackButtonImageType
     private let resource: ResourceModel
@@ -106,6 +106,11 @@ class ToolNavBarViewModel: NSObject, ToolNavBarViewModelType {
     var languageControlFont: UIFont {
         return fontService.getFont(size: 14, weight: .regular)
     }
+}
+
+// MARK: - Inputs
+
+extension ToolNavBarViewModel {
     
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel {
                 

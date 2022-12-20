@@ -19,6 +19,7 @@ class AppDomainLayerDependencies {
     
     func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
         return GetAccountCreationIsSupportedUseCase(
+            appBuild: dataLayer.getAppBuild(),
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }
@@ -282,8 +283,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getUserDetailsUseCase() -> GetUserDetailsUseCase {
-        return GetUserDetailsUseCase(
+    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
+        return GetUserAccountDetailsUseCase(
             repository: dataLayer.getUserDetailsRepository(),
             localizationServices: dataLayer.getLocalizationServices()
         )

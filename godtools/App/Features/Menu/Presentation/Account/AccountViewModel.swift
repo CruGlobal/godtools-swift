@@ -9,14 +9,15 @@
 import Foundation
 import Combine
 import SwiftUI
+import GodToolsToolParser
 
 class AccountViewModel: ObservableObject {
     
     private let localizationServices: LocalizationServices
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
-    private let getUserDetailsUseCase: GetUserDetailsUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let analytics: AnalyticsContainer
     
@@ -35,14 +36,14 @@ class AccountViewModel: ObservableObject {
     @Published var globalActivityTitle: String
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserDetailsUseCase: GetUserDetailsUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getUserAccountProfileNameUseCase = getUserAccountProfileNameUseCase
-        self.getUserDetailsUseCase = getUserDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.analytics = analytics
         
@@ -70,11 +71,11 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserDetailsUseCase.getUserDetailsPublisher()
+        getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
             .receiveOnMain()
             .sink { [weak self] userDetails in
                 
-                self?.joinedOnText = userDetails?.joinedOnString ?? ""
+                self?.joinedOnText = userDetails.joinedOnString
             }
             .store(in: &cancellables)
         
@@ -89,10 +90,10 @@ class AccountViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func trackSectionViewedAnalytics(sectionName: String) {
-        
+    private func trackSectionViewedAnalytics(screenName: String) {
+                        
         let trackScreen = TrackScreenModel(
-            screenName: sectionName,
+            screenName: screenName,
             siteSection: "account",
             siteSubSection: "",
             contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
@@ -111,15 +112,14 @@ extension AccountViewModel {
         flowDelegate?.navigate(step: .backTappedFromMyAccount)
     }
     
-    func activityTapped() {
+    func activityViewed() {
         
-        // TODO: Ensure this is the correct page name for when Activity section is viewed. GT-1861 ~Levi
-        trackSectionViewedAnalytics(sectionName: "Activity")
+        trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_ACTIVITY)
     }
     
-    func globalActivityTapped() {
+    func globalActivityViewed() {
         
-        trackSectionViewedAnalytics(sectionName: "Global Dashboard")
+        trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_GLOBAL_ACTIVITY)
     }
     
     func getGlobalActivityAnalyticsItem(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {

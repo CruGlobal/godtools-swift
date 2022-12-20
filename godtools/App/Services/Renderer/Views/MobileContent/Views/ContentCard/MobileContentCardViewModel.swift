@@ -9,22 +9,17 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentCardViewModel: MobileContentCardViewModelType {
+class MobileContentCardViewModel: MobileContentViewModel {
     
-    private let contentCard: Card
-    private let renderedPageContext: MobileContentRenderedPageContext
+    private let cardModel: Card
     
-    required init(contentCard: Card, renderedPageContext: MobileContentRenderedPageContext) {
+    let mobileContentAnalytics: MobileContentAnalytics
+    
+    init(cardModel: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
-        self.contentCard = contentCard
-        self.renderedPageContext = renderedPageContext
-    }
-    
-    var events: [EventId] {
-        return contentCard.events
-    }
-    
-    var rendererState: State {
-        return renderedPageContext.rendererState
+        self.cardModel = cardModel
+        self.mobileContentAnalytics = mobileContentAnalytics
+        
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

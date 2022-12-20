@@ -17,19 +17,19 @@ protocol ToolPageModalViewDelegate: AnyObject {
 
 class ToolPageModalView: MobileContentView, NibBased {
     
-    private let viewModel: ToolPageModalViewModelType
-    
-    private var contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
+    private let viewModel: ToolPageModalViewModel
+    private let contentStackView: MobileContentStackView
     
     private weak var delegate: ToolPageModalViewDelegate?
     
     @IBOutlet weak private var contentContainerView: UIView!
     
-    required init(viewModel: ToolPageModalViewModelType) {
+    init(viewModel: ToolPageModalViewModel) {
         
         self.viewModel = viewModel
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib()
         setupLayout()

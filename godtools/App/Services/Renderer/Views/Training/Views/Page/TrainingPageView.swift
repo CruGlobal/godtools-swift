@@ -10,24 +10,25 @@ import UIKit
 
 protocol TrainingPageViewDelegate: AnyObject {
     
-    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: String)
+    func trainingPageButtonWithUrlTapped(trainingPage: TrainingPageView, url: URL)
 }
 
 class TrainingPageView: MobileContentView, NibBased {
     
-    private let viewModel: TrainingPageViewModelType
-    private let contentStackView: MobileContentStackView = MobileContentStackView(contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
+    private let viewModel: TrainingPageViewModel
+    private let contentStackView: MobileContentStackView
     
     private weak var delegate: TrainingPageViewDelegate?
     
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var bottomGradientView: UIView!
     
-    required init(viewModel: TrainingPageViewModelType) {
+    required init(viewModel: TrainingPageViewModel) {
         
         self.viewModel = viewModel
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
         
-        super.init(frame: UIScreen.main.bounds)
+        super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         loadNib(nibName: String(describing: TrainingPageView.self))
         setupLayout()
@@ -81,7 +82,7 @@ class TrainingPageView: MobileContentView, NibBased {
         contentStackView.renderChild(childView: childView)
     }
     
-    override func didReceiveButtonWithUrlEvent(url: String) {
+    override func didReceiveButtonWithUrlEvent(url: URL) {
         delegate?.trainingPageButtonWithUrlTapped(trainingPage: self, url: url)
     }
     

@@ -17,14 +17,39 @@ class MobileContentView: UIView {
         case walkingUpViewHierarchy
     }
     
+    private let viewModel: MobileContentViewModel?
+    
+    private var tapGesture: UITapGestureRecognizer?
+    
     private(set) weak var parent: MobileContentView?
     
     private(set) var children: [MobileContentView] = Array()
     private(set) var visibilityState: MobileContentViewVisibilityState = .visible
     private(set) var drawsShadow: Bool = false
     
+    init(viewModel: MobileContentViewModel?, frame: CGRect?) {
+        
+        self.viewModel = viewModel
+        
+        super.init(frame: frame ?? UIScreen.main.bounds)
+        
+        if isClickable {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+            addGestureRecognizer(tapGesture)
+            self.tapGesture = tapGesture
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var paddingInsets: UIEdgeInsets {
         return .zero
+    }
+    
+    var isClickable: Bool {
+        return viewModel?.getIsClickable() ?? false
     }
             
     private func getRootView() -> MobileContentView {
@@ -99,6 +124,27 @@ class MobileContentView: UIView {
         }
         
         children.removeAll()
+    }
+    
+    // MARK: - View Tapped
+    
+    @objc private func tapped() {
+
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        
+        viewModel.viewTapped()
+        
+        let clickableEvents: [EventId] = viewModel.getClickableEvents()
+        
+        if !clickableEvents.isEmpty {
+            sendEventsToAllViews(eventIds: clickableEvents, rendererState: viewModel.rendererState)
+        }
+        
+        if let clickableUrl = viewModel.getClickableUrl() {
+            sendButtonWithUrlEventToRootView(url: clickableUrl)
+        }
     }
     
     // MARK: - View Did Appear
@@ -229,11 +275,11 @@ class MobileContentView: UIView {
     
     // MARK: - Url Events
     
-    func sendButtonWithUrlEventToRootView(url: String) {
+    func sendButtonWithUrlEventToRootView(url: URL) {
         getRootView().didReceiveButtonWithUrlEvent(url: url)
     }
     
-    func didReceiveButtonWithUrlEvent(url: String) {
+    func didReceiveButtonWithUrlEvent(url: URL) {
         
     }
     

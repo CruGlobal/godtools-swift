@@ -10,17 +10,17 @@ import UIKit
 
 class MobileContentCardView: MobileContentStackView {
     
-    private let viewModel: MobileContentCardViewModelType
+    private let viewModel: MobileContentCardViewModel
     private let viewCornerRadius: CGFloat = 10
     
     private var shadowView: UIView?
     private var buttonOverlay: UIButton?
     
-    required init(viewModel: MobileContentCardViewModelType) {
+    init(viewModel: MobileContentCardViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(contentInsets: UIEdgeInsets(top: 14, left: 10, bottom: 14, right: 10), itemSpacing: 0, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 14, left: 10, bottom: 14, right: 10), itemSpacing: 0, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()
@@ -28,10 +28,6 @@ class MobileContentCardView: MobileContentStackView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    required init(contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
-        fatalError("init(contentInsets:itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     
     override var paddingInsets: UIEdgeInsets {
@@ -48,38 +44,5 @@ class MobileContentCardView: MobileContentStackView {
     
     private func setupBinding() {
         
-    }
-    
-    override func finishedRenderingChildren() {
-        super.finishedRenderingChildren()
-        
-        addButtonOverlay()
-    }
-    
-    private func addButtonOverlay() {
-        
-        if let buttonOverlay = self.buttonOverlay {
-            buttonOverlay.removeTarget(self, action: #selector(cardTapped), for: .touchUpInside)
-            buttonOverlay.removeFromSuperview()
-            self.buttonOverlay = nil
-        }
-        
-        let button = UIButton(type: .custom)
-        
-        addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.constrainEdgesToView(view: self)
-        
-        button.backgroundColor = .clear
-        button.setTitle(nil, for: .normal)
-        
-        button.addTarget(self, action: #selector(cardTapped), for: .touchUpInside)
-        
-        self.buttonOverlay = button
-    }
-    
-    @objc private func cardTapped() {
-        
-        super.sendEventsToAllViews(eventIds: viewModel.events, rendererState: viewModel.rendererState)
     }
 }
