@@ -30,12 +30,6 @@ class UserCountersRepository {
                     }
                     .eraseToAnyPublisher()
             }
-            .flatMap { realmUserCounters in
-                
-                let userCounterDataModels = realmUserCounters.map{ UserCounterDataModel(realmUserCounter: $0) }
-                
-                return Just(userCounterDataModels)
-            }
             .eraseToAnyPublisher()
     }
     
@@ -57,10 +51,6 @@ class UserCountersRepository {
                 
                 return self.syncUserCounter(userCounter, remoteSyncSuccess: remoteSyncSuccess, incrementValueBeforeSyncAttempt: incrementValueBeforeSyncAttempt)
             }
-            .flatMap { realmUserCounter in
-                
-                return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
-            }
             .eraseToAnyPublisher()
     }
     
@@ -71,7 +61,7 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    private func syncUserCounter(_ userCounter: UserCounterDecodable, remoteSyncSuccess: Bool, incrementValueBeforeSyncAttempt: Int) -> AnyPublisher<RealmUserCounter, URLResponseError>  {
+    private func syncUserCounter(_ userCounter: UserCounterDecodable, remoteSyncSuccess: Bool, incrementValueBeforeSyncAttempt: Int) -> AnyPublisher<UserCounterDataModel, URLResponseError>  {
         
         let incrementValueBeforeSuccessfulRemoteUpdate = remoteSyncSuccess ? incrementValueBeforeSyncAttempt : nil
         
