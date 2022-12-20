@@ -13,11 +13,11 @@ class MobileContentMultiSelectViewModel: MobileContentViewModel {
     
     private let multiSelectModel: Multiselect
     
-    init(multiSelectModel: Multiselect, renderedPageContext: MobileContentRenderedPageContext) {
+    init(multiSelectModel: Multiselect, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.multiSelectModel = multiSelectModel
         
-        super.init(baseModel: multiSelectModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: multiSelectModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var numberOfColumnsForOptions: Int {

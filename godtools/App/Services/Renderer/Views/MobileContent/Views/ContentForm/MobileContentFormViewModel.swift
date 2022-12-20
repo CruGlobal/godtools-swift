@@ -13,10 +13,10 @@ class MobileContentFormViewModel: MobileContentViewModel {
     
     private let formModel: Form
             
-    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.formModel = formModel
         
-        super.init(baseModel: formModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: formModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

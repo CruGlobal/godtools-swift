@@ -26,7 +26,7 @@ class LessonPageViewModel: MobileContentPageViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
 }
 

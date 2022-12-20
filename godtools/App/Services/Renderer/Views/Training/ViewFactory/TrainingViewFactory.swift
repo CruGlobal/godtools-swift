@@ -11,10 +11,12 @@ import GodToolsToolParser
 
 class TrainingViewFactory: MobileContentPageViewFactoryType {
     
+    private let mobileContentAnalytics: MobileContentAnalytics
     private let viewedTrainingTipsService: ViewedTrainingTipsService
             
-    required init(viewedTrainingTipsService: ViewedTrainingTipsService) {
-        
+    init(mobileContentAnalytics: MobileContentAnalytics, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    
+        self.mobileContentAnalytics = mobileContentAnalytics
         self.viewedTrainingTipsService = viewedTrainingTipsService
     }
     
@@ -37,7 +39,8 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = TrainingPageViewModel(
                 pageModel: pageModel,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = TrainingPageView(viewModel: viewModel)
@@ -57,6 +60,7 @@ class TrainingViewFactory: MobileContentPageViewFactoryType {
         let viewModel = TrainingTipViewModel(
             tipModel: tipModel,
             renderedPageContext: renderedPageContext,
+            mobileContentAnalytics: mobileContentAnalytics,
             viewType: trainingTipViewType,
             viewedTrainingTipsService: viewedTrainingTipsService
         )

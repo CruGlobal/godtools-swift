@@ -24,7 +24,7 @@ class ToolPageHeroViewModel: MobileContentViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(baseModel: heroModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: heroModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     deinit {

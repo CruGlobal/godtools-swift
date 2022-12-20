@@ -15,12 +15,12 @@ class MobileContentPageViewModel: MobileContentViewModel {
     private let pageModel: Page
     private let hidesBackgroundImage: Bool
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.hidesBackgroundImage = hidesBackgroundImage
         
-        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var analyticsScreenName: String {

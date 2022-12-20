@@ -75,7 +75,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
             self.icon = nil
         }
         
-        super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             

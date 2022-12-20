@@ -19,7 +19,7 @@ class MobileContentInputViewModel: MobileContentViewModel {
     let inputLabel: String?
     let placeholder: String?
     
-    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.inputModel = inputModel
         self.fontService = fontService
@@ -27,7 +27,7 @@ class MobileContentInputViewModel: MobileContentViewModel {
         inputLabel = inputModel.label?.text
         placeholder = inputModel.placeholder?.text
         
-        super.init(baseModel: inputModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: inputModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var isHidden: Bool {

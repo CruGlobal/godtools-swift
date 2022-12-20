@@ -19,7 +19,7 @@ class MobileContentTabViewModel: MobileContentViewModel {
         self.tabModel = tabModel
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        super.init(baseModel: tabModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: tabModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var labelText: String? {

@@ -20,6 +20,6 @@ class MobileContentCardViewModel: MobileContentViewModel {
         self.cardModel = cardModel
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }
