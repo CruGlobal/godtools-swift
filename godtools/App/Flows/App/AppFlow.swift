@@ -15,7 +15,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
-    private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
@@ -45,10 +44,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
             
-    init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingService) {
+    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.window = window
         self.navigationController = UINavigationController()
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
@@ -136,7 +134,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 loadingView.addSubview(loadingImage)
                 loadingImage.image = ImageCatalog.launchImage.uiImage
                 loadingView.backgroundColor = .white
-                window.addSubview(loadingView)
+                AppDelegate.getWindow()?.addSubview(loadingView)
                 
                 navigateToDashboard()
                                 
