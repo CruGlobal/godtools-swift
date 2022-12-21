@@ -48,7 +48,7 @@ class UserCountersRepository {
             
             let incrementValue = userCounter.incrementValue
             
-            api.incrementCounterPublisher(id: userCounter.id, increment: incrementValue)
+            api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue)
                 .flatMap { userCounterUpdatedFromRemote in
                     
                     return self.cache.syncUserCounter(userCounterUpdatedFromRemote, incrementValueBeforeRemoteUpdate: incrementValue)

@@ -40,7 +40,7 @@ class UserCountersAPI {
             .eraseToAnyPublisher()
     }
     
-    func incrementCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, URLResponseError> {
+    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, URLResponseError> {
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
