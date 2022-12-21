@@ -55,7 +55,42 @@ class RealmUserCountersCacheSync {
         
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeSuccessfulRemoteUpdate: Int? = nil) -> AnyPublisher<RealmUserCounter, Error> {
+    func incrementUserCounterBy1(id: String) -> AnyPublisher<RealmUserCounter, Error> {
+        
+        return Future() { promise in
+            
+            self.realmDatabase.background { realm in
+                
+                let newUserCounter: RealmUserCounter = RealmUserCounter()
+                
+                if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: id) {
+                    
+                    newUserCounter.latestCountFromAPI = existingCounter.latestCountFromAPI
+                    newUserCounter.incrementValue = existingCounter.incrementValue + 1
+                    
+                } else {
+                    
+                    newUserCounter.incrementValue = 1
+                }
+                
+                do {
+                    
+                    try realm.write {
+                        realm.add(newUserCounter, update: .all)
+                    }
+                    
+                    promise(.success(newUserCounter))
+                    
+                } catch let error {
+                    
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<RealmUserCounter, Error> {
         
         return Future() { promise in
             
@@ -66,15 +101,8 @@ class RealmUserCountersCacheSync {
                 
                 if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: userCounter.id) {
                     
-                    if let incrementValueBeforeSuccessfulRemoteUpdate = incrementValueBeforeSuccessfulRemoteUpdate {
-                        
-                        // During a remote sync, it's possible the existing counter was incremented since the remote request started, so subtract initial value rather than setting to 0
-                        newUserCounter.incrementValue = existingCounter.incrementValue - incrementValueBeforeSuccessfulRemoteUpdate
-                        
-                    } else {
-                        
-                        newUserCounter.incrementValue = existingCounter.incrementValue
-                    }
+                    // During a remote sync, it's possible the existing counter was incremented since the remote request started, so subtract initial value rather than setting to 0
+                    newUserCounter.incrementValue = existingCounter.incrementValue - incrementValueBeforeRemoteUpdate
                 }
                 
                 do {

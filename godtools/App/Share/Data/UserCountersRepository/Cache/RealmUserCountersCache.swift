@@ -35,9 +35,26 @@ class RealmUserCountersCache {
         return UserCounterDataModel(realmUserCounter: realmUserCounter)
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeSuccessfulRemoteUpdate: Int? = nil) -> AnyPublisher<UserCounterDataModel, Error> {
+    func getUserCountersWithIncrementGreaterThanZero() -> [UserCounterDataModel] {
         
-        return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeSuccessfulRemoteUpdate: incrementValueBeforeSuccessfulRemoteUpdate)
+        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+            .filter(NSPredicate(format: "%K > 0", #keyPath(RealmUserCounter.incrementValue)))
+            .map { UserCounterDataModel(realmUserCounter: $0) }
+    }
+    
+    func incrementUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
+        
+        return userCountersSync.incrementUserCounterBy1(id: id)
+            .flatMap { realmUserCounter in
+                
+                return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<UserCounterDataModel, Error> {
+        
+        return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeRemoteUpdate: incrementValueBeforeRemoteUpdate)
             .flatMap { realmUserCounter in
                 
                 return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
