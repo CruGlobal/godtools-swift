@@ -57,13 +57,10 @@ class UserCountersRepository {
                         }
                         .eraseToAnyPublisher()
                 }
-                .sink(receiveCompletion: { completion in
+                .sink(receiveCompletion: { _ in
+                                        
+                }, receiveValue: { _ in
                     
-                    assertionFailure("error updating counter")
-                    
-                }, receiveValue: { userCounterDataModel in
-                    
-                    print("Successfully updated userCounter: \(userCounterDataModel)")
                 })
                 .store(in: &cancellables)
         }

@@ -62,6 +62,7 @@ class RealmUserCountersCacheSync {
             self.realmDatabase.background { realm in
                 
                 let newUserCounter: RealmUserCounter = RealmUserCounter()
+                newUserCounter.id = id
                 
                 if let existingCounter = realm.object(ofType: RealmUserCounter.self, forPrimaryKey: id) {
                     
