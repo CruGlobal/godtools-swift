@@ -24,14 +24,18 @@ class UserCountersAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher() -> AnyPublisher<GetUserCountersResponse, URLResponseError> {
+    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], URLResponseError> {
         
         let fetchRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
-            .decode(type: GetUserCountersResponse.self, decoder: JSONDecoder())
+            .decode(type: GetUserCountersResponseDecodable.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .flatMap { getUserCountersResponse in
+                
+                return Just(getUserCountersResponse.userCounters)
             }
             .eraseToAnyPublisher()
     }
@@ -41,7 +45,7 @@ class UserCountersAPI {
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
-            .decode(type: IncrementUserCounterResponse.self, decoder: JSONDecoder())
+            .decode(type: IncrementUserCounterResponseDecodable.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
             }

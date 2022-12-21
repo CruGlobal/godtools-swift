@@ -1,5 +1,5 @@
 //
-//  IncrementUserCounterResponse.swift
+//  GetUserCountersResponseDecodable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/29/22.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct IncrementUserCounterResponse: Decodable {
+struct GetUserCountersResponseDecodable: Decodable {
     
-    let userCounter: UserCounterDecodable
+    let userCounters: [UserCounterDecodable]
     
     enum RootKeys: String, CodingKey {
         case data
@@ -20,6 +20,6 @@ struct IncrementUserCounterResponse: Decodable {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
         
-        userCounter = try container.decode(UserCounterDecodable.self, forKey: .data)
+        userCounters = try container.decode([UserCounterDecodable].self, forKey: .data)
     }
 }

@@ -950,8 +950,8 @@
 		D409F2CA293679D200D9D2FE /* UserCountersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C9293679D200D9D2FE /* UserCountersAPI.swift */; };
 		D409F2CD29367CFB00D9D2FE /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */; };
 		D409F2CF2936866F00D9D2FE /* UserCounterDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */; };
-		D409F2D22936891C00D9D2FE /* IncrementUserCounterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */; };
-		D409F2D429368FEB00D9D2FE /* GetUserCountersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */; };
+		D409F2D22936891C00D9D2FE /* IncrementUserCounterResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D12936891C00D9D2FE /* IncrementUserCounterResponseDecodable.swift */; };
+		D409F2D429368FEB00D9D2FE /* GetUserCountersResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D329368FEB00D9D2FE /* GetUserCountersResponseDecodable.swift */; };
 		D409F2D72936915000D9D2FE /* RealmUserCountersCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D62936915000D9D2FE /* RealmUserCountersCache.swift */; };
 		D409F2DA2936916900D9D2FE /* RealmUserCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2D92936916900D9D2FE /* RealmUserCounter.swift */; };
 		D409F2DC2936944F00D9D2FE /* RealmUserCountersSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2DB2936944F00D9D2FE /* RealmUserCountersSync.swift */; };
@@ -2080,8 +2080,8 @@
 		D409F2C9293679D200D9D2FE /* UserCountersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCountersAPI.swift; sourceTree = "<group>"; };
 		D409F2CC29367CFB00D9D2FE /* UserCountersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
 		D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDecodable.swift; sourceTree = "<group>"; };
-		D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterResponse.swift; sourceTree = "<group>"; };
-		D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserCountersResponse.swift; sourceTree = "<group>"; };
+		D409F2D12936891C00D9D2FE /* IncrementUserCounterResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterResponseDecodable.swift; sourceTree = "<group>"; };
+		D409F2D329368FEB00D9D2FE /* GetUserCountersResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserCountersResponseDecodable.swift; sourceTree = "<group>"; };
 		D409F2D62936915000D9D2FE /* RealmUserCountersCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserCountersCache.swift; sourceTree = "<group>"; };
 		D409F2D92936916900D9D2FE /* RealmUserCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserCounter.swift; sourceTree = "<group>"; };
 		D409F2DB2936944F00D9D2FE /* RealmUserCountersSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserCountersSync.swift; sourceTree = "<group>"; };
@@ -6672,8 +6672,8 @@
 		D409F2D02936867600D9D2FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D409F2D329368FEB00D9D2FE /* GetUserCountersResponse.swift */,
-				D409F2D12936891C00D9D2FE /* IncrementUserCounterResponse.swift */,
+				D409F2D329368FEB00D9D2FE /* GetUserCountersResponseDecodable.swift */,
+				D409F2D12936891C00D9D2FE /* IncrementUserCounterResponseDecodable.swift */,
 				D409F2CE2936866F00D9D2FE /* UserCounterDecodable.swift */,
 			);
 			path = Models;
@@ -7922,7 +7922,7 @@
 				452F4784287CE28000871A3B /* SetupParallelLanguageView.swift in Sources */,
 				45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */,
 				451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */,
-				D409F2D22936891C00D9D2FE /* IncrementUserCounterResponse.swift in Sources */,
+				D409F2D22936891C00D9D2FE /* IncrementUserCounterResponseDecodable.swift in Sources */,
 				45860A512923E73A0089C836 /* AccountUserDetailsView.swift in Sources */,
 				45D63EA3288F77D4009B4610 /* ResourceModelMetatoolData.swift in Sources */,
 				45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */,
@@ -8128,7 +8128,7 @@
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
 				45F7162F290A12D70019B715 /* MailView.swift in Sources */,
 				D44F3AB328368A330008390D /* OptionalRoundedBorder.swift in Sources */,
-				D409F2D429368FEB00D9D2FE /* GetUserCountersResponse.swift in Sources */,
+				D409F2D429368FEB00D9D2FE /* GetUserCountersResponseDecodable.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,

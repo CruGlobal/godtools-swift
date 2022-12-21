@@ -24,9 +24,9 @@ class UserCountersRepository {
     func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
         
         return api.fetchUserCountersPublisher()
-            .flatMap { userCountersResponse in
+            .flatMap { userCounters in
                 
-                return self.cache.syncUserCounters(userCountersResponse.userCounters)
+                return self.cache.syncUserCounters(userCounters)
                     .mapError { error in
                         return URLResponseError.otherError(error: error)
                     }
