@@ -52,7 +52,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             localizationServices: appDiContainer.localizationServices,
             getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             fontService: appDiContainer.getFontService(),
-            viewsService: appDiContainer.viewsService,
+            resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),

@@ -54,21 +54,6 @@ class AppDiContainer {
         firebaseInAppMessaging = FirebaseInAppMessaging()
     }
     
-    func getArticleAemRepository() -> ArticleAemRepository {
-        return ArticleAemRepository(
-            downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),
-            cache: ArticleAemCache(realmDatabase: realmDatabase, webArchiverSession: sharedIgnoringCacheSession)
-        )
-    }
-    
-    func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
-        return ArticleManifestAemRepository(
-            downloader: ArticleAemDownloader(sharedSession: sharedIgnoringCacheSession),
-            cache: ArticleAemCache(realmDatabase: realmDatabase, webArchiverSession: sharedIgnoringCacheSession),
-            realmDatabase: realmDatabase
-        )
-    }
-    
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }

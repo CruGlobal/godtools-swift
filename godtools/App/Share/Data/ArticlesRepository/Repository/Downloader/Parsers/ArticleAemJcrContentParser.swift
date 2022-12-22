@@ -10,7 +10,7 @@ import Foundation
 
 class ArticleAemJcrContentParser {
     
-    required init() {
+    init() {
         
     }
     

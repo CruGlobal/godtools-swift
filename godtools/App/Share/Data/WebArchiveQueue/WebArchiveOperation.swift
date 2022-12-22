@@ -35,10 +35,12 @@ class WebArchiveOperation: Operation {
     private var getHtmlDocumentTask: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, webArchiveUrl: WebArchiveUrl) {
+    init(session: URLSession, webArchiveUrl: WebArchiveUrl) {
+        
         self.session = session
         self.webArchiveUrl = webArchiveUrl
         self.urlRequest = URLRequest(url: webArchiveUrl.webUrl)
+        
         super.init()
     }
     

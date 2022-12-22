@@ -33,10 +33,12 @@ class ArticleAemDownloadOperation: Operation {
     private var task: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, aemUri: String, maxAemJsonTreeLevels: Int) {
+    init(session: URLSession, aemUri: String, maxAemJsonTreeLevels: Int) {
+        
         self.session = session
         self.aemUri = aemUri
         self.maxAemJsonTreeLevels = maxAemJsonTreeLevels
+       
         super.init()
     }
     

@@ -17,7 +17,7 @@ class ArticleManifestDownloadArticlesReceipt {
     let isRunning: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<ArticleAemRepositoryResult?> = ObservableValue(value: nil)
     
-    required init() {
+    init() {
         
     }
     

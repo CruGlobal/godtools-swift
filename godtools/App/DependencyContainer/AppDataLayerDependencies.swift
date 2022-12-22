@@ -45,6 +45,33 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
+    func getArticleAemRepository() -> ArticleAemRepository {
+        return ArticleAemRepository(
+            downloader: ArticleAemDownloader(
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: ArticleAemCache(
+                realmDatabase: sharedRealmDatabase,
+                webArchiveQueue: getWebArchiveQueue()
+            )
+        )
+    }
+    
+    func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
+        return ArticleManifestAemRepository(
+            downloader: ArticleAemDownloader(
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: ArticleAemCache(
+                realmDatabase: sharedRealmDatabase,
+                webArchiveQueue: getWebArchiveQueue()
+            ),
+            categoryArticlesCache: RealmCategoryArticlesCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
+    }
+    
     func getAttachmentsRepository() -> AttachmentsRepository {
         return AttachmentsRepository(
             api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
@@ -247,5 +274,9 @@ class AppDataLayerDependencies {
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
         )
+    }
+    
+    func getWebArchiveQueue() -> WebArchiveQueue {
+        return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
 }

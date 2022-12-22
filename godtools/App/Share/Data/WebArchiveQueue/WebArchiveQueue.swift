@@ -12,9 +12,9 @@ class WebArchiveQueue {
     
     private let session: URLSession
         
-    required init(sharedSession: SharedIgnoreCacheSession) {
+    init(ignoreCacheSession: IgnoreCacheSession) {
         
-        self.session = sharedSession.session
+        self.session = ignoreCacheSession.session
     }
     
     deinit {

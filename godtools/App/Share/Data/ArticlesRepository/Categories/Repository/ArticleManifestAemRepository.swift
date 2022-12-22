@@ -16,9 +16,9 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
     let downloader: ArticleAemDownloader
     let cache: ArticleAemCache
     
-    required init(downloader: ArticleAemDownloader, cache: ArticleAemCache, realmDatabase: RealmDatabase) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache) {
         
-        self.categoryArticlesCache = RealmCategoryArticlesCache(realmDatabase: realmDatabase)
+        self.categoryArticlesCache = categoryArticlesCache
         self.downloader = downloader
         self.cache = cache
         

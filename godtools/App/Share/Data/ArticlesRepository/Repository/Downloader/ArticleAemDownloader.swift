@@ -15,9 +15,9 @@ class ArticleAemDownloader {
     private let session: URLSession
     private let maxAemJsonTreeLevels: Int = 10
         
-    required init(sharedSession: SharedIgnoreCacheSession) {
+    init(ignoreCacheSession: IgnoreCacheSession) {
         
-        self.session = sharedSession.session
+        self.session = ignoreCacheSession.session
     }
     
     func download(aemUris: [String], completion: @escaping ((_ result: ArticleAemDownloaderResult) -> Void)) -> OperationQueue {

@@ -13,7 +13,7 @@ class ArticleAemRepository: NSObject, ArticleAemRepositoryType {
     let downloader: ArticleAemDownloader
     let cache: ArticleAemCache
     
-    required init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache) {
         
         self.downloader = downloader
         self.cache = cache

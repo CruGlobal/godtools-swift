@@ -13,12 +13,12 @@ class ArticleAemCache {
     
     private let fileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let realmDatabase: RealmDatabase
-    private let webArchiver: WebArchiveQueue
+    private let webArchiveQueue: WebArchiveQueue
     
-    required init(realmDatabase: RealmDatabase, webArchiverSession: SharedIgnoreCacheSession) {
+    init(realmDatabase: RealmDatabase, webArchiveQueue: WebArchiveQueue) {
         
         self.realmDatabase = realmDatabase
-        self.webArchiver = WebArchiveQueue(sharedSession: webArchiverSession)
+        self.webArchiveQueue = webArchiveQueue
     }
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
@@ -101,7 +101,7 @@ class ArticleAemCache {
             }
         }
         
-        return webArchiver.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
+        return webArchiveQueue.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
             
             guard result.successfulArchives.count > 0 else {
                 completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
