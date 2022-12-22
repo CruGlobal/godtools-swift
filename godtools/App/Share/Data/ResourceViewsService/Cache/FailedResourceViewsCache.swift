@@ -13,14 +13,16 @@ class FailedResourceViewsCache {
     
     private let realmDatabase: RealmDatabase
     
-    required init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }
     
     func getFailedResourceViews() -> [ResourceViewModel] {
-        let realm: Realm = realmDatabase.mainThreadRealm
+        
+        let realm: Realm = realmDatabase.openRealm()
         let realmResourceViews: [RealmResourceView] = Array(realm.objects(RealmResourceView.self))
+        
         return realmResourceViews.map({ResourceViewModel(model: $0)})
     }
     

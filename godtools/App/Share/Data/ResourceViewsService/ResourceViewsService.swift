@@ -1,5 +1,5 @@
 //
-//  ViewsService.swift
+//  ResourceViewsService.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/9/20.
@@ -9,15 +9,15 @@
 import Foundation
 import RequestOperation
 
-class ViewsService {
+class ResourceViewsService {
     
-    private let viewsApi: ViewsApi
+    private let resourceViewsApi: MobileContentResourceViewsApi
     private let failedResourceViewsCache: FailedResourceViewsCache
     
-    required init(config: AppConfig, realmDatabase: RealmDatabase, sharedSession: SharedIgnoreCacheSession) {
-        
-        viewsApi = ViewsApi(config: config, sharedSession: sharedSession)
-        failedResourceViewsCache = FailedResourceViewsCache(realmDatabase: realmDatabase)
+    init(resourceViewsApi: MobileContentResourceViewsApi, failedResourceViewsCache: FailedResourceViewsCache) {
+            
+        self.resourceViewsApi = resourceViewsApi
+        self.failedResourceViewsCache = failedResourceViewsCache
     }
     
     deinit {
@@ -28,7 +28,7 @@ class ViewsService {
         
         let resourceView = ResourceViewModel(resourceId: resourceId)
         
-        return viewsApi.postResourceView(resourceView: resourceView) { [weak self] (response: RequestResponse) in
+        return resourceViewsApi.postResourceView(resourceView: resourceView) { [weak self] (response: RequestResponse) in
             
             let httpStatusCode: Int = response.httpStatusCode ?? -1
             let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
@@ -54,7 +54,7 @@ class ViewsService {
                 
         for resourceView in failedResourceViews {
             
-            let operation: RequestOperation = viewsApi.newResourceViewOperation(resourceView: resourceView)
+            let operation: RequestOperation = resourceViewsApi.newResourceViewOperation(resourceView: resourceView)
             
             operations.append(operation)
             

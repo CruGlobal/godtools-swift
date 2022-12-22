@@ -14,7 +14,6 @@ class AppDiContainer {
     private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase
     private let resourcesFileCache: ResourcesSHA256FileCache
-    private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
@@ -22,7 +21,6 @@ class AppDiContainer {
     let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
     let localizationServices: LocalizationServices = LocalizationServices()
-    let viewsService: ViewsService
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
@@ -54,8 +52,6 @@ class AppDiContainer {
         )
                         
         firebaseInAppMessaging = FirebaseInAppMessaging()
-                                                                                             
-        viewsService = ViewsService(config: appConfig, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {

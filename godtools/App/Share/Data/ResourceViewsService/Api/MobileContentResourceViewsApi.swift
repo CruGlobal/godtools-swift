@@ -1,5 +1,5 @@
 //
-//  ViewsApi.swift
+//  MobileContentResourceViewsApi.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/8/20.
@@ -9,15 +9,15 @@
 import Foundation
 import RequestOperation
 
-class ViewsApi {
+class MobileContentResourceViewsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let session: URLSession
     private let baseUrl: String
     
-    required init(config: AppConfig, sharedSession: SharedIgnoreCacheSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
-        session = sharedSession.session
+        session = ignoreCacheSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
     

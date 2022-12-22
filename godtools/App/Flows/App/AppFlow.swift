@@ -17,7 +17,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
-    private let viewsService: ViewsService
+    private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
     
     private var onboardingFlow: OnboardingFlow?
@@ -50,7 +50,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         self.navigationController = UINavigationController()
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
-        self.viewsService = appDiContainer.viewsService
+        self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
         
         super.init()
@@ -81,7 +81,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         _ = followUpsService.postFailedFollowUpsIfNeeded()
         
-        _ = viewsService.postFailedResourceViewsIfNeeded()
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
         let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
 

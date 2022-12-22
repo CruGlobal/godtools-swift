@@ -202,6 +202,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getResourceViewsService() -> ResourceViewsService {
+        
+        return ResourceViewsService(
+            resourceViewsApi: MobileContentResourceViewsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }
