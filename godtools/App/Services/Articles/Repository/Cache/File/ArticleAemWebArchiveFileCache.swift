@@ -31,32 +31,4 @@ class ArticleAemWebArchiveFileCache: FileCache {
             break
         }
     }
-    
-    func logArticles() {
-        
-        let rootDirectoryResult = getRootDirectory()
-        
-        switch rootDirectoryResult {
-        
-        case .success(let rootDirectoryUrl):
-            
-            let articlesDirectory: URL = rootDirectoryUrl.appendingPathComponent("webarchives")
-            
-            do {
-                
-                let contents: [String] = try fileManager.contentsOfDirectory(atPath: articlesDirectory.path)
-                
-                print("\n Articles File Cache - Root Directory Contents")
-                for content in contents {
-                    print("  content: \(content)")
-                }
-            }
-            catch let error {
-                print("\n Failed to fetch contents of root directory with url: \(rootDirectoryUrl)")
-            }
-            
-        case .failure( _):
-            break
-        }
-    }
 }
