@@ -117,9 +117,9 @@ class WebArchiveOperation: Operation {
                     let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
                     let mimeType: String = response.urlResponse?.mimeType ?? ""
                                         
-                    if let error = response.requestError {
+                    if let _ = response.requestError {
                         
-                        // Do something with Error?
+                        // TODO: Do something with Error? ~Levi
                     }
                     else if httpStatusCodeSuccess, let data = response.data, !mimeType.isEmpty {
                         
@@ -133,13 +133,14 @@ class WebArchiveOperation: Operation {
                     }
                     else {
                         
-                        let noData = NSError(
+                        // TODO: Do something with Error? ~Levi
+                        
+                        /*
+                        let noDataError: Error = NSError(
                             domain: self?.errorDomain ?? "",
                             code: -1,
                             userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource."
-                        ])
-                        
-                        // Do something with Error?
+                        ])*/
                     }
                     
                     if let queue = self?.getHtmlResourcesQueue, queue.operations.isEmpty {

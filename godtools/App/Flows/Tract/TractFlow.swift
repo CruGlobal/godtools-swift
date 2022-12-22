@@ -154,7 +154,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             
             toolSettingsFlow = nil
                         
-        case .tractFlowCompleted(let state):
+        case .tractFlowCompleted( _):
             
             guard tractFlow != nil else {
                 return
@@ -165,7 +165,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             
             tractFlow = nil
             
-        case .lessonFlowCompleted(let state):
+        case .lessonFlowCompleted( _):
             
             guard lessonFlow != nil else {
                 return

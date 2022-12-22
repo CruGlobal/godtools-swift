@@ -70,13 +70,13 @@ class LessonFlow: ToolNavigationFlow, Flow {
         
         switch step {
         
-        case .deepLink(let deepLink):
+        case .deepLink( _):
             break
         
         case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
             closeTool(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)
                                                 
-        case .articleFlowCompleted(let state):
+        case .articleFlowCompleted( _):
             
             guard articleFlow != nil else {
                 return
