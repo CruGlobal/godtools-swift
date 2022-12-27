@@ -23,12 +23,7 @@ class ArticleAemCache {
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
-        return getAemCacheObject(realm: realmDatabase.mainThreadRealm, aemUri: aemUri)
-    }
-    
-    private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
-        
-        let realm: Realm = realmDatabase.mainThreadRealm
+        let realm: Realm = realmDatabase.openRealm()
         
         guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
             return nil
