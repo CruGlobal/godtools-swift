@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialItem.swift
+//  OnboardingTutorialItemDataModel.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 10/11/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OnboardingTutorialItem: TutorialItemType {
+struct OnboardingTutorialItemDataModel: TutorialItemType {
     
     let title: String
     let message: String

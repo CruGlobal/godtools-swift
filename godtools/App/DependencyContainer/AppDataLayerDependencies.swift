@@ -199,6 +199,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialItemsRepository() -> OnboardingTutorialItemsRepository {
+        return OnboardingTutorialItemsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
         return OnboardingTutorialViewedRepository(
             cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)

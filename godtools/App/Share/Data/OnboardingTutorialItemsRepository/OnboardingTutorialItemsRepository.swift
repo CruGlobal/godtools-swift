@@ -10,12 +10,17 @@ import Foundation
 
 class OnboardingTutorialItemsRepository {
     
-    let tutorialItems: [OnboardingTutorialItem]
-    
-    required init(localizationServices: LocalizationServices) {
+    private let localizationServices: LocalizationServices
         
-        tutorialItems = [
-            OnboardingTutorialItem(
+    init(localizationServices: LocalizationServices) {
+        
+        self.localizationServices = localizationServices
+    }
+    
+    func getTutorialItems() -> [OnboardingTutorialItemDataModel] {
+        
+        return [
+            OnboardingTutorialItemDataModel(
                 title: "",
                 message: "",
                 imageName: nil,
@@ -23,7 +28,7 @@ class OnboardingTutorialItemsRepository {
                 youTubeVideoId: nil,
                 customViewId: "onboarding-0"
             ),
-            OnboardingTutorialItem(
+            OnboardingTutorialItemDataModel(
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.message"),
                 imageName: nil,
@@ -31,7 +36,7 @@ class OnboardingTutorialItemsRepository {
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
-            OnboardingTutorialItem(
+            OnboardingTutorialItemDataModel(
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.message"),
                 imageName: nil,
@@ -39,7 +44,7 @@ class OnboardingTutorialItemsRepository {
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
-            OnboardingTutorialItem(
+            OnboardingTutorialItemDataModel(
                 title: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.title"),
                 message: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.message"),
                 imageName: nil,

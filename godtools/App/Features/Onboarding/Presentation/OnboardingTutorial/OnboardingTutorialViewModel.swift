@@ -22,7 +22,9 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
         
         let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "Onboarding Start", continueButtonTappedData: [AnalyticsConstants.Keys.onboardingStart: 1], screenTrackIndexOffset: 2)
         
-        super.init(flowDelegate: flowDelegate, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, analyticsContainer: analyticsContainer, tutorialVideoAnalytics: tutorialVideoAnalytics,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
+        let tutorialItems: [OnboardingTutorialItemDataModel] = onboardingTutorialItemsRepository.getTutorialItems()
+        
+        super.init(flowDelegate: flowDelegate, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, analyticsContainer: analyticsContainer, tutorialVideoAnalytics: tutorialVideoAnalytics,  tutorialItems: tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
         onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
     }
