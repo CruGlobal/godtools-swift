@@ -19,11 +19,7 @@ class SetupParallelLanguageViewedRepository {
     
     func getSetupParallelLanguageViewed() -> Bool {
         
-        guard let viewed = cache.getSetupParallelLanguageViewed() else {
-            return false
-        }
-        
-        return viewed
+        return cache.getSetupParallelLanguageViewed()
     }
     
     func storeSetupParallelLanguageViewed(viewed: Bool) {

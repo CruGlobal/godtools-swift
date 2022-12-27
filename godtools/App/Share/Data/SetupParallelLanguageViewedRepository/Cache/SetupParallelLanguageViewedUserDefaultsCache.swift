@@ -18,9 +18,13 @@ class SetupParallelLanguageViewedUserDefaultsCache {
         self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
     
-    func getSetupParallelLanguageViewed() -> Bool? {
+    func getSetupParallelLanguageViewed() -> Bool {
        
-        return sharedUserDefaultsCache.getValue(key: setupParallelLanguageViewedCacheKey) as? Bool
+        guard let viewed = sharedUserDefaultsCache.getValue(key: setupParallelLanguageViewedCacheKey) as? Bool else {
+            return false
+        }
+        
+        return viewed
     }
     
     func storeSetupParallelLanguageViewed(viewed: Bool) {
