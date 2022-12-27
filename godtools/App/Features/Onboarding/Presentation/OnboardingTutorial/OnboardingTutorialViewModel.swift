@@ -11,18 +11,20 @@ import Foundation
 class OnboardingTutorialViewModel: TutorialPagerViewModel {
     
     private let viewBuilder: CustomViewBuilderType
+    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     private let localizationServices: LocalizationServices
         
-    required init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
         self.viewBuilder = customViewBuilder
+        self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
         self.localizationServices = localizationServices
         
         let tutorialPagerAnalyticsModel = TutorialPagerAnalytics(screenName: "onboarding", siteSection: "onboarding", siteSubsection: "", continueButtonTappedActionName: "Onboarding Start", continueButtonTappedData: [AnalyticsConstants.Keys.onboardingStart: 1], screenTrackIndexOffset: 2)
         
         super.init(flowDelegate: flowDelegate, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, analyticsContainer: analyticsContainer, tutorialVideoAnalytics: tutorialVideoAnalytics,  tutorialItems: onboardingTutorialItemsRepository.tutorialItems, tutorialPagerAnalyticsModel: tutorialPagerAnalyticsModel, skipButtonTitle: localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip"))
         
-        onboardingTutorialAvailability.markOnboardingTutorialViewed()
+        onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
     }
     
     override var customViewBuilder: CustomViewBuilderType? {

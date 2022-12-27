@@ -105,7 +105,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 appLaunchedFromDeepLink = nil
                 navigate(step: .deepLink(deepLinkType: deepLink))
             }
-            else if appDiContainer.getOnboardingTutorialAvailability().onboardingTutorialIsAvailable {
+            else if appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: false))
             }

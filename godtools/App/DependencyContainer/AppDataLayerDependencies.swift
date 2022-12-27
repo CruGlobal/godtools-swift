@@ -199,6 +199,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
+        return OnboardingTutorialViewedRepository(
+            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }

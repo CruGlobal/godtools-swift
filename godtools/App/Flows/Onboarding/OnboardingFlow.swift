@@ -47,7 +47,7 @@ class OnboardingFlow: Flow {
             analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
             onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
-            onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
+            onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
             customViewBuilder: appDiContainer.getOnboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
         )

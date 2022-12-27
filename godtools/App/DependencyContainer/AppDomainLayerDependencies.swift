@@ -130,6 +130,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
+        return GetOnboardingTutorialAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
+        )
+    }
+    
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
         return RemoveToolFromFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
