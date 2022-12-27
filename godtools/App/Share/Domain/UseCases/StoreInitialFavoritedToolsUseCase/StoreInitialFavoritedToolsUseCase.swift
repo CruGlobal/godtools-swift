@@ -23,7 +23,7 @@ class StoreInitialFavoritedToolsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.launchCountRepository = launchCountRepository
         
-        Publishers.Zip(resourcesRepository.getResourcesChanged(), launchCountRepository.getLaunchCount())
+        Publishers.Zip(resourcesRepository.getResourcesChanged(), launchCountRepository.getLaunchCountPublisher())
             .sink { (resourcesChanged: Void, launchCount: Int) in
                 
                 guard favoritedResourcesRepository.numberOfFavoritedResources == 0 && launchCount == 1 else {
