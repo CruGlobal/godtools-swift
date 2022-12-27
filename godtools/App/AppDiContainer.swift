@@ -19,7 +19,6 @@ class AppDiContainer {
 
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
-    let isNewUserService: IsNewUserService
     let localizationServices: LocalizationServices = LocalizationServices()
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
@@ -45,12 +44,7 @@ class AppDiContainer {
             getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
         )
-                        
-        isNewUserService = IsNewUserService(
-            isNewUserCache: IsNewUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache),
-            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageSettingsService: languageSettingsService)
-        )
-                        
+                                      
         firebaseInAppMessaging = FirebaseInAppMessaging()
     }
     
@@ -75,7 +69,7 @@ class AppDiContainer {
     }
     
     func getFontService() -> FontService {
-        return FontService(languageSettings: languageSettingsService)
+        return FontService(getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase())
     }
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
@@ -134,13 +128,6 @@ class AppDiContainer {
         )
     }
     
-    func getOnboardingTutorialAvailability() -> OnboardingTutorialAvailabilityType {
-        return OnboardingTutorialAvailability(
-            onboardingTutorialViewedCache: getOnboardingTutorialViewedCache(),
-            isNewUserCache: isNewUserService.isNewUserCache
-        )
-    }
-    
     func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
         return OnboardingTutorialCustomViewBuilder(
             flowDelegate: flowDelegate,
@@ -150,10 +137,6 @@ class AppDiContainer {
             tutorialVideoAnalytics: getTutorialVideoAnalytics(),
             analyticsScreenName: "onboarding"
         )
-    }
-    
-    func getOnboardingTutorialViewedCache() -> OnboardingTutorialViewedCacheType {
-        return OnboardingTutorialViewedUserDefaultsCache()
     }
     
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
@@ -171,17 +154,6 @@ class AppDiContainer {
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
-    }
-    
-    func getSetupParallelLanguageAvailability() -> SetupParallelLanguageAvailabilityType {
-        return SetupParallelLanguageAvailability(
-            setupParallelLanguageViewedCache: getSetupParallelLanguageViewedCache(),
-            isNewUserCache: isNewUserService.isNewUserCache
-        )
-    }
-    
-    func getSetupParallelLanguageViewedCache() -> SetupParallelLanguageViewedCacheType {
-        return SetupParallelLanguageViewedUserDefaultsCache()
     }
     
     func getShareableImageUseCase() -> GetShareableImageUseCase {
