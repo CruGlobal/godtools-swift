@@ -14,7 +14,7 @@ class OnboardingTutorialViewModel: TutorialPagerViewModel {
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     private let localizationServices: LocalizationServices
         
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepositoryType, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analyticsContainer: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics, onboardingTutorialItemsRepository: OnboardingTutorialItemsRepository, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, customViewBuilder: CustomViewBuilderType, localizationServices: LocalizationServices) {
         
         self.viewBuilder = customViewBuilder
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
