@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageListViewModel.swift
+//  ChooseParallelLanguageListViewModel.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/6/21.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
+class ChooseParallelLanguageListViewModel {
     
     private let getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -25,7 +25,7 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
     let selectButtonText: String
     let numberOfLanguages: ObservableValue<Int>
     
-    required init(flowDelegate: FlowDelegate, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getSettingsLanguagesUseCase: GetSettingsLanguagesUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, userDidSetSettingsParallelLanguageUseCase: UserDidSetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.getSettingsLanguagesUseCase = getSettingsLanguagesUseCase
@@ -52,6 +52,11 @@ class ParallelLanguageListViewModel: ParallelLanguageListViewModelType {
         
         numberOfLanguages.accept(value: languagesList.count)
     }
+}
+
+// MARK: - Inputs
+
+extension ChooseParallelLanguageListViewModel {
     
     func languageWillAppear(index: Int) -> ChooseLanguageCellViewModel {
         

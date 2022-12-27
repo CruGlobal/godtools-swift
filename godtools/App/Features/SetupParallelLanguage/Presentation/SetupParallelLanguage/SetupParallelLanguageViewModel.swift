@@ -9,11 +9,12 @@
 import Foundation
 import Combine
 
-class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
+class SetupParallelLanguageViewModel {
     
     private weak var flowDelegate: FlowDelegate?
     
     private let localizationServices: LocalizationServices
+    private let setupParallelLanguageViewedRepository: SetupParallelLanguageViewedRepository
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
@@ -28,10 +29,11 @@ class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
     let yesNoButtonsHidden: ObservableValue<Bool>
     let getStartedButtonHidden: ObservableValue<Bool>
     
-    required init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, setupParallelLanguageAvailability: SetupParallelLanguageAvailabilityType) {
+    init (flowDelegate: FlowDelegate, localizationServices: LocalizationServices, setupParallelLanguageViewedRepository: SetupParallelLanguageViewedRepository, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
+        self.setupParallelLanguageViewedRepository = setupParallelLanguageViewedRepository
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         
         animatedViewModel = AnimatedViewModel(
@@ -48,8 +50,8 @@ class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
         selectLanguageButtonText = ObservableValue(value: "")
         yesNoButtonsHidden = ObservableValue(value: false)
         getStartedButtonHidden = ObservableValue(value: true)
-                
-        setupParallelLanguageAvailability.markSetupParallelLanguageViewed()
+              
+        setupParallelLanguageViewedRepository.storeSetupParallelLanguageViewed(viewed: true)
         
         getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
             .receiveOnMain()
@@ -82,6 +84,11 @@ class SetupParallelLanguageViewModel: SetupParallelLanguageViewModelType {
     deinit {
         print("x deinit: \(type(of: self))")
     }
+}
+
+// MARK: - Inputs
+
+extension SetupParallelLanguageViewModel {
     
     func languageSelectorTapped() {
         

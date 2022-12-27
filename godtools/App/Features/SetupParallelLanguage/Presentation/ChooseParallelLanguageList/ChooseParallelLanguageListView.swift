@@ -1,5 +1,5 @@
 //
-//  ParallelLanguageListView.swift
+//  ChooseParallelLanguageListView.swift
 //  godtools
 //
 //  Created by Robert Eldredge on 12/10/21.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ParallelLanguageListView: UIViewController {
+class ChooseParallelLanguageListView: UIViewController {
     
-    private let viewModel: ParallelLanguageListViewModelType
+    private let viewModel: ChooseParallelLanguageListViewModel
     
     @IBOutlet weak private var languagesTableView: UITableView!
     
-    required init(viewModel: ParallelLanguageListViewModelType) {
+    required init(viewModel: ChooseParallelLanguageListViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(nibName: String(describing: ParallelLanguageListView.self), bundle: nil)
+        super.init(nibName: String(describing: ChooseParallelLanguageListView.self), bundle: nil)
         
         modalPresentationStyle = .overCurrentContext
         transitioningDelegate = self
@@ -70,7 +70,7 @@ class ParallelLanguageListView: UIViewController {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ParallelLanguageListView: UITableViewDelegate, UITableViewDataSource {
+extension ChooseParallelLanguageListView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -105,7 +105,7 @@ extension ParallelLanguageListView: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ParallelLanguageListView: UIViewControllerTransitioningDelegate {
+extension ChooseParallelLanguageListView: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
@@ -120,7 +120,7 @@ extension ParallelLanguageListView: UIViewControllerTransitioningDelegate {
 
 // MARK: - TransparentModalCustomView
 
-extension ParallelLanguageListView: TransparentModalCustomView {
+extension ChooseParallelLanguageListView: TransparentModalCustomView {
     
     var modal: UIView {
         

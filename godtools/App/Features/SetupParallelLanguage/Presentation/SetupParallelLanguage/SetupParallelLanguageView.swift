@@ -10,7 +10,7 @@ import UIKit
 
 class SetupParallelLanguageView: UIViewController {
     
-    private let viewModel: SetupParallelLanguageViewModelType
+    private let viewModel: SetupParallelLanguageViewModel
     private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     private let buttonCornerRadius: CGFloat = 6
         
@@ -22,7 +22,7 @@ class SetupParallelLanguageView: UIViewController {
     @IBOutlet weak private var noButton: UIButton!
     @IBOutlet weak private var getStartedButton: UIButton!
 
-    required init(viewModel: SetupParallelLanguageViewModelType) {
+    required init(viewModel: SetupParallelLanguageViewModel) {
         
         self.viewModel = viewModel
         

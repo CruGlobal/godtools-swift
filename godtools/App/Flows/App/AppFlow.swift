@@ -227,7 +227,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .articleFlowCompleted(let state):
+        case .articleFlowCompleted( _):
             
             guard articleFlow != nil else {
                 return
@@ -894,8 +894,12 @@ extension AppFlow {
 extension AppFlow {
     
     private func presentSetupParallelLanguage() {
-                            
-        guard appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable else {
+                    
+        let setupParallelLanguageAvailabilityUseCase = appDiContainer.domainLayer.getSetupParallelLanguageAvailabilityUseCase()
+        
+        let setupParallelLanguageIsAvailable: Bool = setupParallelLanguageAvailabilityUseCase.getSetupParallelLanguageIsAvailable().isAvailable
+        
+        guard setupParallelLanguageIsAvailable else {
             return
         }
                 
@@ -910,8 +914,8 @@ extension AppFlow {
             let viewModel = SetupParallelLanguageViewModel(
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+                setupParallelLanguageViewedRepository: appDiContainer.dataLayer.getSetupParallelLanguageViewedRepository(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)
             
@@ -923,7 +927,7 @@ extension AppFlow {
     
     private func presentParallelLanguage() {
         
-        let viewModel = ParallelLanguageListViewModel(
+        let viewModel = ChooseParallelLanguageListViewModel(
             flowDelegate: self,
             getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
@@ -931,7 +935,7 @@ extension AppFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
-        let view = ParallelLanguageListView(viewModel: viewModel)
+        let view = ChooseParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
         

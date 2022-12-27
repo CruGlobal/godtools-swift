@@ -160,6 +160,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
+        return GetSetupParallelLanguageAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
+        )
+    }
+    
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
