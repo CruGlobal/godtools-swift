@@ -12,7 +12,7 @@ class DetermineNewUserIfPrimaryLanguageSet: DetermineIfNewUserType {
     
     let isNewUser: Bool
     
-    required init(languageSettingsService: LanguageSettingsService) {
-        self.isNewUser = languageSettingsService.primaryLanguage.value?.id == nil
+    init(languageSettingsRepository: LanguageSettingsRepository) {
+        self.isNewUser = languageSettingsRepository.getPrimaryLanguageId() == nil
     }
 }
