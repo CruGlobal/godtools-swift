@@ -2,100 +2,36 @@
 //  AboutView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/14/20.
+//  Created by Levi Eggert on 12/27/22.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class AboutView: UIViewController {
-    
-    private let viewModel: AboutViewModelType
-    
-    @IBOutlet weak private var aboutTextsTableView: UITableView!
+struct AboutView: View {
         
-    required init(viewModel: AboutViewModelType) {
-        self.viewModel = viewModel
-        super.init(nibName: String(describing: AboutView.self), bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("view didload: \(type(of: self))")
+    @ObservedObject var viewModel: AboutViewModel
         
-        setupLayout()
-        setupBinding()
+    var body: some View {
         
-        addDefaultNavBackItem()
-        
-        aboutTextsTableView.delegate = self
-        aboutTextsTableView.dataSource = self
-    }
-    
-    private func setupLayout() {
-        
-        // aboutTextsTableView
-        aboutTextsTableView.register(
-            UINib(nibName: AboutTextCell.nibName, bundle: nil),
-            forCellReuseIdentifier: AboutTextCell.reuseIdentifier
-        )
-        aboutTextsTableView.rowHeight = UITableView.automaticDimension
-        aboutTextsTableView.separatorStyle = .none
-    }
-    
-    private func setupBinding() {
-        
-        viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
-            self?.title = navTitle
-        }
-        
-        viewModel.aboutTexts.addObserver(self) { [weak self] (aboutTexts: [AboutTextModel]) in
-            self?.aboutTextsTableView.reloadData()
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.pageViewed()
-    }
-}
-
-// MARK: - UITableViewDelegate, UITableViewDataSource
-
-extension AboutView: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.aboutTexts.value.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell: AboutTextCell = aboutTextsTableView.dequeueReusableCell(
-        withIdentifier: AboutTextCell.reuseIdentifier,
-        for: indexPath) as! AboutTextCell
-        
-        let aboutTextModel: AboutTextModel = viewModel.aboutTexts.value[indexPath.row]
-               
-        let cellViewModel = AboutTextCellViewModel(
-            aboutText: aboutTextModel
-        )
-        
-        cell.configure(viewModel: cellViewModel)
+        GeometryReader { geometry in
+            
+            ScrollView(.vertical) {
                 
-        cell.selectionStyle = .none
-        
-        return cell
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    Text(viewModel.aboutText)
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .multilineTextAlignment(.leading)
+                }
+                .padding(EdgeInsets(top: 25, leading: 25, bottom: 25, trailing: 25))
+            }
+        }
+        .onAppear {
+            viewModel.pageViewed()
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(viewModel.navTitle)
     }
 }

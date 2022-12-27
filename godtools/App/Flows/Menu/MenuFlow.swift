@@ -100,21 +100,10 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .aboutTappedFromMenu:
+            navigationController.pushViewController(getAboutView(), animated: true)
             
-            let aboutTextProvider = LocalizedAboutTextProvider(
-                localizationServices: appDiContainer.localizationServices
-            )
-            
-            let viewModel = AboutViewModel(
-                aboutTextProvider: aboutTextProvider,
-                localizationServices: appDiContainer.localizationServices,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
-            )
-            let view = AboutView(viewModel: viewModel)
-            
-            navigationController.pushViewController(view, animated: true)
+        case .backTappedFromAbout:
+            navigationController.popViewController(animated: true)
             
         case .helpTappedFromMenu:
                  
@@ -231,6 +220,28 @@ class MenuFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func getAboutView() -> UIViewController {
+        
+        let viewModel = AboutViewModel(
+            flowDelegate: self,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.localizationServices,
+            analytics: appDiContainer.dataLayer.getAnalytics()
+        )
+        
+        let view = AboutView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<AboutView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return hostingView
     }
     
     private func getAccountView() -> UIViewController {

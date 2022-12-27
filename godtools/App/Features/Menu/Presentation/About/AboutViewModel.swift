@@ -2,32 +2,44 @@
 //  AboutViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/14/20.
+//  Created by Levi Eggert on 12/27/22.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-class AboutViewModel: AboutViewModelType {
+class AboutViewModel: ObservableObject {
     
-    private let aboutTextProvider: AboutTextProviderType
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
-    let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let aboutTexts: ObservableValue<[AboutTextModel]> = ObservableValue(value: [])
+    private weak var flowDelegate: FlowDelegate?
     
-    init(aboutTextProvider: AboutTextProviderType, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    @Published var navTitle: String
+    @Published var aboutText: String
         
-        self.aboutTextProvider = aboutTextProvider
+    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+        
+        self.flowDelegate = flowDelegate
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
-        navTitle.accept(value: localizationServices.stringForMainBundle(key: "aboutApp.navTitle"))
+        navTitle = localizationServices.stringForMainBundle(key: "aboutApp.navTitle")
         
-        aboutTexts.accept(value: aboutTextProvider.aboutTexts)
+        aboutText = localizationServices.stringForMainBundle(key: "general_about_1") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_2") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_3") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_4") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_5") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_6") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_7") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_8") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_9") + "\n\n" +
+        localizationServices.stringForMainBundle(key: "general_about_10")
     }
     
     private var analyticsScreenName: String {
@@ -40,6 +52,16 @@ class AboutViewModel: AboutViewModelType {
     
     private var analyticsSiteSubSection: String {
         return ""
+    }
+}
+
+// MARK: - Inputs
+
+extension AboutViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromAbout)
     }
     
     func pageViewed() {
