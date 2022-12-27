@@ -426,7 +426,7 @@ class ToolSettingsFlow: Flow {
                 let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.value.copy(toolTranslations: toolTranslations)
                 weakSelf.tool.setRenderer(renderer: newRenderer)
                 
-            case .failure(let error):
+            case .failure( _):
                 break
             }
             
