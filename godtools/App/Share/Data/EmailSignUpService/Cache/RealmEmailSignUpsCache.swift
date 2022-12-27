@@ -19,21 +19,12 @@ class RealmEmailSignUpsCache {
     }
     
     func emailIsRegistered(email: String) -> Bool {
-        return getEmailSignUpOnMainThread(email: email)?.isRegistered ?? false
+        return getEmailSign(email: email)?.isRegistered ?? false
     }
     
-    func getEmailSignUpOnMainThread(email: String) -> EmailSignUpModel? {
+    func getEmailSign(email: String) -> EmailSignUpModel? {
         
-        return getEmailSignUp(realm: realmDatabase.mainThreadRealm, email: email)
-    }
-    
-    func getEmailSignUp(realm: Realm, email: String) -> EmailSignUpModel? {
-        
-        guard !email.isEmpty else {
-            return nil
-        }
-        
-        guard let realmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: email) else {
+        guard let realmEmailSignUp = realmDatabase.openRealm().object(ofType: RealmEmailSignUp.self, forPrimaryKey: email) else {
             return nil
         }
         
@@ -41,50 +32,23 @@ class RealmEmailSignUpsCache {
     }
     
     func cacheEmailSignUp(emailSignUp: EmailSignUpModel) {
-                   
-        let realm: Realm = realmDatabase.mainThreadRealm
+          
+        let realm: Realm = realmDatabase.openRealm()
         
-        if let cachedEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
-            
-            updateExistingEmailSignUp(
-                realm: realm,
-                cachedEmailSignUp: cachedEmailSignUp,
-                updateFromEmailSignUp: emailSignUp
-            )
+        let realmEmailSignUp: RealmEmailSignUp
+        
+        if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
+            realmEmailSignUp = existingRealmEmailSignUp
         }
         else {
-            
-            cacheNewEmailSignUp(
-                realm: realm,
-                emailSignUp: emailSignUp
-            )
-        }
-    }
-    
-    private func cacheNewEmailSignUp(realm: Realm, emailSignUp: EmailSignUpModel) {
-        
-        guard getEmailSignUp(realm: realm, email: emailSignUp.email) == nil else {
-            return
+            realmEmailSignUp = RealmEmailSignUp()
         }
         
-        let realmEmailSignUp: RealmEmailSignUp = RealmEmailSignUp()
-        realmEmailSignUp.mapFrom(model: emailSignUp, ignorePrimaryKey: false)
+        realmEmailSignUp.mapFrom(model: emailSignUp)
         
         do {
             try realm.write {
-                realm.add(realmEmailSignUp)
-            }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-        }
-    }
-    
-    private func updateExistingEmailSignUp(realm: Realm, cachedEmailSignUp: RealmEmailSignUp, updateFromEmailSignUp: EmailSignUpModel) {
-        
-        do {
-            try realm.write {
-                cachedEmailSignUp.mapFrom(model: updateFromEmailSignUp, ignorePrimaryKey: true)
+                realm.add(realmEmailSignUp, update: .all)
             }
         }
         catch let error {

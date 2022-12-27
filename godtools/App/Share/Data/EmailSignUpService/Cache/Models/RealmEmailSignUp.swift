@@ -20,12 +20,9 @@ class RealmEmailSignUp: Object, EmailSignUpModelType {
         return "email"
     }
     
-    func mapFrom(model: EmailSignUpModelType, ignorePrimaryKey: Bool) {
+    func mapFrom(model: EmailSignUpModelType) {
         
-        if !ignorePrimaryKey {
-            email = model.email
-        }
-        
+        email = model.email
         firstName = model.firstName
         lastName = model.lastName
         isRegistered = model.isRegistered
