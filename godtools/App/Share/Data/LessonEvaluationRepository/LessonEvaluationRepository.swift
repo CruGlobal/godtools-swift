@@ -12,12 +12,12 @@ class LessonEvaluationRepository {
     
     private let cache: LessonEvaluationRealmCache
     
-    required init(cache: LessonEvaluationRealmCache) {
+    init(cache: LessonEvaluationRealmCache) {
         
         self.cache = cache
     }
     
-    func getLessonEvaluation(lessonId: String) -> LessonEvaluationModel? {
+    func getLessonEvaluation(lessonId: String) -> LessonEvaluationDataModel? {
         
         return cache.getLessonEvaluation(lessonId: lessonId)
     }
@@ -46,7 +46,7 @@ class LessonEvaluationRepository {
             lessonIsEvaluated = lessonEvaluated
         }
         
-        let lessonEvaluation = LessonEvaluationModel(
+        let lessonEvaluation = LessonEvaluationDataModel(
             lastEvaluationAttempt: Date(),
             lessonAbbreviation: lesson.abbreviation,
             lessonEvaluated: lessonIsEvaluated,

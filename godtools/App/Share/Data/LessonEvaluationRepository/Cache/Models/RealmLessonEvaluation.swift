@@ -21,7 +21,7 @@ class RealmLessonEvaluation: Object {
         return "lessonId"
     }
     
-    func mapFrom(model: LessonEvaluationModel, ignorePrimaryKey: Bool) {
+    func mapFrom(model: LessonEvaluationDataModel, ignorePrimaryKey: Bool) {
         
         if !ignorePrimaryKey {
             lessonId = model.lessonId

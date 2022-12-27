@@ -1,5 +1,5 @@
 //
-//  LessonEvaluationModel.swift
+//  LessonEvaluationDataModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/29/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonEvaluationModel {
+struct LessonEvaluationDataModel {
     
     let lastEvaluationAttempt: Date
     let lessonAbbreviation: String
