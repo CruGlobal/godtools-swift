@@ -62,6 +62,25 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
         return "article"
     }
     
+    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
+        
+        isLoading.accept(value: true)
+        
+        webView.navigationDelegate = self
+        
+        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
+            webView.load(URLRequest(url: webUrl))
+        }
+        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
+            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
+        }
+    }
+}
+
+// MARK: - Inputs
+
+extension ArticleWebViewModel {
+    
     @objc func backTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromArticle)
@@ -87,21 +106,9 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     func loadWebPage(webView: WKWebView) {
         loadWebPage(webView: webView, shouldLoadFromFile: false)
     }
-    
-    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
-        
-        isLoading.accept(value: true)
-        
-        webView.navigationDelegate = self
-        
-        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
-            webView.load(URLRequest(url: webUrl))
-        }
-        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
-            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
-        }
-    }
 }
+
+// MARK: - WKNavigationDelegate
 
 extension ArticleWebViewModel: WKNavigationDelegate {
     
