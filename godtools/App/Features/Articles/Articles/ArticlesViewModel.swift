@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class ArticlesViewModel: NSObject, ArticlesViewModelType {
+class ArticlesViewModel: NSObject {
     
     typealias AemUri = String
     
