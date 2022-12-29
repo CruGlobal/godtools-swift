@@ -113,12 +113,12 @@ class MobileContentTextView: MobileContentView, NibBased {
             
             let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
             
-            textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
+            _ = textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         }
         
         switch viewType {
         
-        case .labelOnly( _):
+        case .labelOnly( _, _):
             break
         
         case .loadFromNib:

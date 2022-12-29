@@ -17,7 +17,7 @@ class LaunchCountCache {
         
     }
     
-    func getLaunchCount() -> AnyPublisher<Int, Never> {
+    func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
         
         return userDefaults.publisher(for: \.launchCount)
             .eraseToAnyPublisher()

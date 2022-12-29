@@ -17,7 +17,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let localizationServices: LocalizationServices
     private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
-    private let viewsService: ViewsService
+    private let resourceViewsService: ResourceViewsService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
@@ -27,7 +27,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     let navBarViewModel: ObservableValue<ToolNavBarViewModel>
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, viewsService: ViewsService, analytics: AnalyticsContainer, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, resourceViewsService: ResourceViewsService, analytics: AnalyticsContainer, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.backButtonImageType = backButtonImageType
@@ -36,7 +36,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.localizationServices = localizationServices
         self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.fontService = fontService
-        self.viewsService = viewsService
+        self.resourceViewsService = resourceViewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
@@ -127,7 +127,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        _ = viewsService.postNewResourceView(resourceId: resource.id)
+        _ = resourceViewsService.postNewResourceView(resourceId: resource.id)
         
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)

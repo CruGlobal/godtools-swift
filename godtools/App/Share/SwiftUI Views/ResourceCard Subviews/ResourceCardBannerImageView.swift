@@ -46,7 +46,6 @@ struct ResourceCardBannerImageView: View {
 
 struct ResourceCardBannerImageView_Previews: PreviewProvider {
     static var previews: some View {
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
 
         let cardType: ToolCardType = .square
         

@@ -13,7 +13,7 @@ extension UIView {
     func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero) {
         
         constrainTopToView(view: view, constant: edgeInsets.top)
-        constrainBottomToView(view: view, constant: edgeInsets.bottom)
+        _ = constrainBottomToView(view: view, constant: edgeInsets.bottom)
         constrainLeadingToView(view: view, constant: edgeInsets.left)
         constrainTrailingToView(view: view, constant: edgeInsets.right)
     }

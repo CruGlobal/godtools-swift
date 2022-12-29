@@ -14,22 +14,11 @@ class RealmDatabase {
     private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
-        
-    @available(*, deprecated) // TODO: Would like to move away from using the mainThreadRealm and instead use the func openRealm() since realm instances cant be shared across threads. ~Levi
-    let mainThreadRealm: Realm
     
     init(databaseConfiguration: RealmDatabaseConfiguration) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
-        
-        do {
-            self.mainThreadRealm = try Realm(configuration: config)
-        }
-        catch let error {
-            assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-            self.mainThreadRealm = try! Realm(configuration: config)
-        }
     }
 
     func openRealm() -> Realm {
