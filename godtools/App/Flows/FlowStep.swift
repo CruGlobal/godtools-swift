@@ -124,6 +124,7 @@ enum FlowStep {
     case backTappedFromLanguageSettings
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
+    case backTappedFromChooseLanguage
     case languageTappedFromChooseLanguage
     case deleteLanguageTappedFromChooseLanguage
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)

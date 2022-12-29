@@ -39,6 +39,10 @@ class LanguageSettingsFlow: Flow {
             
             navigateToChooseLanguageView(chooseLanguageType: .parallel)
             
+        case .backTappedFromChooseLanguage:
+            
+            navigationController.popViewController(animated: true)
+            
         case .languageTappedFromChooseLanguage:
             
             navigationController.popViewController(animated: true)
@@ -54,19 +58,7 @@ class LanguageSettingsFlow: Flow {
     
     private func navigateToChooseLanguageView(chooseLanguageType: ChooseLanguageViewModel.ChooseLanguageType) {
         
-        let viewModel = ChooseLanguageViewModel(
-            flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            userDidSetSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsPrimaryLanguageUseCase(),
-            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
-            userDidDeleteSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteSettingsParallelLanguageUseCase(),
-            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            chooseLanguageType: chooseLanguageType
-        )
-        let view = ChooseLanguageView(viewModel: viewModel)
+        let view = getChooseLanguage(chooseLanguageType: chooseLanguageType)
                     
         navigationController.pushViewController(view, animated: true)
     }
@@ -85,6 +77,31 @@ extension LanguageSettingsFlow {
         )
         
         let view = LanguageSettingsView(viewModel: viewModel)
+        
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
+    }
+    
+    func getChooseLanguage(chooseLanguageType: ChooseLanguageViewModel.ChooseLanguageType) -> UIViewController {
+        
+        let viewModel = ChooseLanguageViewModel(
+            flowDelegate: self,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            userDidSetSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsPrimaryLanguageUseCase(),
+            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
+            userDidDeleteSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteSettingsParallelLanguageUseCase(),
+            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
+            localizationServices: appDiContainer.localizationServices,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            chooseLanguageType: chooseLanguageType
+        )
+        
+        let view = ChooseLanguageView(viewModel: viewModel)
         
         _ = view.addDefaultNavBackItem(
             target: viewModel,

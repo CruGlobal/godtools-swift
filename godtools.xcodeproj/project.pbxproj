@@ -701,7 +701,6 @@
 		45C2594428CAC3E8005D2387 /* ChooseLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593828CAC3E8005D2387 /* ChooseLanguageCell.swift */; };
 		45C2594528CAC3E8005D2387 /* ChooseLanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C2593928CAC3E8005D2387 /* ChooseLanguageCell.xib */; };
 		45C2594628CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593A28CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift */; };
-		45C2594828CAC3E8005D2387 /* ChooseLanguageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */; };
 		45C2595928CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */; };
 		45C2595A28CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */; };
 		45C2595B28CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */; };
@@ -1749,7 +1748,6 @@
 		45C2593828CAC3E8005D2387 /* ChooseLanguageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCell.swift; sourceTree = "<group>"; };
 		45C2593928CAC3E8005D2387 /* ChooseLanguageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLanguageCell.xib; sourceTree = "<group>"; };
 		45C2593A28CAC3E8005D2387 /* ChooseLanguageCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageCellViewModel.swift; sourceTree = "<group>"; };
-		45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageViewModelType.swift; sourceTree = "<group>"; };
 		45C2595028CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595228CAC46E005D2387 /* UserDidSetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDidSetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -5576,7 +5574,6 @@
 				45C2593528CAC3E8005D2387 /* ChooseLanguageView.swift */,
 				45C2593628CAC3E8005D2387 /* ChooseLanguageView.xib */,
 				45C2593428CAC3E8005D2387 /* ChooseLanguageViewModel.swift */,
-				45C2593C28CAC3E8005D2387 /* ChooseLanguageViewModelType.swift */,
 				45C2593728CAC3E8005D2387 /* Subviews */,
 			);
 			path = ChooseLanguage;
@@ -8508,7 +8505,6 @@
 				45FB161627DBDDB60009DF8E /* ArticleFlowCompletedState.swift in Sources */,
 				D45922D828679CEB00904B87 /* OpenTutorialBannerView.swift in Sources */,
 				455583F5269F2DA500C3FF14 /* MobileContentImageViewModel.swift in Sources */,
-				45C2594828CAC3E8005D2387 /* ChooseLanguageViewModelType.swift in Sources */,
 				45AD1BB325938A4F00A096A0 /* FontLibrary.swift in Sources */,
 				45F7164E290A12D70019B715 /* MenuItem.swift in Sources */,
 				456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */,
