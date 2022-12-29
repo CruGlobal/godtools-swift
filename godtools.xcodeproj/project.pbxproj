@@ -298,7 +298,6 @@
 		4567782D287DC1F30044AEB2 /* ArticleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567781A287DC1F20044AEB2 /* ArticleWebView.swift */; };
 		4567782E287DC1F30044AEB2 /* ArticleWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567781B287DC1F20044AEB2 /* ArticleWebViewModel.swift */; };
 		4567782F287DC1F30044AEB2 /* ArticleWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4567781C287DC1F20044AEB2 /* ArticleWebView.xib */; };
-		45677830287DC1F30044AEB2 /* ArticleWebViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4567781D287DC1F20044AEB2 /* ArticleWebViewModelType.swift */; };
 		45677833287DC2BD0044AEB2 /* LoadingArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677832287DC2BD0044AEB2 /* LoadingArticleViewModel.swift */; };
 		45677835287DC2D70044AEB2 /* LoadingArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677834287DC2D70044AEB2 /* LoadingArticleView.swift */; };
 		45677838287DC3430044AEB2 /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677837287DC3430044AEB2 /* DownloadArticlesErrorViewModel.swift */; };
@@ -1364,7 +1363,6 @@
 		4567781A287DC1F20044AEB2 /* ArticleWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebView.swift; sourceTree = "<group>"; };
 		4567781B287DC1F20044AEB2 /* ArticleWebViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewModel.swift; sourceTree = "<group>"; };
 		4567781C287DC1F20044AEB2 /* ArticleWebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArticleWebView.xib; sourceTree = "<group>"; };
-		4567781D287DC1F20044AEB2 /* ArticleWebViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewModelType.swift; sourceTree = "<group>"; };
 		45677832287DC2BD0044AEB2 /* LoadingArticleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingArticleViewModel.swift; sourceTree = "<group>"; };
 		45677834287DC2D70044AEB2 /* LoadingArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingArticleView.swift; sourceTree = "<group>"; };
 		45677837287DC3430044AEB2 /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
@@ -3833,7 +3831,6 @@
 				4567781A287DC1F20044AEB2 /* ArticleWebView.swift */,
 				4567781C287DC1F20044AEB2 /* ArticleWebView.xib */,
 				4567781B287DC1F20044AEB2 /* ArticleWebViewModel.swift */,
-				4567781D287DC1F20044AEB2 /* ArticleWebViewModelType.swift */,
 				45677849287DC4100044AEB2 /* ArticleWebViewModelFlowType.swift */,
 			);
 			path = ArticlesWeb;
@@ -8023,7 +8020,6 @@
 				45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */,
 				D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */,
 				452040802959E577004D843E /* SetupParallelLanguageViewedUserDefaultsCache.swift in Sources */,
-				45677830287DC1F30044AEB2 /* ArticleWebViewModelType.swift in Sources */,
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */,

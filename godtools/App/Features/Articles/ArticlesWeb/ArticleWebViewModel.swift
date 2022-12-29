@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
+class ArticleWebViewModel: NSObject {
     
     private let aemCacheObject: ArticleAemCacheObject
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
