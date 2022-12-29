@@ -186,6 +186,16 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         self.articles = aemUris
         numberOfArticles.accept(value: aemUris.count)
     }
+}
+
+// MARK: - Inputs
+
+extension ArticlesViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromArticles)
+    }
     
     func pageViewed() {
         
@@ -224,10 +234,5 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     func downloadArticlesTapped() {
         downloadArticles(forceDownload: true)
-    }
-    
-    @objc func backTapped() {
-        
-        flowDelegate?.navigate(step: .backTappedFromArticles)
     }
 }
