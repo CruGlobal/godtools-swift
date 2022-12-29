@@ -96,12 +96,18 @@ enum FlowStep {
     case myAccountTappedFromMenu
     case aboutTappedFromMenu
     case helpTappedFromMenu
+    case backTappedFromHelp
     case contactUsTappedFromMenu
+    case backTappedFromContactUs
     case shareGodToolsTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
+    case backTappedFromShareAStoryWithUs
     case termsOfUseTappedFromMenu
+    case backTappedFromTermsOfUse
     case privacyPolicyTappedFromMenu
+    case backTappedFromPrivacyPolicy
     case copyrightInfoTappedFromMenu
+    case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
     
     // about
