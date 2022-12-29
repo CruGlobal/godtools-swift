@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ArticleFlow: Flow {
     
@@ -54,22 +55,12 @@ class ArticleFlow: Flow {
         
         case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest, let currentArticleDownloadReceipt):
             
-            let viewModel = ArticlesViewModel(
-                flowDelegate: self,
-                resource: resource,
-                language: language,
-                category: category,
-                manifest: manifest,
-                articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
-                localizationServices: appDiContainer.localizationServices,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
-                currentArticleDownloadReceipt: currentArticleDownloadReceipt
-            )
-            let view = ArticlesView(viewModel: viewModel)
+            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: currentArticleDownloadReceipt)
             
             navigationController.pushViewController(view, animated: true)
+            
+        case .backTappedFromArticles:
+            navigationController.popViewController(animated: true)
                         
         case .articleTappedFromArticles(let resource, let aemCacheObject):
             
@@ -105,3 +96,31 @@ class ArticleFlow: Flow {
     }
 }
 
+extension ArticleFlow {
+    
+    func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
+        
+        let viewModel = ArticlesViewModel(
+            flowDelegate: self,
+            resource: resource,
+            language: language,
+            category: category,
+            manifest: manifest,
+            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            currentArticleDownloadReceipt: currentArticleDownloadReceipt
+        )
+        
+        let view = ArticlesView(viewModel: viewModel)
+        
+        view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
+    }
+}

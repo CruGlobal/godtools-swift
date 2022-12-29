@@ -123,6 +123,7 @@ enum FlowStep {
     // article
     case backTappedFromArticleCategories
     case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
+    case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)

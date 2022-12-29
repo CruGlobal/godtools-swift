@@ -35,9 +35,7 @@ class ArticlesView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
-        
+                
         articlesTableView.delegate = self
         articlesTableView.dataSource = self
     }

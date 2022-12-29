@@ -225,4 +225,9 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     func downloadArticlesTapped() {
         downloadArticles(forceDownload: true)
     }
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromArticles)
+    }
 }

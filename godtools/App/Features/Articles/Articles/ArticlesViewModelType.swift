@@ -19,4 +19,5 @@ protocol ArticlesViewModelType {
     func articleTapped(index: Int)
     func articleWillAppear(index: Int) -> ArticleCellViewModelType?
     func downloadArticlesTapped()
+    func backTapped()
 }
