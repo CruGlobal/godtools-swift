@@ -15,28 +15,21 @@ class LanguageSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
-        let viewModel = LanguageSettingsViewModel(
-            flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
-        )
-        
-        let view = LanguageSettingsView(viewModel: viewModel)
-        
-        sharedNavigationController.pushViewController(view, animated: true)
+        sharedNavigationController.pushViewController(getLanguageSettings(), animated: true)
     }
     
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .backTappedFromLanguageSettings:
+            flowDelegate?.navigate(step: .languageSettingsFlowCompleted(state: .userClosedLanguageSettings))
             
         case .choosePrimaryLanguageTappedFromLanguageSettings:
             
@@ -76,5 +69,28 @@ class LanguageSettingsFlow: Flow {
         let view = ChooseLanguageView(viewModel: viewModel)
                     
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+extension LanguageSettingsFlow {
+    
+    func getLanguageSettings() -> UIViewController {
+        
+        let viewModel = LanguageSettingsViewModel(
+            flowDelegate: self,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            analytics: appDiContainer.dataLayer.getAnalytics()
+        )
+        
+        let view = LanguageSettingsView(viewModel: viewModel)
+        
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
     }
 }

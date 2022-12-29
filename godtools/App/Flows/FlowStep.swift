@@ -121,10 +121,12 @@ enum FlowStep {
     case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
     
     // language settings
+    case backTappedFromLanguageSettings
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
     case languageTappedFromChooseLanguage
     case deleteLanguageTappedFromChooseLanguage
+    case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
     
     // article
     case backTappedFromArticleCategories

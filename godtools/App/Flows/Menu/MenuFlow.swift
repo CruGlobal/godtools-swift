@@ -70,14 +70,10 @@ class MenuFlow: Flow {
         switch step {
             
         case .languageSettingsTappedFromMenu:
+            navigateToLanguageSettings()
             
-            let languageSettingsFlow = LanguageSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController
-            )
-                        
-            self.languageSettingsFlow = languageSettingsFlow
+        case .languageSettingsFlowCompleted( _):
+            closeLanguageSettings()
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
@@ -316,6 +312,33 @@ class MenuFlow: Flow {
         )
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Language Settings
+
+extension MenuFlow {
+    
+    private func navigateToLanguageSettings() {
+        
+        let languageSettingsFlow = LanguageSettingsFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        
+        self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
     }
 }
 
