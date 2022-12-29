@@ -64,18 +64,12 @@ class ArticleFlow: Flow {
                         
         case .articleTappedFromArticles(let resource, let aemCacheObject):
             
-            let viewModel = ArticleWebViewModel(
-                flowDelegate: self,
-                aemCacheObject: aemCacheObject,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
-                flowType: .tool(resource: resource)
-            )
-            
-            let view = ArticleWebView(viewModel: viewModel)
+            let view = getArticle(resource: resource, aemCacheObject: aemCacheObject)
             
             navigationController.pushViewController(view, animated: true)
+            
+        case .backTappedFromArticle:
+            navigationController.popViewController(animated: true)
             
         case .sharedTappedFromArticle(let articleAemData):
             
@@ -116,7 +110,28 @@ extension ArticleFlow {
         
         let view = ArticlesView(viewModel: viewModel)
         
-        view.addDefaultNavBackItem(
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
+    }
+    
+    func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+        
+        let viewModel = ArticleWebViewModel(
+            flowDelegate: self,
+            aemCacheObject: aemCacheObject,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            flowType: .tool(resource: resource)
+        )
+        
+        let view = ArticleWebView(viewModel: viewModel)
+        
+        _ = view.addDefaultNavBackItem(
             target: viewModel,
             action: #selector(viewModel.backTapped)
         )

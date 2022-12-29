@@ -15,6 +15,7 @@ protocol ArticleWebViewModelType {
     var hidesShareButton: ObservableValue<Bool> { get }
     var isLoading: ObservableValue<Bool> { get }
     
+    func backTapped()
     func pageViewed()
     func sharedTapped()
     func loadWebPage(webView: WKWebView)

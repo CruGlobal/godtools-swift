@@ -38,9 +38,7 @@ class ArticleWebView: UIViewController {
             
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
-        
+                
         shareButton = addBarButtonItem(
             to: .right,
             image: ImageCatalog.navShare.uiImage,

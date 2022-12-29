@@ -61,6 +61,11 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     private var analyticsSiteSubSection: String {
         return "article"
     }
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromArticle)
+    }
 
     func pageViewed() {
         
