@@ -510,7 +510,6 @@
 		45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE325938A9700A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift */; };
 		45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */; };
 		45AD1F6925938A9800A096A0 /* LanguageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE725938A9700A096A0 /* LanguageDirection.swift */; };
-		45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DEC25938A9700A096A0 /* LanguageSettingsService.swift */; };
 		45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF525938A9700A096A0 /* ViewedTrainingTipsCacheType.swift */; };
 		45AD1F7525938A9800A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF625938A9700A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift */; };
 		45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */; };
@@ -1574,7 +1573,6 @@
 		45AD1DE325938A9700A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsCacheType.swift; sourceTree = "<group>"; };
 		45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD1DE725938A9700A096A0 /* LanguageDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDirection.swift; sourceTree = "<group>"; };
-		45AD1DEC25938A9700A096A0 /* LanguageSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsService.swift; sourceTree = "<group>"; };
 		45AD1DF525938A9700A096A0 /* ViewedTrainingTipsCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsCacheType.swift; sourceTree = "<group>"; };
 		45AD1DF625938A9700A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipType.swift; sourceTree = "<group>"; };
@@ -4812,7 +4810,6 @@
 				45AD1D4225938A9700A096A0 /* FontService */,
 				45AD1E9125938A9800A096A0 /* InitialDataDownloader */,
 				45AD1DE525938A9700A096A0 /* LanguageDirection */,
-				45AD1DE825938A9700A096A0 /* LanguageSettings */,
 				45AD1EE125938A9800A096A0 /* Localization */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
 				45AD1E0125938A9700A096A0 /* Resources */,
@@ -4897,14 +4894,6 @@
 				45AD1DE725938A9700A096A0 /* LanguageDirection.swift */,
 			);
 			path = LanguageDirection;
-			sourceTree = "<group>";
-		};
-		45AD1DE825938A9700A096A0 /* LanguageSettings */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1DEC25938A9700A096A0 /* LanguageSettingsService.swift */,
-			);
-			path = LanguageSettings;
 			sourceTree = "<group>";
 		};
 		45AD1DF425938A9700A096A0 /* ViewedTrainingTips */ = {
@@ -7771,7 +7760,6 @@
 				4559D67C270B5600006C015C /* LessonFeedbackHelpful.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
 				45BDA60E2954FE3E007E259B /* ArticleAemDataParser.swift in Sources */,
-				45AD1F6D25938A9800A096A0 /* LanguageSettingsService.swift in Sources */,
 				45AD1FEC25938A9800A096A0 /* InitialDataDownloaderError.swift in Sources */,
 				45D63E9D288F77D4009B4610 /* RealmResourcesCache.swift in Sources */,
 				45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,

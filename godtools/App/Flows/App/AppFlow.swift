@@ -197,11 +197,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let translationsRepository: TranslationsRepository = appDiContainer.dataLayer.getTranslationsRepository()
             let localizationServices: LocalizationServices = appDiContainer.localizationServices
-            let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
+            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            let settingsPrimaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
             
             let toolName: String
             
-            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            if let settingsPrimaryLanguage = settingsPrimaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: settingsPrimaryLanguage.dataModelId) {
                 toolName = primaryTranslation.translatedName
             }
             else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {

@@ -18,7 +18,6 @@ class AppDiContainer {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let initialDataDownloader: InitialDataDownloader
-    let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices = LocalizationServices()
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
@@ -38,12 +37,6 @@ class AppDiContainer {
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
                                                       
         initialDataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository())
-        
-        languageSettingsService = LanguageSettingsService(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase()
-        )
                                       
         firebaseInAppMessaging = FirebaseInAppMessaging()
     }
