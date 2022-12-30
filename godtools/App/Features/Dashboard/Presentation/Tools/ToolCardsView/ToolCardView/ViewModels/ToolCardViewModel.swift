@@ -145,7 +145,7 @@ extension ToolCardViewModel {
         detailsButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
         openButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "open")
         
-        layoutDirection = currentTranslationLanguage.direction.layoutDirection
+        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
     }
     
     private func reloadParallelLanguageName(_ parallelLanguage: LanguageDomainModel?) {

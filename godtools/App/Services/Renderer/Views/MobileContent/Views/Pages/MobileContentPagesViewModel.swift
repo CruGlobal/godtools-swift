@@ -47,7 +47,7 @@ class MobileContentPagesViewModel: NSObject {
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         
-        pageNavigationSemanticContentAttribute = renderer.primaryLanguage.direction.semanticContentAttribute
+        pageNavigationSemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
         
         super.init()
         

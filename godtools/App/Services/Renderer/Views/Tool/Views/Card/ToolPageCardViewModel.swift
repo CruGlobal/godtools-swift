@@ -142,7 +142,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.language.direction.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
     }
     
     func containsDismissListener(eventId: EventId) -> Bool {
