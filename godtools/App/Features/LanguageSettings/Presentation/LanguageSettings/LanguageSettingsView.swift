@@ -10,7 +10,7 @@ import UIKit
 
 class LanguageSettingsView: UIViewController {
     
-    private let viewModel: LanguageSettingsViewModelType
+    private let viewModel: LanguageSettingsViewModel
             
     @IBOutlet weak private var languageImageView: UIImageView!
     @IBOutlet weak private var primaryLanguageTitleLabel: UILabel!
@@ -21,7 +21,7 @@ class LanguageSettingsView: UIViewController {
     @IBOutlet weak private var exclamationImageView: UIImageView!
     @IBOutlet weak private var languageAvailabilityLabel: UILabel!
     
-    required init(viewModel: LanguageSettingsViewModelType) {
+    required init(viewModel: LanguageSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: LanguageSettingsView.self), bundle: nil)
     }
@@ -40,9 +40,7 @@ class LanguageSettingsView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
-        
+                
         primaryLanguageButton.addTarget(
             self,
             action: #selector(handlePrimaryLanguage(button:)),

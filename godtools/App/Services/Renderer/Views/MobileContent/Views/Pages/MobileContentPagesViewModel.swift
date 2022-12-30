@@ -47,12 +47,7 @@ class MobileContentPagesViewModel: NSObject {
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         
-        switch renderer.primaryLanguage.direction {
-        case .leftToRight:
-            pageNavigationSemanticContentAttribute = .forceLeftToRight
-        case .rightToLeft:
-            pageNavigationSemanticContentAttribute = .forceRightToLeft
-        }
+        pageNavigationSemanticContentAttribute = renderer.primaryLanguage.direction.semanticContentAttribute
         
         super.init()
         

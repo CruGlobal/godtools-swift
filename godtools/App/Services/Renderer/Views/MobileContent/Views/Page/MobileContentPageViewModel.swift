@@ -89,7 +89,7 @@ extension MobileContentPageViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: model,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.languageDirection
+            languageDirection: renderedPageContext.language.direction
         )
     }
     
@@ -99,7 +99,7 @@ extension MobileContentPageViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil,
             url: url
         )

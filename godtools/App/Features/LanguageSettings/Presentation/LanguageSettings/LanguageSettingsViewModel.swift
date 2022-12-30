@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LanguageSettingsViewModel: LanguageSettingsViewModelType {
+class LanguageSettingsViewModel {
 
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -80,6 +80,11 @@ class LanguageSettingsViewModel: LanguageSettingsViewModelType {
 // MARK: - Inputs
 
 extension LanguageSettingsViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromLanguageSettings)
+    }
     
     func pageViewed() {
         

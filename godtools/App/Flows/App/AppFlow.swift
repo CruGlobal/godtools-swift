@@ -372,6 +372,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .languageSettingsTappedFromTools:
             navigateToLanguageSettings()
             
+        case .languageSettingsFlowCompleted( _):
+            closeLanguageSettings()
+            
         case .userViewedFavoritedToolsListFromTools:
             presentSetupParallelLanguage()
             
@@ -708,6 +711,17 @@ extension AppFlow {
         )
         
         self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
     }
 }
 

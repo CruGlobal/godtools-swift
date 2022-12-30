@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ChooseLanguageViewModel: ChooseLanguageViewModelType {
+class ChooseLanguageViewModel {
         
     enum ChooseLanguageType {
         case primary
@@ -137,6 +137,16 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         }
         
         return languagesList[safe: index]
+    }
+}
+
+// MARK: - Inputs
+
+extension ChooseLanguageViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromChooseLanguage)
     }
     
     func pageViewed() {

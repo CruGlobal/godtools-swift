@@ -10,16 +10,6 @@ import UIKit
 
 extension UIViewController {
     
-    // TODO: (DEPRECATED) Eventually I want this to be removed and instead use addDefaultNavBackItem(target: Any, selector: Selector). This way back navigation can be wired through flows. ~Levi
-    @available(*, deprecated)
-    func addDefaultNavBackItem() -> UIBarButtonItem? {
-          
-        return addDefaultNavBackItem(
-            target: self,
-            action: #selector(handleNavBackItem(barButtonItem:))
-        )
-    }
-    
     func addDefaultNavBackItem(target: Any, action: Selector) -> UIBarButtonItem? {
             
         navigationItem.setHidesBackButton(true, animated: false)
@@ -31,9 +21,5 @@ extension UIViewController {
             target: target,
             action: action
         )
-    }
-    
-    @objc func handleNavBackItem(barButtonItem: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
     }
 }

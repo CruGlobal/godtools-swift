@@ -50,7 +50,7 @@ class MobileContentViewModel: NSObject {
     }
     
     var languageTextAlignment: NSTextAlignment {
-        return renderedPageContext.language.languageDirection == .leftToRight ? .left : .right
+        return renderedPageContext.language.direction == .leftToRight ? .left : .right
     }
     
     func viewDidAppear(analyticsEvents: [MobileContentAnalyticsEvent]) {

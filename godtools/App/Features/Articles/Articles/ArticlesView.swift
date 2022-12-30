@@ -10,13 +10,13 @@ import UIKit
 
 class ArticlesView: UIViewController {
     
-    private let viewModel: ArticlesViewModelType
+    private let viewModel: ArticlesViewModel
            
     @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var articlesTableView: UITableView!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
-    required init(viewModel: ArticlesViewModelType) {
+    required init(viewModel: ArticlesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ArticlesView.self), bundle: nil)
     }
@@ -35,9 +35,7 @@ class ArticlesView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
-        
+                
         articlesTableView.delegate = self
         articlesTableView.dataSource = self
     }

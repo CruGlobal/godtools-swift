@@ -50,7 +50,6 @@ class TractFlow: ToolNavigationFlow, Flow {
             tractRemoteSharePublisher: appDiContainer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.getTractRemoteShareSubscriber(),
             localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             fontService: appDiContainer.getFontService(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

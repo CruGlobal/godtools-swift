@@ -100,7 +100,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     private func getLanguageTextAlign() -> Text.Align {
         
-        if renderedPageContext.language.languageDirection == .rightToLeft {
+        if renderedPageContext.language.direction == .rightToLeft {
             
             if textModel.textAlign == .start {
                 return .end

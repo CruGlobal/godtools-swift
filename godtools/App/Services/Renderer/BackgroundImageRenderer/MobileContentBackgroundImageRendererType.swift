@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 protocol MobileContentBackgroundImageRendererType {
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirectionDomainModel) -> CGRect
 }
 
 extension MobileContentBackgroundImageRendererType {
@@ -103,7 +103,7 @@ extension MobileContentBackgroundImageRendererType {
     
     // MARK: - Positioning Rect
     
-    func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignment, languageDirection: LanguageDirection) -> CGRect {
+    func positionRectInContainer(container: CGRect, rect: CGRect, align: MobileContentBackgroundImageAlignment, languageDirection: LanguageDirectionDomainModel) -> CGRect {
         
         switch align {
             

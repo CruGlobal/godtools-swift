@@ -13,7 +13,6 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
     
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
     
     private weak var flowDelegate: FlowDelegate?
@@ -22,10 +21,9 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.fontService = fontService
         
         backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
@@ -77,7 +75,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     func getNavBarLanguageTitles() -> [String] {
         
-        let languageTitles: [String] = renderer.value.pageRenderers.map({getTranslatedLanguageUseCase.getTranslatedLanguage(language: $0.language).name})
+        let languageTitles: [String] = renderer.value.pageRenderers.map({$0.language.translatedName})
         guard languageTitles.count > 1 else {
             return Array()
         }

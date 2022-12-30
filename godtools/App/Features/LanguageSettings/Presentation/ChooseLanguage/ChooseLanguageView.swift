@@ -10,14 +10,14 @@ import UIKit
 
 class ChooseLanguageView: UIViewController {
         
-    private let viewModel: ChooseLanguageViewModelType
+    private let viewModel: ChooseLanguageViewModel
             
     private var deleteLanguageButton: UIBarButtonItem!
             
     @IBOutlet weak private var searchBar: UISearchBar!
     @IBOutlet weak private var languagesTableView: UITableView!
     
-    required init(viewModel: ChooseLanguageViewModelType) {
+    required init(viewModel: ChooseLanguageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ChooseLanguageView.self), bundle: nil)
     }
@@ -44,9 +44,7 @@ class ChooseLanguageView: UIViewController {
         
         setupLayout()
         setupBinding()
-                
-        addDefaultNavBackItem()
-        
+                        
         searchBar.delegate = self
         languagesTableView.delegate = self
         languagesTableView.dataSource = self
