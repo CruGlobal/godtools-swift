@@ -70,14 +70,10 @@ class MenuFlow: Flow {
         switch step {
             
         case .languageSettingsTappedFromMenu:
+            navigateToLanguageSettings()
             
-            let languageSettingsFlow = LanguageSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController
-            )
-                        
-            self.languageSettingsFlow = languageSettingsFlow
+        case .languageSettingsFlowCompleted( _):
+            closeLanguageSettings()
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
@@ -109,7 +105,10 @@ class MenuFlow: Flow {
                  
             let helpWebContent = HelpWebContent(localizationServices: appDiContainer.localizationServices)
             
-            navigateToWebContentView(webContent: helpWebContent)
+            pushWebContentView(webContent: helpWebContent, backTappedFromWebContentStep: .backTappedFromHelp)
+            
+        case .backTappedFromHelp:
+            navigationController.popViewController(animated: true)
             
         case .contactUsTappedFromMenu:
            
@@ -131,8 +130,11 @@ class MenuFlow: Flow {
             }
             else {
                 let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
-                navigateToWebContentView(webContent: contactUsWebContent)
+                pushWebContentView(webContent: contactUsWebContent, backTappedFromWebContentStep: .backTappedFromContactUs)
             }
+            
+        case .backTappedFromContactUs:
+            navigationController.popViewController(animated: true)
             
         case .shareGodToolsTappedFromMenu:
             
@@ -163,26 +165,38 @@ class MenuFlow: Flow {
                 
                 let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
                 
-                navigateToWebContentView(webContent: shareStoryWebContent)
+                pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
             }
+            
+        case .backTappedFromShareAStoryWithUs:
+            navigationController.popViewController(animated: true)
             
         case .termsOfUseTappedFromMenu:
             
             let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.localizationServices)
             
-            navigateToWebContentView(webContent: termsOfUserWebContent)
+            pushWebContentView(webContent: termsOfUserWebContent, backTappedFromWebContentStep: .backTappedFromTermsOfUse)
+            
+        case .backTappedFromTermsOfUse:
+            navigationController.popViewController(animated: true)
             
         case .privacyPolicyTappedFromMenu:
             
             let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.localizationServices)
             
-            navigateToWebContentView(webContent: privacyPolicyWebContent)
+            pushWebContentView(webContent: privacyPolicyWebContent, backTappedFromWebContentStep: .backTappedFromPrivacyPolicy)
+            
+        case .backTappedFromPrivacyPolicy:
+            navigationController.popViewController(animated: true)
             
         case .copyrightInfoTappedFromMenu:
             
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
             
-            navigateToWebContentView(webContent: copyrightInfoWebContent)
+            pushWebContentView(webContent: copyrightInfoWebContent, backTappedFromWebContentStep: .backTappedFromCopyrightInfo)
+            
+        case .backTappedFromCopyrightInfo:
+            navigationController.popViewController(animated: true)
             
         case .deleteAccountTappedFromMenu:
             
@@ -269,23 +283,62 @@ class MenuFlow: Flow {
         return hostingView
     }
     
-    private func getWebContentView(webContent: WebContentType) -> UIViewController {
+    private func getWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) -> UIViewController {
         
         let viewModel = WebContentViewModel(
+            flowDelegate: self,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
-            webContent: webContent
+            webContent: webContent,
+            backTappedFromWebContentStep: backTappedFromWebContentStep
         )
         
         let view = WebContentView(viewModel: viewModel)
         
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
         return view
     }
     
-    private func navigateToWebContentView(webContent: WebContentType) {
+    private func pushWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) {
         
-        navigationController.pushViewController(getWebContentView(webContent: webContent), animated: true)
+        let view = getWebContentView(
+            webContent: webContent,
+            backTappedFromWebContentStep: backTappedFromWebContentStep
+        )
+        
+        navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Language Settings
+
+extension MenuFlow {
+    
+    private func navigateToLanguageSettings() {
+        
+        let languageSettingsFlow = LanguageSettingsFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        
+        self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
     }
 }
 

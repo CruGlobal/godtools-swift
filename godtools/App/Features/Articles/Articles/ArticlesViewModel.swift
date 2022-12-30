@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsToolParser
 
-class ArticlesViewModel: NSObject, ArticlesViewModelType {
+class ArticlesViewModel: NSObject {
     
     typealias AemUri = String
     
@@ -185,6 +185,16 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         
         self.articles = aemUris
         numberOfArticles.accept(value: aemUris.count)
+    }
+}
+
+// MARK: - Inputs
+
+extension ArticlesViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromArticles)
     }
     
     func pageViewed() {

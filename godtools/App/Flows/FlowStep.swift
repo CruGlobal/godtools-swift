@@ -96,12 +96,18 @@ enum FlowStep {
     case myAccountTappedFromMenu
     case aboutTappedFromMenu
     case helpTappedFromMenu
+    case backTappedFromHelp
     case contactUsTappedFromMenu
+    case backTappedFromContactUs
     case shareGodToolsTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
+    case backTappedFromShareAStoryWithUs
     case termsOfUseTappedFromMenu
+    case backTappedFromTermsOfUse
     case privacyPolicyTappedFromMenu
+    case backTappedFromPrivacyPolicy
     case copyrightInfoTappedFromMenu
+    case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
     
     // about
@@ -115,15 +121,20 @@ enum FlowStep {
     case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
     
     // language settings
+    case backTappedFromLanguageSettings
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
+    case backTappedFromChooseLanguage
     case languageTappedFromChooseLanguage
     case deleteLanguageTappedFromChooseLanguage
+    case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
     
     // article
     case backTappedFromArticleCategories
     case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
+    case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
+    case backTappedFromArticle
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
     

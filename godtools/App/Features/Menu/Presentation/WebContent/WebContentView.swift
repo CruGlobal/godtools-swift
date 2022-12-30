@@ -11,13 +11,13 @@ import WebKit
 
 class WebContentView: UIViewController {
     
-    private let viewModel: WebContentViewModelType
+    private let viewModel: WebContentViewModel
         
     private var webView: WKWebView!
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    required init(viewModel: WebContentViewModelType) {
+    required init(viewModel: WebContentViewModel) {
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
         super.init(nibName: String(describing: WebContentView.self), bundle: nil)
@@ -37,8 +37,6 @@ class WebContentView: UIViewController {
             
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {

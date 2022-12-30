@@ -11,14 +11,14 @@ import WebKit
 
 class ArticleWebView: UIViewController {
     
-    private let viewModel: ArticleWebViewModelType
+    private let viewModel: ArticleWebViewModel
         
     private var webView: WKWebView!
     private var shareButton: UIBarButtonItem?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    required init(viewModel: ArticleWebViewModelType) {
+    required init(viewModel: ArticleWebViewModel) {
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
         super.init(nibName: String(describing: ArticleWebView.self), bundle: nil)
@@ -38,9 +38,7 @@ class ArticleWebView: UIViewController {
             
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
-        
+                
         shareButton = addBarButtonItem(
             to: .right,
             image: ImageCatalog.navShare.uiImage,
