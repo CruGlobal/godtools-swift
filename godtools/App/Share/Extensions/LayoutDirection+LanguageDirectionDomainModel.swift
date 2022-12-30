@@ -1,5 +1,5 @@
 //
-//  LanguageDirectionDomainModel+LayoutDirection.swift
+//  LayoutDirection+LanguageDirectionDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/15/22.
@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-extension LanguageDirectionDomainModel {
+extension LayoutDirection {
     
-    var layoutDirection: LayoutDirection {
-        switch self {
+    static func from(languageDirection: LanguageDirectionDomainModel) -> LayoutDirection {
+        switch languageDirection {
         case .leftToRight:
             return .leftToRight
         case .rightToLeft:
