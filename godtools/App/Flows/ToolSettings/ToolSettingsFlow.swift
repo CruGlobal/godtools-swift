@@ -75,7 +75,7 @@ class ToolSettingsFlow: Flow {
         case .shareLinkTappedFromToolSettings:
                     
             let resource: ResourceModel = toolData.renderer.value.resource
-            let language: LanguageModel = toolData.currentPageRenderer.value.language
+            let language: LanguageDomainModel = toolData.currentPageRenderer.value.language
             
             let viewModel = ShareToolViewModel(
                 resource: resource,

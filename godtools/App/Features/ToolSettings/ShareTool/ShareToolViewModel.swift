@@ -18,7 +18,7 @@ class ShareToolViewModel: ShareToolViewModelType {
     
     let shareMessage: String
     
-    init(resource: ResourceModel, language: LanguageModel, pageNumber: Int, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
                 
         self.resource = resource
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
@@ -26,7 +26,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         self.analytics = analytics
         self.pageNumber = pageNumber
         
-        var shareUrlString: String = "https://www.knowgod.com/\(language.code)/\(resource.abbreviation)"
+        var shareUrlString: String = "https://www.knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             shareUrlString = shareUrlString.appending("/").appending("\(pageNumber)")

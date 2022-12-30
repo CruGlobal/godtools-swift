@@ -47,7 +47,7 @@ class MobileContentPagesViewModel: NSObject {
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         
-        switch renderer.primaryLanguage.languageDirection {
+        switch renderer.primaryLanguage.direction {
         case .leftToRight:
             pageNavigationSemanticContentAttribute = .forceLeftToRight
         case .rightToLeft:
@@ -79,7 +79,7 @@ class MobileContentPagesViewModel: NSObject {
         for pageRenderer in renderer.value.pageRenderers {
             
             let resource: ResourceModel = pageRenderer.resource
-            let language: LanguageModel = pageRenderer.language
+            let language: LanguageDomainModel = pageRenderer.language
             let currentTranslation: TranslationModel = pageRenderer.translation
             
             guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
@@ -115,7 +115,7 @@ class MobileContentPagesViewModel: NSObject {
                 for pageRenderer in currentRenderer.pageRenderers {
                     
                     let resource: ResourceModel = pageRenderer.resource
-                    let language: LanguageModel = pageRenderer.language
+                    let language: LanguageDomainModel = pageRenderer.language
                     let currentTranslation: TranslationModel = pageRenderer.translation
                     
                     let updatedManifest: Manifest
@@ -225,7 +225,7 @@ class MobileContentPagesViewModel: NSObject {
     
     private func trackContentEvent(eventId: EventId) {
         
-        let language: LanguageModel = currentPageRenderer.value.language
+        let language: LanguageDomainModel = currentPageRenderer.value.language
         
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,

@@ -195,7 +195,6 @@ class AppDiContainer {
     
     func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
         return GetTranslatedLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: localizationServices
         )
     }
