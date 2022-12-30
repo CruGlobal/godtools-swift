@@ -130,6 +130,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
+        return GetOnboardingTutorialAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
+        )
+    }
+    
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
         return RemoveToolFromFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
@@ -157,6 +164,13 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
+        return GetSetupParallelLanguageAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
     }
     

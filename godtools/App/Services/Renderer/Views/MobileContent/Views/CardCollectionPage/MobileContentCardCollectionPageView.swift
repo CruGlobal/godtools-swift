@@ -62,18 +62,18 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
         previousCardButton.translatesAutoresizingMaskIntoConstraints = false
         previousCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
-        previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
-        previousCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
-        previousCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
+        _ = previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
+        _ = previousCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
+        _ = previousCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
         // nextButton
         addSubview(nextCardButton)
         nextCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
         nextCardButton.translatesAutoresizingMaskIntoConstraints = false
         nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets)
-        nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
-        nextCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
-        nextCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
+        _ = nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
+        _ = nextCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
+        _ = nextCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
         updatePreviousAndNextButtonVisibility(page: 0)
     }

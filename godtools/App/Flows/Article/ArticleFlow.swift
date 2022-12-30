@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class ArticleFlow: Flow {
     
@@ -28,7 +29,7 @@ class ArticleFlow: Flow {
             resource: toolTranslations.tool,
             language: languageTranslationManifest.language,
             manifest: languageTranslationManifest.manifest,
-            articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
+            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
             localizationServices: appDiContainer.localizationServices,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
@@ -54,37 +55,21 @@ class ArticleFlow: Flow {
         
         case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest, let currentArticleDownloadReceipt):
             
-            let viewModel = ArticlesViewModel(
-                flowDelegate: self,
-                resource: resource,
-                language: language,
-                category: category,
-                manifest: manifest,
-                articleManifestAemRepository: appDiContainer.getArticleManifestAemRepository(),
-                localizationServices: appDiContainer.localizationServices,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
-                currentArticleDownloadReceipt: currentArticleDownloadReceipt
-            )
-            let view = ArticlesView(viewModel: viewModel)
+            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: currentArticleDownloadReceipt)
             
             navigationController.pushViewController(view, animated: true)
+            
+        case .backTappedFromArticles:
+            navigationController.popViewController(animated: true)
                         
         case .articleTappedFromArticles(let resource, let aemCacheObject):
             
-            let viewModel = ArticleWebViewModel(
-                flowDelegate: self,
-                aemCacheObject: aemCacheObject,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
-                flowType: .tool(resource: resource)
-            )
-            
-            let view = ArticleWebView(viewModel: viewModel)
+            let view = getArticle(resource: resource, aemCacheObject: aemCacheObject)
             
             navigationController.pushViewController(view, animated: true)
+            
+        case .backTappedFromArticle:
+            navigationController.popViewController(animated: true)
             
         case .sharedTappedFromArticle(let articleAemData):
             
@@ -105,3 +90,52 @@ class ArticleFlow: Flow {
     }
 }
 
+extension ArticleFlow {
+    
+    func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
+        
+        let viewModel = ArticlesViewModel(
+            flowDelegate: self,
+            resource: resource,
+            language: language,
+            category: category,
+            manifest: manifest,
+            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            currentArticleDownloadReceipt: currentArticleDownloadReceipt
+        )
+        
+        let view = ArticlesView(viewModel: viewModel)
+        
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
+    }
+    
+    func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+        
+        let viewModel = ArticleWebViewModel(
+            flowDelegate: self,
+            aemCacheObject: aemCacheObject,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            flowType: .tool(resource: resource)
+        )
+        
+        let view = ArticleWebView(viewModel: viewModel)
+        
+        _ = view.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        return view
+    }
+}

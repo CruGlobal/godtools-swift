@@ -45,15 +45,4 @@ class LocalizationBundleLoader {
                 
         return nil
     }
-    
-    func bundleForPrimaryLanguage(in languageSettingsService: LanguageSettingsService) -> Bundle? {
-        guard let primaryLanguage = languageSettingsService.primaryLanguage.value else { return nil }
-
-        return bundleForResource(resourceName: primaryLanguage.code)
-    }
-    
-    func bundleForPrimaryLanguageOrFallback(in languageSettingsService: LanguageSettingsService) -> Bundle {
-        
-        return bundleForPrimaryLanguage(in: languageSettingsService) ?? englishBundle ?? Bundle.main
-    }
 }

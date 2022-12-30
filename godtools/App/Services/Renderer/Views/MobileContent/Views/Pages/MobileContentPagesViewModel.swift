@@ -422,7 +422,7 @@ class MobileContentPagesViewModel: NSObject {
         case .success(let mobileContentView):
             return mobileContentView
             
-        case .failure(let error):
+        case .failure( _):
             break
         }
         

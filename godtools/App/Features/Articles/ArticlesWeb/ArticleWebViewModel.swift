@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
+class ArticleWebViewModel: NSObject {
     
     private let aemCacheObject: ArticleAemCacheObject
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -61,6 +61,30 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     private var analyticsSiteSubSection: String {
         return "article"
     }
+    
+    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
+        
+        isLoading.accept(value: true)
+        
+        webView.navigationDelegate = self
+        
+        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
+            webView.load(URLRequest(url: webUrl))
+        }
+        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
+            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
+        }
+    }
+}
+
+// MARK: - Inputs
+
+extension ArticleWebViewModel {
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromArticle)
+    }
 
     func pageViewed() {
         
@@ -82,21 +106,9 @@ class ArticleWebViewModel: NSObject, ArticleWebViewModelType {
     func loadWebPage(webView: WKWebView) {
         loadWebPage(webView: webView, shouldLoadFromFile: false)
     }
-    
-    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
-        
-        isLoading.accept(value: true)
-        
-        webView.navigationDelegate = self
-        
-        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
-            webView.load(URLRequest(url: webUrl))
-        }
-        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
-            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
-        }
-    }
 }
+
+// MARK: - WKNavigationDelegate
 
 extension ArticleWebViewModel: WKNavigationDelegate {
     

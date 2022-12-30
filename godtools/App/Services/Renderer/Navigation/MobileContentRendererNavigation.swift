@@ -43,7 +43,7 @@ class MobileContentRendererNavigation {
             case .allToolsList:
                 break
             
-            case .article(let articleURI):
+            case .article( _):
                 break
             
             case .favoritedToolsList:

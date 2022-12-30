@@ -12,9 +12,7 @@ import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    private let appWindow: UIWindow = UIWindow(frame: UIScreen.main.bounds)
-        
+            
     private lazy var appBuild: AppBuild = {
        AppBuild(infoPlist: infoPlist)
     }()
@@ -40,13 +38,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private lazy var appFlow: AppFlow = {
-        AppFlow(appDiContainer: appDiContainer, window: appWindow, appDeepLinkingService: appDeepLinkingService)
+        AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
     }()
     
     var window: UIWindow?
     
+    static func getWindow() -> UIWindow? {
+        return (UIApplication.shared.delegate as? AppDelegate)?.window
+    }
+    
     static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
-        (UIApplication.shared.delegate as? AppDelegate)?.window?.backgroundColor = color
+        AppDelegate.getWindow()?.backgroundColor = color
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -76,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // window
-        let window: UIWindow = appWindow
+        let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
         window.rootViewController = appFlow.rootController
         window.makeKeyAndVisible()

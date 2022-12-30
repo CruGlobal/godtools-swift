@@ -24,7 +24,7 @@ class ArticleDeepLinkFlow: Flow {
         self.navigationController = sharedNavigationController
         self.aemUri = aemUri
         
-        let articleAemRepository: ArticleAemRepository = appDiContainer.getArticleAemRepository()
+        let articleAemRepository: ArticleAemRepository = appDiContainer.dataLayer.getArticleAemRepository()
         
         if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
             

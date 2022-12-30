@@ -10,20 +10,21 @@ import UIKit
 
 class FontService {
     
-    private let languageSettings: LanguageSettingsService
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
-    required init(languageSettings: LanguageSettingsService) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         
-        self.languageSettings = languageSettings
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
     }
     
     func getFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
         
-        guard let primaryLanguageCode: String = languageSettings.primaryLanguage.value?.code, !primaryLanguageCode.isEmpty else {
-            
+        // TODO: I think this needs to be a use case for fetching a font based on settings primary language. ~Levi
+        
+        guard let primaryLanguageCode = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier, !primaryLanguageCode.isEmpty else {
             return getDefaultFont(size: size, weight: weight)
         }
-        
+
         let font: UIFont?
         
         if primaryLanguageCode == "am" {

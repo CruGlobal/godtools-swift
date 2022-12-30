@@ -59,8 +59,8 @@ class MobileContentButtonView: MobileContentView {
         addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.constrainTopToView(view: self)
-        buttonView.constrainBottomToView(view: self)
-        buttonView.addHeightConstraint(
+        _ = buttonView.constrainBottomToView(view: self)
+        _ = buttonView.addHeightConstraint(
             constant: MobileContentButtonView.buttonHeight,
             relatedBy: .greaterThanOrEqual,
             priority: 1000
@@ -92,7 +92,7 @@ class MobileContentButtonView: MobileContentView {
         buttonView.addSubview(buttonTitle)
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
         buttonTitle.constrainTopToView(view: self)
-        buttonTitle.constrainBottomToView(view: self)
+        _ = buttonTitle.constrainBottomToView(view: self)
         
         if buttonIcon == nil {
             buttonTitle.constrainLeadingToView(view: self)
@@ -158,8 +158,8 @@ class MobileContentButtonView: MobileContentView {
                 addConstraint(trailing)
             }
             
-            buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
-            buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
+            _ = buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
+            _ = buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
             
             self.buttonImageView = buttonImageView
         }
@@ -182,7 +182,7 @@ class MobileContentButtonView: MobileContentView {
         case .percentageOfContainer(let value):
             buttonViewWidthConstraint?.constant = containerWidth * value
             layoutIfNeeded()
-        case .points(let value):
+        case .points( _):
             break
         }
     }
