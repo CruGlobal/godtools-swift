@@ -14,16 +14,16 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     private let callToActionModel: CallToAction?
     private let fontService: FontService
         
-    required init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
         self.fontService = fontService
         
-        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.primaryRendererLanguage.languageDirection.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.direction)
     }
     
     var title: String? {
@@ -36,7 +36,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     
     var titleTextAlignment: NSTextAlignment {
         
-        switch renderedPageContext.language.languageDirection {
+        switch renderedPageContext.language.direction {
         case .leftToRight:
             return .left
         case .rightToLeft:

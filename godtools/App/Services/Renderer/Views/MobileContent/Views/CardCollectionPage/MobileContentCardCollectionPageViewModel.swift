@@ -14,12 +14,12 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     private let cardCollectionPage: CardCollectionPage
     private let analytics: AnalyticsContainer
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.analytics = analytics
         
-        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
+        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
     private func getPageAnalyticsScreenName() -> String {
@@ -86,7 +86,7 @@ extension MobileContentCardCollectionPageViewModel {
             screenName: getPageAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil
         )
         
@@ -99,7 +99,7 @@ extension MobileContentCardCollectionPageViewModel {
             screenName: getCardAnalyticsScreenName(card: card),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil
         )
         

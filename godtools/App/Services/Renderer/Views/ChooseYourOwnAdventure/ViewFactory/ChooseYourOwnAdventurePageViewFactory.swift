@@ -12,10 +12,12 @@ import GodToolsToolParser
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
     private let analytics: AnalyticsContainer
+    private let mobileContentAnalytics: MobileContentAnalytics
         
-    required init(analytics: AnalyticsContainer) {
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.analytics = analytics
+        self.mobileContentAnalytics = mobileContentAnalytics
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -45,6 +47,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentContentPageViewModel(
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
                 analytics: analytics
             )
             
@@ -60,7 +63,8 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
-                renderedPageContext: renderedPageContext
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentFlowView(viewModel: viewModel)

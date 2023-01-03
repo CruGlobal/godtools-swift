@@ -28,7 +28,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
         
         hidesShadow = multiSelectOptionModel.style == .flat
         
-        super.init(baseModel: multiSelectOptionModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: multiSelectOptionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
 

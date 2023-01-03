@@ -100,7 +100,7 @@ extension MobileContentFlowView {
             
             super.renderChild(childView: row)
             
-            row.renderFlowItem(flowItemView: flowItemView)
+            _ = row.renderFlowItem(flowItemView: flowItemView)
         }
     }
 }

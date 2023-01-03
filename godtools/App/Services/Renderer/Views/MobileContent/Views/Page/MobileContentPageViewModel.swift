@@ -15,12 +15,12 @@ class MobileContentPageViewModel: MobileContentViewModel {
     private let pageModel: Page
     private let hidesBackgroundImage: Bool
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.hidesBackgroundImage = hidesBackgroundImage
         
-        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var analyticsScreenName: String {
@@ -89,7 +89,7 @@ extension MobileContentPageViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: model,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.languageDirection
+            languageDirection: renderedPageContext.language.direction
         )
     }
     
@@ -99,7 +99,7 @@ extension MobileContentPageViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil,
             url: url
         )

@@ -65,7 +65,7 @@ extension StarscreamWebSocket {
             isConnected = true
             didConnectSignal.accept()
         
-        case .disconnected(let reason, let code):
+        case .disconnected( _, _):
             isConnected = false
             didDisconnectSignal.accept()
         
@@ -81,16 +81,16 @@ extension StarscreamWebSocket {
         case .pong(_):
             break
         
-        case .viabilityChanged(let changed):
+        case .viabilityChanged( _):
             break
         
-        case .reconnectSuggested(let suggested):
+        case .reconnectSuggested( _):
             break
         
         case .cancelled:
             isConnected = false
         
-        case .error(let error):
+        case .error( _):
             isConnected = false
             break
         }

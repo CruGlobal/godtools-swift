@@ -30,7 +30,8 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .chooseYourOwnAdventure:
             
             let chooseYourOwnAdventureViewFactory = ChooseYourOwnAdventurePageViewFactory(
-                analytics: analytics
+                analytics: analytics,
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             pageViewFactories = [chooseYourOwnAdventureViewFactory]
@@ -53,6 +54,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+                mobileContentAnalytics: mobileContentAnalytics,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
@@ -71,6 +73,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+                mobileContentAnalytics: mobileContentAnalytics,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             
@@ -79,6 +82,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .trainingTip:
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+                mobileContentAnalytics: mobileContentAnalytics,
                 viewedTrainingTipsService: viewedTrainingTipsService
             )
             

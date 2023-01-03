@@ -12,7 +12,7 @@ class LocalizationServices {
             
     let bundleLoader: LocalizationBundleLoader = LocalizationBundleLoader()
                  
-    required init() {
+    init() {
             
     }
 

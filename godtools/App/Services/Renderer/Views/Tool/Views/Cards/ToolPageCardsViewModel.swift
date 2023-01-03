@@ -16,14 +16,12 @@ class ToolPageCardsViewModel: MobileContentViewModel {
     
     let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, cardJumpService: CardJumpService) {
-        
-        let visibleCards: [TractPage.Card] = cards.filter({!$0.isHidden})
-        
+    init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, cardJumpService: CardJumpService) {
+                
         self.cards = cards
         self.cardJumpService = cardJumpService
         
-        super.init(baseModels: cards, renderedPageContext: renderedPageContext)
+        super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
         setupBinding()
         

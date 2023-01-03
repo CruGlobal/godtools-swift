@@ -15,10 +15,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
-    private let window: UIWindow
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
-    private let viewsService: ViewsService
+    private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
     
     private var onboardingFlow: OnboardingFlow?
@@ -45,14 +44,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
             
-    init(appDiContainer: AppDiContainer, window: UIWindow, appDeepLinkingService: DeepLinkingService) {
+    init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.window = window
         self.navigationController = UINavigationController()
         self.dataDownloader = appDiContainer.initialDataDownloader
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
-        self.viewsService = appDiContainer.viewsService
+        self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
         
         super.init()
@@ -83,7 +81,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         _ = followUpsService.postFailedFollowUpsIfNeeded()
         
-        _ = viewsService.postFailedResourceViewsIfNeeded()
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
         let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
 
@@ -107,7 +105,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 appLaunchedFromDeepLink = nil
                 navigate(step: .deepLink(deepLinkType: deepLink))
             }
-            else if appDiContainer.getOnboardingTutorialAvailability().onboardingTutorialIsAvailable {
+            else if appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: false))
             }
@@ -136,7 +134,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 loadingView.addSubview(loadingImage)
                 loadingImage.image = ImageCatalog.launchImage.uiImage
                 loadingView.backgroundColor = .white
-                window.addSubview(loadingView)
+                AppDelegate.getWindow()?.addSubview(loadingView)
                 
                 navigateToDashboard()
                                 
@@ -199,11 +197,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let translationsRepository: TranslationsRepository = appDiContainer.dataLayer.getTranslationsRepository()
             let localizationServices: LocalizationServices = appDiContainer.localizationServices
-            let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
+            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            let settingsPrimaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
             
             let toolName: String
             
-            if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            if let settingsPrimaryLanguage = settingsPrimaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: settingsPrimaryLanguage.dataModelId) {
                 toolName = primaryTranslation.translatedName
             }
             else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
@@ -229,7 +228,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
-        case .articleFlowCompleted(let state):
+        case .articleFlowCompleted( _):
             
             guard articleFlow != nil else {
                 return
@@ -285,12 +284,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                 
-                setupNavBar()
+                configureNavBarForDashboard()
                 navigationController.popToViewController(dashboardInNavigationStack, animated: true)
             }
             else {
                 
-                setupNavBar()
+                configureNavBarForDashboard()
                 _ = navigationController.popViewController(animated: true)
             }
             
@@ -304,12 +303,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 
                 if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                     
-                    setupNavBar()
+                    configureNavBarForDashboard()
                     navigationController.popToViewController(dashboardInNavigationStack, animated: true)
                 }
                 else {
                     
-                    setupNavBar()
+                    configureNavBarForDashboard()
                     _ = navigationController.popViewController(animated: true)
                 }
                 
@@ -372,6 +371,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .languageSettingsTappedFromTools:
             navigateToLanguageSettings()
+            
+        case .languageSettingsFlowCompleted( _):
+            closeLanguageSettings()
             
         case .userViewedFavoritedToolsListFromTools:
             presentSetupParallelLanguage()
@@ -570,23 +572,12 @@ extension AppFlow {
         return dashboardHostingController
     }
     
-    private func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    private func configureNavBarForDashboard() {
         
-        if let dashboard = getDashboardInNavigationStack() {
-            
-            dashboard.rootView.navigateToTab(startingTab)
-            setupNavBar()
-            navigationController.popToViewController(dashboard, animated: true)
-        }
-        else {
-            
-            buildNewDashboard(startingTab: startingTab, animatePopToToolsMenu: animatePopToToolsMenu, animateDismissingPresentedView: animateDismissingPresentedView, didCompleteDismissingPresentedView: didCompleteDismissingPresentedView)
-        }
-    }
-    
-    private func setupNavBar() {
         AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        
         navigationController.setNavigationBarHidden(false, animated: true)
+        
         navigationController.navigationBar.setupNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
@@ -596,13 +587,21 @@ extension AppFlow {
         )
     }
     
-    private func buildNewDashboard(startingTab: DashboardTabTypeDomainModel, animatePopToToolsMenu: Bool, animateDismissingPresentedView: Bool, didCompleteDismissingPresentedView: (() -> Void)?) {
+    private func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
         
-        let dashboard = getNewDashboardView(startingTab: startingTab)
+        if let dashboard = getDashboardInNavigationStack() {
+            
+            dashboard.rootView.navigateToTab(startingTab)
+        }
+        else {
+            
+            let dashboard = getNewDashboardView(startingTab: startingTab)
+            
+            navigationController.setViewControllers([dashboard], animated: false)
+        }
         
-        navigationController.setViewControllers([dashboard], animated: false)
+        configureNavBarForDashboard()
         
-        setupNavBar()
         closeMenu(animated: false)
         
         onboardingFlow = nil
@@ -613,7 +612,7 @@ extension AppFlow {
         lessonFlow = nil
         tractFlow = nil
         articleFlow = nil
-                                
+        
         navigationController.popToRootViewController(animated: animatePopToToolsMenu)
         
         navigationController.dismissPresented(
@@ -665,10 +664,9 @@ extension AppFlow {
         
         case .tool(let toolDeepLink):
                
-            navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
-                
-                self?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-            })
+            navigateToDashboard(startingTab: .favorites, animatePopToToolsMenu: false, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+                        
+            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
         case .article(let articleUri):
             
@@ -713,6 +711,17 @@ extension AppFlow {
         )
         
         self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
     }
 }
 
@@ -896,8 +905,12 @@ extension AppFlow {
 extension AppFlow {
     
     private func presentSetupParallelLanguage() {
-                            
-        guard appDiContainer.getSetupParallelLanguageAvailability().setupParallelLanguageIsAvailable else {
+                    
+        let setupParallelLanguageAvailabilityUseCase = appDiContainer.domainLayer.getSetupParallelLanguageAvailabilityUseCase()
+        
+        let setupParallelLanguageIsAvailable: Bool = setupParallelLanguageAvailabilityUseCase.getSetupParallelLanguageIsAvailable().isAvailable
+        
+        guard setupParallelLanguageIsAvailable else {
             return
         }
                 
@@ -912,8 +925,8 @@ extension AppFlow {
             let viewModel = SetupParallelLanguageViewModel(
                 flowDelegate: weakSelf,
                 localizationServices: appDiContainer.localizationServices,
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                setupParallelLanguageAvailability: appDiContainer.getSetupParallelLanguageAvailability()
+                setupParallelLanguageViewedRepository: appDiContainer.dataLayer.getSetupParallelLanguageViewedRepository(),
+                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
             )
             let view = SetupParallelLanguageView(viewModel: viewModel)
             
@@ -925,7 +938,7 @@ extension AppFlow {
     
     private func presentParallelLanguage() {
         
-        let viewModel = ParallelLanguageListViewModel(
+        let viewModel = ChooseParallelLanguageListViewModel(
             flowDelegate: self,
             getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
@@ -933,7 +946,7 @@ extension AppFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
-        let view = ParallelLanguageListView(viewModel: viewModel)
+        let view = ChooseParallelLanguageListView(viewModel: viewModel)
         
         let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
         

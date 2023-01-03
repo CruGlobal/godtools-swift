@@ -15,15 +15,17 @@ class GetToolTranslationsFilesUseCase {
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
+    private let getLanguageUseCase: GetLanguageUseCase
     
     private var getToolTranslationsCancellable: AnyCancellable?
     private var didInitiateDownloadStarted: Bool = false
         
-    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
+    init(resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository, getLanguageUseCase: GetLanguageUseCase) {
 
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository
+        self.getLanguageUseCase = getLanguageUseCase
     }
     
     func getToolTranslationsFiles(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
@@ -131,7 +133,11 @@ class GetToolTranslationsFilesUseCase {
                         return nil
                     }
                     
-                    return MobileContentRendererLanguageTranslationManifest(manifest: $0.manifest, language: language, translation: $0.translation)
+                    return MobileContentRendererLanguageTranslationManifest(
+                        manifest: $0.manifest,
+                        language: self.getLanguageUseCase.getLanguage(language: language),
+                        translation: $0.translation
+                    )
                 })
                 
                 let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)

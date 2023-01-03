@@ -12,8 +12,8 @@ class ToolLanguageSegmentViewModel {
         
     let title: String
     
-    required init(language: LanguageModel, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase) {
+    required init(language: LanguageDomainModel) {
         
-        self.title = getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
+        self.title = language.translatedName
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 protocol ToolNavBarViewDelegate: AnyObject {
     
     func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool)
-    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageModel)
+    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageDomainModel)
     func navBarLanguageChanged(navBar: ToolNavBarView)
 }
 
@@ -191,9 +191,7 @@ class ToolNavBarView: NSObject {
     }
     
     private func setRemoteShareActiveNavItem(hidden: Bool) {
-        
-        let position: ButtonItemPosition = .right
-        
+                
         if hidden, let remoteShareActiveNavItem = self.remoteShareActiveNavItem {
             parentViewController?.removeBarButtonItem(item: remoteShareActiveNavItem)
             self.remoteShareActiveNavItem = nil

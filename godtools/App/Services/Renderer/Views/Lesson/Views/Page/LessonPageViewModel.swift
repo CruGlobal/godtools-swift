@@ -26,7 +26,7 @@ class LessonPageViewModel: MobileContentPageViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
 }
 
@@ -42,7 +42,7 @@ extension LessonPageViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil
         )
         

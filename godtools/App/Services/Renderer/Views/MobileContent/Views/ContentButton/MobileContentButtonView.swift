@@ -18,7 +18,6 @@ class MobileContentButtonView: MobileContentView {
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     
-    private var tapGesture: UITapGestureRecognizer?
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     
@@ -30,11 +29,6 @@ class MobileContentButtonView: MobileContentView {
         
         setupLayout()
         setupBinding()
-        
-        // tapGesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
-        addGestureRecognizer(tapGesture)
-        self.tapGesture = tapGesture
     }
     
     required init?(coder: NSCoder) {
@@ -65,8 +59,8 @@ class MobileContentButtonView: MobileContentView {
         addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.constrainTopToView(view: self)
-        buttonView.constrainBottomToView(view: self)
-        buttonView.addHeightConstraint(
+        _ = buttonView.constrainBottomToView(view: self)
+        _ = buttonView.addHeightConstraint(
             constant: MobileContentButtonView.buttonHeight,
             relatedBy: .greaterThanOrEqual,
             priority: 1000
@@ -98,7 +92,7 @@ class MobileContentButtonView: MobileContentView {
         buttonView.addSubview(buttonTitle)
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
         buttonTitle.constrainTopToView(view: self)
-        buttonTitle.constrainBottomToView(view: self)
+        _ = buttonTitle.constrainBottomToView(view: self)
         
         if buttonIcon == nil {
             buttonTitle.constrainLeadingToView(view: self)
@@ -164,8 +158,8 @@ class MobileContentButtonView: MobileContentView {
                 addConstraint(trailing)
             }
             
-            buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
-            buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
+            _ = buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
+            _ = buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
             
             self.buttonImageView = buttonImageView
         }
@@ -188,14 +182,9 @@ class MobileContentButtonView: MobileContentView {
         case .percentageOfContainer(let value):
             buttonViewWidthConstraint?.constant = containerWidth * value
             layoutIfNeeded()
-        case .points(let value):
+        case .points( _):
             break
         }
-    }
-    
-    @objc private func buttonTapped() {
-        
-        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

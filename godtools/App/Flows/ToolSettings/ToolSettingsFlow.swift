@@ -14,8 +14,8 @@ class ToolSettingsFlow: Flow {
     
     private let toolData: ToolSettingsFlowToolData
     private let tool: ToolSettingsToolType
-    private let settingsPrimaryLanguage: CurrentValueSubject<LanguageModel, Never>
-    private let settingsParallelLanguage: CurrentValueSubject<LanguageModel?, Never>
+    private let settingsPrimaryLanguage: CurrentValueSubject<LanguageDomainModel, Never>
+    private let settingsParallelLanguage: CurrentValueSubject<LanguageDomainModel?, Never>
     
     private var shareToolScreenTutorialModal: UIViewController?
     private var loadToolRemoteSessionModal: UIViewController?
@@ -44,7 +44,6 @@ class ToolSettingsFlow: Flow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            getTranslatedLanguageUseCase: appDiContainer.getTranslatedLanguageUseCase(),
             getShareableImageUseCase: appDiContainer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
@@ -75,7 +74,7 @@ class ToolSettingsFlow: Flow {
         case .shareLinkTappedFromToolSettings:
                     
             let resource: ResourceModel = toolData.renderer.value.resource
-            let language: LanguageModel = toolData.currentPageRenderer.value.language
+            let language: LanguageDomainModel = toolData.currentPageRenderer.value.language
             
             let viewModel = ShareToolViewModel(
                 resource: resource,
@@ -137,8 +136,8 @@ class ToolSettingsFlow: Flow {
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.getTractRemoteShareURLBuilder()
                 
                 let resource: ResourceModel = toolData.renderer.value.resource
-                let primaryLanguage: LanguageModel = settingsPrimaryLanguage.value
-                let parallelLanguage: LanguageModel? = settingsParallelLanguage.value
+                let primaryLanguage: LanguageDomainModel = settingsPrimaryLanguage.value
+                let parallelLanguage: LanguageDomainModel? = settingsParallelLanguage.value
                 
                 guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
@@ -305,7 +304,7 @@ class ToolSettingsFlow: Flow {
       
         var languagesList: [LanguageDomainModel] = toolLanguages
         
-        let selectedLanguage: LanguageModel?
+        let selectedLanguage: LanguageDomainModel?
         let deleteTappedClosure: (() -> Void)?
         
         switch languageListType {
@@ -393,7 +392,7 @@ class ToolSettingsFlow: Flow {
     
     private func setToolLanguages(languageIds: [String]) {
         
-        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        let getLanguageUseCase: GetLanguageUseCase = appDiContainer.domainLayer.getLanguageUseCase()
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,
@@ -412,11 +411,11 @@ class ToolSettingsFlow: Flow {
             
             case .success(let toolTranslations):
                 
-                if let primaryLanguageId = languageIds.first, let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
+                if let primaryLanguageId = languageIds.first, let primaryLanguage = getLanguageUseCase.getLanguage(id: primaryLanguageId) {
                     weakSelf.settingsPrimaryLanguage.send(primaryLanguage)
                 }
                 
-                if let parallelLanguageId = languageIds[safe: 1], let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
+                if let parallelLanguageId = languageIds[safe: 1], let parallelLanguage = getLanguageUseCase.getLanguage(id: parallelLanguageId) {
                     weakSelf.settingsParallelLanguage.send(parallelLanguage)
                 }
                 else {
@@ -426,7 +425,7 @@ class ToolSettingsFlow: Flow {
                 let newRenderer: MobileContentRenderer = weakSelf.toolData.renderer.value.copy(toolTranslations: toolTranslations)
                 weakSelf.tool.setRenderer(renderer: newRenderer)
                 
-            case .failure(let error):
+            case .failure( _):
                 break
             }
             

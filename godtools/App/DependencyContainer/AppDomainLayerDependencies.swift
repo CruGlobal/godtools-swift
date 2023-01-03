@@ -130,6 +130,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
+        return GetOnboardingTutorialAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
+        )
+    }
+    
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
         return RemoveToolFromFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
@@ -157,6 +164,13 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
+        return GetSetupParallelLanguageAvailabilityUseCase(
+            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
     }
     
@@ -248,7 +262,8 @@ class AppDomainLayerDependencies {
         return GetToolTranslationsFilesUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository(),
-            languagesRepository: dataLayer.getLanguagesRepository()
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getLanguageUseCase: getLanguageUseCase()
         )
     }
     
@@ -280,6 +295,13 @@ class AppDomainLayerDependencies {
     func getUserAccountProfileNameUseCase() -> GetUserAccountProfileNameUseCase {
         return GetUserAccountProfileNameUseCase(
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+        )
+    }
+    
+    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
+        return GetUserAccountDetailsUseCase(
+            repository: dataLayer.getUserDetailsRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     

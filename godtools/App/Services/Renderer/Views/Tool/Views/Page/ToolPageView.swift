@@ -343,7 +343,7 @@ extension ToolPageView: ToolPageCardsViewDelegate {
             setHeaderHidden(hidden: true, animated: animated)
             setCallToActionHidden(hidden: !isShowingLastVisibleCard, animated: animated)
             
-        case .showingKeyboard(let showingCardAtPosition):
+        case .showingKeyboard( _):
             break
             
         case .collapseAllCards:

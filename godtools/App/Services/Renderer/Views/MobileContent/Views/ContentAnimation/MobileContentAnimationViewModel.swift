@@ -42,6 +42,6 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             animatedViewModel = nil
         }
         
-        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }

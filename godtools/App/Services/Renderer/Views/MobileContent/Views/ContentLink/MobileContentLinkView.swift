@@ -21,8 +21,6 @@ class MobileContentLinkView: MobileContentView {
         
         setupLayout()
         setupBinding()
-        
-        linkButton.addTarget(self, action: #selector(handleLinkTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -58,11 +56,6 @@ class MobileContentLinkView: MobileContentView {
         linkButton.titleLabel?.font = viewModel.font
         linkButton.setTitle(viewModel.title, for: .normal)
         linkButton.setTitleColor(viewModel.titleColor, for: .normal)
-    }
-    
-    @objc func handleLinkTapped() {
-        
-        super.viewTapped(mobileContentAnalytics: viewModel.mobileContentAnalytics)
     }
     
     // MARK: - MobileContentView

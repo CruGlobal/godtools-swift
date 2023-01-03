@@ -40,8 +40,8 @@ struct AccountUserDetailsView: View {
                 
                 FixedVerticalSpacer(height: 9)
                 
-                Text("")
-                    .font(FontLibrary.sfProTextRegular.font(size: 14))
+                Text(viewModel.joinedOnText)
+                    .font(FontLibrary.sfProTextRegular.font(size: 11))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
                 

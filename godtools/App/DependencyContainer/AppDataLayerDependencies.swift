@@ -45,6 +45,33 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
+    func getArticleAemRepository() -> ArticleAemRepository {
+        return ArticleAemRepository(
+            downloader: ArticleAemDownloader(
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: ArticleAemCache(
+                realmDatabase: sharedRealmDatabase,
+                webArchiveQueue: getWebArchiveQueue()
+            )
+        )
+    }
+    
+    func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
+        return ArticleManifestAemRepository(
+            downloader: ArticleAemDownloader(
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
+            cache: ArticleAemCache(
+                realmDatabase: sharedRealmDatabase,
+                webArchiveQueue: getWebArchiveQueue()
+            ),
+            categoryArticlesCache: RealmCategoryArticlesCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
+    }
+    
     func getAttachmentsRepository() -> AttachmentsRepository {
         return AttachmentsRepository(
             api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
@@ -172,6 +199,18 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getOnboardingTutorialItemsRepository() -> OnboardingTutorialItemsRepository {
+        return OnboardingTutorialItemsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
+    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
+        return OnboardingTutorialViewedRepository(
+            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
     private func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
@@ -202,6 +241,20 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getResourceViewsService() -> ResourceViewsService {
+        
+        return ResourceViewsService(
+            resourceViewsApi: MobileContentResourceViewsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
+    func getSetupParallelLanguageViewedRepository() -> SetupParallelLanguageViewedRepository {
+        return SetupParallelLanguageViewedRepository(
+            cache: SetupParallelLanguageViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
+        )
+    }
+    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }
@@ -224,5 +277,24 @@ class AppDataLayerDependencies {
     
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
+    }
+    
+    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsRepository(
+            api: UserDetailsAPI(
+                config: getAppConfig(),
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                mobileContentApiAuthSession: getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserDetailsCache(
+                realmDatabase: sharedRealmDatabase,
+                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
+                authTokenRepository: getMobileContentAuthTokenRepository()
+            )
+        )
+    }
+    
+    func getWebArchiveQueue() -> WebArchiveQueue {
+        return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
 }

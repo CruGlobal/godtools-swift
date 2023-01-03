@@ -11,10 +11,67 @@ import Security
 
 class MobileContentAuthTokenKeychainAccessor {
     
-    private let serviceName = "mobileContent"
-    private let accountName = "authToken"
+    enum Service: String {
+        case mobileContent
+        case mobileContentAuthToken
+    }
+    
+    enum Account: String {
+        case userId
+    }
     
     func saveMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
+        
+        try saveUserId(authTokenDataModel.userId)
+        try saveAuthToken(authTokenDataModel)
+    }
+    
+    func getMobileContentAuthToken(userId: String) -> String? {
+        
+        let getQuery = buildGetQueryForAuthToken(userId: userId)
+        
+        var getResult: AnyObject?
+        let getStatus = SecItemCopyMatching(getQuery, &getResult)
+        let getResponse = KeychainServiceResponse(osStatus: getStatus)
+        
+        switch getResponse {
+            
+        case .success:
+            
+            return decodeString(from: getResult)
+            
+        default:
+            
+            return nil
+        }
+    }
+    
+    func getMobileContentUserId() -> String? {
+        
+        let getQuery = buildGetQueryForUserId()
+        
+        var getResult: AnyObject?
+        let getStatus = SecItemCopyMatching(getQuery, &getResult)
+        let getResponse = KeychainServiceResponse(osStatus: getStatus)
+        
+        switch getResponse {
+            
+        case .success:
+            
+            return decodeString(from: getResult)
+            
+        default:
+            
+            return nil
+        }
+    }
+}
+
+// MARK: - Private
+ 
+extension MobileContentAuthTokenKeychainAccessor {
+    
+    private func saveAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
         let saveQuery = buildSaveQueryFromAuthToken(authTokenDataModel)
         let saveStatus = SecItemAdd(saveQuery, nil)
@@ -36,30 +93,27 @@ class MobileContentAuthTokenKeychainAccessor {
         }
     }
     
-    func getMobileContentAuthToken() -> String? {
+    private func saveUserId(_ userId: String) throws {
         
-        let getQuery = buildGetQueryForAuthToken()
+        let saveQuery = buildSaveQueryFromUserId(userId)
+        let saveStatus = SecItemAdd(saveQuery, nil)
         
-        var getResult: AnyObject?
-        let getStatus = SecItemCopyMatching(getQuery, &getResult)
-        let getResponse = KeychainServiceResponse(osStatus: getStatus)
+        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
         
-        switch getResponse {
+        switch saveResponse {
             
         case .success:
+            return
             
-            return decodeAuthToken(from: getResult)
+        case .duplicateItem:
             
-        default:
+            try updateExistingMobileContentUserId(userId)
             
-            return nil
+        case .unhandledError(let error):
+            
+            throw error
         }
     }
-}
-
-// MARK: - Private
- 
-extension MobileContentAuthTokenKeychainAccessor {
     
     private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
@@ -82,13 +136,44 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
+    private func updateExistingMobileContentUserId(_ userId: String) throws {
+        
+        let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromUserId(userId)
+        
+        let updateStatus = SecItemUpdate(updateQuery, updateAttributes)
+        let updateResponse = KeychainServiceResponse(osStatus: updateStatus)
+        
+        switch updateResponse {
+            
+        case .success:
+            return
+            
+        case .unhandledError(let error):
+            
+            throw error
+            
+        default:
+            return
+        }
+    }
+    
     private func buildSaveQueryFromAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) -> CFDictionary {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: accountName,
+            kSecAttrService as String: Service.mobileContentAuthToken.rawValue,
+            kSecAttrAccount as String: authTokenDataModel.userId,
             kSecValueData as String: Data(authTokenDataModel.token.utf8)
+        ] as CFDictionary
+    }
+    
+    private func buildSaveQueryFromUserId(_ userId: String) -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.mobileContent.rawValue,
+            kSecAttrAccount as String: Account.userId.rawValue,
+            kSecValueData as String: Data(userId.utf8)
         ] as CFDictionary
     }
     
@@ -96,28 +181,53 @@ extension MobileContentAuthTokenKeychainAccessor {
         
         let updateQuery = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName
+            kSecAttrService as String: Service.mobileContentAuthToken.rawValue
         ] as CFDictionary
         
         let updateAttributes = [
-            kSecAttrAccount as String: accountName,
+            kSecAttrAccount as String: authTokenDataModel.userId,
             kSecValueData as String: Data(authTokenDataModel.token.utf8)
         ] as CFDictionary
         
         return (updateQuery, updateAttributes)
     }
     
-    private func buildGetQueryForAuthToken() -> CFDictionary {
+    private func buildUpdateQueryAndAttributesFromUserId(_ userId: String) -> (query: CFDictionary, updateAttributes: CFDictionary) {
+        
+        let updateQuery = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.mobileContent.rawValue
+        ] as CFDictionary
+        
+        let updateAttributes = [
+            kSecAttrAccount as String: Account.userId.rawValue,
+            kSecValueData as String: Data(userId.utf8)
+        ] as CFDictionary
+        
+        return (updateQuery, updateAttributes)
+    }
+    
+    private func buildGetQueryForAuthToken(userId: String) -> CFDictionary {
         
         return [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: accountName,
+            kSecAttrService as String: Service.mobileContentAuthToken.rawValue,
+            kSecAttrAccount as String: userId,
             kSecReturnData as String: true
         ] as CFDictionary
     }
     
-    private func decodeAuthToken(from result: AnyObject?) -> String? {
+    private func buildGetQueryForUserId() -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.mobileContent.rawValue,
+            kSecAttrAccount as String: Account.userId.rawValue,
+            kSecReturnData as String: true
+        ] as CFDictionary
+    }
+    
+    private func decodeString(from result: AnyObject?) -> String? {
         
         guard let resultData = result as? Data else { return nil }
         return String(data: resultData, encoding: .utf8)

@@ -31,8 +31,13 @@ class LaunchCountRepository {
         cache.storeLaunchCount(launchCount: newLaunchCount)
     }
     
-    func getLaunchCount() -> AnyPublisher<Int, Never> {
+    func getLaunchCount() -> Int {
         
-        return cache.getLaunchCount()
+        return cache.getLaunchCountValue()
+    }
+    
+    func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
+        
+        return cache.getLaunchCountPublisher()
     }
 }

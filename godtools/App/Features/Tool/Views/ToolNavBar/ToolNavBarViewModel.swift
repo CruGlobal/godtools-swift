@@ -16,11 +16,10 @@ class ToolNavBarViewModel: NSObject {
     private let resource: ResourceModel
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let fontService: FontService
     private let analytics: AnalyticsContainer
     
-    let languages: [LanguageModel]
+    let languages: [LanguageDomainModel]
     let backButtonImage: UIImage
     let navBarColor: UIColor
     let navBarControlColor: UIColor
@@ -28,14 +27,13 @@ class ToolNavBarViewModel: NSObject {
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let selectedLanguage: ObservableValue<Int>
     
-    init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
+    init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageDomainModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
         self.languages = languages
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.fontService = fontService
         self.analytics = analytics
         self.selectedLanguage = ObservableValue(value: selectedLanguageValue ?? 0)
@@ -99,7 +97,7 @@ class ToolNavBarViewModel: NSObject {
         return fontService.getFont(size: 17, weight: .semibold)
     }
     
-    var language: LanguageModel {
+    var language: LanguageDomainModel {
         return languages[selectedLanguage.value]
     }
     
@@ -115,8 +113,7 @@ extension ToolNavBarViewModel {
     func languageSegmentWillAppear(index: Int) -> ToolLanguageSegmentViewModel {
                 
         return ToolLanguageSegmentViewModel(
-            language: languages[index],
-            getTranslatedLanguageUseCase: getTranslatedLanguageUseCase
+            language: languages[index]
         )
     }
     
@@ -124,11 +121,11 @@ extension ToolNavBarViewModel {
                 
         selectedLanguage.setValue(value: index)
         
-        let language: LanguageModel = languages[index]
+        let language: LanguageDomainModel = languages[index]
         
         let data: [String: String] = [
             AnalyticsConstants.ActionNames.parallelLanguageToggled: "",
-            AnalyticsConstants.Keys.contentLanguageSecondary: language.code,
+            AnalyticsConstants.Keys.contentLanguageSecondary: language.localeIdentifier,
         ]
         
         let trackAction = TrackActionModel(
@@ -136,7 +133,7 @@ extension ToolNavBarViewModel {
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
-            contentLanguage: language.code,
+            contentLanguage: language.localeIdentifier,
             secondaryContentLanguage: nil,
             url: nil,
             data: data

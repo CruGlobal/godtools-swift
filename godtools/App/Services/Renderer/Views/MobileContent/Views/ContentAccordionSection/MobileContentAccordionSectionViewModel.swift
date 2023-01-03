@@ -26,7 +26,7 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(baseModel: sectionModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: sectionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }
 

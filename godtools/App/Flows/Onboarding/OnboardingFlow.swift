@@ -38,16 +38,14 @@ class OnboardingFlow: Flow {
             isTranslucent: true
         )
         
-        let onboardingTutorialItemsRepository = OnboardingTutorialItemsRepository(localizationServices: appDiContainer.localizationServices)
-        
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
             tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
-            onboardingTutorialItemsRepository: onboardingTutorialItemsRepository,
-            onboardingTutorialAvailability: appDiContainer.getOnboardingTutorialAvailability(),
+            onboardingTutorialItemsRepository: appDiContainer.dataLayer.getOnboardingTutorialItemsRepository(),
+            onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
             customViewBuilder: appDiContainer.getOnboardingTutorialCustomViewBuilder(flowDelegate: self),
             localizationServices: appDiContainer.localizationServices
         )

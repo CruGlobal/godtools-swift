@@ -13,14 +13,14 @@ class MobileContentTabsViewModel: MobileContentViewModel {
     
     private let tabsModel: Tabs
         
-    init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext) {
+    init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.tabsModel = tabsModel
         
-        super.init(baseModel: tabsModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: tabsModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.language.languageDirection.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
     }
 }

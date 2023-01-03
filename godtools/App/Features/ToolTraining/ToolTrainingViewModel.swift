@@ -59,7 +59,7 @@ class ToolTrainingViewModel: NSObject {
         return pageRenderer.resource
     }
     
-    private var language: LanguageModel {
+    private var language: LanguageDomainModel {
         return pageRenderer.language
     }
     
@@ -171,7 +171,7 @@ extension ToolTrainingViewModel {
             screenName: getExitAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil,
             url: url
         )

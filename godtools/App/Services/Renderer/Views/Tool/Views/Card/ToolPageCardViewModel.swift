@@ -62,7 +62,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
             hidesHeaderTrainingTip = !hasTrainingTip
         }
         
-        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     private var analyticsScreenName: String {
@@ -118,7 +118,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.code, key: "card_status1")
+        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -130,7 +130,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.code, key: "card_status2")
+        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -142,7 +142,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.language.languageDirection.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
     }
     
     func containsDismissListener(eventId: EventId) -> Bool {
@@ -173,7 +173,7 @@ extension ToolPageCardViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.languageDirection
+            languageDirection: renderedPageContext.language.direction
         )
     }
         
@@ -185,7 +185,7 @@ extension ToolPageCardViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.code,
+            contentLanguage: renderedPageContext.language.localeIdentifier,
             secondaryContentLanguage: nil
         )
         

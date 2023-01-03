@@ -19,14 +19,14 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     let textColor: UIColor
     
-    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, fontService: FontService) {
+    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
         
         self.textModel = textModel
         self.fontService = fontService
         
         self.textColor = textModel.textColor
         
-        super.init(baseModel: textModel, renderedPageContext: renderedPageContext)
+        super.init(baseModel: textModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
     var startImage: UIImage? {
@@ -100,7 +100,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     private func getLanguageTextAlign() -> Text.Align {
         
-        if renderedPageContext.language.languageDirection == .rightToLeft {
+        if renderedPageContext.language.direction == .rightToLeft {
             
             if textModel.textAlign == .start {
                 return .end
