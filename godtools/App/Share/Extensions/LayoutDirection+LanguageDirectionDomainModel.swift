@@ -1,5 +1,5 @@
 //
-//  LayoutDirection+LanguageDirection.swift
+//  LayoutDirection+LanguageDirectionDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/15/22.

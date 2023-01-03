@@ -13,11 +13,10 @@ import Combine
 class ToolSettingsViewModel: ObservableObject {
     
     private let localizationServices: LocalizationServices
-    private let getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
-    private let primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>
-    private let parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>
+    private let primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>
+    private let parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>
     private let trainingTipsEnabledSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
     
     private var trainingTipsCancellable: AnyCancellable?
@@ -41,11 +40,10 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getTranslatedLanguageUseCase: GetTranslatedLanguageUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageModel?, Never>, trainingTipsEnabled: Bool) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
-        self.getTranslatedLanguageUseCase = getTranslatedLanguageUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.primaryLanguageSubject = primaryLanguageSubject
@@ -70,34 +68,22 @@ class ToolSettingsViewModel: ObservableObject {
             self?.pageRendererChanged(pageRenderer: pageRenderer)
         })
         
-        primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageModel) in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.primaryLanguageTitle = weakSelf.getTranslatedLanguageName(language: language)
+        primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageDomainModel) in
+           
+            self?.primaryLanguageTitle = language.translatedName
         })
         
-        parallelLanguageCancellable = parallelLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageModel?) in
-            
-            guard let weakSelf = self else {
-                return
-            }
+        parallelLanguageCancellable = parallelLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
             
             if let language = language {
-                weakSelf.parallelLanguageTitle = weakSelf.getTranslatedLanguageName(language: language)
+                self?.parallelLanguageTitle = language.translatedName
             }
             else {
-                weakSelf.parallelLanguageTitle = weakSelf.localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
+                self?.parallelLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
             }
         })
         
         pageRendererChanged(pageRenderer: currentPageRenderer.value)
-    }
-    
-    private func getTranslatedLanguageName(language: LanguageModel) -> String {
-        return getTranslatedLanguageUseCase.getTranslatedLanguage(language: language).name
     }
     
     private func pageRendererChanged(pageRenderer: MobileContentPageRenderer) {

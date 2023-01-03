@@ -193,13 +193,6 @@ class AppDiContainer {
         return TractRemoteShareURLBuilder()
     }
     
-    func getTranslatedLanguageUseCase() -> GetTranslatedLanguageUseCase {
-        return GetTranslatedLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            localizationServices: localizationServices
-        )
-    }
-    
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
             trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics

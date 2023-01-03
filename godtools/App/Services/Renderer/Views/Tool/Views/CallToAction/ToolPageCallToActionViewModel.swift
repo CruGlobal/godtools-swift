@@ -23,7 +23,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.primaryRendererLanguage.languageDirection.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.direction)
     }
     
     var title: String? {
@@ -36,7 +36,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     
     var titleTextAlignment: NSTextAlignment {
         
-        switch renderedPageContext.language.languageDirection {
+        switch renderedPageContext.language.direction {
         case .leftToRight:
             return .left
         case .rightToLeft:

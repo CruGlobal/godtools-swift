@@ -16,20 +16,20 @@ class TractRemoteShareURLBuilder {
         
     }
     
-    func buildRemoteShareURL(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, subscriberChannelId: String) -> String? {
+    func buildRemoteShareURL(resource: ResourceModel, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?, subscriberChannelId: String) -> String? {
         
         var urlComponents: URLComponents = URLComponents()
         
         urlComponents.scheme = "https"
         urlComponents.host = "knowgod.com"
-        urlComponents.path = "/" + primaryLanguage.code + "/" + resource.abbreviation
+        urlComponents.path = "/" + primaryLanguage.localeIdentifier + "/" + resource.abbreviation
         
         var queryItems: [URLQueryItem] = Array()
         if let parallelLanguage = parallelLanguage {
-            queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.code))
+            queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.localeIdentifier))
         }
         queryItems.append(URLQueryItem(name: "icid", value: "gtshare"))
-        queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.code))
+        queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.localeIdentifier))
         queryItems.append(URLQueryItem(name: "liveShareStream", value: subscriberChannelId))
         
         urlComponents.queryItems = queryItems

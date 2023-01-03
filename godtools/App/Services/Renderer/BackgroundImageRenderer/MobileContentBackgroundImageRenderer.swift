@@ -15,7 +15,7 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         
     }
     
-    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect {
+    func getBackgroundImageRectForRenderingInContainer(container: CGRect, backgroundImageSizePixels: CGSize, scale: ImageScaleType, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirectionDomainModel) -> CGRect {
         
         let scaledRect: CGRect = scaleRectToContainer(
             container: container,
@@ -55,7 +55,7 @@ class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRenderer
         }
     }
     
-    private func positionRectInContainer(container: CGRect, rect: CGRect, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirection) -> CGRect {
+    private func positionRectInContainer(container: CGRect, rect: CGRect, horizontal: Gravity.Horizontal, vertical: Gravity.Vertical, languageDirection: LanguageDirectionDomainModel) -> CGRect {
         
         var positionedRect: CGRect = rect
         

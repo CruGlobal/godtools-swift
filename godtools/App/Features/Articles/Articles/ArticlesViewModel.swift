@@ -14,7 +14,7 @@ class ArticlesViewModel: NSObject {
     typealias AemUri = String
     
     private let resource: ResourceModel
-    private let language: LanguageModel
+    private let language: LanguageDomainModel
     private let category: GodToolsToolParser.Category
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
@@ -34,7 +34,7 @@ class ArticlesViewModel: NSObject {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -122,7 +122,7 @@ class ArticlesViewModel: NSObject {
         
         errorMessage.accept(value: nil)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.code, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
                 self?.handleCompleteArticlesDownload(result: result)
@@ -163,7 +163,7 @@ class ArticlesViewModel: NSObject {
             return []
         }
         
-        let languageCode: String = language.code
+        let languageCode: String = language.localeIdentifier
         
         let categoryArticles: [CategoryArticleModel] = articleManifestAemRepository.getCategoryArticles(
             categoryId: categoryId,

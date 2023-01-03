@@ -29,7 +29,7 @@ class ToolPageHeaderViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return renderedPageContext.language.languageDirection.semanticContentAttribute
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
     }
     
     var backgroundColor: UIColor {
