@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-struct RealmUserDetailsCacheSync {
+class RealmUserDetailsCacheSync {
     
     private let realmDatabase: RealmDatabase
     
