@@ -14,6 +14,9 @@ class RealmTranslation: Object, TranslationModelType {
     @objc dynamic var id: String = ""
     @objc dynamic var isPublished: Bool = false
     @objc dynamic var manifestName: String = ""
+    @objc dynamic var toolDetailsBibleReferences: String = ""
+    @objc dynamic var toolDetailsConversationStarters: String = ""
+    @objc dynamic var toolDetailsOutline: String = ""
     @objc dynamic var translatedDescription: String = ""
     @objc dynamic var translatedName: String = ""
     @objc dynamic var translatedTagline: String = ""
@@ -32,6 +35,9 @@ class RealmTranslation: Object, TranslationModelType {
         id = model.id
         isPublished = model.isPublished
         manifestName = model.manifestName
+        toolDetailsBibleReferences = model.toolDetailsBibleReferences
+        toolDetailsConversationStarters = model.toolDetailsConversationStarters
+        toolDetailsOutline = model.toolDetailsOutline
         translatedDescription = model.translatedDescription
         translatedName = model.translatedName
         translatedTagline = model.translatedTagline
