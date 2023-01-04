@@ -13,8 +13,8 @@ protocol TranslationModelType {
     var id: String { get }
     var isPublished: Bool { get }
     var manifestName: String { get }
-    var toolDetailsConversationStarters: String { get }
     var toolDetailsBibleReferences: String { get }
+    var toolDetailsConversationStarters: String { get }
     var toolDetailsOutline: String { get }
     var translatedDescription: String { get }
     var translatedName: String { get }
