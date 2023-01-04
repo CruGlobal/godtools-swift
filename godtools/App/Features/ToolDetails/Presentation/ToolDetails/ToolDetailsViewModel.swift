@@ -111,12 +111,18 @@ class ToolDetailsViewModel: ObservableObject {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
+            bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
+            conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
+            outlineContent = primaryTranslation.toolDetailsOutline
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
             nameValue = englishTranslation.translatedName
             aboutDetailsValue = englishTranslation.translatedDescription
+            bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
+            conversationStartersContent = englishTranslation.toolDetailsConversationStarters
+            outlineContent = englishTranslation.toolDetailsOutline
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
