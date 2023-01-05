@@ -22,7 +22,7 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDataModel, Error> {
+    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
         
         let userCounterId: String
         let userCounterNames = UserCounterNames.shared
@@ -34,6 +34,13 @@ class IncrementUserCounterUseCase {
         }
         
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
+            .flatMap { userCounterDataModel in
+                
+                let userCounterDomainModel = UserCounterDomainModel(dataModel: userCounterDataModel)
+                
+                return Just(userCounterDomainModel)
+            }
+            .eraseToAnyPublisher()
     }
     
 }

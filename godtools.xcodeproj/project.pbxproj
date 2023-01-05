@@ -1037,6 +1037,7 @@
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
 		D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */; };
 		D4F1DE8D2967538A00A2F674 /* IncrementUserCounterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1DE8C2967538A00A2F674 /* IncrementUserCounterUseCase.swift */; };
+		D4F1DE9029676B8A00A2F674 /* UserCounterDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1DE8F29676B8A00A2F674 /* UserCounterDomainModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2143,6 +2144,7 @@
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
 		D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightTitleView.swift; sourceTree = "<group>"; };
 		D4F1DE8C2967538A00A2F674 /* IncrementUserCounterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterUseCase.swift; sourceTree = "<group>"; };
+		D4F1DE8F29676B8A00A2F674 /* UserCounterDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDomainModel.swift; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
@@ -7236,6 +7238,7 @@
 			isa = PBXGroup;
 			children = (
 				D4F1DE8C2967538A00A2F674 /* IncrementUserCounterUseCase.swift */,
+				D4F1DE8F29676B8A00A2F674 /* UserCounterDomainModel.swift */,
 			);
 			path = IncrementUserCounterUseCase;
 			sourceTree = "<group>";
@@ -8599,6 +8602,7 @@
 				45BDA6202954FE3E007E259B /* ArticleCategory.swift in Sources */,
 				45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				4561B40D295B32E700F5AF5B /* OnboardingQuickStartItem.swift in Sources */,
+				D4F1DE9029676B8A00A2F674 /* UserCounterDomainModel.swift in Sources */,
 				45BDA6142954FE3E007E259B /* ArticleAemData.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				45AE975E27C97A9500C2CB33 /* Card+MobileContentRenderableModel.swift in Sources */,
