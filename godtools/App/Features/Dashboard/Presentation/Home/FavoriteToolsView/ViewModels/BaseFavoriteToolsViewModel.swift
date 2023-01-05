@@ -19,7 +19,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
  
     // MARK: - Properties
     
-    let dataDownloader: InitialDataDownloader
     let localizationServices: LocalizationServices
     
     let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
@@ -40,8 +39,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
-        self.dataDownloader = dataDownloader
+    init(localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
         self.localizationServices = localizationServices
         
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
@@ -63,7 +61,6 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
             tool: tool,
-            dataDownloader: dataDownloader,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
