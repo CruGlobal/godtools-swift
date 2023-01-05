@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 import GodToolsToolParser
 
 class IncrementUserCounterUseCase {
@@ -21,7 +22,7 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) {
+    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDataModel, Error> {
         
         let userCounterId: String
         let userCounterNames = UserCounterNames.shared
@@ -32,7 +33,7 @@ class IncrementUserCounterUseCase {
             
         }
         
-        userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
+        return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
     }
     
 }

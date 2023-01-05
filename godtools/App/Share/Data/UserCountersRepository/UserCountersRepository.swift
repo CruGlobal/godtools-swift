@@ -35,16 +35,9 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    func incrementCachedUserCounterBy1(id: String) {
+    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
         
-        cache.incrementUserCounterBy1(id: id)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
-
+        return cache.incrementUserCounterBy1(id: id)
     }
     
     func syncUpdatedUserCountersWithRemote() {
