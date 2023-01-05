@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class BaseToolCardViewModel: NSObject, ObservableObject {
+class BaseToolCardViewModel: ObservableObject {
         
     // MARK: - Published
     
