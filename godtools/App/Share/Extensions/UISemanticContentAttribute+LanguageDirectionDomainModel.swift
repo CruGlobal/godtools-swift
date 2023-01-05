@@ -13,7 +13,7 @@ extension UISemanticContentAttribute {
     static func from(languageDirection: LanguageDirectionDomainModel) -> UISemanticContentAttribute {
         switch languageDirection {
         case .leftToRight:
-            return .forceRightToLeft
+            return .forceLeftToRight
         case .rightToLeft:
             return .forceRightToLeft
         }
