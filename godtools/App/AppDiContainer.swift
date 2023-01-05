@@ -17,7 +17,6 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let initialDataDownloader: InitialDataDownloader
     let localizationServices: LocalizationServices = LocalizationServices()
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
@@ -35,9 +34,7 @@ class AppDiContainer {
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-                                                      
-        initialDataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository())
-                                      
+                                                                                            
         firebaseInAppMessaging = FirebaseInAppMessaging()
     }
     
