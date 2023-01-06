@@ -14,6 +14,7 @@ class IncrementUserCounterUseCase {
     
     enum UserCounterInteraction {
         case sessionLaunch
+        case linkShared
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -24,14 +25,7 @@ class IncrementUserCounterUseCase {
     
     func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
         
-        let userCounterId: String
-        let userCounterNames = UserCounterNames.shared
-        switch interaction {
-            
-        case .sessionLaunch:
-            userCounterId = userCounterNames.SESSION
-            
-        }
+        let userCounterId = getUserCounterId(for: interaction)
         
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { userCounterDataModel in
@@ -41,6 +35,23 @@ class IncrementUserCounterUseCase {
                 return Just(userCounterDomainModel)
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getUserCounterId(for interaction: UserCounterInteraction) -> String {
+        
+        let userCounterNames = UserCounterNames.shared
+        let userCounterId: String
+        
+        switch interaction {
+            
+        case .sessionLaunch:
+            userCounterId = userCounterNames.SESSION
+            
+        case .linkShared:
+            userCounterId = userCounterNames.LINK_SHARED
+        }
+        
+        return userCounterId
     }
     
 }
