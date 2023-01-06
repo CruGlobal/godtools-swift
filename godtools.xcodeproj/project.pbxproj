@@ -16,6 +16,15 @@
 		4504D00428BD00E400D8A5FD /* GodToolsParserLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504D00328BD00E400D8A5FD /* GodToolsParserLogger.swift */; };
 		45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051204275AA7050081BF56 /* MobileContentParagraphView.swift */; };
 		45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */; };
+		45052140295F3B9D0018ABD0 /* RealmUserCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45052134295F3B9C0018ABD0 /* RealmUserCounter.swift */; };
+		45052141295F3B9D0018ABD0 /* RealmUserCountersCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45052135295F3B9C0018ABD0 /* RealmUserCountersCache.swift */; };
+		45052142295F3B9D0018ABD0 /* RealmUserCountersSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45052137295F3B9C0018ABD0 /* RealmUserCountersSync.swift */; };
+		45052143295F3B9D0018ABD0 /* UserCounterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45052138295F3B9C0018ABD0 /* UserCounterDataModel.swift */; };
+		45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */; };
+		45052145295F3B9D0018ABD0 /* GetUserCountersResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213C295F3B9C0018ABD0 /* GetUserCountersResponseDecodable.swift */; };
+		45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */; };
+		45052147295F3B9D0018ABD0 /* IncrementUserCounterResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213E295F3B9C0018ABD0 /* IncrementUserCounterResponseDecodable.swift */; };
+		45052148295F3B9D0018ABD0 /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */; };
 		4508D26928341BE20092ECA4 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508D26828341BE20092ECA4 /* CloseButton.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450D7B0128E32965006C3FDF /* RealmDownloadedTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */; };
@@ -1069,6 +1078,15 @@
 		4504D00328BD00E400D8A5FD /* GodToolsParserLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GodToolsParserLogger.swift; sourceTree = "<group>"; };
 		45051204275AA7050081BF56 /* MobileContentParagraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphView.swift; sourceTree = "<group>"; };
 		45051206275AA71F0081BF56 /* MobileContentParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParagraphViewModel.swift; sourceTree = "<group>"; };
+		45052134295F3B9C0018ABD0 /* RealmUserCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmUserCounter.swift; sourceTree = "<group>"; };
+		45052135295F3B9C0018ABD0 /* RealmUserCountersCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmUserCountersCache.swift; sourceTree = "<group>"; };
+		45052137295F3B9C0018ABD0 /* RealmUserCountersSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmUserCountersSync.swift; sourceTree = "<group>"; };
+		45052138295F3B9C0018ABD0 /* UserCounterDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCounterDataModel.swift; sourceTree = "<group>"; };
+		4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPI.swift; sourceTree = "<group>"; };
+		4505213C295F3B9C0018ABD0 /* GetUserCountersResponseDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserCountersResponseDecodable.swift; sourceTree = "<group>"; };
+		4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCounterDecodable.swift; sourceTree = "<group>"; };
+		4505213E295F3B9C0018ABD0 /* IncrementUserCounterResponseDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterResponseDecodable.swift; sourceTree = "<group>"; };
+		4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
 		4508D26828341BE20092ECA4 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDownloadedTranslation.swift; sourceTree = "<group>"; };
@@ -2251,6 +2269,62 @@
 			path = ContentParagraph;
 			sourceTree = "<group>";
 		};
+		45052131295F3B9C0018ABD0 /* UserCountersRepository */ = {
+			isa = PBXGroup;
+			children = (
+				45052138295F3B9C0018ABD0 /* UserCounterDataModel.swift */,
+				4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */,
+				45052139295F3B9C0018ABD0 /* Api */,
+				45052132295F3B9C0018ABD0 /* Cache */,
+			);
+			path = UserCountersRepository;
+			sourceTree = "<group>";
+		};
+		45052132295F3B9C0018ABD0 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				45052135295F3B9C0018ABD0 /* RealmUserCountersCache.swift */,
+				45052133295F3B9C0018ABD0 /* Models */,
+				45052136295F3B9C0018ABD0 /* Sync */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		45052133295F3B9C0018ABD0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45052134295F3B9C0018ABD0 /* RealmUserCounter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45052136295F3B9C0018ABD0 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				45052137295F3B9C0018ABD0 /* RealmUserCountersSync.swift */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		45052139295F3B9C0018ABD0 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */,
+				4505213B295F3B9C0018ABD0 /* Models */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		4505213B295F3B9C0018ABD0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4505213C295F3B9C0018ABD0 /* GetUserCountersResponseDecodable.swift */,
+				4505213E295F3B9C0018ABD0 /* IncrementUserCounterResponseDecodable.swift */,
+				4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -2376,6 +2450,7 @@
 				45D63E77288F69C7009B4610 /* URLResponseError.swift */,
 				459B265C28862C69009C8C24 /* URLResponseObject.swift */,
 				D409F2C4292EA25300D9D2FE /* UserAuthentication */,
+				45052131295F3B9C0018ABD0 /* UserCountersRepository */,
 				D409F2AF2928115600D9D2FE /* UserDetailsRepository */,
 				45BDA6392954FF08007E259B /* WebArchiveQueue */,
 			);
@@ -7662,6 +7737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45052148295F3B9D0018ABD0 /* UserCountersRepository.swift in Sources */,
 				D41B38BF288F2ED200BD5899 /* LanguageCodes.swift in Sources */,
 				45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */,
 				454365AC28B4EEE300CC97C1 /* Error+NetworkError.swift in Sources */,
@@ -7686,6 +7762,7 @@
 				45D63E9E288F77D4009B4610 /* RealmResource.swift in Sources */,
 				45EC5CF228CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift in Sources */,
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
+				45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */,
 				45BDA6492954FF08007E259B /* WebArchiveUrl.swift in Sources */,
 				459E86E428EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
@@ -7734,6 +7811,7 @@
 				4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */,
 				45BDA5D02954F67D007E259B /* ResourceViewsService.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
+				45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */,
 				45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */,
 				D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */,
 				450D7B0228E32965006C3FDF /* TrackDownloadedTranslationsCache.swift in Sources */,
@@ -7854,6 +7932,7 @@
 				D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */,
 				4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */,
 				D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */,
+				45052142295F3B9D0018ABD0 /* RealmUserCountersSync.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45F715B9290A12AA0019B715 /* CruOktaAuthentication+GetAuthUser.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
@@ -7872,6 +7951,7 @@
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
+				45052147295F3B9D0018ABD0 /* IncrementUserCounterResponseDecodable.swift in Sources */,
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
 				45F7163D290A12D70019B715 /* DeleteAccountHostingView.swift in Sources */,
 				45BDA61A2954FE3E007E259B /* ArticleAemRepositoryType.swift in Sources */,
@@ -8125,6 +8205,7 @@
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,
 				4570B7042889B1760024C931 /* DownloadToolView.swift in Sources */,
+				45052141295F3B9D0018ABD0 /* RealmUserCountersCache.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				453C1BD62899A50C007332E2 /* FavoritedResourcesCache.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
@@ -8425,6 +8506,7 @@
 				D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */,
 				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,
 				453AC11528F4A10400291791 /* FollowUpsApi.swift in Sources */,
+				45052143295F3B9D0018ABD0 /* UserCounterDataModel.swift in Sources */,
 				455583D5269F2DA500C3FF14 /* MobileContentHeaderViewModel.swift in Sources */,
 				45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */,
 				4555832F269F2C7B00C3FF14 /* ToolPageCardTopConstantState.swift in Sources */,
@@ -8451,6 +8533,7 @@
 				4573133C28C1821100481640 /* ToolDetailsMediaView.swift in Sources */,
 				45C2595C28CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift in Sources */,
 				45AE975427C97A9500C2CB33 /* ContentPage+MobileContentRenderableModel.swift in Sources */,
+				45052145295F3B9D0018ABD0 /* GetUserCountersResponseDecodable.swift in Sources */,
 				D44F3AB8283BC5470008390D /* ToolCategoriesView.swift in Sources */,
 				45C2596C28CAC71B005D2387 /* LanguagesListViewModel.swift in Sources */,
 				4555840E269F2DA500C3FF14 /* MobileContentTextView.swift in Sources */,
@@ -8519,6 +8602,7 @@
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				456777C1287DB3770044AEB2 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AE974827C97A9400C2CB33 /* Flow+MobileContentRenderableModel.swift in Sources */,
+				45052140295F3B9D0018ABD0 /* RealmUserCounter.swift in Sources */,
 				D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDecodable.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,

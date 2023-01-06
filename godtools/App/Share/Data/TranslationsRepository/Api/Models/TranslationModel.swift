@@ -13,6 +13,9 @@ struct TranslationModel: TranslationModelType, Decodable {
     let id: String
     let isPublished: Bool
     let manifestName: String
+    let toolDetailsBibleReferences: String
+    let toolDetailsConversationStarters: String
+    let toolDetailsOutline: String
     let translatedDescription: String
     let translatedName: String
     let translatedTagline: String
@@ -30,6 +33,9 @@ struct TranslationModel: TranslationModelType, Decodable {
     }
     
     enum AttributesKeys: String, CodingKey {
+        case attrToolDetailsBibleReferences = "attr-tool-details-bible-references"
+        case attrToolDetailsConversationStarters = "attr-tool-details-conversation-starters"
+        case attrToolDetailsOutline = "attr-tool-details-outline"
         case isPublished = "is-published"
         case manifestName = "manifest-name"
         case translatedDescription = "translated-description"
@@ -52,6 +58,9 @@ struct TranslationModel: TranslationModelType, Decodable {
         id = model.id
         isPublished = model.isPublished
         manifestName = model.manifestName
+        toolDetailsBibleReferences = model.toolDetailsBibleReferences
+        toolDetailsConversationStarters = model.toolDetailsConversationStarters
+        toolDetailsOutline = model.toolDetailsOutline
         translatedDescription = model.translatedDescription
         translatedName = model.translatedName
         translatedTagline = model.translatedTagline
@@ -86,6 +95,9 @@ struct TranslationModel: TranslationModelType, Decodable {
         // attributes
         isPublished = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .isPublished) ?? false
         manifestName = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifestName) ?? ""
+        toolDetailsBibleReferences = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrToolDetailsBibleReferences) ?? ""
+        toolDetailsConversationStarters = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrToolDetailsConversationStarters) ?? ""
+        toolDetailsOutline = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrToolDetailsOutline) ?? ""
         translatedDescription = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedDescription) ?? ""
         translatedName = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedName) ?? ""
         translatedTagline = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedTagline) ?? ""

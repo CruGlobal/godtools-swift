@@ -40,13 +40,26 @@ struct ToolDetailsAboutView: View {
                 .foregroundColor(.clear)
             
             VStack(spacing: 20) {
-                AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
                 
-                AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+                if viewModel.conversationStartersContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
+                }
+                
+                if viewModel.outlineContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+                }
 
-                AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
-
-                AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+                if viewModel.bibleReferencesContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
+                }
+                
+                if viewModel.availableLanguagesList.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+                }
             }
             
             if accordionExpandedConversationStarters || accordionExpandedOutline || accordionExpandedBibleReferences || accordionExpandedLanguageAvailability {
