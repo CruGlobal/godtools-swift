@@ -15,6 +15,7 @@ class IncrementUserCounterUseCase {
     enum UserCounterInteraction {
         case sessionLaunch
         case linkShared
+        case imageShared
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -49,6 +50,9 @@ class IncrementUserCounterUseCase {
             
         case .linkShared:
             userCounterId = userCounterNames.LINK_SHARED
+            
+        case .imageShared:
+            userCounterId = userCounterNames.IMAGE_SHARED
         }
         
         return userCounterId

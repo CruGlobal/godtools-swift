@@ -87,7 +87,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
             .sink { _ in
                 
-            } receiveValue: { value in
+            } receiveValue: { _ in
 
             }
             .store(in: &cancellables)

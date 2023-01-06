@@ -17,5 +17,7 @@ class ShareShareableView: UIActivityViewController {
         self.viewModel = viewModel
         
         super.init(activityItems: [viewModel.imageToShare], applicationActivities: nil)
+        
+        viewModel.pageViewed()
     }
 }
