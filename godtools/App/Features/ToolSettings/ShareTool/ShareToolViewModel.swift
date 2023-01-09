@@ -84,7 +84,7 @@ class ShareToolViewModel: ShareToolViewModelType {
                 
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
+        incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)?
             .sink { _ in
                 
             } receiveValue: { _ in

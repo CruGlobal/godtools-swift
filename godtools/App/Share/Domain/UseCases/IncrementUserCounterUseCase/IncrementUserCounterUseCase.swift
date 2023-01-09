@@ -16,6 +16,8 @@ class IncrementUserCounterUseCase {
         case sessionLaunch
         case linkShared
         case imageShared
+        case tipsCompleted // TODO: - this gets pulled from the viewedTrainingTip cache right before we send all the counters to the shared library, we don't ever update this independently as each tip is completed
+        case articleOpen(uri: String)
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -24,9 +26,9 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
+    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error>? {
         
-        let userCounterId = getUserCounterId(for: interaction)
+        guard let userCounterId = getUserCounterId(for: interaction) else { return nil }
         
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { userCounterDataModel in
@@ -38,7 +40,7 @@ class IncrementUserCounterUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getUserCounterId(for interaction: UserCounterInteraction) -> String {
+    private func getUserCounterId(for interaction: UserCounterInteraction) -> String? {
         
         let userCounterNames = UserCounterNames.shared
         let userCounterId: String
@@ -53,6 +55,17 @@ class IncrementUserCounterUseCase {
             
         case .imageShared:
             userCounterId = userCounterNames.IMAGE_SHARED
+            
+        case .tipsCompleted:
+            
+            assertionFailure("The total tips completed count gets pulled from the viewedTrainingTip cache right before we send all the counters to the shared library, we don't ever increment this independently as each tip is completed")
+            return nil
+            
+        case .articleOpen(let uriString):
+            
+            guard let uri = URL(string: uriString) else { return nil }
+            userCounterId = userCounterNames.ARTICLE_OPEN(uri: uri)
+            
         }
         
         return userCounterId

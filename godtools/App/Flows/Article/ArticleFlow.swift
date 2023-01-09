@@ -125,6 +125,7 @@ extension ArticleFlow {
             aemCacheObject: aemCacheObject,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             flowType: .tool(resource: resource)
         )
