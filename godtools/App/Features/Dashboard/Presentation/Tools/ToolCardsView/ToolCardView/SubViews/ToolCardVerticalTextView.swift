@@ -51,7 +51,6 @@ struct ToolCardVerticalTextView_Previews: PreviewProvider {
         
         let viewModel = ToolCardViewModel(
             tool: tool,
-            dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

@@ -61,7 +61,6 @@ class ToolSpotlightViewModel: ToolCardProvider {
     override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
             tool: tool,
-            dataDownloader: dataDownloader,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,

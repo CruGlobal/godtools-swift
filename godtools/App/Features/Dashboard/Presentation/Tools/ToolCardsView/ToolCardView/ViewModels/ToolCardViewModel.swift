@@ -17,12 +17,11 @@ protocol ToolCardViewModelDelegate: AnyObject {
     func openToolButtonTapped(_ tool: ToolDomainModel)
 }
 
-class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgress {
+class ToolCardViewModel: BaseToolCardViewModel {
     
     // MARK: - Properties
     
     let tool: ToolDomainModel
-    let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     
     private let getBannerImageUseCase: GetBannerImageUseCase
@@ -31,22 +30,14 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
     private weak var delegate: ToolCardViewModelDelegate?
-    
-    var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
-    var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
-    var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
-    var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
-    
+        
     private var cancellables = Set<AnyCancellable>()
-    
-    var resourceId: String { tool.id }
-    
+        
     // MARK: - Init
     
-    init(tool: ToolDomainModel, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
+    init(tool: ToolDomainModel, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.tool = tool
-        self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         
         self.getBannerImageUseCase = getBannerImageUseCase
@@ -55,18 +46,10 @@ class ToolCardViewModel: BaseToolCardViewModel, ResourceItemInitialDownloadProgr
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         
         self.delegate = delegate
-        
+              
         super.init()
         
         setup()
-    }
-    
-    deinit {
-        
-        removeDataDownloaderObservers()
-        
-        attachmentsDownloadProgress.removeObserver(self)
-        translationDownloadProgress.removeObserver(self)
     }
     
     // MARK: - Overrides
@@ -98,29 +81,11 @@ extension ToolCardViewModel {
     }
     
     private func setupBinding() {
-        
-        addDataDownloaderObservers()
-        
-        attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async {
-                withAnimation {
-                    self?.attachmentsDownloadProgressValue = progress
-                }
-            }
-        }
-        
+                
         getBannerImageUseCase.getBannerImagePublisher(for: tool.bannerImageId)
             .receiveOnMain()
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
-        
-        translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async {
-                withAnimation {
-                    self?.translationDownloadProgressValue = progress
-                }
-            }
-        }
         
         getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
             .receiveOnMain()

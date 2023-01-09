@@ -13,7 +13,7 @@ protocol FavoritesContentViewModelDelegate: AnyObject {
     func favoriteToolsViewGoToToolsTapped()
 }
 
-class FavoritesContentViewModel: NSObject, ObservableObject {
+class FavoritesContentViewModel: ObservableObject {
     
     // MARK: - Properties
         
@@ -88,9 +88,7 @@ class FavoritesContentViewModel: NSObject, ObservableObject {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
-        
-        super.init()
-                        
+                                
         setupBinding()
     }
 }

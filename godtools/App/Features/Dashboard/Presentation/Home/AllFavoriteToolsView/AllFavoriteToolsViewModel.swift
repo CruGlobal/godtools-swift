@@ -27,14 +27,14 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     // MARK: - Init
     
-    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
+    init(localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
-        super.init(dataDownloader: dataDownloader, localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: nil)
+        super.init(localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: nil)
     }
     
     // MARK: - Overrides
@@ -42,7 +42,6 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(
             tool: tool,
-            dataDownloader: dataDownloader,
             localizationServices: localizationServices,
             getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,

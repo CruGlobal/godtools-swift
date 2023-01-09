@@ -46,7 +46,7 @@ struct FeaturedLessonCardsView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = FeaturedLessonCardsViewModel(
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
