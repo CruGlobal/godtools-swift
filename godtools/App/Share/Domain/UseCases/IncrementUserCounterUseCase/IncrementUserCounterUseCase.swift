@@ -19,6 +19,7 @@ class IncrementUserCounterUseCase {
         case tipsCompleted // TODO: - this gets pulled from the viewedTrainingTip cache right before we send all the counters to the shared library, we don't ever update this independently as each tip is completed
         case articleOpen(uri: String)
         case lessonOpen(tool: String)
+        case toolOpen(tool: String)
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -68,9 +69,10 @@ class IncrementUserCounterUseCase {
             userCounterId = userCounterNames.ARTICLE_OPEN(uri: uri)
             
         case .lessonOpen(let tool):
-            
             userCounterId = userCounterNames.LESSON_OPEN(tool: tool)
             
+        case .toolOpen(let tool):
+            userCounterId = userCounterNames.TOOL_OPEN(tool: tool)
         }
         
         return userCounterId
