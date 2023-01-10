@@ -21,7 +21,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
-    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     private weak var flowDelegate: FlowDelegate?
     private var cancellables = Set<AnyCancellable>()
@@ -41,13 +40,12 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
-        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         let navBarViewModelValue: ToolNavBarViewModel = ToolViewModel.navBarWillAppear(backButtonImageType: backButtonImageType, renderer: renderer, tractRemoteSharePublisher: tractRemoteSharePublisher, tractRemoteShareSubscriber: tractRemoteShareSubscriber, localizationServices: localizationServices, fontService: fontService, analytics: analytics, selectedLanguageValue: nil)
         
         self.navBarViewModel = ObservableValue(value: navBarViewModelValue)
         
-        super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
+        super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
         
         setupBinding()
     }
@@ -205,7 +203,7 @@ extension ToolViewModel {
     
     func pageViewed() {
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))?
+        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
             .sink { _ in
                 
             } receiveValue: { _ in

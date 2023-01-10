@@ -102,7 +102,7 @@ extension ArticleWebViewModel {
                 
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))?
+        incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
             .sink { _ in
                 
             } receiveValue: { value in

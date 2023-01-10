@@ -1038,7 +1038,7 @@ extension AppFlow {
             
             let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
             
-            incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)?
+            incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
                 .sink { _ in
                     
                 } receiveValue: { _ in

@@ -25,7 +25,7 @@ class ShareShareableViewModel {
     
     func pageViewed() {
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .imageShared)?
+        incrementUserCounterUseCase.incrementUserCounter(for: .imageShared)
             .sink { _ in
                 
             } receiveValue: { _ in

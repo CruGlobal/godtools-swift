@@ -48,7 +48,7 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
     
     func pageViewed() {
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: resourceId))?
+        incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: resourceId))
             .sink { _ in
                 
             } receiveValue: { _ in

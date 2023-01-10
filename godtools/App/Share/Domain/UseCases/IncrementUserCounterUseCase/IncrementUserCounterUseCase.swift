@@ -21,6 +21,11 @@ class IncrementUserCounterUseCase {
         case lessonOpen(tool: String)
         case toolOpen(tool: String)
         case screenShare(tool: String)
+        case languageUsed(locale: Locale)
+    }
+    
+    enum UserCounterError: Error {
+        case invalidUserCounterId
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -29,9 +34,13 @@ class IncrementUserCounterUseCase {
         self.userCountersRepository = userCountersRepository
     }
     
-    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error>? {
+    func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
         
-        guard let userCounterId = getUserCounterId(for: interaction) else { return nil }
+        guard let userCounterId = getUserCounterId(for: interaction) else {
+            
+            return Fail(error: UserCounterError.invalidUserCounterId)
+                .eraseToAnyPublisher()
+        }
         
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { userCounterDataModel in
@@ -77,6 +86,9 @@ class IncrementUserCounterUseCase {
             
         case .screenShare(let tool):
             userCounterId = userCounterNames.SCREEN_SHARE(tool: tool)
+            
+        case .languageUsed(let locale):
+            userCounterId = userCounterNames.LANGUAGE_USED(locale: locale)
         }
         
         return userCounterId
