@@ -20,6 +20,7 @@ class IncrementUserCounterUseCase {
         case articleOpen(uri: String)
         case lessonOpen(tool: String)
         case toolOpen(tool: String)
+        case screenShare(tool: String)
     }
     
     private let userCountersRepository: UserCountersRepository
@@ -73,6 +74,9 @@ class IncrementUserCounterUseCase {
             
         case .toolOpen(let tool):
             userCounterId = userCounterNames.TOOL_OPEN(tool: tool)
+            
+        case .screenShare(let tool):
+            userCounterId = userCounterNames.SCREEN_SHARE(tool: tool)
         }
         
         return userCounterId

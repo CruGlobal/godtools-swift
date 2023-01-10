@@ -287,9 +287,11 @@ class ToolSettingsFlow: Flow {
     private func navigateToLoadToolRemoteSession() {
         
         let viewModel = LoadToolRemoteSessionViewModel(
+            resourceId: toolData.renderer.value.resource.id,
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher
+            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         let view = LoadingView(viewModel: viewModel)
         
