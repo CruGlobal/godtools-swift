@@ -7,16 +7,21 @@
 //
 
 import UIKit
+import Combine
 
 class LessonViewModel: MobileContentPagesViewModel {
         
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
+    
     private weak var flowDelegate: FlowDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageDomainModel, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageDomainModel, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
                 
         self.flowDelegate = flowDelegate
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
     }
@@ -55,5 +60,16 @@ extension LessonViewModel {
     func closeTapped() {
                 
         flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: resource, highestPageNumberViewed: highestPageNumberViewed))
+    }
+    
+    func pageViewed() {
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .lessonOpen(tool: resource.id))?
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
 }
