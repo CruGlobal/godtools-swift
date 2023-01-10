@@ -87,7 +87,6 @@ class ResourcesRepository {
                     resourcesRemoved: [],
                     translationsRemoved: [],
                     attachmentsRemoved: [],
-                    latestAttachmentFiles: [],
                     downloadedTranslationsRemoved: []
                 )
             })
