@@ -13,15 +13,14 @@ import GodToolsToolParser
 class IncrementUserCounterUseCase {
     
     enum UserCounterInteraction {
-        case sessionLaunch
-        case linkShared
-        case imageShared
-        case tipsCompleted // TODO: - this gets pulled from the viewedTrainingTip cache right before we send all the counters to the shared library, we don't ever update this independently as each tip is completed
         case articleOpen(uri: String)
-        case lessonOpen(tool: String)
-        case toolOpen(tool: String)
-        case screenShare(tool: String)
+        case imageShared
         case languageUsed(locale: Locale)
+        case lessonOpen(tool: String)
+        case linkShared
+        case screenShare(tool: String)
+        case sessionLaunch
+        case toolOpen(tool: String)
     }
     
     enum UserCounterError: Error {
@@ -59,36 +58,32 @@ class IncrementUserCounterUseCase {
         
         switch interaction {
             
-        case .sessionLaunch:
-            userCounterId = userCounterNames.SESSION
-            
-        case .linkShared:
-            userCounterId = userCounterNames.LINK_SHARED
-            
-        case .imageShared:
-            userCounterId = userCounterNames.IMAGE_SHARED
-            
-        case .tipsCompleted:
-            
-            assertionFailure("The total tips completed count gets pulled from the viewedTrainingTip cache right before we send all the counters to the shared library, we don't ever increment this independently as each tip is completed")
-            return nil
-            
         case .articleOpen(let uriString):
             
             guard let uri = URL(string: uriString) else { return nil }
             userCounterId = userCounterNames.ARTICLE_OPEN(uri: uri)
-            
+        
+        case .imageShared:
+            userCounterId = userCounterNames.IMAGE_SHARED
+        
+        case .languageUsed(let locale):
+            userCounterId = userCounterNames.LANGUAGE_USED(locale: locale)
+        
         case .lessonOpen(let tool):
             userCounterId = userCounterNames.LESSON_OPEN(tool: tool)
+        
+        case .linkShared:
+            userCounterId = userCounterNames.LINK_SHARED
+        
+        case .screenShare(let tool):
+            userCounterId = userCounterNames.SCREEN_SHARE(tool: tool)
+        
+        case .sessionLaunch:
+            userCounterId = userCounterNames.SESSION
             
         case .toolOpen(let tool):
             userCounterId = userCounterNames.TOOL_OPEN(tool: tool)
             
-        case .screenShare(let tool):
-            userCounterId = userCounterNames.SCREEN_SHARE(tool: tool)
-            
-        case .languageUsed(let locale):
-            userCounterId = userCounterNames.LANGUAGE_USED(locale: locale)
         }
         
         return userCounterId

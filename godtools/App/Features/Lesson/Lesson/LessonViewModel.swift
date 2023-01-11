@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 class LessonViewModel: MobileContentPagesViewModel {
-            
+    
     private weak var flowDelegate: FlowDelegate?
     private var cancellables = Set<AnyCancellable>()
     

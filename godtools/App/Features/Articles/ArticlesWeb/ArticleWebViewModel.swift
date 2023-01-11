@@ -105,8 +105,8 @@ extension ArticleWebViewModel {
         incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
             .sink { _ in
                 
-            } receiveValue: { value in
-                print("value: \(value)")
+            } receiveValue: { _ in
+                
             }
             .store(in: &cancellables)
     }
