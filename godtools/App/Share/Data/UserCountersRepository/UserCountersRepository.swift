@@ -21,6 +21,13 @@ class UserCountersRepository {
         self.cache = cache
     }
     
+    func getUserCounter(id: String) -> UserCounterDomainModel? {
+        
+        guard let userCounterDataModel = cache.getUserCounter(id: id) else { return nil }
+        
+        return UserCounterDomainModel(dataModel: userCounterDataModel)
+    }
+    
     func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
         
         return api.fetchUserCountersPublisher()
@@ -41,6 +48,14 @@ class UserCountersRepository {
     }
     
     func syncUpdatedUserCountersWithRemote() {
+        
+        if cancellables.isEmpty == false {
+            for cancellable in cancellables {
+                cancellable.cancel()
+            }
+            
+            cancellables.removeAll()
+        }
         
         let userCountersToSync = cache.getUserCountersWithIncrementGreaterThanZero()
         
