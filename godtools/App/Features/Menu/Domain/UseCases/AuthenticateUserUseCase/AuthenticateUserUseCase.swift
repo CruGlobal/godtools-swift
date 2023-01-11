@@ -15,14 +15,12 @@ class AuthenticateUserUseCase {
     private let cruOktaAuthentication: CruOktaAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
-    private let snowplowAnalytics: SnowplowAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
-        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
@@ -97,11 +95,6 @@ class AuthenticateUserUseCase {
         firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,
             loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties(grMasterPersonId: authUser.grMasterPersonId, ssoguid: authUser.ssoGuid)
-        )
-        
-        snowplowAnalytics.setLoggedInStateIdContextProperties(
-            isLoggedIn: true,
-            loggedInUserProperties: SnowplowAnalyticsLoggedInUserProperties(grMasterPersonId: authUser.grMasterPersonId, ssoguid: authUser.ssoGuid)
         )
     }
 }

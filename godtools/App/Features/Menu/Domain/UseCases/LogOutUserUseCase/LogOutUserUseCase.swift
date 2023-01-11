@@ -14,13 +14,11 @@ class LogOutUserUseCase {
     
     private let cruOktaAuthentication: CruOktaAuthentication
     private let firebaseAnalytics: FirebaseAnalytics
-    private let snowplowAnalytics: SnowplowAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, firebaseAnalytics: FirebaseAnalytics) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.firebaseAnalytics = firebaseAnalytics
-        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Never> {
@@ -39,11 +37,6 @@ class LogOutUserUseCase {
     private func setAnalyticsUserProperties() {
         
         firebaseAnalytics.setLoggedInStateUserProperties(
-            isLoggedIn: false,
-            loggedInUserProperties: nil
-        )
-        
-        snowplowAnalytics.setLoggedInStateIdContextProperties(
             isLoggedIn: false,
             loggedInUserProperties: nil
         )
