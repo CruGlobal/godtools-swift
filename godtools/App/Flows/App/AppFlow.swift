@@ -447,6 +447,7 @@ extension AppFlow {
         }
         observersAdded = true
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didFinishLaunchingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -1032,7 +1033,20 @@ extension AppFlow {
     
     @objc private func handleNotification(notification: Notification) {
         
-        if notification.name == UIApplication.willResignActiveNotification {
+        if notification.name == UIApplication.didFinishLaunchingNotification {
+            
+            let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+            
+            incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+
+                }
+                .store(in: &cancellables)
+            
+        }
+        else if notification.name == UIApplication.willResignActiveNotification {
             
             resignedActiveDate = Date()
         }

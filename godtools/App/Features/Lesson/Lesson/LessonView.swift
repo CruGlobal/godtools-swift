@@ -42,6 +42,7 @@ class LessonView: MobileContentPagesView {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: true)
+        viewModel.pageViewed()
     }
     
     override func setupLayout() {

@@ -35,8 +35,9 @@ class MobileContentPagesViewModel: NSObject {
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
+    let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool) {
+    init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -46,6 +47,7 @@ class MobileContentPagesViewModel: NSObject {
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         pageNavigationSemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
         
@@ -61,10 +63,29 @@ class MobileContentPagesViewModel: NSObject {
                 self?.updateTranslationsIfNeeded()
             }
             .store(in: &cancellables)
+        
+        setUpCountLanguageUsages()
     }
     
     deinit {
 
+    }
+    
+    private func setUpCountLanguageUsages() {
+        
+        currentPageRenderer.flatMap { currentPageRenderer -> AnyPublisher<UserCounterDomainModel, Error> in
+            
+            let currentLocaleId = currentPageRenderer.language.localeIdentifier
+            let locale = Locale(identifier: currentLocaleId)
+            
+            return self.incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
+        }
+        .sink { _ in
+            
+        } receiveValue: { _ in
+            
+        }
+        .store(in: &cancellables)
     }
     
     private func updateTranslationsIfNeeded() {

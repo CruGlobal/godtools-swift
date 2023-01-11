@@ -92,6 +92,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
+        return IncrementUserCounterUseCase(
+            userCountersRepository: dataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
         return GetLanguageAvailabilityUseCase(
             localizationServices: dataLayer.getLocalizationServices()

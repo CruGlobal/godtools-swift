@@ -7,20 +7,26 @@
 //
 
 import Foundation
+import Combine
 
 class LoadToolRemoteSessionViewModel: LoadingViewModelType {
     
+    private let resourceId: String
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     private weak var flowDelegate: FlowDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     let message: ObservableValue<String> = ObservableValue(value: "")
     let hidesCloseButton: Bool = false
     
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tractRemoteSharePublisher: TractRemoteSharePublisher) {
+    required init(resourceId: String, flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
+        self.resourceId = resourceId
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
         tractRemoteSharePublisher.createNewSubscriberChannelIdForPublish { [weak self] (result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>) in
             
@@ -38,5 +44,16 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
         flowDelegate?.navigate(step: .cancelledLoadingToolRemoteSession)
+    }
+    
+    func pageViewed() {
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: resourceId))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
 }

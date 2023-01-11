@@ -48,7 +48,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = LessonView(viewModel: viewModel)
