@@ -17,9 +17,3 @@ protocol SHA256FileModelType {
     var attachments: Attachments { get }
     var translations: Translations { get }
 }
-
-extension SHA256FileModelType {
-    var location: SHA256FileLocation {
-        return SHA256FileLocation(sha256WithPathExtension: sha256WithPathExtension)
-    }
-}

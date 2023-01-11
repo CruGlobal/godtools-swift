@@ -523,7 +523,6 @@
 		45AD1F7625938A9800A096A0 /* ViewedTrainingTipType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */; };
 		45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */; };
 		45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */; };
-		45AD1F9725938A9800A096A0 /* AttachmentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E2125938A9700A096A0 /* AttachmentFile.swift */; };
 		45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4D25938A9800A096A0 /* TractRemoteSharePublisherError.swift */; };
 		45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4E25938A9800A096A0 /* TractRemoteShareChannel.swift */; };
 		45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4F25938A9800A096A0 /* TractRemoteShareURLBuilder.swift */; };
@@ -746,7 +745,6 @@
 		45D63E87288F75B0009B4610 /* MobileContentAttachmentsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E80288F75B0009B4610 /* MobileContentAttachmentsApi.swift */; };
 		45D63E88288F75B0009B4610 /* AttachmentModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E82288F75B0009B4610 /* AttachmentModelType.swift */; };
 		45D63E89288F75B0009B4610 /* AttachmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E83288F75B0009B4610 /* AttachmentModel.swift */; };
-		45D63E8B288F75DC009B4610 /* AttachmentModelType+SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E8A288F75DC009B4610 /* AttachmentModelType+SHA256FileLocation.swift */; };
 		45D63E9D288F77D4009B4610 /* RealmResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E8E288F77D4009B4610 /* RealmResourcesCache.swift */; };
 		45D63E9E288F77D4009B4610 /* RealmResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E90288F77D4009B4610 /* RealmResource.swift */; };
 		45D63E9F288F77D4009B4610 /* ResourcesJsonFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E92288F77D4009B4610 /* ResourcesJsonFileCache.swift */; };
@@ -778,7 +776,6 @@
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
 		45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */; };
-		45E8FAA82882FD4B00D7D569 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */; };
 		45E8FAA92882FD4B00D7D569 /* SHA256FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */; };
 		45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */; };
 		45E8FAAD2883040B00D7D569 /* FileCache+SSZipArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */; };
@@ -1578,7 +1575,6 @@
 		45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipType.swift; sourceTree = "<group>"; };
 		45AD1DF925938A9700A096A0 /* ViewedTrainingTip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTip.swift; sourceTree = "<group>"; };
 		45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsService.swift; sourceTree = "<group>"; };
-		45AD1E2125938A9700A096A0 /* AttachmentFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentFile.swift; sourceTree = "<group>"; };
 		45AD1E4D25938A9800A096A0 /* TractRemoteSharePublisherError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherError.swift; sourceTree = "<group>"; };
 		45AD1E4E25938A9800A096A0 /* TractRemoteShareChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareChannel.swift; sourceTree = "<group>"; };
 		45AD1E4F25938A9800A096A0 /* TractRemoteShareURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareURLBuilder.swift; sourceTree = "<group>"; };
@@ -1785,7 +1781,6 @@
 		45D63E80288F75B0009B4610 /* MobileContentAttachmentsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAttachmentsApi.swift; sourceTree = "<group>"; };
 		45D63E82288F75B0009B4610 /* AttachmentModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentModelType.swift; sourceTree = "<group>"; };
 		45D63E83288F75B0009B4610 /* AttachmentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentModel.swift; sourceTree = "<group>"; };
-		45D63E8A288F75DC009B4610 /* AttachmentModelType+SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AttachmentModelType+SHA256FileLocation.swift"; sourceTree = "<group>"; };
 		45D63E8E288F77D4009B4610 /* RealmResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourcesCache.swift; sourceTree = "<group>"; };
 		45D63E90288F77D4009B4610 /* RealmResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResource.swift; sourceTree = "<group>"; };
 		45D63E92288F77D4009B4610 /* ResourcesJsonFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesJsonFileCache.swift; sourceTree = "<group>"; };
@@ -1820,7 +1815,6 @@
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
-		45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
 		45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModel.swift; sourceTree = "<group>"; };
 		45E8FAAA2883020A00D7D569 /* FileCacheLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocation.swift; sourceTree = "<group>"; };
 		45E8FAAC2883040B00D7D569 /* FileCache+SSZipArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileCache+SSZipArchive.swift"; sourceTree = "<group>"; };
@@ -4859,7 +4853,6 @@
 				45AD1D4225938A9700A096A0 /* FontService */,
 				45AD1EE125938A9800A096A0 /* Localization */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
-				45AD1E0125938A9700A096A0 /* Resources */,
 				45677784287DB3520044AEB2 /* ShareToolScreenTutorialItemProvider */,
 				45677786287DB3520044AEB2 /* ShareToolScreenTutorialNumberOfViewsCache */,
 				45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */,
@@ -4952,14 +4945,6 @@
 				45AD1DF825938A9700A096A0 /* ViewedTrainingTipType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		45AD1E0125938A9700A096A0 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E2125938A9700A096A0 /* AttachmentFile.swift */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		45AD1E4B25938A9800A096A0 /* TractRemoteShare */ = {
@@ -5865,7 +5850,6 @@
 			children = (
 				45D63E83288F75B0009B4610 /* AttachmentModel.swift */,
 				45D63E82288F75B0009B4610 /* AttachmentModelType.swift */,
-				45D63E8A288F75DC009B4610 /* AttachmentModelType+SHA256FileLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5980,7 +5964,6 @@
 				4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */,
 				45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */,
 				45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */,
-				45E8FAA22882FD4B00D7D569 /* SHA256FileLocation.swift */,
 				45E8FAA32882FD4B00D7D569 /* SHA256FileModel.swift */,
 				45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */,
 				4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */,
@@ -7809,7 +7792,6 @@
 				45BDA6162954FE3E007E259B /* ArticleAemDownloaderError.swift in Sources */,
 				457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */,
 				45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
-				45D63E8B288F75DC009B4610 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
 				D409F2A8291D9C2300D9D2FE /* MobileContentApiAuthSession.swift in Sources */,
 				45AD1B9125938A4F00A096A0 /* ToolView.swift in Sources */,
 				D1D569122704A92B00BBE2A6 /* TutorialPagerView.swift in Sources */,
@@ -7828,7 +7810,6 @@
 				4596622727BBFEFB0059F70B /* ChooseYourOwnAdventureNavBarModel.swift in Sources */,
 				453AC11628F4A10400291791 /* FollowUpModel.swift in Sources */,
 				4561B41E295B392000F5AF5B /* OnboardingTutorialItemDataModel.swift in Sources */,
-				45AD1F9725938A9800A096A0 /* AttachmentFile.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
 				4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */,
 				45860A562923E7B30089C836 /* FixedHorizontalSpacer.swift in Sources */,
@@ -8231,7 +8212,6 @@
 				45AD1BB125938A4F00A096A0 /* FlowDelegate.swift in Sources */,
 				45C2593E28CAC3E8005D2387 /* LanguageSettingsView.swift in Sources */,
 				455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */,
-				45E8FAA82882FD4B00D7D569 /* SHA256FileLocation.swift in Sources */,
 				456431E1284ACCA400846720 /* DismissToolEvent.swift in Sources */,
 				45AE974927C97A9400C2CB33 /* InlineTip+MobileContentRenderableModel.swift in Sources */,
 				4567781F287DC1F20044AEB2 /* ArticleCategoriesViewModel.swift in Sources */,
