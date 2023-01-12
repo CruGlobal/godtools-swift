@@ -12,7 +12,7 @@ protocol FavoritingToolBannerViewModelDelegate: AnyObject {
     func closeBanner()
 }
 
-class FavoritingToolBannerViewModel: NSObject, ObservableObject {
+class FavoritingToolBannerViewModel: ObservableObject {
     
     // MARK: - Properties
     

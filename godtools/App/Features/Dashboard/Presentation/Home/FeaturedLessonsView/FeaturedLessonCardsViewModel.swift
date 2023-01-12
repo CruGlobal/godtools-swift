@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
+class FeaturedLessonCardsViewModel: ObservableObject {
     
     // MARK: - Properties
     
@@ -44,9 +44,7 @@ class FeaturedLessonCardsViewModel: NSObject, ObservableObject {
         self.translationsRepository = translationsRepository
         
         self.delegate = delegate
-        
-        super.init()
-                
+                        
         setupBinding()
     }
 }

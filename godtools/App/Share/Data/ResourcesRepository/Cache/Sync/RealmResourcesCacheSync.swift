@@ -35,9 +35,7 @@ class RealmResourcesCacheSync {
                 
                 var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
                 var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
-                
-                var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
-                
+                                
                 // sync new resourecs
                 
                 var existingResourcesMinusNewlyAddedResources: [RealmResource] = Array(realm.objects(RealmResource.self))
@@ -113,21 +111,6 @@ class RealmResourcesCacheSync {
                         }
                         
                         newRealmObjectsToStore.append(realmAttachment)
-                        
-                        let sha256WithPathExtension: String = realmAttachment.sha256FileLocation.sha256WithPathExtension
-                        
-                        if let attachmentFile = attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] {
-                            attachmentFile.addAttachmentId(attachmentId: realmAttachment.id)
-                        }
-                        else if let remoteFileUrl = URL(string: realmAttachment.file) {
-                            let attachmentFile: AttachmentFile = AttachmentFile(
-                                remoteFileUrl: remoteFileUrl,
-                                sha256: realmAttachment.sha256,
-                                pathExtension: remoteFileUrl.pathExtension
-                            )
-                            attachmentFile.addAttachmentId(attachmentId: realmAttachment.id)
-                            attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] = attachmentFile
-                        }
                         
                         if let indexOfNewAttachment = existingAttachmentsMinusNewlyAddedAttachments.firstIndex(where: { $0.id == newAttachment.id }) {
                             
@@ -213,7 +196,6 @@ class RealmResourcesCacheSync {
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
                         attachmentsRemoved: attachmentsRemoved,
-                        latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values),
                         downloadedTranslationsRemoved: downloadedTranslationsRemoved
                     )
                     

@@ -138,6 +138,12 @@ class AppDataLayerDependencies {
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
+    
+    func getInitialDataDownloader() -> InitialDataDownloader {
+        return InitialDataDownloader(
+            resourcesRepository: getResourcesRepository()
+        )
+    }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(

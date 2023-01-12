@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class BaseLessonCardViewModel: NSObject, ObservableObject {
+class BaseLessonCardViewModel: ObservableObject {
     
     // MARK: - Published
     

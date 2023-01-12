@@ -48,7 +48,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
-        self.dataDownloader = appDiContainer.initialDataDownloader
+        self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
@@ -519,7 +519,7 @@ extension AppFlow {
         let dashboardViewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
-            initialDataDownloader: appDiContainer.initialDataDownloader,
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
@@ -764,7 +764,6 @@ extension AppFlow {
     func getAllFavoriteTools() -> UIViewController {
         
         let viewModel = AllFavoriteToolsViewModel(
-            dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
