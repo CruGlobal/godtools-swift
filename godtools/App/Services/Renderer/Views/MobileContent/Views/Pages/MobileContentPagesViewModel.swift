@@ -64,28 +64,11 @@ class MobileContentPagesViewModel: NSObject {
             }
             .store(in: &cancellables)
         
-        setUpCountLanguageUsages()
+        countLanguageUsage(localeId: currentPageRenderer.value.language.localeIdentifier)
     }
     
     deinit {
 
-    }
-    
-    private func setUpCountLanguageUsages() {
-        
-        currentPageRenderer.flatMap { currentPageRenderer -> AnyPublisher<UserCounterDomainModel, Error> in
-            
-            let currentLocaleId = currentPageRenderer.language.localeIdentifier
-            let locale = Locale(identifier: currentLocaleId)
-            
-            return self.incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
-        }
-        .sink { _ in
-            
-        } receiveValue: { _ in
-            
-        }
-        .store(in: &cancellables)
     }
     
     private func updateTranslationsIfNeeded() {
@@ -331,6 +314,8 @@ class MobileContentPagesViewModel: NSObject {
     
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
         
+        countLanguageUsageIfNeeded(updatedLanguage: pageRenderer.language)
+        
         let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
         let pageModelsToRender: [Page]
         
@@ -367,6 +352,30 @@ class MobileContentPagesViewModel: NSObject {
         self.pageModels = pageModelsToRender
         
         numberOfPages.accept(value: pageModels.count)
+    }
+    
+    private func countLanguageUsageIfNeeded(updatedLanguage: LanguageDomainModel) {
+        
+        let updatedLocaleId = updatedLanguage.localeIdentifier
+        let languageChanged: Bool = currentPageRenderer.value.language.localeIdentifier != updatedLocaleId
+        
+        if languageChanged {
+            
+            countLanguageUsage(localeId: updatedLocaleId)
+        }
+    }
+    
+    private func countLanguageUsage(localeId: String) {
+        
+        let locale = Locale(identifier: localeId)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     func handleDismissToolEvent() {
