@@ -29,6 +29,18 @@ class LessonViewModel: MobileContentPagesViewModel {
         closeTapped()
     }
     
+    override func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
+        super.viewDidFinishLayout(window: window, safeArea: safeArea)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .lessonOpen(tool: resource.id))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
+    }
+    
     private func updateProgress(page: Int) {
         
         let currentPage: CGFloat = CGFloat(page + 1)
@@ -57,16 +69,5 @@ extension LessonViewModel {
     func closeTapped() {
                 
         flowDelegate?.navigate(step: .closeTappedFromLesson(lesson: resource, highestPageNumberViewed: highestPageNumberViewed))
-    }
-    
-    func pageViewed() {
-        
-        incrementUserCounterUseCase.incrementUserCounter(for: .lessonOpen(tool: resource.id))
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
     }
 }
