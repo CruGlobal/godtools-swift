@@ -66,7 +66,6 @@ class ToolView: MobileContentPagesView {
         super.viewWillAppear(animated)
         
         navBarView.reloadAppearance()
-        viewModel.pageViewed()
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {

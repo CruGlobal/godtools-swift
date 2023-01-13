@@ -130,6 +130,14 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
@@ -199,17 +207,6 @@ extension ToolViewModel {
             page: page,
             pagePositions: pagePositions
         )
-    }
-    
-    func pageViewed() {
-        
-        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
     }
 }
 

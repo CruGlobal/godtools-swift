@@ -74,25 +74,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         removeObservers()
         removeDeepLinkingObservers()
     }
-
-    private func loadInitialData() {
-        
-        dataDownloader.downloadInitialData()
-        
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
-        
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
-            .sink { finished in
-
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
-    }
     
     func navigate(step: FlowStep) {
 
@@ -115,6 +96,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             loadInitialData()
+            countAppSessionLaunch()
                         
         case .appLaunchedFromBackgroundState:
             
@@ -145,6 +127,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 }, completion: {(finished: Bool) in
                     loadingView.removeFromSuperview()
                 })
+                
+                countAppSessionLaunch()
             }
             
             self.resignedActiveDate = nil
@@ -447,7 +431,6 @@ extension AppFlow {
         }
         observersAdded = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didFinishLaunchingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -496,6 +479,43 @@ extension AppFlow {
         
         isObservingDeepLinking = false
         deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+}
+
+// MARK: - Launch
+
+extension AppFlow {
+    
+    private func loadInitialData() {
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
+        
+        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+
+        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
+            .sink { finished in
+
+            } receiveValue: { success in
+
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func countAppSessionLaunch() {
+        
+        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -1033,20 +1053,7 @@ extension AppFlow {
     
     @objc private func handleNotification(notification: Notification) {
         
-        if notification.name == UIApplication.didFinishLaunchingNotification {
-            
-            let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
-            
-            incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
-                .sink { _ in
-                    
-                } receiveValue: { _ in
-
-                }
-                .store(in: &cancellables)
-            
-        }
-        else if notification.name == UIApplication.willResignActiveNotification {
+        if notification.name == UIApplication.willResignActiveNotification {
             
             resignedActiveDate = Date()
         }
