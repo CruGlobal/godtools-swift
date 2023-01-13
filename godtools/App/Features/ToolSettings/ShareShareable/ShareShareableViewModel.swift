@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import Combine
 
 class ShareShareableViewModel {
         
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
+   
     let imageToShare: UIImage
     
-    init(imageToShare: UIImage) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(imageToShare: UIImage, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.imageToShare = imageToShare
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
+    }
+    
+    func pageViewed() {
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .imageShared)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
 }

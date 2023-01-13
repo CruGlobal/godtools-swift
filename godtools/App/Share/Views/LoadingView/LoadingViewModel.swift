@@ -21,4 +21,8 @@ class LoadingViewModel: LoadingViewModelType {
     func closeTapped() {
         
     }
+    
+    func pageViewed() {
+        
+    }
 }

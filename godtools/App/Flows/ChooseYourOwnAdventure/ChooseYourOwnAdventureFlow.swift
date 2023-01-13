@@ -47,7 +47,8 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             fontService: appDiContainer.getFontService(),
-            trainingTipsEnabled: false
+            trainingTipsEnabled: false,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel)

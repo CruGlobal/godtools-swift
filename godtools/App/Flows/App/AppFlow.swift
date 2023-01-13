@@ -74,25 +74,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         removeObservers()
         removeDeepLinkingObservers()
     }
-
-    private func loadInitialData() {
-        
-        dataDownloader.downloadInitialData()
-        
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
-        
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
-            .sink { finished in
-
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
-    }
     
     func navigate(step: FlowStep) {
 
@@ -115,6 +96,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             loadInitialData()
+            countAppSessionLaunch()
                         
         case .appLaunchedFromBackgroundState:
             
@@ -145,6 +127,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 }, completion: {(finished: Bool) in
                     loadingView.removeFromSuperview()
                 })
+                
+                countAppSessionLaunch()
             }
             
             self.resignedActiveDate = nil
@@ -495,6 +479,43 @@ extension AppFlow {
         
         isObservingDeepLinking = false
         deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+}
+
+// MARK: - Launch
+
+extension AppFlow {
+    
+    private func loadInitialData() {
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
+        
+        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+
+        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
+            .sink { finished in
+
+            } receiveValue: { success in
+
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func countAppSessionLaunch() {
+        
+        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+
+            }
+            .store(in: &cancellables)
     }
 }
 

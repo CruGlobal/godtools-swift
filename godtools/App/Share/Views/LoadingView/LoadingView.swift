@@ -41,6 +41,12 @@ class LoadingView: UIViewController {
         setupBinding()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.pageViewed()
+    }
+    
     private func setupLayout() {
         messageLabel.text = ""
         loadingView.startAnimating()
