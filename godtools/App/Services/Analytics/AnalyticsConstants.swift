@@ -25,7 +25,6 @@ struct AnalyticsConstants {
         static let siteSubSection = "cru.siteSubSection"
         static let source = "cru.source"
         static let ssoguid = "cru.ssoguid"
-        static let snowplowid = "cru.snowplowid"
         static let toggleAction = "cru.toggleswitch"
         static let gospelPresentedTimedAction = "cru.presentingthegospel"
         static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
