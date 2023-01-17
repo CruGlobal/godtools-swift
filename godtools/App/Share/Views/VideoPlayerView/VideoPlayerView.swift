@@ -100,35 +100,8 @@ extension VideoPlayerView: YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
-        print("\n ToolDetailView playerView didChangeTo state")
-        switch state {
-            
-        case .unstarted:
-            print("unstarted")
-        case .ended:
-            print("ended")
+        if state == .ended {
             viewModel.videoEnded()
-        case .playing:
-            print("playing")
-        case .paused:
-            print("paused")
-        case .buffering:
-            print("buffering")
-        case .cued:
-            print("cued")
-        case .unknown:
-            print("unknown")
-        @unknown default:
-            print("default")
         }
-    }
-    
-    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
-        print("\n ToolDetailView playerView didChangeTo quality")
-    }
-    
-    func playerView(_ playerView: YTPlayerError, receivedError error: YTPlayerError) {
-        print("\n TutorialCell: youTubeVideoPlayer receivedError")
-        print("  error: \(error)")
     }
 }
