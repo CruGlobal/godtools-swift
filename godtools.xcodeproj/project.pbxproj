@@ -970,6 +970,8 @@
 		D44F3AEB28628E7D0008390D /* BackwardCompatibleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */; };
 		D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */; };
 		D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EF297739F6009D5F93 /* AccountActivityView.swift */; };
+		D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */; };
+		D455F3F429773C30009D5F93 /* UserActivityBadgeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */; };
 		D45922BD2864E70C00904B87 /* AllFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */; };
 		D45922C42864ED9300904B87 /* AllFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */; };
 		D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */; };
@@ -2065,6 +2067,8 @@
 		D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardCompatibleList.swift; sourceTree = "<group>"; };
 		D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityUseCase.swift; sourceTree = "<group>"; };
 		D455F3EF297739F6009D5F93 /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
+		D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainModel.swift; sourceTree = "<group>"; };
+		D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityBadgeDomainModel.swift; sourceTree = "<group>"; };
 		D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
@@ -6155,7 +6159,7 @@
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
 				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
-				D455F3EB29773007009D5F93 /* GetUserActivityUserCase */,
+				D455F3EB29773007009D5F93 /* GetUserActivityUseCase */,
 				45F71615290A12D70019B715 /* GetUserIsAuthenticatedUseCase */,
 				45F7161D290A12D70019B715 /* LogOutUserUseCase */,
 			);
@@ -6843,12 +6847,14 @@
 			path = FavoriteToolsView;
 			sourceTree = "<group>";
 		};
-		D455F3EB29773007009D5F93 /* GetUserActivityUserCase */ = {
+		D455F3EB29773007009D5F93 /* GetUserActivityUseCase */ = {
 			isa = PBXGroup;
 			children = (
 				D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */,
+				D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */,
+				D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */,
 			);
-			path = GetUserActivityUserCase;
+			path = GetUserActivityUseCase;
 			sourceTree = "<group>";
 		};
 		D455F3EE297739E7009D5F93 /* AccountActivityView */ = {
@@ -8066,6 +8072,7 @@
 				45BDA6072954FE3E007E259B /* ArticleAemCacheResult.swift in Sources */,
 				459E86ED28EDA86C00E197A5 /* DeepLinkingManifestType.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
+				D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */,
 				D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */,
 				D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */,
 				45F7162B290A12D70019B715 /* HelpWebContent.swift in Sources */,
@@ -8527,6 +8534,7 @@
 				450E3D072958916A000FF6D0 /* RealmLessonEvaluation.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				4573133A28C1821100481640 /* ToolDetailsToggleFavoriteButton.swift in Sources */,
+				D455F3F429773C30009D5F93 /* UserActivityBadgeDomainModel.swift in Sources */,
 				45E658E628F0760A00E90350 /* AppBuild.swift in Sources */,
 				45AE973D27C97A9400C2CB33 /* MultiplatformCard.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,

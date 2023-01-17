@@ -18,8 +18,8 @@ struct AccountActivityView: View {
             
             Text("Your Badges")
             
-            ForEach(viewModel.badges, id: \.variant) { badge in
-                Text("variant: \(badge.variant), type: \(badge.type), progress: \(badge.progressTarget)")
+            ForEach(viewModel.badges) { badge in
+                Text("id: \(badge.id), progress: \(badge.progressTarget), isEarned: \(badge.isEarned ? "yes" : "no")")
             }
         }
     }

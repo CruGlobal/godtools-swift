@@ -19,7 +19,7 @@ class GetUserActivityUseCase {
         self.userCounterRepository = userCounterRepository
     }
     
-    func getUserActivityPublisher() -> AnyPublisher<UserActivity, Never> {
+    func getUserActivityPublisher() -> AnyPublisher<UserActivityDomainModel, Never> {
         
         return userCounterRepository.getUserCountersChanged(reloadFromRemote: true)
             .flatMap { _ in
@@ -29,7 +29,9 @@ class GetUserActivityUseCase {
                 
                 let userActivity = UserActivity(counters: userCounterDictionary)
                 
-                return Just(userActivity)
+                let userActivityDomainModel = UserActivityDomainModel(userActivity: userActivity)
+                
+                return Just(userActivityDomainModel)
                 
             }
             .eraseToAnyPublisher()
