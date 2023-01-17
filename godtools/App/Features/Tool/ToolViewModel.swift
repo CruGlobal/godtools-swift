@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ToolViewModel: MobileContentPagesViewModel {
     
@@ -22,11 +23,12 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let liveShareStream: String?
     
     private weak var flowDelegate: FlowDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     let navBarViewModel: ObservableValue<ToolNavBarViewModel>
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, resourceViewsService: ResourceViewsService, analytics: AnalyticsContainer, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, resourceViewsService: ResourceViewsService, analytics: AnalyticsContainer, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, page: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.backButtonImageType = backButtonImageType
@@ -43,7 +45,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         self.navBarViewModel = ObservableValue(value: navBarViewModelValue)
         
-        super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled)
+        super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
         
         setupBinding()
     }
@@ -128,6 +130,14 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
