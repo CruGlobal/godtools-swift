@@ -18,6 +18,7 @@ class AccountViewModel: ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
+    private let getUserActivityUseCase: GetUserActivityUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let analytics: AnalyticsContainer
     
@@ -35,8 +36,9 @@ class AccountViewModel: ObservableObject {
     @Published var globalActivityButtonTitle: String
     @Published var globalActivityTitle: String
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
+    @Published var badges = [Badge]()
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -45,6 +47,7 @@ class AccountViewModel: ObservableObject {
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getUserAccountProfileNameUseCase = getUserAccountProfileNameUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
+        self.getUserActivityUseCase = getUserActivityUseCase
         self.analytics = analytics
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
@@ -88,6 +91,23 @@ class AccountViewModel: ObservableObject {
                 self?.numberOfGlobalActivityThisWeekItems = globalActivityThisWeekDomainModels.count
             }
             .store(in: &cancellables)
+        
+        getUserActivityUseCase.getUserActivityPublisher()
+            .receiveOnMain()
+            .sink { _ in
+                
+            } receiveValue: { userActivity in
+                
+                self.updateUserActivityValues(userActivity: userActivity)
+            }
+            .store(in: &cancellables)
+
+    }
+    
+    private func updateUserActivityValues(userActivity: UserActivity) {
+        
+        self.badges = userActivity.badges
+        
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {

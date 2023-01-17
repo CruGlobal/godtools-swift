@@ -309,6 +309,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getUserActivityUseCase() -> GetUserActivityUseCase {
+        return GetUserActivityUseCase(
+            userCounterRepository: dataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
