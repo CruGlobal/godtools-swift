@@ -15,6 +15,7 @@ class UserCountersRepository {
     private let cache: RealmUserCountersCache
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var syncCancellables: Set<AnyCancellable> = Set()
     
     init(api: UserCountersAPI, cache: RealmUserCountersCache) {
         self.api = api
@@ -26,6 +27,28 @@ class UserCountersRepository {
         guard let userCounterDataModel = cache.getUserCounter(id: id) else { return nil }
         
         return UserCounterDomainModel(dataModel: userCounterDataModel)
+    }
+    
+    func getUserCountersChanged(reloadFromRemote: Bool) -> AnyPublisher<Void, Never> {
+            
+            if reloadFromRemote {
+                
+                fetchRemoteUserCounters()
+                    .sink(receiveCompletion: { _ in
+                        
+                    }, receiveValue: { _ in
+                        
+                    })
+                    .store(in: &cancellables)
+
+            }
+            
+            return cache.getUserCountersChanged()
+        }
+    
+    func getUserCounters() -> [UserCounterDataModel] {
+        
+        return cache.getAllUserCounters()
     }
     
     func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
@@ -49,12 +72,12 @@ class UserCountersRepository {
     
     func syncUpdatedUserCountersWithRemote() {
         
-        if cancellables.isEmpty == false {
-            for cancellable in cancellables {
+        if syncCancellables.isEmpty == false {
+            for cancellable in syncCancellables {
                 cancellable.cancel()
             }
             
-            cancellables.removeAll()
+            syncCancellables.removeAll()
         }
         
         let userCountersToSync = cache.getUserCountersWithIncrementGreaterThanZero()
@@ -77,7 +100,7 @@ class UserCountersRepository {
                 }, receiveValue: { _ in
                     
                 })
-                .store(in: &cancellables)
+                .store(in: &syncCancellables)
         }
     }
 }
