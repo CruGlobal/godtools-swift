@@ -80,9 +80,4 @@ class AppConfig {
             return productionFileName
         }
     }
-    
-    var snowplowAppId: String {
-        
-        return appBuild.isDebug ? "godtools-dev" : "godtools"
-    }
 }

@@ -13,20 +13,18 @@ class AnalyticsContainer {
     // analytics systems
     let appsFlyerAnalytics: AppsFlyerAnalytics
     let firebaseAnalytics: FirebaseAnalytics
-    let snowplowAnalytics: SnowplowAnalytics
 
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics
     let trackActionAnalytics: TrackActionAnalytics
             
-    init(appsFlyerAnalytics: AppsFlyerAnalytics, firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(appsFlyerAnalytics: AppsFlyerAnalytics, firebaseAnalytics: FirebaseAnalytics) {
         
-        pageViewedAnalytics = PageViewedAnalytics(firebaseAnalytics: firebaseAnalytics, snowplowAnalytics: snowplowAnalytics)
+        pageViewedAnalytics = PageViewedAnalytics(firebaseAnalytics: firebaseAnalytics)
         
-        trackActionAnalytics = TrackActionAnalytics(firebaseAnalytics: firebaseAnalytics, snowplowAnalytics: snowplowAnalytics)
+        trackActionAnalytics = TrackActionAnalytics(firebaseAnalytics: firebaseAnalytics)
 
         self.appsFlyerAnalytics = appsFlyerAnalytics
         self.firebaseAnalytics = firebaseAnalytics
-        self.snowplowAnalytics = snowplowAnalytics
     }
 }
