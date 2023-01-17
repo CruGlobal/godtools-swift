@@ -73,13 +73,14 @@ class ToolPageViewModel: MobileContentPageViewModel {
 extension ToolPageViewModel {
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
+
+        guard !hidesCallToAction else {
+            return nil
+        }
         
-        if !hidesCallToAction && pageModel.callToAction == nil {
-            
-            for viewFactory in renderedPageContext.pageViewFactories.factories {
-                if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
-                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
-                }
+        for viewFactory in renderedPageContext.pageViewFactories.factories {
+            if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
+                return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
             }
         }
         
