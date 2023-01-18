@@ -24,7 +24,9 @@ struct BackwardCompatibleList<Content: View>: View {
             // Pull to refresh is supported only in iOS 15+
             
             ScrollView(.vertical) {
-                content()
+                LazyVStack(spacing: 0) {
+                    content()
+                }
             }
             .refreshable {
                 refreshHandler()
