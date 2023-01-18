@@ -72,8 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
         
         appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
-        
-        appDiContainer.dataLayer.getAnalytics().snowplowAnalytics.configure()
                 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         

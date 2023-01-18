@@ -65,7 +65,7 @@ struct DashboardTabBarView_Previews: PreviewProvider {
         let viewModel = DashboardViewModel(
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
-            initialDataDownloader: appDiContainer.initialDataDownloader,
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),

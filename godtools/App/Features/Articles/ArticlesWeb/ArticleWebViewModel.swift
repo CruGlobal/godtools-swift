@@ -8,27 +8,31 @@
 
 import Foundation
 import WebKit
+import Combine
 
 class ArticleWebViewModel: NSObject {
     
     private let aemCacheObject: ArticleAemCacheObject
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
     
     private weak var flowDelegate: FlowDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
+    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
         self.flowDelegate = flowDelegate
         self.aemCacheObject = aemCacheObject
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.analytics = analytics
         self.flowType = flowType
         
@@ -97,6 +101,14 @@ extension ArticleWebViewModel {
         )
                 
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     func sharedTapped() {

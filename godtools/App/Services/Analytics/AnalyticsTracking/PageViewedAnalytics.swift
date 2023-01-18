@@ -11,12 +11,10 @@ import Foundation
 class PageViewedAnalytics {
     
     private let firebaseAnalytics: FirebaseAnalytics
-    private let snowplowAnalytics: SnowplowAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
-        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackPageView(trackScreen: TrackScreenModel) {
@@ -28,7 +26,5 @@ class PageViewedAnalytics {
             contentLanguage: trackScreen.contentLanguage,
             secondaryContentLanguage: trackScreen.secondaryContentLanguage
         )
-        
-        snowplowAnalytics.trackScreenView(screenName: trackScreen.screenName)
     }
 }

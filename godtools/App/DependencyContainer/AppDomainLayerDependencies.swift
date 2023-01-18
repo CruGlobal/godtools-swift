@@ -63,8 +63,7 @@ class AppDomainLayerDependencies {
         return AuthenticateUserUseCase(
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
@@ -89,6 +88,12 @@ class AppDomainLayerDependencies {
         return GetGlobalActivityThisWeekUseCase(
             globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
             localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
+        return IncrementUserCounterUseCase(
+            userCountersRepository: dataLayer.getUserCountersRepository()
         )
     }
     
@@ -119,8 +124,7 @@ class AppDomainLayerDependencies {
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     

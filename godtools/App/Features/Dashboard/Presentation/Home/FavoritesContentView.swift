@@ -72,7 +72,7 @@ struct FavoritesContentView_Previews: PreviewProvider {
         
         let viewModel = FavoritesContentViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.dataLayer.getAnalytics(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),

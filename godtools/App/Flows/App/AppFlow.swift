@@ -48,7 +48,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
-        self.dataDownloader = appDiContainer.initialDataDownloader
+        self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
@@ -74,25 +74,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         removeObservers()
         removeDeepLinkingObservers()
     }
-
-    private func loadInitialData() {
-        
-        dataDownloader.downloadInitialData()
-        
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
-        
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
-            .sink { finished in
-
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
-    }
     
     func navigate(step: FlowStep) {
 
@@ -115,6 +96,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             loadInitialData()
+            countAppSessionLaunch()
                         
         case .appLaunchedFromBackgroundState:
             
@@ -145,6 +127,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 }, completion: {(finished: Bool) in
                     loadingView.removeFromSuperview()
                 })
+                
+                countAppSessionLaunch()
             }
             
             self.resignedActiveDate = nil
@@ -498,6 +482,43 @@ extension AppFlow {
     }
 }
 
+// MARK: - Launch
+
+extension AppFlow {
+    
+    private func loadInitialData() {
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
+        
+        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+
+        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
+            .sink { finished in
+
+            } receiveValue: { success in
+
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func countAppSessionLaunch() {
+        
+        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+
+            }
+            .store(in: &cancellables)
+    }
+}
+
 // MARK: - Tools Menu
 
 extension AppFlow {
@@ -518,7 +539,7 @@ extension AppFlow {
         let dashboardViewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
-            initialDataDownloader: appDiContainer.initialDataDownloader,
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
@@ -763,7 +784,6 @@ extension AppFlow {
     func getAllFavoriteTools() -> UIViewController {
         
         let viewModel = AllFavoriteToolsViewModel(
-            dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),

@@ -13,7 +13,7 @@ protocol OpenTutorialBannerViewModelDelegate: AnyObject {
     func openTutorial()
 }
 
-class OpenTutorialBannerViewModel: NSObject, ObservableObject {
+class OpenTutorialBannerViewModel: ObservableObject {
     
     // MARK: - Properties
     

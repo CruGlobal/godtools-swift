@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 import Combine
 
 class InitialDataDownloader {
@@ -15,16 +14,8 @@ class InitialDataDownloader {
     private let resourcesRepository: ResourcesRepository
     
     private var cancellables = Set<AnyCancellable>()
-                    
-    // observables
-    @available(*, deprecated)
-    let resourcesUpdatedFromRemoteDatabase: SignalValue<InitialDataDownloaderError?> = SignalValue()
-    @available(*, deprecated)
-    let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
-    @available(*, deprecated)
-    let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
-    
-    required init(resourcesRepository: ResourcesRepository) {
+                        
+    init(resourcesRepository: ResourcesRepository) {
         
         self.resourcesRepository = resourcesRepository
     }

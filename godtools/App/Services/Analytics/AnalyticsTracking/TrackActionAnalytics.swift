@@ -11,12 +11,10 @@ import Foundation
 class TrackActionAnalytics {
     
     private let firebaseAnalytics: FirebaseAnalytics
-    private let snowplowAnalytics: SnowplowAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalytics, snowplowAnalytics: SnowplowAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
-        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackAction(trackAction: TrackActionModel) {
@@ -30,7 +28,5 @@ class TrackActionAnalytics {
             actionName: trackAction.actionName,
             data: trackAction.data
         )
-        
-        snowplowAnalytics.trackAction(actionName: trackAction.actionName)
     }
 }

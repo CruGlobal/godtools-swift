@@ -28,8 +28,7 @@ class AppDataLayerDependencies {
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
-            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging),
-            snowplowAnalytics: SnowplowAnalytics(config: appConfig, loggingEnabled: appBuild.configuration == .analyticsLogging)
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
     
@@ -137,6 +136,12 @@ class AppDataLayerDependencies {
     
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
+    }
+    
+    func getInitialDataDownloader() -> InitialDataDownloader {
+        return InitialDataDownloader(
+            resourcesRepository: getResourcesRepository()
+        )
     }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {

@@ -59,7 +59,8 @@ class TractFlow: ToolNavigationFlow, Flow {
             toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
             liveShareStream: liveShareStream,
             page: page,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = ToolView(viewModel: viewModel)

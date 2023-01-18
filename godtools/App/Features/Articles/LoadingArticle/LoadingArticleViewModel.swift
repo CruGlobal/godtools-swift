@@ -69,4 +69,8 @@ class LoadingArticleViewModel: LoadingViewModelType {
     func closeTapped() {
         // No implementation needed here. ~Levi
     }
+    
+    func pageViewed() {
+        // No implementation needed here.
+    }
 }
