@@ -20,6 +20,7 @@ class MobileContentPagesViewModel: NSObject {
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
+    private var languagelocaleIdUsed: Set<String> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private(set) var renderer: CurrentValueSubject<MobileContentRenderer, Never>
@@ -314,7 +315,7 @@ class MobileContentPagesViewModel: NSObject {
     
     func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
         
-        countLanguageUsageIfNeeded(updatedLanguage: pageRenderer.language)
+        countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
         let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
         let pageModelsToRender: [Page]
@@ -354,7 +355,7 @@ class MobileContentPagesViewModel: NSObject {
         numberOfPages.accept(value: pageModels.count)
     }
     
-    private func countLanguageUsageIfNeeded(updatedLanguage: LanguageDomainModel) {
+    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDomainModel) {
         
         let updatedLocaleId = updatedLanguage.localeIdentifier
         let languageChanged: Bool = currentPageRenderer.value.language.localeIdentifier != updatedLocaleId
@@ -367,15 +368,33 @@ class MobileContentPagesViewModel: NSObject {
     
     private func countLanguageUsage(localeId: String) {
         
+        if languageUsageAlreadyCountedThisSession(localeId: localeId) { return }
+        
         let locale = Locale(identifier: localeId)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
-            .sink { _ in
+            .sink { completion in
+                
+                switch completion {
+                case .finished:
+                    self.trackLanguageUsageCountedThisSession(localeId: localeId)
+                    
+                case .failure:
+                    break
+                }
                 
             } receiveValue: { _ in
                 
             }
             .store(in: &cancellables)
+    }
+    
+    private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
+        return languagelocaleIdUsed.contains(localeId)
+    }
+    
+    private func trackLanguageUsageCountedThisSession(localeId: String) {
+        languagelocaleIdUsed.insert(localeId)
     }
     
     func handleDismissToolEvent() {

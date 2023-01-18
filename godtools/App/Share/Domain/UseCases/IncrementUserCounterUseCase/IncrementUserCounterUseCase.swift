@@ -41,14 +41,6 @@ class IncrementUserCounterUseCase {
                 .eraseToAnyPublisher()
         }
         
-        // Only need to count language usage once per language.
-        if case .languageUsed = interaction, let languageAlreadyUsedCounter = userCountersRepository.getUserCounter(id: userCounterId) {
-            
-            return Just(languageAlreadyUsedCounter)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { userCounterDataModel in
                 
