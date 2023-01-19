@@ -286,16 +286,22 @@ class AppDataLayerDependencies {
     }
     
     func getUserCountersRepository() -> UserCountersRepository {
+        
+        let api = UserCountersAPI(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            mobileContentApiAuthSession: getMobileContentApiAuthSession()
+        )
+        
+        let cache = RealmUserCountersCache(
+            realmDatabase: sharedRealmDatabase,
+            userCountersSync: RealmUserCountersCacheSync(realmDatabase: sharedRealmDatabase)
+        )
+        
         return UserCountersRepository(
-            api: UserCountersAPI(
-                config: getAppConfig(),
-                ignoreCacheSession: sharedIgnoreCacheSession,
-                mobileContentApiAuthSession: getMobileContentApiAuthSession()
-            ),
-            cache: RealmUserCountersCache(
-                realmDatabase: sharedRealmDatabase,
-                userCountersSync: RealmUserCountersCacheSync(realmDatabase: sharedRealmDatabase)
-            )
+            api: api,
+            cache: cache,
+            remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
         )
     }
     

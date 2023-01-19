@@ -13,12 +13,14 @@ class UserCountersRepository {
     
     private let api: UserCountersAPI
     private let cache: RealmUserCountersCache
+    private let remoteUserCountersSync: RemoteUserCountersSync
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersAPI, cache: RealmUserCountersCache) {
+    init(api: UserCountersAPI, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
         self.api = api
         self.cache = cache
+        self.remoteUserCountersSync = remoteUserCountersSync
     }
     
     func getUserCounter(id: String) -> UserCounterDomainModel? {
@@ -49,35 +51,6 @@ class UserCountersRepository {
     
     func syncUpdatedUserCountersWithRemote() {
         
-        if cancellables.isEmpty == false {
-            for cancellable in cancellables {
-                cancellable.cancel()
-            }
-            
-            cancellables.removeAll()
-        }
-        
-        let userCountersToSync = cache.getUserCountersWithIncrementGreaterThanZero()
-        
-        for userCounter in userCountersToSync {
-            
-            let incrementValue = userCounter.incrementValue
-            
-            api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue)
-                .flatMap { userCounterUpdatedFromRemote in
-                    
-                    return self.cache.syncUserCounter(userCounterUpdatedFromRemote, incrementValueBeforeRemoteUpdate: incrementValue)
-                        .mapError { error in
-                            return URLResponseError.otherError(error: error)
-                        }
-                        .eraseToAnyPublisher()
-                }
-                .sink(receiveCompletion: { _ in
-                                        
-                }, receiveValue: { _ in
-                    
-                })
-                .store(in: &cancellables)
-        }
+        remoteUserCountersSync.syncUpdatedUserCountersWithRemote()
     }
 }
