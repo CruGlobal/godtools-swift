@@ -38,21 +38,6 @@ struct DashboardTabBarView: View {
             )
         }
     }
-    
-    @ViewBuilder private func doubleSpacer() -> some View {
-        Group {
-            Spacer()
-            Spacer()
-        }
-    }
-    
-    @ViewBuilder private func tripleSpacer() -> some View {
-        Group {
-            Spacer()
-            Spacer()
-            Spacer()
-        }
-    }
 }
 
 struct DashboardTabBarView_Previews: PreviewProvider {
