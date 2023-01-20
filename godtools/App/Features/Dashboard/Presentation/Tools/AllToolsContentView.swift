@@ -39,6 +39,10 @@ struct AllToolsContentView: View {
                         
                         AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
                         
+                        Rectangle()
+                            .frame(height: 80)
+                            .foregroundColor(.clear)
+                        
                     } refreshHandler: {
                         viewModel.refreshTools()
                     }

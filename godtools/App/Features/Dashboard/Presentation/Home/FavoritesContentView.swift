@@ -41,7 +41,7 @@ struct FavoritesContentView: View {
                         Text(viewModel.pageTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
                             .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 12)
+                            .padding(.top, 24)
                             .padding(.bottom, 15)
                             .padding(.leading, leadingTrailingPadding)
                         
@@ -52,7 +52,9 @@ struct FavoritesContentView: View {
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                         
-                        Spacer()
+                        Rectangle()
+                            .frame(height: 80)
+                            .foregroundColor(.clear)
                         
                     } refreshHandler: {
                         viewModel.refreshData()
