@@ -44,6 +44,8 @@ class IncrementUserCounterUseCase {
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { userCounterDataModel in
                 
+                self.userCountersRepository.syncUpdatedUserCountersWithRemote()
+                
                 let userCounterDomainModel = UserCounterDomainModel(dataModel: userCounterDataModel)
                 
                 return Just(userCounterDomainModel)

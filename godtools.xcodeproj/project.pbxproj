@@ -969,6 +969,7 @@
 		D44F3AE728625C3F0008390D /* FavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AE628625C3F0008390D /* FavoriteToolsView.swift */; };
 		D44F3AE928625C660008390D /* FavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AE828625C660008390D /* FavoriteToolsViewModel.swift */; };
 		D44F3AEB28628E7D0008390D /* BackwardCompatibleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */; };
+		D455F3F62979CE5D009D5F93 /* RemoteUserCountersSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F52979CE5D009D5F93 /* RemoteUserCountersSync.swift */; };
 		D45922BD2864E70C00904B87 /* AllFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */; };
 		D45922C42864ED9300904B87 /* AllFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */; };
 		D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */; };
@@ -2062,6 +2063,7 @@
 		D44F3AE628625C3F0008390D /* FavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsView.swift; sourceTree = "<group>"; };
 		D44F3AE828625C660008390D /* FavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D44F3AEA28628E7D0008390D /* BackwardCompatibleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardCompatibleList.swift; sourceTree = "<group>"; };
+		D455F3F52979CE5D009D5F93 /* RemoteUserCountersSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserCountersSync.swift; sourceTree = "<group>"; };
 		D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
@@ -2252,6 +2254,7 @@
 			children = (
 				45052138295F3B9C0018ABD0 /* UserCounterDataModel.swift */,
 				4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */,
+				D455F3F52979CE5D009D5F93 /* RemoteUserCountersSync.swift */,
 				45052139295F3B9C0018ABD0 /* Api */,
 				45052132295F3B9C0018ABD0 /* Cache */,
 			);
@@ -8333,6 +8336,7 @@
 				45C2595F28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift in Sources */,
 				45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */,
 				45AD1B1C25938A4E00A096A0 /* LearnToShareToolItemsProviderType.swift in Sources */,
+				D455F3F62979CE5D009D5F93 /* RemoteUserCountersSync.swift in Sources */,
 				455583EC269F2DA500C3FF14 /* MobileContentSpacerView.swift in Sources */,
 				45BDA5C22954F605007E259B /* ResourceViewModel.swift in Sources */,
 				45428A8126712B1C0022A66D /* AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift in Sources */,
