@@ -130,7 +130,7 @@ class AppDataLayerDependencies {
                 baseUrl: getAppConfig().mobileContentApiBaseUrl,
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
-            cache: GlobalAnalyticsUserDefaultsCache()
+            cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
         )
     }
     
