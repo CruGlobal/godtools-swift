@@ -65,9 +65,12 @@ class MobileContentAuthTokenAPI {
             .mapError {
                 return URLResponseError.requestError(error: $0 as Error)
             }
-            .decode(type: MobileContentAuthTokenDecodable.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<MobileContentAuthTokenDecodable>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }
