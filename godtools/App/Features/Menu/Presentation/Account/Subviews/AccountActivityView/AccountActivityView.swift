@@ -41,6 +41,13 @@ struct AccountActivityView: View {
                         
                         VStack(alignment: .center, spacing: 0) {
                             
+                            ZStack(alignment: .center) {
+                                Image("badge_background")
+                                    .foregroundColor(badge.iconBackgroundColor)
+                                Image("tools-1")
+                                    .foregroundColor(badge.iconForegroundColor)
+                            }
+                            
                             Text(badge.badgeText)
                                 .font(FontLibrary.sfProTextRegular.font(size: 10))
                                 .foregroundColor(ColorPalette.gtGrey.color)

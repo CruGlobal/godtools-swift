@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import SwiftUI
 
 struct UserActivityBadgeDomainModel {
     
@@ -18,16 +19,19 @@ struct UserActivityBadgeDomainModel {
     // properties actually in use
     let badgeText: String
     let badgeType: Badge.BadgeType
-    let progress: Int
+    let iconBackgroundColor: Color
+    let iconForegroundColor: Color
     
     init(badge: Badge) {
         
         variant = Int(badge.variant)
         progressTarget = Int(badge.progressTarget)
-        progress = Int(badge.progress)
-        badgeType = badge.type
         isEarned = badge.isEarned
-        badgeText = UserActivityBadgeDomainModel.getBadgeText(badgeType: badge.type, progress: progress)
+        badgeType = badge.type
+        badgeText = UserActivityBadgeDomainModel.getBadgeText(badgeType: badgeType, progress: Int(badge.progress))
+        iconBackgroundColor = Color(badge.colors.containerColor(mode: .light))
+        iconForegroundColor = Color(badge.colors.color(mode: .light))
+        
     }
     
     private static func getBadgeText(badgeType: Badge.BadgeType, progress: Int) -> String {
