@@ -12,6 +12,8 @@ import Combine
 
 class MobileContentGlobalAnalyticsApi {
     
+    static let sharedGlobalAnalyticsId: String = "1"
+    
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let session: URLSession
     private let baseUrl: String
