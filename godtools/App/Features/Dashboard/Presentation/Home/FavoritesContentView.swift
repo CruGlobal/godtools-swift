@@ -43,6 +43,7 @@ struct FavoritesContentView: View {
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .padding(.top, 12)
                             .padding(.bottom, 15)
+                            .padding(.leading, leadingTrailingPadding)
                         
                         FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
