@@ -369,6 +369,10 @@
 		457F6BDD28B0132F0055456C /* AttachmentsBundleCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F6BDC28B0132F0055456C /* AttachmentsBundleCache.swift */; };
 		4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581657526F4DD4D000D660F /* MobileContentRowView.swift */; };
 		4581D97F297AD21E00D056D6 /* JsonApiResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D97E297AD21E00D056D6 /* JsonApiResponseData.swift */; };
+		4581D987297ADEC300D056D6 /* MobileContentGlobalAnalyticsDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D986297ADEC300D056D6 /* MobileContentGlobalAnalyticsDecodable.swift */; };
+		4581D989297AE04B00D056D6 /* GlobalAnalyticsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D988297AE04B00D056D6 /* GlobalAnalyticsDataModel.swift */; };
+		4581D98B297AE09900D056D6 /* RealmGlobalAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D98A297AE09900D056D6 /* RealmGlobalAnalytics.swift */; };
+		4581D98D297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D98C297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift */; };
 		45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BC7279CCB5300F6B5F3 /* MobileContentCardView.swift */; };
 		45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BC9279CCB6900F6B5F3 /* MobileContentCardViewModel.swift */; };
 		45828BD1279CCBD200F6B5F3 /* MobileContentFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */; };
@@ -384,11 +388,8 @@
 		45860A77292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A76292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift */; };
 		45860A7A292421EC0089C836 /* GetGlobalActivityThisWeekUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A79292421EC0089C836 /* GetGlobalActivityThisWeekUseCase.swift */; };
 		45860A7C292422010089C836 /* GlobalActivityThisWeekDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A7B292422010089C836 /* GlobalActivityThisWeekDomainModel.swift */; };
-		45860A85292424030089C836 /* GlobalAnalyticsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A7F292424030089C836 /* GlobalAnalyticsUserDefaultsCache.swift */; };
 		45860A86292424030089C836 /* GlobalAnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A80292424030089C836 /* GlobalAnalyticsRepository.swift */; };
 		45860A87292424030089C836 /* MobileContentGlobalAnalyticsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A82292424030089C836 /* MobileContentGlobalAnalyticsApi.swift */; };
-		45860A88292424030089C836 /* MobileContentGlobalAnalyticsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A84292424030089C836 /* MobileContentGlobalAnalyticsDataModel.swift */; };
-		45860A8A2924262D0089C836 /* GlobalAnalyticsAttributeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A892924262D0089C836 /* GlobalAnalyticsAttributeType.swift */; };
 		45860A8C29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A8B29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift */; };
 		45860A95292437420089C836 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45860A93292437420089C836 /* DownloadProgressView.xib */; };
 		45860A96292437420089C836 /* DownloadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A94292437420089C836 /* DownloadProgressView.swift */; };
@@ -1424,6 +1425,10 @@
 		457F6BDC28B0132F0055456C /* AttachmentsBundleCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsBundleCache.swift; sourceTree = "<group>"; };
 		4581657526F4DD4D000D660F /* MobileContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRowView.swift; sourceTree = "<group>"; };
 		4581D97E297AD21E00D056D6 /* JsonApiResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonApiResponseData.swift; sourceTree = "<group>"; };
+		4581D986297ADEC300D056D6 /* MobileContentGlobalAnalyticsDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentGlobalAnalyticsDecodable.swift; sourceTree = "<group>"; };
+		4581D988297AE04B00D056D6 /* GlobalAnalyticsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsDataModel.swift; sourceTree = "<group>"; };
+		4581D98A297AE09900D056D6 /* RealmGlobalAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmGlobalAnalytics.swift; sourceTree = "<group>"; };
+		4581D98C297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmGlobalAnalyticsCache.swift; sourceTree = "<group>"; };
 		45828BC7279CCB5300F6B5F3 /* MobileContentCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardView.swift; sourceTree = "<group>"; };
 		45828BC9279CCB6900F6B5F3 /* MobileContentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardViewModel.swift; sourceTree = "<group>"; };
 		45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowView.swift; sourceTree = "<group>"; };
@@ -1439,11 +1444,8 @@
 		45860A76292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountGlobalActivityAnalyticsItemView.swift; sourceTree = "<group>"; };
 		45860A79292421EC0089C836 /* GetGlobalActivityThisWeekUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityThisWeekUseCase.swift; sourceTree = "<group>"; };
 		45860A7B292422010089C836 /* GlobalActivityThisWeekDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityThisWeekDomainModel.swift; sourceTree = "<group>"; };
-		45860A7F292424030089C836 /* GlobalAnalyticsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45860A80292424030089C836 /* GlobalAnalyticsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsRepository.swift; sourceTree = "<group>"; };
 		45860A82292424030089C836 /* MobileContentGlobalAnalyticsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentGlobalAnalyticsApi.swift; sourceTree = "<group>"; };
-		45860A84292424030089C836 /* MobileContentGlobalAnalyticsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentGlobalAnalyticsDataModel.swift; sourceTree = "<group>"; };
-		45860A892924262D0089C836 /* GlobalAnalyticsAttributeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsAttributeType.swift; sourceTree = "<group>"; };
 		45860A8B29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountGlobalActivityAnalyticsItemViewModel.swift; sourceTree = "<group>"; };
 		45860A93292437420089C836 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
 		45860A94292437420089C836 /* DownloadProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressView.swift; sourceTree = "<group>"; };
@@ -4254,6 +4256,7 @@
 		45860A7D292424030089C836 /* GlobalAnalyticsRepository */ = {
 			isa = PBXGroup;
 			children = (
+				4581D988297AE04B00D056D6 /* GlobalAnalyticsDataModel.swift */,
 				45860A80292424030089C836 /* GlobalAnalyticsRepository.swift */,
 				45860A81292424030089C836 /* Api */,
 				45860A7E292424030089C836 /* Cache */,
@@ -4264,8 +4267,8 @@
 		45860A7E292424030089C836 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				45860A892924262D0089C836 /* GlobalAnalyticsAttributeType.swift */,
-				45860A7F292424030089C836 /* GlobalAnalyticsUserDefaultsCache.swift */,
+				4581D98A297AE09900D056D6 /* RealmGlobalAnalytics.swift */,
+				4581D98C297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -4282,7 +4285,7 @@
 		45860A83292424030089C836 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45860A84292424030089C836 /* MobileContentGlobalAnalyticsDataModel.swift */,
+				4581D986297ADEC300D056D6 /* MobileContentGlobalAnalyticsDecodable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -7755,7 +7758,6 @@
 				D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */,
 				450D7B0228E32965006C3FDF /* TrackDownloadedTranslationsCache.swift in Sources */,
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
-				45860A8A2924262D0089C836 /* GlobalAnalyticsAttributeType.swift in Sources */,
 				D44F3ABA283BC7DB0008390D /* ToolCategoriesViewModel.swift in Sources */,
 				4567782D287DC1F30044AEB2 /* ArticleWebView.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
@@ -7835,7 +7837,6 @@
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				45BDA6112954FE3E007E259B /* ArticleJcrContent.swift in Sources */,
 				D44F3AD72862429A0008390D /* GTWhiteButton.swift in Sources */,
-				45860A85292424030089C836 /* GlobalAnalyticsUserDefaultsCache.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45B212B829229EE700C9A94D /* RealmDatabaseProductionConfiguration.swift in Sources */,
@@ -7897,7 +7898,9 @@
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				459E86F128EDA86C00E197A5 /* IncomingDeepLinkUrl.swift in Sources */,
 				456777EB287DB42C0044AEB2 /* ToolSettingsOptionsItemView.swift in Sources */,
+				4581D98D297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift in Sources */,
 				D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */,
+				4581D989297AE04B00D056D6 /* GlobalAnalyticsDataModel.swift in Sources */,
 				D404F86E28AD86FF00643BA7 /* Publisher+ReceiveOnMain.swift in Sources */,
 				459BD08B289AD4310075901B /* DetermineDeepLinkedToolTranslationsToDownload.swift in Sources */,
 				45AE974727C97A9400C2CB33 /* Header+MobileContentRenderableModel.swift in Sources */,
@@ -7988,6 +7991,7 @@
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */,
 				45F71669290A12D70019B715 /* AuthenticateUserUseCase.swift in Sources */,
+				4581D987297ADEC300D056D6 /* MobileContentGlobalAnalyticsDecodable.swift in Sources */,
 				457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */,
 				45AD205025938AC300A096A0 /* PageViewedAnalytics.swift in Sources */,
 				45AD1B2325938A4F00A096A0 /* LearnToShareToolViewModelType.swift in Sources */,
@@ -8398,6 +8402,7 @@
 				45677846287DC3BC0044AEB2 /* ArticlesErrorMessageView.swift in Sources */,
 				D4F1DE8D2967538A00A2F674 /* IncrementUserCounterUseCase.swift in Sources */,
 				453AC11228F4A10400291791 /* FailedFollowUpsCache.swift in Sources */,
+				4581D98B297AE09900D056D6 /* RealmGlobalAnalytics.swift in Sources */,
 				45AD1BC825938A4F00A096A0 /* UIViewController+NavBackItem.swift in Sources */,
 				457739ED27A0985A00999270 /* MobileContentFlowRowItem.swift in Sources */,
 				452040902959E73F004D843E /* ChooseParallelLanguageListView.swift in Sources */,
@@ -8569,7 +8574,6 @@
 				45E39ECB27457A14006A59E4 /* AnimatedViewModelType.swift in Sources */,
 				453235B827BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift in Sources */,
 				459E86E628EDA86C00E197A5 /* LessonDeepLinkParser.swift in Sources */,
-				45860A88292424030089C836 /* MobileContentGlobalAnalyticsDataModel.swift in Sources */,
 				45D63E76288F698C009B4610 /* MobileContentLanguagesApi.swift in Sources */,
 				45860A77292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift in Sources */,
 				45AE975827C97A9500C2CB33 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
