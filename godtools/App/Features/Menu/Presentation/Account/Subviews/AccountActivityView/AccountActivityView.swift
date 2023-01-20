@@ -18,8 +18,36 @@ struct AccountActivityView: View {
             
             Text("Your Badges")
             
-            ForEach(viewModel.badges) { badge in
-                Text("id: \(badge.id), progress: \(badge.progressTarget), isEarned: \(badge.isEarned ? "yes" : "no")")
+            let columns = [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ]
+            
+            LazyVGrid(columns: columns) {
+                
+                ForEach(viewModel.badges) { badge in
+                    
+                    ZStack(alignment: .center) {
+                        
+                        Color.white
+                            .cornerRadius(10)
+                            .shadow(
+                                color: Color.black.opacity(0.3),
+                                radius: 4,
+                                x: 1,
+                                y: 1
+                            )
+                        
+                        VStack(alignment: .center, spacing: 0) {
+                            
+                            Text(badge.badgeText)
+                                .font(FontLibrary.sfProTextRegular.font(size: 10))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                        }
+                    }
+//                    Text("id: \(badge.id), progress: \(badge.progressTarget), isEarned: \(badge.isEarned ? "yes" : "no")")
+                }
             }
         }
     }
