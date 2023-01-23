@@ -21,9 +21,12 @@ struct AccountActivityView: View {
         let itemSpacingTotal = itemSpacing * 2
         let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacingTotal) / 3
         
-        VStack {
+        VStack(alignment: .leading) {
             
             Text("Your Badges")
+                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .padding(.top, 40)
             
             let columns = [
                 GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
@@ -35,34 +38,11 @@ struct AccountActivityView: View {
                 
                 ForEach(viewModel.badges) { badge in
                     
-                    ZStack(alignment: .center) {
-                        
-                        Color.white
-                            .cornerRadius(10)
-                            .shadow(
-                                color: Color.black.opacity(0.3),
-                                radius: 4,
-                                x: 1,
-                                y: 1
-                            )
-                        
-                        VStack(alignment: .center, spacing: 7) {
-                            
-                            ZStack(alignment: .center) {
-                                Image("badge_background")
-                                    .foregroundColor(badge.iconBackgroundColor)
-                                Image(badge.iconImageName)
-                                    .foregroundColor(badge.iconForegroundColor)
-                            }
-                            
-                            Text(badge.badgeText)
-                                .font(FontLibrary.sfProTextRegular.font(size: 10))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                        }
-                    }
+                    AccountActivityBadgeView(badge: badge)
                     .frame(width: itemWidthHeight, height: itemWidthHeight)
                 }
             }
         }
+        .padding(.bottom, 20)
     }
 }

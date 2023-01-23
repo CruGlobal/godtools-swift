@@ -14,9 +14,9 @@ struct UserActivityBadgeDomainModel {
     
     let variant: Int
     let progressTarget: Int
-    let isEarned: Bool
     
     // properties actually in use
+    let isEarned: Bool
     let badgeText: String
     let badgeType: Badge.BadgeType
     let iconBackgroundColor: Color
