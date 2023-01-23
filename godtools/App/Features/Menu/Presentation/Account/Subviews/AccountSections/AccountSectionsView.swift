@@ -64,7 +64,10 @@ struct AccountSectionsView: View {
                     
                 case .activity:
                     
-                    AccountActivityView(viewModel: viewModel)
+                    AccountActivityView(
+                        viewModel: viewModel,
+                        sectionFrameWidth: sectionFrameWidth
+                    )
                     
                 case .globalActivity:
                     

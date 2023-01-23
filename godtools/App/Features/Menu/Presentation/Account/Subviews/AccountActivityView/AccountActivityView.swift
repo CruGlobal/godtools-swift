@@ -10,21 +10,28 @@ import SwiftUI
 
 struct AccountActivityView: View {
     
+    private let itemSpacing: CGFloat = 18
+    
     @ObservedObject var viewModel: AccountViewModel
     
+    let sectionFrameWidth: CGFloat
+    
     var body: some View {
+        
+        let itemSpacingTotal = itemSpacing * 2
+        let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacingTotal) / 3
         
         VStack {
             
             Text("Your Badges")
             
             let columns = [
-                GridItem(.flexible()),
-                GridItem(.flexible()),
-                GridItem(.flexible())
+                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
+                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
+                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing)
             ]
             
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: itemSpacing) {
                 
                 ForEach(viewModel.badges) { badge in
                     
@@ -39,7 +46,7 @@ struct AccountActivityView: View {
                                 y: 1
                             )
                         
-                        VStack(alignment: .center, spacing: 0) {
+                        VStack(alignment: .center, spacing: 7) {
                             
                             ZStack(alignment: .center) {
                                 Image("badge_background")
@@ -53,6 +60,7 @@ struct AccountActivityView: View {
                                 .foregroundColor(ColorPalette.gtGrey.color)
                         }
                     }
+                    .frame(width: itemWidthHeight, height: itemWidthHeight)
                 }
             }
         }
