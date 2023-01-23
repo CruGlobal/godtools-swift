@@ -44,7 +44,7 @@ struct AccountActivityView: View {
                             ZStack(alignment: .center) {
                                 Image("badge_background")
                                     .foregroundColor(badge.iconBackgroundColor)
-                                Image("tools-1")
+                                Image(badge.iconImageName)
                                     .foregroundColor(badge.iconForegroundColor)
                             }
                             
@@ -53,7 +53,6 @@ struct AccountActivityView: View {
                                 .foregroundColor(ColorPalette.gtGrey.color)
                         }
                     }
-//                    Text("id: \(badge.id), progress: \(badge.progressTarget), isEarned: \(badge.isEarned ? "yes" : "no")")
                 }
             }
         }

@@ -21,6 +21,7 @@ struct UserActivityBadgeDomainModel {
     let badgeType: Badge.BadgeType
     let iconBackgroundColor: Color
     let iconForegroundColor: Color
+    let iconImageName: String
     
     init(badge: Badge) {
         
@@ -31,7 +32,39 @@ struct UserActivityBadgeDomainModel {
         badgeText = UserActivityBadgeDomainModel.getBadgeText(badgeType: badgeType, progress: Int(badge.progress))
         iconBackgroundColor = Color(badge.colors.containerColor(mode: .light))
         iconForegroundColor = Color(badge.colors.color(mode: .light))
+        iconImageName = UserActivityBadgeDomainModel.getIconImageName(badgeType: badgeType, variant: variant)
         
+    }
+    
+    private static func getIconImageName(badgeType: Badge.BadgeType, variant: Int) -> String {
+        
+        switch badgeType {
+            
+        case .toolsOpened:
+            
+            return "tools-\(variant)"
+            
+        case .articlesOpened:
+            
+            return "articles-\(variant)"
+            
+        case .imagesShared:
+            
+            return "share-images-\(variant)"
+            
+        case .lessonsCompleted:
+            
+            return "lesson-\(variant)"
+            
+        case .tipsCompleted:
+            
+            return "tips-\(variant)"
+            
+        default:
+            
+            return "tools-\(variant)"
+
+        }
     }
     
     private static func getBadgeText(badgeType: Badge.BadgeType, progress: Int) -> String {
