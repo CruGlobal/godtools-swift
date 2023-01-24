@@ -127,10 +127,6 @@ class GetUserActivityBadgeUseCase {
         
         switch badgeType {
             
-        case .toolsOpened:
-            
-            return "tools-\(variant)"
-            
         case .articlesOpened:
             
             return "articles-\(variant)"
@@ -138,10 +134,14 @@ class GetUserActivityBadgeUseCase {
         case .imagesShared:
             
             return "share-images-\(variant)"
-            
+        
         case .lessonsCompleted:
             
             return "lesson-\(variant)"
+       
+        case .toolsOpened:
+            
+            return "tools-\(variant)"
             
         case .tipsCompleted:
             
