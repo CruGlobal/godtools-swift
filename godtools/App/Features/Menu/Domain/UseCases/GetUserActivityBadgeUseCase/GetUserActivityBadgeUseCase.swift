@@ -12,6 +12,13 @@ import SwiftUI
 
 class GetUserActivityBadgeUseCase {
     
+    private let localizationServices: LocalizationServices
+    
+    init(localizationServices: LocalizationServices) {
+        
+        self.localizationServices = localizationServices
+    }
+    
     func getBadge(from godToolsSharedLibraryBadge: Badge) -> UserActivityBadgeDomainModel {
         
         let badgeType = godToolsSharedLibraryBadge.type
@@ -37,32 +44,81 @@ class GetUserActivityBadgeUseCase {
     
     private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int) -> String {
         
-        // TODO: - need singular/plural
+        if progressTarget == 1 {
+            
+            return getSingularString(for: badgeType)
+            
+        } else {
+            
+            return getPluralString(for: badgeType, progressTarget: progressTarget)
+        }
+    }
+    
+    private func getPluralString(for badgeType: Badge.BadgeType, progressTarget: Int) -> String {
+        
+        let stringToFormat: String
+        
         switch badgeType {
-            
-        case .toolsOpened:
-            
-            return "Opened \(progressTarget) tools"
             
         case .articlesOpened:
             
-            return "Opened \(progressTarget) articles"
-            
+            stringToFormat = localizationServices.stringForMainBundle(key: "badges.articlesOpened.plural")
+        
         case .imagesShared:
             
-            return "Shared \(progressTarget) images"
-            
+            stringToFormat = localizationServices.stringForMainBundle(key: "badges.imagesShared.plural")
+        
         case .lessonsCompleted:
             
-            return "Completed \(progressTarget) lessons"
+            stringToFormat = localizationServices.stringForMainBundle(key: "badges.lessonsCompleted.plural")
+        
+        case .toolsOpened:
             
+            stringToFormat = localizationServices.stringForMainBundle(key: "badges.toolsOpened.plural")
+   
         case .tipsCompleted:
             
-            return "Completed \(progressTarget) training tips"
+            stringToFormat = localizationServices.stringForMainBundle(key: "badges.tipsCompleted.plural")
             
         default:
             
-            return "What is this? \(badgeType.name)"
+            stringToFormat = ""
+
+        }
+        
+        return String.localizedStringWithFormat(
+            stringToFormat,
+            progressTarget
+        )
+    }
+    
+    private func getSingularString(for badgeType: Badge.BadgeType) -> String {
+        
+        switch badgeType {
+            
+        case .articlesOpened:
+            
+            return localizationServices.stringForMainBundle(key: "badges.articlesOpened.singular")
+        
+        case .imagesShared:
+            
+            return localizationServices.stringForMainBundle(key: "badges.imagesShared.singular")
+        
+        case .lessonsCompleted:
+            
+            return localizationServices.stringForMainBundle(key: "badges.lessonsCompleted.singular")
+        
+        case .toolsOpened:
+            
+            return localizationServices.stringForMainBundle(key: "badges.toolsOpened.singular")
+   
+        case .tipsCompleted:
+            
+            return localizationServices.stringForMainBundle(key: "badges.tipsCompleted.singular")
+            
+        default:
+            
+            return ""
 
         }
     }

@@ -1,3 +1,14 @@
+"badges.articlesOpened.plural" = "Read %d articles";
+"badges.articlesOpened.singular" = "Read 1 article";
+"badges.imagesShared.plural" = "Shared %d images";
+"badges.imagesShared.singular" = "Shared 1 image";
+"badges.lessonsCompleted.plural" = "Completed %d lessons";
+"badges.lessonsCompleted.singular" = "Completed 1 lesson";
+"badges.toolsOpened.plural" = "Opened %d tools";
+"badges.toolsOpened.singular" = "Opened 1 tool";
+"badges.tipsCompleted.plural" = "Completed %d training tips";
+"badges.tipsCompleted.singular" = "Completed 1 training tip";
+
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Joined %@";
 

@@ -310,7 +310,9 @@ class AppDomainLayerDependencies {
     }
     
     func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
-        return GetUserActivityBadgeUseCase()
+        return GetUserActivityBadgeUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
     }
     
     func getUserActivityUseCase() -> GetUserActivityUseCase {
