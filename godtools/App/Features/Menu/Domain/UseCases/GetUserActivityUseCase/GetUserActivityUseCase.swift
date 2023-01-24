@@ -12,10 +12,12 @@ import GodToolsToolParser
 
 class GetUserActivityUseCase {
     
+    private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
     private let userCounterRepository: UserCountersRepository
     
-    init(userCounterRepository: UserCountersRepository) {
+    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, userCounterRepository: UserCountersRepository) {
         
+        self.getUserActivityBadgeUseCase = getUserActivityBadgeUseCase
         self.userCounterRepository = userCounterRepository
     }
     
@@ -25,16 +27,23 @@ class GetUserActivityUseCase {
             .flatMap { _ in
                 
                 let allUserCounters = self.userCounterRepository.getUserCounters()
-                let userCounterDictionary = self.buildDictionary(from: allUserCounters)
                 
-                let userActivity = UserActivity(counters: userCounterDictionary)
-                
-                let userActivityDomainModel = UserActivityDomainModel(userActivity: userActivity)
+                let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters)
                 
                 return Just(userActivityDomainModel)
                 
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getUserActivityDomainModel(from counters: [UserCounterDataModel]) -> UserActivityDomainModel {
+        
+        let userCounterDictionary = buildDictionary(from: counters)
+        
+        let userActivity = UserActivity(counters: userCounterDictionary)
+        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
+        
+        return UserActivityDomainModel(badges: badges)
     }
     
     private func buildDictionary(from counters: [UserCounterDataModel]) -> [String: KotlinInt] {

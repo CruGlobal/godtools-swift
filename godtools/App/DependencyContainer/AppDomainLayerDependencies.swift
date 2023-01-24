@@ -309,8 +309,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
+        return GetUserActivityBadgeUseCase()
+    }
+    
     func getUserActivityUseCase() -> GetUserActivityUseCase {
         return GetUserActivityUseCase(
+            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
             userCounterRepository: dataLayer.getUserCountersRepository()
         )
     }

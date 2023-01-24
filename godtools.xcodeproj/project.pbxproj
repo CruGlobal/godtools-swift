@@ -975,6 +975,7 @@
 		D455F3F429773C30009D5F93 /* UserActivityBadgeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */; };
 		D455F3F62979CE5D009D5F93 /* RemoteUserCountersSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F52979CE5D009D5F93 /* RemoteUserCountersSync.swift */; };
 		D455F3FB297F2BD7009D5F93 /* AccountActivityBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3FA297F2BD7009D5F93 /* AccountActivityBadgeView.swift */; };
+		D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3FD29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift */; };
 		D45922BD2864E70C00904B87 /* AllFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */; };
 		D45922C42864ED9300904B87 /* AllFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */; };
 		D45922C62864F18900904B87 /* BaseFavoriteToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */; };
@@ -2074,6 +2075,7 @@
 		D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityBadgeDomainModel.swift; sourceTree = "<group>"; };
 		D455F3F52979CE5D009D5F93 /* RemoteUserCountersSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserCountersSync.swift; sourceTree = "<group>"; };
 		D455F3FA297F2BD7009D5F93 /* AccountActivityBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityBadgeView.swift; sourceTree = "<group>"; };
+		D455F3FD29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityBadgeUseCase.swift; sourceTree = "<group>"; };
 		D45922BC2864E70C00904B87 /* AllFavoriteToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsView.swift; sourceTree = "<group>"; };
 		D45922C32864ED9300904B87 /* AllFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
 		D45922C52864F18900904B87 /* BaseFavoriteToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFavoriteToolsViewModel.swift; sourceTree = "<group>"; };
@@ -6166,6 +6168,7 @@
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
 				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
+				D455F3FC29805BD9009D5F93 /* GetUserActivityBadgeUseCase */,
 				D455F3EB29773007009D5F93 /* GetUserActivityUseCase */,
 				45F71615290A12D70019B715 /* GetUserIsAuthenticatedUseCase */,
 				45F7161D290A12D70019B715 /* LogOutUserUseCase */,
@@ -6859,7 +6862,6 @@
 			children = (
 				D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */,
 				D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */,
-				D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */,
 			);
 			path = GetUserActivityUseCase;
 			sourceTree = "<group>";
@@ -6879,6 +6881,15 @@
 				D455F3FA297F2BD7009D5F93 /* AccountActivityBadgeView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D455F3FC29805BD9009D5F93 /* GetUserActivityBadgeUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D455F3FD29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift */,
+				D455F3F329773C30009D5F93 /* UserActivityBadgeDomainModel.swift */,
+			);
+			path = GetUserActivityBadgeUseCase;
 			sourceTree = "<group>";
 		};
 		D45922C02864EC2500904B87 /* AllFavoriteToolsView */ = {
@@ -7927,6 +7938,7 @@
 				4567782B287DC1F30044AEB2 /* ShareArticleViewModel.swift in Sources */,
 				45AD207E25938B6A00A096A0 /* AnimatableValue.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
+				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
 				456777B5287DB3770044AEB2 /* ShareToolView.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,

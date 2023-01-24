@@ -13,8 +13,4 @@ struct UserActivityDomainModel {
     
     let badges: [UserActivityBadgeDomainModel]
     
-    init(userActivity: UserActivity) {
-        
-        badges = userActivity.badges.map { UserActivityBadgeDomainModel(badge: $0) }
-    }
 }
