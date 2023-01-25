@@ -19,7 +19,6 @@ struct UserActivityBadgeDomainModel {
     let iconImageName: String
     let isEarned: Bool
     let variant: Int
-    
 }
 
 extension UserActivityBadgeDomainModel: Identifiable {
