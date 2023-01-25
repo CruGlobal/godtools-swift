@@ -26,7 +26,7 @@ class GetUserActivityUseCase {
         return userCounterRepository.getUserCountersChanged(reloadFromRemote: true)
             .flatMap { _ in
                 
-                let allUserCounters = self.userCounterRepository.getUserCounters()
+                let allUserCounters = self.userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
                 
                 let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters)
                 
@@ -36,7 +36,7 @@ class GetUserActivityUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getUserActivityDomainModel(from counters: [UserCounterDataModel]) -> UserActivityDomainModel {
+    private func getUserActivityDomainModel(from counters: [UserCounterDomainModel]) -> UserActivityDomainModel {
         
         let userCounterDictionary = buildDictionary(from: counters)
         
@@ -46,14 +46,13 @@ class GetUserActivityUseCase {
         return UserActivityDomainModel(badges: badges)
     }
     
-    private func buildDictionary(from counters: [UserCounterDataModel]) -> [String: KotlinInt] {
+    private func buildDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {
         
         var dict = [String: KotlinInt]()
         
         for counter in counters {
             
-            let count = counter.incrementValue + counter.latestCountFromAPI
-            dict[counter.id] = KotlinInt(int: Int32(count))
+            dict[counter.id] = KotlinInt(int: Int32(counter.count))
         }
         
         return dict

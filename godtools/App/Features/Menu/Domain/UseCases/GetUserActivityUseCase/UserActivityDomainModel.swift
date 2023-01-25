@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import GodToolsToolParser
 
 struct UserActivityDomainModel {
     
     let badges: [UserActivityBadgeDomainModel]
-    
 }
