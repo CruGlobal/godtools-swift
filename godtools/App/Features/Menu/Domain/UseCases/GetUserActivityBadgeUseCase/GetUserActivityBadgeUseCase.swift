@@ -41,7 +41,6 @@ class GetUserActivityBadgeUseCase {
         )
     }
     
-    
     private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int) -> String {
         
         if progressTarget == 1 {
@@ -54,73 +53,77 @@ class GetUserActivityBadgeUseCase {
         }
     }
     
-    private func getPluralString(for badgeType: Badge.BadgeType, progressTarget: Int) -> String {
-        
-        let stringToFormat: String
-        
-        switch badgeType {
-            
-        case .articlesOpened:
-            
-            stringToFormat = localizationServices.stringForMainBundle(key: "badges.articlesOpened.plural")
-        
-        case .imagesShared:
-            
-            stringToFormat = localizationServices.stringForMainBundle(key: "badges.imagesShared.plural")
-        
-        case .lessonsCompleted:
-            
-            stringToFormat = localizationServices.stringForMainBundle(key: "badges.lessonsCompleted.plural")
-        
-        case .toolsOpened:
-            
-            stringToFormat = localizationServices.stringForMainBundle(key: "badges.toolsOpened.plural")
-   
-        case .tipsCompleted:
-            
-            stringToFormat = localizationServices.stringForMainBundle(key: "badges.tipsCompleted.plural")
-            
-        default:
-            
-            stringToFormat = ""
-
-        }
-        
-        return String.localizedStringWithFormat(
-            stringToFormat,
-            progressTarget
-        )
-    }
-    
     private func getSingularString(for badgeType: Badge.BadgeType) -> String {
         
+        let stringLocalizationKey: String
+        
         switch badgeType {
             
         case .articlesOpened:
             
-            return localizationServices.stringForMainBundle(key: "badges.articlesOpened.singular")
+            stringLocalizationKey = "badges.articlesOpened.singular"
         
         case .imagesShared:
             
-            return localizationServices.stringForMainBundle(key: "badges.imagesShared.singular")
+            stringLocalizationKey = "badges.imagesShared.singular"
         
         case .lessonsCompleted:
             
-            return localizationServices.stringForMainBundle(key: "badges.lessonsCompleted.singular")
+            stringLocalizationKey = "badges.lessonsCompleted.singular"
         
         case .toolsOpened:
             
-            return localizationServices.stringForMainBundle(key: "badges.toolsOpened.singular")
+            stringLocalizationKey = "badges.toolsOpened.singular"
    
         case .tipsCompleted:
             
-            return localizationServices.stringForMainBundle(key: "badges.tipsCompleted.singular")
+            stringLocalizationKey = "badges.tipsCompleted.singular"
             
         default:
             
             return ""
 
         }
+        
+        return localizationServices.stringForMainBundle(key: stringLocalizationKey)
+    }
+    
+    private func getPluralString(for badgeType: Badge.BadgeType, progressTarget: Int) -> String {
+        
+        let stringLocalizationKey: String
+        
+        switch badgeType {
+            
+        case .articlesOpened:
+            
+            stringLocalizationKey = "badges.articlesOpened.plural"
+        
+        case .imagesShared:
+            
+            stringLocalizationKey = "badges.imagesShared.plural"
+        
+        case .lessonsCompleted:
+            
+            stringLocalizationKey = "badges.lessonsCompleted.plural"
+        
+        case .toolsOpened:
+            
+            stringLocalizationKey = "badges.toolsOpened.plural"
+   
+        case .tipsCompleted:
+            
+            stringLocalizationKey = "badges.tipsCompleted.plural"
+            
+        default:
+            
+            return ""
+
+        }
+        
+        return String.localizedStringWithFormat(
+            localizationServices.stringForMainBundle(key: stringLocalizationKey),
+            progressTarget
+        )
     }
     
     private func getIconImageName(badgeType: Badge.BadgeType, variant: Int) -> String {
