@@ -23,6 +23,7 @@ struct AccountActivityBadgeView: View {
             VStack(alignment: .center, spacing: 7) {
                 
                 ZStack(alignment: .center) {
+                    
                     Image("badge_background")
                         .foregroundColor(badge.iconBackgroundColor)
                     Image(badge.iconImageName)
@@ -42,8 +43,7 @@ struct AccountActivityBadgeView: View {
         
         if withShadow {
             
-            Color.white
-                .cornerRadius(10)
+            badgeBackground()
                 .shadow(
                     color: Color.black.opacity(0.15),
                     radius: 5,
@@ -53,8 +53,13 @@ struct AccountActivityBadgeView: View {
             
         } else {
             
-            Color.white
-                .cornerRadius(10)
+            badgeBackground()
         }
+    }
+    
+    @ViewBuilder private func badgeBackground() -> some View {
+        
+        Color.white
+            .cornerRadius(10)
     }
 }

@@ -38,7 +38,7 @@ class GetUserActivityUseCase {
     
     private func getUserActivityDomainModel(from counters: [UserCounterDomainModel]) -> UserActivityDomainModel {
         
-        let userCounterDictionary = buildDictionary(from: counters)
+        let userCounterDictionary = buildUserCounterDictionary(from: counters)
         
         let userActivity = UserActivity(counters: userCounterDictionary)
         let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
@@ -46,7 +46,7 @@ class GetUserActivityUseCase {
         return UserActivityDomainModel(badges: badges)
     }
     
-    private func buildDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {
+    private func buildUserCounterDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {
         
         var dict = [String: KotlinInt]()
         
