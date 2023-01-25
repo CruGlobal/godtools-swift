@@ -23,7 +23,7 @@ struct AccountActivityView: View {
         
         VStack(alignment: .leading) {
             
-            Text("Your Badges")
+            Text(viewModel.badgesSectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.top, 40)

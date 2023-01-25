@@ -33,10 +33,11 @@ class AccountViewModel: ObservableObject {
     @Published var profileName: String = ""
     @Published var joinedOnText: String = ""
     @Published var activityButtonTitle: String
+    @Published var badges = [UserActivityBadgeDomainModel]()
+    @Published var badgesSectionTitle: String
     @Published var globalActivityButtonTitle: String
     @Published var globalActivityTitle: String
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
-    @Published var badges = [UserActivityBadgeDomainModel]()
         
     init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
@@ -52,6 +53,7 @@ class AccountViewModel: ObservableObject {
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
         activityButtonTitle = localizationServices.stringForMainBundle(key: "account.activity.title")
+        badgesSectionTitle = localizationServices.stringForMainBundle(key: "account.badges.sectionTitle")
         globalActivityButtonTitle = localizationServices.stringForMainBundle(key: "account.globalActivity.title")
         
         let localizedGlobalActivityTitle: String = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.header.title")
@@ -107,7 +109,6 @@ class AccountViewModel: ObservableObject {
     private func updateUserActivityValues(userActivity: UserActivityDomainModel) {
         
         self.badges = userActivity.badges
-        
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {
