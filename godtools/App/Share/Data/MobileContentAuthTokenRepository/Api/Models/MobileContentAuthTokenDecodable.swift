@@ -14,10 +14,6 @@ struct MobileContentAuthTokenDecodable: Decodable {
     let expirationDate: Date?
     let userId: String
     
-    enum RootKeys: String, CodingKey {
-        case data
-    }
-    
     enum DataKeys: String, CodingKey {
         case attributes
     }
@@ -30,10 +26,9 @@ struct MobileContentAuthTokenDecodable: Decodable {
     
     init(from decoder: Decoder) throws {
         
-        let container = try decoder.container(keyedBy: RootKeys.self)
+        let container = try decoder.container(keyedBy: DataKeys.self)
         
-        let dataContainer = try container.nestedContainer(keyedBy: DataKeys.self, forKey: .data)
-        let attributesContainer = try dataContainer.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
+        let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         token = try attributesContainer.decode(String.self, forKey: .token)
         let userIdInt = try attributesContainer.decode(Int.self, forKey: .userId)
