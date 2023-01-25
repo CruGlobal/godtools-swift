@@ -22,4 +22,14 @@ class RealmGlobalAnalytics: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+    
+    func mapFrom(decodable: MobileContentGlobalAnalyticsDecodable) {
+        
+        countries = decodable.countries
+        createdAt = Date()
+        gospelPresentations = decodable.gospelPresentations
+        launches = decodable.launches
+        type = decodable.type
+        users = decodable.users
+    }
 }
