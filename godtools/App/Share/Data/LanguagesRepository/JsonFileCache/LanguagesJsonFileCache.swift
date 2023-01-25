@@ -29,8 +29,8 @@ class LanguagesJsonFileCache {
             }
             
             do {
-                let languagesDataModel: LanguagesDataModel = try JSONDecoder().decode(LanguagesDataModel.self, from: data)
-                return .success(languagesDataModel.data)
+                let responseData: JsonApiResponseData<[LanguageModel]> = try JSONDecoder().decode(JsonApiResponseData<[LanguageModel]>.self, from: data)
+                return .success(responseData.data)
             }
             catch let error {
                 return .failure(error)

@@ -13,10 +13,6 @@ struct UserDetailsDataModel: Decodable {
     let id: String
     let createdAt: Date?
     
-    enum RootKeys: String, CodingKey {
-        case data
-    }
-    
     enum DataKeys: String, CodingKey {
         case id
         case attributes
@@ -28,12 +24,11 @@ struct UserDetailsDataModel: Decodable {
     
     init(from decoder: Decoder) throws {
         
-        let container = try decoder.container(keyedBy: RootKeys.self)
-        let dataContainer = try container.nestedContainer(keyedBy: DataKeys.self, forKey: .data)
+        let container = try decoder.container(keyedBy: DataKeys.self)
         
-        id = try dataContainer.decode(String.self, forKey: .id)
+        id = try container.decode(String.self, forKey: .id)
         
-        let attributesContainer = try dataContainer.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
+        let attributesContainer = try container.nestedContainer(keyedBy: AttributesKeys.self, forKey: .attributes)
         
         let createdAtDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .createdAt) ?? ""
         createdAt = UserDetailsDataModel.parseCreatedAtDateFromString(createdAtDateString)
