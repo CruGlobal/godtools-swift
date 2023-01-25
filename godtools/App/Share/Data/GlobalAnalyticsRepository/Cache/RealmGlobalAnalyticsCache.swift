@@ -38,19 +38,27 @@ class RealmGlobalAnalyticsCache {
 
             self.realmDatabase.background { (realm: Realm) in
                 
-                let realmGlobalAnalytics: RealmGlobalAnalytics = realm.object(ofType: RealmGlobalAnalytics.self, forPrimaryKey: globalAnalytics.id) ?? RealmGlobalAnalytics()
+                let realmGlobalAnalytics: RealmGlobalAnalytics
                 
-                realmGlobalAnalytics.countries = globalAnalytics.countries
-                realmGlobalAnalytics.createdAt = Date()
-                realmGlobalAnalytics.id = globalAnalytics.id
-                realmGlobalAnalytics.gospelPresentations = globalAnalytics.gospelPresentations
-                realmGlobalAnalytics.launches = globalAnalytics.launches
-                realmGlobalAnalytics.type = globalAnalytics.type
-                realmGlobalAnalytics.users = globalAnalytics.users
-                                                                
+                if let existingRealmGlobalAnalytics = realm.object(ofType: RealmGlobalAnalytics.self, forPrimaryKey: globalAnalytics.id) {
+                   
+                    realmGlobalAnalytics = existingRealmGlobalAnalytics
+                }
+                else {
+                    
+                    let newRealmGlobalAnalytics = RealmGlobalAnalytics()
+                    
+                    newRealmGlobalAnalytics.id = globalAnalytics.id
+                    
+                    realmGlobalAnalytics = newRealmGlobalAnalytics
+                }
+                
                 do {
                     
                     try realm.write {
+                        
+                        realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
+                        
                         realm.add(realmGlobalAnalytics, update: .all)
                     }
                     
