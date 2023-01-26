@@ -52,10 +52,6 @@ struct FavoritesContentView: View {
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
                         
-                        Rectangle()
-                            .frame(height: 80)
-                            .foregroundColor(.clear)
-                        
                     } refreshHandler: {
                         viewModel.refreshData()
                     }

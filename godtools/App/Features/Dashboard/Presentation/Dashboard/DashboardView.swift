@@ -17,9 +17,8 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        if #available(iOS 16.0, *) { } else {
-            UITabBar.appearance().isHidden = true
-        }
+        // Note: In iOS 16+, the preferred way to hide the tab bar is through the view modifier `.toolbar(.hidden, for: .tabBar)`, but there seems to be a bug where it only hides on the tab's first appearance.  May want to reinvestigate this in future versions.
+        UITabBar.appearance().isHidden = true
     }
     
     var body: some View {
@@ -27,28 +26,13 @@ struct DashboardView: View {
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
             
-            ZStack(alignment: .bottom) {
-                
-                if #available(iOS 16.0, *) {
-                    
-                    tabViewWithDefaultBarHidden(padding: leadingTrailingPadding)
-                    
-                } else {
-                    
-                    tabView(padding: leadingTrailingPadding)
-                }
-                
+            VStack {
+
+                tabView(padding: leadingTrailingPadding)
+                    .padding(.bottom, -3)
+
                 DashboardTabBarView(viewModel: viewModel)
             }
-        }
-    }
-    
-    @available(iOS 16.0, *)
-    @ViewBuilder private func tabViewWithDefaultBarHidden(padding: CGFloat) -> some View {
-        
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-                .toolbar(.hidden, for: .tabBar)
         }
     }
     

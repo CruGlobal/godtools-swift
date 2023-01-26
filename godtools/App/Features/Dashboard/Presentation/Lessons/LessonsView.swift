@@ -57,10 +57,6 @@ struct LessonsView: View {
                         }
                         .listRowInsets(EdgeInsets())
                         
-                        Rectangle()
-                            .frame(height: 80)
-                            .foregroundColor(.clear)
-                        
                     } refreshHandler: {
                         viewModel.refreshData()
                     }
