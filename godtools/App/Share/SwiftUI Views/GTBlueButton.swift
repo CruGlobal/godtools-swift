@@ -27,16 +27,26 @@ struct GTBlueButton: View {
     }
     
     var body: some View {
-        Text(title)
-            .font(FontLibrary.sfProTextRegular.font(size: fontSize))
-            .foregroundColor(Color.white)
-            .padding()
-            .frame(width: width, height: height, alignment: .center)
-            .background(ColorPalette.gtBlue.color)
-            .cornerRadius(cornerRadius)
-            .onTapGesture {
-                action()
+        
+        Button(action: {
+            action()
+        }) {
+            
+            ZStack(alignment: .center) {
+                
+                Rectangle()
+                    .fill(.clear)
+                    .frame(width: width, height: height)
+                    .cornerRadius(cornerRadius)
+                
+                Text(title)
+                    .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+                    .foregroundColor(Color.white)
             }
+        }
+        .frame(width: width, height: height, alignment: .center)
+        .background(ColorPalette.gtBlue.color)
+        .cornerRadius(cornerRadius)
     }
 }
 
