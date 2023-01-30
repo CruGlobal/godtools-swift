@@ -42,6 +42,7 @@ struct GTBlueButton: View {
                 Text(title)
                     .font(FontLibrary.sfProTextRegular.font(size: fontSize))
                     .foregroundColor(Color.white)
+                    .padding()
             }
         }
         .frame(width: width, height: height, alignment: .center)

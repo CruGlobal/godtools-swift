@@ -42,6 +42,7 @@ struct GTWhiteButton: View {
                 Text(title)
                     .font(FontLibrary.sfProTextRegular.font(size: fontSize))
                     .foregroundColor(ColorPalette.gtBlue.color)
+                    .padding()
             }
         }
         .frame(width: width, height: height, alignment: .center)
