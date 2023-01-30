@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SSZipArchive
+import ZipArchive
 import Combine
 
 extension FileCache {

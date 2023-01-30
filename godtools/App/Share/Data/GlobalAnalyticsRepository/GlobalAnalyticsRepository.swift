@@ -10,48 +10,52 @@ import Foundation
 import Combine
 
 class GlobalAnalyticsRepository {
-    
-    private static let globalAnalyticsChanged: CurrentValueSubject<MobileContentGlobalAnalyticsDataModel?, Never> = CurrentValueSubject(nil)
-    
+        
     private let api: MobileContentGlobalAnalyticsApi
-    private let cache: GlobalAnalyticsUserDefaultsCache
+    private let cache: RealmGlobalAnalyticsCache
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: MobileContentGlobalAnalyticsApi, cache: GlobalAnalyticsUserDefaultsCache) {
+    init(api: MobileContentGlobalAnalyticsApi, cache: RealmGlobalAnalyticsCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    func getGlobalAnalyticsChangedPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDataModel?, Never> {
+    func getGlobalAnalyticsChangedPublisher() -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
         
         getGlobalAnalyticsFromRemote()
-            .sink { finished in
+            .sink { _ in
                 
-            } receiveValue: { (dataModel: MobileContentGlobalAnalyticsDataModel) in
+            } receiveValue: { _ in
                 
-                GlobalAnalyticsRepository.globalAnalyticsChanged.send(dataModel)
             }
             .store(in: &cancellables)
-        
-        GlobalAnalyticsRepository.globalAnalyticsChanged.value = cache.getGlobalAnalytics()
-
-        return GlobalAnalyticsRepository.globalAnalyticsChanged
+            
+        return cache.getGlobalAnalyticsChangedPublisher(id: MobileContentGlobalAnalyticsApi.sharedGlobalAnalyticsId)
+            .map { (realmGlobalAnalytics: RealmGlobalAnalytics?) in
+                
+                if let realmGlobalAnalytics = realmGlobalAnalytics {
+                    return GlobalAnalyticsDataModel(realmGlobalAnalytics: realmGlobalAnalytics)
+                }
+                
+                return nil
+            }
             .eraseToAnyPublisher()
     }
     
-    func getGlobalAnalyticsFromRemote() -> AnyPublisher<MobileContentGlobalAnalyticsDataModel, URLResponseError> {
+    func getGlobalAnalyticsFromRemote() -> AnyPublisher<GlobalAnalyticsDataModel, URLResponseError> {
         
         return api.getGlobalAnalyticsPublisher()
-            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDataModel) -> AnyPublisher<MobileContentGlobalAnalyticsDataModel, Never> in
+            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, URLResponseError> in
                 
                 return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDataModel) -> AnyPublisher<MobileContentGlobalAnalyticsDataModel, URLResponseError> in
-                
-                return Just(globalAnalytics).setFailureType(to: URLResponseError.self)
+                    .mapError {
+                        return URLResponseError.otherError(error: $0)
+                    }
+                    .map {
+                        return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: $0)
+                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

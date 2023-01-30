@@ -29,9 +29,12 @@ class UserDetailsAPI {
         let urlRequest = getUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: UserDetailsDataModel.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }

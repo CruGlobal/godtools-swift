@@ -597,7 +597,7 @@ extension ToolPageCardsView {
         case .starting:
             break
             
-        case .showingCard(let showingCardAtPosition):
+        case .showingCard( _):
             break
             
         case .showingKeyboard:

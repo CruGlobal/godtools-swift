@@ -12,6 +12,8 @@ import Combine
 
 class MobileContentGlobalAnalyticsApi {
     
+    static let sharedGlobalAnalyticsId: String = "1"
+    
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let session: URLSession
     private let baseUrl: String
@@ -36,7 +38,7 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDataModel, URLResponseError> {
+    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, URLResponseError> {
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest()
         
@@ -54,9 +56,12 @@ class MobileContentGlobalAnalyticsApi {
             .mapError {
                 return URLResponseError.requestError(error: $0 as Error)
             }
-            .decode(type: MobileContentGlobalAnalyticsDataModel.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<MobileContentGlobalAnalyticsDecodable>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }
