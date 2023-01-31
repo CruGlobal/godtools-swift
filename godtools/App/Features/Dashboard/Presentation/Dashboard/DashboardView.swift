@@ -18,7 +18,7 @@ struct DashboardView: View {
         self.viewModel = viewModel
         
         // Note: In iOS 16+, the preferred way to hide the tab bar is through the view modifier `.toolbar(.hidden, for: .tabBar)`, but there seems to be a bug where it only hides on the tab's first appearance.  May want to reinvestigate this in future versions.
-        UITabBar.appearance().isHidden = true
+        UITabBar.appearance(whenContainedInInstancesOf: [UIHostingController<DashboardView>.self]).isHidden = true
     }
     
     var body: some View {
