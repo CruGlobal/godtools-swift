@@ -40,6 +40,9 @@ struct DashboardView: View {
         TabView(selection: $viewModel.selectedTab) {
             makeTabs(padding: padding)
         }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .animation(.easeInOut)
+        .transition(.slide)
     }
     
     @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {
