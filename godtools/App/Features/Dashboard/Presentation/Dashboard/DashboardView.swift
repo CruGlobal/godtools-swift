@@ -26,10 +26,9 @@ struct DashboardView: View {
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
             
-            VStack {
+            VStack(spacing: 0) {
 
                 tabView(padding: leadingTrailingPadding)
-                    .padding(.bottom, -3)
 
                 DashboardTabBarView(viewModel: viewModel)
             }
