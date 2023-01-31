@@ -377,12 +377,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToLearnToShareTool(resource: resource)
             
         case .continueTappedFromLearnToShareTool(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
-            dismissLearnToShareToolFlow()
+            dismissLearnToShareToolFlow {
+                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            }
             
         case .closeTappedFromLearnToShareTool(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
-            dismissLearnToShareToolFlow()
+            dismissLearnToShareToolFlow {
+                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            }
             
         case .closeTappedFromLessonEvaluation:
             dismissLessonEvaluation()
@@ -882,13 +884,14 @@ extension AppFlow {
         }
     }
     
-    private func dismissLearnToShareToolFlow() {
+    private func dismissLearnToShareToolFlow(completion: (() -> Void)?) {
         
         guard learnToShareToolFlow != nil else {
+            completion?()
             return
         }
         
-        navigationController.dismissPresented(animated: true, completion: nil)
+        navigationController.dismissPresented(animated: true, completion: completion)
         learnToShareToolFlow = nil
     }
 }
