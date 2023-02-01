@@ -22,11 +22,14 @@ class VideoViewCoordinator: NSObject, YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
-        videoView.setLoadingViewHidden(hidden: true, animated: true)
+        videoView.videoPlayerViewDidBecomeReady()
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
+        if state == .ended {
+            videoView.videoEnded()
+        }
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
