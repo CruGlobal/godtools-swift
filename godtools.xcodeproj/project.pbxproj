@@ -893,10 +893,6 @@
 		D188EA8327146AB000B10ABA /* onboarding_distance.json in Resources */ = {isa = PBXBuildFile; fileRef = D188EA8027146AAF00B10ABA /* onboarding_distance.json */; };
 		D19EB5DE259BB39300685156 /* training_tip_callout.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DD259BB39300685156 /* training_tip_callout.json */; };
 		D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */ = {isa = PBXBuildFile; fileRef = D19EB5DF259BB75900685156 /* training_tip_tips.json */; };
-		D1AF02ED2730763700BEC921 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02EC2730763600BEC921 /* VideoPlayerView.swift */; };
-		D1AF02EF2730767D00BEC921 /* VideoPlayerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02EE2730767D00BEC921 /* VideoPlayerViewModelType.swift */; };
-		D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */; };
-		D1AF02F3273080CE00BEC921 /* VideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */; };
 		D1B944E5259E58F5004641DB /* remote_share_active.json in Resources */ = {isa = PBXBuildFile; fileRef = D1B944E4259E58F5004641DB /* remote_share_active.json */; };
 		D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */; };
 		D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */; };
@@ -1991,10 +1987,6 @@
 		D188EA8027146AAF00B10ABA /* onboarding_distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_distance.json; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
 		D19EB5DF259BB75900685156 /* training_tip_tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_tips.json; sourceTree = "<group>"; };
-		D1AF02EC2730763600BEC921 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
-		D1AF02EE2730767D00BEC921 /* VideoPlayerViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModelType.swift; sourceTree = "<group>"; };
-		D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewModel.swift; sourceTree = "<group>"; };
-		D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerView.xib; sourceTree = "<group>"; };
 		D1B944E4259E58F5004641DB /* remote_share_active.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remote_share_active.json; sourceTree = "<group>"; };
 		D1C8FEB82714E7000071BD07 /* TutorialCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModelType.swift; sourceTree = "<group>"; };
 		D1CE0958273EACCC00C8832C /* TutorialVideoAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVideoAnalytics.swift; sourceTree = "<group>"; };
@@ -4795,7 +4787,6 @@
 				45BF6EB827050A0E003596A4 /* TransparentModal */,
 				D1C8FEB72714E6580071BD07 /* TutorialCell */,
 				D168FDC426F921EB0083D578 /* TutorialPagerView */,
-				D1AF02EB2730760900BEC921 /* VideoPlayerView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6544,17 +6535,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D1AF02EB2730760900BEC921 /* VideoPlayerView */ = {
-			isa = PBXGroup;
-			children = (
-				D1AF02EC2730763600BEC921 /* VideoPlayerView.swift */,
-				D1AF02F2273080CE00BEC921 /* VideoPlayerView.xib */,
-				D1AF02F0273076E700BEC921 /* VideoPlayerViewModel.swift */,
-				D1AF02EE2730767D00BEC921 /* VideoPlayerViewModelType.swift */,
-			);
-			path = VideoPlayerView;
-			sourceTree = "<group>";
-		};
 		D1C8FEB72714E6580071BD07 /* TutorialCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -7504,7 +7484,6 @@
 				45B6482925E593110098BAF1 /* (null) in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
-				D1AF02F3273080CE00BEC921 /* VideoPlayerView.xib in Resources */,
 				455582E7269F2C1000C3FF14 /* TrainingPageView.xib in Resources */,
 				455583D9269F2DA500C3FF14 /* MobileContentTabsView.xib in Resources */,
 				45F71646290A12D70019B715 /* MenuSectionHeaderView.xib in Resources */,
@@ -7909,7 +7888,6 @@
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45F715B9290A12AA0019B715 /* CruOktaAuthentication+GetAuthUser.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
-				D1AF02F1273076E700BEC921 /* VideoPlayerViewModel.swift in Sources */,
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
 				45E39ECC27457A14006A59E4 /* AnimatedResource.swift in Sources */,
 				45AE974027C97A9400C2CB33 /* MultiplatformContentHeader.swift in Sources */,
@@ -8125,7 +8103,6 @@
 				45BDA6092954FE3E007E259B /* ArticleAemCache.swift in Sources */,
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
-				D1AF02EF2730767D00BEC921 /* VideoPlayerViewModelType.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
 				D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
@@ -8225,7 +8202,6 @@
 				45BDA64A2954FF08007E259B /* WebArchiveOperationResult.swift in Sources */,
 				45558334269F2C7B00C3FF14 /* ToolPageModalsViewModel.swift in Sources */,
 				45558323269F2C7B00C3FF14 /* ToolPageViewModel.swift in Sources */,
-				D1AF02ED2730763700BEC921 /* VideoPlayerView.swift in Sources */,
 				45558321269F2C7B00C3FF14 /* ToolPagePositions.swift in Sources */,
 				45677780287DB21F0044AEB2 /* ToolTrainingTipView.swift in Sources */,
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,
