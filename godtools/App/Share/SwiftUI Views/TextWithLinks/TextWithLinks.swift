@@ -79,10 +79,6 @@ struct TextWithLinks: UIViewRepresentable {
     
     func updateUIView(_ textView: UITextView, context: Context) {
         
-        for constraint in textView.constraints {
-            if constraint.firstAttribute == .width {
-                constraint.constant = width
-            }
-        }
+        textView.layoutIfNeeded()
     }
 }
