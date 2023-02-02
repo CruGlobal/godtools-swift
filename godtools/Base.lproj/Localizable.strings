@@ -1,3 +1,30 @@
+"account.badges.sectionTitle" = "Your badges";
+"badges.tipsCompleted.singular" = "Completed 1 training tip";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Read %d articles";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Read 1 article";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Shared %d images";
+
+"badges.imagesShared.singular" = "Shared 1 image";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Completed %d lessons";
+
+"badges.lessonsCompleted.singular" = "Completed 1 lesson";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Opened %d tools";
+
+"badges.toolsOpened.singular" = "Opened 1 tool";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Completed %d training tips";
+
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Joined %@";
 
@@ -110,7 +137,7 @@
 "onboardingQuickStart.0.button.title" = "Read our articles";
 "onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
 "onboardingQuickStart.1.button.title" = "Try our Lessons";
-"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon which adds it to your favorites.";
+"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon, which adds it to your favorites.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Conversation Starter";
