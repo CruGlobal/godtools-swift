@@ -14,6 +14,8 @@ class GetUserActivityBadgeUseCase {
     
     private let localizationServices: LocalizationServices
     
+    private let lightGreyTextColor = Color(red: 203 / 255, green: 203 / 255, blue: 203 / 255)
+    
     init(localizationServices: LocalizationServices) {
         
         self.localizationServices = localizationServices
@@ -30,14 +32,17 @@ class GetUserActivityBadgeUseCase {
         let iconBackgroundColor = Color(godToolsSharedLibraryBadge.colors.containerColor(mode: .light))
         let iconForegroundColor = Color(godToolsSharedLibraryBadge.colors.color(mode: .light))
         
+        let identifiableId = "\(badgeType.name)_\(variant)"
+        let isEarned = godToolsSharedLibraryBadge.isEarned
+        
         return UserActivityBadgeDomainModel(
             badgeText: badgeText,
-            badgeType: badgeType,
             iconBackgroundColor: iconBackgroundColor,
             iconForegroundColor: iconForegroundColor,
             iconImageName: iconName,
-            isEarned: godToolsSharedLibraryBadge.isEarned,
-            variant: variant
+            id: identifiableId,
+            isEarned: isEarned,
+            textColor: isEarned ? ColorPalette.gtGrey.color : lightGreyTextColor
         )
     }
     

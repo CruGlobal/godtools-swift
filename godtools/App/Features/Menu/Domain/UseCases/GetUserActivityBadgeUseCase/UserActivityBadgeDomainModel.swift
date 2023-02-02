@@ -10,20 +10,14 @@ import Foundation
 import GodToolsToolParser
 import SwiftUI
 
-struct UserActivityBadgeDomainModel {
+struct UserActivityBadgeDomainModel: Identifiable {
         
     let badgeText: String
-    let badgeType: Badge.BadgeType
     let iconBackgroundColor: Color
     let iconForegroundColor: Color
     let iconImageName: String
+    let id: String
     let isEarned: Bool
-    let variant: Int
-}
-
-extension UserActivityBadgeDomainModel: Identifiable {
+    let textColor: Color
     
-    var id: String {
-        return "\(badgeType.name)_\(variant)"
-    }
 }

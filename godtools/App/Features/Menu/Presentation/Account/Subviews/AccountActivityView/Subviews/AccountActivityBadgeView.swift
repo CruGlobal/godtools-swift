@@ -32,7 +32,7 @@ struct AccountActivityBadgeView: View {
                 
                 Text(badge.badgeText)
                     .font(FontLibrary.sfProTextRegular.font(size: 10))
-                    .foregroundColor(badge.isEarned ? ColorPalette.gtGrey.color : lightGreyTextColor)
+                    .foregroundColor(badge.textColor)
                     .multilineTextAlignment(.center)
                     .padding([.leading, .trailing], 15)
             }
