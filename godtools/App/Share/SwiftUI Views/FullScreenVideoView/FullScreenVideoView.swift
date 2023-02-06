@@ -14,6 +14,8 @@ struct FullScreenVideoView: View {
     
     @ObservedObject var viewModel: FullScreenVideoViewModel
     
+    let backgroundColor: Color
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -26,7 +28,7 @@ struct FullScreenVideoView: View {
                 let videoWidth: CGFloat = geometry.size.width
                 let videoHeight: CGFloat = (videoWidth / aspectRatio.width) * aspectRatio.height
                 
-                VideoView(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: .black, videoBackgroundColor: .black, loadingViewBackgroundColor: .black, loadingActivityIndicatorColor: .white), videoEndedClosure: {
+                VideoView(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: backgroundColor, videoBackgroundColor: backgroundColor, loadingViewBackgroundColor: backgroundColor, loadingActivityIndicatorColor: .white), videoEndedClosure: {
                     viewModel.videoEnded()
                 })
                 .frame(width: videoWidth, height: videoHeight)
@@ -42,6 +44,6 @@ struct FullScreenVideoView: View {
             videoPlayerState = .paused
         }
         .statusBarHidden(true)
-        .background(Color.black)
+        .background(backgroundColor)
     }
 }

@@ -13,7 +13,9 @@ extension Flow {
     
     func presentVideoModal(viewModel: FullScreenVideoViewModel) {
         
-        let view = FullScreenVideoView(viewModel: viewModel)
+        let videoBackgroundColor: Color = .black
+        
+        let view = FullScreenVideoView(viewModel: viewModel, backgroundColor: videoBackgroundColor)
         
         let hostingView = UIHostingController(rootView: view)
         
@@ -25,7 +27,11 @@ extension Flow {
             action: #selector(viewModel.closeTapped)
         )
         
+        hostingView.view.backgroundColor = UIColor(videoBackgroundColor)
+        
         let modal = ModalNavigationController(rootView: hostingView, navBarColor: .black, navBarIsTranslucent: true)
+               
+        modal.view.backgroundColor = UIColor(videoBackgroundColor)
         
         navigationController.present(modal, animated: true)
     }
