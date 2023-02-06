@@ -48,15 +48,15 @@ struct VideoView: UIViewRepresentable {
         containerView.addSubview(loadingView)
         loadingView.addSubview(loadingActivityIndicator)
         
-        containerView.backgroundColor = configuration?.videoContainerBackgroundColor ?? ColorPalette.gtLightestGrey.uiColor
-        youtubePlayerView.backgroundColor = configuration?.videoBackgroundColor ?? .white
-        loadingView.backgroundColor = configuration?.loadingViewBackgroundColor ?? ColorPalette.gtLightestGrey.uiColor
+        containerView.backgroundColor = UIColor(configuration?.videoContainerBackgroundColor ?? ColorPalette.gtLightestGrey.color)
+        youtubePlayerView.backgroundColor = UIColor(configuration?.videoBackgroundColor ?? .white)
+        loadingView.backgroundColor = UIColor(configuration?.loadingViewBackgroundColor ?? ColorPalette.gtLightestGrey.color)
         
         loadingActivityIndicator.layer.position = CGPoint(
             x: loadingView.frame.size.width / 2,
             y: loadingView.frame.size.height / 2
         )
-        loadingActivityIndicator.color = configuration?.loadingActivityIndicatorColor ?? .white
+        loadingActivityIndicator.color = UIColor(configuration?.loadingActivityIndicatorColor ?? .white)
     }
     
     private func setLoadingViewHidden(hidden: Bool, animated: Bool) {

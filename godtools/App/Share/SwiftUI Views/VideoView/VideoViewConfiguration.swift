@@ -6,12 +6,12 @@
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 struct VideoViewConfiguration {
     
-    let videoContainerBackgroundColor: UIColor?
-    let videoBackgroundColor: UIColor?
-    let loadingViewBackgroundColor: UIColor?
-    let loadingActivityIndicatorColor: UIColor?
+    let videoContainerBackgroundColor: Color?
+    let videoBackgroundColor: Color?
+    let loadingViewBackgroundColor: Color?
+    let loadingActivityIndicatorColor: Color?
 }
