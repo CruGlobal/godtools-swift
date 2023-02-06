@@ -17,7 +17,8 @@ class MobileContentAnalytics {
         
         let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
             .appsflyer: analytics.appsFlyerAnalytics,
-            .firebase: analytics.firebaseAnalytics
+            .firebase: analytics.firebaseAnalytics,
+            .user: analytics.userAnalytics
         ]
  
         self.analyticsSystems = analyticsSystems
