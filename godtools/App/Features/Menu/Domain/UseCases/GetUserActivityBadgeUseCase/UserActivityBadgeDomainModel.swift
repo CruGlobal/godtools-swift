@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GodToolsToolParser
 import SwiftUI
 
 struct UserActivityBadgeDomainModel: Identifiable {
