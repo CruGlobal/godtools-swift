@@ -11,9 +11,7 @@ import SwiftUI
 struct AccountActivityBadgeView: View {
     
     let badge: UserActivityBadgeDomainModel
-    
-    let lightGreyTextColor = Color(red: 203 / 255, green: 203 / 255, blue: 203 / 255)
-    
+        
     var body: some View {
         
         ZStack(alignment: .center) {
