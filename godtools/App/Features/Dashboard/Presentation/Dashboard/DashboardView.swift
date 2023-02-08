@@ -17,9 +17,6 @@ struct DashboardView: View {
     init(viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         
-        if #available(iOS 16.0, *) { } else {
-            UITabBar.appearance().isHidden = true
-        }
     }
     
     var body: some View {
@@ -27,28 +24,12 @@ struct DashboardView: View {
             
             let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
             
-            ZStack(alignment: .bottom) {
-                
-                if #available(iOS 16.0, *) {
-                    
-                    tabViewWithDefaultBarHidden(padding: leadingTrailingPadding)
-                    
-                } else {
-                    
-                    tabView(padding: leadingTrailingPadding)
-                }
-                
+            VStack(spacing: 0) {
+
+                tabView(padding: leadingTrailingPadding)
+
                 DashboardTabBarView(viewModel: viewModel)
             }
-        }
-    }
-    
-    @available(iOS 16.0, *)
-    @ViewBuilder private func tabViewWithDefaultBarHidden(padding: CGFloat) -> some View {
-        
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-                .toolbar(.hidden, for: .tabBar)
         }
     }
     
@@ -57,6 +38,8 @@ struct DashboardView: View {
         TabView(selection: $viewModel.selectedTab) {
             makeTabs(padding: padding)
         }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .animation(.easeOut, value: viewModel.selectedTab)
     }
     
     @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {

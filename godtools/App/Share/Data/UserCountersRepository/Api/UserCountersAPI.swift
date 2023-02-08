@@ -29,13 +29,12 @@ class UserCountersAPI {
         let fetchRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
-            .decode(type: GetUserCountersResponseDecodable.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<[UserCounterDecodable]>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
             }
-            .flatMap { getUserCountersResponse in
-                
-                return Just(getUserCountersResponse.userCounters)
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }
@@ -45,15 +44,12 @@ class UserCountersAPI {
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
-            .decode(type: IncrementUserCounterResponseDecodable.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<UserCounterDecodable>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
             }
-            .flatMap { incrementUserCounterResponse in
-                
-                return Just(incrementUserCounterResponse.userCounter)
-                    .setFailureType(to: URLResponseError.self)
-                    .eraseToAnyPublisher()
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }

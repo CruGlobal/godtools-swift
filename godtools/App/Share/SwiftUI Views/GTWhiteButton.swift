@@ -27,21 +27,32 @@ struct GTWhiteButton: View {
     }
     
     var body: some View {
-        Text(title)
-            .font(FontLibrary.sfProTextRegular.font(size: fontSize))
-            .foregroundColor(ColorPalette.gtBlue.color)
-            .padding()
-            .frame(width: width, height: height, alignment: .center)
-            .background(Color.white)
-            .accentColor(ColorPalette.gtBlue.color)
-            .cornerRadius(cornerRadius)
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
-            )
-            .onTapGesture {
-                action()
+        
+        Button(action: {
+            action()
+        }) {
+            
+            ZStack(alignment: .center) {
+                
+                Rectangle()
+                    .fill(.clear)
+                    .frame(width: width, height: height)
+                    .cornerRadius(cornerRadius)
+                
+                Text(title)
+                    .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+                    .foregroundColor(ColorPalette.gtBlue.color)
+                    .padding()
             }
+        }
+        .frame(width: width, height: height, alignment: .center)
+        .background(Color.white)
+        .accentColor(ColorPalette.gtBlue.color)
+        .cornerRadius(cornerRadius)
+        .overlay(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
+        )
     }
 }
 

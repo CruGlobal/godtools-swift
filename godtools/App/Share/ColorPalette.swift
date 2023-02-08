@@ -31,6 +31,10 @@ enum ColorPalette: String {
         Color(.sRGB, red: red / 255, green: green / 255, blue: blue / 255, opacity: opacity)
     }
     
+    static func getUIColorWithRGB(red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) -> UIColor {        
+        return UIColor(ColorPalette.getColorWithRGB(red: red, green: green, blue: blue, opacity: opacity))
+    }
+    
     var uiColor: UIColor {
                 
         if let color = UIColor(named: colorName, in: Bundle.main, compatibleWith: nil) {

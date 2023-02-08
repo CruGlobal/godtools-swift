@@ -1,3 +1,30 @@
+"account.badges.sectionTitle" = "Tavi žetoni";
+"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: 1";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Atvērto rakstu skaits: %d";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Atvērto rakstu skaits: 1";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Kopīgoto attēlu skaits: %d";
+
+"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: 1";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Pabeigta(s) nodarbība(s): %d";
+
+"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): 1";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Atvērto rīku skaits: %d";
+
+"badges.toolsOpened.singular" = "Atvērto rīku skaits: 1";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Izmantoti apmācības padomi: %d";
+
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
 
