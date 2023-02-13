@@ -19,7 +19,7 @@ class ToolPageHeroViewModel: MobileContentViewModel {
         self.heroModel = heroModel
                 
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: heroModel.analyticsEvents,
+            analyticsEvents: heroModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )

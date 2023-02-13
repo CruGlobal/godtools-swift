@@ -57,11 +57,7 @@ class MobileContentViewModel: NSObject {
         
         for event in analyticsEvents {
             
-            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
-
-            if trigger == .visible {
-                event.trigger()
-            }
+            event.trigger()
         }
     }
     
@@ -69,11 +65,7 @@ class MobileContentViewModel: NSObject {
         
         for event in analyticsEvents {
             
-            let trigger: AnalyticsEvent.Trigger = event.analyticsEvent.trigger
-            
-            if trigger == .visible {
-                event.cancel()
-            }
+            event.cancel()
         }
     }
 }

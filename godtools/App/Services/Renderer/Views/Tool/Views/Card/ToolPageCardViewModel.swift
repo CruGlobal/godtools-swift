@@ -49,7 +49,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
         }
         
         analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: cardModel.analyticsEvents,
+            analyticsEvents: cardModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
