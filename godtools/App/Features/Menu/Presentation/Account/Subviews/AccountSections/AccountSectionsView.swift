@@ -64,9 +64,10 @@ struct AccountSectionsView: View {
                     
                 case .activity:
                     
-                    Rectangle()
-                        .fill(Color.red)
-                        .frame(height: 500)
+                    AccountActivityView(
+                        viewModel: viewModel,
+                        sectionFrameWidth: sectionFrameWidth
+                    )
                     
                 case .globalActivity:
                     
