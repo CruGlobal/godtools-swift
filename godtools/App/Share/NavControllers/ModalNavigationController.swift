@@ -11,13 +11,13 @@ import UIKit
 class ModalNavigationController: UINavigationController {
     
     private static let defaultNavBarColor: UIColor = .white
-    private static let defaultNavBarisTranslucent = false
+    private static let defaultNavBarIsTranslucent = false
     
     private let rootView: UIViewController
     private let navBarColor: UIColor
     private let navBarIsTranslucent: Bool
     
-    required init(rootView: UIViewController, navBarColor: UIColor = ModalNavigationController.defaultNavBarColor, navBarIsTranslucent: Bool = ModalNavigationController.defaultNavBarisTranslucent) {
+    required init(rootView: UIViewController, navBarColor: UIColor = ModalNavigationController.defaultNavBarColor, navBarIsTranslucent: Bool = ModalNavigationController.defaultNavBarIsTranslucent) {
         
         self.rootView = rootView
         self.navBarColor = navBarColor
