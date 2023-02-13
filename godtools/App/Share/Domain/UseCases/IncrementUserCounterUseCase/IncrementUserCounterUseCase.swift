@@ -16,6 +16,7 @@ class IncrementUserCounterUseCase {
         case articleOpen(uri: String)
         case imageShared
         case languageUsed(locale: Locale)
+        case lessonCompletion(mobileContentAction: String)
         case lessonOpen(tool: String)
         case linkShared
         case screenShare(tool: String)
@@ -71,6 +72,9 @@ class IncrementUserCounterUseCase {
         case .languageUsed(let locale):
             userCounterId = userCounterNames.LANGUAGE_USED(locale: locale)
         
+        case .lessonCompletion(let mobileContentAction):
+            userCounterId = mobileContentAction
+            
         case .lessonOpen(let tool):
             userCounterId = userCounterNames.LESSON_OPEN(tool: tool)
         

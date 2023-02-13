@@ -13,12 +13,12 @@ class MobileContentAnalytics {
     
     private let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem]
         
-    required init(analytics: AnalyticsContainer) {
+    required init(analytics: AnalyticsContainer, userAnalytics: UserAnalytics) {
         
         let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
             .appsflyer: analytics.appsFlyerAnalytics,
             .firebase: analytics.firebaseAnalytics,
-            .user: analytics.userAnalytics
+            .user: userAnalytics
         ]
  
         self.analyticsSystems = analyticsSystems

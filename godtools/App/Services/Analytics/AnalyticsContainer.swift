@@ -13,7 +13,6 @@ class AnalyticsContainer {
     // analytics systems
     let appsFlyerAnalytics: AppsFlyerAnalytics
     let firebaseAnalytics: FirebaseAnalytics
-    let userAnalytics: UserAnalytics
 
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics
@@ -27,6 +26,5 @@ class AnalyticsContainer {
 
         self.appsFlyerAnalytics = appsFlyerAnalytics
         self.firebaseAnalytics = firebaseAnalytics
-        userAnalytics = UserAnalytics()
     }
 }
