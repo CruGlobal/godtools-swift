@@ -19,7 +19,7 @@ struct FavoritesContentView: View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             if viewModel.hideTutorialBanner == false {
                 
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
