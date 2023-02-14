@@ -53,17 +53,17 @@ class MobileContentViewModel: NSObject {
         return renderedPageContext.language.direction == .leftToRight ? .left : .right
     }
     
-    func viewDidAppear(analyticsEvents: [MobileContentAnalyticsEvent]) {
+    func viewDidAppear(visibleAnalyticsEvents: [MobileContentAnalyticsEvent]) {
         
-        for event in analyticsEvents {
+        for event in visibleAnalyticsEvents {
             
             event.trigger()
         }
     }
     
-    func viewDidDisappear(analyticsEvents: [MobileContentAnalyticsEvent]) {
+    func viewDidDisappear(visibleAnalyticsEvents: [MobileContentAnalyticsEvent]) {
         
-        for event in analyticsEvents {
+        for event in visibleAnalyticsEvents {
             
             event.cancel()
         }

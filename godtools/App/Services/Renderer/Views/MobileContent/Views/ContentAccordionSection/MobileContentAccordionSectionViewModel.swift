@@ -13,14 +13,14 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
     
     private let sectionModel: Accordion.Section
     private let mobileContentAnalytics: MobileContentAnalytics
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     init(sectionModel: Accordion.Section, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
         self.sectionModel = sectionModel
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: sectionModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -35,10 +35,10 @@ class MobileContentAccordionSectionViewModel: MobileContentViewModel {
 extension MobileContentAccordionSectionViewModel {
     
     func sectionOpened() {
-        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
     }
     
     func sectionClosed() {
-        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidDisappear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
     }
 }

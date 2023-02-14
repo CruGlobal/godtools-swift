@@ -16,7 +16,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
     private let numberOfVisbleCards: Int
      
     let hidesHeaderTrainingTip: Bool
@@ -48,7 +48,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
             hidesNextButton = true
         }
         
-        analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: cardModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -179,7 +179,7 @@ extension ToolPageCardViewModel {
         
     func cardDidAppear() {
         
-        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                            
         let trackScreen =  TrackScreenModel(
             screenName: analyticsScreenName,
@@ -194,6 +194,6 @@ extension ToolPageCardViewModel {
     
     func cardDidDisappear() {
         
-        super.viewDidDisappear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidDisappear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
     }
 }

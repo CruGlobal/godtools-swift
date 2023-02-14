@@ -13,7 +13,7 @@ class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
     private let analytics: AnalyticsContainer
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     private var cardPosition: Int?
     
@@ -25,7 +25,7 @@ class ToolPageViewModel: MobileContentPageViewModel {
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
                 
-        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -89,7 +89,7 @@ extension ToolPageViewModel {
     
     func pageDidAppear() {
         
-        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                 
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
