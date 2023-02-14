@@ -51,9 +51,8 @@ struct FavoritesContentView: View {
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
-                        
-                        Spacer()
-                        
+                            .padding(.bottom, 23)
+                                                
                     } refreshHandler: {
                         viewModel.refreshData()
                     }
