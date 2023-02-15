@@ -19,7 +19,7 @@ struct FavoritesContentView: View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             if viewModel.hideTutorialBanner == false {
                 
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
@@ -51,9 +51,8 @@ struct FavoritesContentView: View {
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
-                        
-                        Spacer()
-                        
+                            .padding(.bottom, 23)
+                                                
                     } refreshHandler: {
                         viewModel.refreshData()
                     }
