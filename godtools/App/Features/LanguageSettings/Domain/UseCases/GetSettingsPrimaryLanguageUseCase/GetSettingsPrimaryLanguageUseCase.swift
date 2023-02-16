@@ -32,6 +32,7 @@ class GetSettingsPrimaryLanguageUseCase {
                 return Just(self.getPrimaryLanguage())
                     .eraseToAnyPublisher()
             })
+            .prepend(getPrimaryLanguage())
             .eraseToAnyPublisher()
     }
     
