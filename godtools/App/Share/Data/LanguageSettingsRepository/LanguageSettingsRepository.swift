@@ -18,7 +18,7 @@ class LanguageSettingsRepository {
         self.cache = cache
     }
     
-    func getPrimaryLanguageChanged() -> AnyPublisher<String?, Never> {
+    func getPrimaryLanguageChanged() -> AnyPublisher<Void, Never> {
         return cache.getPrimaryLanguageChanged()
     }
     
