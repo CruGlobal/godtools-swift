@@ -20,6 +20,11 @@ class LanguageSettingsRepository {
     
     func getPrimaryLanguageChanged() -> AnyPublisher<Void, Never> {
         return cache.getPrimaryLanguageChanged()
+            .flatMap { _ in
+                
+                return Empty()
+            }
+            .eraseToAnyPublisher()
     }
     
     func getParallelLanguageChanged() -> AnyPublisher<String?, Never> {

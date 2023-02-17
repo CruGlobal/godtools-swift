@@ -17,12 +17,8 @@ class LanguageSettingsCache {
         
     }
     
-    func getPrimaryLanguageChanged() -> AnyPublisher<Void, Never> {
+    func getPrimaryLanguageChanged() -> AnyPublisher<String?, Never> {
         return userDefaults.publisher(for: \.primaryLanguageId)
-            .flatMap { _ in
-                
-                return Empty()
-            }
             .eraseToAnyPublisher()
     }
     
