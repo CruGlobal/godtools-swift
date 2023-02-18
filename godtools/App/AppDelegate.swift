@@ -9,6 +9,7 @@
 import UIKit
 import AppsFlyerLib
 import FBSDKCoreKit
+import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -208,6 +209,16 @@ extension AppDelegate {
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
+        if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+            
+            print("url: \(dynamicLink.url?.absoluteString)")
+            
+            // Handle the deep link. For example, show the deep-linked content or
+            // apply a promotional offer to the user's account.
+            // ...
+            return true
+        }
+        
         if deepLinkedHandled {
             return true
         }
@@ -235,6 +246,16 @@ extension AppDelegate {
         
         guard let url = userActivity.webpageURL else {
             return false
+        }
+        
+        let firebaseDynamicLinkHandled: Bool
+        
+        firebaseDynamicLinkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink: DynamicLink?, error: Error?) in
+            
+        }
+        
+        if firebaseDynamicLinkHandled {
+            print("did handle firebase universal link?  What does that mean?")
         }
           
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
