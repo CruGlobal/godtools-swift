@@ -26,12 +26,13 @@ class GetSettingsPrimaryLanguageUseCase {
     
     func getPrimaryLanguagePublisher() -> AnyPublisher<LanguageDomainModel?, Never> {
         
-        return Publishers.CombineLatest(languagesRepository.getLanguagesChanged(), languageSettingsRepository.getPrimaryLanguageChanged())
-            .flatMap({ (void: Void, primaryLanguageId: String?) -> AnyPublisher<LanguageDomainModel?, Never> in
+        return Publishers.Merge(languagesRepository.getLanguagesChanged(), languageSettingsRepository.getPrimaryLanguageChanged())
+            .flatMap { _ in
                 
                 return Just(self.getPrimaryLanguage())
                     .eraseToAnyPublisher()
-            })
+            }
+            .prepend(getPrimaryLanguage())
             .eraseToAnyPublisher()
     }
     
