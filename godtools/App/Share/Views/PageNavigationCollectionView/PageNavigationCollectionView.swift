@@ -273,6 +273,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView.visibleCells
     }
     
+    func getSemanticContentAttribute() -> UISemanticContentAttribute {
+        return collectionView.semanticContentAttribute
+    }
+    
     private func didEndPageScrolling() {
         
         let currentPage: Int = self.currentPage
