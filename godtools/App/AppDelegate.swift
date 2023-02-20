@@ -205,24 +205,16 @@ extension AppDelegate {
         
         appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
         
-        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            return true
+        }
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
-        if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
-            
-            print("url: \(dynamicLink.url?.absoluteString)")
-            
-            // Handle the deep link. For example, show the deep-linked content or
-            // apply a promotional offer to the user's account.
-            // ...
-            return true
-        }
+        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
-        if deepLinkedHandled {
-            return true
-        }
-        else if facebookHandled {
+        if facebookHandled || deepLinkedHandled {
             return true
         }
         
@@ -248,16 +240,21 @@ extension AppDelegate {
             return false
         }
         
-        let firebaseDynamicLinkHandled: Bool
-        
-        firebaseDynamicLinkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink: DynamicLink?, error: Error?) in
+        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { [weak self] (dynamicLink: DynamicLink?, error: Error?) in
             
+            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                _ = self?.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            }
         }
         
         if firebaseDynamicLinkHandled {
-            print("did handle firebase universal link?  What does that mean?")
+            return true
         }
-          
+        
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {
