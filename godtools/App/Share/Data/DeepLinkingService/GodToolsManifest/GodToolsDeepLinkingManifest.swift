@@ -18,8 +18,26 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "org.cru.godtools",
+                rootPathComponent: "dashboard",
+                parserClass: DashboardDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "godtools",
+                host: "org.cru.godtools",
                 rootPathComponent: "tool",
                 parserClass: ToolDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "godtoolsapp.com",
+                rootPathComponent: "article",
+                parserClass: ArticleDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "godtoolsapp.com",
+                rootPathComponent: "lessons",
+                parserClass: DashboardDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
@@ -29,25 +47,7 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
-                host: "godtoolsapp.com",
-                rootPathComponent: "article",
-                parserClass: ArticleDeepLinkParser.self
-            ),
-            DeepLinkingParserManifestUrl(
-                scheme: "godtools",
-                host: "org.cru.godtools",
-                rootPathComponent: "dashboard",
-                parserClass: DashboardDeepLinkParser.self
-            ),
-            DeepLinkingParserManifestUrl(
-                scheme: "https",
                 host: "knowgod.com",
-                rootPathComponent: "lessons",
-                parserClass: DashboardDeepLinkParser.self
-            ),
-            DeepLinkingParserManifestUrl(
-                scheme: "https",
-                host: "godtoolsapp.com",
                 rootPathComponent: "lessons",
                 parserClass: DashboardDeepLinkParser.self
             ),
