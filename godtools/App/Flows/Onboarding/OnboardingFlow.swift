@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class OnboardingFlow: Flow {
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
         
@@ -38,20 +42,7 @@ class OnboardingFlow: Flow {
             isTranslucent: true
         )
         
-        let viewModel = OnboardingTutorialViewModel(
-            flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
-            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics(),
-            onboardingTutorialItemsRepository: appDiContainer.dataLayer.getOnboardingTutorialItemsRepository(),
-            onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
-            customViewBuilder: appDiContainer.getOnboardingTutorialCustomViewBuilder(flowDelegate: self),
-            localizationServices: appDiContainer.localizationServices
-        )
-        let view = OnboardingTutorialView(viewModel: viewModel)
-        
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([getOnboardingTutorialView()], animated: false)
     }
     
     private func presentVideoPlayerView(youtubeVideoId: String) {
@@ -97,6 +88,8 @@ class OnboardingFlow: Flow {
     }
 }
 
+// MARK: - FlowDelegate
+
 extension OnboardingFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
@@ -136,5 +129,55 @@ extension OnboardingFlow: FlowDelegate {
         default:
             break
         }
+    }
+}
+
+// MARK: -
+
+extension OnboardingFlow {
+    
+    private func getOnboardingTutorialView() -> UIViewController {
+        
+        let viewModel = OnboardingTutorialViewModel(
+            flowDelegate: self,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
+            trackTutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
+        )
+        
+        let view = OnboardingTutorialView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController<OnboardingTutorialView>(rootView: view)
+        
+        var skipButton: UIBarButtonItem?
+        
+        viewModel.hidesSkipButton
+            .receiveOnMain()
+            .sink { (hidden: Bool) in
+                
+                let skipButtonPosition: ButtonItemPosition = .right
+                
+                if skipButton == nil, !hidden {
+                    
+                    skipButton = hostingView.addBarButtonItem(
+                        to: skipButtonPosition,
+                        title: viewModel.skipButtonTitle,
+                        style: .plain,
+                        color: ColorPalette.gtBlue.uiColor,
+                        target: viewModel,
+                        action: #selector(viewModel.skipTapped)
+                    )
+                }
+                else if let skipButton = skipButton {
+                    
+                    hidden ? hostingView.removeBarButtonItem(item: skipButton) : hostingView.addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
+                }
+            }
+            .store(in: &cancellables)
+        
+        return hostingView
     }
 }
