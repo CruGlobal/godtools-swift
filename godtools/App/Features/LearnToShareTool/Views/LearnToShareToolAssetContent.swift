@@ -10,7 +10,7 @@ import UIKit
 
 enum LearnToShareToolAssetContent {
     
-    case animation(viewModel: AnimatedViewModelType)
+    case animation(viewModel: AnimatedViewModel)
     case image(image: UIImage)
     case none
 }
