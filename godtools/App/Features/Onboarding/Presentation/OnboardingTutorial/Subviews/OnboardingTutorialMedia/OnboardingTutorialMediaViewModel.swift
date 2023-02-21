@@ -20,4 +20,13 @@ class OnboardingTutorialMediaViewModel: ObservableObject {
         self.message = message
         self.animationFilename = animationFilename
     }
+    
+    func getAnimationViewModel() -> AnimatedViewModel {
+        
+        return AnimatedViewModel(
+            animationDataResource: .mainBundleJsonFile(filename: animationFilename),
+            autoPlay: true,
+            loop: true
+        )
+    }
 }
