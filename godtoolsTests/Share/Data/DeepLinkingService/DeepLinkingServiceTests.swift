@@ -39,18 +39,6 @@ class DeepLinkingServiceTests: XCTestCase {
         case knowgodTractTeachMeToShareSpanishAndRussian = "https://knowgod.com/es/teachmetoshare?primaryLanguage=es&parallelLanguage=ru"
         case knowgodLessonLessonConvoEnglish = "https://knowgod.com/lessons/lessonconvo/en"
         
-        
-        // TODO: Testing needed for these. ~Levi
-        /*
-        https://godtoolsapp.com/deeplink/tool/article/{abbrev}/{lang}
-        https://godtoolsapp.com/deeplink/tool/cyoa/{abbrev}/{lang}
-        https://godtoolsapp.com/deeplink/tool/cyoa/{abbrev}/{lang}/{pageId}
-        https://godtoolsapp.com/deeplink/tool/lesson/{abbrev}/{lang}
-        https://godtoolsapp.com/deeplink/tool/tract/{abbrev}/{lang}
-        https://godtoolsapp.com/deeplink/tool/tract/{abbrev}/{lang}/{pageIndex}
-        */
-        
-        
         var url: URL {
             return DeepLinkUrl.getUrl(string: rawValue)
         }
