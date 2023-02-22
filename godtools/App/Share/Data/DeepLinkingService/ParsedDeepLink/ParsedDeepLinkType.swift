@@ -8,10 +8,11 @@
 
 import Foundation
 
-enum ParsedDeepLinkType {
+enum ParsedDeepLinkType: Equatable {
     
     case allToolsList
-    case article(articleURI: String)
+    case articleAemUri(aemUri: String)
+    case dashboard
     case favoritedToolsList
     case lessonsList
     case tool(toolDeepLink: ToolDeepLink)

@@ -12,56 +12,56 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
     
     let parserManifests: [DeepLinkingParserManifestType]
     
-    required init() {
+    init() {
         
         parserManifests = [
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "org.cru.godtools",
-                rootPathComponent: "dashboard",
-                parserClass: DashboardDeepLinkParser.self
+                path: "dashboard",
+                parserClass: DashboardPathDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "godtoolsapp.com",
+                path: "deeplink/dashboard",
+                parserClass: DashboardPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "org.cru.godtools",
-                rootPathComponent: "tool",
-                parserClass: ToolDeepLinkParser.self
+                path: "tool",
+                parserClass: ToolPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
                 host: "godtoolsapp.com",
-                rootPathComponent: "article",
-                parserClass: ArticleDeepLinkParser.self
+                path: "deeplink/tool",
+                parserClass: ToolPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
                 host: "godtoolsapp.com",
-                rootPathComponent: "lessons",
-                parserClass: DashboardDeepLinkParser.self
-            ),
-            DeepLinkingParserManifestUrl(
-                scheme: "https",
-                host: "godtoolsapp.com",
-                rootPathComponent: "lessons",
-                parserClass: LessonDeepLinkParser.self
+                path: "article/aem",
+                parserClass: ArticleAemPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
                 host: "knowgod.com",
-                rootPathComponent: "lessons",
-                parserClass: DashboardDeepLinkParser.self
-            ),
-            DeepLinkingParserManifestUrl(
-                scheme: "https",
-                host: "knowgod.com",
-                rootPathComponent: nil,
-                parserClass: KnowGodTractDeepLinkParser.self
+                path: nil,
+                parserClass: KnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "knowgod.com",
-                rootPathComponent: nil,
-                parserClass: KnowGodTractDeepLinkParser.self
+                path: nil,
+                parserClass: KnowGodDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "godtoolsapp.com",
+                path: "lessons",
+                parserClass: GodToolsAppLessonsPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestAppsFlyer(
                 parserClass: AppsFlyerDeepLinkValueParser.self

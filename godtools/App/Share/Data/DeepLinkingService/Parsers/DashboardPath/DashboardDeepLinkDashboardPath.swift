@@ -10,6 +10,7 @@ import Foundation
 
 enum DashboardDeepLinkDashboardPath: String {
     
+    case dashboard = "dashboard"
     case tools = "tools"
     case home = "home"
     case lessons = "lessons"

@@ -37,6 +37,22 @@
 		450E3D092958916A000FF6D0 /* LessonEvaluationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E3D052958916A000FF6D0 /* LessonEvaluationDataModel.swift */; };
 		450E3D0A2958916A000FF6D0 /* LessonEvaluationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E3D062958916A000FF6D0 /* LessonEvaluationRepository.swift */; };
 		450E442727565DCD00D4311E /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E442627565DCD00D4311E /* TutorialItem.swift */; };
+		450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */; };
+		450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */; };
+		450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
+		450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */; };
+		450EE28929A6648900524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */; };
+		450EE29529A668D300524F64 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */; };
+		450EE29629A668D500524F64 /* ToolPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */; };
+		450EE29A29A668E400524F64 /* DashboardPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */; };
+		450EE29B29A668E400524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
+		450EE29C29A668E700524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */; };
+		450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */; };
+		450EE2A029A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */; };
+		450EE2A129A66CE400524F64 /* KnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */; };
+		450EE2A229A66CE400524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */; };
+		450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */; };
+		450EE2AC29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
 		450F94DA27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F94D627A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift */; };
 		450F94DB27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F94D727A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift */; };
@@ -424,17 +440,9 @@
 		459E86DC28EDA86C00E197A5 /* DeepLinkParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */; };
 		459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */; };
 		459E86DE28EDA86C00E197A5 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BE28EDA86C00E197A5 /* LegacyAppsFlyerDeepLinkValueParser.swift */; };
-		459E86DF28EDA86C00E197A5 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C028EDA86C00E197A5 /* DashboardDeepLinkDashboardPath.swift */; };
-		459E86E028EDA86C00E197A5 /* DashboardDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C128EDA86C00E197A5 /* DashboardDeepLinkParser.swift */; };
 		459E86E128EDA86C00E197A5 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C328EDA86C00E197A5 /* AppsFlyerDeepLinkValueComponentsParser.swift */; };
 		459E86E228EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C428EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift */; };
 		459E86E328EDA86C00E197A5 /* DeepLinkAppsFlyerParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C528EDA86C00E197A5 /* DeepLinkAppsFlyerParserType.swift */; };
-		459E86E428EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C728EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift */; };
-		459E86E528EDA86C00E197A5 /* KnowGodTractDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C828EDA86C00E197A5 /* KnowGodTractDeepLinkParser.swift */; };
-		459E86E628EDA86C00E197A5 /* LessonDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86CA28EDA86C00E197A5 /* LessonDeepLinkParser.swift */; };
-		459E86E728EDA86C00E197A5 /* ArticleDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86CC28EDA86C00E197A5 /* ArticleDeepLinkParser.swift */; };
-		459E86E828EDA86C00E197A5 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86CE28EDA86C00E197A5 /* ToolDeepLinkToolPath.swift */; };
-		459E86E928EDA86C00E197A5 /* ToolDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86CF28EDA86C00E197A5 /* ToolDeepLinkParser.swift */; };
 		459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
 		459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */; };
 		459E86EC28EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D328EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift */; };
@@ -754,6 +762,27 @@
 		45D63EA5288F77D4009B4610 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9A288F77D4009B4610 /* ResourceModel.swift */; };
 		45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */; };
 		45D63EA7288F77D4009B4610 /* ResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */; };
+		45D7781629A56FD100F23D99 /* DeepLinkingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */; };
+		45D7781729A570CB00F23D99 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86DA28EDA86C00E197A5 /* DeepLinkingService.swift */; };
+		45D7781829A570D000F23D99 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
+		45D7781929A570D400F23D99 /* IncomingDeepLinkUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D928EDA86C00E197A5 /* IncomingDeepLinkUrl.swift */; };
+		45D7781A29A570DA00F23D99 /* DeepLinkingManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D428EDA86C00E197A5 /* DeepLinkingManifestType.swift */; };
+		45D7781B29A570DD00F23D99 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D328EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift */; };
+		45D7781C29A570DF00F23D99 /* DeepLinkingParserManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */; };
+		45D7781D29A570E400F23D99 /* DeepLinkingParserManifestUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */; };
+		45D7781E29A570E700F23D99 /* ParsedDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D728EDA86C00E197A5 /* ParsedDeepLinkType.swift */; };
+		45D7781F29A570E900F23D99 /* ToolDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */; };
+		45D7782029A570FC00F23D99 /* DeepLinkUrlParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */; };
+		45D7782429A570FC00F23D99 /* DeepLinkParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */; };
+		45D7782529A570FC00F23D99 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C328EDA86C00E197A5 /* AppsFlyerDeepLinkValueComponentsParser.swift */; };
+		45D7782A29A570FC00F23D99 /* DeepLinkAppsFlyerParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C528EDA86C00E197A5 /* DeepLinkAppsFlyerParserType.swift */; };
+		45D7782B29A570FC00F23D99 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BE28EDA86C00E197A5 /* LegacyAppsFlyerDeepLinkValueParser.swift */; };
+		45D7782C29A570FC00F23D99 /* AppsFlyerDeepLinkValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86C428EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift */; };
+		45D7782E29A5714C00F23D99 /* GodToolsDeepLinkingManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */; };
+		45D7782F29A572B000F23D99 /* Collection+SafeLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115B25C27C0318100C18EF6 /* Collection+SafeLookup.swift */; };
+		45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
+		45D7783129A572E500F23D99 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20E9259391B000A096A0 /* JsonServices.swift */; };
+		45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20EA259391B000A096A0 /* JsonServicesType.swift */; };
 		45D95CCE271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */; };
 		45D9608A289B871A001A5A3E /* GetAllFavoritedToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D96089289B871A001A5A3E /* GetAllFavoritedToolsUseCase.swift */; };
 		45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D9608C289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift */; };
@@ -1096,6 +1125,14 @@
 		450E3D052958916A000FF6D0 /* LessonEvaluationDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationDataModel.swift; sourceTree = "<group>"; };
 		450E3D062958916A000FF6D0 /* LessonEvaluationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationRepository.swift; sourceTree = "<group>"; };
 		450E442627565DCD00D4311E /* TutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkToolPath.swift; sourceTree = "<group>"; };
+		450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPathDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
+		450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPathDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemPathDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowGodTractDeepLinkQueryParameters.swift; sourceTree = "<group>"; };
+		450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsAppLessonsPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		450F94D627A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardViewModel.swift; sourceTree = "<group>"; };
 		450F94D727A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardView.swift; sourceTree = "<group>"; };
@@ -1486,17 +1523,9 @@
 		459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserType.swift; sourceTree = "<group>"; };
 		459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserType.swift; sourceTree = "<group>"; };
 		459E86BE28EDA86C00E197A5 /* LegacyAppsFlyerDeepLinkValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyAppsFlyerDeepLinkValueParser.swift; sourceTree = "<group>"; };
-		459E86C028EDA86C00E197A5 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
-		459E86C128EDA86C00E197A5 /* DashboardDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkParser.swift; sourceTree = "<group>"; };
 		459E86C328EDA86C00E197A5 /* AppsFlyerDeepLinkValueComponentsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerDeepLinkValueComponentsParser.swift; sourceTree = "<group>"; };
 		459E86C428EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyerDeepLinkValueParser.swift; sourceTree = "<group>"; };
 		459E86C528EDA86C00E197A5 /* DeepLinkAppsFlyerParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkAppsFlyerParserType.swift; sourceTree = "<group>"; };
-		459E86C728EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowGodTractDeepLinkQueryParameters.swift; sourceTree = "<group>"; };
-		459E86C828EDA86C00E197A5 /* KnowGodTractDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowGodTractDeepLinkParser.swift; sourceTree = "<group>"; };
-		459E86CA28EDA86C00E197A5 /* LessonDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonDeepLinkParser.swift; sourceTree = "<group>"; };
-		459E86CC28EDA86C00E197A5 /* ArticleDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDeepLinkParser.swift; sourceTree = "<group>"; };
-		459E86CE28EDA86C00E197A5 /* ToolDeepLinkToolPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkToolPath.swift; sourceTree = "<group>"; };
-		459E86CF28EDA86C00E197A5 /* ToolDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkParser.swift; sourceTree = "<group>"; };
 		459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestType.swift; sourceTree = "<group>"; };
 		459E86D328EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestAppsFlyer.swift; sourceTree = "<group>"; };
@@ -1798,6 +1827,7 @@
 		45D63E9A288F77D4009B4610 /* ResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
 		45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentResourcesApi.swift; sourceTree = "<group>"; };
 		45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesRepository.swift; sourceTree = "<group>"; };
+		45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceTests.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEventAnalyticsTracking.swift; sourceTree = "<group>"; };
 		45D96089289B871A001A5A3E /* GetAllFavoritedToolsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsUseCase.swift; sourceTree = "<group>"; };
 		45D9608C289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsLatestTranslationFilesUseCase.swift; sourceTree = "<group>"; };
@@ -2390,6 +2420,57 @@
 				45F88B052860BA8700C8027F /* ViewModels */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		450EE27D29A6648900524F64 /* ToolPath */ = {
+			isa = PBXGroup;
+			children = (
+				450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */,
+				450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */,
+			);
+			path = ToolPath;
+			sourceTree = "<group>";
+		};
+		450EE28029A6648900524F64 /* DashboardPath */ = {
+			isa = PBXGroup;
+			children = (
+				450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */,
+				450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */,
+			);
+			path = DashboardPath;
+			sourceTree = "<group>";
+		};
+		450EE28329A6648900524F64 /* ArticleAemPath */ = {
+			isa = PBXGroup;
+			children = (
+				450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */,
+			);
+			path = ArticleAemPath;
+			sourceTree = "<group>";
+		};
+		450EE28A29A6680800524F64 /* KnowGod */ = {
+			isa = PBXGroup;
+			children = (
+				450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */,
+				450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */,
+			);
+			path = KnowGod;
+			sourceTree = "<group>";
+		};
+		450EE2A829A6719500524F64 /* GodToolsApp */ = {
+			isa = PBXGroup;
+			children = (
+				450EE2A929A6719500524F64 /* Lessons */,
+			);
+			path = GodToolsApp;
+			sourceTree = "<group>";
+		};
+		450EE2A929A6719500524F64 /* Lessons */ = {
+			isa = PBXGroup;
+			children = (
+				450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */,
+			);
+			path = Lessons;
 			sourceTree = "<group>";
 		};
 		450F94CC27A1F0D2009DEA43 /* CardCollectionPageCard */ = {
@@ -4200,6 +4281,7 @@
 		4584D7FF252B5BDD007B5D4E /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				45D7781329A56FB400F23D99 /* Data */,
 				45A7BAF3252CBC5500D70465 /* Extensions */,
 				45557AE3252D085B00ACFA95 /* Services */,
 			);
@@ -4442,12 +4524,12 @@
 				459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */,
 				459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */,
 				459E86C228EDA86C00E197A5 /* AppsFlyerDeepLinkValue */,
-				459E86CB28EDA86C00E197A5 /* Article */,
-				459E86BF28EDA86C00E197A5 /* Dashboard */,
+				450EE28329A6648900524F64 /* ArticleAemPath */,
+				450EE28029A6648900524F64 /* DashboardPath */,
+				450EE2A829A6719500524F64 /* GodToolsApp */,
+				450EE28A29A6680800524F64 /* KnowGod */,
 				459E86BD28EDA86C00E197A5 /* Legacy */,
-				459E86C928EDA86C00E197A5 /* Lesson */,
-				459E86CD28EDA86C00E197A5 /* Tool */,
-				459E86C628EDA86C00E197A5 /* Tract */,
+				450EE27D29A6648900524F64 /* ToolPath */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -4460,15 +4542,6 @@
 			path = Legacy;
 			sourceTree = "<group>";
 		};
-		459E86BF28EDA86C00E197A5 /* Dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				459E86C028EDA86C00E197A5 /* DashboardDeepLinkDashboardPath.swift */,
-				459E86C128EDA86C00E197A5 /* DashboardDeepLinkParser.swift */,
-			);
-			path = Dashboard;
-			sourceTree = "<group>";
-		};
 		459E86C228EDA86C00E197A5 /* AppsFlyerDeepLinkValue */ = {
 			isa = PBXGroup;
 			children = (
@@ -4476,40 +4549,6 @@
 				459E86C428EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift */,
 			);
 			path = AppsFlyerDeepLinkValue;
-			sourceTree = "<group>";
-		};
-		459E86C628EDA86C00E197A5 /* Tract */ = {
-			isa = PBXGroup;
-			children = (
-				459E86C828EDA86C00E197A5 /* KnowGodTractDeepLinkParser.swift */,
-				459E86C728EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift */,
-			);
-			path = Tract;
-			sourceTree = "<group>";
-		};
-		459E86C928EDA86C00E197A5 /* Lesson */ = {
-			isa = PBXGroup;
-			children = (
-				459E86CA28EDA86C00E197A5 /* LessonDeepLinkParser.swift */,
-			);
-			path = Lesson;
-			sourceTree = "<group>";
-		};
-		459E86CB28EDA86C00E197A5 /* Article */ = {
-			isa = PBXGroup;
-			children = (
-				459E86CC28EDA86C00E197A5 /* ArticleDeepLinkParser.swift */,
-			);
-			path = Article;
-			sourceTree = "<group>";
-		};
-		459E86CD28EDA86C00E197A5 /* Tool */ = {
-			isa = PBXGroup;
-			children = (
-				459E86CF28EDA86C00E197A5 /* ToolDeepLinkParser.swift */,
-				459E86CE28EDA86C00E197A5 /* ToolDeepLinkToolPath.swift */,
-			);
-			path = Tool;
 			sourceTree = "<group>";
 		};
 		459E86D128EDA86C00E197A5 /* Manifest */ = {
@@ -5928,6 +5967,22 @@
 				45D63E99288F77D4009B4610 /* ResourceType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		45D7781329A56FB400F23D99 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				45D7781429A56FB400F23D99 /* DeepLinkingService */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		45D7781429A56FB400F23D99 /* DeepLinkingService */ = {
+			isa = PBXGroup;
+			children = (
+				45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */,
+			);
+			path = DeepLinkingService;
 			sourceTree = "<group>";
 		};
 		45D96088289B871A001A5A3E /* GetAllFavoritedToolsUseCase */ = {
@@ -7781,7 +7836,6 @@
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
 				45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */,
 				45BDA6492954FF08007E259B /* WebArchiveUrl.swift in Sources */,
-				459E86E428EDA86C00E197A5 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				450E3D082958916A000FF6D0 /* LessonEvaluationRealmCache.swift in Sources */,
 				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */,
@@ -7844,6 +7898,7 @@
 				D47346C12909CDF000579463 /* DashboardTabItem.swift in Sources */,
 				45BDA64B2954FF08007E259B /* WebArchive.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
+				450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
@@ -8007,6 +8062,7 @@
 				4573134228C1821200481640 /* ToolDetailsView.swift in Sources */,
 				45BDA60A2954FE3E007E259B /* RealmArticleAemData.swift in Sources */,
 				D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */,
+				450EE28929A6648900524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */,
 				45BDA6032954FE3E007E259B /* ArticleAemWebArchiveFileCache.swift in Sources */,
 				45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */,
 				450D7B0328E32965006C3FDF /* TrackDownloadedTranslationsRepository.swift in Sources */,
@@ -8035,6 +8091,7 @@
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
 				D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */,
 				45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */,
+				450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
 				D45922F4286B3DAD00904B87 /* FeaturedLessonCardsViewModel.swift in Sources */,
 				453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */,
 				45AD204F25938AC300A096A0 /* ExitLinkAnalytics.swift in Sources */,
@@ -8059,7 +8116,6 @@
 				452040A02959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift in Sources */,
 				D182CA1E2721943900ABAAC8 /* TutorialPagerAnalytics.swift in Sources */,
 				45AD22B32593D1FB00A096A0 /* UIImage+CreateImageWithColor.swift in Sources */,
-				459E86E928EDA86C00E197A5 /* ToolDeepLinkParser.swift in Sources */,
 				45F71621290A12D70019B715 /* TutorialViewModelType.swift in Sources */,
 				45860A702924144B0089C836 /* AccountSectionType.swift in Sources */,
 				D1E98EDF27974F0100D1B738 /* LessonEvaluationViewModel.swift in Sources */,
@@ -8081,6 +8137,7 @@
 				456777BD287DB3770044AEB2 /* LoadToolRemoteSessionViewModel.swift in Sources */,
 				45BDA6082954FE3E007E259B /* ArticleAemCacheObject.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
+				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */,
 				D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */,
@@ -8091,7 +8148,6 @@
 				D49D3CA228E381FE009F6532 /* AccordionView.swift in Sources */,
 				45BDA64D2954FF08007E259B /* WebArchiveOperation.swift in Sources */,
 				4554205B28B17AEA00368CFE /* AttachmentFileDataModel.swift in Sources */,
-				459E86E828EDA86C00E197A5 /* ToolDeepLinkToolPath.swift in Sources */,
 				4570B7032889B1760024C931 /* DownloadToolViewModelType.swift in Sources */,
 				4567781E287DC1F20044AEB2 /* ArticleCategoriesView.swift in Sources */,
 				45558406269F2DA500C3FF14 /* MobileContentPagesNavigationModel.swift in Sources */,
@@ -8224,6 +8280,7 @@
 				45052141295F3B9D0018ABD0 /* RealmUserCountersCache.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				453C1BD62899A50C007332E2 /* FavoritedResourcesCache.swift in Sources */,
+				450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
 				457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */,
 				45F7166A290A12D70019B715 /* LogOutUserUseCase.swift in Sources */,
@@ -8294,6 +8351,7 @@
 				45AE974927C97A9400C2CB33 /* InlineTip+MobileContentRenderableModel.swift in Sources */,
 				4567781F287DC1F20044AEB2 /* ArticleCategoriesViewModel.swift in Sources */,
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,
+				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
 				4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */,
 				45AD208525938B6A00A096A0 /* KeyboardState.swift in Sources */,
@@ -8353,7 +8411,6 @@
 				45F715BA290A12AA0019B715 /* CruOktaAuthentication+GetAuthenticationInstance.swift in Sources */,
 				450D7B0A28E34ACA006C3FDF /* RealmLanguagesCacheSyncResult.swift in Sources */,
 				459BD08E289AD4310075901B /* DetermineToolTranslationsToDownloadResult.swift in Sources */,
-				459E86DF28EDA86C00E197A5 /* DashboardDeepLinkDashboardPath.swift in Sources */,
 				450D7B0828E34AA9006C3FDF /* RealmLanguagesCacheSync.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentAnalyticsEvent.swift in Sources */,
 				45F7162D290A12D70019B715 /* WebContentView.swift in Sources */,
@@ -8394,6 +8451,7 @@
 				4561B40F295B32E700F5AF5B /* OnboardingQuickStartViewModel.swift in Sources */,
 				45AE973F27C97A9400C2CB33 /* MultiplatformContent.swift in Sources */,
 				4561C40F27C6891600C4A367 /* MobileContentAccordionSectionView.swift in Sources */,
+				450EE2A029A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
 				45C2596B28CAC71B005D2387 /* LanguagesListView.swift in Sources */,
 				45AE974C27C97A9500C2CB33 /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45AE974427C97A9400C2CB33 /* Modal+MobileContentRenderableModel.swift in Sources */,
@@ -8429,13 +8487,13 @@
 				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,
 				45D63EA2288F77D4009B4610 /* ResourceModelType.swift in Sources */,
-				459E86E728EDA86C00E197A5 /* ArticleDeepLinkParser.swift in Sources */,
 				D48018C028EF650700389565 /* DashboardView.swift in Sources */,
 				456777D2287DB3770044AEB2 /* ShareShareableView.swift in Sources */,
 				D1C8FEB92714E7010071BD07 /* TutorialCellViewModelType.swift in Sources */,
 				45BDA5CE2954F67D007E259B /* RealmResourceView.swift in Sources */,
 				D45922BD2864E70C00904B87 /* AllFavoriteToolsView.swift in Sources */,
 				D45922E7286A405A00904B87 /* BaseLessonCardViewModel.swift in Sources */,
+				450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */,
 				453C1BDE2899A8A5007332E2 /* RemoveToolFromFavoritesUseCase.swift in Sources */,
 				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
 				D41B38B8288EDA1F00BD5899 /* GetShareableImageUseCase.swift in Sources */,
@@ -8582,7 +8640,6 @@
 				45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */,
 				455583F4269F2DA500C3FF14 /* MobileContentImageView.swift in Sources */,
 				45677789287DB3520044AEB2 /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
-				459E86E528EDA86C00E197A5 /* KnowGodTractDeepLinkParser.swift in Sources */,
 				455582EA269F2C1000C3FF14 /* TrainingPageViewModel.swift in Sources */,
 				D46BBE1F28A159F70025EB79 /* GetBannerImageUseCase.swift in Sources */,
 				45B212B02922972300C9A94D /* RealmDatabaseCacheType.swift in Sources */,
@@ -8614,7 +8671,6 @@
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
 				453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */,
 				45AE974D27C97A9500C2CB33 /* Multiselect+MobileContentRenderableModel.swift in Sources */,
-				459E86E028EDA86C00E197A5 /* DashboardDeepLinkParser.swift in Sources */,
 				45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */,
 				456777C1287DB3770044AEB2 /* ShareToolRemoteSessionURLViewModelType.swift in Sources */,
 				45AE974827C97A9400C2CB33 /* Flow+MobileContentRenderableModel.swift in Sources */,
@@ -8657,7 +8713,6 @@
 				45FB160827DBDDB60009DF8E /* LessonFlow.swift in Sources */,
 				45E39ECB27457A14006A59E4 /* AnimatedViewModelType.swift in Sources */,
 				453235B827BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift in Sources */,
-				459E86E628EDA86C00E197A5 /* LessonDeepLinkParser.swift in Sources */,
 				45D63E76288F698C009B4610 /* MobileContentLanguagesApi.swift in Sources */,
 				45860A77292417770089C836 /* AccountGlobalActivityAnalyticsItemView.swift in Sources */,
 				45AE975827C97A9500C2CB33 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
@@ -8677,12 +8732,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
+				45D7781629A56FD100F23D99 /* DeepLinkingServiceTests.swift in Sources */,
+				45D7782529A570FC00F23D99 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */,
+				45D7781A29A570DA00F23D99 /* DeepLinkingManifestType.swift in Sources */,
 				45AD22DF2593E63D00A096A0 /* Locale+Extensions.swift in Sources */,
+				450EE29C29A668E700524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */,
+				450EE29B29A668E400524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
+				450EE29629A668D500524F64 /* ToolPathDeepLinkParser.swift in Sources */,
+				45D7782F29A572B000F23D99 /* Collection+SafeLookup.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
+				45D7781E29A570E700F23D99 /* ParsedDeepLinkType.swift in Sources */,
+				45D7782B29A570FC00F23D99 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */,
+				450EE29529A668D300524F64 /* ToolDeepLinkToolPath.swift in Sources */,
+				45D7781929A570D400F23D99 /* IncomingDeepLinkUrl.swift in Sources */,
 				45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */,
+				45D7781F29A570E900F23D99 /* ToolDeepLink.swift in Sources */,
+				45D7782E29A5714C00F23D99 /* GodToolsDeepLinkingManifest.swift in Sources */,
+				45D7781C29A570DF00F23D99 /* DeepLinkingParserManifestType.swift in Sources */,
+				45D7781829A570D000F23D99 /* IncomingDeepLinkType.swift in Sources */,
+				45D7781D29A570E400F23D99 /* DeepLinkingParserManifestUrl.swift in Sources */,
+				45D7782429A570FC00F23D99 /* DeepLinkParserType.swift in Sources */,
+				45D7783129A572E500F23D99 /* JsonServices.swift in Sources */,
+				450EE2A129A66CE400524F64 /* KnowGodDeepLinkParser.swift in Sources */,
+				45D7781B29A570DD00F23D99 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
+				45D7782A29A570FC00F23D99 /* DeepLinkAppsFlyerParserType.swift in Sources */,
 				455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */,
+				450EE29A29A668E400524F64 /* DashboardPathDeepLinkParser.swift in Sources */,
+				45D7782029A570FC00F23D99 /* DeepLinkUrlParserType.swift in Sources */,
+				45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
+				450EE2A229A66CE400524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
+				45D7782C29A570FC00F23D99 /* AppsFlyerDeepLinkValueParser.swift in Sources */,
+				45D7781729A570CB00F23D99 /* DeepLinkingService.swift in Sources */,
 				45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */,
+				450EE2AC29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
