@@ -73,11 +73,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.contentInset = .zero
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        collectionView.reloadData()
-    }
-    
     // MARK: -
     
     func registerPageCell(nib: UINib?, cellReuseIdentifier: String) {
