@@ -35,6 +35,12 @@ class RealmUserCountersCache {
         return UserCounterDataModel(realmUserCounter: realmUserCounter)
     }
     
+    func getAllUserCounters() -> [UserCounterDataModel] {
+        
+        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+            .map { UserCounterDataModel(realmUserCounter: $0) }
+    }
+    
     func getUserCountersWithIncrementGreaterThanZero() -> [UserCounterDataModel] {
         
         return realmDatabase.openRealm().objects(RealmUserCounter.self)

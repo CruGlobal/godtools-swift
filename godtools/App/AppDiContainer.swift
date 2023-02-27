@@ -87,7 +87,12 @@ class AppDiContainer {
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
-        return MobileContentAnalytics(analytics: dataLayer.getAnalytics())
+        return MobileContentAnalytics(
+            analytics: dataLayer.getAnalytics(),
+            userAnalytics: UserAnalytics(
+                incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
+            )
+        )
     }
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {

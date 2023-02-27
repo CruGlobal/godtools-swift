@@ -46,15 +46,18 @@ struct LessonsView: View {
                         .padding([.leading, .trailing], leadingTrailingPadding)
                         .listRowInsets(EdgeInsets())
                         
-                        ForEach(viewModel.lessons) { lesson in
+                        VStack(spacing: 0) {
                             
-                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
-                                .listRowInsets(EdgeInsets())
-                                .contentShape(Rectangle())
-                                .padding([.top, .bottom], 8)
-                                .padding([.leading, .trailing], leadingTrailingPadding)
-                            
+                            ForEach(viewModel.lessons) { lesson in
+                                
+                                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
+                                    .listRowInsets(EdgeInsets())
+                                    .contentShape(Rectangle())
+                                    .padding([.top, .bottom], 8)
+                                    .padding([.leading, .trailing], leadingTrailingPadding)
+                            }
                         }
+                        .padding(.bottom, 27)
                         .listRowInsets(EdgeInsets())
                         
                     } refreshHandler: {
