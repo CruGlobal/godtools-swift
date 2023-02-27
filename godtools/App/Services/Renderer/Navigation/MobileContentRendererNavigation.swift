@@ -40,10 +40,13 @@ class MobileContentRendererNavigation {
             
             switch deepLink {
             
+            case .dashboard:
+                break
+                
             case .allToolsList:
                 break
             
-            case .article( _):
+            case .articleAemUri( _):
                 break
             
             case .favoritedToolsList:
