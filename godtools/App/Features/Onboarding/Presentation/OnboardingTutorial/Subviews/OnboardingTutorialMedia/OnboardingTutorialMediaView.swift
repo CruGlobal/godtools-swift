@@ -43,7 +43,9 @@ struct OnboardingTutorialMediaView: View {
                 contentMode: .scaleAspectFill
             )
             .frame(width: animationWidth, height: animationHeight)
-            .padding(EdgeInsets(top: 0, leading: 30, bottom: 10, trailing: 30))
+            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
+            
+            FixedVerticalSpacer(height: 20)
             
             Spacer()
         }
