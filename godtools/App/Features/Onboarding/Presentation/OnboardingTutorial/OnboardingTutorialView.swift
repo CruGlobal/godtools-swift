@@ -17,7 +17,7 @@ struct OnboardingTutorialView: View {
         GeometryReader { geometry in
             
             VStack(alignment: .leading, spacing: 0) {
-                
+                                
                 TabView(selection: $viewModel.currentPage) {
 
                     Group {
@@ -39,19 +39,22 @@ struct OnboardingTutorialView: View {
                             case .talkAboutGodWithAnyone:
                                 
                                 OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel()
+                                    viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
+                                    geometry: geometry
                                 )
                                 
                             case .prepareForTheMomentsThatMatter:
                                 
                                 OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel()
+                                    viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
+                                    geometry: geometry
                                 )
                                 
                             case .helpSomeoneDiscoverJesus:
                                 
                                 OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel()
+                                    viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
+                                    geometry: geometry
                                 )
                             }
                         }
@@ -59,7 +62,7 @@ struct OnboardingTutorialView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.currentPage)
-                
+                                
                 GTBlueButton(title: viewModel.continueButtonTitle, fontSize: 17, height: 50) {
                     
                     viewModel.continueTapped()
@@ -67,7 +70,7 @@ struct OnboardingTutorialView: View {
                 .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))
                 
                 GTPageControl(numberOfPages: 4, currentPage: $viewModel.currentPage)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0))
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
             }
             .frame(maxWidth: .infinity)
         }
