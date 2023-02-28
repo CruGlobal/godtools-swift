@@ -10,8 +10,8 @@ import SwiftUI
 struct GTPageControl: View {
     
     let numberOfPages: Int
-    let buttonSize: CGFloat = 10
-    let buttonSpacing: CGFloat = 8
+    let buttonSize: CGFloat = 7.5
+    let buttonSpacing: CGFloat = 10
     
     @Binding var currentPage: Int
     
