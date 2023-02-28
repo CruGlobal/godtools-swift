@@ -9,6 +9,7 @@
 import UIKit
 import AppsFlyerLib
 import FBSDKCoreKit
+import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -204,14 +205,16 @@ extension AppDelegate {
         
         appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
         
-        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            return true
+        }
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
-        if deepLinkedHandled {
-            return true
-        }
-        else if facebookHandled {
+        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        
+        if facebookHandled || deepLinkedHandled {
             return true
         }
         
@@ -236,7 +239,22 @@ extension AppDelegate {
         guard let url = userActivity.webpageURL else {
             return false
         }
-          
+        
+        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { [weak self] (dynamicLink: DynamicLink?, error: Error?) in
+            
+            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                _ = self?.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            }
+        }
+        
+        if firebaseDynamicLinkHandled {
+            return true
+        }
+        
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {

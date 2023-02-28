@@ -691,7 +691,7 @@ extension AppFlow {
                         
             navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
-        case .article(let articleUri):
+        case .articleAemUri(let aemUri):
             
             navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
@@ -703,7 +703,7 @@ extension AppFlow {
                     flowDelegate: weakSelf,
                     appDiContainer: weakSelf.appDiContainer,
                     sharedNavigationController: weakSelf.navigationController,
-                    aemUri: articleUri
+                    aemUri: aemUri
                 )
                 
                 weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
@@ -717,6 +717,9 @@ extension AppFlow {
             
         case .allToolsList:
             navigateToDashboard(startingTab: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+            
+        case .dashboard:
+            navigateToDashboard(startingTab: .favorites)
         }
     }
 }
