@@ -10,6 +10,8 @@ import SwiftUI
 
 struct OnboardingTutorialReadyForEveryConversationView: View {
     
+    private let logoAspectRatio: CGSize = CGSize(width: 221, height: 131)
+    
     @ObservedObject var viewModel: OnboardingTutorialReadyForEveryConversationViewModel
     
     let geometry: GeometryProxy
@@ -21,19 +23,20 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
             
             Spacer()
             
+            let logoWidth: CGFloat = geometry.size.width * 0.7
+            let logoHeight: CGFloat = (logoWidth / logoAspectRatio.width) * logoAspectRatio.height
+            
             ImageCatalog.onboardingWelcomeLogo.image
                 .resizable()
                 .scaledToFit()
-                .frame(width: 221, height: 131)
+                .frame(width: logoWidth, height: logoHeight)
                 .clipped()
-            
-            FixedVerticalSpacer(height: 40)
-            
+                        
             Text(viewModel.title)
                 .multilineTextAlignment(.center)
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .font(FontLibrary.sfProDisplayLight.font(size: 31))
-                .padding(EdgeInsets(top: 0, leading: 30, bottom: 40, trailing: 30))
+                .padding(EdgeInsets(top: 40, leading: 30, bottom: 30, trailing: 30))
                         
             Button(action: {
                 watchVideoTappedClosure()
@@ -43,7 +46,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
                     
                     Text(viewModel.watchVideoButtonTitle)
                         .foregroundColor(ColorPalette.gtBlue.color)
-                        .font(FontLibrary.sfProTextBold.font(size: 17))
+                        .font(FontLibrary.sfProTextBold.font(size: 16))
                     
                     ImageCatalog.playIcon.image
                         .resizable()
@@ -53,7 +56,9 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
                 }
                 .frame(width: geometry.size.width, height: 50, alignment: .center)
             }
-            .padding(EdgeInsets(top: 0, leading: 30, bottom: 40, trailing: 30))
+            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
+            
+            Spacer()
         }
     }
 }
