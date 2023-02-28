@@ -32,7 +32,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
             Text(viewModel.title)
                 .multilineTextAlignment(.center)
                 .foregroundColor(ColorPalette.gtBlue.color)
-                .font(FontLibrary.sfProDisplayLight.font(size: 30))
+                .font(FontLibrary.sfProDisplayLight.font(size: 31))
                 .padding(EdgeInsets(top: 0, leading: 30, bottom: 40, trailing: 30))
                         
             Button(action: {
@@ -43,7 +43,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
                     
                     Text(viewModel.watchVideoButtonTitle)
                         .foregroundColor(ColorPalette.gtBlue.color)
-                        .font(FontLibrary.sfProTextBold.font(size: 15))
+                        .font(FontLibrary.sfProTextBold.font(size: 17))
                     
                     ImageCatalog.playIcon.image
                         .resizable()
