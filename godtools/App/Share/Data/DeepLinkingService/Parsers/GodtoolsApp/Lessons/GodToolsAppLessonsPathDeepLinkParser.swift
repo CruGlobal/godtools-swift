@@ -1,20 +1,28 @@
 //
-//  LessonDeepLinkParser.swift
+//  GodToolsAppLessonsPathDeepLinkParser.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/26/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/22/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class LessonDeepLinkParser: DeepLinkUrlParserType {
-        
+class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
+    
     required init() {
         
     }
     
-    func parse(pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+        
+        guard pathComponents.first == "lessons" else {
+            return nil
+        }
+        
+        guard pathComponents.count > 1 else {
+            return .lessonsList
+        }
         
         guard let resourceAbbreviation = pathComponents[safe: 1] else {
             return nil

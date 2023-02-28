@@ -47,7 +47,7 @@ class DeepLinkingService: NSObject {
                     continue
                 }
                 
-                parsedDeepLink = urlParser.parse(pathComponents: incomingUrl.pathComponents, queryParameters: incomingUrl.queryParameters)
+                parsedDeepLink = urlParser.parse(url: incomingUrl.url, pathComponents: incomingUrl.pathComponents, queryParameters: incomingUrl.queryParameters)
             }
                         
             guard let deepLink = parsedDeepLink else {

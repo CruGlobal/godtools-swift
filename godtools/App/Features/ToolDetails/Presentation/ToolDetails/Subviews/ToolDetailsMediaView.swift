@@ -13,6 +13,8 @@ struct ToolDetailsMediaView: View {
     private let aspectRatio: CGSize = CGSize(width: 16, height: 9)
     private let mediaViewSize: CGSize
     
+    @State private var videoPlayerState: VideoViewPlayerState = .stopped
+    
     @ObservedObject var viewModel: ToolDetailsViewModel
         
     init(viewModel: ToolDetailsViewModel, width: CGFloat) {
@@ -49,9 +51,12 @@ struct ToolDetailsMediaView: View {
             case .youtube(let videoId, let playerParameters):
                 
                 VideoView(
+                    playerState: $videoPlayerState,
                     frameSize: mediaViewSize,
                     videoId: videoId,
-                    videoPlayerParameters: playerParameters
+                    videoPlayerParameters: playerParameters,
+                    configuration: nil,
+                    videoEndedClosure: nil
                 )
                 
             case .empty:

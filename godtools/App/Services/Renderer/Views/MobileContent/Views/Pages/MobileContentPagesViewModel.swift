@@ -32,7 +32,7 @@ class MobileContentPagesViewModel: NSObject {
     private(set) weak var window: UIViewController?
     
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let pageNavigationSemanticContentAttribute: UISemanticContentAttribute
+    let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute>
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -50,7 +50,7 @@ class MobileContentPagesViewModel: NSObject {
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
-        pageNavigationSemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
+        pageNavigationSemanticContentAttribute = ObservableValue(value: UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction))
         
         super.init()
         
@@ -310,6 +310,8 @@ class MobileContentPagesViewModel: NSObject {
         
         self.renderer.send(renderer)
         
+        pageNavigationSemanticContentAttribute.accept(value: UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction))
+        
         setPageRenderer(pageRenderer: pageRenderer)
     }
     
@@ -344,7 +346,6 @@ class MobileContentPagesViewModel: NSObject {
             
             pageModelsToRender = pageRenderer.getVisibleRenderablePageModels()
         }
-        
         
         rendererWillChangeSignal.accept()
         

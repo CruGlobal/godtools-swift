@@ -19,9 +19,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         self.viewModel = viewModel
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
-        
+                
         setupLayout()
-        setupBinding()
+        
+        videoView.delegate = self
+        videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +32,10 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     deinit {
         print("x deinit: \(type(of: self))")
+                
+        videoView.delegate = nil
+        videoView.webView?.uiDelegate = nil
+        videoView.webView?.navigationDelegate = nil
         videoView.stopVideo()
     }
     
@@ -43,26 +49,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         videoView.constrainEdgesToView(view: parentView)
     }
     
-    private func setupBinding() {
-        
-        embedVideo()
-    }
-    
-    private func embedVideo() {
-        
-        videoView.delegate = self
-        videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
-    }
-    
-    private func recueVideo() {
-        
-        videoView.cueVideo(byId: viewModel.videoId, startSeconds: 0.0)
-    }
-    
     // MARK: - MobileContentView
     
     override func viewDidDisappear() {
-        videoView.pauseVideo()
+
+        videoView.stopVideo()
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
@@ -77,44 +68,21 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
-        print("\n MobileContentEmbeddedVideoView player view did become ready")
     }
     
     internal func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
-        print("\n MobileContentEmbeddedVideoView playerView didChangeTo state")
-        
-        switch state {
-            
-        case .unstarted:
-            print("unstarted")
-        case .ended:
-            print("ended")
-            recueVideo()
-        case .playing:
-            print("playing")
-        case .paused:
-            print("paused")
-        case .buffering:
-            print("buffering")
-        case .cued:
-            print("cued")
-        case .unknown:
-            print("unknown")
-        @unknown default:
-            print("default")
+        if state == .ended {
+            videoView.cueVideo(byId: viewModel.videoId, startSeconds: 0.0)
         }
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
         
-        print("\n MobileContentEmbeddedVideoView playerView didChangeTo quality \(quality)")
-        
     }
     
     func playerView(_ playerView: YTPlayerView, receivedError error: YTPlayerError) {
-        
-        print("\n MobileContentEmbeddedVideoView playerView receivedError: \(error)")
+
     }
 }
 

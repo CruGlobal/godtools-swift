@@ -54,18 +54,17 @@ class OnboardingFlow: Flow {
         navigationController.setViewControllers([view], animated: false)
     }
     
-    private func dismissModal() {
-        
-        navigationController.dismiss(animated: true, completion: nil)
-    }
-    
     private func presentVideoPlayerView(youtubeVideoId: String) {
         
-        let viewModel = VideoPlayerViewModel(flowDelegate: self, youtubeVideoId: youtubeVideoId, closeVideoPlayerFlowStep: .closeVideoPlayerTappedFromOnboardingTutorial, videoEndedFlowStep: .videoEndedOnOnboardingTutorial)
-        let view = VideoPlayerView(viewModel: viewModel)
-        let modal = ModalNavigationController(rootView: view, navBarColor: .black, navBarIsTranslucent: true)
+        let viewModel = FullScreenVideoViewModel(
+            flowDelegate: self,
+            videoId: youtubeVideoId,
+            videoPlayerParameters: nil,
+            userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
+            videoEndedStep: .videoEndedOnOnboardingTutorial
+        )
         
-        navigationController.present(modal, animated: true, completion: nil)
+        presentVideoModal(viewModel: viewModel)
     }
     
     private func navigateToQuickStartOrTools() {
@@ -108,10 +107,10 @@ extension OnboardingFlow: FlowDelegate {
             presentVideoPlayerView(youtubeVideoId: youtubeVideoId)
         
         case .closeVideoPlayerTappedFromOnboardingTutorial:
-            dismissModal()
+            dismissVideoModal(animated: true, completion: nil)
             
         case .videoEndedOnOnboardingTutorial:
-            dismissModal()
+            dismissVideoModal(animated: true, completion: nil)
             
         case .skipTappedFromOnboardingTutorial:
             navigateToQuickStartOrTools()

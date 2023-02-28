@@ -73,11 +73,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.contentInset = .zero
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        collectionView.reloadData()
-    }
-    
     // MARK: -
     
     func registerPageCell(nib: UINib?, cellReuseIdentifier: String) {
@@ -271,6 +266,10 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     func getVisiblePageCells() -> [UICollectionViewCell] {
         return collectionView.visibleCells
+    }
+    
+    func getSemanticContentAttribute() -> UISemanticContentAttribute {
+        return collectionView.semanticContentAttribute
     }
     
     private func didEndPageScrolling() {

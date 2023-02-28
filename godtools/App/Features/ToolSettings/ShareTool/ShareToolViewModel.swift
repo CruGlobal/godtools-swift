@@ -31,7 +31,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         self.analytics = analytics
         self.pageNumber = pageNumber
         
-        var shareUrlString: String = "https://www.knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
+        var shareUrlString: String = "https://knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             shareUrlString = shareUrlString.appending("/").appending("\(pageNumber)")
