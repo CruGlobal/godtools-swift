@@ -51,32 +51,15 @@ class RealmUserCountersCache {
     func incrementUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return userCountersSync.incrementUserCounterBy1(id: id)
-            .flatMap { realmUserCounter in
-                
-                return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
-            }
-            .eraseToAnyPublisher()
     }
     
     func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeRemoteUpdate: incrementValueBeforeRemoteUpdate)
-            .flatMap { realmUserCounter in
-                
-                return Just(UserCounterDataModel(realmUserCounter: realmUserCounter))
-            }
-            .eraseToAnyPublisher()
     }
     
     func syncUserCounters(_ userCounters: [UserCounterDecodable]) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return userCountersSync.syncUserCounters(userCounters)
-            .flatMap { realmUserCounters in
-                
-                let userCounterDataModels = realmUserCounters.map{ UserCounterDataModel(realmUserCounter: $0) }
-                
-                return Just(userCounterDataModels)
-            }
-            .eraseToAnyPublisher()
     }
 }

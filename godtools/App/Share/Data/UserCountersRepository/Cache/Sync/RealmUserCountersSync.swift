@@ -18,7 +18,7 @@ class RealmUserCountersCacheSync {
         self.realmDatabase = realmDatabase
     }
     
-    func incrementUserCounterBy1(id: String) -> AnyPublisher<RealmUserCounter, Error> {
+    func incrementUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return Future() { promise in
             
@@ -43,7 +43,7 @@ class RealmUserCountersCacheSync {
                         realm.add(newUserCounter, update: .all)
                     }
                     
-                    promise(.success(newUserCounter))
+                    promise(.success(UserCounterDataModel(realmUserCounter: newUserCounter)))
                     
                 } catch let error {
                     
@@ -54,7 +54,7 @@ class RealmUserCountersCacheSync {
         .eraseToAnyPublisher()
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<RealmUserCounter, Error> {
+    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return Future() { promise in
             
@@ -75,7 +75,7 @@ class RealmUserCountersCacheSync {
                         realm.add(newUserCounter, update: .all)
                     }
                     
-                    promise(.success(newUserCounter))
+                    promise(.success(UserCounterDataModel(realmUserCounter: newUserCounter)))
                     
                 } catch let error {
                     
@@ -86,7 +86,7 @@ class RealmUserCountersCacheSync {
         .eraseToAnyPublisher()
     }
     
-    func syncUserCounters(_ userCounters: [UserCounterDecodable]) -> AnyPublisher<[RealmUserCounter], Error> {
+    func syncUserCounters(_ userCounters: [UserCounterDecodable]) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return Future() { promise in
             
@@ -111,7 +111,9 @@ class RealmUserCountersCacheSync {
                         realm.add(newUserCounters, update: .all)
                     }
                     
-                    promise(.success(newUserCounters))
+                    let userCounterDataModels = newUserCounters.map { UserCounterDataModel(realmUserCounter: $0) }
+                    
+                    promise(.success(userCounterDataModels))
                     
                 } catch let error {
                     
