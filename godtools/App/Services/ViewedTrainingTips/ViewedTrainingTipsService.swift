@@ -23,9 +23,4 @@ class ViewedTrainingTipsService {
         
         return cache.containsViewedTrainingTip(id: id)
     }
-    
-    func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) {
-        
-        cache.storeViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
-    }
 }

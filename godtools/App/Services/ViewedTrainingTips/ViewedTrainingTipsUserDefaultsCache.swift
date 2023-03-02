@@ -22,10 +22,4 @@ class ViewedTrainingTipsUserDefaultsCache: ViewedTrainingTipsCacheType {
         
         return sharedUserDefaults.getValue(key: id) != nil
     }
-    
-    func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) {
-        
-        sharedUserDefaults.cache(value: viewedTrainingTip.id, forKey: viewedTrainingTip.id)
-        sharedUserDefaults.commitChanges()
-    }
 }

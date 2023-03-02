@@ -12,5 +12,4 @@ import Foundation
 protocol ViewedTrainingTipsCacheType {
     
     func containsViewedTrainingTip(id: String) -> Bool
-    func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType)
 }
