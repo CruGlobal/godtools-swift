@@ -14,11 +14,13 @@ class GetUserActivityUseCase {
     
     private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
     private let userCounterRepository: UserCountersRepository
+    private let completedTrainingTipRepository: CompletedTrainingTipRepository
     
-    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, userCounterRepository: UserCountersRepository) {
+    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
         
         self.getUserActivityBadgeUseCase = getUserActivityBadgeUseCase
         self.userCounterRepository = userCounterRepository
+        self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
     func getUserActivityPublisher() -> AnyPublisher<UserActivityDomainModel, Never> {
@@ -26,7 +28,7 @@ class GetUserActivityUseCase {
         return userCounterRepository.getUserCountersChanged(reloadFromRemote: true)
             .flatMap { _ in
                 
-                let allUserCounters = self.userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
+                let allUserCounters = self.getAllUserCounters()
                 
                 let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters)
                 
@@ -34,6 +36,25 @@ class GetUserActivityUseCase {
                 
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getAllUserCounters() -> [UserCounterDomainModel] {
+        
+        var userCounters = userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
+        
+        userCounters.append(getCompletedTrainingTipCounter())
+        
+        return userCounters
+    }
+    
+    private func getCompletedTrainingTipCounter() -> UserCounterDomainModel {
+        
+        let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()
+        
+        return UserCounterDomainModel(
+            id: UserCounterNames.shared.TIPS_COMPLETED,
+            count: numberTipsCompleted
+        )
     }
     
     private func getUserActivityDomainModel(from counters: [UserCounterDomainModel]) -> UserActivityDomainModel {
