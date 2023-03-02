@@ -16,7 +16,7 @@ class MobileContentPagesViewModel: NSObject {
     private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
-    private let startingPage: Int?
+    private let initialPage: MobileContentPagesPage?
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
@@ -38,11 +38,11 @@ class MobileContentPagesViewModel: NSObject {
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
-        self.startingPage = page
+        self.initialPage = initialPage
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -54,8 +54,8 @@ class MobileContentPagesViewModel: NSObject {
         
         super.init()
         
-        if let page = page {
-            currentPage = page
+        if let initialPageNumber = initialPageNumber {
+            currentPage = initialPageNumber
         }
                 
         resourcesRepository.getResourcesChanged()
@@ -70,6 +70,40 @@ class MobileContentPagesViewModel: NSObject {
     
     deinit {
 
+    }
+    
+    private var initialPageNumber: Int? {
+        
+        guard let initialPage = self.initialPage else {
+            return nil
+        }
+        
+        let pageNumber: Int?
+        
+        switch initialPage {
+            
+        case .pageNumber(let value):
+            
+            pageNumber = value
+            
+        case .pageId(let value):
+            
+            guard let pageModel = pageModels.filter({$0.id == value}).first else {
+                return nil
+            }
+            
+            pageNumber = Int(pageModel.position)
+        }
+        
+        guard let pageNumber = pageNumber else {
+            return nil
+        }
+        
+        guard pageNumber >= 0 && pageNumber < pageModels.count else {
+            return nil
+        }
+        
+        return pageNumber
     }
     
     private func updateTranslationsIfNeeded() {
@@ -428,11 +462,11 @@ class MobileContentPagesViewModel: NSObject {
             return
         }
         
-        if let startingPage = startingPage {
+        if let initialPageNumber = initialPageNumber {
             
             let navigationModel = MobileContentPagesNavigationModel(
                 willReloadData: true,
-                page: startingPage,
+                page: initialPageNumber,
                 pagePositions: nil,
                 animated: false
             )
