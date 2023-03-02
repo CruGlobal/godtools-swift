@@ -271,6 +271,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
+        return GetTrainingTipCompletedUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository(),
+            service: dataLayer.getViewedTrainingTipsService()
+        )
+    }
+    
     func getTutorialUseCase() -> GetTutorialUseCase {
         return GetTutorialUseCase(
             localizationServices: dataLayer.getLocalizationServices(),

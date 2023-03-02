@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 class ViewedTrainingTipsUserDefaultsCache: ViewedTrainingTipsCacheType {
     
     private let sharedUserDefaults: SharedUserDefaultsCache
@@ -17,9 +18,9 @@ class ViewedTrainingTipsUserDefaultsCache: ViewedTrainingTipsCacheType {
         self.sharedUserDefaults = sharedUserDefaults
     }
     
-    func containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) -> Bool {
+    func containsViewedTrainingTip(id: String) -> Bool {
         
-        return sharedUserDefaults.getValue(key: viewedTrainingTip.id) != nil
+        return sharedUserDefaults.getValue(key: id) != nil
     }
     
     func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) {

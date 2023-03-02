@@ -12,18 +12,18 @@ import GodToolsToolParser
 class TrainingTipViewModel: MobileContentViewModel {
     
     private let tipModel: Tip
-    private let viewedTrainingTipsService: ViewedTrainingTipsService
+    private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase
     
     private var viewType: TrainingTipViewType = .rounded
     
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewType: TrainingTipViewType, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewType: TrainingTipViewType, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase) {
         
         self.tipModel = tipModel
         self.viewType = viewType
-        self.viewedTrainingTipsService = viewedTrainingTipsService
+        self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase
             
         super.init(baseModel: tipModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
@@ -42,13 +42,13 @@ class TrainingTipViewModel: MobileContentViewModel {
     
     private func getTrainingTipViewed() -> Bool {
         
-        let viewedTrainingTip = ViewedTrainingTip(
+        let trainingTip = TrainingTipDomainModel(
             trainingTipId: trainingTipId,
             resourceId: renderedPageContext.resource.id,
             languageId: renderedPageContext.language.id
         )
         
-        let trainingTipViewed: Bool = viewedTrainingTipsService.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
+        let trainingTipViewed: Bool = getTrainingTipCompletedUseCase.hasTrainingTipBeenCompleted(tip: trainingTip)
         
         return trainingTipViewed
     }

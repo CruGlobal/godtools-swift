@@ -7,3 +7,29 @@
 //
 
 import Foundation
+import Combine
+
+class CompletedTrainingTipRepository {
+    
+    private let cache: RealmCompletedTrainingTipCache
+    
+    init(cache: RealmCompletedTrainingTipCache) {
+        
+        self.cache = cache
+    }
+    
+    func getCompletedTrainingTip(id: String) -> CompletedTrainingTipDataModel? {
+        
+        return cache.getCompletedTrainingTip(id: id)
+    }
+    
+    func getNumberOfCompletedTrainingTips() -> Int {
+        
+        return cache.countCompletedTrainingTips()
+    }
+    
+    func storeCompletedTrainingTip(_ completedTrainingTip: CompletedTrainingTipDataModel) -> AnyPublisher<CompletedTrainingTipDataModel, Error> {
+        
+        return cache.storeCompletedTrainingTip(completedTrainingTip: completedTrainingTip)
+    }
+}

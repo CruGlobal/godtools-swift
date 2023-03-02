@@ -17,9 +17,8 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
-    private let viewedTrainingTipsService: ViewedTrainingTipsService
         
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService, viewedTrainingTipsService: ViewedTrainingTipsService) {
+    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
         
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -27,7 +26,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.followUpService = followUpService
-        self.viewedTrainingTipsService = viewedTrainingTipsService
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -61,8 +59,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageHeaderViewModel(
                 headerModel: headerModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                mobileContentAnalytics: mobileContentAnalytics
             )
 
             let view = ToolPageHeaderView(viewModel: viewModel)

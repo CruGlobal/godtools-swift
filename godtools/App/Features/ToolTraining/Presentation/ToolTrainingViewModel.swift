@@ -17,9 +17,9 @@ class ToolTrainingViewModel: NSObject {
     private let tipModel: Tip
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
-    private let viewedTrainingTips: ViewedTrainingTipsService
     private let closeTappedClosure: (() -> Void)
     
     private var page: Int = 0
@@ -31,7 +31,7 @@ class ToolTrainingViewModel: NSObject {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
+    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void)) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
@@ -39,16 +39,19 @@ class ToolTrainingViewModel: NSObject {
         self.tipModel = tipModel
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase
         self.analytics = analytics
         self.localizationServices = localizationServices
-        self.viewedTrainingTips = viewedTrainingTips
         self.closeTappedClosure = closeTappedClosure
         
         super.init()
         
+        let trainingTip = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
+        let trainingTipViewed = getTrainingTipCompletedUseCase.hasTrainingTipBeenCompleted(tip: trainingTip)
+        
         reloadTitleAndTipIcon(
             tipModel: tipModel,
-            trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
+            trainingTipViewed: trainingTipViewed
         )
         
         numberOfTipPages.accept(value: tipModel.pages.count)

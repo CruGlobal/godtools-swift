@@ -8,6 +8,8 @@
 
 import Foundation
 
+// TODO: We're transitioning away from storing completed tips in UserDefaults and using Realm instead in CompletedTrainingTipRepository.
+@available(*, deprecated)
 class ViewedTrainingTipsService {
     
     private let cache: ViewedTrainingTipsCacheType
@@ -17,9 +19,9 @@ class ViewedTrainingTipsService {
         self.cache = cache
     }
     
-    func containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) -> Bool {
+    func containsViewedTrainingTip(id: String) -> Bool {
         
-        return cache.containsViewedTrainingTip(viewedTrainingTip: viewedTrainingTip)
+        return cache.containsViewedTrainingTip(id: id)
     }
     
     func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) {

@@ -1060,6 +1060,8 @@
 		D4BC79DA299D6C7D0040651B /* RealmCompletedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79D9299D6C7D0040651B /* RealmCompletedTrainingTip.swift */; };
 		D4BC79DC299D6CBF0040651B /* RealmCompletedTrainingTipCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79DB299D6CBF0040651B /* RealmCompletedTrainingTipCache.swift */; };
 		D4BC79DE299D70E40040651B /* CompletedTrainingTipDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79DD299D70E40040651B /* CompletedTrainingTipDataModel.swift */; };
+		D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E329AE99590040651B /* GetTrainingTipCompletedUseCase.swift */; };
+		D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E529AFCE870040651B /* TrainingTipDomainModel.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
@@ -2166,6 +2168,8 @@
 		D4BC79D9299D6C7D0040651B /* RealmCompletedTrainingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCompletedTrainingTip.swift; sourceTree = "<group>"; };
 		D4BC79DB299D6CBF0040651B /* RealmCompletedTrainingTipCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCompletedTrainingTipCache.swift; sourceTree = "<group>"; };
 		D4BC79DD299D70E40040651B /* CompletedTrainingTipDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTrainingTipDataModel.swift; sourceTree = "<group>"; };
+		D4BC79E329AE99590040651B /* GetTrainingTipCompletedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTrainingTipCompletedUseCase.swift; sourceTree = "<group>"; };
+		D4BC79E529AFCE870040651B /* TrainingTipDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipDomainModel.swift; sourceTree = "<group>"; };
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
@@ -4254,9 +4258,8 @@
 		4581C58D285A5C7A0078425B /* ToolTraining */ = {
 			isa = PBXGroup;
 			children = (
-				45677775287DB21E0044AEB2 /* ToolTrainingView.swift */,
-				45677774287DB21E0044AEB2 /* ToolTrainingView.xib */,
-				45677776287DB21E0044AEB2 /* ToolTrainingViewModel.swift */,
+				D4BC79DF29AE99020040651B /* Domain */,
+				D4BC79E129AE99190040651B /* Presentation */,
 				4567777B287DB21E0044AEB2 /* Transitioning */,
 				45677777287DB21E0044AEB2 /* Subviews */,
 			);
@@ -7317,6 +7320,41 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		D4BC79DF29AE99020040651B /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				D4BC79E029AE990C0040651B /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		D4BC79E029AE990C0040651B /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				D4BC79E229AE992C0040651B /* GetTrainingTipCompletedUseCase */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		D4BC79E129AE99190040651B /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				45677775287DB21E0044AEB2 /* ToolTrainingView.swift */,
+				45677774287DB21E0044AEB2 /* ToolTrainingView.xib */,
+				45677776287DB21E0044AEB2 /* ToolTrainingViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D4BC79E229AE992C0040651B /* GetTrainingTipCompletedUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D4BC79E329AE99590040651B /* GetTrainingTipCompletedUseCase.swift */,
+				D4BC79E529AFCE870040651B /* TrainingTipDomainModel.swift */,
+			);
+			path = GetTrainingTipCompletedUseCase;
+			sourceTree = "<group>";
+		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -8061,6 +8099,7 @@
 				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				45AD1F7725938A9800A096A0 /* ViewedTrainingTip.swift in Sources */,
+				D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */,
 				45F7163D290A12D70019B715 /* DeleteAccountHostingView.swift in Sources */,
 				45BDA61A2954FE3E007E259B /* ArticleAemRepositoryType.swift in Sources */,
 				D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */,
@@ -8149,6 +8188,7 @@
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
 				45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */,
 				D4BC79D129918C220040651B /* UserAnalytics.swift in Sources */,
+				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
 				45D63E74288F698C009B4610 /* LanguageModelType.swift in Sources */,
 				45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */,
 				45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */,

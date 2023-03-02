@@ -200,10 +200,4 @@ class AppDiContainer {
             trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics
         )
     }
-    
-    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
-        return ViewedTrainingTipsService(
-            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
-        )
-    }
 }
