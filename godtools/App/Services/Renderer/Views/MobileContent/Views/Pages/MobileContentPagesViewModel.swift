@@ -68,9 +68,25 @@ class MobileContentPagesViewModel: NSObject {
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeIdentifier)
     }
     
-    deinit {
-
+    var resource: ResourceModel {
+        return renderer.value.resource
     }
+    
+    func setTrainingTipsEnabled(enabled: Bool) {
+        
+        guard trainingTipsEnabled != enabled else {
+            return
+        }
+        
+        trainingTipsEnabled = enabled
+        
+        setPageRenderer(pageRenderer: currentPageRenderer.value)
+    }
+}
+
+// MARK: - Private
+
+extension MobileContentPagesViewModel {
     
     private var initialPageNumber: Int? {
         
@@ -316,12 +332,55 @@ class MobileContentPagesViewModel: NSObject {
         }
     }
     
-    var primaryPageRenderer: MobileContentPageRenderer {
-        return renderer.value.pageRenderers[0]
+    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDomainModel) {
+        
+        let updatedLocaleId = updatedLanguage.localeIdentifier
+        let languageChanged: Bool = currentPageRenderer.value.language.localeIdentifier != updatedLocaleId
+        
+        if languageChanged {
+            
+            countLanguageUsage(localeId: updatedLocaleId)
+        }
     }
     
-    var resource: ResourceModel {
-        return renderer.value.resource
+    private func countLanguageUsage(localeId: String) {
+        
+        if languageUsageAlreadyCountedThisSession(localeId: localeId) { return }
+        
+        let locale = Locale(identifier: localeId)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
+            .sink { completion in
+                
+                switch completion {
+                case .finished:
+                    self.trackLanguageUsageCountedThisSession(localeId: localeId)
+                    
+                case .failure:
+                    break
+                }
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
+        return languagelocaleIdUsed.contains(localeId)
+    }
+    
+    private func trackLanguageUsageCountedThisSession(localeId: String) {
+        languagelocaleIdUsed.insert(localeId)
+    }
+}
+
+// MARK: - Renderer / Page Renderer
+
+extension MobileContentPagesViewModel {
+    
+    var primaryPageRenderer: MobileContentPageRenderer {
+        return renderer.value.pageRenderers[0]
     }
     
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
@@ -389,48 +448,11 @@ class MobileContentPagesViewModel: NSObject {
         
         numberOfPages.accept(value: pageModels.count)
     }
-    
-    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDomainModel) {
-        
-        let updatedLocaleId = updatedLanguage.localeIdentifier
-        let languageChanged: Bool = currentPageRenderer.value.language.localeIdentifier != updatedLocaleId
-        
-        if languageChanged {
-            
-            countLanguageUsage(localeId: updatedLocaleId)
-        }
-    }
-    
-    private func countLanguageUsage(localeId: String) {
-        
-        if languageUsageAlreadyCountedThisSession(localeId: localeId) { return }
-        
-        let locale = Locale(identifier: localeId)
-        
-        incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
-            .sink { completion in
-                
-                switch completion {
-                case .finished:
-                    self.trackLanguageUsageCountedThisSession(localeId: localeId)
-                    
-                case .failure:
-                    break
-                }
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
-        return languagelocaleIdUsed.contains(localeId)
-    }
-    
-    private func trackLanguageUsageCountedThisSession(localeId: String) {
-        languagelocaleIdUsed.insert(localeId)
-    }
+}
+
+// MARK: - Inputs
+
+extension MobileContentPagesViewModel {
     
     func handleDismissToolEvent() {
         
@@ -440,17 +462,6 @@ class MobileContentPagesViewModel: NSObject {
         )
         
         renderer.value.navigation.dismissTool(event: event)
-    }
-    
-    func setTrainingTipsEnabled(enabled: Bool) {
-        
-        guard trainingTipsEnabled != enabled else {
-            return
-        }
-        
-        trainingTipsEnabled = enabled
-        
-        setPageRenderer(pageRenderer: currentPageRenderer.value)
     }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
@@ -528,7 +539,6 @@ class MobileContentPagesViewModel: NSObject {
         
         removePageIfHidden(page: page)
     }
-    
     
     func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
         
