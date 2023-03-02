@@ -89,7 +89,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     func navBackTapped() {
         
-        let isFirstPage: Bool = currentPage == 0
+        let isFirstPage: Bool = currentRenderedPageNumber == 0
         
         if isFirstPage {
             flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
