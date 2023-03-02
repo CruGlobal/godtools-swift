@@ -15,6 +15,14 @@ struct CompletedTrainingTipDataModel {
     let languageId: String
     let resourceId: String
     
+    init(trainingTipDomainModel: TrainingTipDomainModel) {
+        
+        id = trainingTipDomainModel.id
+        trainingTipId = trainingTipDomainModel.trainingTipId
+        languageId = trainingTipDomainModel.languageId
+        resourceId = trainingTipDomainModel.resourceId
+    }
+    
     init(realmCompletedTrainingTip: RealmCompletedTrainingTip) {
         
         id = realmCompletedTrainingTip.id

@@ -147,6 +147,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
+        return SetCompletedTrainingTipUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository()
+        )
+    }
+    
     func getSettingsLanguagesUseCase() -> GetSettingsLanguagesUseCase {
         return GetSettingsLanguagesUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
