@@ -8,7 +8,8 @@
 
 import Foundation
 
-// TODO: We're transitioning away from storing completed tips in UserDefaults and using Realm instead in CompletedTrainingTipRepository.
+// We're transitioning away from storing completed tips in UserDefaults and using Realm instead in CompletedTrainingTipRepository.
+// TODO: - remove once migration from UserDefaults to Realm is deemed complete
 @available(*, deprecated)
 class ViewedTrainingTipsService {
     
