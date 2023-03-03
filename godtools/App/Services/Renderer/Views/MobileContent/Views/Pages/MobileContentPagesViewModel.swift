@@ -286,8 +286,9 @@ extension MobileContentPagesViewModel {
                 
                 let introPageId: String = "intro"
                 let categoriesPageId: String = "categories"
+                let pageIsCategoryPage: Bool = value != categoriesPageId && value != introPageId
                 
-                guard value != categoriesPageId && value != introPageId else {
+                guard pageIsCategoryPage else {
                     return
                 }
                 
