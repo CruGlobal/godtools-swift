@@ -77,6 +77,8 @@ class MobileContentPagesViewModel: NSObject {
             return
         }
         
+        setPageRenderer(pageRenderer: pageRenderer)
+        
         if let initialPage = self.initialPage {
             
             navigateToPage(
@@ -85,8 +87,6 @@ class MobileContentPagesViewModel: NSObject {
                 animated: false
             )
         }
-        
-        setPageRenderer(pageRenderer: pageRenderer)
     }
     
     func handleDismissToolEvent() {
@@ -270,6 +270,7 @@ extension MobileContentPagesViewModel {
     
     private func navigateToPage(page: MobileContentPagesPage, forceReloadPagesUI: Bool, animated: Bool) {
         
+        let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
         let pageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         let renderablePages: [Page] = pageRenderer.getRenderablePageModels()
         
@@ -280,24 +281,53 @@ extension MobileContentPagesViewModel {
         switch page {
             
         case .pageId(let value):
-                        
-            var pageModelsToRenderUpToPageToNavigateTo: [Page] = Array()
-            var pageModelMatchingPageId: Page?
-            
-            for pageModel in renderablePages {
+                     
+            if isChooseYourOwnAdventure {
                 
-                pageModelsToRenderUpToPageToNavigateTo.append(pageModel)
+                let introPageId: String = "intro"
+                let categoriesPageId: String = "categories"
                 
-                if pageModel.id == value {
-                    pageModelMatchingPageId = pageModel
-                    break
+                guard value != categoriesPageId && value != introPageId else {
+                    return
                 }
+                
+                guard let pageModelMatchingPageId = renderablePages.first(where: {$0.id == value}) else {
+                    return
+                }
+                
+                if let introPage = renderablePages.first(where: {$0.id == introPageId}),
+                   let categoriesPage = renderablePages.first(where: {$0.id == categoriesPageId}) {
+                    
+                    pagesToRender = [introPage, categoriesPage, pageModelMatchingPageId]
+                }
+                else {
+                    
+                    pagesToRender = [pageModelMatchingPageId]
+                }
+                
+                navigateToPageModel = pageModelMatchingPageId
+                shouldReloadPagesUI = true
+            }
+            else {
+                
+                var pageModelsToRenderUpToPageToNavigateTo: [Page] = Array()
+                var pageModelMatchingPageId: Page?
+                
+                for pageModel in renderablePages {
+                    
+                    pageModelsToRenderUpToPageToNavigateTo.append(pageModel)
+                    
+                    if pageModel.id == value {
+                        pageModelMatchingPageId = pageModel
+                        break
+                    }
+                }
+                
+                pagesToRender = pageModelsToRenderUpToPageToNavigateTo
+                navigateToPageModel = pageModelMatchingPageId
+                shouldReloadPagesUI = true
             }
             
-            pagesToRender = pageModelsToRenderUpToPageToNavigateTo
-            navigateToPageModel = pageModelMatchingPageId
-            shouldReloadPagesUI = true
-                     
         case .pageNumber(let value):
                         
             if value >= 0 && value < renderablePages.count {
@@ -311,7 +341,6 @@ extension MobileContentPagesViewModel {
                 return
             }
             
-            let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
             let isHiddenPage: Bool = navigateToPageModel.isHidden
             
             if isHiddenPage || isChooseYourOwnAdventure {
