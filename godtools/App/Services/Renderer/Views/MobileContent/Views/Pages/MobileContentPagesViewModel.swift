@@ -281,53 +281,29 @@ extension MobileContentPagesViewModel {
         switch page {
             
         case .pageId(let value):
-                     
-            if isChooseYourOwnAdventure {
-                
-                let introPageId: String = "intro"
-                let categoriesPageId: String = "categories"
-                let pageIsCategoryPage: Bool = value != categoriesPageId && value != introPageId
-                
-                guard pageIsCategoryPage else {
-                    return
-                }
-                
-                guard let pageModelMatchingPageId = renderablePages.first(where: {$0.id == value}) else {
-                    return
-                }
-                
-                if let introPage = renderablePages.first(where: {$0.id == introPageId}),
-                   let categoriesPage = renderablePages.first(where: {$0.id == categoriesPageId}) {
-                    
-                    pagesToRender = [introPage, categoriesPage, pageModelMatchingPageId]
-                }
-                else {
-                    
-                    pagesToRender = [pageModelMatchingPageId]
-                }
-                
-                navigateToPageModel = pageModelMatchingPageId
-                shouldReloadPagesUI = true
+                   
+            guard let pageModelMatchingPageId = renderablePages.first(where: {$0.id == value}) else {
+                return
             }
-            else {
-                
-                var pageModelsToRenderUpToPageToNavigateTo: [Page] = Array()
-                var pageModelMatchingPageId: Page?
-                
-                for pageModel in renderablePages {
-                    
-                    pageModelsToRenderUpToPageToNavigateTo.append(pageModel)
-                    
-                    if pageModel.id == value {
-                        pageModelMatchingPageId = pageModel
-                        break
-                    }
+            
+            var pageModelsToRenderUpToPageToNavigateTo: [Page] = [pageModelMatchingPageId]
+            
+            while true {
+            
+                guard let parentPage = pageModelsToRenderUpToPageToNavigateTo[0].parentPage else {
+                    break
                 }
                 
-                pagesToRender = pageModelsToRenderUpToPageToNavigateTo
-                navigateToPageModel = pageModelMatchingPageId
-                shouldReloadPagesUI = true
+                guard !pageModelsToRenderUpToPageToNavigateTo.contains(parentPage) else {
+                    break
+                }
+                
+                pageModelsToRenderUpToPageToNavigateTo.insert(parentPage, at: 0)
             }
+            
+            pagesToRender = pageModelsToRenderUpToPageToNavigateTo
+            navigateToPageModel = pageModelMatchingPageId
+            shouldReloadPagesUI = true
             
         case .pageNumber(let value):
                         
