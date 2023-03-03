@@ -403,42 +403,6 @@ extension MobileContentPagesViewModel {
 
 extension MobileContentPagesViewModel {
     
-    private var initialPageNumber: Int? {
-        
-        guard let initialPage = self.initialPage else {
-            return nil
-        }
-        
-        let pageModels: [Page] = currentPageRenderer.value.getRenderablePageModels()
-        
-        let pageNumber: Int?
-        
-        switch initialPage {
-            
-        case .pageNumber(let value):
-            
-            pageNumber = value
-            
-        case .pageId(let value):
-            
-            guard let pageModel = pageModels.filter({$0.id == value}).first else {
-                return nil
-            }
-            
-            pageNumber = Int(pageModel.position)
-        }
-        
-        guard let pageNumber = pageNumber else {
-            return nil
-        }
-        
-        guard pageNumber >= 0 && pageNumber < pageModels.count else {
-            return nil
-        }
-        
-        return pageNumber
-    }
-    
     private func updateTranslationsIfNeeded() {
         
         var translationsNeededDownloading: [TranslationModel] = Array()
