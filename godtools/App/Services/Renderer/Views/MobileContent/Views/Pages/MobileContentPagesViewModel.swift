@@ -272,70 +272,91 @@ extension MobileContentPagesViewModel {
         
         let pageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         let renderablePages: [Page] = pageRenderer.getRenderablePageModels()
+        
+        let pagesToRender: [Page]?
         let navigateToPageModel: Page?
+        let shouldReloadPagesUI: Bool
         
         switch page {
             
         case .pageId(let value):
-            
-            if let pageModel = renderablePages.filter({$0.id == value}).first {
-                navigateToPageModel = pageModel
-            }
-            else {
-                navigateToPageModel = nil
-            }
                         
-        case .pageNumber(let value):
+            var pageModelsToRenderUpToPageToNavigateTo: [Page] = Array()
+            var pageModelMatchingPageId: Page?
             
+            for pageModel in renderablePages {
+                
+                pageModelsToRenderUpToPageToNavigateTo.append(pageModel)
+                
+                if pageModel.id == value {
+                    pageModelMatchingPageId = pageModel
+                    break
+                }
+            }
+            
+            pagesToRender = pageModelsToRenderUpToPageToNavigateTo
+            navigateToPageModel = pageModelMatchingPageId
+            shouldReloadPagesUI = true
+                     
+        case .pageNumber(let value):
+                        
             if value >= 0 && value < renderablePages.count {
                 navigateToPageModel = renderablePages[value]
             }
             else {
                 navigateToPageModel = nil
             }
+
+            guard let navigateToPageModel = navigateToPageModel else {
+                return
+            }
+            
+            let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
+            let isHiddenPage: Bool = navigateToPageModel.isHidden
+            
+            if isHiddenPage || isChooseYourOwnAdventure {
+                
+                let insertAtPage: Int = currentRenderedPageNumber + 1
+                
+                var pageModelsToRenderUpToPageToNavigateTo: [Page] = pageModels
+                
+                if insertAtPage < pageModels.count {
+                    
+                    pageModelsToRenderUpToPageToNavigateTo.insert(navigateToPageModel, at: insertAtPage)
+                }
+                else {
+                    pageModelsToRenderUpToPageToNavigateTo.append(navigateToPageModel)
+                }
+                
+                pagesToRender = pageModelsToRenderUpToPageToNavigateTo
+                shouldReloadPagesUI = true
+            }
+            else {
+                
+                pagesToRender = renderablePages
+                shouldReloadPagesUI = false
+            }
         }
+        
+        guard let pagesToRender = pagesToRender else {
+            return
+        }
+        
+        pageModels = pagesToRender
         
         guard let navigateToPageModel = navigateToPageModel else {
             return
         }
         
-        guard let navigateToPageNumber = renderablePages.firstIndex(of: navigateToPageModel) else {
+        guard let navigateToPageNumber = pageModels.firstIndex(of: navigateToPageModel) else {
             return
         }
         
-        let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
-        let isHiddenPage: Bool = navigateToPageModel.isHidden
-        
-        let pageNumber: Int
-        let shouldReloadPagesUI: Bool
-        
-        if isHiddenPage || isChooseYourOwnAdventure {
-            
-            let insertAtPage: Int = currentRenderedPageNumber + 1
-            
-            if insertAtPage < pageModels.count {
-                
-                pageModels.insert(navigateToPageModel, at: insertAtPage)
-                pageNumber = insertAtPage
-            }
-            else {
-                pageModels.append(navigateToPageModel)
-                pageNumber = pageModels.count - 1
-            }
-            
-            shouldReloadPagesUI = true
-        }
-        else {
-            
-            pageNumber = navigateToPageNumber
-            shouldReloadPagesUI = false
-        }
-        
         let willReloadData: Bool = shouldReloadPagesUI || forceReloadPagesUI
-        
+                
         let pageNavigationForReceivedPageListener = MobileContentPagesNavigationModel(
             willReloadData: willReloadData,
-            page: pageNumber,
+            page: navigateToPageNumber,
             pagePositions: nil,
             animated: animated
         )
