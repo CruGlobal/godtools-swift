@@ -113,7 +113,7 @@ class MobileContentPagesViewModel: NSObject {
             
             navigateToPage(
                 page: .pageNumber(value: didReceivePageListenerForPageNumber),
-                forceReloadPagesUI: false,
+                forceReloadPagesUI: false,       
                 animated: true
             )
         }
@@ -183,16 +183,16 @@ class MobileContentPagesViewModel: NSObject {
                 newPageModelsToRenderer = getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: pageRenderer)
             }
             
-            if newPageModelsToRenderer.isEmpty && pageRenderer.getRenderablePageModels().count > 0 {
+            if newPageModelsToRenderer.isEmpty && pageRenderer.getAllPageModels().count > 0 {
                 
-                newPageModelsToRenderer = [pageRenderer.getRenderablePageModels()[0]]
+                newPageModelsToRenderer = [pageRenderer.getAllPageModels()[0]]
             }
 
             pageModelsToRender = newPageModelsToRenderer
             
         case .visiblePages:
             
-            pageModelsToRender = pageRenderer.getVisibleRenderablePageModels()
+            pageModelsToRender = pageRenderer.getVisiblePageModels()
         }
         
         rendererWillChangeSignal.accept()
@@ -270,19 +270,17 @@ extension MobileContentPagesViewModel {
     
     private func navigateToPage(page: MobileContentPagesPage, forceReloadPagesUI: Bool, animated: Bool) {
         
-        let isChooseYourOwnAdventure: Bool = initialPageRenderingType == .chooseYourOwnAdventure
         let pageRenderer: MobileContentPageRenderer = currentPageRenderer.value
-        let renderablePages: [Page] = pageRenderer.getRenderablePageModels()
+        let allPages: [Page] = pageRenderer.getAllPageModels()
         
-        let pagesToRender: [Page]?
-        let navigateToPageModel: Page?
-        let shouldReloadPagesUI: Bool
+        var shouldRenderNewPages: [Page]?
+        let navigateToPageModel: Page
         
         switch page {
             
         case .pageId(let value):
                    
-            guard let pageModelMatchingPageId = renderablePages.first(where: {$0.id == value}) else {
+            guard let pageModelMatchingPageId = allPages.first(where: {$0.id == value}) else {
                 return
             }
             
@@ -301,26 +299,25 @@ extension MobileContentPagesViewModel {
                 pageModelsToRenderUpToPageToNavigateTo.insert(parentPage, at: 0)
             }
             
-            pagesToRender = pageModelsToRenderUpToPageToNavigateTo
+            shouldRenderNewPages = pageModelsToRenderUpToPageToNavigateTo
             navigateToPageModel = pageModelMatchingPageId
-            shouldReloadPagesUI = true
             
         case .pageNumber(let value):
-                        
-            if value >= 0 && value < renderablePages.count {
-                navigateToPageModel = renderablePages[value]
+            
+            let page: Page?
+            
+            if value >= 0 && value < allPages.count {
+                page = allPages[value]
             }
             else {
-                navigateToPageModel = nil
+                page = nil
             }
-
-            guard let navigateToPageModel = navigateToPageModel else {
+            
+            guard let page = page else {
                 return
             }
-            
-            let isHiddenPage: Bool = navigateToPageModel.isHidden
-            
-            if isHiddenPage || isChooseYourOwnAdventure {
+
+            if page.isHidden || initialPageRenderingType == .chooseYourOwnAdventure {
                 
                 let insertAtPage: Int = currentRenderedPageNumber + 1
                 
@@ -328,32 +325,27 @@ extension MobileContentPagesViewModel {
                 
                 if insertAtPage < pageModels.count {
                     
-                    pageModelsToRenderUpToPageToNavigateTo.insert(navigateToPageModel, at: insertAtPage)
+                    pageModelsToRenderUpToPageToNavigateTo.insert(page, at: insertAtPage)
                 }
                 else {
-                    pageModelsToRenderUpToPageToNavigateTo.append(navigateToPageModel)
+                    pageModelsToRenderUpToPageToNavigateTo.append(page)
                 }
                 
-                pagesToRender = pageModelsToRenderUpToPageToNavigateTo
-                shouldReloadPagesUI = true
+                shouldRenderNewPages = pageModelsToRenderUpToPageToNavigateTo
+                navigateToPageModel = page
             }
             else {
                 
-                pagesToRender = renderablePages
-                shouldReloadPagesUI = false
+                navigateToPageModel = page
             }
         }
         
-        guard let pagesToRender = pagesToRender else {
-            return
+        let shouldReloadPagesUI: Bool = shouldRenderNewPages != nil
+        
+        if let shouldRenderNewPages = shouldRenderNewPages {
+            pageModels = shouldRenderNewPages
         }
-        
-        pageModels = pagesToRender
-        
-        guard let navigateToPageModel = navigateToPageModel else {
-            return
-        }
-        
+
         guard let navigateToPageNumber = pageModels.firstIndex(of: navigateToPageModel) else {
             return
         }
@@ -467,7 +459,7 @@ extension MobileContentPagesViewModel {
         var rendererPageModelsMatchingCurrentRenderedPageModels: [Page] = Array()
         
         let currentRenderedPageModels: [Page] = pageModels
-        let allPageModelsInNewRenderer: [Page] = pageRenderer.getRenderablePageModels()
+        let allPageModelsInNewRenderer: [Page] = pageRenderer.getAllPageModels()
         
         for pageModel in currentRenderedPageModels {
                         
@@ -479,16 +471,6 @@ extension MobileContentPagesViewModel {
         }
         
         return rendererPageModelsMatchingCurrentRenderedPageModels
-    }
-    
-    private func getIndexForFirstPageModel(pageModel: Page) -> Int? {
-        for index in 0 ..< pageModels.count {
-            let activePageModel: Page = pageModels[index]
-            if activePageModel.id == pageModel.id {
-                return index
-            }
-        }
-        return nil
     }
     
     private func removePage(page: Int) {
