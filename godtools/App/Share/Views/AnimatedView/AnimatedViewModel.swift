@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 
-class AnimatedViewModel: AnimatedViewModelType {
+class AnimatedViewModel {
     
     let animationData: Animation?
     let autoPlay: Bool

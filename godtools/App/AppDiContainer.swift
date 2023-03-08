@@ -123,17 +123,6 @@ class AppDiContainer {
         )
     }
     
-    func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(
-            flowDelegate: flowDelegate,
-            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: localizationServices,
-            tutorialVideoAnalytics: getTutorialVideoAnalytics(),
-            analyticsScreenName: "onboarding"
-        )
-    }
-    
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
             cache: OptInOnboardingBannerEnabledCache()
