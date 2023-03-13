@@ -34,7 +34,7 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
             trainingTipsEnabled: false,
-            page: toolDeepLink.page
+            initialPage: toolDeepLink.mobileContentPage
         )
     }
     
@@ -55,11 +55,11 @@ extension ToolNavigationFlow {
             languageIds: languageIds,
             liveShareStream: nil,
             trainingTipsEnabled: trainingTipsEnabled,
-            page: nil
+            initialPage: nil
         )
     }
     
-    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -72,11 +72,11 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
             trainingTipsEnabled: trainingTipsEnabled,
-            page: page
+            initialPage: initialPage
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, URLResponseError>) in
                         
@@ -88,7 +88,7 @@ extension ToolNavigationFlow {
                     toolTranslations: toolTranslations,
                     liveShareStream: liveShareStream,
                     trainingTipsEnabled: trainingTipsEnabled,
-                    page: page
+                    initialPage: initialPage
                 )
                 
             case .failure(let responseError):
@@ -108,7 +108,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -131,7 +131,7 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 toolTranslations: toolTranslations,
                 trainingTipsEnabled: trainingTipsEnabled,
-                page: page
+                initialPage: initialPage
             )
             
         case .tract:
@@ -143,7 +143,7 @@ extension ToolNavigationFlow {
                 toolTranslations: toolTranslations,
                 liveShareStream: liveShareStream,
                 trainingTipsEnabled: trainingTipsEnabled,
-                page: page
+                initialPage: initialPage
             )
             
         case .chooseYourOwnAdventure:
@@ -152,7 +152,8 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                toolTranslations: toolTranslations
+                toolTranslations: toolTranslations,
+                initialPage: initialPage
             )
             
         case .metaTool:

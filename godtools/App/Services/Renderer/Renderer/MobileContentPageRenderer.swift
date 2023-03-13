@@ -35,13 +35,13 @@ class MobileContentPageRenderer {
         self.navigation = navigation
     }
     
-    func getRenderablePageModels() -> [Page] {
+    func getAllPageModels() -> [Page] {
         return manifest.pages
     }
     
     func getPageModel(page: Int) -> Page? {
         
-        let pageModels: [Page] = getRenderablePageModels()
+        let pageModels: [Page] = getAllPageModels()
         
         guard page >= 0 && page < pageModels.count else {
             return nil
@@ -49,14 +49,14 @@ class MobileContentPageRenderer {
         return pageModels[page]
     }
     
-    func getVisibleRenderablePageModels() -> [Page] {
-        let pageModels: [Page] = getRenderablePageModels()
+    func getVisiblePageModels() -> [Page] {
+        let pageModels: [Page] = getAllPageModels()
         return pageModels.filter({!$0.isHidden})
     }
     
     func getPageForListenerEvents(eventIds: [EventId]) -> Int? {
                 
-        let pageModels: [Page] = getRenderablePageModels()
+        let pageModels: [Page] = getAllPageModels()
         
         for pageIndex in 0 ..< pageModels.count {
             

@@ -32,8 +32,9 @@ class MobileContentAnalytics {
     }
     
     private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
-        
-        guard let action = event.action, !action.isEmpty else {
+
+        let action = event.action
+        guard !action.isEmpty else {
             return
         }
                 

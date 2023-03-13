@@ -14,7 +14,7 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
     private let animationModel: Animation
     
     let mobileContentAnalytics: MobileContentAnalytics
-    let animatedViewModel: AnimatedViewModelType?
+    let animatedViewModel: AnimatedViewModel?
     
     init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
         
