@@ -147,6 +147,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
+        return SetCompletedTrainingTipUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository()
+        )
+    }
+    
     func getSettingsLanguagesUseCase() -> GetSettingsLanguagesUseCase {
         return GetSettingsLanguagesUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -271,6 +277,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
+        return GetTrainingTipCompletedUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository(),
+            service: dataLayer.getViewedTrainingTipsService(),
+            setCompletedTrainingTipUseCase: getSetCompletedTrainingTipUseCase()
+        )
+    }
+    
     func getTutorialUseCase() -> GetTutorialUseCase {
         return GetTutorialUseCase(
             localizationServices: dataLayer.getLocalizationServices(),
@@ -318,7 +332,8 @@ class AppDomainLayerDependencies {
     func getUserActivityUseCase() -> GetUserActivityUseCase {
         return GetUserActivityUseCase(
             getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
-            userCounterRepository: dataLayer.getUserCountersRepository()
+            userCounterRepository: dataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
         )
     }
     

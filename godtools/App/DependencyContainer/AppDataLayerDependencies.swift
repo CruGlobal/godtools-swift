@@ -80,6 +80,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
+        return CompletedTrainingTipRepository(
+            cache: RealmCompletedTrainingTipCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getCruOktaAuthentication() -> CruOktaAuthentication {
         return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
     }
@@ -310,6 +316,12 @@ class AppDataLayerDependencies {
                 userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
+        )
+    }
+    
+    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
+        return ViewedTrainingTipsService(
+            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
         )
     }
     
