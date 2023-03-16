@@ -23,7 +23,7 @@ class OnboardingFlow: Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
@@ -44,53 +44,6 @@ class OnboardingFlow: Flow {
         
         navigationController.setViewControllers([getOnboardingTutorialView()], animated: false)
     }
-    
-    private func presentVideoPlayerView(youtubeVideoId: String) {
-        
-        let viewModel = FullScreenVideoViewModel(
-            flowDelegate: self,
-            videoId: youtubeVideoId,
-            videoPlayerParameters: nil,
-            userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
-            videoEndedStep: .videoEndedOnOnboardingTutorial
-        )
-        
-        presentVideoModal(viewModel: viewModel)
-    }
-    
-    private func navigateToQuickStartOrTools() {
-        
-        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.domainLayer.getOnboardingQuickLinksEnabledUseCase()
-        
-        if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
-            
-            let viewModel = OnboardingQuickStartViewModel(
-                flowDelegate: self,
-                localizationServices: appDiContainer.localizationServices,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
-            )
-            
-            let view = OnboardingQuickStartView(viewModel: viewModel)
-            
-            navigationController.setViewControllers([view], animated: true)
-        }
-        else {
-            
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
-        }
-    }
-    
-    private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
-        
-        flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: onboardingFlowCompletedState))
-    }
-}
-
-// MARK: - FlowDelegate
-
-extension OnboardingFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
         
@@ -129,6 +82,40 @@ extension OnboardingFlow: FlowDelegate {
         default:
             break
         }
+    }
+    
+    private func presentVideoPlayerView(youtubeVideoId: String) {
+        
+        let viewModel = FullScreenVideoViewModel(
+            flowDelegate: self,
+            videoId: youtubeVideoId,
+            videoPlayerParameters: nil,
+            userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
+            videoEndedStep: .videoEndedOnOnboardingTutorial
+        )
+        
+        presentVideoModal(viewModel: viewModel)
+    }
+    
+    private func navigateToQuickStartOrTools() {
+        
+        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.domainLayer.getOnboardingQuickLinksEnabledUseCase()
+        
+        if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
+                        
+            let view = getOnboardingQuickStartView()
+            
+            navigationController.setViewControllers([view], animated: true)
+        }
+        else {
+            
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
+        }
+    }
+    
+    private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
+        
+        flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: onboardingFlowCompletedState))
     }
 }
 
@@ -177,6 +164,33 @@ extension OnboardingFlow {
                 }
             }
             .store(in: &cancellables)
+        
+        return hostingView
+    }
+    
+    private func getOnboardingQuickStartView() -> UIViewController {
+        
+        let viewModel = OnboardingQuickStartViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getOnboardingQuickStartItemsUseCase: appDiContainer.domainLayer.getOnboardingQuickStartItemsUseCase(),
+            trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
+        )
+        
+        let view = OnboardingQuickStartView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController<OnboardingQuickStartView>(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            title: viewModel.skipButtonTitle,
+            style: .plain,
+            color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
+            target: viewModel,
+            action: #selector(viewModel.skipTapped)
+        )
         
         return hostingView
     }
