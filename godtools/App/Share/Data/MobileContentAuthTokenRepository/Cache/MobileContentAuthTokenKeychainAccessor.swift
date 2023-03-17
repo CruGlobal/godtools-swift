@@ -26,6 +26,12 @@ class MobileContentAuthTokenKeychainAccessor {
         try saveAuthToken(authTokenDataModel)
     }
     
+    func deleteMobileContentAuthToken(userId: String) {
+        
+        let deleteQuery = buildDeleteQueryForAuthToken(userId: userId)
+        let _ = SecItemDelete(deleteQuery)
+    }
+    
     func getMobileContentAuthToken(userId: String) -> String? {
         
         let getQuery = buildGetQueryForAuthToken(userId: userId)
@@ -207,6 +213,15 @@ extension MobileContentAuthTokenKeychainAccessor {
         return (updateQuery, updateAttributes)
     }
     
+    private func buildDeleteQueryForAuthToken(userId: String) -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.mobileContentAuthToken.rawValue,
+            kSecAttrAccount as String: userId
+        ] as CFDictionary
+    }
+        
     private func buildGetQueryForAuthToken(userId: String) -> CFDictionary {
         
         return [

@@ -56,4 +56,11 @@ class MobileContentAuthTokenRepository {
         
         return getCachedAuthTokenModel()?.token
     }
+    
+    func deleteCachedAuthToken() {
+        
+        guard let userId = getUserId() else { return }
+        
+        cache.deleteAuthToken(for: userId)
+    }
 }
