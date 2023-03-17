@@ -41,6 +41,6 @@ class MobileContentAuthTokenCache {
     
     func deleteAuthToken(for userId: String) {
         
-        keychainAccessor.deleteMobileContentAuthToken(userId: userId)
+        keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
     }
 }
