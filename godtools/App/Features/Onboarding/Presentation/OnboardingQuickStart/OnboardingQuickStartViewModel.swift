@@ -2,17 +2,18 @@
 //  OnboardingQuickStartViewModel.swift
 //  godtools
 //
-//  Created by Robert Eldredge on 11/8/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/13/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
+class OnboardingQuickStartViewModel: ObservableObject {
     
-    private let quickStartItems: [OnboardingQuickStartItem]
+    private let quickStartItems: [OnboardingQuickStartItemDomainModel]
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase
     private let trackActionAnalytics: TrackActionAnalytics
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,9 +21,10 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
     let title: String
     let skipButtonTitle: String
     let endTutorialButtonTitle: String
-    let quickStartItemCount: Int
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, trackActionAnalytics: TrackActionAnalytics) {
+    @Published var numberOfQuickStartItems: Int = 0
+    
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase, trackActionAnalytics: TrackActionAnalytics) {
         
         title = localizationServices.stringForMainBundle(key: "onboardingQuickStart.title")
         skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
@@ -32,47 +34,35 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getOnboardingQuickStartItemsUseCase = getOnboardingQuickStartItemsUseCase
         self.trackActionAnalytics = trackActionAnalytics
         
-        quickStartItems = [
-            OnboardingQuickStartItem(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.0.title"),
-                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.0.button.title"),
-                linkButtonFlowStep: .readArticlesTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartArticles
-            ),
-            OnboardingQuickStartItem(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
-                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
-                linkButtonFlowStep: .tryLessonsTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartLessons
-            ),
-            OnboardingQuickStartItem(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
-                linkButtonTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
-                linkButtonFlowStep: .chooseToolTappedFromOnboardingQuickStart,
-                linkButtonAnalyticsAction: AnalyticsConstants.ActionNames.onboardingQuickStartTools
-            ),
-        ]
+        quickStartItems = getOnboardingQuickStartItemsUseCase.getOnboardingQuickStartItems()
         
-        quickStartItemCount = quickStartItems.count
+        numberOfQuickStartItems = quickStartItems.count
     }
     
     private var analyticsScreenName: String {
         return "onboarding-quick-start"
     }
     
-    func quickStartCellWillAppear(index: Int) -> OnboardingQuickStartCellViewModelType {
+    func getQuickStartItemViewModel(index: Int) -> OnboardingQuickStartItemViewModel {
         
-        return OnboardingQuickStartCellViewModel(item: quickStartItems[index])
+        return OnboardingQuickStartItemViewModel(item: quickStartItems[index])
     }
+}
+
+// MARK: - Inputs
+
+extension OnboardingQuickStartViewModel {
     
-    func quickStartCellTapped(index: Int) {
+    func quickStartItemTapped(index: Int) {
+        
         let item = quickStartItems[index]
         
         let trackAction = TrackActionModel(
             screenName: analyticsScreenName,
-            actionName: item.linkButtonAnalyticsAction,
+            actionName: item.analyticsEventActionName,
             siteSection: "",
             siteSubSection: "",
             contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
@@ -83,15 +73,15 @@ class OnboardingQuickStartViewModel: OnboardingQuickStartViewModelType {
         
         trackActionAnalytics.trackAction(trackAction: trackAction)
         
-        flowDelegate?.navigate(step: item.linkButtonFlowStep)
+        flowDelegate?.navigate(step: item.actionFlowStep)
     }
     
-    func skipButtonTapped() {
+    @objc func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingQuickStart)
     }
     
-    func endTutorialButtonTapped() {
+    func endTutorialTapped() {
         
         flowDelegate?.navigate(step: .endTutorialFromOnboardingQuickStart)
     }

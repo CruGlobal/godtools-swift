@@ -10,7 +10,7 @@ import UIKit
 
 enum TutorialAssetContent {
     
-    case animation(viewModel: AnimatedViewModelType)
+    case animation(viewModel: AnimatedViewModel)
     case customView(customView: UIView)
     case image(image: UIImage)
     case video(youTubeVideoId: String, youTubeVideoParameters: [String: Any]?)

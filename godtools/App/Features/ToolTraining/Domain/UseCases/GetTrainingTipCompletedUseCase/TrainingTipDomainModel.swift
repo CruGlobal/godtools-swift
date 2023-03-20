@@ -1,14 +1,14 @@
 //
-//  ViewedTrainingTip.swift
+//  TrainingTipDomainModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/1/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Rachael Skeath on 3/1/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct ViewedTrainingTip: ViewedTrainingTipType {
+struct TrainingTipDomainModel {
     
     let trainingTipId: String
     let resourceId: String

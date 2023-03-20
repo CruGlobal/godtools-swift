@@ -14,11 +14,13 @@ class LogOutUserUseCase {
     
     private let cruOktaAuthentication: CruOktaAuthentication
     private let firebaseAnalytics: FirebaseAnalytics
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(cruOktaAuthentication: CruOktaAuthentication, firebaseAnalytics: FirebaseAnalytics) {
+    init(cruOktaAuthentication: CruOktaAuthentication, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
         self.firebaseAnalytics = firebaseAnalytics
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
     func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Never> {
@@ -27,6 +29,7 @@ class LogOutUserUseCase {
             .flatMap({ (response: OktaSignOutResponse) -> AnyPublisher<Bool, Never> in
                 
                 self.setAnalyticsUserProperties()
+                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
                 
                 return Just(true)
                     .eraseToAnyPublisher()

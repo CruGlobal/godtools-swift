@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ToolTrainingViewModel: NSObject {
     
@@ -15,14 +16,16 @@ class ToolTrainingViewModel: NSObject {
     private let renderedPageContext: MobileContentRenderedPageContext
     private let trainingTipId: String
     private let tipModel: Tip
+    private let setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase
     private let analytics: AnalyticsContainer
     private let localizationServices: LocalizationServices
-    private let viewedTrainingTips: ViewedTrainingTipsService
     private let closeTappedClosure: (() -> Void)
     
     private var page: Int = 0
+    private var cancellables = Set<AnyCancellable>()
         
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
@@ -31,24 +34,28 @@ class ToolTrainingViewModel: NSObject {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, viewedTrainingTips: ViewedTrainingTipsService, closeTappedClosure: @escaping (() -> Void)) {
+    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void)) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
+        self.setCompletedTrainingTipUseCase = setCompletedTrainingTipUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase
         self.analytics = analytics
         self.localizationServices = localizationServices
-        self.viewedTrainingTips = viewedTrainingTips
         self.closeTappedClosure = closeTappedClosure
         
         super.init()
         
+        let trainingTip = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
+        let trainingTipViewed = getTrainingTipCompletedUseCase.hasTrainingTipBeenCompleted(tip: trainingTip)
+        
         reloadTitleAndTipIcon(
             tipModel: tipModel,
-            trainingTipViewed: viewedTrainingTips.containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
+            trainingTipViewed: trainingTipViewed
         )
         
         numberOfTipPages.accept(value: tipModel.pages.count)
@@ -144,7 +151,16 @@ class ToolTrainingViewModel: NSObject {
 extension ToolTrainingViewModel {
     
     func viewLoaded() {
-        viewedTrainingTips.storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTip(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id))
+        
+        let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
+        
+        setCompletedTrainingTipUseCase.setTrainingTipAsCompleted(tip: trainingTipCompleted)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     func overlayTapped() {
