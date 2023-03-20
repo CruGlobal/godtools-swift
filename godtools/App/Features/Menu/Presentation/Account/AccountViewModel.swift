@@ -38,6 +38,7 @@ class AccountViewModel: ObservableObject {
     @Published var globalActivityButtonTitle: String
     @Published var globalActivityTitle: String
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
+    @Published var stats = [UserActivityStatDomainModel]()
         
     init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
@@ -109,6 +110,7 @@ class AccountViewModel: ObservableObject {
     private func updateUserActivityValues(userActivity: UserActivityDomainModel) {
         
         self.badges = userActivity.badges
+        self.stats = userActivity.stats
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {

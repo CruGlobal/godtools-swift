@@ -13,12 +13,14 @@ import GodToolsToolParser
 class GetUserActivityUseCase {
     
     private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
+    private let getUserActivityStatsUseCase: GetUserActivityStatsUseCase
     private let userCounterRepository: UserCountersRepository
     private let completedTrainingTipRepository: CompletedTrainingTipRepository
     
-    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
+    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, getUserActivityStatsUseCase: GetUserActivityStatsUseCase, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
         
         self.getUserActivityBadgeUseCase = getUserActivityBadgeUseCase
+        self.getUserActivityStatsUseCase = getUserActivityStatsUseCase
         self.userCounterRepository = userCounterRepository
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
@@ -62,9 +64,11 @@ class GetUserActivityUseCase {
         let userCounterDictionary = buildUserCounterDictionary(from: counters)
         
         let userActivity = UserActivity(counters: userCounterDictionary)
-        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
         
-        return UserActivityDomainModel(badges: badges)
+        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
+        let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity)
+        
+        return UserActivityDomainModel(badges: badges, stats: stats)
     }
     
     private func buildUserCounterDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {

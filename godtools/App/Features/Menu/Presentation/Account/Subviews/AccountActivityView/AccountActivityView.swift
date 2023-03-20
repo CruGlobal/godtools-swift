@@ -18,6 +18,29 @@ struct AccountActivityView: View {
     
     var body: some View {
         
+        VStack(spacing: 0) {
+            
+            activitySection()
+            
+            badgesSection()
+        }
+        .padding(.bottom, 20)
+    }
+    
+    @ViewBuilder func activitySection() -> some View {
+        
+        VStack(alignment: .leading) {
+            
+            Text("Your activity")
+                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .padding(.top, 40)
+            
+        }
+    }
+    
+    @ViewBuilder func badgesSection() -> some View {
+        
         let itemSpacingTotal = itemSpacing * 2
         let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacingTotal) / 3
         
@@ -43,6 +66,5 @@ struct AccountActivityView: View {
                 }
             }
         }
-        .padding(.bottom, 20)
     }
 }
