@@ -1062,6 +1062,7 @@
 		D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */; };
 		D4BC79EB29C8E0230040651B /* GetUserActivityStatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79EA29C8E0230040651B /* GetUserActivityStatsUseCase.swift */; };
 		D4BC79EE29C8E0770040651B /* UserActivityStatDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79ED29C8E0770040651B /* UserActivityStatDomainModel.swift */; };
+		D4BC79F029C8E5F90040651B /* AccountActivityStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79EF29C8E5F90040651B /* AccountActivityStatView.swift */; };
 		D4BCE3712824147E005757B5 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BCE3702824147E005757B5 /* ProgressBarView.swift */; };
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
@@ -2170,6 +2171,7 @@
 		D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCompletedTrainingTipUseCase.swift; sourceTree = "<group>"; };
 		D4BC79EA29C8E0230040651B /* GetUserActivityStatsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityStatsUseCase.swift; sourceTree = "<group>"; };
 		D4BC79ED29C8E0770040651B /* UserActivityStatDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityStatDomainModel.swift; sourceTree = "<group>"; };
+		D4BC79EF29C8E5F90040651B /* AccountActivityStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityStatView.swift; sourceTree = "<group>"; };
 		D4BCE3702824147E005757B5 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
@@ -6981,6 +6983,7 @@
 			isa = PBXGroup;
 			children = (
 				D455F3FA297F2BD7009D5F93 /* AccountActivityBadgeView.swift */,
+				D4BC79EF29C8E5F90040651B /* AccountActivityStatView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -8406,6 +8409,7 @@
 				45BDA6152954FE3E007E259B /* ArticleAemDownloaderResult.swift in Sources */,
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
 				45F71631290A12D70019B715 /* MailViewModel.swift in Sources */,
+				D4BC79F029C8E5F90040651B /* AccountActivityStatView.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */,
 				D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */,

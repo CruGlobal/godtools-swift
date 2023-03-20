@@ -14,7 +14,7 @@ struct UserActivityStatDomainModel {
     let iconImageName: String
     let text: String
     let textColor: Color
-    let value: Int
+    let value: String
     
 }
 

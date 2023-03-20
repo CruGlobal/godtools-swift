@@ -29,6 +29,8 @@ struct AccountActivityView: View {
     
     @ViewBuilder func activitySection() -> some View {
         
+        let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacing) / 2
+        
         VStack(alignment: .leading) {
             
             Text("Your activity")
@@ -36,6 +38,18 @@ struct AccountActivityView: View {
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.top, 40)
             
+            let columns = [
+                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
+                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing)
+            ]
+            
+            LazyVGrid(columns: columns, spacing: itemSpacing) {
+                
+                ForEach(viewModel.stats) { stat in
+                    
+                    AccountActivityStatView(stat: stat)
+                }
+            }
         }
     }
     

@@ -18,7 +18,7 @@ class GetUserActivityStatsUseCase {
             iconImageName: "tool-opens",
             text: "Tool opens",
             textColor: Color(red: 5 / 255, green: 105 / 255, blue: 155 / 255),
-            value: Int(userActivity.toolOpens)
+            value: String(userActivity.toolOpens)
         )
         
         
