@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import AppleExtensions
+import SharedAppleExtensions
 
 extension Flow {
     
