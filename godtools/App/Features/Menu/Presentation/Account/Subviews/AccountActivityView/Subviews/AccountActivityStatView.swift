@@ -18,10 +18,15 @@ struct AccountActivityStatView: View {
             
             Image(stat.iconImageName)
             
-            VStack {
+            VStack(alignment: .leading, spacing: 0) {
                 
                 Text(stat.value)
+                    .font(FontLibrary.sfProTextSemibold.font(size: 25))
+                    .foregroundColor(stat.textColor)
+                
                 Text(stat.text)
+                    .font(FontLibrary.sfProTextRegular.font(size: 10))
+                    .foregroundColor(ColorPalette.gtGrey.color)
             }
             
         }
