@@ -457,7 +457,6 @@
 		45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */; };
 		45A63AB3265441B60090E09D /* ExitLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A63AB2265441B60090E09D /* ExitLinkModel.swift */; };
 		45A7BAF5252CBC5B00D70465 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */; };
-		45ABF7FB29C9E66E00DA04F0 /* AppleExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 45ABF7FA29C9E66E00DA04F0 /* AppleExtensions */; };
 		45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD175425938A4D00A096A0 /* TutorialItemType.swift */; };
 		45AD1AAB25938A4E00A096A0 /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD175D25938A4D00A096A0 /* TutorialCell.xib */; };
 		45AD1AAE25938A4E00A096A0 /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */; };
@@ -784,6 +783,7 @@
 		45D96093289B898D001A5A3E /* GetToolIsFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D96092289B898D001A5A3E /* GetToolIsFavoritedUseCase.swift */; };
 		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
+		45E35D6D29CA45C500C927D8 /* SharedAppleExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 45E35D6C29CA45C500C927D8 /* SharedAppleExtensions */; };
 		45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC227457856006A59E4 /* TutorialAssetContent.swift */; };
 		45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC527457A14006A59E4 /* AnimatedView.swift */; };
 		45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC627457A14006A59E4 /* AnimatedViewModel.swift */; };
@@ -1537,7 +1537,6 @@
 		45A5200D26C481DB009B68D4 /* ManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A63AB2265441B60090E09D /* ExitLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitLinkModel.swift; sourceTree = "<group>"; };
 		45A7BAF4252CBC5B00D70465 /* LocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
-		45ABF7F929C9E57600DA04F0 /* AppleExtensions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppleExtensions; sourceTree = "<group>"; };
 		45AD175425938A4D00A096A0 /* TutorialItemType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemType.swift; sourceTree = "<group>"; };
 		45AD175D25938A4D00A096A0 /* TutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
 		45AD176025938A4D00A096A0 /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
@@ -1836,6 +1835,7 @@
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		45E35D6B29CA454F00C927D8 /* SharedAppleExtensions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedAppleExtensions; sourceTree = "<group>"; };
 		45E39EC227457856006A59E4 /* TutorialAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAssetContent.swift; sourceTree = "<group>"; };
 		45E39EC527457A14006A59E4 /* AnimatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedView.swift; sourceTree = "<group>"; };
 		45E39EC627457A14006A59E4 /* AnimatedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedViewModel.swift; sourceTree = "<group>"; };
@@ -2208,7 +2208,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
-				45ABF7FB29C9E66E00DA04F0 /* AppleExtensions in Frameworks */,
 				459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */,
 				457771B229A00C5C00EA8115 /* FirebaseAnalytics in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
@@ -2222,6 +2221,7 @@
 				45EDBCF227359CD70099495B /* RealmSwift in Frameworks */,
 				45B248582734676F00B7AD5E /* AppsFlyerLib in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
+				45E35D6D29CA45C500C927D8 /* SharedAppleExtensions in Frameworks */,
 				457771B829A00C5C00EA8115 /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4604,7 +4604,7 @@
 		45ABF7F829C9E4FE00DA04F0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				45ABF7F929C9E57600DA04F0 /* AppleExtensions */,
+				45E35D6B29CA454F00C927D8 /* SharedAppleExtensions */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -7494,7 +7494,7 @@
 				457771B329A00C5C00EA8115 /* FirebaseCrashlytics */,
 				457771B529A00C5C00EA8115 /* FirebaseDynamicLinks */,
 				457771B729A00C5C00EA8115 /* FirebaseInAppMessaging-Beta */,
-				45ABF7FA29C9E66E00DA04F0 /* AppleExtensions */,
+				45E35D6C29CA45C500C927D8 /* SharedAppleExtensions */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -10062,10 +10062,6 @@
 			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */;
 			productName = OktaAuthentication;
 		};
-		45ABF7FA29C9E66E00DA04F0 /* AppleExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppleExtensions;
-		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
@@ -10080,6 +10076,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */;
 			productName = RequestOperation;
+		};
+		45E35D6C29CA45C500C927D8 /* SharedAppleExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedAppleExtensions;
 		};
 		45E39EDB27457E0C006A59E4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

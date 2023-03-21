@@ -80,10 +80,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AppleExtensionsTests"
-               BuildableName = "AppleExtensionsTests"
-               BlueprintName = "AppleExtensionsTests"
-               ReferencedContainer = "container:godtools/App/Packages/Common/AppleExtensions">
+               BlueprintIdentifier = "SharedAppleExtensionsTests"
+               BuildableName = "SharedAppleExtensionsTests"
+               BlueprintName = "SharedAppleExtensionsTests"
+               ReferencedContainer = "container:godtools/App/Packages/Common/SharedAppleExtensions">
             </BuildableReference>
          </TestableReference>
       </Testables>
