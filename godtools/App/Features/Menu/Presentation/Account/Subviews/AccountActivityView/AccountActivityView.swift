@@ -9,9 +9,7 @@
 import SwiftUI
 
 struct AccountActivityView: View {
-    
-    private let itemSpacing: CGFloat = 18
-    
+        
     @ObservedObject var viewModel: AccountViewModel
     
     let sectionFrameWidth: CGFloat
@@ -29,32 +27,49 @@ struct AccountActivityView: View {
     
     @ViewBuilder func activitySection() -> some View {
         
-        let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacing) / 2
+        let leadingPaddingRatio: CGFloat = 15 / 335
+        let leadingPadding = sectionFrameWidth * leadingPaddingRatio
+        let itemWidth: CGFloat = sectionFrameWidth / 2
         
         VStack(alignment: .leading) {
-            
+
             Text("Your activity")
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.top, 40)
+                .padding(.top, 20)
             
-            let columns = [
-                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
-                GridItem(.fixed(itemWidthHeight), spacing: itemSpacing)
-            ]
-            
-            LazyVGrid(columns: columns, spacing: itemSpacing) {
+            ZStack(alignment: .center) {
                 
-                ForEach(viewModel.stats) { stat in
+                Color.white
+                    .cornerRadius(10)
+                    .shadow(
+                        color: Color.black.opacity(0.15),
+                        radius: 5,
+                        x: 0,
+                        y: 3
+                    )
+                                    
+                let columns = [
+                    GridItem(.fixed(itemWidth - leadingPadding), spacing: 0, alignment: .leading),
+                    GridItem(.fixed(itemWidth), spacing: 0, alignment: .leading)
+                ]
+                
+                LazyVGrid(columns: columns, spacing: 26) {
                     
-                    AccountActivityStatView(stat: stat)
+                    ForEach(viewModel.stats) { stat in
+                        
+                        AccountActivityStatView(stat: stat)
+                    }
                 }
+                .padding([.top, .bottom], 21)
+                .padding(.leading, leadingPadding)
             }
         }
     }
     
     @ViewBuilder func badgesSection() -> some View {
         
+        let itemSpacing: CGFloat = 18
         let itemSpacingTotal = itemSpacing * 2
         let itemWidthHeight: CGFloat = (sectionFrameWidth - itemSpacingTotal) / 3
         
