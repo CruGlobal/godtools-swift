@@ -76,6 +76,16 @@
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AppleExtensionsTests"
+               BuildableName = "AppleExtensionsTests"
+               BlueprintName = "AppleExtensionsTests"
+               ReferencedContainer = "container:godtools/App/Packages/Common/AppleExtensions">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

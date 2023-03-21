@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import AppleExtensions
+import AppleExtensions
 
 final class CollectionSafeLookupTests: XCTestCase {
     
