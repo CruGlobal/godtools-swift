@@ -29,7 +29,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
-    private var observersAdded: Bool = false
+    private var uiApplicationLifeCycleObserversAdded: Bool = false
     private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
@@ -63,7 +63,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         rootController.addChildController(child: navigationController)
         
-        addObservers()
+        addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
         appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
@@ -71,7 +71,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeObservers()
+        removeUIApplicationLifeCycleObservers()
         removeDeepLinkingObservers()
     }
     
@@ -422,68 +422,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     }
 }
 
-// MARK: - Add / Remove Observers
-
-extension AppFlow {
-    
-    private func addObservers() {
-              
-        guard !observersAdded else {
-            return
-        }
-        observersAdded = true
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func removeObservers() {
-        
-        guard observersAdded else {
-            return
-        }
-        observersAdded = false
-        
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func addDeepLinkingObservers() {
-        
-        guard !isObservingDeepLinking else {
-            return
-        }
-        
-        isObservingDeepLinking = true
-        
-        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
-            
-            guard let deepLink = optionalDeepLink else {
-                return
-            }
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            if !weakSelf.navigationStarted {
-                weakSelf.appLaunchedFromDeepLink = deepLink
-            }
-            else {
-                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-        }
-    }
-    
-    private func removeDeepLinkingObservers() {
-        
-        isObservingDeepLinking = false
-        deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-}
-
 // MARK: - Launch
 
 extension AppFlow {
@@ -680,6 +618,39 @@ extension AppFlow {
 // MARK: - Deep Link
 
 extension AppFlow {
+    
+    private func addDeepLinkingObservers() {
+        
+        guard !isObservingDeepLinking else {
+            return
+        }
+        
+        isObservingDeepLinking = true
+        
+        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = optionalDeepLink else {
+                return
+            }
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            if !weakSelf.navigationStarted {
+                weakSelf.appLaunchedFromDeepLink = deepLink
+            }
+            else {
+                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+        }
+    }
+    
+    private func removeDeepLinkingObservers() {
+        
+        isObservingDeepLinking = false
+        deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
     
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
         
@@ -1053,11 +1024,37 @@ extension AppFlow {
     }
 }
 
-// MARK: - Notifications
+// MARK: - UIApplication Life Cycle Notifications
 
 extension AppFlow {
     
-    @objc private func handleNotification(notification: Notification) {
+    private func addUIApplicationLifeCycleObservers() {
+              
+        guard !uiApplicationLifeCycleObserversAdded else {
+            return
+        }
+        
+        uiApplicationLifeCycleObserversAdded = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    private func removeUIApplicationLifeCycleObservers() {
+        
+        guard uiApplicationLifeCycleObserversAdded else {
+            return
+        }
+        
+        uiApplicationLifeCycleObserversAdded = false
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {
         
         if notification.name == UIApplication.willResignActiveNotification {
             
