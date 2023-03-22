@@ -33,6 +33,7 @@ class AccountViewModel: ObservableObject {
     @Published var profileName: String = ""
     @Published var joinedOnText: String = ""
     @Published var activityButtonTitle: String
+    @Published var myActivitySectionTitle: String
     @Published var badges = [UserActivityBadgeDomainModel]()
     @Published var badgesSectionTitle: String
     @Published var globalActivityButtonTitle: String
@@ -54,6 +55,7 @@ class AccountViewModel: ObservableObject {
         
         navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
         activityButtonTitle = localizationServices.stringForMainBundle(key: "account.activity.title")
+        myActivitySectionTitle = localizationServices.stringForMainBundle(key: "account.activity.sectionTitle")
         badgesSectionTitle = localizationServices.stringForMainBundle(key: "account.badges.sectionTitle")
         globalActivityButtonTitle = localizationServices.stringForMainBundle(key: "account.globalActivity.title")
         

@@ -16,7 +16,7 @@ struct AccountActivityView: View {
     
     var body: some View {
         
-        VStack(spacing: 0) {
+        VStack(spacing: 40) {
             
             activitySection()
             
@@ -33,7 +33,7 @@ struct AccountActivityView: View {
         
         VStack(alignment: .leading) {
 
-            Text("Your activity")
+            Text(viewModel.myActivitySectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.top, 20)
@@ -78,7 +78,6 @@ struct AccountActivityView: View {
             Text(viewModel.badgesSectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.top, 40)
             
             let columns = [
                 GridItem(.fixed(itemWidthHeight), spacing: itemSpacing),
