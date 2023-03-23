@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import GodToolsToolParser
 import RequestOperation
+import SharedAppleExtensions
 
 class TranslationsRepository {
         
@@ -178,7 +179,7 @@ extension TranslationsRepository {
                      
                 let error: Error = urlResponseError.getError()
                 
-                guard !error.requestCancelled else {
+                guard !error.isUrlErrorCancelledCode else {
                     
                     return Fail(error: urlResponseError)
                         .eraseToAnyPublisher()
@@ -199,7 +200,7 @@ extension TranslationsRepository {
                     latestDownloadedTranslation = nil
                 }
                 
-                if !error.notConnectedToInternet {
+                if !error.isUrlErrorNotConnectedToInternetCode {
                     
                     return self.downloadAndCacheTranslationZipFiles(translation: translation)
                         .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in

@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import SharedAppleExtensions
 
 extension Flow {
     
     func presentNetworkError(responseError: URLResponseError) {
         
-        guard !responseError.getError().requestCancelled else {
+        guard !responseError.getError().isUrlErrorCancelledCode else {
             return
         }
         
@@ -21,7 +22,7 @@ extension Flow {
         let title: String
         let message: String
         
-        if responseError.getError().notConnectedToInternet {
+        if responseError.getError().isUrlErrorNotConnectedToInternetCode {
 
             title = localizationServices.stringForMainBundle(key: "no_internet_title")
             message = localizationServices.stringForMainBundle(key: "no_internet")
