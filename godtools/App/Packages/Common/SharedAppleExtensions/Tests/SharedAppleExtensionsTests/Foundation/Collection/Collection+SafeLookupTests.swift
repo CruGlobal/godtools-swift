@@ -14,7 +14,8 @@ final class CollectionSafeLookupTests: XCTestCase {
     func testSafeLookupValueIsNil() {
                 
         let numbers: [Int] = [0, 1, 2, 3]
+        let outOfBoundsIndex: Int = numbers.count + 10
         
-        XCTAssertNil(numbers[safe: 10])
+        XCTAssertNil(numbers[safe: outOfBoundsIndex])
     }
 }
