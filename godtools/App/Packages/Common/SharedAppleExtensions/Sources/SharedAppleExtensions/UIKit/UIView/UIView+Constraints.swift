@@ -1,6 +1,6 @@
 //
 //  UIView+Constraints.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 10/28/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero) {
         

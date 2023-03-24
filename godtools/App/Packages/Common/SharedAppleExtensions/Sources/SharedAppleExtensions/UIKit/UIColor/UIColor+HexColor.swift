@@ -1,6 +1,6 @@
 //
 //  UIColor+HexColor.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 6/25/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     
     static func hexColor(hexValue: Int, alpha: CGFloat = 1) -> UIColor {
         let red: Int = (hexValue >> 16) & 0xff

@@ -1,6 +1,6 @@
 //
 //  UIView+Animations.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 5/19/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func animateHidden(hidden: Bool, animated: Bool) {
         

@@ -161,7 +161,18 @@ extension ToolNavigationFlow {
             break
             
         case .unknown:
-            navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
+            
+            let viewModel = AlertMessageViewModel(
+                title: "Internal Error",
+                message: "Attempted to navigate to a tool with an unknown resource type.",
+                cancelTitle: nil,
+                acceptTitle: "OK",
+                acceptHandler: nil
+            )
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
         }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  Locale+Extensions.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 10/6/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Locale {
+public extension Locale {
     
     var isBaseLanguage: Bool {
         
