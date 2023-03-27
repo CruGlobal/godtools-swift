@@ -53,13 +53,13 @@ class AccountViewModel: ObservableObject {
         self.getUserActivityUseCase = getUserActivityUseCase
         self.analytics = analytics
         
-        navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
-        activityButtonTitle = localizationServices.stringForMainBundle(key: "account.activity.title")
-        myActivitySectionTitle = localizationServices.stringForMainBundle(key: "account.activity.sectionTitle")
-        badgesSectionTitle = localizationServices.stringForMainBundle(key: "account.badges.sectionTitle")
-        globalActivityButtonTitle = localizationServices.stringForMainBundle(key: "account.globalActivity.title")
+        navTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.navTitle.rawValue)
+        activityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activityButtonTitle.rawValue)
+        myActivitySectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activitySectionTitle.rawValue)
+        badgesSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.badgesSectionTitle.rawValue)
+        globalActivityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
         
-        let localizedGlobalActivityTitle: String = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.header.title")
+        let localizedGlobalActivityTitle: String = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
         let todaysDate: Date = Date()
         let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
                 
