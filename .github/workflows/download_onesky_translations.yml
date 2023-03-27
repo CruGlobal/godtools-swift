@@ -7,6 +7,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -27,10 +30,20 @@ jobs:
       - name: Bundle Install
         run: bundle install
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ONESKY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Import OneSky Keys
+        uses: dkershner6/aws-ssm-getparameters-action@v1
+        with:
+          parameterPairs: |
+            /shared/onesky/PUBLIC_KEY = ONESKY_PUBLIC_KEY,
+            /shared/onesky/SECRET_KEY = ONESKY_SECRET_KEY
+
       - name: Download And Commit Latest OneSky Localizations
-        env:
-          ONESKY_PUBLIC_KEY: ${{ secrets.ONESKY_PUBLIC_KEY }}
-          ONESKY_SECRET_KEY: ${{ secrets.ONESKY_SECRET_KEY }}
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
       - name: Create Pull Request
