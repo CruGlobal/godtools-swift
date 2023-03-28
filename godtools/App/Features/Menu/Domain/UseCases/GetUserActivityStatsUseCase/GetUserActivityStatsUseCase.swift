@@ -24,42 +24,42 @@ class GetUserActivityStatsUseCase {
         let toolOpensStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityToolOpens.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.toolOpens.rawValue),
-            textColor: Color(red: 5 / 255, green: 105 / 255, blue: 155 / 255),
+            textColor: Color.getColorWithRGB(red: 5, green: 105, blue: 155, opacity: 1),
             value: String(userActivity.toolOpens)
         )
         
         let lessonCompletionsStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLessonCompletions.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.lessonCompletions.rawValue),
-            textColor: Color(red: 55 / 255, green: 167 / 255, blue: 160 / 255),
+            textColor: Color.getColorWithRGB(red: 55, green: 167, blue: 160, opacity: 1),
             value: String(userActivity.lessonCompletions)
         )
         
         let screenSharesStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityScreenShares.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.screenShares.rawValue),
-            textColor: Color(red: 229 / 255, green: 91 / 255, blue: 54 / 255),
+            textColor: Color.getColorWithRGB(red: 229, green: 91, blue: 54, opacity: 1),
             value: String(userActivity.screenShares)
         )
         
         let linksSharedStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLinksShared.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.linksShared.rawValue),
-            textColor: Color(red: 47 / 255, green: 54 / 255, blue: 118 / 255),
+            textColor: Color.getColorWithRGB(red: 47, green: 54, blue: 118, opacity: 1),
             value: String(userActivity.linksShared)
         )
         
         let languagesUsedStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLanguagesUsed.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.languagesUsed.rawValue),
-            textColor: Color(red: 110 / 255, green: 220 / 255, blue: 80 / 255),
+            textColor: Color.getColorWithRGB(red: 110, green: 220, blue: 80, opacity: 1),
             value: String(userActivity.languagesUsed)
         )
-        
+
         let sessionsStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivitySessions.name,
             text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.sessions.rawValue),
-            textColor: Color(red: 224 / 255, green: 206 / 255, blue: 38 / 255),
+            textColor: Color.getColorWithRGB(red: 224, green: 206, blue: 38, opacity: 1),
             value: String(userActivity.sessions)
         )
         

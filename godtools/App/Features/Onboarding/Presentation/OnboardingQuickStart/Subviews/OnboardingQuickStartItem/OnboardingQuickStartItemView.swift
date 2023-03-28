@@ -10,7 +10,7 @@ import SwiftUI
 
 struct OnboardingQuickStartItemView: View {
     
-    private let backgroundColor: Color = ColorPalette.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
+    private let backgroundColor: Color = Color.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
     
     @ObservedObject var viewModel: OnboardingQuickStartItemViewModel
     
