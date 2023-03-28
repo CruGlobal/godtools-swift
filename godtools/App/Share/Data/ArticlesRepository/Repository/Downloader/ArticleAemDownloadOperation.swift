@@ -67,11 +67,9 @@ class ArticleAemDownloadOperation: Operation {
             return
         }
                 
-        var urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json"
+        let cacheTimeInterval: TimeInterval = ArticleAemDownloadGetCacheTimeInterval().getCacheTimeInterval(cachePolicy: cachePolicy)
         
-        if let cacheTimeInteral = ArticleAemDownloadGetCacheTimeInterval().getCacheTimeInterval(cachePolicy: cachePolicy) {
-            urlJsonString += "?_=\(cacheTimeInteral)"
-        }
+        let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
         
         guard let urlJson: URL = URL(string: urlJsonString) else {
             
