@@ -17,6 +17,8 @@ struct AccountActivityStatView: View {
         HStack {
             
             Image(stat.iconImageName)
+                .resizable()
+                .frame(width: 42, height: 42)
             
             VStack(alignment: .leading, spacing: 0) {
                 
