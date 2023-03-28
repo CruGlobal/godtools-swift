@@ -1,6 +1,6 @@
 //
 //  UIViewController+Containment.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 5/20/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     
     func addChildController(child: UIViewController, toView: UIView? = nil) {
         addChild(child)

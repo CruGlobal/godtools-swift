@@ -1,16 +1,17 @@
 //
 //  Publisher+ReceiveOnMain.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Rachael Skeath on 8/17/22.
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import Foundation
 import Combine
 
-extension Publisher {
+public extension Publisher {
     
-    public func receiveOnMain() -> AnyPublisher<Self.Output, Self.Failure> {
+    func receiveOnMain() -> AnyPublisher<Self.Output, Self.Failure> {
         
         return self.flatMap({ value -> AnyPublisher<Self.Output, Self.Failure> in
             

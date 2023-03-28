@@ -1,6 +1,6 @@
 //
 //  UIImage+CreateImageWithColor.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 12/23/20.
 //  Copyright © 2020 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     
     static func createImageWithColor(color: UIColor) -> UIImage? {
         

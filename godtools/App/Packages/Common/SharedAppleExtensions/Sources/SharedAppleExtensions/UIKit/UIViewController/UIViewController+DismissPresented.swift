@@ -1,6 +1,6 @@
 //
 //  UIViewController+DismissPresented.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 12/22/21.
 //  Copyright © 2021 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     
     // Helper ensures completion will always be called.  I believe if animated is false when calling UIKit's UIViewController.dismiss(animated:) the completion closure will never be called.
     

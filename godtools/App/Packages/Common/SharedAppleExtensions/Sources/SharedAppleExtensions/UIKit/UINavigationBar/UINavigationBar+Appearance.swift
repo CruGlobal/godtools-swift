@@ -1,6 +1,6 @@
 //
 //  UINavigationBar+Appearance.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Levi Eggert on 10/6/21.
 //  Copyright © 2021 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UINavigationBar {
+public extension UINavigationBar {
     
     func setupNavigationBarAppearance(backgroundColor: UIColor, controlColor: UIColor?, titleFont: UIFont?, titleColor: UIColor?, isTranslucent: Bool) {
         

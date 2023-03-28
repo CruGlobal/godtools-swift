@@ -1,6 +1,6 @@
 //
 //  UIImage+ScalePresevingAspectRatio.swift
-//  godtools
+//  SharedAppleExtensions
 //
 //  Created by Robert Eldredge on 10/25/21.
 //  Copyright © 2021 Cru. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     //found here: https://www.advancedswift.com/resize-uiimage-no-stretching-swift/
     func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
             // Determine the scale factor that preserves aspect ratio
