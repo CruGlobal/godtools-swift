@@ -27,17 +27,19 @@ class ArticleAemDownloadOperation: Operation {
     private let session: URLSession
     private let aemUri: String
     private let maxAemJsonTreeLevels: Int
+    private let cachePolicy: ArticleAemDownloadOperationCachePolicy
     private let errorDomain: String = String(describing: ArticleAemDownloadOperation.self)
     
     private var urlRequest: URLRequest?
     private var task: URLSessionDataTask?
     private var completion: Completion?
     
-    init(session: URLSession, aemUri: String, maxAemJsonTreeLevels: Int) {
+    init(session: URLSession, aemUri: String, maxAemJsonTreeLevels: Int, cachePolicy: ArticleAemDownloadOperationCachePolicy) {
         
         self.session = session
         self.aemUri = aemUri
         self.maxAemJsonTreeLevels = maxAemJsonTreeLevels
+        self.cachePolicy = cachePolicy
        
         super.init()
     }
@@ -64,8 +66,12 @@ class ArticleAemDownloadOperation: Operation {
             
             return
         }
+                
+        var urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json"
         
-        let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json"
+        if let cacheTimeInteral = ArticleAemDownloadGetCacheTimeInterval().getCacheTimeInterval(cachePolicy: cachePolicy) {
+            urlJsonString += "?_=\(cacheTimeInteral)"
+        }
         
         guard let urlJson: URL = URL(string: urlJsonString) else {
             
