@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 class LearnToShareToolView: UIViewController {
     
@@ -92,7 +93,7 @@ class LearnToShareToolView: UIViewController {
     
     private func setBackButton(hidden: Bool) {
         
-        let backButtonPosition: ButtonItemPosition = .left
+        let backButtonPosition: BarButtonItemBarPosition = .left
         
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(

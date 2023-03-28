@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import SharedAppleExtensions
 
 class ArticleWebView: UIViewController {
     
@@ -75,7 +76,7 @@ class ArticleWebView: UIViewController {
         
         viewModel.hidesShareButton.addObserver(self) { [weak self] (hidesShareButton) in
             if let shareButton = self?.shareButton {
-                let shareButtonPosition = ButtonItemPosition.right
+                let shareButtonPosition: BarButtonItemBarPosition = .right
                 if hidesShareButton {
                     self?.removeBarButtonItem(item: shareButton)
                 }
