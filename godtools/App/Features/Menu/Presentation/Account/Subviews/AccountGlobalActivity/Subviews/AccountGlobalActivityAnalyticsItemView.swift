@@ -31,7 +31,7 @@ struct AccountGlobalActivityAnalyticsItemView: View {
                 
                 Text(viewModel.count)
                     .font(FontLibrary.sfProTextSemibold.font(size: 25))
-                    .foregroundColor(ColorPalette.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1))
+                    .foregroundColor(Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1))
                     .multilineTextAlignment(.center)
                 
                 Text(viewModel.label)

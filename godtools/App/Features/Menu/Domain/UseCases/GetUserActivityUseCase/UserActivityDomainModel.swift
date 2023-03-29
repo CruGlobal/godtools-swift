@@ -11,4 +11,5 @@ import Foundation
 struct UserActivityDomainModel {
     
     let badges: [UserActivityBadgeDomainModel]
+    let stats: [UserActivityStatDomainModel]
 }
