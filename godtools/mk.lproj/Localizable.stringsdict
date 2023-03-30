@@ -1,0 +1,47 @@
+{
+	"badges.articlesOpened" = {
+		"NSStringLocalizedFormatKey" = "%#@articlesCount@";
+		articlesCount = {
+			"NSStringFormatSpecTypeKey" = "NSStringPluralRuleType";
+			"NSStringFormatValueTypeKey" = d;
+			one = "Read 1 article";
+			other = "Read %d articles";
+		};
+	};
+	"badges.imagesShared" = {
+		"NSStringLocalizedFormatKey" = "%#@imageCount@";
+		imageCount = {
+			"NSStringFormatSpecTypeKey" = "NSStringPluralRuleType";
+			"NSStringFormatValueTypeKey" = d;
+			one = "Shared 1 image";
+			other = "Shared %d images";
+		};
+	};
+	"badges.lessonsCompleted" = {
+		"NSStringLocalizedFormatKey" = "%#@lessonsCount@";
+		lessonsCount = {
+			"NSStringFormatSpecTypeKey" = "NSStringPluralRuleType";
+			"NSStringFormatValueTypeKey" = d;
+			one = "Completed 1 lesson";
+			other = "Completed %d lessons";
+		};
+	};
+	"badges.toolsOpened" = {
+		"NSStringLocalizedFormatKey" = "%#@toolsCount@";
+		toolsCount = {
+			"NSStringFormatSpecTypeKey" = "NSStringPluralRuleType";
+			"NSStringFormatValueTypeKey" = d;
+			one = "Opened 1 tool";
+			other = "Opened %d tools";
+		};
+	};
+	"badges.tipsCompleted" = {
+		"NSStringLocalizedFormatKey" = "%#@tipsCount@";
+		tipsCount = {
+			"NSStringFormatSpecTypeKey" = "NSStringPluralRuleType";
+			"NSStringFormatValueTypeKey" = d;
+			one = "Completed 1 training tip";
+			other = "Completed %d training tips";
+		};
+	};
+}
