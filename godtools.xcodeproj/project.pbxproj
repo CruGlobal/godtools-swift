@@ -972,6 +972,7 @@
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
 		D42FEBE1287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */; };
 		D43D8FE729D2213D005FD00C /* MenuStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43D8FE629D2213D005FD00C /* MenuStringKeys.swift */; };
+		D43D8FE929D608E5005FD00C /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D43D8FE829D608E5005FD00C /* Localizable.stringsdict */; };
 		D44C6933280479720000B970 /* ToolCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C6932280479720000B970 /* ToolCardViewModel.swift */; };
 		D44C69392804B6D40000B970 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C69382804B6D40000B970 /* RoundedCorner.swift */; };
 		D44C693B2804B8050000B970 /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44C693A2804B8050000B970 /* View+CustomModifiers.swift */; };
@@ -2083,6 +2084,7 @@
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
 		D42FEBE0287617F10002FAD9 /* DisableOptInOnboardingBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableOptInOnboardingBannerUseCase.swift; sourceTree = "<group>"; };
 		D43D8FE629D2213D005FD00C /* MenuStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuStringKeys.swift; sourceTree = "<group>"; };
+		D43D8FE829D608E5005FD00C /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		D44C6932280479720000B970 /* ToolCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolCardViewModel.swift; sourceTree = "<group>"; };
 		D44C69382804B6D40000B970 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		D44C693A2804B8050000B970 /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
@@ -6601,6 +6603,7 @@
 				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
 				4F57329B1EA69CF00082035C /* Info.plist */,
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
+				D43D8FE829D608E5005FD00C /* Localizable.stringsdict */,
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
 				453D866624E08454004EA89F /* MissingLocalizations */,
 				D471CFBF28B3D67100DCE61C /* Preview Content */,
@@ -7753,6 +7756,7 @@
 				45F7164A290A12D70019B715 /* MenuView.xib in Resources */,
 				4555833D269F2C7B00C3FF14 /* ToolPageModalView.xib in Resources */,
 				45558338269F2C7B00C3FF14 /* ToolPageCallToActionView.xib in Resources */,
+				D43D8FE929D608E5005FD00C /* Localizable.stringsdict in Resources */,
 				45558354269F2D1000C3FF14 /* LessonPageView.xib in Resources */,
 				45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */,
 				45677841287DC3780044AEB2 /* ArticleCell.xib in Resources */,
