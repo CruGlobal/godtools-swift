@@ -198,7 +198,7 @@ class ToolNavBarView: NSObject {
         }
         else if !hidden && remoteShareActiveNavItem == nil {
             
-            remoteShareActiveNavItem = parentViewController?.addBarButtonItem(
+            remoteShareActiveNavItem = parentViewController?.addAnimatedBarButtonItem(
                 to: .right,
                 index: RightNavbarPosition.remoteShareActive.rawValue,
                 animationName: "remote_share_active"

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 class LoadingView: UIViewController {
     
@@ -68,7 +69,7 @@ class LoadingView: UIViewController {
     
     private func setCloseButton(hidden: Bool) {
         
-        let position: ButtonItemPosition = .right
+        let position: BarButtonItemBarPosition = .right
         
         if hidden, let closeButton = closeButton {
             
