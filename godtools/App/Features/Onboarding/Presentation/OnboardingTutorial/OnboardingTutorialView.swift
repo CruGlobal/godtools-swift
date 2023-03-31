@@ -62,9 +62,8 @@ struct OnboardingTutorialView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.currentPage)
-                                
-                GTBlueButton(title: viewModel.continueButtonTitle, font: FontLibrary.sfProTextSemibold.font(size: 17), width: geometry.size.width - 60, height: 50, highlightsTitleOnTap: false) {
-                    
+                     
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
                     viewModel.continueTapped()
                 }
                 

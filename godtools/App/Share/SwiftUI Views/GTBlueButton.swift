@@ -62,6 +62,7 @@ struct GTBlueButton: View {
                     }
                 }
             }
+            .frame(width: width, height: height, alignment: .center)
             .background(ColorPalette.gtBlue.color)
             .cornerRadius(cornerRadius)
             
