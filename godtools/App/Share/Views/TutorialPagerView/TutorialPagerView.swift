@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 class TutorialPagerView: UIViewController {
     
@@ -90,7 +91,7 @@ class TutorialPagerView: UIViewController {
     
     private func setSkipButton(hidden: Bool) {
         
-        let skipButtonPosition: ButtonItemPosition = .right
+        let skipButtonPosition: BarButtonItemBarPosition = .right
         
         if skipButton == nil {
             if !hidden {
