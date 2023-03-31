@@ -25,7 +25,6 @@ struct OnboardingQuickStartItemView: View {
                 
                 Text(viewModel.title)
                     .multilineTextAlignment(.leading)
-                    .lineLimit(nil)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextLight.font(size: 19))
                                 
@@ -33,7 +32,6 @@ struct OnboardingQuickStartItemView: View {
                     
                     Text(viewModel.actionTitle)
                         .multilineTextAlignment(.leading)
-                        .lineLimit(nil)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextSemibold.font(size: 16))
                     
