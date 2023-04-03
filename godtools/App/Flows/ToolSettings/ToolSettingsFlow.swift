@@ -273,7 +273,7 @@ class ToolSettingsFlow: Flow {
         )
 
         let view = ShareToolScreenTutorialView(viewModel: viewModel)
-        let modal = ModalNavigationController(rootView: view)
+        let modal = ModalNavigationController.defaultModal(rootView: view)
 
         navigationController.present(
             modal,
@@ -295,7 +295,7 @@ class ToolSettingsFlow: Flow {
         )
         let view = LoadingView(viewModel: viewModel)
         
-        let modal = ModalNavigationController(rootView: view)
+        let modal = ModalNavigationController.defaultModal(rootView: view)
         
         navigationController.present(modal, animated: true, completion: nil)
         

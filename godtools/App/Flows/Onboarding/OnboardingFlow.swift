@@ -37,7 +37,7 @@ class OnboardingFlow: Flow {
         
         navigationController.navigationBar.setupNavigationBarAppearance(
             backgroundColor: .clear,
-            controlColor: nil,
+            controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: true
