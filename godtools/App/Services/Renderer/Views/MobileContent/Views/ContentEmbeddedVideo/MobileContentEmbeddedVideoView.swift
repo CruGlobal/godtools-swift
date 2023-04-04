@@ -53,6 +53,10 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     override func viewDidDisappear() {
 
+        videoView.currentTime({ (number: Float, error: Error?) in
+            print("number: \(number)")
+        })
+        
         videoView.stopVideo()
     }
     

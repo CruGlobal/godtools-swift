@@ -28,6 +28,7 @@ class MobileContentPagesViewModel: NSObject {
     private(set) var currentRenderedPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
+    private(set) var pagesDataCache: MobileContentPagesDataCache = MobileContentPagesDataCache()
     
     private(set) weak var window: UIViewController?
     
@@ -239,6 +240,8 @@ class MobileContentPagesViewModel: NSObject {
     
     func pageDidAppear(page: Int) {
         
+        updateCachedPageDataForPageChange(currentPage: page)
+        
         currentRenderedPageNumber = page
         
         if page > highestPageNumberViewed {
@@ -261,6 +264,27 @@ class MobileContentPagesViewModel: NSObject {
     func didChangeMostVisiblePage(page: Int) {
         
         currentRenderedPageNumber = page
+    }
+}
+
+// MARK: - Pages Data Cache
+
+extension MobileContentPagesViewModel {
+    
+    private func updateCachedPageDataForPageChange(currentPage: Int) {
+        
+        var cachedPageDataToKeep: [MobileContentPagesView.PageNumber: [String: Any]] = Dictionary()
+        
+        let cachedPageDataToKeepStartNumber: Int = currentPage - 1
+        let cachedPageDataToKeepEndNumber: Int = currentPage + 1
+        
+        for pageNumber in cachedPageDataToKeepStartNumber ... cachedPageDataToKeepEndNumber {
+            if let cachedPageData = pagesDataCache.getCachedDataForPage(page: pageNumber) {
+                cachedPageDataToKeep[pageNumber] = cachedPageData
+            }
+        }
+        
+        pagesDataCache = MobileContentPagesDataCache(cachedPageData: cachedPageDataToKeep)
     }
 }
 
