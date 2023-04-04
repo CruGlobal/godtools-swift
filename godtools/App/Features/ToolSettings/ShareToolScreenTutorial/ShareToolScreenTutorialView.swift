@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 class ShareToolScreenTutorialView: UIViewController {
     //TODO: re-implement this tutorial using TutorialPagerView
@@ -93,7 +94,7 @@ class ShareToolScreenTutorialView: UIViewController {
     
     private func setSkipButton(hidden: Bool) {
         
-        let buttonPosition: ButtonItemPosition = .right
+        let buttonPosition: BarButtonItemBarPosition = .right
         
         if skipButton == nil && !hidden {
             

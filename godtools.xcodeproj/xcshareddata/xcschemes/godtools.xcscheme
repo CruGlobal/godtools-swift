@@ -83,7 +83,7 @@
                BlueprintIdentifier = "SharedAppleExtensionsTests"
                BuildableName = "SharedAppleExtensionsTests"
                BlueprintName = "SharedAppleExtensionsTests"
-               ReferencedContainer = "container:godtools/App/Packages/Common/SharedAppleExtensions">
+               ReferencedContainer = "container:godtools/Packages/Common/SharedAppleExtensions">
             </BuildableReference>
          </TestableReference>
       </Testables>

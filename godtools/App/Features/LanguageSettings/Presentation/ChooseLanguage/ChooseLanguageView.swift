@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 class ChooseLanguageView: UIViewController {
         
@@ -79,7 +80,7 @@ class ChooseLanguageView: UIViewController {
         
         viewModel.hidesDeleteLanguageButton.addObserver(self) { [weak self] (hidden: Bool) in
             if let deleteLanguageButton = self?.deleteLanguageButton {
-                let barPosition: ButtonItemPosition = .right
+                let barPosition: BarButtonItemBarPosition = .right
                 if hidden {
                     self?.removeBarButtonItem(item: deleteLanguageButton)
                 }
