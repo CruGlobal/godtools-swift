@@ -15,6 +15,7 @@ GodTools
 
 - [Conventions](#conventions)
 - [Architecture](#architecture)
+- [Fastlane](#fastlane)
 
 #### Conventions
 
@@ -153,5 +154,14 @@ A Repository has the following responsibilities:
 The Coorindator is responsible for the navigation decisions, dependency injection, and the navigation between views. In GodTools, any class that implements the Flow protocol is a class that implements the coordinator pattern. 
 The Coordinator is the decision maker when it comes to navigation. For example, say a user taps a button to login, the coordinater (Flow) receives this as a step enumeration (describes an action) and determines where to navigate based on that action. Once navigation is determined, the coordinator will instantiate the view, viewModel, inject any dependencies, and then perform navigation.
 
+#### Fastlane
 
+- Project Fastlane Fastfile (https://github.com/CruGlobal/godtools-swift/blob/develop/fastlane/Fastfile) points to shared Fastfile (https://github.com/CruGlobal/cru-fastlane-files/blob/master/Fastfile)
 
+- Uses a combination of Fastlane Environment Variables(https://github.com/CruGlobal/godtools-swift/blob/develop/fastlane/.env.default) and GitHub Secrets
+
+- GitHub Actions Build Workflow: https://github.com/CruGlobal/godtools-swift/blob/develop/.github/workflows/build.yml
+
+- GitHub Actions OneSky Workflow: https://github.com/CruGlobal/godtools-swift/blob/develop/.github/workflows/download_onesky_translations.yml
+
+- GitHub Actions OneSky Workflow Dependency Plugin: https://github.com/thekie/fastlane-plugin-onesky
