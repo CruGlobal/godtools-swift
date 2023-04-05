@@ -21,6 +21,7 @@ class MobileContentPageRenderer {
     let translation: TranslationModel
     let manifestResourcesCache: ManifestResourcesCache
     let pageViewFactories: MobileContentRendererPageViewFactories
+    let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
     init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: ManifestResourcesCache) {
         
@@ -92,7 +93,8 @@ class MobileContentPageRenderer {
             navigation: navigation,
             primaryRendererLanguage: primaryLanguage,
             rendererState: sharedState,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            pageViewDataCache: pagesViewDataCache.getPageViewDataCache(page: pageModel)
         )
         
         return renderedPageContext
