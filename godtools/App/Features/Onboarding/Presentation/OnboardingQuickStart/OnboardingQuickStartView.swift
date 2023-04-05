@@ -48,11 +48,11 @@ struct OnboardingQuickStartView: View {
                 
                 Spacer()
                 
-                GTBlueButton(title: viewModel.endTutorialButtonTitle, fontSize: 15, height: 50) {
-                    
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.endTutorialButtonTitle) {
                     viewModel.endTutorialTapped()
                 }
-                .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))
+                
+                FixedVerticalSpacer(height: 30)
             }
         }
     }
