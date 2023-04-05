@@ -28,7 +28,6 @@ class MobileContentPagesViewModel: NSObject {
     private(set) var currentRenderedPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
-    private(set) var pagesDataCache: MobileContentPagesDataCache = MobileContentPagesDataCache()
     
     private(set) weak var window: UIViewController?
     
@@ -240,7 +239,12 @@ class MobileContentPagesViewModel: NSObject {
     
     func pageDidAppear(page: Int) {
         
-        updateCachedPageDataForPageChange(currentPage: page)
+        if page >= 0 && page < pageModels.count {
+            
+            let currentPage: Page = pageModels[page]
+            
+            updateCachedPageDataForPageChange(currentPage: currentPage)
+        }
         
         currentRenderedPageNumber = page
         
@@ -271,20 +275,41 @@ class MobileContentPagesViewModel: NSObject {
 
 extension MobileContentPagesViewModel {
     
-    private func updateCachedPageDataForPageChange(currentPage: Int) {
+    private func updateCachedPageDataForPageChange(currentPage: Page) {
         
-        var cachedPageDataToKeep: [MobileContentPagesView.PageNumber: [String: Any]] = Dictionary()
+        guard let currentPageIndex = pageModels.firstIndex(of: currentPage) else {
+            return
+        }
+
+        let currentPageRendererPagesViewDataCache: MobileContentPageRendererPagesViewDataCache = currentPageRenderer.value.pagesViewDataCache
         
-        let cachedPageDataToKeepStartNumber: Int = currentPage - 1
-        let cachedPageDataToKeepEndNumber: Int = currentPage + 1
+        var cachedPageDataToKeep: [Page: MobileContentPageViewDataCache] = Dictionary()
+        
+        let cachedPageDataToKeepStartNumber: Int = currentPageIndex - 1
+        let cachedPageDataToKeepEndNumber: Int = currentPageIndex + 1
         
         for pageNumber in cachedPageDataToKeepStartNumber ... cachedPageDataToKeepEndNumber {
-            if let cachedPageData = pagesDataCache.getCachedDataForPage(page: pageNumber) {
-                cachedPageDataToKeep[pageNumber] = cachedPageData
+            
+            guard pageNumber >= 0 && pageNumber < pageModels.count else {
+                continue
             }
+            
+            let pageModel: Page = pageModels[pageNumber]
+            
+            let pageViewDataCache: MobileContentPageViewDataCache = currentPageRendererPagesViewDataCache.getPageViewDataCache(page: pageModel)
+            
+            guard !pageViewDataCache.isEmpty else {
+                continue
+            }
+            
+            cachedPageDataToKeep[pageModel] = pageViewDataCache
         }
         
-        pagesDataCache = MobileContentPagesDataCache(cachedPageData: cachedPageDataToKeep)
+        currentPageRendererPagesViewDataCache.clearCache()
+        
+        for (page, pageViewDataCache) in cachedPageDataToKeep {
+            currentPageRendererPagesViewDataCache.storePageViewDataCache(page: page, pageViewDataCache: pageViewDataCache)
+        }
     }
 }
 
