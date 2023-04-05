@@ -16,7 +16,7 @@ struct OnboardingTutorialView: View {
         
         GeometryReader { geometry in
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                                 
                 TabView(selection: $viewModel.currentPage) {
 
@@ -62,12 +62,12 @@ struct OnboardingTutorialView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.currentPage)
-                                
-                GTBlueButton(title: viewModel.continueButtonTitle, fontSize: 17, height: 50) {
-                    
+                     
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
                     viewModel.continueTapped()
                 }
-                .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))
+                
+                FixedVerticalSpacer(height: 30)
                 
                 GTPageControl(numberOfPages: 4, currentPage: $viewModel.currentPage)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
