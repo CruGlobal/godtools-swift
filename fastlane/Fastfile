@@ -365,7 +365,7 @@ platform :ios do
 
             onesky_download(
                 destination: "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/Localizable.stringsdict",
-                filename: one_sky_filename,
+                filename: "Localizable.stringsdict",
                 locale: locale,
                 project_id: one_sky_project_id,
                 public_key: one_sky_public_key,
@@ -382,6 +382,8 @@ platform :ios do
             path: "*/#{one_sky_filename}",
             message: "[skip ci] Adding latest localization files from OneSky"
         )
+        push_to_git_remote(
+          remote: "GT-1918-Localize-with-stringsdict-file")
     rescue
       puts("Failed to commit localization files.. maybe none to commit?")
     end
