@@ -382,7 +382,7 @@ platform :ios do
             path: "*/#{one_sky_filename}",
             message: "[skip ci] Adding latest localization files from OneSky"
         )
-        push_to_git_remote
+        # push_to_git_remote
     rescue
       puts("Failed to commit localization files.. maybe none to commit?")
     end
