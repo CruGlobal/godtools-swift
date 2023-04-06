@@ -1,3 +1,6 @@
+"account.activity.sessions" = "Сессии";
+"account.globalActivity.title" = "Глобальная активность";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "О приложении";
 
@@ -46,10 +49,26 @@
 "tool_menu_item.lessons" = "Уроки";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Нет, спасибо";
+"parallelLanguage.selectButton.title" = "Выбрать";
 "parallelLanguage.getStartedButton.title" = "Начать";
 "parallelLanguage.selectLanguageButton.title" = "Выберите язык";
 "parellelLanguage.prompt" = "Хотите установить второй язык?";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Уроки";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Это руководство будет доступно для повторного просмотра в меню";
+
 "onboardingTutorial.beginButton.title" = "Начать";
+"onboardingQuickStart.2.title" = "Я хочу поделиться Евангелием с другими";
+"onboardingQuickStart.2.button.title" = "Выберите один из наших инструментов";
+"onboardingTutorial.nextButton.title" = "Дальше";
+"onboardingQuickStart.title" = "Ссылки для быстрого начала";
+"onboardingQuickStart.0.title" = "Я хочу изучить христианство";
+"onboardingQuickStart.0.button.title" = "Прочитайте наши статьи";
+"onboardingQuickStart.1.title" = "Я хочу научиться вести разговоры о Евангелии";
+"onboardingQuickStart.1.button.title" = "Попробуйте наши уроки";
 "tool_offline_favorite_message" = "Нажав на значок сердца, вы добавите инструмент в избранное, что сделает его доступным, даже когда вы не в сети.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -72,6 +91,14 @@
 Если это сообщение придет слишком поздно, ссылка может уже не работать. Мы можем попробовать еще раз в другое время.";
 "exit_tract_remote_share_session.message" = "Выйти из сеанса удаленной трансляции?";
 "load_tool_remote_session.message" = "Запуск трансляции экрана…";
+"onboardingTutorial.0.title" = "Готовность к любому разговору";
+"onboardingTutorial.0.videoLink.title" = "Посмотрите видео";
+"onboardingTutorial.1.title" = "Говорите о Боге с кем угодно";
+"onboardingTutorial.1.message" = "GodTools поможет вам вести осмысленные беседы о Боге.";
+"onboardingTutorial.2.title" = "Приготовьтесь к важным моментам";
+"onboardingTutorial.2.message" = "Узнайте, как сделать разговоры о вере естественной частью жизни.";
+"onboardingTutorial.3.title" = "Помогите другим открыть для себя Иисуса";
+"onboardingTutorial.3.message" = "GodTools – это ваше руководство по ясному и актуальному донесению Евангелия.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Обучение";
