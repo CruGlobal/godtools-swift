@@ -50,5 +50,5 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: 'latest-onesky-translations'
-          repo-token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           title: 'Latest OneSky Translations'
