@@ -1,4 +1,23 @@
 "account.badges.sectionTitle" = "Tavi žetoni";
+"
+account.activity.sectionTitle" = "Tava aktivitāte";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Atvērtie rīki";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Pabeigtās nodarbības";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Kopīgotie ekrāni";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Kopīgotās saites";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Izmantotās valodas";
+
+"account.activity.sessions" = "Sesijas";
 "badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: 1";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
