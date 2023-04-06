@@ -350,8 +350,14 @@ platform :ios do
         xcodeDirectoryNameForStringsDict = "English"
       end
 
-      download_onesky_localizations(xcodeDirectoryNameForStrings, stringsFileName)
-      download_onesky_localizations(xcodeDirectoryNameForStringsDict, stringsDictFileName)
+      download_onesky_localizations(
+        xcodeDirectoryName: xcodeDirectoryNameForStrings, 
+        filename: stringsFileName
+        )
+      download_onesky_localizations(
+        xcodeDirectoryName: xcodeDirectoryNameForStringsDict, 
+        filename: stringsDictFileName
+        )
 
     end
 
@@ -366,8 +372,11 @@ platform :ios do
     end
   end
 
-  lane :download_onesky_localizations do |xcodeDirectoryName, filename|
+  lane :download_onesky_localizations do |options|
     
+    xcodeDirectoryName = options[:xcodeDirectoryName]
+    filename = options[:filename]
+
     begin
             
       directory = "../#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj"
