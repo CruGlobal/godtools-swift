@@ -18,27 +18,17 @@ class FullScreenVideoViewModel: ObservableObject {
     let videoId: String
     let videoPlayerParameters: [String: Any]?
     
-    init(flowDelegate: FlowDelegate, videoId: String, videoPlayerParameters: [String: Any]?, userDidCloseVideoStep: FlowStep, videoEndedStep: FlowStep) {
+    init(flowDelegate: FlowDelegate, videoId: String, userDidCloseVideoStep: FlowStep, videoEndedStep: FlowStep) {
         
         self.flowDelegate = flowDelegate
         self.userDidCloseVideoStep = userDidCloseVideoStep
         self.videoEndedStep = videoEndedStep
         self.videoId = videoId
-        self.videoPlayerParameters = FullScreenVideoViewModel.buildVideoPlayerParameters(fromParameters: videoPlayerParameters)
-    }
-    
-    private static func buildVideoPlayerParameters(fromParameters: [String: Any]?) -> [String: Any] {
         
-        var videoPlayerParameters: [String: Any] = fromParameters ?? Dictionary()
-        
-        let playsInlineKey: String = Strings.YoutubePlayerParameters.playsInline.rawValue
-        let disablesFullScreen: Int = 1
-        
-        if videoPlayerParameters[playsInlineKey] == nil {
-            videoPlayerParameters[playsInlineKey] = disablesFullScreen
-        }
-        
-        return videoPlayerParameters
+        videoPlayerParameters = [
+            YouTubePlayerParameterStrings.playsInline.rawValue: 1,
+            YouTubePlayerParameterStrings.controls.rawValue: 0
+        ]
     }
 }
 

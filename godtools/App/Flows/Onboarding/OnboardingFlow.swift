@@ -90,7 +90,6 @@ class OnboardingFlow: Flow {
         let viewModel = FullScreenVideoViewModel(
             flowDelegate: self,
             videoId: youtubeVideoId,
-            videoPlayerParameters: nil,
             userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
