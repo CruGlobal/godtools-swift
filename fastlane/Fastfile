@@ -328,6 +328,7 @@ platform :ios do
   #
   lane :cru_shared_lane_download_and_commit_latest_one_sky_localizations do |options|
     
+    one_sky_localizations_string = options[:one_sky_localizations] || ENV["ONESKY_LOCALIZATIONS"]
     one_sky_localizations_array = one_sky_localizations_string.split(",")
 
     stringsFileName = options[:one_sky_filename] || ENV["ONESKY_FILENAME"]
@@ -370,7 +371,6 @@ platform :ios do
   lane :download_onesky_localizations do |options|
 
     one_sky_download_to_project_directory = options[:one_sky_download_to_project_directory] || ENV["ONESKY_DOWNLOAD_TO_XCODE_PROJECT_DIRECTORY"]
-    one_sky_localizations_string = options[:one_sky_localizations] || ENV["ONESKY_LOCALIZATIONS"]
     one_sky_project_id = options[:one_sky_project_id] || ENV["ONESKY_PROJECT_ID"]
     one_sky_public_key = options[:one_sky_public_key] || ENV["ONESKY_PUBLIC_KEY"]
     one_sky_secret_key = options[:one_sky_secret_key] || ENV["ONESKY_SECRET_KEY"] || ""
