@@ -337,55 +337,55 @@ platform :ios do
     
     one_sky_localizations_array = one_sky_localizations_string.split(",")
 
+    stringsFileName = one_sky_filename
+    stringsDictFileName = "Localizable.stringsdict"
+
     one_sky_localizations_array.each do |locale|
-        
-        begin
+      
+      xcodeDirectoryNameForStrings = locale
+      xcodeDirectoryNameForStringsDict = locale
 
-            xcodeDirectoryName = locale
+      if locale == "en"
+        xcodeDirectoryNameForStrings = "Base"
+        xcodeDirectoryNameForStringsDict = "English"
+      end
 
-            puts "beginning download for locale: #{locale}"
+      download_onesky_localizations(xcodeDirectoryNameForStrings, stringsFileName)
+      download_onesky_localizations(xcodeDirectoryNameForStringsDict, stringsDictFileName)
 
-            if locale == "en"
-              xcodeDirectoryName = "Base"
-            end
-
-            puts "xcode directory name: #{xcodeDirectoryName}"
-            
-            directory = "../#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj"
-            Dir.mkdir(directory) unless File.exists?(directory)
-
-            onesky_download(
-                destination: "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/#{one_sky_filename}",
-                filename: one_sky_filename,
-                locale: locale,
-                project_id: one_sky_project_id,
-                public_key: one_sky_public_key,
-                secret_key: one_sky_secret_key
-            )
-
-            onesky_download(
-                destination: "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/Localizable.stringsdict",
-                filename: "Localizable.stringsdict",
-                locale: locale,
-                project_id: one_sky_project_id,
-                public_key: one_sky_public_key,
-                secret_key: one_sky_secret_key
-            )
-        rescue
-            puts("Failed to import #{locale}")
-        end
     end
 
     begin
-        git_add(path: "*/#{one_sky_filename}")
+        git_add(path: ["*/#{stringsFileName}", "*/#{stringsDictFileName}"])
         git_commit(
-            path: "*/#{one_sky_filename}",
+            path: ["*/#{stringsFileName}", "*/#{stringsDictFileName}"],
             message: "[skip ci] Adding latest localization files from OneSky"
         )
-        # push_to_git_remote
     rescue
       puts("Failed to commit localization files.. maybe none to commit?")
     end
+  end
+
+  lane :download_onesky_localizations do |xcodeDirectoryName, filename|
+    
+    begin
+            
+      directory = "../#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj"
+      Dir.mkdir(directory) unless File.exists?(directory)
+
+      onesky_download(
+          destination: "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/#{filename}",
+          filename: filename,
+          locale: locale,
+          project_id: one_sky_project_id,
+          public_key: one_sky_public_key,
+          secret_key: one_sky_secret_key
+      )
+
+      rescue
+          puts("Failed to import #{filename} to #{xcodeDirectoryName}")
+      end
+
   end
 
   # Increments the xcode project build number by 1 using the latest testflight build number to increment against.
