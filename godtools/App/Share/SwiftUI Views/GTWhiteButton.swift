@@ -12,12 +12,12 @@ struct GTWhiteButton: View {
     
     let title: String
     let fontSize: CGFloat
-    let width: CGFloat?
-    let height: CGFloat?
+    let width: CGFloat
+    let height: CGFloat
     let cornerRadius: CGFloat
     let action: () -> Void
     
-    init(title: String, fontSize: CGFloat = 12, width: CGFloat? = nil, height: CGFloat? = nil, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
+    init(title: String, fontSize: CGFloat = 12, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
         self.title = title
         self.fontSize = fontSize
         self.width = width
@@ -58,7 +58,7 @@ struct GTWhiteButton: View {
 
 struct GTWhiteButton_Previews: PreviewProvider {
     static var previews: some View {
-        GTWhiteButton(title: "Test Button", action: {})
+        GTWhiteButton(title: "Test Button", width: 240, height: 50, action: {})
             .padding()
             .previewLayout(.sizeThatFits)
     }

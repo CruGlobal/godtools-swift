@@ -10,7 +10,7 @@ import SwiftUI
 
 struct OnboardingQuickStartItemView: View {
     
-    private let backgroundColor: Color = ColorPalette.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
+    private let backgroundColor: Color = Color.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
     
     @ObservedObject var viewModel: OnboardingQuickStartItemViewModel
     
@@ -25,14 +25,15 @@ struct OnboardingQuickStartItemView: View {
                 
                 Text(viewModel.title)
                     .multilineTextAlignment(.leading)
-                    .lineLimit(nil)
                     .foregroundColor(ColorPalette.gtGrey.color)
-                    .font(Font.system(size: 18, weight: .regular))
+                    .font(FontLibrary.sfProTextLight.font(size: 19))
                                 
                 HStack(alignment: .center, spacing: 8) {
                     
                     Text(viewModel.actionTitle)
+                        .multilineTextAlignment(.leading)
                         .foregroundColor(ColorPalette.gtBlue.color)
+                        .font(FontLibrary.sfProTextSemibold.font(size: 16))
                     
                     ImageCatalog.rightArrowBlue.image
                         .resizable()
@@ -40,7 +41,7 @@ struct OnboardingQuickStartItemView: View {
                         .frame(width: 12, height:12)
                         .clipped()
                 }
-                .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0) )
+                .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0) )
             }
             .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
         }

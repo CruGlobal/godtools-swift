@@ -10,7 +10,7 @@ import SwiftUI
 struct GTPageControlButton: View {
     
     let page: Int
-    let deselectedColor: Color = ColorPalette.getColorWithRGB(red: 230, green: 230, blue: 230, opacity: 1)
+    let deselectedColor: Color = Color.getColorWithRGB(red: 230, green: 230, blue: 230, opacity: 1)
     let selectedColor: Color = ColorPalette.gtBlue.color
     let size: CGFloat
     

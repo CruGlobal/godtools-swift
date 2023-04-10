@@ -27,15 +27,18 @@ extension ArticleAemRepositoryType {
     func downloadAndCache(aemUris: [String], forceDownload: Bool = false, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
         
         let aemUrisNeedingUpdate: [String]
+        let downloadCachePolicy: ArticleAemDownloadOperationCachePolicy
         
         if forceDownload {
             aemUrisNeedingUpdate = aemUris
+            downloadCachePolicy = .ignoreCache
         }
         else {
             aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
+            downloadCachePolicy = .fetchFromCacheUpToNextHour
         }
         
-        return downloader.download(aemUris: aemUrisNeedingUpdate) { [weak self] (downloaderResult: ArticleAemDownloaderResult) in
+        return downloader.download(aemUris: aemUrisNeedingUpdate, downloadCachePolicy: downloadCachePolicy) { [weak self] (downloaderResult: ArticleAemDownloaderResult) in
             
             guard let repository = self else {
                 return

@@ -13,14 +13,14 @@ import RequestOperation
 class ArticleAemDownloader {
             
     private let session: URLSession
-    private let maxAemJsonTreeLevels: Int = 10
+    private let maxAemJsonTreeLevels: Int = 9999
         
     init(ignoreCacheSession: IgnoreCacheSession) {
         
         self.session = ignoreCacheSession.session
     }
     
-    func download(aemUris: [String], completion: @escaping ((_ result: ArticleAemDownloaderResult) -> Void)) -> OperationQueue {
+    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloadOperationCachePolicy, completion: @escaping ((_ result: ArticleAemDownloaderResult) -> Void)) -> OperationQueue {
                         
         let queue = OperationQueue()
                 
@@ -34,7 +34,8 @@ class ArticleAemDownloader {
             let operation = ArticleAemDownloadOperation(
                 session: session,
                 aemUri: aemUri,
-                maxAemJsonTreeLevels: maxAemJsonTreeLevels
+                maxAemJsonTreeLevels: maxAemJsonTreeLevels,
+                cachePolicy: downloadCachePolicy
             )
             
             operations.append(operation)

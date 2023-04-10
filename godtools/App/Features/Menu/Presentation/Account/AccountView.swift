@@ -28,7 +28,7 @@ struct AccountView: View {
         }
         .navigationTitle(viewModel.navTitle)
         .navigationBarBackButtonHidden(true)
-        .background(ColorPalette.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
+        .background(Color.getColorWithRGB(red: 245, green: 245, blue: 245, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)
     }
 }

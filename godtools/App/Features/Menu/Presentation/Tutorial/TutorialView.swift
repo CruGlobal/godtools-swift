@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedAppleExtensions
 
 // TODO: Look into using TutorialPagerView instead. ~Levi
 class TutorialView: UIViewController {
@@ -88,7 +89,7 @@ class TutorialView: UIViewController {
     
     private func setBackButton(hidden: Bool) {
         
-        let backButtonPosition: ButtonItemPosition = .left
+        let backButtonPosition: BarButtonItemBarPosition = .left
         
         if backButton == nil && !hidden {
             backButton = addBarButtonItem(

@@ -67,6 +67,12 @@ enum ImageCatalog: String {
     case tutorialPeople = "tutorial_people"
     case unfavoritedCircle = "unfavorited_circle"
     case unfavoriteIcon = "unfavorite_icon"
+    case userActivityLanguagesUsed = "languages-used"
+    case userActivityLessonCompletions = "lesson-completions"
+    case userActivityLinksShared = "links-shared"
+    case userActivityScreenShares = "screen-shares"
+    case userActivitySessions = "sessions"
+    case userActivityToolOpens = "tool-opens"
     
     var image: Image {
         return Image(name)

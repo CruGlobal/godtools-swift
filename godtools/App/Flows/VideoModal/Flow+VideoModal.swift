@@ -29,7 +29,7 @@ extension Flow {
         
         hostingView.view.backgroundColor = UIColor(videoBackgroundColor)
         
-        let modal = ModalNavigationController(rootView: hostingView, navBarColor: .black, navBarIsTranslucent: true)
+        let modal = ModalNavigationController(rootView: hostingView, navBarColor: .black, navBarIsTranslucent: true, controlColor: .white)
                
         modal.view.backgroundColor = UIColor(videoBackgroundColor)
         

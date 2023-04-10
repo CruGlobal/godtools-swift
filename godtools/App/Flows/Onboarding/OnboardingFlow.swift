@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import SharedAppleExtensions
 
 class OnboardingFlow: Flow {
     
@@ -36,7 +37,7 @@ class OnboardingFlow: Flow {
         
         navigationController.navigationBar.setupNavigationBarAppearance(
             backgroundColor: .clear,
-            controlColor: nil,
+            controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: true
@@ -145,7 +146,7 @@ extension OnboardingFlow {
             .receiveOnMain()
             .sink { (hidden: Bool) in
                 
-                let skipButtonPosition: ButtonItemPosition = .right
+                let skipButtonPosition: BarButtonItemBarPosition = .right
                 
                 if skipButton == nil, !hidden {
                     

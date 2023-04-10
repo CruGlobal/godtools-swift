@@ -336,9 +336,16 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
+        return GetUserActivityStatsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getUserActivityUseCase() -> GetUserActivityUseCase {
         return GetUserActivityUseCase(
             getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
+            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
             userCounterRepository: dataLayer.getUserCountersRepository(),
             completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
         )
