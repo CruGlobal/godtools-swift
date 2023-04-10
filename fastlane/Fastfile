@@ -360,14 +360,17 @@ platform :ios do
       stringsDictFilePath = Dir["./godtools/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"]
       puts("stringsDict file path: #{stringsDictFilePath}")
 
-      if File.zero?(stringsDictFilePath)
-        puts("Strings dict is empty: #{locale}")
-        reset_git_repo(files: [stringsDictFilePath])
-        puts("Reset the stringsDict file changes")
-      end
+      # if File.zero?(stringsDictFilePath)
+        #puts("Strings dict is empty: #{locale}")
+        # reset_git_repo(files: [stringsDictFilePath])
+        #puts("Reset the stringsDict file changes")
+      #end
+
+      sh "ls ./godtools/#{xcodeDirectoryNameForStringsDict}.lproj"
     end
 
     begin
+
       filesToCommit = ["*/#{stringsFileName}", "*/#{stringsDictFileName}"]
 
       git_add(path: filesToCommit)
