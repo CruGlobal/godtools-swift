@@ -101,7 +101,7 @@ class ShareToolScreenTutorialView: UIViewController {
             skipButton = addBarButtonItem(
                 to: buttonPosition,
                 title: viewModel.skipTitle,
-                style: .done,
+                style: .plain,
                 color: ColorPalette.gtBlue.uiColor,
                 target: self,
                 action: #selector(handleSkip(barButtonItem:))

@@ -30,7 +30,7 @@ class TutorialFlow: Flow {
         navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.navigationBar.setupNavigationBarAppearance(
             backgroundColor: .white,
-            controlColor: nil,
+            controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: false
