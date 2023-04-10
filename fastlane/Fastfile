@@ -360,7 +360,7 @@ platform :ios do
       stringsDictFilePath = "*/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"
       puts("stringsDict file path: #{stringsDictFilePath}")
 
-      if File.size?(stringsDictFilePath) == 0
+      if File.zero?(stringsDictFilePath)
         puts("Strings dict is empty: #{locale}")
         reset_git_repo(files: [stringsDictFilePath])
         puts("Reset the stringsDict file changes")
