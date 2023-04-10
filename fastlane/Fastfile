@@ -355,26 +355,18 @@ platform :ios do
         locale: locale
         )
 
-    end
-
-    begin
-      filesToCommit = ["*/#{stringsFileName}"]
-
-      puts(filesToCommit)
-
-      stringsDictFilePath = "*/#{stringsDictFileName}"
+      stringsDictFilePath = "#{xcodeDirectoryNameForStringsDict/stringsDictFileName}"
+      puts("stringsDict file path: #{stringsDictFilePath}")
 
       if File.size?(stringsDictFilePath) == nil
-
         puts("Strings dict is empty or not found: #{locale}")
         reset_git_repo(files: [stringsDictFilePath])
         puts("Reset the stringsDict file changes")
-        
-      else
-        
-        puts("Strings dict is not empty: #{locale}")
-        filesToCommit.append(stringsDictFilePath)
       end
+    end
+
+    begin
+      filesToCommit = ["*/#{stringsFileName}", "*/#{stringsDictFileName}"]
 
       git_add(path: filesToCommit)
       git_commit(
