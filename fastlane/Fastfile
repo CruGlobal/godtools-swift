@@ -358,11 +358,18 @@ platform :ios do
     end
 
     begin
-        git_add(path: ["*/#{stringsFileName}", "*/#{stringsDictFileName}"])
-        git_commit(
-            path: ["*/#{stringsFileName}", "*/#{stringsDictFileName}"],
-            message: "[skip ci] Adding latest localization files from OneSky"
-        )
+      filesToCommit = ["*/#{stringsFileName}"]
+
+      unless File.zero?(stringsDictFileName)
+        puts("Strings dict is empty")
+        filesToCommit.append(stringsDictFileName)
+      end
+
+      git_add(path: filesToCommit)
+      git_commit(
+          path: filesToCommit,
+          message: "[skip ci] Adding latest localization files from OneSky"
+      )
     rescue
       puts("Failed to commit localization files.. maybe none to commit?")
     end
