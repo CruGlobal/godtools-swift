@@ -360,9 +360,17 @@ platform :ios do
     begin
       filesToCommit = ["*/#{stringsFileName}"]
 
-      unless File.zero?(stringsDictFileName)
-        puts("Strings dict is empty")
-        filesToCommit.append(stringsDictFileName)
+
+      if File.zero?(stringsDictFileName)
+
+        puts("Strings dict is empty: #{locale}")
+        reset_git_repo(files: ["*/#{stringsDictFileName}"])
+        puts("Reset the stringsDict file changes")
+        
+      else
+        
+        puts("Strings dict is not empty: #{locale}")
+        filesToCommit.append("*/#{stringsDictFileName}")
       end
 
       git_add(path: filesToCommit)
@@ -370,6 +378,7 @@ platform :ios do
           path: filesToCommit,
           message: "[skip ci] Adding latest localization files from OneSky"
       )
+
     rescue
       puts("Failed to commit localization files.. maybe none to commit?")
     end
