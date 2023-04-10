@@ -366,6 +366,8 @@ platform :ios do
         #puts("Reset the stringsDict file changes")
       #end
 
+      puts("where are we???")
+      sh "ls"
       sh "ls ./godtools/#{xcodeDirectoryNameForStringsDict}.lproj"
     end
 
