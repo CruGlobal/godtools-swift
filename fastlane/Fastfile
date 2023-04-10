@@ -364,9 +364,9 @@ platform :ios do
 
       stringsDictFilePath = "*/#{stringsDictFileName}"
 
-      if File.zero?(stringsDictFilePath)
+      if File.size?(stringsDictFilePath) == nil
 
-        puts("Strings dict is empty: #{locale}")
+        puts("Strings dict is empty or not found: #{locale}")
         reset_git_repo(files: [stringsDictFilePath])
         puts("Reset the stringsDict file changes")
         
@@ -382,8 +382,9 @@ platform :ios do
           message: "[skip ci] Adding latest localization files from OneSky"
       )
 
-    rescue
+    rescue Exception => e
       puts("Failed to commit localization files.. maybe none to commit?")
+      puts("with exception #{e}")
     end
   end
 
