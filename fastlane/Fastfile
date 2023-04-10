@@ -360,17 +360,20 @@ platform :ios do
     begin
       filesToCommit = ["*/#{stringsFileName}"]
 
+      puts(filesToCommit)
 
-      if File.zero?(stringsDictFileName)
+      stringsDictFilePath = "*/#{stringsDictFileName}"
+
+      if File.zero?(stringsDictFilePath)
 
         puts("Strings dict is empty: #{locale}")
-        reset_git_repo(files: ["*/#{stringsDictFileName}"])
+        reset_git_repo(files: [stringsDictFilePath])
         puts("Reset the stringsDict file changes")
         
       else
         
         puts("Strings dict is not empty: #{locale}")
-        filesToCommit.append("*/#{stringsDictFileName}")
+        filesToCommit.append(stringsDictFilePath)
       end
 
       git_add(path: filesToCommit)
