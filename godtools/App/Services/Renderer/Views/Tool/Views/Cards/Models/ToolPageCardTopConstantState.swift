@@ -10,9 +10,9 @@ import Foundation
 
 enum ToolPageCardTopConstantState {
     
-    case starting(cardPosition: Int)
+    case starting
     case showing
     case showingKeyboard
-    case collapsed(cardPosition: Int)
+    case collapsed
     case hidden
 }
