@@ -369,7 +369,7 @@ platform :ios do
       puts("where are we???")
       sh "cd"
       sh "ls"
-      sh "ls ./godtools/#{xcodeDirectoryNameForStringsDict}.lproj"
+      sh "ls ../godtools/#{xcodeDirectoryNameForStringsDict}.lproj"
     end
 
     begin
