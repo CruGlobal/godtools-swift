@@ -357,19 +357,14 @@ platform :ios do
         locale: locale
         )
 
-      stringsDictFilePath = Dir["./godtools/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"]
+      stringsDictFilePath = "../godtools/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"
       puts("stringsDict file path: #{stringsDictFilePath}")
 
-      # if File.zero?(stringsDictFilePath)
-        #puts("Strings dict is empty: #{locale}")
-        # reset_git_repo(files: [stringsDictFilePath])
-        #puts("Reset the stringsDict file changes")
-      #end
-
-      puts("where are we???")
-      sh "cd"
-      sh "ls"
-      sh "ls ../godtools/#{xcodeDirectoryNameForStringsDict}.lproj"
+      if File.zero?(stringsDictFilePath)
+        puts("Strings dict is empty: #{locale}")
+        reset_git_repo(files: [stringsDictFilePath])
+        puts("Reset the stringsDict file changes")
+      end
     end
 
     begin
