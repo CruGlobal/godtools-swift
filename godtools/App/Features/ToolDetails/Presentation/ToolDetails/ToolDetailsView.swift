@@ -26,20 +26,11 @@ struct ToolDetailsView: View {
               
             ScrollView(.vertical, showsIndicators: true) {
                 
-                if #available(iOS 14, *) {
-                    
-                    ScrollViewReader { scrollViewReader in
-                        
-                        getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
-                            
-                            scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
-                        }
-                    }
-                }
-                else {
+                ScrollViewReader { scrollViewReader in
                     
                     getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
                         
+                        scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
                     }
                 }
             }
