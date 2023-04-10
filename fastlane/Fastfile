@@ -357,7 +357,7 @@ platform :ios do
         locale: locale
         )
 
-      stringsDictFilePath = "*/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"
+      stringsDictFilePath = "./godtools/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"
       puts("stringsDict file path: #{stringsDictFilePath}")
 
       if File.zero?(stringsDictFilePath)
