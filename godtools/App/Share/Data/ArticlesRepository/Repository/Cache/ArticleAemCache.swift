@@ -21,9 +21,31 @@ class ArticleAemCache {
         self.webArchiveQueue = webArchiveQueue
     }
     
+    func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {
+        
+        guard aemUris.count > 0 else {
+            completion([])
+            return
+        }
+        
+        realmDatabase.background { (realm: Realm) in
+            
+            let aemCacheObjects: [ArticleAemCacheObject] = aemUris.compactMap({
+                self.getAemCacheObject(realm: realm, aemUri: $0)
+            })
+            
+            completion(aemCacheObjects)
+        }
+    }
+    
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
         let realm: Realm = realmDatabase.openRealm()
+        
+        return getAemCacheObject(realm: realm, aemUri: aemUri)
+    }
+    
+    private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
         
         guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
             return nil
