@@ -328,6 +328,8 @@ platform :ios do
   #
   lane :cru_shared_lane_download_and_commit_latest_one_sky_localizations do |options|
     
+    ensure_git_status_clean
+
     one_sky_localizations_string = options[:one_sky_localizations] || ENV["ONESKY_LOCALIZATIONS"]
     one_sky_localizations_array = one_sky_localizations_string.split(",")
 
@@ -355,7 +357,7 @@ platform :ios do
         locale: locale
         )
 
-      stringsDictFilePath = "#{xcodeDirectoryNameForStringsDict}/#{stringsDictFileName}"
+      stringsDictFilePath = "*/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"
       puts("stringsDict file path: #{stringsDictFilePath}")
 
       if File.size?(stringsDictFilePath) == nil
