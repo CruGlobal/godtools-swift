@@ -119,6 +119,14 @@ Commit downloaded localization files to default branch and push to remote
 
 
 
+### ios download_onesky_localizations
+
+```sh
+[bundle exec] fastlane ios download_onesky_localizations
+```
+
+
+
 ### ios cru_shared_lane_increment_xcode_project_build_number
 
 ```sh
