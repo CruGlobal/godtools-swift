@@ -364,7 +364,7 @@ platform :ios do
         git_add(path: ["*/#{stringsDictFileName}"])
         puts("Strings dict is empty: #{locale}")
 
-        reset_git_repo(files: ["*/#{xcodeDirectoryNameForStringsDict}.lproj/#{stringsDictFileName}"])
+        reset_git_repo(files: ["*/#{stringsDictFileName}"])
         puts("Reset the stringsDict file changes")
       end
     end
