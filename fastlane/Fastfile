@@ -361,7 +361,7 @@ platform :ios do
       puts("stringsDict file path: #{stringsDictFilePath}")
 
       if File.zero?(stringsDictFilePath)
-        git_add(path: [stringsDictFilePath])
+        git_add(path: ["*/#{stringsDictFileName}"])
         puts("Strings dict is empty: #{locale}")
         reset_git_repo(files: [stringsDictFilePath])
         puts("Reset the stringsDict file changes")
