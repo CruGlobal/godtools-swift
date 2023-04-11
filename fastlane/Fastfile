@@ -371,7 +371,7 @@ platform :ios do
 
     rescue Exception => e
       puts("Failed to commit localization files.. maybe none to commit?")
-      puts("with exception #{e}")
+      puts("Exception: #{e}")
     end
   end
 
@@ -391,26 +391,14 @@ platform :ios do
       directory = "../#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj"
       Dir.mkdir(directory) unless File.exists?(directory)
 
-      destination = "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/#{filename}"
-
       onesky_download(
-          destination: destination,
+          destination: "./#{one_sky_download_to_project_directory}/#{xcodeDirectoryName}.lproj/#{filename}",
           filename: filename,
           locale: locale,
           project_id: one_sky_project_id,
           public_key: one_sky_public_key,
           secret_key: one_sky_secret_key
       )
-
-      puts("destination file path: #{destination}")
-
-      if File.zero?(destination)
-        git_add(path: [destination])
-        puts("File is empty: #{locale}")
-
-        reset_git_repo(files: [destination])
-        puts("Reset the file changes")
-      end
 
       rescue
           puts("Failed to import #{filename} to #{directory})")
