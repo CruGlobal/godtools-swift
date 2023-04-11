@@ -48,41 +48,29 @@ class GetUserActivityBadgeUseCase {
     
     private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int) -> String {
         
-        if progressTarget == 1 {
-            
-            return getSingularString(for: badgeType)
-            
-        } else {
-            
-            return getPluralString(for: badgeType, progressTarget: progressTarget)
-        }
-    }
-    
-    private func getSingularString(for badgeType: Badge.BadgeType) -> String {
-        
         let stringLocalizationKey: String
         
         switch badgeType {
             
         case .articlesOpened:
             
-            stringLocalizationKey = "badges.articlesOpened.singular"
+            stringLocalizationKey = "badges.articlesOpened"
         
         case .imagesShared:
             
-            stringLocalizationKey = "badges.imagesShared.singular"
+            stringLocalizationKey = "badges.imagesShared"
         
         case .lessonsCompleted:
             
-            stringLocalizationKey = "badges.lessonsCompleted.singular"
+            stringLocalizationKey = "badges.lessonsCompleted"
         
         case .toolsOpened:
             
-            stringLocalizationKey = "badges.toolsOpened.singular"
+            stringLocalizationKey = "badges.toolsOpened"
    
         case .tipsCompleted:
             
-            stringLocalizationKey = "badges.tipsCompleted.singular"
+            stringLocalizationKey = "badges.tipsCompleted"
             
         default:
             
@@ -90,45 +78,9 @@ class GetUserActivityBadgeUseCase {
 
         }
         
-        return localizationServices.stringForMainBundle(key: stringLocalizationKey)
-    }
-    
-    private func getPluralString(for badgeType: Badge.BadgeType, progressTarget: Int) -> String {
+        let formatString = localizationServices.stringForMainBundle(key: stringLocalizationKey)
         
-        let stringLocalizationKey: String
-        
-        switch badgeType {
-            
-        case .articlesOpened:
-            
-            stringLocalizationKey = "badges.articlesOpened.plural"
-        
-        case .imagesShared:
-            
-            stringLocalizationKey = "badges.imagesShared.plural"
-        
-        case .lessonsCompleted:
-            
-            stringLocalizationKey = "badges.lessonsCompleted.plural"
-        
-        case .toolsOpened:
-            
-            stringLocalizationKey = "badges.toolsOpened.plural"
-   
-        case .tipsCompleted:
-            
-            stringLocalizationKey = "badges.tipsCompleted.plural"
-            
-        default:
-            
-            return ""
-
-        }
-        
-        return String.localizedStringWithFormat(
-            localizationServices.stringForMainBundle(key: stringLocalizationKey),
-            progressTarget
-        )
+        return String.localizedStringWithFormat(formatString, progressTarget)
     }
     
     private func getIconImageName(badgeType: Badge.BadgeType, variant: Int) -> String {
