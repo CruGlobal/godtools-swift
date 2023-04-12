@@ -8,12 +8,12 @@
 
 import Foundation
 
-class ArticleCellViewModel: ArticleCellViewModelType {
+class ArticleCellViewModel {
     
     let title: String?
     
-    required init(aemData: ArticleAemData) {
-        
+    init(aemData: ArticleAemData) {
+
         title = aemData.articleJcrContent?.title
     }
 }

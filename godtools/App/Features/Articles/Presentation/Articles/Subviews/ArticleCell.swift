@@ -13,7 +13,7 @@ class ArticleCell: UITableViewCell {
     static let nibName: String = "ArticleCell"
     static let reuseIdentifier: String = "ArticleCellReuseIdentifier"
     
-    private var viewModel: ArticleCellViewModelType?
+    private var viewModel: ArticleCellViewModel?
     
     @IBOutlet weak private var titleLabel: UILabel!
     
@@ -23,7 +23,7 @@ class ArticleCell: UITableViewCell {
         titleLabel.text = ""
     }
     
-    func configure(viewModel: ArticleCellViewModelType) {
+    func configure(viewModel: ArticleCellViewModel) {
         
         self.viewModel = viewModel
         

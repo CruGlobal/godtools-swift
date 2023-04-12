@@ -19,6 +19,11 @@ protocol ArticleAemRepositoryType: NSObject {
 
 extension ArticleAemRepositoryType {
     
+    func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {
+        
+        return cache.getAemCacheObjectsOnBackgroundThread(aemUris: aemUris, completion: completion)
+    }
+    
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
         return cache.getAemCacheObject(aemUri: aemUri)
