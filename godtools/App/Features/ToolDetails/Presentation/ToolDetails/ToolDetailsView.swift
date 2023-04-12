@@ -26,20 +26,11 @@ struct ToolDetailsView: View {
               
             ScrollView(.vertical, showsIndicators: true) {
                 
-                if #available(iOS 14, *) {
-                    
-                    ScrollViewReader { scrollViewReader in
-                        
-                        getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
-                            
-                            scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
-                        }
-                    }
-                }
-                else {
+                ScrollViewReader { scrollViewReader in
                     
                     getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
                         
+                        scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
                     }
                 }
             }
@@ -57,13 +48,19 @@ struct ToolDetailsView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
+            ZStack {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: geometry.size.width, height: 0)
+            }
+            .id(ToolDetailsView.headerViewId)
+            
             ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
             
             VStack(alignment: .center, spacing: 0) {
                                          
                  ToolDetailsTitleHeaderView(viewModel: viewModel)
                      .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                     .id(ToolDetailsView.headerViewId)
                  
                  ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
                      .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
