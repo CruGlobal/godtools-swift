@@ -23,7 +23,7 @@ class ArticlesViewModel: NSObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
         
-    private var articles: [AemUri] = Array()
+    private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
     
@@ -183,8 +183,24 @@ class ArticlesViewModel: NSObject {
     
     private func reloadArticles(aemUris: [AemUri]) {
         
-        self.articles = aemUris
-        numberOfArticles.accept(value: aemUris.count)
+        articleManifestAemRepository.getAemCacheObjectsOnBackgroundThread(aemUris: aemUris) { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
+            
+            let sortedAemCacheObjects: [ArticleAemCacheObject] = aemCacheObjects.sorted(by: {
+                let thisTitle: String? = $0.aemData.articleJcrContent?.title
+                let thatTitle: String? = $1.aemData.articleJcrContent?.title
+                
+                if let thisTitle = thisTitle, let thatTitle = thatTitle {
+                    return thisTitle < thatTitle
+                }
+                
+                return false
+            })
+            
+            DispatchQueue.main.async {
+                self?.articleAemCacheObjects = sortedAemCacheObjects
+                self?.numberOfArticles.accept(value: sortedAemCacheObjects.count)
+            }
+        }
     }
 }
 
@@ -212,22 +228,14 @@ extension ArticlesViewModel {
     
     func articleTapped(index: Int) {
         
-        let aemUri: String = articles[index]
-        
-        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
-            return
-        }
+        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
         
         flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, aemCacheObject: aemCacheObject))
     }
     
-    func articleWillAppear(index: Int) -> ArticleCellViewModelType? {
+    func articleWillAppear(index: Int) -> ArticleCellViewModel {
         
-        let aemUri: String = articles[index]
-    
-        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
-            return nil
-        }
+        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
         
         return ArticleCellViewModel(aemData: aemCacheObject.aemData)
     }
