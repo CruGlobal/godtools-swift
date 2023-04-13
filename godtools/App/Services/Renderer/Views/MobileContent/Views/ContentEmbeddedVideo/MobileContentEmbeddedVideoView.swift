@@ -53,7 +53,11 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     override func viewDidDisappear() {
 
-        videoView.stopVideo()
+        videoView.currentTime({ [weak self] (number: Float, error: Error?) in
+            self?.viewModel.trackElapsedTime(elapsedTime: number)
+        })
+        
+        videoView.pauseVideo()
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
@@ -68,6 +72,9 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
+        if let lastTrackedElapsedTime = viewModel.getLastTrackedElapsedTime() {
+            videoView.cueVideo(byId: viewModel.videoId, startSeconds: lastTrackedElapsedTime)
+        }
     }
     
     internal func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {

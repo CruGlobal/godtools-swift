@@ -16,7 +16,7 @@ class ArticlesView: UIViewController {
     @IBOutlet weak private var articlesTableView: UITableView!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
-    required init(viewModel: ArticlesViewModel) {
+    init(viewModel: ArticlesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ArticlesView.self), bundle: nil)
     }
@@ -117,11 +117,9 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
         let cell: ArticleCell = articlesTableView.dequeueReusableCell(
             withIdentifier: ArticleCell.reuseIdentifier,
             for: indexPath) as! ArticleCell
-                
-        if let cellViewModel = viewModel.articleWillAppear(index: indexPath.row) {
-            cell.configure(viewModel: cellViewModel)
-        }
-
+        
+        cell.configure(viewModel: viewModel.articleWillAppear(index: indexPath.row))
+        
         return cell
     }
 }
