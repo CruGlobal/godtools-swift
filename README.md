@@ -156,6 +156,8 @@ The Coordinator is the decision maker when it comes to navigation. For example, 
 
 #### Fastlane
 
+Below are some helpful references to GitHub Actions Workflows and Fastlane Files that the GodTools project uses.
+
 - Project Fastlane Fastfile (https://github.com/CruGlobal/godtools-swift/blob/develop/fastlane/Fastfile) points to shared Fastfile (https://github.com/CruGlobal/cru-fastlane-files/blob/master/Fastfile)
 
 - Uses a combination of Fastlane Environment Variables(https://github.com/CruGlobal/godtools-swift/blob/develop/fastlane/.env.default) and GitHub Secrets
