@@ -14,9 +14,9 @@ extension UIViewController {
   
     func addAnimatedBarButtonItem(to barPosition: BarButtonItemBarPosition, index: Int? = nil, animationName: String) -> UIBarButtonItem {
         
-        let animationView = AnimationView()
+        let animationView = LottieAnimationView()
         
-        let animation = Animation.named(animationName)
+        let animation = LottieAnimation.named(animationName)
         animationView.animation = animation
         
         animationView.loopMode = .loop
