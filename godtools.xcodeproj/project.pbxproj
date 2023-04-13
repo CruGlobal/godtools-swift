@@ -359,6 +359,7 @@
 		45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BC9279CCB6900F6B5F3 /* MobileContentCardViewModel.swift */; };
 		45828BD1279CCBD200F6B5F3 /* MobileContentFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */; };
 		45828BD3279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45828BD0279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift */; };
+		45838F0329E847D4003B5578 /* ToolDetailsSectionDescriptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45838F0229E847D3003B5578 /* ToolDetailsSectionDescriptionTextView.swift */; };
 		458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */; };
 		458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */; };
 		4585E0692706560600DD6608 /* TransparentModalCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585E0682706560600DD6608 /* TransparentModalCustomView.swift */; };
@@ -1432,6 +1433,7 @@
 		45828BC9279CCB6900F6B5F3 /* MobileContentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardViewModel.swift; sourceTree = "<group>"; };
 		45828BCE279CCBD200F6B5F3 /* MobileContentFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowView.swift; sourceTree = "<group>"; };
 		45828BD0279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentFlowViewModel.swift; sourceTree = "<group>"; };
+		45838F0229E847D3003B5578 /* ToolDetailsSectionDescriptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailsSectionDescriptionTextView.swift; sourceTree = "<group>"; };
 		458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountCreationIsSupportedUseCase.swift; sourceTree = "<group>"; };
 		458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationIsSupportedDomainModel.swift; sourceTree = "<group>"; };
 		4585E0682706560600DD6608 /* TransparentModalCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomView.swift; sourceTree = "<group>"; };
@@ -4051,6 +4053,7 @@
 				4573133028C1821100481640 /* ToolDetailsAboutView.swift */,
 				4573132F28C1821100481640 /* ToolDetailsMediaView.swift */,
 				4573133428C1821100481640 /* ToolDetailsPrimaryButtonsView.swift */,
+				45838F0229E847D3003B5578 /* ToolDetailsSectionDescriptionTextView.swift */,
 				4573133528C1821100481640 /* ToolDetailsSegmentType.swift */,
 				4573132E28C1821100481640 /* ToolDetailsTitleHeaderView.swift */,
 				4573132D28C1821100481640 /* ToolDetailsToggleFavoriteButton.swift */,
@@ -8837,6 +8840,7 @@
 				D1E98EDD27974F0000D1B738 /* LessonEvaluationViewModelType.swift in Sources */,
 				45BDA61B2954FE3E007E259B /* ArticleManifestAemRepository.swift in Sources */,
 				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,
+				45838F0329E847D4003B5578 /* ToolDetailsSectionDescriptionTextView.swift in Sources */,
 				45AD1B2225938A4F00A096A0 /* LearnToShareToolCellViewModelType.swift in Sources */,
 				45E8FAA92882FD4B00D7D569 /* SHA256FileModel.swift in Sources */,
 				45D63E5E288F689F009B4610 /* RealmTranslation.swift in Sources */,

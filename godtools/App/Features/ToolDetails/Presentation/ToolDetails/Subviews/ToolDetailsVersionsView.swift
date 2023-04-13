@@ -10,23 +10,30 @@ import SwiftUI
 
 struct ToolDetailsVersionsView: View {
         
+    private let geometry: GeometryProxy
     private let cardHorizontalInsets: CGFloat = 20
     private let cardSpacing: CGFloat = 15
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
     
-    let geometry: GeometryProxy
-    let textEdgeInsets: EdgeInsets
     let toolVersionTappedClosure: (() -> Void)
+       
+    init(viewModel: ToolDetailsViewModel, geometry: GeometryProxy, toolVersionTappedClosure: @escaping (() -> Void)) {
         
+        self.viewModel = viewModel
+        self.geometry = geometry
+        self.toolVersionTappedClosure = toolVersionTappedClosure
+    }
+    
     var body: some View {
                 
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.versionsMessage)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
-                .padding(textEdgeInsets)
+            ToolDetailsSectionDescriptionTextView(
+                viewModel: viewModel,
+                geometry: geometry,
+                text: viewModel.versionsMessage
+            )
             
             ForEach(viewModel.toolVersions) { toolVersion in
                          

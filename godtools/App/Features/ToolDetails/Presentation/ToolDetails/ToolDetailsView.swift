@@ -10,10 +10,11 @@ import SwiftUI
 
 struct ToolDetailsView: View {
     
+    static let sectionDescriptionTextInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+    
     private static let headerViewId: String = "HeaderViewId"
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
-    private let sectionTextInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
     
     @State private var selectedSegmentIndex: Int = 0
     
@@ -85,14 +86,12 @@ struct ToolDetailsView: View {
              switch viewModel.selectedSegment {
              
              case .about:
-                 ToolDetailsAboutView(viewModel: viewModel, width: contentWidth)
-                     .padding(sectionTextInsets)
+                 ToolDetailsAboutView(viewModel: viewModel, geometry: geometry)
              
              case .versions:
                  ToolDetailsVersionsView(
                     viewModel: viewModel,
                     geometry: geometry,
-                    textEdgeInsets: sectionTextInsets,
                     toolVersionTappedClosure: toolVersionTappedClosure
                  )
              }
