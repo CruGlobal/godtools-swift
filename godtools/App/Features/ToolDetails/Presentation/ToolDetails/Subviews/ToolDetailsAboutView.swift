@@ -29,6 +29,7 @@ struct ToolDetailsAboutView: View {
                 font: FontLibrary.sfProTextRegular.uiFont(size: 16),
                 lineSpacing: 3,
                 width: width,
+                adjustsFontForContentSizeCategory: true,
                 didInteractWithUrlClosure: { (url: URL) in
                     viewModel.urlTapped(url: url)
                     return true

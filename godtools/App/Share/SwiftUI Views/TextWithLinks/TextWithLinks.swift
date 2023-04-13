@@ -17,9 +17,10 @@ struct TextWithLinks: UIViewRepresentable {
     private let lineSpacing: CGFloat?
     private let width: CGFloat
     private let linkTextColor: UIColor
+    private let adjustsFontForContentSizeCategory: Bool
     private let didInteractWithUrlClosure: ((_ url: URL) -> Bool)
         
-    init(text: String, textColor: UIColor, font: UIFont?, lineSpacing: CGFloat?, width: CGFloat, linkTextColor: UIColor = .systemBlue, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
+    init(text: String, textColor: UIColor, font: UIFont?, lineSpacing: CGFloat?, width: CGFloat, linkTextColor: UIColor = .systemBlue, adjustsFontForContentSizeCategory: Bool = false, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
         
         self.text = text
         self.textColor = textColor
@@ -27,6 +28,7 @@ struct TextWithLinks: UIViewRepresentable {
         self.lineSpacing = lineSpacing
         self.width = width
         self.linkTextColor = linkTextColor
+        self.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory
         self.didInteractWithUrlClosure = didInteractWithUrlClosure
     }
     
@@ -65,6 +67,11 @@ struct TextWithLinks: UIViewRepresentable {
         textView.isUserInteractionEnabled = true
         textView.dataDetectorTypes = .link
         textView.linkTextAttributes = [.foregroundColor: linkTextColor]
+        
+        if adjustsFontForContentSizeCategory, let font = self.font {
+            textView.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+            textView.adjustsFontForContentSizeCategory = true
+        }
         
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
