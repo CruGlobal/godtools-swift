@@ -35,22 +35,22 @@ struct ToolDetailsVersionsView: View {
                 text: viewModel.versionsMessage
             )
             
-            ForEach(viewModel.toolVersions) { toolVersion in
-                         
-                Rectangle()
-                    .frame(width: geometry.size.width, height: cardSpacing)
-                    .foregroundColor(.clear)
+            LazyVStack(alignment: .center, spacing: cardSpacing) {
                 
-                ToolDetailsVersionsCardView(
-                    viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion),
-                    width: geometry.size.width - (cardHorizontalInsets * 2)
-                )
-                .padding(EdgeInsets(top: 0, leading: cardHorizontalInsets, bottom: 0, trailing: cardHorizontalInsets))
-                .onTapGesture {
-                    viewModel.toolVersionTapped(toolVersion: toolVersion)
-                    toolVersionTappedClosure()
+                ForEach(viewModel.toolVersions) { toolVersion in
+                             
+                    ToolDetailsVersionsCardView(
+                        viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion),
+                        width: geometry.size.width - (cardHorizontalInsets * 2)
+                    )
+                    .padding(EdgeInsets(top: 0, leading: cardHorizontalInsets, bottom: 0, trailing: cardHorizontalInsets))
+                    .onTapGesture {
+                        viewModel.toolVersionTapped(toolVersion: toolVersion)
+                        toolVersionTappedClosure()
+                    }
                 }
             }
+            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
         }
     }
 }

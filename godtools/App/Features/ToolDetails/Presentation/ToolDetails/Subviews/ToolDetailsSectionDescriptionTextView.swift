@@ -24,7 +24,7 @@ struct ToolDetailsSectionDescriptionTextView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
            
             TextWithLinks(
                 text: text,

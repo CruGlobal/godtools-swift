@@ -86,7 +86,10 @@ struct ToolDetailsView: View {
              switch viewModel.selectedSegment {
              
              case .about:
-                 ToolDetailsAboutView(viewModel: viewModel, geometry: geometry)
+                 ToolDetailsAboutView(
+                    viewModel: viewModel,
+                    geometry: geometry
+                 )
              
              case .versions:
                  ToolDetailsVersionsView(
