@@ -11,12 +11,12 @@ import Combine
 
 class RemoteUserCountersSync {
     
-    private let api: UserCountersAPI
+    private let api: UserCountersAPIType
     private let cache: RealmUserCountersCache
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersAPI, cache: RealmUserCountersCache) {
+    init(api: UserCountersAPIType, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache
