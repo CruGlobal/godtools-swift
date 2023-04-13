@@ -16,6 +16,7 @@ struct ToolDetailsVersionsView: View {
     @ObservedObject var viewModel: ToolDetailsViewModel
     
     let geometry: GeometryProxy
+    let textEdgeInsets: EdgeInsets
     let toolVersionTappedClosure: (() -> Void)
         
     var body: some View {
@@ -25,7 +26,7 @@ struct ToolDetailsVersionsView: View {
             Text(viewModel.versionsMessage)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 16))
-                .padding(EdgeInsets(top: 0, leading: 30, bottom: 10, trailing: 30))
+                .padding(textEdgeInsets)
             
             ForEach(viewModel.toolVersions) { toolVersion in
                          
