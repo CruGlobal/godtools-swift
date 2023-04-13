@@ -38,40 +38,40 @@ final class UserCountersRepositoryTests: XCTestCase {
     }
     
     func testIncrementUserCounter() throws {
-        
-        // Given:
-        
+                
         let counterId = "counter_1"
         XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
-        
-        // When
-        
-//        var updatedUserCounter: UserCounterDataModel
-//        var error: Error?
-//        let expectation = self.expectation(description: "Increment User Counter")
-                        
-//        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
-//            .sink(receiveCompletion: { (completion: Combine.Subscribers.Completion<Error>) in
-//                
-//                switch completion {
-//                case .finished:
-//                    break
-//                    
-//                case .failure(let encounteredError):
-//                    error = encounteredError
-//                }
-//                
-//                expectation.fulfill()
-//                
-//            }, receiveValue: { userCounter in
-//                
-//                updatedUserCounter = userCounter
-//            })
-//            .store(in: &cancellables)
+                
+        var updatedUserCounter: UserCounterDataModel?
+        var error: Error?
+        let expectation = self.expectation(description: "Increment User Counter")
+             
+        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+            .sink { completion in
+                
+                switch completion {
+                case .finished:
+                    break
+                    
+                case .failure(let encounteredError):
+                    error = encounteredError
+                }
+                
+                expectation.fulfill()
+                
+            } receiveValue: { userCounter in
+                
+                updatedUserCounter = userCounter
+            }
+            .store(in: &cancellables)
 
-        
-        // Then
-        
+        waitForExpectations(timeout: 10)
+                
+        XCTAssertNil(error)
+        XCTAssertNotNil(updatedUserCounter)
+        XCTAssertEqual(updatedUserCounter!.id, counterId)
+        XCTAssertEqual(updatedUserCounter!.incrementValue, 1)
+        XCTAssertEqual(updatedUserCounter!.latestCountFromAPI, 0)
         
     }
 }
