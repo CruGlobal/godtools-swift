@@ -13,9 +13,9 @@ import Combine
 class UserCountersAPIMock {
     
     var fetchedCounters: [UserCounterDecodable] = [
-        UserCounterDecodable(id: "counter_1", count: 1),
-        UserCounterDecodable(id: "counter_2", count: 2),
-        UserCounterDecodable(id: "counter_3", count: 3)
+        UserCounterDecodable(id: "counter_1", count: 10),
+        UserCounterDecodable(id: "counter_2", count: 20),
+        UserCounterDecodable(id: "counter_3", count: 30)
     ]
     
     func setMockFetchedCounters() {

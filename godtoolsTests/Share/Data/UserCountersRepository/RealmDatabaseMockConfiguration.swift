@@ -11,13 +11,12 @@ import Foundation
 
 class RealmDatabaseMockConfiguration: RealmDatabaseConfiguration {
     
-    private static let inMemoryFileName = "godtools_realm_mock"
     private static let schemaVersion: UInt64 = 1
     
     init() {
         
         super.init(
-            cacheType: .inMemory(identifier: RealmDatabaseMockConfiguration.inMemoryFileName),
+            cacheType: .inMemory(identifier: NSUUID().uuidString),
             schemaVersion: RealmDatabaseMockConfiguration.schemaVersion
         )
     }
