@@ -10,11 +10,25 @@ import Foundation
 import Combine
 @testable import godtools
 
-class UserCountersAPIMock: UserCountersAPIType {
+class UserCountersAPIMock {
+    
+    var fetchedCounters: [UserCounterDecodable] = [
+        UserCounterDecodable(id: "counter_1", count: 1),
+        UserCounterDecodable(id: "counter_2", count: 2),
+        UserCounterDecodable(id: "counter_3", count: 3)
+    ]
+    
+    func setMockFetchedCounters() {
+        
+        
+    }
+}
+    
+extension UserCountersAPIMock: UserCountersAPIType {
     
     func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], URLResponseError> {
         
-        return Just([])
+        return Just(fetchedCounters)
             .setFailureType(to: URLResponseError.self)
             .eraseToAnyPublisher()
     }
