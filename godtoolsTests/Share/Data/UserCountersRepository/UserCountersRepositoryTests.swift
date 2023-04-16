@@ -36,6 +36,83 @@ final class UserCountersRepositoryTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    func testIncrementUserCounter() throws {
+
+        let counterId = "counter_1"
+        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
+
+        var error: Error?
+        let expectation = expectation(description: "Increment User Counter")
+        var updatedUserCounter: UserCounterDataModel?
+
+        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+            .sink { completion in
+
+                switch completion {
+                case .finished:
+                    break
+
+                case .failure(let encounteredError):
+                    error = encounteredError
+                }
+
+                expectation.fulfill()
+
+            } receiveValue: { userCounter in
+
+                updatedUserCounter = userCounter
+            }
+            .store(in: &cancellables)
+
+        waitForExpectations(timeout: 10)
+
+        XCTAssertNil(error)
+        XCTAssertNotNil(updatedUserCounter)
+        XCTAssertEqual(updatedUserCounter!.id, counterId)
+        XCTAssertEqual(updatedUserCounter!.incrementValue, 1)
+        XCTAssertEqual(updatedUserCounter!.latestCountFromAPI, 0)
+    }
+    
+    func testGetUserCounter() throws {
+        
+        let counterId = "counter_1"
+        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
+
+        var error: Error?
+        let expectation = expectation(description: "Increment User Counter")
+        var updatedUserCounter: UserCounterDataModel?
+
+        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+            .sink { completion in
+
+                switch completion {
+                case .finished:
+                    break
+
+                case .failure(let encounteredError):
+                    error = encounteredError
+                }
+
+                expectation.fulfill()
+
+            } receiveValue: { userCounter in
+
+                updatedUserCounter = userCounter
+            }
+            .store(in: &cancellables)
+
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertNil(error)
+        XCTAssertNotNil(updatedUserCounter)
+        
+        let cachedCounter = userCountersRepository.getUserCounter(id: counterId)
+        
+        XCTAssertNotNil(cachedCounter)
+        XCTAssertEqual(cachedCounter!.id, counterId)
+        XCTAssertEqual(cachedCounter!.count, 1)
+    }
+    
     func testSyncNewRemoteUserCounters() throws {
         
         let counter1Id = "counter_1"
@@ -159,42 +236,13 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(counter1DataModel!.incrementValue, 1)
         XCTAssertEqual(counter2DataModel!.latestCountFromAPI, 20)
         XCTAssertEqual(counter2DataModel!.incrementValue, 2)
-    }
-    
-    func testIncrementUserCounter() throws {
-
-        let counterId = "counter_1"
-        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
-
-        var error: Error?
-        let expectation = expectation(description: "Increment User Counter")
-        var updatedUserCounter: UserCounterDataModel?
-
-        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
-            .sink { completion in
-
-                switch completion {
-                case .finished:
-                    break
-
-                case .failure(let encounteredError):
-                    error = encounteredError
-                }
-
-                expectation.fulfill()
-
-            } receiveValue: { userCounter in
-
-                updatedUserCounter = userCounter
-            }
-            .store(in: &cancellables)
-
-        waitForExpectations(timeout: 10)
-
-        XCTAssertNil(error)
-        XCTAssertNotNil(updatedUserCounter)
-        XCTAssertEqual(updatedUserCounter!.id, counterId)
-        XCTAssertEqual(updatedUserCounter!.incrementValue, 1)
-        XCTAssertEqual(updatedUserCounter!.latestCountFromAPI, 0)
+        
+        let counter1DomainModel = userCountersRepository.getUserCounter(id: counter1Id)
+        let counter2DomainModel = userCountersRepository.getUserCounter(id: counter2Id)
+        
+        XCTAssertNotNil(counter1DomainModel)
+        XCTAssertNotNil(counter2DomainModel)
+        XCTAssertEqual(counter1DomainModel!.count, 11)
+        XCTAssertEqual(counter2DomainModel!.count, 22)
     }
 }
