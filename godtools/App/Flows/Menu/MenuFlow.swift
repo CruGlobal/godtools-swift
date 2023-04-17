@@ -94,54 +94,13 @@ class MenuFlow: Flow {
             
         case .backTappedFromActivity:
             navigationController.popViewController(animated: true)
-            
-//        case .aboutTappedFromMenu:
-//            navigationController.pushViewController(getAboutView(), animated: true)
-//
-//        case .backTappedFromAbout:
-//            navigationController.popViewController(animated: true)
-            
-//        case .helpTappedFromMenu:
-//
-//            let helpWebContent = HelpWebContent(localizationServices: appDiContainer.localizationServices)
-//
-//            pushWebContentView(webContent: helpWebContent, backTappedFromWebContentStep: .backTappedFromHelp)
-//
-//        case .backTappedFromHelp:
-//            navigationController.popViewController(animated: true)
-            
-//        case .contactUsTappedFromMenu:
-//
-//            if MFMailComposeViewController.canSendMail() {
-//
-//                let finishedSendingMail = CallbackHandler { [weak self] in
-//                    self?.navigationController.dismiss(animated: true, completion: nil)
-//                }
-//
-//                let viewModel = MailViewModel(
-//                    toRecipients: ["support@godtoolsapp.com"],
-//                    subject: "Email to GodTools support",
-//                    message: "",
-//                    isHtml: false,
-//                    finishedSendingMailHandler: finishedSendingMail
-//                )
-//
-//                navigateToNativeMailApp(viewModel: viewModel)
-//            }
-//            else {
-//                let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
-//                pushWebContentView(webContent: contactUsWebContent, backTappedFromWebContentStep: .backTappedFromContactUs)
-//            }
-//
-//        case .backTappedFromContactUs:
-//            navigationController.popViewController(animated: true)
-//
-//        case .shareGodToolsTappedFromMenu:
-//
-//            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
-//            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
-//
-//            navigationController.present(view, animated: true, completion: nil)
+
+        case .shareGodToolsTappedFromMenu:
+
+            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
+            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+
+            navigationController.present(view, animated: true, completion: nil)
             
         case .sendFeedbackTappedFromMenu:
             let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)

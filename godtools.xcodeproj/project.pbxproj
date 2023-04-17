@@ -821,10 +821,8 @@
 		45F71625290A12D70019B715 /* CopyrightInfoWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C6290A12D70019B715 /* CopyrightInfoWebContent.swift */; };
 		45F71626290A12D70019B715 /* WebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C7290A12D70019B715 /* WebContent.swift */; };
 		45F71627290A12D70019B715 /* TermsOfUseWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C8290A12D70019B715 /* TermsOfUseWebContent.swift */; };
-		45F71628290A12D70019B715 /* ContactUsWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C9290A12D70019B715 /* ContactUsWebContent.swift */; };
 		45F71629290A12D70019B715 /* WebContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CA290A12D70019B715 /* WebContentType.swift */; };
 		45F7162A290A12D70019B715 /* PrivacyPolicyWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CB290A12D70019B715 /* PrivacyPolicyWebContent.swift */; };
-		45F7162B290A12D70019B715 /* HelpWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CC290A12D70019B715 /* HelpWebContent.swift */; };
 		45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CD290A12D70019B715 /* ShareAStoryWithUsWebContent.swift */; };
 		45F7162D290A12D70019B715 /* WebContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CE290A12D70019B715 /* WebContentView.swift */; };
 		45F7162E290A12D70019B715 /* WebContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F715CF290A12D70019B715 /* WebContentView.xib */; };
@@ -1862,10 +1860,8 @@
 		45F715C6290A12D70019B715 /* CopyrightInfoWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightInfoWebContent.swift; sourceTree = "<group>"; };
 		45F715C7290A12D70019B715 /* WebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContent.swift; sourceTree = "<group>"; };
 		45F715C8290A12D70019B715 /* TermsOfUseWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfUseWebContent.swift; sourceTree = "<group>"; };
-		45F715C9290A12D70019B715 /* ContactUsWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsWebContent.swift; sourceTree = "<group>"; };
 		45F715CA290A12D70019B715 /* WebContentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContentType.swift; sourceTree = "<group>"; };
 		45F715CB290A12D70019B715 /* PrivacyPolicyWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyWebContent.swift; sourceTree = "<group>"; };
-		45F715CC290A12D70019B715 /* HelpWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpWebContent.swift; sourceTree = "<group>"; };
 		45F715CD290A12D70019B715 /* ShareAStoryWithUsWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAStoryWithUsWebContent.swift; sourceTree = "<group>"; };
 		45F715CE290A12D70019B715 /* WebContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContentView.swift; sourceTree = "<group>"; };
 		45F715CF290A12D70019B715 /* WebContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebContentView.xib; sourceTree = "<group>"; };
@@ -6199,9 +6195,7 @@
 			isa = PBXGroup;
 			children = (
 				D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */,
-				45F715C9290A12D70019B715 /* ContactUsWebContent.swift */,
 				45F715C6290A12D70019B715 /* CopyrightInfoWebContent.swift */,
-				45F715CC290A12D70019B715 /* HelpWebContent.swift */,
 				45F715CB290A12D70019B715 /* PrivacyPolicyWebContent.swift */,
 				D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */,
 				D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */,
@@ -8330,7 +8324,6 @@
 				D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */,
 				D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */,
 				D420DA2D282AEE9C0035ABCB /* ToolSpotlightView.swift in Sources */,
-				45F7162B290A12D70019B715 /* HelpWebContent.swift in Sources */,
 				457F6BDD28B0132F0055456C /* AttachmentsBundleCache.swift in Sources */,
 				45F715B8290A12AA0019B715 /* OktaAuthenticationError+GetError.swift in Sources */,
 				459E86F228EDA86C00E197A5 /* DeepLinkingService.swift in Sources */,
@@ -8824,7 +8817,6 @@
 				45BDA6142954FE3E007E259B /* ArticleAemData.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				45AE975E27C97A9500C2CB33 /* Card+MobileContentRenderableModel.swift in Sources */,
-				45F71628290A12D70019B715 /* ContactUsWebContent.swift in Sources */,
 				45C2596228CAC5D5005D2387 /* UserDidDeleteSettingsParallelLanguageUseCase.swift in Sources */,
 				4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */,
 				459BD08A289AD4310075901B /* DetermineToolTranslationsToDownloadError.swift in Sources */,
