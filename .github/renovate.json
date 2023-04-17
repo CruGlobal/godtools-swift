@@ -2,6 +2,7 @@
   "extends": ["config:base"],
   "dependencyDashboard": true,
   "labels": ["dependencies"],
+  "lockFileMaintenance": { "enabled": true },
   "packageRules": [
     {
       "matchManagers": ["bundler"],
