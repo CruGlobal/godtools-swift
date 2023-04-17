@@ -152,14 +152,20 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
+            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.localizationServices)
             
-            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            pushWebContentView(webContent: reportABugWebContent, backTappedFromWebContentStep: .backTappedFromReportABug)
+            
+        case .backTappedFromReportABug:
+            navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
             let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
             
             pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            
+        case .backTappedFromAskAQuestion:
+            navigationController.popViewController(animated: true)
             
         case .leaveAReviewTappedFromMenu:
             // TODO: - link to apple store

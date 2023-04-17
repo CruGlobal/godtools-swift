@@ -97,7 +97,9 @@ enum FlowStep {
     case sendFeedbackTappedFromMenu
     case backTappedFromSendFeedback
     case reportABugTappedFromMenu
+    case backTappedFromReportABug
     case askAQuestionTappedFromMenu
+    case backTappedFromAskAQuestion
     case leaveAReviewTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
