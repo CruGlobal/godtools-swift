@@ -160,9 +160,9 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
+            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.localizationServices)
             
-            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            pushWebContentView(webContent: askAQuestionWebContent, backTappedFromWebContentStep: .backTappedFromAskAQuestion)
             
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
