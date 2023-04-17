@@ -309,22 +309,22 @@ extension MenuViewModel {
         switch section {
             
         case .getStarted:
-            localizedKey = "menu_getStarted"
+            localizedKey = MenuStringKeys.SectionTitles.getStarted.rawValue
             
         case .account:
-            localizedKey = "menu_account"
+            localizedKey = MenuStringKeys.SectionTitles.account.rawValue
             
         case .support:
-            localizedKey = "menu_support"
+            localizedKey = MenuStringKeys.SectionTitles.support.rawValue
             
         case .share:
-            localizedKey = "menu_share"
+            localizedKey = MenuStringKeys.SectionTitles.share.rawValue
             
         case .about:
-            localizedKey = "menu_about"
+            localizedKey = MenuStringKeys.SectionTitles.about.rawValue
             
         case .version:
-            localizedKey = "menu_version"
+            localizedKey = MenuStringKeys.SectionTitles.version.rawValue
         }
         
         return localizationServices.stringForMainBundle(key: localizedKey)
@@ -337,52 +337,52 @@ extension MenuViewModel {
         switch item {
             
         case .tutorial:
-            localizedKey = "menu.tutorial"
+            localizedKey = MenuStringKeys.ItemTitles.tutorial.rawValue
             
         case .languageSettings:
-            localizedKey = "language_settings"
+            localizedKey = MenuStringKeys.ItemTitles.languageSettings.rawValue
             
         case .login:
-            localizedKey = "login"
+            localizedKey = MenuStringKeys.ItemTitles.login.rawValue
             
         case .activity:
-            localizedKey = "account.activity.title"
+            localizedKey = MenuStringKeys.ItemTitles.activity.rawValue
             
         case .createAccount:
-            localizedKey = "create_account"
+            localizedKey = MenuStringKeys.ItemTitles.createAccount.rawValue
             
         case .logout:
-            localizedKey = "logout"
+            localizedKey = MenuStringKeys.ItemTitles.logout.rawValue
             
         case .deleteAccount:
-            localizedKey = "menu.deleteAccount"
+            localizedKey = MenuStringKeys.ItemTitles.deleteAccount.rawValue
             
         case .sendFeedback:
-            localizedKey = "menu.sendFeedback"
+            localizedKey = MenuStringKeys.ItemTitles.sendFeedback.rawValue
             
         case .reportABug:
-            localizedKey = "menu.reportABug"
+            localizedKey = MenuStringKeys.ItemTitles.reportABug.rawValue
             
         case .askAQuestion:
-            localizedKey = "menu.askAQuestion"
+            localizedKey = MenuStringKeys.ItemTitles.askAQuestion.rawValue
             
         case .leaveAReview:
-            localizedKey = "menu.leaveAReview"
+            localizedKey = MenuStringKeys.ItemTitles.leaveAReview.rawValue
             
         case .shareAStoryWithUs:
-            localizedKey = "share_a_story_with_us"
+            localizedKey = MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue
         
         case .shareGodTools:
-            localizedKey = "share_god_tools"
+            localizedKey = MenuStringKeys.ItemTitles.shareGodTools.rawValue
             
         case .termsOfUse:
-            localizedKey = "terms_of_use"
+            localizedKey = MenuStringKeys.ItemTitles.termsOfUse.rawValue
             
         case .privacyPolicy:
-            localizedKey = "privacy_policy"
+            localizedKey = MenuStringKeys.ItemTitles.privacyPolicy.rawValue
             
         case .copyrightInfo:
-            localizedKey = "copyright_info"
+            localizedKey = MenuStringKeys.ItemTitles.copyrightInfo.rawValue
             
         case .version:
             
