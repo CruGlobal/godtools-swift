@@ -10,9 +10,10 @@ import Foundation
 
 enum MenuSection: Hashable {
     
-    case general
+    case getStarted
     case account
+    case support
     case share
-    case legal
+    case about
     case version
 }
