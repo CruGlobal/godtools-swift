@@ -127,10 +127,11 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .leaveAReviewTappedFromMenu:
-            // TODO: - link to apple store
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
+            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id542773210?action=write-review") else {
+                fatalError("Expected a valid URL")
+            }
             
-            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
