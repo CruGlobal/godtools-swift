@@ -207,7 +207,7 @@ extension MenuViewModel {
     }
     
     func activityTapped() {
-        
+        flowDelegate?.navigate(step: .activityTappedFromMenu)
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
@@ -229,19 +229,19 @@ extension MenuViewModel {
     }
     
     func sendFeedbackTapped() {
-        
+        flowDelegate?.navigate(step: .sendFeedbackTappedFromMenu)
     }
     
     func reportABugTapped() {
-        
+        flowDelegate?.navigate(step: .reportABugTappedFromMenu)
     }
     
     func askAQuestionTapped() {
-        
+        flowDelegate?.navigate(step: .askAQuestionTappedFromMenu)
     }
     
     func leaveAReviewTapped() {
-        
+        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu)
     }
     
     func shareAStoryWithUsTapped() {
@@ -297,22 +297,6 @@ extension MenuViewModel {
     
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
-    }
-    
-    func myAccountTapped() {
-        flowDelegate?.navigate(step: .myAccountTappedFromMenu)
-    }
-    
-    func aboutTapped() {
-        flowDelegate?.navigate(step: .aboutTappedFromMenu)
-    }
-    
-    func helpTapped() {
-        flowDelegate?.navigate(step: .helpTappedFromMenu)
-    }
-    
-    func contactUsTapped() {
-        flowDelegate?.navigate(step: .contactUsTappedFromMenu)
     }
 }
 

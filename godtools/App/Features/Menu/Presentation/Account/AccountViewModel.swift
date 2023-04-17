@@ -134,7 +134,7 @@ class AccountViewModel: ObservableObject {
 extension AccountViewModel {
     
     @objc func backTapped() {
-        flowDelegate?.navigate(step: .backTappedFromMyAccount)
+        flowDelegate?.navigate(step: .backTappedFromActivity)
     }
     
     func activityViewed() {

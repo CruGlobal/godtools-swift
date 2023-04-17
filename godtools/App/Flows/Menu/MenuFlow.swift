@@ -89,84 +89,88 @@ class MenuFlow: Flow {
             print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
                         
-        case .myAccountTappedFromMenu:
+        case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
             
-        case .backTappedFromMyAccount:
+        case .backTappedFromActivity:
             navigationController.popViewController(animated: true)
             
-        case .aboutTappedFromMenu:
-            navigationController.pushViewController(getAboutView(), animated: true)
+//        case .aboutTappedFromMenu:
+//            navigationController.pushViewController(getAboutView(), animated: true)
+//
+//        case .backTappedFromAbout:
+//            navigationController.popViewController(animated: true)
             
-        case .backTappedFromAbout:
+//        case .helpTappedFromMenu:
+//
+//            let helpWebContent = HelpWebContent(localizationServices: appDiContainer.localizationServices)
+//
+//            pushWebContentView(webContent: helpWebContent, backTappedFromWebContentStep: .backTappedFromHelp)
+//
+//        case .backTappedFromHelp:
+//            navigationController.popViewController(animated: true)
+            
+//        case .contactUsTappedFromMenu:
+//
+//            if MFMailComposeViewController.canSendMail() {
+//
+//                let finishedSendingMail = CallbackHandler { [weak self] in
+//                    self?.navigationController.dismiss(animated: true, completion: nil)
+//                }
+//
+//                let viewModel = MailViewModel(
+//                    toRecipients: ["support@godtoolsapp.com"],
+//                    subject: "Email to GodTools support",
+//                    message: "",
+//                    isHtml: false,
+//                    finishedSendingMailHandler: finishedSendingMail
+//                )
+//
+//                navigateToNativeMailApp(viewModel: viewModel)
+//            }
+//            else {
+//                let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
+//                pushWebContentView(webContent: contactUsWebContent, backTappedFromWebContentStep: .backTappedFromContactUs)
+//            }
+//
+//        case .backTappedFromContactUs:
+//            navigationController.popViewController(animated: true)
+//
+//        case .shareGodToolsTappedFromMenu:
+//
+//            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
+//            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+//
+//            navigationController.present(view, animated: true, completion: nil)
+            
+        case .sendFeedbackTappedFromMenu:
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
+            
+            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            
+        case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
             
-        case .helpTappedFromMenu:
-                 
-            let helpWebContent = HelpWebContent(localizationServices: appDiContainer.localizationServices)
+        case .reportABugTappedFromMenu:
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
             
-            pushWebContentView(webContent: helpWebContent, backTappedFromWebContentStep: .backTappedFromHelp)
+            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
             
-        case .backTappedFromHelp:
-            navigationController.popViewController(animated: true)
+        case .askAQuestionTappedFromMenu:
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
             
-        case .contactUsTappedFromMenu:
-           
-            if MFMailComposeViewController.canSendMail() {
-                
-                let finishedSendingMail = CallbackHandler { [weak self] in
-                    self?.navigationController.dismiss(animated: true, completion: nil)
-                }
-                
-                let viewModel = MailViewModel(
-                    toRecipients: ["support@godtoolsapp.com"],
-                    subject: "Email to GodTools support",
-                    message: "",
-                    isHtml: false,
-                    finishedSendingMailHandler: finishedSendingMail
-                )
-                
-                navigateToNativeMailApp(viewModel: viewModel)
-            }
-            else {
-                let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
-                pushWebContentView(webContent: contactUsWebContent, backTappedFromWebContentStep: .backTappedFromContactUs)
-            }
+            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
             
-        case .backTappedFromContactUs:
-            navigationController.popViewController(animated: true)
+        case .leaveAReviewTappedFromMenu:
+            // TODO: - link to apple store
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
             
-        case .shareGodToolsTappedFromMenu:
-            
-            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
-            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
-            
-            navigationController.present(view, animated: true, completion: nil)
+            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
             
         case .shareAStoryWithUsTappedFromMenu:
+            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
             
-            if MFMailComposeViewController.canSendMail() {
-                
-                let finishedSendingMail = CallbackHandler { [weak self] in
-                    self?.navigationController.dismiss(animated: true, completion: nil)
-                }
-                
-                let viewModel = MailViewModel(
-                    toRecipients: ["support@godtoolsapp.com"],
-                    subject: "GodTools story",
-                    message: "",
-                    isHtml: false,
-                    finishedSendingMailHandler: finishedSendingMail
-                )
-                
-                navigateToNativeMailApp(viewModel: viewModel)                
-            }
-            else {
-                
-                let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
-                
-                pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
-            }
+            pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
             
         case .backTappedFromShareAStoryWithUs:
             navigationController.popViewController(animated: true)
