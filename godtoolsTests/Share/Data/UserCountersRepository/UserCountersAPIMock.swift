@@ -18,6 +18,10 @@ class UserCountersAPIMock {
     func setMockFetchResponse(fetchedCounters: [UserCounterDecodable]) {
         self.fetchedCounters = fetchedCounters
     }
+    
+    func setMockRemoteCountResponse(count: Int) {
+        self.remoteCount = count
+    }
 }
     
 extension UserCountersAPIMock: UserCountersAPIType {

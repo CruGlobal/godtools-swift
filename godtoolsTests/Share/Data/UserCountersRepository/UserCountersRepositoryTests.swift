@@ -118,7 +118,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(cachedCounter!.count, 1)
     }
     
-    func testSyncNewRemoteUserCounters() throws {
+    func testFetchRemoteUserCounters() throws {
         
         let counter1Id = "counter_1"
         let counter2Id = "counter_2"
@@ -181,7 +181,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(counter3DataModel!.incrementValue, 0)
     }
     
-    func testSyncExistingRemoteUserCounters() throws {
+    func testFetchRemoteUserCountersWithExistingLocalCounters() throws {
         
         let counter1Id = "counter_1"
         let counter2Id = "counter_2"
@@ -197,32 +197,10 @@ final class UserCountersRepositoryTests: XCTestCase {
             UserCounterDecodable(id: counter2Id, count: latestCountFromMockAPI2),
         ])
         
-        let incrementCounter1Expectation = expectation(description: "Increment Counter 1 Once")
-        let incrementCounter2Expectation = expectation(description: "Increment Counter 2 Twice")
-        
-        userCountersRepository.incrementCachedUserCounterBy1(id: counter1Id)
-            .sink { _ in
-                
-                incrementCounter1Expectation.fulfill()
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
-        
-        userCountersRepository.incrementCachedUserCounterBy1(id: counter2Id)
-            .flatMap { _ in
-                
-                return self.userCountersRepository.incrementCachedUserCounterBy1(id: counter2Id)
-            }
-            .sink { _ in
-                
-                incrementCounter2Expectation.fulfill()
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
-
-        wait(for: [incrementCounter1Expectation, incrementCounter2Expectation], timeout: 10)
+        let counter1Increment = 2
+        let counter2Increment = 4
+        cacheMockCounter(counterId: counter1Id, incrementValue: counter1Increment)
+        cacheMockCounter(counterId: counter2Id, incrementValue: counter2Increment)
 
         var error: Error?
         let fetchAndSyncExpectation = expectation(description: "Fetch Existing Remote User Counters")
@@ -258,16 +236,48 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertNotNil(counter2DataModel)
 
         XCTAssertEqual(counter1DataModel!.latestCountFromAPI, latestCountFromMockAPI1)
-        XCTAssertEqual(counter1DataModel!.incrementValue, 1)
+        XCTAssertEqual(counter1DataModel!.incrementValue, counter1Increment)
         XCTAssertEqual(counter2DataModel!.latestCountFromAPI, latestCountFromMockAPI2)
-        XCTAssertEqual(counter2DataModel!.incrementValue, 2)
+        XCTAssertEqual(counter2DataModel!.incrementValue, counter2Increment)
         
         let counter1DomainModel = userCountersRepository.getUserCounter(id: counter1Id)
         let counter2DomainModel = userCountersRepository.getUserCounter(id: counter2Id)
         
         XCTAssertNotNil(counter1DomainModel)
         XCTAssertNotNil(counter2DomainModel)
-        XCTAssertEqual(counter1DomainModel!.count, 1 + latestCountFromMockAPI1)
-        XCTAssertEqual(counter2DomainModel!.count, 2 + latestCountFromMockAPI2)
+        XCTAssertEqual(counter1DomainModel!.count, counter1Increment + latestCountFromMockAPI1)
+        XCTAssertEqual(counter2DomainModel!.count, counter2Increment + latestCountFromMockAPI2)
+    }
+    
+    func testSyncUpdatedUserCountersWithRemote() throws {
+        
+        
+    }
+}
+
+// MARK: - Private
+
+extension UserCountersRepositoryTests {
+    
+    private func cacheMockCounter(counterId: String, incrementValue: Int) {
+        
+        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
+                
+        for i in 1...incrementValue {
+            
+            let expectation = expectation(description: "Increment \(i) for Counter \(counterId)")
+            
+            userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+                .sink { _ in
+                    
+                    expectation.fulfill()
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &cancellables)
+        
+            wait(for: [expectation], timeout: 10)
+        }
     }
 }
