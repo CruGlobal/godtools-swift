@@ -12,15 +12,11 @@ import Combine
 
 class UserCountersAPIMock {
     
-    var fetchedCounters: [UserCounterDecodable] = [
-        UserCounterDecodable(id: "counter_1", count: 10),
-        UserCounterDecodable(id: "counter_2", count: 20),
-        UserCounterDecodable(id: "counter_3", count: 30)
-    ]
+    private var fetchedCounters: [UserCounterDecodable] = [UserCounterDecodable]()
+    private var remoteCount: Int = 5
     
-    func setMockFetchedCounters() {
-        
-        
+    func setMockFetchResponse(fetchedCounters: [UserCounterDecodable]) {
+        self.fetchedCounters = fetchedCounters
     }
 }
     
@@ -35,7 +31,7 @@ extension UserCountersAPIMock: UserCountersAPIType {
     
     func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, URLResponseError> {
         
-        let userCounterDecodable = UserCounterDecodable(id: id, count: 5)
+        let userCounterDecodable = UserCounterDecodable(id: id, count: increment + remoteCount)
         
         return Just(userCounterDecodable)
             .setFailureType(to: URLResponseError.self)

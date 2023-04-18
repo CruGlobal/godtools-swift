@@ -13,12 +13,15 @@ import Combine
 final class UserCountersRepositoryTests: XCTestCase {
 
     private var userCountersRepository: UserCountersRepository!
-    private let userCountersApi = UserCountersAPIMock()
-    private var cancellables = Set<AnyCancellable>()
+    private var userCountersApi: UserCountersAPIMock!
+    private var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
+        userCountersApi = UserCountersAPIMock()
+        cancellables = Set<AnyCancellable>()
+        
         let realmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseMockConfiguration())
         let userCountersCacheSync = RealmUserCountersCacheSync(realmDatabase: realmDatabase)
         let userCountersCache = RealmUserCountersCache(realmDatabase: realmDatabase, userCountersSync: userCountersCacheSync)
@@ -26,13 +29,15 @@ final class UserCountersRepositoryTests: XCTestCase {
         let remoteUserCountersSync = RemoteUserCountersSync(api: userCountersApi, cache: userCountersCache)
         
         userCountersRepository = UserCountersRepository(
-            api: UserCountersAPIMock(),
+            api: userCountersApi,
             cache: userCountersCache,
             remoteUserCountersSync: remoteUserCountersSync
         )
+        
+        continueAfterFailure = false
     }
-
-    override func tearDownWithError() throws {
+    
+    override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
@@ -122,6 +127,16 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertNil(userCountersRepository.getUserCounter(id: counter1Id))
         XCTAssertNil(userCountersRepository.getUserCounter(id: counter2Id))
         XCTAssertNil(userCountersRepository.getUserCounter(id: counter3Id))
+        
+        let latestCountFromMockAPI1 = 10
+        let latestCountFromMockAPI2 = 20
+        let latestCountFromMockAPI3 = 30
+        
+        userCountersApi.setMockFetchResponse(fetchedCounters: [
+            UserCounterDecodable(id: counter1Id, count: latestCountFromMockAPI1),
+            UserCounterDecodable(id: counter2Id, count: latestCountFromMockAPI2),
+            UserCounterDecodable(id: counter3Id, count: latestCountFromMockAPI3)
+        ])
 
         var error: Error?
         let expectation = expectation(description: "Fetch Remote User Counters")
@@ -158,10 +173,12 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertNotNil(counter2DataModel)
         XCTAssertNotNil(counter3DataModel)
 
-        XCTAssertEqual(counter1DataModel!.latestCountFromAPI, 10)
+        XCTAssertEqual(counter1DataModel!.latestCountFromAPI, latestCountFromMockAPI1)
         XCTAssertEqual(counter1DataModel!.incrementValue, 0)
-        XCTAssertEqual(counter2DataModel!.latestCountFromAPI, 20)
+        XCTAssertEqual(counter2DataModel!.latestCountFromAPI, latestCountFromMockAPI2)
         XCTAssertEqual(counter2DataModel!.incrementValue, 0)
+        XCTAssertEqual(counter3DataModel!.latestCountFromAPI, latestCountFromMockAPI3)
+        XCTAssertEqual(counter3DataModel!.incrementValue, 0)
     }
     
     func testSyncExistingRemoteUserCounters() throws {
@@ -171,6 +188,14 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         XCTAssertNil(userCountersRepository.getUserCounter(id: counter1Id))
         XCTAssertNil(userCountersRepository.getUserCounter(id: counter2Id))
+        
+        let latestCountFromMockAPI1 = 5
+        let latestCountFromMockAPI2 = 8
+        
+        userCountersApi.setMockFetchResponse(fetchedCounters: [
+            UserCounterDecodable(id: counter1Id, count: latestCountFromMockAPI1),
+            UserCounterDecodable(id: counter2Id, count: latestCountFromMockAPI2),
+        ])
         
         let incrementCounter1Expectation = expectation(description: "Increment Counter 1 Once")
         let incrementCounter2Expectation = expectation(description: "Increment Counter 2 Twice")
@@ -228,13 +253,13 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         let counter1DataModel = syncedDataModels.first(where: { $0.id == counter1Id })
         let counter2DataModel = syncedDataModels.first(where: { $0.id == counter2Id })
-
+        
         XCTAssertNotNil(counter1DataModel)
         XCTAssertNotNil(counter2DataModel)
 
-        XCTAssertEqual(counter1DataModel!.latestCountFromAPI, 10)
+        XCTAssertEqual(counter1DataModel!.latestCountFromAPI, latestCountFromMockAPI1)
         XCTAssertEqual(counter1DataModel!.incrementValue, 1)
-        XCTAssertEqual(counter2DataModel!.latestCountFromAPI, 20)
+        XCTAssertEqual(counter2DataModel!.latestCountFromAPI, latestCountFromMockAPI2)
         XCTAssertEqual(counter2DataModel!.incrementValue, 2)
         
         let counter1DomainModel = userCountersRepository.getUserCounter(id: counter1Id)
@@ -242,7 +267,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         XCTAssertNotNil(counter1DomainModel)
         XCTAssertNotNil(counter2DomainModel)
-        XCTAssertEqual(counter1DomainModel!.count, 11)
-        XCTAssertEqual(counter2DomainModel!.count, 22)
+        XCTAssertEqual(counter1DomainModel!.count, 1 + latestCountFromMockAPI1)
+        XCTAssertEqual(counter2DomainModel!.count, 2 + latestCountFromMockAPI2)
     }
 }
