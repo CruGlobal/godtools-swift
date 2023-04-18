@@ -25,7 +25,7 @@ struct AnimatedSwiftUIView: UIViewRepresentable {
                 
         let view: UIView = UIView(frame: .zero)
         
-        let animationView: AnimationView = AnimationView()
+        let animationView: LottieAnimationView = LottieAnimationView()
         
         animationView.animation = viewModel.animationData
         animationView.loopMode = viewModel.loop ? .loop : .playOnce
