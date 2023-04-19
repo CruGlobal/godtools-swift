@@ -13,14 +13,14 @@ import Combine
 class UserCountersAPIMock {
     
     private var fetchedCounters: [UserCounterDecodable] = [UserCounterDecodable]()
-    private var remoteCount: Int = 5
+    private var remoteCountValues: [Int] = [Int]()
     
     func setMockFetchResponse(fetchedCounters: [UserCounterDecodable]) {
         self.fetchedCounters = fetchedCounters
     }
     
-    func setMockRemoteCountResponse(count: Int) {
-        self.remoteCount = count
+    func setMockRemoteCountResponse(countValues: [Int]) {
+        self.remoteCountValues = countValues
     }
 }
     
@@ -35,6 +35,7 @@ extension UserCountersAPIMock: UserCountersAPIType {
     
     func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, URLResponseError> {
         
+        let remoteCount = remoteCountValues.removeFirst()
         let userCounterDecodable = UserCounterDecodable(id: id, count: increment + remoteCount)
         
         return Just(userCounterDecodable)

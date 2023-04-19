@@ -251,7 +251,34 @@ final class UserCountersRepositoryTests: XCTestCase {
     
     func testSyncUpdatedUserCountersWithRemote() throws {
         
+        // number of changes expected: 2 to cache mock counters + 2 for sync
+        let syncUpdateCompleteExpectation = makeExpectationForUserCounterChangesToOccur(numberOfChanges: 4)
         
+        let counter1Id = "counter_1"
+        let counter2Id = "counter_2"
+        let counter1Increment = 3
+        let counter2Increment = 4
+        
+        cacheMockCounter(counterId: counter1Id, incrementValue: counter1Increment)
+        cacheMockCounter(counterId: counter2Id, incrementValue: counter2Increment)
+        
+        let counter1RemoteCount = 7
+        let counter2RemoteCount = 12
+        
+        userCountersApi.setMockRemoteCountResponse(countValues: [counter1RemoteCount, counter2RemoteCount])
+        
+        userCountersRepository.syncUpdatedUserCountersWithRemote()
+        
+        waitForExpectations(timeout: 10)
+        
+        let updatedCounter1 = userCountersRepository.getUserCounter(id: counter1Id)
+        let updatedCounter2 = userCountersRepository.getUserCounter(id: counter2Id)
+        
+        XCTAssertNotNil(updatedCounter1)
+        XCTAssertNotNil(updatedCounter2)
+        
+        XCTAssertEqual(updatedCounter1!.count, counter1RemoteCount + counter1Increment)
+        XCTAssertEqual(updatedCounter2!.count, counter2RemoteCount + counter2Increment)
     }
 }
 
@@ -279,5 +306,28 @@ extension UserCountersRepositoryTests {
         
             wait(for: [expectation], timeout: 10)
         }
+    }
+    
+    private func makeExpectationForUserCounterChangesToOccur(numberOfChanges: Int) -> XCTestExpectation {
+        
+        let userCounterChangesCompleteExpectation = expectation(description: "User Counter Changes Complete")
+        
+        var userCounterChangedHitCount = 0
+
+        userCountersRepository.getUserCountersChanged(reloadFromRemote: false)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+                userCounterChangedHitCount += 1
+                
+                if userCounterChangedHitCount == numberOfChanges {
+                    
+                    userCounterChangesCompleteExpectation.fulfill()
+                }
+            }
+            .store(in: &cancellables)
+        
+        return userCounterChangesCompleteExpectation
     }
 }
