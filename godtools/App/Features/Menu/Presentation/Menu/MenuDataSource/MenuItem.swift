@@ -10,20 +10,21 @@ import Foundation
 
 enum MenuItem {
     
+    case tutorial
     case languageSettings
-    case about
-    case help
-    case contactUs
-    case deleteAccount
-    case logout
     case login
+    case activity
     case createAccount
-    case myAccount
-    case shareGodTools
+    case logout
+    case deleteAccount
+    case sendFeedback
+    case reportABug
+    case askAQuestion
+    case leaveAReview
     case shareAStoryWithUs
+    case shareGodTools
     case termsOfUse
     case privacyPolicy
     case copyrightInfo
-    case tutorial
     case version
 }
