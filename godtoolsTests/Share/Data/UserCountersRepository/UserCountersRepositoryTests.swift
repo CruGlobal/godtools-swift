@@ -80,42 +80,21 @@ final class UserCountersRepositoryTests: XCTestCase {
     
     func testGetUserCounter() throws {
         
-        let counterId = "counter_1"
-        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
-
-        var error: Error?
-        let expectation = expectation(description: "Increment User Counter")
-        var updatedUserCounter: UserCounterDataModel?
-
-        userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
-            .sink { completion in
-
-                switch completion {
-                case .finished:
-                    break
-
-                case .failure(let encounteredError):
-                    error = encounteredError
-                }
-
-                expectation.fulfill()
-
-            } receiveValue: { userCounter in
-
-                updatedUserCounter = userCounter
-            }
-            .store(in: &cancellables)
-
-        waitForExpectations(timeout: 10)
+        let counter1 = UserCounterDomainModel(id: "counter_1", count: 1)
+        let counter2 = UserCounterDomainModel(id: "counter_2", count: 2)
         
-        XCTAssertNil(error)
-        XCTAssertNotNil(updatedUserCounter)
+        cacheMockCounters([counter1, counter2])
         
-        let cachedCounter = userCountersRepository.getUserCounter(id: counterId)
+        let cachedCounter1 = userCountersRepository.getUserCounter(id: counter1.id)
+        let cachedCounter2 = userCountersRepository.getUserCounter(id: counter2.id)
         
-        XCTAssertNotNil(cachedCounter)
-        XCTAssertEqual(cachedCounter!.id, counterId)
-        XCTAssertEqual(cachedCounter!.count, 1)
+        XCTAssertNotNil(cachedCounter1)
+        XCTAssertNotNil(cachedCounter2)
+        
+        XCTAssertEqual(cachedCounter1!.id, counter1.id)
+        XCTAssertEqual(cachedCounter1!.count, counter1.count)
+        XCTAssertEqual(cachedCounter2!.id, counter2.id)
+        XCTAssertEqual(cachedCounter2!.count, counter2.count)
     }
     
     func testFetchRemoteUserCounters() throws {
@@ -183,24 +162,18 @@ final class UserCountersRepositoryTests: XCTestCase {
     
     func testFetchRemoteUserCountersWithExistingLocalCounters() throws {
         
-        let counter1Id = "counter_1"
-        let counter2Id = "counter_2"
+        let counter1 = UserCounterDomainModel(id: "counter_1", count: 2)
+        let counter2 = UserCounterDomainModel(id: "counter_2", count: 4)
         
-        XCTAssertNil(userCountersRepository.getUserCounter(id: counter1Id))
-        XCTAssertNil(userCountersRepository.getUserCounter(id: counter2Id))
+        cacheMockCounters([counter1, counter2])
         
         let latestCountFromMockAPI1 = 5
         let latestCountFromMockAPI2 = 8
         
         userCountersApi.setMockFetchResponse(fetchedCounters: [
-            UserCounterDecodable(id: counter1Id, count: latestCountFromMockAPI1),
-            UserCounterDecodable(id: counter2Id, count: latestCountFromMockAPI2),
+            UserCounterDecodable(id: counter1.id, count: latestCountFromMockAPI1),
+            UserCounterDecodable(id: counter2.id, count: latestCountFromMockAPI2),
         ])
-        
-        let counter1Increment = 2
-        let counter2Increment = 4
-        cacheMockCounter(counterId: counter1Id, incrementValue: counter1Increment)
-        cacheMockCounter(counterId: counter2Id, incrementValue: counter2Increment)
 
         var error: Error?
         let fetchAndSyncExpectation = expectation(description: "Fetch Existing Remote User Counters")
@@ -229,24 +202,24 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         XCTAssertNil(error)
         
-        let counter1DataModel = syncedDataModels.first(where: { $0.id == counter1Id })
-        let counter2DataModel = syncedDataModels.first(where: { $0.id == counter2Id })
+        let counter1DataModel = syncedDataModels.first(where: { $0.id == counter1.id })
+        let counter2DataModel = syncedDataModels.first(where: { $0.id == counter2.id })
         
         XCTAssertNotNil(counter1DataModel)
         XCTAssertNotNil(counter2DataModel)
 
         XCTAssertEqual(counter1DataModel!.latestCountFromAPI, latestCountFromMockAPI1)
-        XCTAssertEqual(counter1DataModel!.incrementValue, counter1Increment)
+        XCTAssertEqual(counter1DataModel!.incrementValue, counter1.count)
         XCTAssertEqual(counter2DataModel!.latestCountFromAPI, latestCountFromMockAPI2)
-        XCTAssertEqual(counter2DataModel!.incrementValue, counter2Increment)
+        XCTAssertEqual(counter2DataModel!.incrementValue, counter2.count)
         
-        let counter1DomainModel = userCountersRepository.getUserCounter(id: counter1Id)
-        let counter2DomainModel = userCountersRepository.getUserCounter(id: counter2Id)
+        let counter1DomainModel = userCountersRepository.getUserCounter(id: counter1.id)
+        let counter2DomainModel = userCountersRepository.getUserCounter(id: counter2.id)
         
         XCTAssertNotNil(counter1DomainModel)
         XCTAssertNotNil(counter2DomainModel)
-        XCTAssertEqual(counter1DomainModel!.count, counter1Increment + latestCountFromMockAPI1)
-        XCTAssertEqual(counter2DomainModel!.count, counter2Increment + latestCountFromMockAPI2)
+        XCTAssertEqual(counter1DomainModel!.count, counter1.count + latestCountFromMockAPI1)
+        XCTAssertEqual(counter2DomainModel!.count, counter2.count + latestCountFromMockAPI2)
     }
     
     func testSyncUpdatedUserCountersWithRemote() throws {
@@ -254,13 +227,10 @@ final class UserCountersRepositoryTests: XCTestCase {
         // number of changes expected: 2 to cache mock counters + 2 for sync
         let syncUpdateCompleteExpectation = makeExpectationForUserCounterChangesToOccur(numberOfChanges: 4)
         
-        let counter1Id = "counter_1"
-        let counter2Id = "counter_2"
-        let counter1Increment = 3
-        let counter2Increment = 4
+        let counter1 = UserCounterDomainModel(id: "counter_1", count: 3)
+        let counter2 = UserCounterDomainModel(id: "counter_2", count: 4)
         
-        cacheMockCounter(counterId: counter1Id, incrementValue: counter1Increment)
-        cacheMockCounter(counterId: counter2Id, incrementValue: counter2Increment)
+        cacheMockCounters([counter1, counter2])
         
         let counter1RemoteCount = 7
         let counter2RemoteCount = 12
@@ -271,14 +241,14 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         waitForExpectations(timeout: 10)
         
-        let updatedCounter1 = userCountersRepository.getUserCounter(id: counter1Id)
-        let updatedCounter2 = userCountersRepository.getUserCounter(id: counter2Id)
+        let updatedCounter1 = userCountersRepository.getUserCounter(id: counter1.id)
+        let updatedCounter2 = userCountersRepository.getUserCounter(id: counter2.id)
         
         XCTAssertNotNil(updatedCounter1)
         XCTAssertNotNil(updatedCounter2)
         
-        XCTAssertEqual(updatedCounter1!.count, counter1RemoteCount + counter1Increment)
-        XCTAssertEqual(updatedCounter2!.count, counter2RemoteCount + counter2Increment)
+        XCTAssertEqual(updatedCounter1!.count, counter1RemoteCount + counter1.count)
+        XCTAssertEqual(updatedCounter2!.count, counter2RemoteCount + counter2.count)
     }
 }
 
@@ -286,15 +256,22 @@ final class UserCountersRepositoryTests: XCTestCase {
 
 extension UserCountersRepositoryTests {
     
-    private func cacheMockCounter(counterId: String, incrementValue: Int) {
+    private func cacheMockCounters(_ counters: [UserCounterDomainModel]) {
         
-        XCTAssertNil(userCountersRepository.getUserCounter(id: counterId))
+        for counter in counters {
+            cacheMockCounter(counter)
+        }
+    }
+    
+    private func cacheMockCounter(_ counter: UserCounterDomainModel) {
+        
+        XCTAssertNil(userCountersRepository.getUserCounter(id: counter.id))
                 
-        for i in 1...incrementValue {
+        for i in 1...counter.count {
             
-            let expectation = expectation(description: "Increment \(i) for Counter \(counterId)")
+            let expectation = expectation(description: "Increment \(i) for Counter \(counter.id)")
             
-            userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+            userCountersRepository.incrementCachedUserCounterBy1(id: counter.id)
                 .sink { _ in
                     
                     expectation.fulfill()
