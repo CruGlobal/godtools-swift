@@ -206,28 +206,6 @@ class MenuFlow: Flow {
         }
     }
     
-    private func getAboutView() -> UIViewController {
-        
-        let viewModel = AboutViewModel(
-            flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics()
-        )
-        
-        let view = AboutView(viewModel: viewModel)
-        
-        let hostingView: UIHostingController<AboutView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        return hostingView
-    }
-    
     private func getAccountView() -> UIViewController {
         
         let viewModel = AccountViewModel(

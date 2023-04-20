@@ -830,8 +830,6 @@
 		45F71630290A12D70019B715 /* MailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D2290A12D70019B715 /* MailViewModelType.swift */; };
 		45F71631290A12D70019B715 /* MailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D3290A12D70019B715 /* MailViewModel.swift */; };
 		45F71632290A12D70019B715 /* MailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F715D4290A12D70019B715 /* MailView.xib */; };
-		45F71633290A12D70019B715 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D6290A12D70019B715 /* AboutView.swift */; };
-		45F7163C290A12D70019B715 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E1290A12D70019B715 /* AboutViewModel.swift */; };
 		45F7163D290A12D70019B715 /* DeleteAccountHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E3290A12D70019B715 /* DeleteAccountHostingView.swift */; };
 		45F7163E290A12D70019B715 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E4290A12D70019B715 /* DeleteAccountView.swift */; };
 		45F7163F290A12D70019B715 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E5290A12D70019B715 /* DeleteAccountViewModel.swift */; };
@@ -1869,8 +1867,6 @@
 		45F715D2290A12D70019B715 /* MailViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModelType.swift; sourceTree = "<group>"; };
 		45F715D3290A12D70019B715 /* MailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModel.swift; sourceTree = "<group>"; };
 		45F715D4290A12D70019B715 /* MailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailView.xib; sourceTree = "<group>"; };
-		45F715D6290A12D70019B715 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		45F715E1290A12D70019B715 /* AboutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		45F715E3290A12D70019B715 /* DeleteAccountHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountHostingView.swift; sourceTree = "<group>"; };
 		45F715E4290A12D70019B715 /* DeleteAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		45F715E5290A12D70019B715 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
@@ -6158,7 +6154,6 @@
 		45F715BC290A12D70019B715 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				45F715D5290A12D70019B715 /* About */,
 				45F715FA290A12D70019B715 /* Account */,
 				45F715E2290A12D70019B715 /* DeleteAccount */,
 				45F715D0290A12D70019B715 /* Mail */,
@@ -6216,15 +6211,6 @@
 				45F715D2290A12D70019B715 /* MailViewModelType.swift */,
 			);
 			path = Mail;
-			sourceTree = "<group>";
-		};
-		45F715D5290A12D70019B715 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				45F715D6290A12D70019B715 /* AboutView.swift */,
-				45F715E1290A12D70019B715 /* AboutViewModel.swift */,
-			);
-			path = About;
 			sourceTree = "<group>";
 		};
 		45F715E2290A12D70019B715 /* DeleteAccount */ = {
@@ -8304,7 +8290,6 @@
 				458AA38425D4252000E71B32 /* LocalizationBundle.swift in Sources */,
 				D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */,
 				458CFE9F29D4E10C007B423C /* ArticleAemDownloadOperationCachePolicy.swift in Sources */,
-				45F7163C290A12D70019B715 /* AboutViewModel.swift in Sources */,
 				45AE973B27C97A9400C2CB33 /* MultiplatformHeading.swift in Sources */,
 				453649EC295E0B3F00B5B354 /* LanguageSettingsFlowCompletedState.swift in Sources */,
 				45FB1CC1295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift in Sources */,
@@ -8694,7 +8679,6 @@
 				45AD202825938A9800A096A0 /* LocalizationServices.swift in Sources */,
 				45C1A43528256B3300B8469A /* ProcessedEventResult.swift in Sources */,
 				4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */,
-				45F71633290A12D70019B715 /* AboutView.swift in Sources */,
 				45FB161827DBDDB60009DF8E /* AppFlow.swift in Sources */,
 				D455F3FB297F2BD7009D5F93 /* AccountActivityBadgeView.swift in Sources */,
 				45D63E88288F75B0009B4610 /* AttachmentModelType.swift in Sources */,
