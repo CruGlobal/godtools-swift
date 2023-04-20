@@ -88,6 +88,9 @@ class MenuFlow: Flow {
         case .doneTappedFromMenu:
             print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
+            
+        case .loginTappedFromMenu:
+            navigationController.pushViewController(getSocialSignInView(), animated: true)
                         
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
@@ -204,6 +207,22 @@ class MenuFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func getSocialSignInView() -> UIViewController {
+        
+        let viewModel = SocialSignInViewModel()
+        
+        let view = SocialSignInView()
+        
+        let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
+        
+//        _ = hostingView.addDefaultNavBackItem(
+//            target: viewModel,
+//            action: #selector(viewModel.backTapped)
+//        )
+        
+        return hostingView
     }
     
     private func getAccountView() -> UIViewController {

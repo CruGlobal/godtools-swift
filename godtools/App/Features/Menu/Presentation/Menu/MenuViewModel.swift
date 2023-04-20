@@ -203,7 +203,7 @@ extension MenuViewModel {
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        authenticateUser(fromViewController: fromViewController)
+        flowDelegate?.navigate(step: .loginTappedFromMenu)
     }
     
     func activityTapped() {
