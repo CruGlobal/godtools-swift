@@ -8,7 +8,6 @@
 
 import Foundation
 import WebKit
-import SharedAppleExtensions
 
 class ArticleWebView: UIViewController {
     
