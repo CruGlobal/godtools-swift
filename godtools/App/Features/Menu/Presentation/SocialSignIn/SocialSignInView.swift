@@ -17,14 +17,34 @@ struct SocialSignInView: View {
                 ColorPalette.gtBlue.color
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(alignment: .leading) {
                     
                     Image(ImageCatalog.loginBackground.rawValue)
                         .resizable()
                         .scaledToFit()
                         .frame(width: geometry.size.width)
                     
-                    Text("Sign in")
+                    VStack(alignment: .leading, spacing: 10) {
+                        
+                        Text("Sign in")
+                            .font(FontLibrary.sfProTextRegular.font(size: 40))
+                            .foregroundColor(.white)
+                        
+                        Text("Create an account to have real stories, encouragement, and practical tips at your fingertips.")
+                            .font(FontLibrary.sfProTextRegular.font(size: 16))
+                            .foregroundColor(.white)
+                        
+                        FixedVerticalSpacer(height: 10)
+                        
+                        VStack(spacing: 10) {
+                            
+                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .google))
+                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .facebook))
+                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .apple))
+                        }
+                        
+                    }
+                    .padding([.leading, .trailing], 36)
                 }
                 
             }

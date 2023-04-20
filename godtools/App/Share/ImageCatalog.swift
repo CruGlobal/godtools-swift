@@ -13,10 +13,13 @@ enum ImageCatalog: String {
     
     case accordionSectionPlus = "accordion_section_plus"
     case accordionSectionMinus = "accordion_section_minus"
+    case appleIcon = "appleIcon"
     case circleSelectorBackground = "circle_selector_background"
+    case facebookIcon = "facebookIcon"
     case favorited = "favorited"
     case favoritedCircle = "favorited_circle"
     case favoriteIcon = "favorite_icon"
+    case googleIcon = "googleIcon"
     case languageAvailableCheck = "language_available_check"
     case languageUnavailableX = "language_unavailable_x"
     case launchImage = "LaunchImage"
