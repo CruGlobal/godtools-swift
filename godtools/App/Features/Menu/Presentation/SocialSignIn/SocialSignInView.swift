@@ -10,7 +10,27 @@ import SwiftUI
 
 struct SocialSignInView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        GeometryReader { geometry in
+            
+            ZStack {
+                ColorPalette.gtBlue.color
+                    .ignoresSafeArea()
+                
+                VStack {
+                    
+                    Image(ImageCatalog.loginBackground.rawValue)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geometry.size.width)
+                    
+                    Text("Sign in")
+                }
+                
+            }
+            
+        }
+        
     }
 }
 
