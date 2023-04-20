@@ -33,10 +33,12 @@ class DownloadToolTranslationsFlow: Flow {
         self.getToolTranslationsFilesUseCase = appDiContainer.domainLayer.getToolTranslationsFilesUseCase()
         self.didDownloadToolTranslations = didDownloadToolTranslations
         
-        getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
-            self?.navigateToDownloadTool()
+        getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.navigateToDownloadTool()
+            }
         })
-        .receive(on: DispatchQueue.main)
+        .receiveOnMain()
         .sink(receiveCompletion: { [weak self] completed in
             
             switch completed {

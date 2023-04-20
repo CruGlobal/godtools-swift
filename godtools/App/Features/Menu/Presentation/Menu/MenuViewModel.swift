@@ -94,12 +94,13 @@ class MenuViewModel: MenuViewModelType {
         let tutorialIsAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()
         
         var sections: [MenuSection] = Array()
-        sections.append(.general)
+        sections.append(.getStarted)
         if accountCreationIsSupported {
             sections.append(.account)
         }
+        sections.append(.support)
         sections.append(.share)
-        sections.append(.legal)
+        sections.append(.about)
         sections.append(.version)
         
         var itemsDictionary: [MenuSection: [MenuItem]] = Dictionary()
@@ -110,30 +111,31 @@ class MenuViewModel: MenuViewModelType {
             
             switch section {
                 
-            case .general:
+            case .getStarted:
                 
-                items.append(.languageSettings)
                 if tutorialIsAvailable {
                     items.append(.tutorial)
                 }
-                items.append(.about)
-                items.append(.help)
-                items.append(.contactUs)
+                items.append(.languageSettings)
                 
             case .account:
                 
                 if isAuthorized {
-                    items = [.myAccount, .logout, .deleteAccount]
+                    items = [.activity, .logout, .deleteAccount]
                 }
                 else {
-                    items = [.createAccount, .login, .deleteAccount]
+                    items = [.login, .createAccount, .deleteAccount]
                 }
+                
+            case .support:
+                
+                items = [.sendFeedback, .reportABug, .askAQuestion]
                 
             case .share:
                 
-                items = [.shareGodTools, .shareAStoryWithUs]
+                items = [.leaveAReview, .shareAStoryWithUs, .shareGodTools]
             
-            case .legal:
+            case .about:
                 
                 items = [.termsOfUse, .privacyPolicy, .copyrightInfo]
                 
@@ -191,29 +193,25 @@ class MenuViewModel: MenuViewModelType {
 
 extension MenuViewModel {
     
-    func languageSettingsTapped() {
-        flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
-    }
-    
     func tutorialTapped() {
         disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
     }
     
-    func myAccountTapped() {
-        flowDelegate?.navigate(step: .myAccountTappedFromMenu)
+    func languageSettingsTapped() {
+        flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
     }
     
-    func aboutTapped() {
-        flowDelegate?.navigate(step: .aboutTappedFromMenu)
+    func loginTapped(fromViewController: UIViewController) {
+        authenticateUser(fromViewController: fromViewController)
     }
     
-    func helpTapped() {
-        flowDelegate?.navigate(step: .helpTappedFromMenu)
+    func activityTapped() {
+        flowDelegate?.navigate(step: .activityTappedFromMenu)
     }
     
-    func contactUsTapped() {
-        flowDelegate?.navigate(step: .contactUsTappedFromMenu)
+    func createAccountTapped(fromViewController: UIViewController) {
+        authenticateUser(fromViewController: fromViewController)
     }
     
     func logoutTapped(fromViewController: UIViewController) {
@@ -226,12 +224,39 @@ extension MenuViewModel {
             .store(in: &cancellables)
     }
     
-    func loginTapped(fromViewController: UIViewController) {
-        authenticateUser(fromViewController: fromViewController)
+    func deleteAccountTapped() {
+        flowDelegate?.navigate(step: .deleteAccountTappedFromMenu)
     }
     
-    func createAccountTapped(fromViewController: UIViewController) {
-        authenticateUser(fromViewController: fromViewController)
+    func sendFeedbackTapped() {
+        flowDelegate?.navigate(step: .sendFeedbackTappedFromMenu)
+    }
+    
+    func reportABugTapped() {
+        flowDelegate?.navigate(step: .reportABugTappedFromMenu)
+    }
+    
+    func askAQuestionTapped() {
+        flowDelegate?.navigate(step: .askAQuestionTappedFromMenu)
+    }
+    
+    func leaveAReviewTapped() {
+        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu)
+    }
+    
+    func shareAStoryWithUsTapped() {
+        
+        flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
+        
+        let trackScreen = TrackScreenModel(
+            screenName: getShareStoryAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func shareGodToolsTapped() {
@@ -262,21 +287,6 @@ extension MenuViewModel {
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
-    func shareAStoryWithUsTapped() {
-        
-        flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
-        
-        let trackScreen = TrackScreenModel(
-            screenName: getShareStoryAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
-        )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-    }
-    
     func termsOfUseTapped() {
         flowDelegate?.navigate(step: .termsOfUseTappedFromMenu)
     }
@@ -288,10 +298,6 @@ extension MenuViewModel {
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
     }
-    
-    func deleteAccountTapped() {
-        flowDelegate?.navigate(step: .deleteAccountTappedFromMenu)
-    }
 }
 
 extension MenuViewModel {
@@ -302,20 +308,23 @@ extension MenuViewModel {
         
         switch section {
             
-        case .general:
-            localizedKey = "menu_general"
+        case .getStarted:
+            localizedKey = MenuStringKeys.SectionTitles.getStarted.rawValue
             
         case .account:
-            localizedKey = "menu_account"
+            localizedKey = MenuStringKeys.SectionTitles.account.rawValue
+            
+        case .support:
+            localizedKey = MenuStringKeys.SectionTitles.support.rawValue
             
         case .share:
-            localizedKey = "menu_share"
+            localizedKey = MenuStringKeys.SectionTitles.share.rawValue
             
-        case .legal:
-            localizedKey = "menu_legal"
+        case .about:
+            localizedKey = MenuStringKeys.SectionTitles.about.rawValue
             
         case .version:
-            localizedKey = "menu_version"
+            localizedKey = MenuStringKeys.SectionTitles.version.rawValue
         }
         
         return localizationServices.stringForMainBundle(key: localizedKey)
@@ -327,50 +336,53 @@ extension MenuViewModel {
         
         switch item {
             
+        case .tutorial:
+            localizedKey = MenuStringKeys.ItemTitles.tutorial.rawValue
+            
         case .languageSettings:
-            localizedKey = "language_settings"
-            
-        case .about:
-            localizedKey = "aboutApp.navTitle"
-            
-        case .help:
-            localizedKey = "help"
-            
-        case .contactUs:
-            localizedKey = "contact_us"
-            
-        case .deleteAccount:
-            localizedKey = "menu.deleteAccount"
-            
-        case .logout:
-            localizedKey = "logout"
+            localizedKey = MenuStringKeys.ItemTitles.languageSettings.rawValue
             
         case .login:
-            localizedKey = "login"
+            localizedKey = MenuStringKeys.ItemTitles.login.rawValue
+            
+        case .activity:
+            localizedKey = MenuStringKeys.ItemTitles.activity.rawValue
             
         case .createAccount:
-            localizedKey = "create_account"
+            localizedKey = MenuStringKeys.ItemTitles.createAccount.rawValue
             
-        case .myAccount:
-            localizedKey = "menu.my_account"
+        case .logout:
+            localizedKey = MenuStringKeys.ItemTitles.logout.rawValue
             
-        case .shareGodTools:
-            localizedKey = "share_god_tools"
+        case .deleteAccount:
+            localizedKey = MenuStringKeys.ItemTitles.deleteAccount.rawValue
+            
+        case .sendFeedback:
+            localizedKey = MenuStringKeys.ItemTitles.sendFeedback.rawValue
+            
+        case .reportABug:
+            localizedKey = MenuStringKeys.ItemTitles.reportABug.rawValue
+            
+        case .askAQuestion:
+            localizedKey = MenuStringKeys.ItemTitles.askAQuestion.rawValue
+            
+        case .leaveAReview:
+            localizedKey = MenuStringKeys.ItemTitles.leaveAReview.rawValue
             
         case .shareAStoryWithUs:
-            localizedKey = "share_a_story_with_us"
+            localizedKey = MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue
+        
+        case .shareGodTools:
+            localizedKey = MenuStringKeys.ItemTitles.shareGodTools.rawValue
             
         case .termsOfUse:
-            localizedKey = "terms_of_use"
+            localizedKey = MenuStringKeys.ItemTitles.termsOfUse.rawValue
             
         case .privacyPolicy:
-            localizedKey = "privacy_policy"
+            localizedKey = MenuStringKeys.ItemTitles.privacyPolicy.rawValue
             
         case .copyrightInfo:
-            localizedKey = "copyright_info"
-            
-        case .tutorial:
-            localizedKey = "menu.tutorial"
+            localizedKey = MenuStringKeys.ItemTitles.copyrightInfo.rawValue
             
         case .version:
             

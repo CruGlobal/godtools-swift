@@ -91,17 +91,19 @@ enum FlowStep {
     
     // menu
     case doneTappedFromMenu
-    case languageSettingsTappedFromMenu
     case tutorialTappedFromMenu
-    case myAccountTappedFromMenu
-    case aboutTappedFromMenu
-    case helpTappedFromMenu
-    case backTappedFromHelp
-    case contactUsTappedFromMenu
-    case backTappedFromContactUs
-    case shareGodToolsTappedFromMenu
+    case languageSettingsTappedFromMenu
+    case activityTappedFromMenu
+    case sendFeedbackTappedFromMenu
+    case backTappedFromSendFeedback
+    case reportABugTappedFromMenu
+    case backTappedFromReportABug
+    case askAQuestionTappedFromMenu
+    case backTappedFromAskAQuestion
+    case leaveAReviewTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
+    case shareGodToolsTappedFromMenu
     case termsOfUseTappedFromMenu
     case backTappedFromTermsOfUse
     case privacyPolicyTappedFromMenu
@@ -113,8 +115,8 @@ enum FlowStep {
     // about
     case backTappedFromAbout
     
-    // my account
-    case backTappedFromMyAccount
+    // user activity
+    case backTappedFromActivity
     
     // delete account
     case backTappedFromDeleteAccount

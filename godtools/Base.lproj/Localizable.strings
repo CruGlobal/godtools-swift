@@ -1,3 +1,12 @@
+"menu_getStarted" = "Get Started";
+"menu_support" = "Support";
+"menu_about" = "About";
+"menu.sendFeedback" = "Send Feedback";
+"menu.reportABug" = "Report a Bug";
+"menu.askAQuestion" = "Ask a Question";
+"menu.leaveAReview" = "Leave a Review";
+"share_god_tools" = "Share GodTools";
+
 "account.activity.sectionTitle" = "Your activity";
 "account.activity.toolOpens" = "Tool opens";
 "account.activity.lessonCompletions" = "Lesson completions";
@@ -268,7 +277,6 @@ If you don't receive this message until later, the link may not still work. We c
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share the GodTools App";
 "share_a_story_with_us" = "Share a Story With Us";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
