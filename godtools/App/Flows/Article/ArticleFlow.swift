@@ -17,7 +17,7 @@ class ArticleFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -100,7 +100,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    func getArticles(resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
+    private func getArticles(resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
@@ -126,7 +126,7 @@ extension ArticleFlow {
         return view
     }
     
-    func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
@@ -149,7 +149,7 @@ extension ArticleFlow {
         return view
     }
     
-    func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
+    private func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
         
         let viewModel = ArticleDebugViewModel(
             flowDelegate: self,
