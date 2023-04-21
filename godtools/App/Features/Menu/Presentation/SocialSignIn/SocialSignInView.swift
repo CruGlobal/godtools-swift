@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct SocialSignInView: View {
+    
+    @ObservedObject var viewModel: SocialSignInViewModel
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -26,11 +29,11 @@ struct SocialSignInView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         
-                        Text("Sign in")
+                        Text(viewModel.titleText)
                             .font(FontLibrary.sfProTextRegular.font(size: 40))
                             .foregroundColor(.white)
                         
-                        Text("Create an account to have real stories, encouragement, and practical tips at your fingertips.")
+                        Text(viewModel.subtitleText)
                             .font(FontLibrary.sfProTextRegular.font(size: 16))
                             .foregroundColor(.white)
                         
@@ -38,25 +41,15 @@ struct SocialSignInView: View {
                         
                         VStack(spacing: 10) {
                             
-                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .google))
-                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .facebook))
-                            SocialSignInButtonView(viewModel: SocialSignInButtonViewModel(buttonType: .apple))
+                            SocialSignInButtonView(viewModel: viewModel.googleSignInButtonViewModel)
+                            SocialSignInButtonView(viewModel: viewModel.facebookSignInButtonViewModel)
+                            SocialSignInButtonView(viewModel: viewModel.appleSignInButtonViewModel)
                         }
                         
                     }
                     .padding([.leading, .trailing], 36)
                 }
-                
             }
-            
         }
-        
-    }
-}
-
-struct SocialSignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SocialSignInView()
-            .previewLayout(.device)
     }
 }

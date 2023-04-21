@@ -14,22 +14,29 @@ struct SocialSignInButtonView: View {
     
     var body: some View {
         
-        ZStack {
+        Button {
             
-            viewModel.backgroundColor
-                .ignoresSafeArea()
+        } label: {
             
-            HStack(spacing: 12) {
+            ZStack {
                 
-                Image(viewModel.iconName)
+                viewModel.backgroundColor
+                    .ignoresSafeArea()
                 
-                Text(viewModel.buttonText)
-                    .font(viewModel.font)
-                    .foregroundColor(viewModel.fontColor)
+                HStack(spacing: 12) {
+                    
+                    Image(viewModel.iconName)
+                        .frame(width: viewModel.iconSize.width, height: viewModel.iconSize.height)
+                    
+                    Text(viewModel.buttonText)
+                        .font(viewModel.font)
+                        .foregroundColor(viewModel.fontColor)
+                }
+                
             }
-            
+            .frame(height: 43)
+            .cornerRadius(6)
         }
-        .frame(height: 43)
-        .cornerRadius(6)
+
     }
 }

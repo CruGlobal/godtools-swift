@@ -211,9 +211,11 @@ class MenuFlow: Flow {
     
     private func getSocialSignInView() -> UIViewController {
         
-        let viewModel = SocialSignInViewModel()
+        let viewModel = SocialSignInViewModel(
+            localizationServices: appDiContainer.localizationServices
+        )
         
-        let view = SocialSignInView()
+        let view = SocialSignInView(viewModel: viewModel)
         
         let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
         

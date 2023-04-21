@@ -1,3 +1,9 @@
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+"signIn.google" = "Sign in with Google";
+"signIn.facebook" = "Login with Facebook";
+"signIn.apple" = "Continue with Apple";
+
 "menu_getStarted" = "Get Started";
 "menu_support" = "Support";
 "menu_about" = "About";
