@@ -16,6 +16,7 @@ class ArticleWebViewModel: NSObject {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
+    private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
     
@@ -24,16 +25,17 @@ class ArticleWebViewModel: NSObject {
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let hidesDebugButton: ObservableValue<Bool> = ObservableValue(value: true)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
-    let debugEnabled: Bool = true
     
-    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
+    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
         self.flowDelegate = flowDelegate
         self.aemCacheObject = aemCacheObject
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
+        self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
         self.analytics = analytics
         self.flowType = flowType
         
@@ -42,6 +44,13 @@ class ArticleWebViewModel: NSObject {
         navTitle.accept(value: aemCacheObject.aemData.articleJcrContent?.title ?? "")
                 
         hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
+        
+        getAppUIDebuggingIsEnabledUseCase.getIsEnabledPublisher()
+            .receiveOnMain()
+            .sink { [weak self] (isEnabled: Bool) in
+                self?.hidesDebugButton.accept(value: !isEnabled)
+            }
+            .store(in: &cancellables)
     }
     
     private var analyticsScreenName: String {

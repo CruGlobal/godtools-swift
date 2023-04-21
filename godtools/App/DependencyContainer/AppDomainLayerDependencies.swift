@@ -59,6 +59,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
+        return GetAppUIDebuggingIsEnabledUseCase(
+            appBuild: dataLayer.getAppBuild()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
