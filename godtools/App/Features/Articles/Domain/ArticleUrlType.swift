@@ -8,6 +8,7 @@
 
 import Foundation
 
+// NOTE: This will most likely get paired with a use case once we can refactor the Articles feature to use SwiftUI/Combine and UseCases. ~Levi
 enum ArticleUrlType {
     
     case fileUrl
