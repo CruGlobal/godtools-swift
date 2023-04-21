@@ -24,6 +24,7 @@ class SocialSignInButtonViewModel: ObservableObject {
     let fontColor: Color
     let buttonText: String
     let iconName: String
+    let iconSize: CGSize
     
     init(buttonType: SocialSignInButtonType) {
         
@@ -34,16 +35,18 @@ class SocialSignInButtonViewModel: ObservableObject {
         case .google:
             backgroundColor = .white
             font = FontLibrary.robotoMedium.font(size: 16)
-            fontColor = .gray
+            fontColor = ColorPalette.gtGrey.color
             buttonText = "Sign in with Google"
             iconName = ImageCatalog.googleIcon.name
+            iconSize = CGSize(width: 18, height: 18)
             
         case .facebook:
-            backgroundColor = .blue
+            backgroundColor = Color.getColorWithRGB(red: 24, green: 119, blue: 242, opacity: 1)
             font = Font.system(size: 16, weight: .semibold)
             fontColor = .white
             buttonText = "Login with Facebook"
             iconName = ImageCatalog.facebookIcon.name
+            iconSize = CGSize(width: 24, height: 24)
             
         case .apple:
             backgroundColor = .black
@@ -51,6 +54,7 @@ class SocialSignInButtonViewModel: ObservableObject {
             fontColor = .white
             buttonText = "Continue with Apple"
             iconName = ImageCatalog.appleIcon.name
+            iconSize = CGSize(width: 24, height: 24)
         }
     }
 }
