@@ -1052,6 +1052,7 @@
 		D4E243D529F1A64400EA4BB7 /* SocialSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243D429F1A64400EA4BB7 /* SocialSignInViewModel.swift */; };
 		D4E243DB29F1B61900EA4BB7 /* SocialSignInButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243DA29F1B61900EA4BB7 /* SocialSignInButtonView.swift */; };
 		D4E243DD29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243DC29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift */; };
+		D4E243DF29F30DAD00EA4BB7 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4E243DE29F30DAC00EA4BB7 /* Roboto-Medium.ttf */; };
 		D4EAE99E281C219C002B5B9D /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */; };
 		D4EB51DA2833E0A5009C185F /* PlainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51D92833E0A5009C185F /* PlainList.swift */; };
 		D4EB51DD2833E42E009C185F /* SpotlightTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */; };
@@ -2216,6 +2217,7 @@
 		D4E243D429F1A64400EA4BB7 /* SocialSignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInViewModel.swift; sourceTree = "<group>"; };
 		D4E243DA29F1B61900EA4BB7 /* SocialSignInButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonView.swift; sourceTree = "<group>"; };
 		D4E243DC29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonViewModel.swift; sourceTree = "<group>"; };
+		D4E243DE29F30DAC00EA4BB7 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		D4EAE99D281C219C002B5B9D /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
 		D4EB51D92833E0A5009C185F /* PlainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainList.swift; sourceTree = "<group>"; };
 		D4EB51DC2833E42E009C185F /* SpotlightTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightTitleView.swift; sourceTree = "<group>"; };
@@ -3603,6 +3605,7 @@
 		4556AEC923E22185002C15E8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D4E243DE29F30DAC00EA4BB7 /* Roboto-Medium.ttf */,
 				4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */,
 				4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */,
 				4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */,
@@ -7823,6 +7826,7 @@
 				45C2594528CAC3E8005D2387 /* ChooseLanguageCell.xib in Resources */,
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
+				D4E243DF29F30DAD00EA4BB7 /* Roboto-Medium.ttf in Resources */,
 				45B6480A25E581660098BAF1 /* (null) in Resources */,
 				45F7162E290A12D70019B715 /* WebContentView.xib in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,

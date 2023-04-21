@@ -20,6 +20,7 @@ class SocialSignInButtonViewModel: ObservableObject {
     private let buttonType: SocialSignInButtonType
     
     let backgroundColor: Color
+    let font: Font
     let fontColor: Color
     let buttonText: String
     let iconName: String
@@ -32,20 +33,23 @@ class SocialSignInButtonViewModel: ObservableObject {
             
         case .google:
             backgroundColor = .white
+            font = FontLibrary.robotoMedium.font(size: 16)
             fontColor = .gray
             buttonText = "Sign in with Google"
             iconName = ImageCatalog.googleIcon.name
             
         case .facebook:
             backgroundColor = .blue
+            font = Font.system(size: 16, weight: .semibold)
             fontColor = .white
             buttonText = "Login with Facebook"
             iconName = ImageCatalog.facebookIcon.name
             
         case .apple:
             backgroundColor = .black
+            font = Font.system(size: 16, weight: .semibold)
             fontColor = .white
-            buttonText = "Continue with Google"
+            buttonText = "Continue with Apple"
             iconName = ImageCatalog.appleIcon.name
         }
     }

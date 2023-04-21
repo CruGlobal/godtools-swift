@@ -19,12 +19,12 @@ struct SocialSignInButtonView: View {
             viewModel.backgroundColor
                 .ignoresSafeArea()
             
-            HStack {
+            HStack(spacing: 12) {
                 
                 Image(viewModel.iconName)
                 
                 Text(viewModel.buttonText)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
+                    .font(viewModel.font)
                     .foregroundColor(viewModel.fontColor)
             }
             
