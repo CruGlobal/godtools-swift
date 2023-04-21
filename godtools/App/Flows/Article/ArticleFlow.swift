@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import SwiftUI
 
 class ArticleFlow: Flow {
     
@@ -84,6 +85,13 @@ class ArticleFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
+        case .debugTappedFromArticle(let article):
+            
+            navigationController.present(getArticleDebugView(article: article), animated: true)
+            
+        case .closeTappedFromArticleDebug:
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
         default:
             break
         }
@@ -138,5 +146,29 @@ extension ArticleFlow {
         )
         
         return view
+    }
+    
+    func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
+        
+        let viewModel = ArticleDebugViewModel(
+            flowDelegate: self,
+            article: article
+        )
+        
+        let view = ArticleDebugView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<ArticleDebugView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView)
+        
+        return modal
     }
 }

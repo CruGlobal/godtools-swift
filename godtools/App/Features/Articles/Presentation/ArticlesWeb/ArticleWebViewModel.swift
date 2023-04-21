@@ -25,6 +25,7 @@ class ArticleWebViewModel: NSObject {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let debugEnabled: Bool = true
     
     init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
@@ -109,6 +110,29 @@ extension ArticleWebViewModel {
                 
             }
             .store(in: &cancellables)
+    }
+    
+    func debugTapped() {
+        
+        let url: URL?
+        let urlType: ArticleUrlType?
+        
+        if let webUrl = URL(string: aemCacheObject.aemData.webUrl) {
+            url = webUrl
+            urlType = .url
+        }
+        else if let webArchiveFileUrl = aemCacheObject.webArchiveFileUrl {
+            url = webArchiveFileUrl
+            urlType = .fileUrl
+        }
+        else {
+            url = nil
+            urlType = nil
+        }
+        
+        let article = ArticleDomainModel(url: url, urlType: urlType)
+        
+        flowDelegate?.navigate(step: .debugTappedFromArticle(article: article))
     }
     
     func sharedTapped() {

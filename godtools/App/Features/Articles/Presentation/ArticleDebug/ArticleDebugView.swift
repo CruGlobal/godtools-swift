@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ArticleDebugView: View {
     
+    private let horizontalPadding: CGFloat = 30
+    
     @ObservedObject private var viewModel: ArticleDebugViewModel
     
     init(viewModel: ArticleDebugViewModel) {
@@ -23,6 +25,30 @@ struct ArticleDebugView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
+                Text("Article Debug View")
+                    .foregroundColor(Color.black)
+                    .font(FontLibrary.sfProTextSemibold.font(size: 19))
+                    .multilineTextAlignment(.leading)
+                    .padding(EdgeInsets(top: 40, leading: horizontalPadding, bottom: 0, trailing: horizontalPadding))
+                
+                Text("Article URL: \(viewModel.url)")
+                    .foregroundColor(Color.black)
+                    .font(FontLibrary.sfProTextRegular.font(size: 17))
+                    .multilineTextAlignment(.leading)
+                    .padding(EdgeInsets(top: 30, leading: horizontalPadding, bottom: 0, trailing: horizontalPadding))
+                
+                Text("Article URL Type: \(viewModel.urlType)")
+                    .foregroundColor(Color.black)
+                    .font(FontLibrary.sfProTextRegular.font(size: 17))
+                    .multilineTextAlignment(.leading)
+                    .padding(EdgeInsets(top: 15, leading: horizontalPadding, bottom: 0, trailing: horizontalPadding))
+                
+                Spacer()
+                
+                GTBlueButton(title: "Copy Url", font: FontLibrary.sfProTextSemibold.font(size: 15), width: geometry.size.width - (horizontalPadding * 2), height: 50) {
+                    viewModel.copyUrlTapped()
+                }
+                .padding(EdgeInsets(top: 0, leading: horizontalPadding, bottom: 40, trailing: 0))
             }
         }
     }

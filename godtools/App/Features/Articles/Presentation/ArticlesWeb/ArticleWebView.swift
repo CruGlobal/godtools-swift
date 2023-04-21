@@ -38,14 +38,25 @@ class ArticleWebView: UIViewController {
             
         setupLayout()
         setupBinding()
-                
+        
         shareButton = addBarButtonItem(
             to: .right,
             image: ImageCatalog.navShare.uiImage,
             color: .white,
             target: self,
-            action: #selector(handleShare(barButtonItem:))
+            action: #selector(shareButtonTapped)
         )
+        
+        if viewModel.debugEnabled {
+            
+            _ = addBarButtonItem(
+                to: .right,
+                image: ImageCatalog.navDebug.uiImage,
+                color: .white,
+                target: self,
+                action: #selector(debugButtonTapped)
+            )
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,7 +113,11 @@ class ArticleWebView: UIViewController {
         viewModel.loadWebPage(webView: webView)
     }
     
-    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+    @objc private func debugButtonTapped() {
+        viewModel.debugTapped()
+    }
+    
+    @objc private func shareButtonTapped() {
         viewModel.sharedTapped()
     }
 }
