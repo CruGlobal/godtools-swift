@@ -12,6 +12,8 @@ class SocialSignInViewModel: ObservableObject {
     
     private let localizationServices: LocalizationServices
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let titleText: String
     let subtitleText: String
     
@@ -36,11 +38,17 @@ class SocialSignInViewModel: ObservableObject {
         )
     }()
     
-    init(localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
         
+        self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         
         titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
         subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
+    }
+    
+    func closeTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromLogin)
     }
 }

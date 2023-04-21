@@ -16,6 +16,8 @@ struct SocialSignInButtonView: View {
         
         Button {
             
+            viewModel.loginTapped()
+            
         } label: {
             
             ZStack {

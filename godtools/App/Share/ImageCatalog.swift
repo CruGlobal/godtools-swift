@@ -28,6 +28,7 @@ enum ImageCatalog: String {
     case loginBackground = "loginBackground"
     case navBack = "nav_item_back"
     case navClose = "nav_item_close"
+    case navCloseWhite = "nav_item_close_white"
     case navHome = "home"
     case navLanguage = "nav_language"
     case navMenu = "nav_menu"

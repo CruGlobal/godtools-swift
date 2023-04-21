@@ -16,11 +16,21 @@ struct SocialSignInView: View {
         
         GeometryReader { geometry in
             
-            ZStack {
+            ZStack(alignment: .top) {
                 ColorPalette.gtBlue.color
                     .ignoresSafeArea()
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .trailing) {
+                    
+                    Button {
+                        viewModel.closeTapped()
+                    } label: {
+                        Image(ImageCatalog.navCloseWhite.rawValue)
+                            .frame(width: 50, height: 50)
+                    }
+                    .padding([.top, .trailing], 5)
+                    
+                    FixedVerticalSpacer(height: 22)
                     
                     Image(ImageCatalog.loginBackground.rawValue)
                         .resizable()
@@ -51,5 +61,6 @@ struct SocialSignInView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }

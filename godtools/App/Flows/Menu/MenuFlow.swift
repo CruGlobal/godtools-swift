@@ -90,7 +90,13 @@ class MenuFlow: Flow {
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
         case .loginTappedFromMenu:
-            navigationController.pushViewController(getSocialSignInView(), animated: true)
+            let view = getSocialSignInView()
+            view.modalPresentationStyle = .fullScreen
+            
+            navigationController.present(view, animated: true)
+            
+        case .backTappedFromLogin:
+            navigationController.dismiss(animated: true)
                         
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
@@ -212,17 +218,13 @@ class MenuFlow: Flow {
     private func getSocialSignInView() -> UIViewController {
         
         let viewModel = SocialSignInViewModel(
+            flowDelegate: self,
             localizationServices: appDiContainer.localizationServices
         )
         
         let view = SocialSignInView(viewModel: viewModel)
         
         let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
-        
-//        _ = hostingView.addDefaultNavBackItem(
-//            target: viewModel,
-//            action: #selector(viewModel.backTapped)
-//        )
         
         return hostingView
     }
