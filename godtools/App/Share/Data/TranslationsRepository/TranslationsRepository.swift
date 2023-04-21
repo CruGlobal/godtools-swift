@@ -10,7 +10,6 @@ import Foundation
 import Combine
 import GodToolsToolParser
 import RequestOperation
-import SharedAppleExtensions
 
 class TranslationsRepository {
         

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SharedAppleExtensions
 
 class LoadingView: UIViewController {
     
