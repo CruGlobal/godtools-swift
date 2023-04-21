@@ -8,7 +8,6 @@
 
 import UIKit
 import Lottie
-import SharedAppleExtensions
 
 extension UIViewController {
   

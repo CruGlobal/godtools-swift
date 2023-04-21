@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SharedAppleExtensions
 
 // TODO: Look into using TutorialPagerView instead. ~Levi
 class TutorialView: UIViewController {

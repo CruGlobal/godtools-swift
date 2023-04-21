@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SharedAppleExtensions
 
 class ShareToolScreenTutorialView: UIViewController {
     //TODO: re-implement this tutorial using TutorialPagerView
