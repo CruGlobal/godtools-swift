@@ -10,35 +10,52 @@ import SwiftUI
 
 struct SocialSignInButtonView: View {
     
-    @ObservedObject var viewModel: SocialSignInButtonViewModel
+    private let height: CGFloat = 43
+    private let cornerRadius: CGFloat = 6
+    private let tappedClosure: (() -> Void)
+    
+    @ObservedObject private var viewModel: SocialSignInButtonViewModel
+    
+    init(viewModel: SocialSignInButtonViewModel, tappedClosure: @escaping (() -> Void)) {
+        
+        self.viewModel = viewModel
+        self.tappedClosure = tappedClosure
+    }
     
     var body: some View {
         
-        Button {
-            
-            viewModel.loginTapped()
-            
-        } label: {
-            
-            ZStack {
+        ZStack(alignment: .center) {
+                     
+            Button {
                 
-                viewModel.backgroundColor
-                    .ignoresSafeArea()
+                print("button tap")
                 
-                HStack(spacing: 12) {
+                tappedClosure()
+                
+            } label: {
+                
+                ZStack(alignment: .center) {
+                
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(height: height)
+                        .cornerRadius(cornerRadius)
+                        .ignoresSafeArea()
                     
-                    Image(viewModel.iconName)
-                        .frame(width: viewModel.iconSize.width, height: viewModel.iconSize.height)
-                    
-                    Text(viewModel.buttonText)
-                        .font(viewModel.font)
-                        .foregroundColor(viewModel.fontColor)
+                    HStack(spacing: 12) {
+                        
+                        Image(viewModel.iconName)
+                            .frame(width: viewModel.iconSize.width, height: viewModel.iconSize.height)
+                        
+                        Text(viewModel.buttonText)
+                            .font(viewModel.font)
+                            .foregroundColor(viewModel.fontColor)
+                    }
                 }
-                
             }
-            .frame(height: 43)
-            .cornerRadius(6)
+            .frame(height: height)
+            .background(viewModel.backgroundColor)
+            .cornerRadius(cornerRadius)
         }
-
     }
 }

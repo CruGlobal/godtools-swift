@@ -57,8 +57,4 @@ class SocialSignInButtonViewModel: ObservableObject {
             iconSize = CGSize(width: 24, height: 24)
         }
     }
-    
-    func loginTapped() {
-        // TODO
-    }
 }

@@ -51,9 +51,17 @@ struct SocialSignInView: View {
                         
                         VStack(spacing: 10) {
                             
-                            SocialSignInButtonView(viewModel: viewModel.googleSignInButtonViewModel)
-                            SocialSignInButtonView(viewModel: viewModel.facebookSignInButtonViewModel)
-                            SocialSignInButtonView(viewModel: viewModel.appleSignInButtonViewModel)
+                            SocialSignInButtonView(viewModel: viewModel.googleSignInButtonViewModel, tappedClosure: {
+                                viewModel.signInWithGoogleTapped()
+                            })
+                            
+                            SocialSignInButtonView(viewModel: viewModel.facebookSignInButtonViewModel, tappedClosure: {
+                                viewModel.signInWithFacebookTapped()
+                            })
+                            
+                            SocialSignInButtonView(viewModel: viewModel.appleSignInButtonViewModel, tappedClosure: {
+                                viewModel.signInWithAppleTapped()
+                            })
                         }
                         
                     }
