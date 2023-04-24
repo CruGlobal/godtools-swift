@@ -115,10 +115,7 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
-    
-    // about
-    case backTappedFromAbout
-    
+        
     // user activity
     case backTappedFromActivity
     
