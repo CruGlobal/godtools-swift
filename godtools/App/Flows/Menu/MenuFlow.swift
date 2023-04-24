@@ -89,13 +89,13 @@ class MenuFlow: Flow {
             print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
-        case .loginTappedFromMenu:
+        case .loginTappedFromMenu, .createAccountTappedFromMenu:
             let view = getSocialSignInView()
             view.modalPresentationStyle = .fullScreen
             
             navigationController.present(view, animated: true)
             
-        case .backTappedFromLogin:
+        case .backTappedFromLogin, .backTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
                         
         case .activityTappedFromMenu:

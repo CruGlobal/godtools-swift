@@ -211,7 +211,7 @@ extension MenuViewModel {
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        authenticateUser(fromViewController: fromViewController)
+        flowDelegate?.navigate(step: .createAccountTappedFromMenu)
     }
     
     func logoutTapped(fromViewController: UIViewController) {
