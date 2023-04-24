@@ -27,9 +27,7 @@ struct SocialSignInButtonView: View {
         ZStack(alignment: .center) {
                      
             Button {
-                
-                print("button tap")
-                
+                                
                 tappedClosure()
                 
             } label: {

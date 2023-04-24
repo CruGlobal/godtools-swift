@@ -60,14 +60,14 @@ extension SocialSignInViewModel {
     }
     
     func signInWithGoogleTapped() {
-        print("sign in with google tapped...")
+
     }
     
     func signInWithFacebookTapped() {
-        print("sign in with facebook tapped...")
+
     }
     
     func signInWithAppleTapped() {
-        print("sign in with apple tapped...")
+
     }
 }
