@@ -140,6 +140,8 @@ enum FlowStep {
     case backTappedFromArticle
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
+    case debugTappedFromArticle(article: ArticleDomainModel)
+    case closeTappedFromArticleDebug
     
     // article deep link
     case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)
