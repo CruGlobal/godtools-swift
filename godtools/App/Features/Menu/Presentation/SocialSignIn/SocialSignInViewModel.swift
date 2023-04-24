@@ -10,6 +10,7 @@ import Foundation
 
 class SocialSignInViewModel: ObservableObject {
     
+    private let authenticationType: SocialSignInAuthenticationType
     private let localizationServices: LocalizationServices
     
     private weak var flowDelegate: FlowDelegate?
@@ -38,16 +39,15 @@ class SocialSignInViewModel: ObservableObject {
         )
     }()
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, authenticationType: SocialSignInAuthenticationType, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.authenticationType = authenticationType
         self.localizationServices = localizationServices
         
         titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
         subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
     }
-    
-    
 }
 
 // MARK: - Inputs
@@ -56,7 +56,13 @@ extension SocialSignInViewModel {
     
     @objc func closeTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromLogin)
+        switch authenticationType {
+        case .createAccount:
+            flowDelegate?.navigate(step: .backTappedFromCreateAccount)
+            
+        case .login:
+            flowDelegate?.navigate(step: .backTappedFromLogin)
+        }
     }
     
     func signInWithGoogleTapped() {

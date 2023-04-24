@@ -89,14 +89,14 @@ class MenuFlow: Flow {
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
         case .loginTappedFromMenu:
-            let view = getSocialSignInView()
+            let view = getSocialSignInView(authenticationType: .login)
             navigationController.present(view, animated: true)
             
         case .backTappedFromLogin:
             navigationController.dismiss(animated: true)
             
         case .createAccountTappedFromMenu:
-            let view = getSocialSignInView()
+            let view = getSocialSignInView(authenticationType: .createAccount)
             navigationController.present(view, animated: true)
             
         case .backTappedFromCreateAccount:
@@ -219,13 +219,14 @@ class MenuFlow: Flow {
         }
     }
     
-    private func getSocialSignInView() -> UIViewController {
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
         let viewBackgroundColor: Color = ColorPalette.gtBlue.color
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
         
         let viewModel = SocialSignInViewModel(
             flowDelegate: self,
+            authenticationType: authenticationType,
             localizationServices: appDiContainer.localizationServices
         )
         
