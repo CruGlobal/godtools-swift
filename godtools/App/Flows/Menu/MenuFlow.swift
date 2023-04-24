@@ -86,16 +86,20 @@ class MenuFlow: Flow {
             dismissTutorial()
             
         case .doneTappedFromMenu:
-            print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
-        case .loginTappedFromMenu, .createAccountTappedFromMenu:
+        case .loginTappedFromMenu:
             let view = getSocialSignInView()
-            view.modalPresentationStyle = .fullScreen
-            
             navigationController.present(view, animated: true)
             
-        case .backTappedFromLogin, .backTappedFromCreateAccount:
+        case .backTappedFromLogin:
+            navigationController.dismiss(animated: true)
+            
+        case .createAccountTappedFromMenu:
+            let view = getSocialSignInView()
+            navigationController.present(view, animated: true)
+            
+        case .backTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
                         
         case .activityTappedFromMenu:
@@ -217,16 +221,39 @@ class MenuFlow: Flow {
     
     private func getSocialSignInView() -> UIViewController {
         
+        let viewBackgroundColor: Color = ColorPalette.gtBlue.color
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
         let viewModel = SocialSignInViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices
         )
         
-        let view = SocialSignInView(viewModel: viewModel)
+        let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
         let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
         
-        return hostingView
+        hostingView.view.backgroundColor = viewBackgroundUIColor
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: .white,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: .white,
+            statusBarStyle: .lightContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
     }
     
     private func getAccountView() -> UIViewController {

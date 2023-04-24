@@ -10,25 +10,25 @@ import SwiftUI
 
 struct SocialSignInView: View {
     
-    @ObservedObject var viewModel: SocialSignInViewModel
+    private let backgroundColor: Color
+    
+    @ObservedObject private var viewModel: SocialSignInViewModel
+    
+    init(viewModel: SocialSignInViewModel, backgroundColor: Color) {
+        
+        self.viewModel = viewModel
+        self.backgroundColor = backgroundColor
+    }
     
     var body: some View {
         
         GeometryReader { geometry in
             
             ZStack(alignment: .top) {
-                ColorPalette.gtBlue.color
+                backgroundColor
                     .ignoresSafeArea()
                 
                 VStack(alignment: .trailing) {
-                    
-                    Button {
-                        viewModel.closeTapped()
-                    } label: {
-                        Image(ImageCatalog.navCloseWhite.rawValue)
-                            .frame(width: 50, height: 50)
-                    }
-                    .padding([.top, .trailing], 5)
                     
                     FixedVerticalSpacer(height: 22)
                     

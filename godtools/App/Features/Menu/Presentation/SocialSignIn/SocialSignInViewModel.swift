@@ -47,7 +47,14 @@ class SocialSignInViewModel: ObservableObject {
         subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
     }
     
-    func closeTapped() {
+    
+}
+
+// MARK: - Inputs
+
+extension SocialSignInViewModel {
+    
+    @objc func closeTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromLogin)
     }
