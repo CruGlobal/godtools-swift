@@ -134,39 +134,45 @@ extension MenuView: UITableViewDelegate {
         let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
         
         switch menuItem {
+        
+        case .tutorial:
+            viewModel.tutorialTapped()
             
         case .languageSettings:
             viewModel.languageSettingsTapped()
-        
-        case .about:
-            viewModel.aboutTapped()
-        
-        case .help:
-            viewModel.helpTapped()
-        
-        case .contactUs:
-            viewModel.contactUsTapped()
-            
-        case .deleteAccount:
-            viewModel.deleteAccountTapped()
-        
-        case .logout:
-            viewModel.logoutTapped(fromViewController: self)
             
         case .login:
             viewModel.loginTapped(fromViewController: self)
-        
+            
+        case .activity:
+            viewModel.activityTapped()
+            
         case .createAccount:
             viewModel.createAccountTapped(fromViewController: self)
             
-        case .myAccount:
-            viewModel.myAccountTapped()
+        case .logout:
+            viewModel.logoutTapped(fromViewController: self)
+            
+        case .deleteAccount:
+            viewModel.deleteAccountTapped()
+            
+        case .sendFeedback:
+            viewModel.sendFeedbackTapped()
+        
+        case .reportABug:
+            viewModel.reportABugTapped()
+            
+        case .askAQuestion:
+            viewModel.askAQuestionTapped()
+        
+        case .leaveAReview:
+            viewModel.leaveAReviewTapped()
+            
+        case .shareAStoryWithUs:
+            viewModel.shareAStoryWithUsTapped()
         
         case .shareGodTools:
             viewModel.shareGodToolsTapped()
-        
-        case .shareAStoryWithUs:
-            viewModel.shareAStoryWithUsTapped()
         
         case .termsOfUse:
             viewModel.termsOfUseTapped()
@@ -176,9 +182,6 @@ extension MenuView: UITableViewDelegate {
         
         case .copyrightInfo:
             viewModel.copyrightInfoTapped()
-            
-        case .tutorial:
-            viewModel.tutorialTapped()
             
         case .version:
             break

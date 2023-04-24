@@ -11,7 +11,8 @@ import UIKit
 class MobileContentLinkView: MobileContentView {
     
     private let viewModel: MobileContentLinkViewModel
-    private let linkButton: UIButton = UIButton(type: .custom)
+    private let backgroundView: UIView = UIView(frame: .zero)
+    private let titleLabel: UILabel = UILabel(frame: .zero)
     
     required init(viewModel: MobileContentLinkViewModel) {
         
@@ -29,14 +30,15 @@ class MobileContentLinkView: MobileContentView {
     
     private func setupLayout() {
         
-        // linkButton
         let parentView: UIView = self
-        parentView.addSubview(linkButton)
-        linkButton.translatesAutoresizingMaskIntoConstraints = false
-        linkButton.constrainEdgesToView(view: parentView)
         
-        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-            item: linkButton,
+        // backgroundView
+        parentView.addSubview(backgroundView)
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.constrainEdgesToView(view: parentView)
+        
+        let backgroundViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint(
+            item: backgroundView,
             attribute: .height,
             relatedBy: .equal,
             toItem: nil,
@@ -44,18 +46,25 @@ class MobileContentLinkView: MobileContentView {
             multiplier: 1,
             constant: 50
         )
-        heightConstraint.priority = UILayoutPriority(1000)
-        linkButton.addConstraint(heightConstraint)
+        backgroundViewHeightConstraint.priority = UILayoutPriority(1000)
+        backgroundView.addConstraint(backgroundViewHeightConstraint)
         
-        linkButton.layer.cornerRadius = 5
+        backgroundView.layer.cornerRadius = 5
+        
+        // titleLabel
+        parentView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.constrainEdgesToView(view: parentView)
+        titleLabel.backgroundColor = .clear
+        titleLabel.textAlignment = .center
     }
     
     private func setupBinding() {
         
-        linkButton.backgroundColor = viewModel.backgroundColor
-        linkButton.titleLabel?.font = viewModel.font
-        linkButton.setTitle(viewModel.title, for: .normal)
-        linkButton.setTitleColor(viewModel.titleColor, for: .normal)
+        backgroundView.backgroundColor = viewModel.backgroundColor
+        titleLabel.font = viewModel.font
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.titleColor
     }
     
     // MARK: - MobileContentView

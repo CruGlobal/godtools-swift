@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import SharedAppleExtensions
+import godtools
 
 class LocaleTests: XCTestCase {
 

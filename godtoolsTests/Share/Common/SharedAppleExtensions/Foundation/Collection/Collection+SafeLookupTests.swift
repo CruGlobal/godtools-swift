@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import SharedAppleExtensions
+import godtools
 
 final class CollectionSafeLookupTests: XCTestCase {
     
