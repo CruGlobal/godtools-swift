@@ -721,6 +721,7 @@
 		45CE7FD42926A0940056168A /* AccountSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CE7FD32926A0940056168A /* AccountSectionsView.swift */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */; };
+		45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D48C8229F81082004E92B1 /* Colors.xcassets */; };
 		45D4A6CD29B126BB00DED984 /* MobileContentPagesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */; };
 		45D4A6CF29B12AE200DED984 /* ToolDeepLinkPage+MobileContentPagesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D4A6CE29B12AE200DED984 /* ToolDeepLinkPage+MobileContentPagesPage.swift */; };
 		45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */; };
@@ -1810,6 +1811,7 @@
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CE7FD32926A0940056168A /* AccountSectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSectionsView.swift; sourceTree = "<group>"; };
 		45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewPlayerState.swift; sourceTree = "<group>"; };
+		45D48C8229F81082004E92B1 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesPage.swift; sourceTree = "<group>"; };
 		45D4A6CE29B12AE200DED984 /* ToolDeepLinkPage+MobileContentPagesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolDeepLinkPage+MobileContentPagesPage.swift"; sourceTree = "<group>"; };
 		45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResourcesAttachments.swift; sourceTree = "<group>"; };
@@ -6930,6 +6932,7 @@
 				45AD174725938A4D00A096A0 /* App */,
 				4556AEC823E22185002C15E8 /* Assets */,
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
+				45D48C8229F81082004E92B1 /* Colors.xcassets */,
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */,
@@ -8071,6 +8074,7 @@
 				45AD1AAB25938A4E00A096A0 /* TutorialCell.xib in Resources */,
 				4599251D2704F37B008F7844 /* ChooseScaleSliderView.xib in Resources */,
 				45C2594028CAC3E8005D2387 /* LanguageSettingsView.xib in Resources */,
+				45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */,
 				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				45677781287DB21F0044AEB2 /* ToolTrainingTipView.xib in Resources */,
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
