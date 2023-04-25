@@ -86,8 +86,21 @@ class MenuFlow: Flow {
             dismissTutorial()
             
         case .doneTappedFromMenu:
-            print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
+            
+        case .loginTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .login)
+            navigationController.present(view, animated: true)
+            
+        case .backTappedFromLogin:
+            navigationController.dismiss(animated: true)
+            
+        case .createAccountTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .createAccount)
+            navigationController.present(view, animated: true)
+            
+        case .backTappedFromCreateAccount:
+            navigationController.dismiss(animated: true)
                         
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
@@ -206,26 +219,42 @@ class MenuFlow: Flow {
         }
     }
     
-    private func getAboutView() -> UIViewController {
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
-        let viewModel = AboutViewModel(
+        let viewBackgroundColor: Color = ColorPalette.gtBlue.color
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = SocialSignInViewModel(
             flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            authenticationType: authenticationType,
+            localizationServices: appDiContainer.localizationServices
         )
         
-        let view = AboutView(viewModel: viewModel)
+        let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<AboutView> = UIHostingController(rootView: view)
+        let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
         
-        _ = hostingView.addDefaultNavBackItem(
+        hostingView.view.backgroundColor = viewBackgroundUIColor
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: .white,
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.closeTapped)
         )
         
-        return hostingView
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: .white,
+            statusBarStyle: .lightContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
     }
     
     private func getAccountView() -> UIViewController {

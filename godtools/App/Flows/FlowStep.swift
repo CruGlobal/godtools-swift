@@ -93,6 +93,10 @@ enum FlowStep {
     case doneTappedFromMenu
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
+    case loginTappedFromMenu
+    case backTappedFromLogin
+    case createAccountTappedFromMenu
+    case backTappedFromCreateAccount
     case activityTappedFromMenu
     case sendFeedbackTappedFromMenu
     case backTappedFromSendFeedback
@@ -111,10 +115,7 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
-    
-    // about
-    case backTappedFromAbout
-    
+        
     // user activity
     case backTappedFromActivity
     

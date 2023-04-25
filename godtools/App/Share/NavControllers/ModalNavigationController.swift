@@ -11,20 +11,23 @@ import UIKit
 class ModalNavigationController: UINavigationController {
         
     private let rootView: UIViewController
+    private let statusBarStyle: UIStatusBarStyle
     
-    static func defaultModal(rootView: UIViewController) -> ModalNavigationController {
+    static func defaultModal(rootView: UIViewController, statusBarStyle: UIStatusBarStyle) -> ModalNavigationController {
         
         return ModalNavigationController(
             rootView: rootView,
             navBarColor: UIColor.white,
             navBarIsTranslucent: false,
-            controlColor: ColorPalette.gtBlue.uiColor
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: statusBarStyle
         )
     }
     
-    init(rootView: UIViewController, navBarColor: UIColor, navBarIsTranslucent: Bool, controlColor: UIColor) {
+    init(rootView: UIViewController, navBarColor: UIColor, navBarIsTranslucent: Bool, controlColor: UIColor, statusBarStyle: UIStatusBarStyle) {
         
         self.rootView = rootView
+        self.statusBarStyle = statusBarStyle
         
         super.init(nibName: nil, bundle: nil)
         
@@ -53,6 +56,6 @@ class ModalNavigationController: UINavigationController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         
-        return .default
+        return statusBarStyle
     }
 }
