@@ -39,9 +39,11 @@ extension DeleteAccountViewModel {
     
     func deleteAccountTapped() {
         
+        flowDelegate?.navigate(step: .deleteAccountTappedFromDeleteAccount)
     }
     
     func cancelTapped() {
         
+        flowDelegate?.navigate(step: .cancelTappedFromDeleteAccount)
     }
 }

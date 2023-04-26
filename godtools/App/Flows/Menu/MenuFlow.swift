@@ -182,11 +182,16 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .deleteAccountTappedFromMenu:
-            
             navigationController.present(getDeleteAccountView(), animated: true)
             
         case .closeTappedFromDeleteAccount:
+            navigationController.dismissPresented(animated: true, completion: nil)
             
+        case .deleteAccountTappedFromDeleteAccount:
+            print("deleting account...")
+            assertionFailure("TODO: Implement delete account use case in GT-2010...")
+        
+        case .cancelTappedFromDeleteAccount:
             navigationController.dismissPresented(animated: true, completion: nil)
                         
         default:
