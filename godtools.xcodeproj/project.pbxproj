@@ -861,7 +861,6 @@
 		45F71630290A12D70019B715 /* MailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D2290A12D70019B715 /* MailViewModelType.swift */; };
 		45F71631290A12D70019B715 /* MailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D3290A12D70019B715 /* MailViewModel.swift */; };
 		45F71632290A12D70019B715 /* MailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F715D4290A12D70019B715 /* MailView.xib */; };
-		45F7163D290A12D70019B715 /* DeleteAccountHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E3290A12D70019B715 /* DeleteAccountHostingView.swift */; };
 		45F7163E290A12D70019B715 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E4290A12D70019B715 /* DeleteAccountView.swift */; };
 		45F7163F290A12D70019B715 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E5290A12D70019B715 /* DeleteAccountViewModel.swift */; };
 		45F71640290A12D70019B715 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715E7290A12D70019B715 /* MenuViewModel.swift */; };
@@ -1933,7 +1932,6 @@
 		45F715D2290A12D70019B715 /* MailViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModelType.swift; sourceTree = "<group>"; };
 		45F715D3290A12D70019B715 /* MailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModel.swift; sourceTree = "<group>"; };
 		45F715D4290A12D70019B715 /* MailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailView.xib; sourceTree = "<group>"; };
-		45F715E3290A12D70019B715 /* DeleteAccountHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountHostingView.swift; sourceTree = "<group>"; };
 		45F715E4290A12D70019B715 /* DeleteAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		45F715E5290A12D70019B715 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		45F715E7290A12D70019B715 /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
@@ -6549,7 +6547,6 @@
 		45F715E2290A12D70019B715 /* DeleteAccount */ = {
 			isa = PBXGroup;
 			children = (
-				45F715E3290A12D70019B715 /* DeleteAccountHostingView.swift */,
 				45F715E4290A12D70019B715 /* DeleteAccountView.swift */,
 				45F715E5290A12D70019B715 /* DeleteAccountViewModel.swift */,
 			);
@@ -8522,7 +8519,6 @@
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */,
 				45EB9B8229F16CF200CA74A8 /* Error+Code.swift in Sources */,
-				45F7163D290A12D70019B715 /* DeleteAccountHostingView.swift in Sources */,
 				45BDA61A2954FE3E007E259B /* ArticleAemRepositoryType.swift in Sources */,
 				D45922CA2865368100904B87 /* ToolCardNavButtonView.swift in Sources */,
 				452040932959E73F004D843E /* SetupParallelLanguageViewModel.swift in Sources */,

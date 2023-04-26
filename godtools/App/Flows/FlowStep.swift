@@ -120,8 +120,7 @@ enum FlowStep {
     case backTappedFromActivity
     
     // delete account
-    case backTappedFromDeleteAccount
-    case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
+    case closeTappedFromDeleteAccount
     
     // language settings
     case backTappedFromLanguageSettings

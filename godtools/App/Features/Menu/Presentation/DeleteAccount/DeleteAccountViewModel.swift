@@ -28,13 +28,8 @@ class DeleteAccountViewModel: ObservableObject {
 
 extension DeleteAccountViewModel {
     
-    func backTapped() {
+    @objc func closeTapped() {
         
-        flowDelegate?.navigate(step: .backTappedFromDeleteAccount)
-    }
-    
-    func emailHelpDeskToDeleteOktaAccountTapped() {
-        
-        flowDelegate?.navigate(step: .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount)
+        flowDelegate?.navigate(step: .closeTappedFromDeleteAccount)
     }
 }

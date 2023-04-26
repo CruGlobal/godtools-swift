@@ -11,8 +11,15 @@ import SwiftUI
 struct DeleteAccountView: View {
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 40, leading: 30, bottom: 0, trailing: 30)
+    private let backgroundColor: Color
     
-    @ObservedObject var viewModel: DeleteAccountViewModel
+    @ObservedObject private var viewModel: DeleteAccountViewModel
+    
+    init(viewModel: DeleteAccountViewModel, backgroundColor: Color) {
+        
+        self.viewModel = viewModel
+        self.backgroundColor = backgroundColor
+    }
     
     var body: some View {
         
@@ -20,26 +27,10 @@ struct DeleteAccountView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                Rectangle()
-                    .frame(height: contentInsets.top)
-                    .foregroundColor(.clear)
-                
-                TextWithLinks(
-                    text: viewModel.deleteOktaAccountInstructions,
-                    textColor: ColorPalette.gtGrey.uiColor,
-                    font: FontLibrary.sfProTextRegular.uiFont(size: 18),
-                    lineSpacing: 2,
-                    width: geometry.size.width - contentInsets.leading - contentInsets.trailing,
-                    didInteractWithUrlClosure: { (url: URL) in
-                        
-                        viewModel.emailHelpDeskToDeleteOktaAccountTapped()
-                        
-                        return false
-                    }
-                )
+                FixedVerticalSpacer(height: contentInsets.top)
             }
-            .padding(EdgeInsets(top: 0, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
         }
+        .background(Color.white)
     }
 }
 
@@ -54,6 +45,6 @@ struct DeleteAccountView_Preview: PreviewProvider {
             localizationServices: appDiContainer.localizationServices
         )
         
-        return DeleteAccountView(viewModel: viewModel)
+        return DeleteAccountView(viewModel: viewModel, backgroundColor: Color.white)
     }
 }
