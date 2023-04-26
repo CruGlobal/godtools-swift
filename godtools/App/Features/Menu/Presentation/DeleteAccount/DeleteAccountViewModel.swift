@@ -12,15 +12,19 @@ class DeleteAccountViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var navTitle: String = ""
-    @Published var deleteOktaAccountInstructions: String = ""
+    let title: String
+    let subtitle: String
+    let confirmButtonTitle: String
+    let cancelButtonTitle: String
     
     init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         
-        navTitle = localizationServices.stringForMainBundle(key: "deleteAccount.navTitle")
-        deleteOktaAccountInstructions = localizationServices.stringForMainBundle(key: "deleteAccount.deleteOktaAccountInstructions")
+        title = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.title.rawValue)
+        subtitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.subtitle.rawValue)
+        confirmButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue)
+        cancelButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
     }
 }
 
@@ -31,5 +35,13 @@ extension DeleteAccountViewModel {
     @objc func closeTapped() {
         
         flowDelegate?.navigate(step: .closeTappedFromDeleteAccount)
+    }
+    
+    func deleteAccountTapped() {
+        
+    }
+    
+    func cancelTapped() {
+        
     }
 }
