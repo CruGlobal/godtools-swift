@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import OktaAuthentication
 import Combine
 
 class MobileContentAuthTokenAPI {

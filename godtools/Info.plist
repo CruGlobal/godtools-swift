@@ -71,10 +71,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
-	<key>FacebookAppID</key>
-	<string>2236701616451487</string>
-	<key>FacebookDisplayName</key>
-	<string>GodTools</string>
 	<key>FirebaseAutomaticScreenReportingEnabled</key>
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>

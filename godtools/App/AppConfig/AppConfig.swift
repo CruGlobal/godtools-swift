@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SocialAuthentication
 
 class AppConfig {
     
@@ -14,9 +15,21 @@ class AppConfig {
     
     private let appBuild: AppBuild
     
+    let facebookConfig: FacebookConfiguration
+    
     init(appBuild: AppBuild) {
         
         self.appBuild = appBuild
+        
+        facebookConfig = FacebookConfiguration(
+            appId: "2236701616451487",
+            clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
+            displayName: "GodTools",
+            isAutoLogAppEventsEnabled: true,
+            isAdvertiserTrackingEnabled: false,
+            isAdvertiserIDCollectionEnabled: false,
+            isSKAdNetworkReportEnabled: false
+        )
     }
     
     var appsFlyerConfiguration: AppsFlyerConfiguration {

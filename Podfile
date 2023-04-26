@@ -19,7 +19,6 @@ end
 target 'godtools' do
         
     pod 'GoogleConversionTracking', '~> 3.4.0'
-    pod 'FBSDKCoreKit', '~> 8.2.0'
     pod 'Fuzi', '~> 3.1.1'
     pod 'Starscream', '~> 4.0.0'
     
