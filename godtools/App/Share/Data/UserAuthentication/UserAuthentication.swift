@@ -9,14 +9,17 @@
 import Foundation
 import OktaAuthentication
 import Combine
+import SocialAuthentication
 
 class UserAuthentication {
     
     private let cruOktaAuthentication: CruOktaAuthentication
+    private let facebookAuthentication: FacebookAuthentication
         
-    init(cruOktaAuthentication: CruOktaAuthentication) {
+    init(cruOktaAuthentication: CruOktaAuthentication, facebookAuthentication: FacebookAuthentication) {
         
         self.cruOktaAuthentication = cruOktaAuthentication
+        self.facebookAuthentication = facebookAuthentication
     }
     
     func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {

@@ -8,6 +8,7 @@
 
 import Foundation
 import OktaAuthentication
+import SocialAuthentication
 
 class AppDataLayerDependencies {
     
@@ -101,6 +102,10 @@ class AppDataLayerDependencies {
             api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getFacebookAuthentication() -> FacebookAuthentication {
+        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
@@ -281,7 +286,10 @@ class AppDataLayerDependencies {
     }
     
     func getUserAuthentication() -> UserAuthentication {
-        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
+        return UserAuthentication(
+            cruOktaAuthentication: getCruOktaAuthentication(),
+            facebookAuthentication: getFacebookAuthentication()
+        )
     }
     
     func getUserCountersRepository() -> UserCountersRepository {
