@@ -20,6 +20,8 @@ class UserAuthentication {
     }
     
     func getAccessToken() -> UserAuthenticationAccessToken? {
+        // TODO: Implement in GT-2012. ~Levi
+        // Should return persisted access token.  We may need to track which social sign in a user last used?
         return nil
     }
     
@@ -28,7 +30,7 @@ class UserAuthentication {
         return Just("").setFailureType(to: URLResponseError.self)
             .eraseToAnyPublisher()
         
-        // Uncomment and implement in GT-2012. ~Levi
+        // TODO: Uncomment and implement in GT-2012. ~Levi
         
         /*
         
@@ -52,11 +54,17 @@ class UserAuthentication {
     
     func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
         
+        // TODO: Implement in GT-2012. ~Levi
+        // Should revoke any access tokens.
+        
         return Just(())
             .eraseToAnyPublisher()
     }
     
     func getAuthenticatedUserPublisher() -> AnyPublisher<AuthenticatedUserInterface?, Error> {
+        
+        // TODO: Implement in GT-2012. ~Levi
+        // Need to see what user information we can obtain from social sdks.
         
         return Just(nil).setFailureType(to: Error.self)
             .eraseToAnyPublisher()

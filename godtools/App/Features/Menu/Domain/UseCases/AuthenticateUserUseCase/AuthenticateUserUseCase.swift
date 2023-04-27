@@ -27,7 +27,7 @@ class AuthenticateUserUseCase {
         return Just(true).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         
-        // Uncomment and implement in GT-2012. ~Levi
+        // TODO: Uncomment and implement in GT-2012. ~Levi
         
         /*
         return authenticateByAuthTypePublisher(authType: authType)
@@ -56,7 +56,7 @@ class AuthenticateUserUseCase {
         return Just(true).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         
-        // Uncomment and implement in GT-2012. ~Levi
+        // TODO: Uncomment and implement in GT-2012. ~Levi
         
         /*
         switch authType {
