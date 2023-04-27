@@ -21,12 +21,12 @@ class GetUserAccountProfileNameUseCase {
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
         return userAuthentication.getAuthenticatedUserPublisher()
-            .catch({ (error: Error) -> AnyPublisher<AuthenticatedUserInterface?, Never> in
+            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel?, Never> in
                 
                 return Just(nil)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: AuthenticatedUserInterface?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
                 
                 guard let authUser = authUser else {
                     return Just(AccountProfileNameDomainModel(value: ""))

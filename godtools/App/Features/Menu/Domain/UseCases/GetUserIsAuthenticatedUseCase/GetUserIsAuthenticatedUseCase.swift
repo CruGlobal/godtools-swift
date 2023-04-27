@@ -19,6 +19,6 @@ class GetUserIsAuthenticatedUseCase {
     
     func getUserIsAuthenticated() -> Bool {
         
-        return userAuthentication.getAccessToken() != nil
+        return userAuthentication.getPersistedAccessToken() != nil
     }
 }

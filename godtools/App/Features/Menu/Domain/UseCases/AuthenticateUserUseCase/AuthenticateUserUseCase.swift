@@ -22,7 +22,7 @@ class AuthenticateUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
+    func authenticatePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
         
         return Just(true).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
@@ -51,7 +51,7 @@ class AuthenticateUserUseCase {
          */
     }
     
-    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
+    private func authenticateByAuthTypePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
         
         return Just(true).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
@@ -59,7 +59,7 @@ class AuthenticateUserUseCase {
         // TODO: Uncomment and implement in GT-2012. ~Levi
         
         /*
-        switch authType {
+        switch policy {
             
         case .attemptToRenewAuthenticationElseAuthenticate(let fromViewController):
             
@@ -97,7 +97,7 @@ class AuthenticateUserUseCase {
         }*/
     }
     
-    private func postEmailSignUp(authUser: AuthenticatedUserInterface) {
+    private func postEmailSignUp(authUser: AuthUserDomainModel) {
         
         let emailSignUp = EmailSignUpModel(
             email: authUser.email,
@@ -108,7 +108,7 @@ class AuthenticateUserUseCase {
         _ = emailSignUpService.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
     }
     
-    private func setAnalyticsUserProperties(authUser: AuthenticatedUserInterface) {
+    private func setAnalyticsUserProperties(authUser: AuthUserDomainModel) {
         
         firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,

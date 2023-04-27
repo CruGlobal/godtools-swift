@@ -19,9 +19,7 @@ class UserAuthentication {
         self.facebookAuthentication = facebookAuthentication
     }
     
-    func getAccessToken() -> UserAuthenticationAccessToken? {
-        // TODO: Implement in GT-2012. ~Levi
-        // Should return persisted access token.  We may need to track which social sign in a user last used?
+    func getPersistedAccessToken() -> String? {
         return nil
     }
     
@@ -30,10 +28,7 @@ class UserAuthentication {
         return Just("").setFailureType(to: URLResponseError.self)
             .eraseToAnyPublisher()
         
-        // TODO: Uncomment and implement in GT-2012. ~Levi
-        
         /*
-        
         return cruOktaAuthentication.renewAccessTokenPublisher()
             .flatMap { (response: OktaAuthenticationResponse) in
                 
@@ -48,25 +43,24 @@ class UserAuthentication {
                 return Just(oktaAccessToken.value)
             }
             .eraseToAnyPublisher()
-         
          */
     }
     
-    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
+    func getAuthenticatedUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Never> {
         
-        // TODO: Implement in GT-2012. ~Levi
-        // Should revoke any access tokens.
+        return Just(nil)
+            .eraseToAnyPublisher()
+    }
+    
+    func signInPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
         
         return Just(())
             .eraseToAnyPublisher()
     }
     
-    func getAuthenticatedUserPublisher() -> AnyPublisher<AuthenticatedUserInterface?, Error> {
+    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
         
-        // TODO: Implement in GT-2012. ~Levi
-        // Need to see what user information we can obtain from social sdks.
-        
-        return Just(nil).setFailureType(to: Error.self)
+        return Just(())
             .eraseToAnyPublisher()
     }
 }
