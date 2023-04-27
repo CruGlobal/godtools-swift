@@ -182,37 +182,17 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .deleteAccountTappedFromMenu:
+            navigationController.present(getDeleteAccountView(), animated: true)
             
-            let viewModel = DeleteAccountViewModel(
-                flowDelegate: self,
-                localizationServices: appDiContainer.localizationServices
-            )
+        case .closeTappedFromDeleteAccount:
+            navigationController.dismissPresented(animated: true, completion: nil)
             
-            let view = DeleteAccountView(viewModel: viewModel)
-            
-            let hostingView = DeleteAccountHostingView(view: view)
-                        
-            navigationController.pushViewController(hostingView, animated: true)
-            
-        case .backTappedFromDeleteAccount:
-            
-            navigationController.popViewController(animated: true)
-            
-        case .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount:
-            
-            let finishedSendingMail = CallbackHandler { [weak self] in
-                self?.navigationController.dismiss(animated: true, completion: nil)
-            }
-            
-            let viewModel = MailViewModel(
-                toRecipients: ["help@cru.org"],
-                subject: "Please delete my account",
-                message: "I have created an account on the GodTools app and I would like to request that you delete my Okta account.",
-                isHtml: false,
-                finishedSendingMailHandler: finishedSendingMail
-            )
-            
-            navigateToNativeMailApp(viewModel: viewModel)
+        case .deleteAccountTappedFromDeleteAccount:
+            print("deleting account...")
+            assertionFailure("TODO: Implement delete account use case in GT-2010...")
+        
+        case .cancelTappedFromDeleteAccount:
+            navigationController.dismissPresented(animated: true, completion: nil)
                         
         default:
             break
@@ -281,6 +261,43 @@ class MenuFlow: Flow {
         )
         
         return hostingView
+    }
+    
+    private func getDeleteAccountView() -> UIViewController {
+        
+        let viewBackgroundColor: Color = Color.white
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = DeleteAccountViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        
+        let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
+        
+        hostingView.view.backgroundColor = viewBackgroundUIColor
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: .darkContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
     }
     
     private func getWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) -> UIViewController {
