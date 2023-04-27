@@ -154,24 +154,6 @@
       }
     },
     {
-      "identity" : "okta-authentication-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/CruGlobal/okta-authentication-ios.git",
-      "state" : {
-        "revision" : "08ecba67a8dd9463361888a010e9b5e183c09806",
-        "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "okta-oidc-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/okta/okta-oidc-ios.git",
-      "state" : {
-        "revision" : "91eac722b8e859ba7f15d65a9085a64a296bc065",
-        "version" : "3.11.2"
-      }
-    },
-    {
       "identity" : "promises",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",

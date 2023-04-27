@@ -446,7 +446,6 @@
 		459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */; };
 		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 459C93A327581B23006207D2 /* OktaAuthentication */; };
 		459E86B528ED1A9B00E197A5 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B328ED1A9B00E197A5 /* AppsFlyer.swift */; };
 		459E86B628ED1A9B00E197A5 /* AppsFlyerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B428ED1A9B00E197A5 /* AppsFlyerConfiguration.swift */; };
 		459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */; };
@@ -2318,7 +2317,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
-				459C93A427581B23006207D2 /* OktaAuthentication in Frameworks */,
 				457771B229A00C5C00EA8115 /* FirebaseAnalytics in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				45CDFB4D281730FA00AC4F2E /* GoogleTagManager in Frameworks */,
@@ -7864,7 +7862,6 @@
 				45EDBCEF27359CD70099495B /* Realm */,
 				45EDBCF127359CD70099495B /* RealmSwift */,
 				45E39EDB27457E0C006A59E4 /* Lottie */,
-				459C93A327581B23006207D2 /* OktaAuthentication */,
 				45CF096F2784B910007F13D3 /* RequestOperation */,
 				45CDFB4C281730FA00AC4F2E /* GoogleTagManager */,
 				D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */,
@@ -8020,7 +8017,6 @@
 				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */,
 				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
 				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
@@ -10436,14 +10432,6 @@
 				minimumVersion = 9.6.0;
 			};
 		};
-		459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CruGlobal/okta-authentication-ios.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
 		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
@@ -10530,11 +10518,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseInAppMessaging-Beta";
-		};
-		459C93A327581B23006207D2 /* OktaAuthentication */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 459C93A227581B23006207D2 /* XCRemoteSwiftPackageReference "okta-authentication-ios" */;
-			productName = OktaAuthentication;
 		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
