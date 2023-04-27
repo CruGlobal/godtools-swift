@@ -23,9 +23,9 @@ class UserAuthentication {
         return nil
     }
     
-    func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {
+    func renewAccessTokenPublisher() -> AnyPublisher<String, Error> {
 
-        return Just("").setFailureType(to: URLResponseError.self)
+        return Just("").setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         
         /*
@@ -46,15 +46,17 @@ class UserAuthentication {
          */
     }
     
-    func getAuthenticatedUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Never> {
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel, Error> {
         
-        return Just(nil)
+        let authUser = AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
+        
+        return Just(authUser).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
+    func signInPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
         
-        return Just(())
+        return Just(()).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     

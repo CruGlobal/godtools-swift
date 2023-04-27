@@ -23,23 +23,16 @@ class AuthenticateUserUseCase {
     }
     
     func authenticatePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
-        
-        return Just(true).setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
+                
         // TODO: Uncomment and implement in GT-2012. ~Levi
         
-        /*
-        return authenticateByAuthTypePublisher(authType: authType)
-            .flatMap({ (success: Bool) -> AnyPublisher<CruOktaUserDataModel, Error> in
+        return authenticateByAuthTypePublisher(policy: policy)
+            .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel, Error> in
                                 
-                return self.cruOktaAuthentication.getAuthUserPublisher()
-                    .mapError { oktaError in
-                        return oktaError.getError()
-                    }
+                return self.userAuthentication.getAuthUserPublisher()
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<Bool, Error> in
+            .flatMap({ (authUser: AuthUserDomainModel) -> AnyPublisher<Bool, Error> in
                 
                 self.postEmailSignUp(authUser: authUser)
                 self.setAnalyticsUserProperties(authUser: authUser)
@@ -48,53 +41,31 @@ class AuthenticateUserUseCase {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-         */
     }
     
     private func authenticateByAuthTypePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
+                
+        // TODO: Implement in GT-2012. ~Levi
         
-        return Just(true).setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-        // TODO: Uncomment and implement in GT-2012. ~Levi
-        
-        /*
         switch policy {
             
-        case .attemptToRenewAuthenticationElseAuthenticate(let fromViewController):
+        case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
-            return cruOktaAuthentication.signInPublisher(fromViewController: fromViewController)
-                .setFailureType(to: Error.self)
-                .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, Error> in
-                    
-                    return response.result.publisher
-                        .mapError { oktaError in
-                            return oktaError.getError()
-                        }
-                        .eraseToAnyPublisher()
-                })
-                .map { (oktaAccessToken: OktaAccessToken) in
+            return userAuthentication.signInPublisher(fromViewController: fromViewController)
+                .map { (void: Void) in
                     return true
                 }
                 .eraseToAnyPublisher()
             
-        case .attemptToRenewAuthenticationOnly:
+        case .renewAccessToken:
             
-            return cruOktaAuthentication.renewAccessTokenPublisher()
-                .setFailureType(to: Error.self)
-                .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, Error> in
-                    
-                    return response.result.publisher
-                        .mapError { oktaError in
-                            return oktaError.getError()
-                        }
+            return userAuthentication.renewAccessTokenPublisher()
+                .flatMap({ (token: String) -> AnyPublisher<Bool, Never> in
+                    return Just(true)
                         .eraseToAnyPublisher()
                 })
-                .map { (oktaAccessToken: OktaAccessToken) in
-                    return true
-                }
                 .eraseToAnyPublisher()
-        }*/
+        }
     }
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {
