@@ -7,19 +7,18 @@
 //
 
 import Foundation
-import OktaAuthentication
 
 class GetUserIsAuthenticatedUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     
-    init(cruOktaAuthentication: CruOktaAuthentication) {
+    init(userAuthentication: UserAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
     }
     
     func getUserIsAuthenticated() -> Bool {
         
-        return cruOktaAuthentication.refreshTokenExists && cruOktaAuthentication.getAccessTokenFromPersistentStore() != nil
+        return userAuthentication.getAccessToken() != nil
     }
 }

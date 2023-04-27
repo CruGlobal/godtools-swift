@@ -7,26 +7,31 @@
 //
 
 import UIKit
-import OktaAuthentication
 import Combine
 
 class AuthenticateUserUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
+    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
     }
     
     func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
         
+        return Just(true).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        // Uncomment and implement in GT-2012. ~Levi
+        
+        /*
         return authenticateByAuthTypePublisher(authType: authType)
-            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
+            .flatMap({ (success: Bool) -> AnyPublisher<CruOktaUserDataModel, Error> in
                                 
                 return self.cruOktaAuthentication.getAuthUserPublisher()
                     .mapError { oktaError in
@@ -43,10 +48,17 @@ class AuthenticateUserUseCase {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+         */
     }
     
-    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<OktaAccessToken, Error> {
+    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
         
+        return Just(true).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        // Uncomment and implement in GT-2012. ~Levi
+        
+        /*
         switch authType {
             
         case .attemptToRenewAuthenticationElseAuthenticate(let fromViewController):
@@ -61,6 +73,9 @@ class AuthenticateUserUseCase {
                         }
                         .eraseToAnyPublisher()
                 })
+                .map { (oktaAccessToken: OktaAccessToken) in
+                    return true
+                }
                 .eraseToAnyPublisher()
             
         case .attemptToRenewAuthenticationOnly:
@@ -75,11 +90,14 @@ class AuthenticateUserUseCase {
                         }
                         .eraseToAnyPublisher()
                 })
+                .map { (oktaAccessToken: OktaAccessToken) in
+                    return true
+                }
                 .eraseToAnyPublisher()
-        }
+        }*/
     }
     
-    private func postEmailSignUp(authUser: CruOktaUserDataModel) {
+    private func postEmailSignUp(authUser: AuthenticatedUserInterface) {
         
         let emailSignUp = EmailSignUpModel(
             email: authUser.email,
@@ -90,7 +108,7 @@ class AuthenticateUserUseCase {
         _ = emailSignUpService.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
     }
     
-    private func setAnalyticsUserProperties(authUser: CruOktaUserDataModel) {
+    private func setAnalyticsUserProperties(authUser: AuthenticatedUserInterface) {
         
         firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,

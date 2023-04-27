@@ -6,24 +6,32 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
-import OktaAuthentication
+import UIKit
 import Combine
 import SocialAuthentication
 
 class UserAuthentication {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
     private let facebookAuthentication: FacebookAuthentication
         
-    init(cruOktaAuthentication: CruOktaAuthentication, facebookAuthentication: FacebookAuthentication) {
+    init(facebookAuthentication: FacebookAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
         self.facebookAuthentication = facebookAuthentication
+    }
+    
+    func getAccessToken() -> UserAuthenticationAccessToken? {
+        return nil
     }
     
     func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {
 
+        return Just("").setFailureType(to: URLResponseError.self)
+            .eraseToAnyPublisher()
+        
+        // Uncomment and implement in GT-2012. ~Levi
+        
+        /*
+        
         return cruOktaAuthentication.renewAccessTokenPublisher()
             .flatMap { (response: OktaAuthenticationResponse) in
                 
@@ -37,6 +45,20 @@ class UserAuthentication {
                 
                 return Just(oktaAccessToken.value)
             }
+            .eraseToAnyPublisher()
+         
+         */
+    }
+    
+    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
+        
+        return Just(())
+            .eraseToAnyPublisher()
+    }
+    
+    func getAuthenticatedUserPublisher() -> AnyPublisher<AuthenticatedUserInterface?, Error> {
+        
+        return Just(nil).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
 }

@@ -7,27 +7,31 @@
 //
 
 import Foundation
-import OktaAuthentication
 import Combine
 
 class GetUserAccountProfileNameUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     
-    init(cruOktaAuthentication: CruOktaAuthentication) {
+    init(userAuthentication: UserAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
     }
     
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
-        return cruOktaAuthentication.getAuthUserPublisher()
-            .catch({ (oktaError: OktaAuthenticationError) -> AnyPublisher<CruOktaUserDataModel, Never> in
+        return userAuthentication.getAuthenticatedUserPublisher()
+            .catch({ (error: Error) -> AnyPublisher<AuthenticatedUserInterface?, Never> in
                 
-                return Just(CruOktaUserDataModel(email: "", firstName: "", grMasterPersonId: "", lastName: "", ssoGuid: ""))
+                return Just(nil)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+            .flatMap({ (authUser: AuthenticatedUserInterface?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+                
+                guard let authUser = authUser else {
+                    return Just(AccountProfileNameDomainModel(value: ""))
+                        .eraseToAnyPublisher()
+                }
                 
                 let profileName: String
                 

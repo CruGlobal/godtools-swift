@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import OktaAuthentication
 import SocialAuthentication
 
 class AppDataLayerDependencies {
@@ -85,10 +84,6 @@ class AppDataLayerDependencies {
         return CompletedTrainingTipRepository(
             cache: RealmCompletedTrainingTipCache(realmDatabase: sharedRealmDatabase)
         )
-    }
-    
-    func getCruOktaAuthentication() -> CruOktaAuthentication {
-        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
     }
     
     func getDeepLinkingService() -> DeepLinkingService {
@@ -287,7 +282,6 @@ class AppDataLayerDependencies {
     
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
-            cruOktaAuthentication: getCruOktaAuthentication(),
             facebookAuthentication: getFacebookAuthentication()
         )
     }
