@@ -182,6 +182,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
+        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices()
     }
@@ -282,7 +286,10 @@ class AppDataLayerDependencies {
     
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
-            facebookAuthentication: getFacebookAuthentication()
+            authenticationProviders: [
+                .facebook: getFacebookAuthentication()
+            ],
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
         )
     }
     
