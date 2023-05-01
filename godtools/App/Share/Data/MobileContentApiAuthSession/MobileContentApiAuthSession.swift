@@ -78,13 +78,16 @@ class MobileContentApiAuthSession {
     
     private func fetchRemoteAuthToken() -> AnyPublisher<String, URLResponseError> {
         
-        return userAuthentication.renewAccessTokenPublisher()
+        // TODO: Remove hard-coded .facebook and renew access token based on current auth provider. See GT-2025. ~Levi
+        // TODO: The internals of this method will need to be updated since we no longer support okta.  See GT-2025.  ~Levi
+        
+        return userAuthentication.renewAccessTokenPublisher(provider: .facebook)
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
-            .flatMap { oktaAccessToken in
+            .flatMap { (providerAccessToken: AuthenticationProviderAccessToken) in
                 
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: providerAccessToken.tokenString)
                    .eraseToAnyPublisher()
             }
             .flatMap { authTokenDataModel in
