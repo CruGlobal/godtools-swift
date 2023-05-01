@@ -94,9 +94,7 @@ enum FlowStep {
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
     case loginTappedFromMenu
-    case backTappedFromLogin
     case createAccountTappedFromMenu
-    case backTappedFromCreateAccount
     case activityTappedFromMenu
     case sendFeedbackTappedFromMenu
     case backTappedFromSendFeedback
@@ -119,6 +117,12 @@ enum FlowStep {
     // user activity
     case backTappedFromActivity
     
+    // social sign-in
+    case closeTappedFromLogin
+    case closeTappedFromCreateAccount
+    case userCompletedSignInFromLogin(error: Error?)
+    case userCompletedSignInFromCreateAccount(error: Error?)
+        
     // delete account
     case closeTappedFromDeleteAccount
     case deleteAccountTappedFromDeleteAccount
