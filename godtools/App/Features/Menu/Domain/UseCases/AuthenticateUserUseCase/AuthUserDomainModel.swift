@@ -1,14 +1,14 @@
 //
-//  CruOktaUserDataModel.swift
+//  AuthUserDomainModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 10/24/22.
-//  Copyright © 2022 Cru. All rights reserved.
+//  Created by Levi Eggert on 4/27/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct CruOktaUserDataModel {
+struct AuthUserDomainModel {
     
     let email: String
     let firstName: String?
@@ -16,3 +16,4 @@ struct CruOktaUserDataModel {
     let lastName: String?
     let ssoGuid: String?
 }
+

@@ -6,24 +6,29 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
-import OktaAuthentication
+import UIKit
 import Combine
 import SocialAuthentication
 
 class UserAuthentication {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
     private let facebookAuthentication: FacebookAuthentication
         
-    init(cruOktaAuthentication: CruOktaAuthentication, facebookAuthentication: FacebookAuthentication) {
+    init(facebookAuthentication: FacebookAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
         self.facebookAuthentication = facebookAuthentication
     }
     
-    func renewOktaAccessTokenPublisher() -> AnyPublisher<String, URLResponseError> {
+    func getPersistedAccessToken() -> String? {
+        return nil
+    }
+    
+    func renewAccessTokenPublisher() -> AnyPublisher<String, Error> {
 
+        return Just("").setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        /*
         return cruOktaAuthentication.renewAccessTokenPublisher()
             .flatMap { (response: OktaAuthenticationResponse) in
                 
@@ -37,6 +42,27 @@ class UserAuthentication {
                 
                 return Just(oktaAccessToken.value)
             }
+            .eraseToAnyPublisher()
+         */
+    }
+    
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel, Error> {
+        
+        let authUser = AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
+        
+        return Just(authUser).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func signInPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
+        
+        return Just(()).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Never> {
+        
+        return Just(())
             .eraseToAnyPublisher()
     }
 }

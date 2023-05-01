@@ -436,7 +436,9 @@ extension AppFlow {
         
         let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
 
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
+        // TODO: We will need to be able to support authentication methods facebook, google, apple. To complete in GT-2012. ~Levi
+        
+        authenticateUserUseCase.authenticatePublisher(policy: .renewAccessToken)
             .sink { finished in
 
             } receiveValue: { success in

@@ -75,7 +75,9 @@ class MenuViewModel: MenuViewModelType {
     
     private func authenticateUser(fromViewController: UIViewController) {
         
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationElseAuthenticate(fromViewController: fromViewController))
+        // TODO: We will need to be able to support authentication methods facebook, google, apple. To complete in GT-2012. ~Levi
+        
+        authenticateUserUseCase.authenticatePublisher(policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: fromViewController))
             .receiveOnMain()
             .sink { _ in
             
