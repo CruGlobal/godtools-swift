@@ -59,7 +59,7 @@ class AuthenticateUserUseCase {
             
         case .renewAccessToken:
             
-            return userAuthentication.renewAccessTokenPublisher(provider: provider)
+            return userAuthentication.renewAccessTokenPublisher()
                 .flatMap({ (providerAccessToken: AuthenticationProviderAccessToken?) -> AnyPublisher<Bool, Error> in
                     return Just(true).setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
