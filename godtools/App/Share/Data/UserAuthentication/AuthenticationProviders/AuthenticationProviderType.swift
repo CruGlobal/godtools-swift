@@ -1,5 +1,5 @@
 //
-//  AuthenticationMethod.swift
+//  AuthenticationProviderType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/1/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticationMethod: String {
+enum AuthenticationProviderType: String {
     
     case apple = "apple"
     case facebook = "facebook"
