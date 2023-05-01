@@ -42,7 +42,6 @@ class MenuFlow: Flow {
             flowDelegate: self,
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             localizationServices: appDiContainer.localizationServices,
@@ -92,16 +91,30 @@ class MenuFlow: Flow {
             let view = getSocialSignInView(authenticationType: .login)
             navigationController.present(view, animated: true)
             
-        case .backTappedFromLogin:
+        case .closeTappedFromLogin:
             navigationController.dismiss(animated: true)
             
         case .createAccountTappedFromMenu:
             let view = getSocialSignInView(authenticationType: .createAccount)
             navigationController.present(view, animated: true)
             
-        case .backTappedFromCreateAccount:
+        case .closeTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
                         
+        case .userCompletedSignInFromCreateAccount(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
+        case .userCompletedSignInFromLogin(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
             
@@ -206,7 +219,9 @@ class MenuFlow: Flow {
         
         let viewModel = SocialSignInViewModel(
             flowDelegate: self,
+            presentAuthViewController: navigationController,
             authenticationType: authenticationType,
+            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )
         

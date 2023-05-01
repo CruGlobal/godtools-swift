@@ -22,11 +22,11 @@ class AuthenticateUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func authenticatePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
+    func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
                 
         // TODO: Uncomment and implement in GT-2012. ~Levi
         
-        return authenticateByAuthTypePublisher(policy: policy)
+        return authenticateByAuthTypePublisher(provider: provider, policy: policy)
             .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel, Error> in
                                 
                 return self.userAuthentication.getAuthUserPublisher()
@@ -43,15 +43,15 @@ class AuthenticateUserUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func authenticateByAuthTypePublisher(policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
+    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
                 
         // TODO: Implement in GT-2012. ~Levi
-        
+                
         switch policy {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
-            return userAuthentication.signInPublisher(fromViewController: fromViewController)
+            return userAuthentication.signInPublisher(provider: provider, fromViewController: fromViewController)
                 .map { (void: Void) in
                     return true
                 }
@@ -59,9 +59,9 @@ class AuthenticateUserUseCase {
             
         case .renewAccessToken:
             
-            return userAuthentication.renewAccessTokenPublisher()
-                .flatMap({ (token: String) -> AnyPublisher<Bool, Never> in
-                    return Just(true)
+            return userAuthentication.renewAccessTokenPublisher(provider: provider)
+                .flatMap({ (providerAccessToken: AuthenticationProviderAccessToken?) -> AnyPublisher<Bool, Error> in
+                    return Just(true).setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 })
                 .eraseToAnyPublisher()

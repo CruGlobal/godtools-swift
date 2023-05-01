@@ -14,5 +14,6 @@ protocol AuthenticationProviderInterface {
         
     func getPersistedAccessToken() -> AuthenticationProviderAccessToken?
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error>
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error>
     func signOutPublisher() -> AnyPublisher<Void, Error>
 }

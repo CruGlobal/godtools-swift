@@ -19,7 +19,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             return nil
         }
         
-        return AuthenticationProviderAccessToken(value: accessToken)
+        return AuthenticationProviderAccessToken(provider: .facebook, tokenString: accessToken)
     }
     
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
@@ -31,8 +31,25 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
                     return nil
                 }
                 
-                return AuthenticationProviderAccessToken(value: accessToken)
+                return AuthenticationProviderAccessToken(provider: .facebook, tokenString: accessToken)
             }
+            .eraseToAnyPublisher()
+    }
+    
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+        
+        return refreshCurrentAccessTokenPublisher()
+            .flatMap({ (void: Void) -> AnyPublisher<AuthenticationProviderAccessToken, Error> in
+                
+                if let providerAccessToken = self.getPersistedAccessToken() {
+                    return Just(providerAccessToken).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    return Fail(error: NSError.errorWithDescription(description: "Unable to refresh access token."))
+                        .eraseToAnyPublisher()
+                }
+            })
             .eraseToAnyPublisher()
     }
     

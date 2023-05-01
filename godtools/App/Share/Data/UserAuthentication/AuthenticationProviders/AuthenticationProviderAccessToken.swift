@@ -10,5 +10,6 @@ import Foundation
 
 struct AuthenticationProviderAccessToken {
     
-    let value: String
+    let provider: AuthenticationProviderType
+    let tokenString: String
 }
