@@ -92,6 +92,10 @@ class UserAuthentication {
         }
         
         return lastAuthProvider.signOutPublisher()
+            .map { response in
+                self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
+                return response
+            }
             .eraseToAnyPublisher()
         
         // TODO: Should we sign out of all providers? ~Levi
