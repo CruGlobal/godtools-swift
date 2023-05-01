@@ -186,6 +186,10 @@ class AppDataLayerDependencies {
         return LocalizationServices()
     }
     
+    func getMobileContentApi() -> MobileContentApi {
+        return MobileContentApi(baseUrl: getAppConfig().mobileContentApiBaseUrl)
+    }
+    
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
         return MobileContentAuthTokenKeychainAccessor()
     }
@@ -308,6 +312,7 @@ class AppDataLayerDependencies {
     
     func getUserDetailsRepository() -> UserDetailsRepository {
         return UserDetailsRepository(
+            mobileContentApi: getMobileContentApi(),
             api: UserDetailsAPI(
                 config: getAppConfig(),
                 ignoreCacheSession: sharedIgnoreCacheSession,

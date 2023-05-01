@@ -11,10 +11,13 @@ import Combine
 
 class UserDetailsRepository {
     
+    private let mobileContentApi: MobileContentApi
     private let api: UserDetailsAPI
     private let cache: RealmUserDetailsCache
     
-    init(api: UserDetailsAPI, cache: RealmUserDetailsCache) {
+    init(mobileContentApi: MobileContentApi, api: UserDetailsAPI, cache: RealmUserDetailsCache) {
+        
+        self.mobileContentApi = mobileContentApi
         self.api = api
         self.cache = cache
     }
@@ -41,5 +44,9 @@ class UserDetailsRepository {
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+    }
+    
+    func deleteUser() -> AnyPublisher<Void, Error> {
+        
     }
 }
