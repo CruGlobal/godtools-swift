@@ -95,17 +95,13 @@ class ArticlesViewModel: NSObject {
         
         downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
             
-            guard let viewModel = self else {
-                return
-            }
-            
-            guard let downloadResult = result else {
+            guard let weakSelf = self else {
                 return
             }
             
             DispatchQueue.main.async {
-                viewModel.continueArticleDownloadReceipt?.removeAllObserversFrom(object: viewModel)
-                viewModel.handleCompleteArticlesDownload(result: downloadResult)
+                self?.continueArticleDownloadReceipt?.removeAllObserversFrom(object: weakSelf)
+                self?.handleCompleteArticlesDownload(result: result)
             }
         }
     }
@@ -130,7 +126,7 @@ class ArticlesViewModel: NSObject {
         }
     }
     
-    private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult) {
+    private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult?) {
                 
         isLoading.accept(value: false)
         
@@ -138,7 +134,7 @@ class ArticlesViewModel: NSObject {
         
         reloadArticles(aemUris: cachedArticles)
         
-        if let downloadError = result.downloaderResult.downloadError, cachedArticles.isEmpty {
+        if let downloadError = result?.downloaderResult.downloadError, cachedArticles.isEmpty {
             
             let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
                 localizationServices: localizationServices,
