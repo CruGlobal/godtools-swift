@@ -1,12 +1,12 @@
 PODS:
   - Fuzi (3.1.3)
-  - GodToolsShared (0.9.0-SNAPSHOT)
+  - GodToolsShared (0.9.0)
   - GoogleConversionTracking (3.4.0)
   - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Fuzi (~> 3.1.1)
-  - GodToolsShared (= 0.9.0-SNAPSHOT)
+  - GodToolsShared (= 0.9.0)
   - GoogleConversionTracking (~> 3.4.0)
   - Starscream (~> 4.0.0)
 
@@ -20,10 +20,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Fuzi: 4c10d6449c0b49a85cd75b13844c559c0fc71220
-  GodToolsShared: c3d678bdc96f0e027c021525730c27143827cdf1
+  GodToolsShared: 2dedd05349324826ce9182501d79cdde9a8db00c
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: aca00ed1870f453a5432f4ca891072e36eeff7d0
+PODFILE CHECKSUM: b3f33f1198aad0f30157474521292b0b4ffe0bbd
 
 COCOAPODS: 1.12.1
