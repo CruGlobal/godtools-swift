@@ -38,7 +38,7 @@ class MenuFlow: Flow {
             isTranslucent: false
         )
         
-        let viewModel = MenuViewModel(
+        let viewModel = LegacyMenuViewModel(
             flowDelegate: self,
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
@@ -51,7 +51,7 @@ class MenuFlow: Flow {
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
         )
-        let view = MenuView(viewModel: viewModel)
+        let view = LegacyMenuView(viewModel: viewModel)
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -153,8 +153,13 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .leaveAReviewTappedFromMenu:
-            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id542773210?action=write-review") else {
-                fatalError("Expected a valid URL")
+            
+            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().appleAppId
+            
+            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
+                let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
+                presentError(error: error)
+                return
             }
             
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)

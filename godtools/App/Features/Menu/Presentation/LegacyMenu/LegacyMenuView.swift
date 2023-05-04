@@ -1,5 +1,5 @@
 //
-//  MenuView.swift
+//  LegacyMenuView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/31/20.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class MenuView: UIViewController {
+class LegacyMenuView: UIViewController {
     
-    private let viewModel: MenuViewModel
+    private let viewModel: LegacyMenuViewModel
     private let headerHeight: CGFloat = 44
     private let rowHeight: CGFloat = 50
     
@@ -18,9 +18,9 @@ class MenuView: UIViewController {
         
     var isComingFromLoginBanner = false
     
-    required init(viewModel: MenuViewModel) {
+    required init(viewModel: LegacyMenuViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: MenuView.self), bundle: nil)
+        super.init(nibName: String(describing: LegacyMenuView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,8 +55,8 @@ class MenuView: UIViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = rowHeight
         tableView.register(
-            UINib(nibName: MenuItemView.nibName, bundle: nil),
-            forCellReuseIdentifier: MenuItemView.reuseIdentifier
+            UINib(nibName: LegacyMenuItemView.nibName, bundle: nil),
+            forCellReuseIdentifier: LegacyMenuItemView.reuseIdentifier
         )
     }
     
@@ -83,7 +83,7 @@ class MenuView: UIViewController {
 
 // MARK: - UITableViewDataSource
 
-extension MenuView: UITableViewDataSource {
+extension LegacyMenuView: UITableViewDataSource {
         
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.menuDataSource.value.sections.count
@@ -99,9 +99,9 @@ extension MenuView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: MenuItemView = tableView.dequeueReusableCell(
-            withIdentifier: MenuItemView.reuseIdentifier,
-            for: indexPath) as! MenuItemView
+        let cell: LegacyMenuItemView = tableView.dequeueReusableCell(
+            withIdentifier: LegacyMenuItemView.reuseIdentifier,
+            for: indexPath) as! LegacyMenuItemView
                         
         let numberOfRowsInSection: Int = tableView.numberOfRows(inSection: indexPath.section)
         let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
@@ -117,11 +117,11 @@ extension MenuView: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension MenuView: UITableViewDelegate {
+extension LegacyMenuView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                 
-        let menuSectionHeader = MenuSectionHeaderView(
+        let menuSectionHeader = LegacyMenuSectionHeaderView(
             size: CGSize(width: tableView.frame.size.width, height: headerHeight),
             viewModel: viewModel.menuSectionWillAppear(sectionIndex: section)
         )

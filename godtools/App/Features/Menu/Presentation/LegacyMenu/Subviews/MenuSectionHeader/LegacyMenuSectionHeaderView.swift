@@ -1,5 +1,5 @@
 //
-//  MenuSectionHeaderView.swift
+//  LegacyMenuSectionHeaderView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/9/20.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MenuSectionHeaderView: UIView, NibBased {
+class LegacyMenuSectionHeaderView: UIView, NibBased {
      
-    private let viewModel: MenuSectionHeaderViewModel
+    private let viewModel: LegacyMenuSectionHeaderViewModel
     
     @IBOutlet weak private var headerLabel: UILabel!
     
-    required init(size: CGSize, viewModel: MenuSectionHeaderViewModel) {
+    required init(size: CGSize, viewModel: LegacyMenuSectionHeaderViewModel) {
         self.viewModel = viewModel
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         initialize()

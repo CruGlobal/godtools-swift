@@ -1,5 +1,5 @@
 //
-//  MenuSectionHeaderViewModel.swift
+//  LegacyMenuSectionHeaderViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/9/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuSectionHeaderViewModel {
+class LegacyMenuSectionHeaderViewModel {
     
     let headerTitle: String
     

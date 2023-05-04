@@ -1,5 +1,5 @@
 //
-//  MenuViewModel.swift
+//  LegacyMenuViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/31/20.
@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class MenuViewModel {
+class LegacyMenuViewModel {
     
     private let infoPlist: InfoPlist
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
@@ -235,17 +235,17 @@ class MenuViewModel {
 
 // MARK: - Inputs
 
-extension MenuViewModel {
+extension LegacyMenuViewModel {
     
-    func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModel {
+    func menuSectionWillAppear(sectionIndex: Int) -> LegacyMenuSectionHeaderViewModel {
         
         let menuSection: MenuSection = menuDataSource.value.sections[sectionIndex]
         let sectionTitle: String = getSectionTitle(section: menuSection)
         
-        return MenuSectionHeaderViewModel(headerTitle: sectionTitle)
+        return LegacyMenuSectionHeaderViewModel(headerTitle: sectionTitle)
     }
     
-    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModel {
+    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> LegacyMenuItemViewModel {
         
         let menuDataSource: MenuDataSource = menuDataSource.value
         let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: sectionIndex))
@@ -253,7 +253,7 @@ extension MenuViewModel {
         
         let selectionDisabled: Bool = menuItem == .version
         
-        return MenuItemViewModel(title: itemTitle, selectionDisabled: selectionDisabled)
+        return LegacyMenuItemViewModel(title: itemTitle, selectionDisabled: selectionDisabled)
     }
     
     func pageViewed() {
