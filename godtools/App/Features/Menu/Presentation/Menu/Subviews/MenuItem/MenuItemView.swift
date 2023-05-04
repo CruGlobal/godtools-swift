@@ -13,7 +13,7 @@ class MenuItemView: UITableViewCell {
     static let nibName: String = "MenuItemView"
     static let reuseIdentifier: String = "MenuItemViewReuseIdentifier"
       
-    private var viewModel: MenuItemViewModelType?
+    private var viewModel: MenuItemViewModel?
     
     @IBOutlet weak private var selectedView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -33,7 +33,7 @@ class MenuItemView: UITableViewCell {
         titleLabel.text = nil
     }
     
-    func configure(viewModel: MenuItemViewModelType, hidesSeparator: Bool) {
+    func configure(viewModel: MenuItemViewModel, hidesSeparator: Bool) {
         
         self.viewModel = viewModel
         

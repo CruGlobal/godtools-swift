@@ -10,11 +10,11 @@ import UIKit
 
 class MenuSectionHeaderView: UIView, NibBased {
      
-    private let viewModel: MenuSectionHeaderViewModelType
+    private let viewModel: MenuSectionHeaderViewModel
     
     @IBOutlet weak private var headerLabel: UILabel!
     
-    required init(size: CGSize, viewModel: MenuSectionHeaderViewModelType) {
+    required init(size: CGSize, viewModel: MenuSectionHeaderViewModel) {
         self.viewModel = viewModel
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         initialize()

@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class MenuViewModel: MenuViewModelType {
+class MenuViewModel {
     
     private let infoPlist: InfoPlist
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
@@ -137,8 +137,107 @@ class MenuViewModel: MenuViewModelType {
         
         menuDataSource.accept(value: menuDataSourceValue)
     }
+    
+    private func getSectionTitle(section: MenuSection) -> String {
+        
+        let localizedKey: String
+        
+        switch section {
+            
+        case .getStarted:
+            localizedKey = MenuStringKeys.SectionTitles.getStarted.rawValue
+            
+        case .account:
+            localizedKey = MenuStringKeys.SectionTitles.account.rawValue
+            
+        case .support:
+            localizedKey = MenuStringKeys.SectionTitles.support.rawValue
+            
+        case .share:
+            localizedKey = MenuStringKeys.SectionTitles.share.rawValue
+            
+        case .about:
+            localizedKey = MenuStringKeys.SectionTitles.about.rawValue
+            
+        case .version:
+            localizedKey = MenuStringKeys.SectionTitles.version.rawValue
+        }
+        
+        return localizationServices.stringForMainBundle(key: localizedKey)
+    }
+    
+    private func getItemTitle(item: MenuItem) -> String {
+        
+        let localizedKey: String
+        
+        switch item {
+            
+        case .tutorial:
+            localizedKey = MenuStringKeys.ItemTitles.tutorial.rawValue
+            
+        case .languageSettings:
+            localizedKey = MenuStringKeys.ItemTitles.languageSettings.rawValue
+            
+        case .login:
+            localizedKey = MenuStringKeys.ItemTitles.login.rawValue
+            
+        case .activity:
+            localizedKey = MenuStringKeys.ItemTitles.activity.rawValue
+            
+        case .createAccount:
+            localizedKey = MenuStringKeys.ItemTitles.createAccount.rawValue
+            
+        case .logout:
+            localizedKey = MenuStringKeys.ItemTitles.logout.rawValue
+            
+        case .deleteAccount:
+            localizedKey = MenuStringKeys.ItemTitles.deleteAccount.rawValue
+            
+        case .sendFeedback:
+            localizedKey = MenuStringKeys.ItemTitles.sendFeedback.rawValue
+            
+        case .reportABug:
+            localizedKey = MenuStringKeys.ItemTitles.reportABug.rawValue
+            
+        case .askAQuestion:
+            localizedKey = MenuStringKeys.ItemTitles.askAQuestion.rawValue
+            
+        case .leaveAReview:
+            localizedKey = MenuStringKeys.ItemTitles.leaveAReview.rawValue
+            
+        case .shareAStoryWithUs:
+            localizedKey = MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue
+        
+        case .shareGodTools:
+            localizedKey = MenuStringKeys.ItemTitles.shareGodTools.rawValue
+            
+        case .termsOfUse:
+            localizedKey = MenuStringKeys.ItemTitles.termsOfUse.rawValue
+            
+        case .privacyPolicy:
+            localizedKey = MenuStringKeys.ItemTitles.privacyPolicy.rawValue
+            
+        case .copyrightInfo:
+            localizedKey = MenuStringKeys.ItemTitles.copyrightInfo.rawValue
+            
+        case .version:
+            
+            if let appVersion = infoPlist.appVersion, let bundleVersion = infoPlist.bundleVersion {
+                return "v" + appVersion + " " + "(" + bundleVersion + ")"
+            }
+            
+            return ""
+        }
+        
+        return localizationServices.stringForMainBundle(key: localizedKey)
+    }
+}
 
-    func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModelType {
+// MARK: - Inputs
+
+extension MenuViewModel {
+    
+    func menuSectionWillAppear(sectionIndex: Int) -> MenuSectionHeaderViewModel {
         
         let menuSection: MenuSection = menuDataSource.value.sections[sectionIndex]
         let sectionTitle: String = getSectionTitle(section: menuSection)
@@ -146,7 +245,7 @@ class MenuViewModel: MenuViewModelType {
         return MenuSectionHeaderViewModel(headerTitle: sectionTitle)
     }
     
-    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModelType {
+    func menuItemWillAppear(sectionIndex: Int, itemIndexRelativeToSection: Int) -> MenuItemViewModel {
         
         let menuDataSource: MenuDataSource = menuDataSource.value
         let menuItem: MenuItem = menuDataSource.getMenuItem(at: IndexPath(row: itemIndexRelativeToSection, section: sectionIndex))
@@ -173,11 +272,6 @@ class MenuViewModel: MenuViewModelType {
     func doneTapped() {
         flowDelegate?.navigate(step: .doneTappedFromMenu)
     }
-}
-
-// MARK: - Menu Option Tapped
-
-extension MenuViewModel {
     
     func tutorialTapped() {
         disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
@@ -285,102 +379,5 @@ extension MenuViewModel {
     
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
-    }
-}
-
-extension MenuViewModel {
-    
-    private func getSectionTitle(section: MenuSection) -> String {
-        
-        let localizedKey: String
-        
-        switch section {
-            
-        case .getStarted:
-            localizedKey = MenuStringKeys.SectionTitles.getStarted.rawValue
-            
-        case .account:
-            localizedKey = MenuStringKeys.SectionTitles.account.rawValue
-            
-        case .support:
-            localizedKey = MenuStringKeys.SectionTitles.support.rawValue
-            
-        case .share:
-            localizedKey = MenuStringKeys.SectionTitles.share.rawValue
-            
-        case .about:
-            localizedKey = MenuStringKeys.SectionTitles.about.rawValue
-            
-        case .version:
-            localizedKey = MenuStringKeys.SectionTitles.version.rawValue
-        }
-        
-        return localizationServices.stringForMainBundle(key: localizedKey)
-    }
-    
-    private func getItemTitle(item: MenuItem) -> String {
-        
-        let localizedKey: String
-        
-        switch item {
-            
-        case .tutorial:
-            localizedKey = MenuStringKeys.ItemTitles.tutorial.rawValue
-            
-        case .languageSettings:
-            localizedKey = MenuStringKeys.ItemTitles.languageSettings.rawValue
-            
-        case .login:
-            localizedKey = MenuStringKeys.ItemTitles.login.rawValue
-            
-        case .activity:
-            localizedKey = MenuStringKeys.ItemTitles.activity.rawValue
-            
-        case .createAccount:
-            localizedKey = MenuStringKeys.ItemTitles.createAccount.rawValue
-            
-        case .logout:
-            localizedKey = MenuStringKeys.ItemTitles.logout.rawValue
-            
-        case .deleteAccount:
-            localizedKey = MenuStringKeys.ItemTitles.deleteAccount.rawValue
-            
-        case .sendFeedback:
-            localizedKey = MenuStringKeys.ItemTitles.sendFeedback.rawValue
-            
-        case .reportABug:
-            localizedKey = MenuStringKeys.ItemTitles.reportABug.rawValue
-            
-        case .askAQuestion:
-            localizedKey = MenuStringKeys.ItemTitles.askAQuestion.rawValue
-            
-        case .leaveAReview:
-            localizedKey = MenuStringKeys.ItemTitles.leaveAReview.rawValue
-            
-        case .shareAStoryWithUs:
-            localizedKey = MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue
-        
-        case .shareGodTools:
-            localizedKey = MenuStringKeys.ItemTitles.shareGodTools.rawValue
-            
-        case .termsOfUse:
-            localizedKey = MenuStringKeys.ItemTitles.termsOfUse.rawValue
-            
-        case .privacyPolicy:
-            localizedKey = MenuStringKeys.ItemTitles.privacyPolicy.rawValue
-            
-        case .copyrightInfo:
-            localizedKey = MenuStringKeys.ItemTitles.copyrightInfo.rawValue
-            
-        case .version:
-            
-            if let appVersion = infoPlist.appVersion, let bundleVersion = infoPlist.bundleVersion {
-                return "v" + appVersion + " " + "(" + bundleVersion + ")"
-            }
-            
-            return ""
-        }
-        
-        return localizationServices.stringForMainBundle(key: localizedKey)
     }
 }

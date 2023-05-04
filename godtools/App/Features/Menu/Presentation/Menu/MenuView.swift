@@ -10,7 +10,7 @@ import UIKit
 
 class MenuView: UIViewController {
     
-    private let viewModel: MenuViewModelType
+    private let viewModel: MenuViewModel
     private let headerHeight: CGFloat = 44
     private let rowHeight: CGFloat = 50
     
@@ -18,7 +18,7 @@ class MenuView: UIViewController {
         
     var isComingFromLoginBanner = false
     
-    required init(viewModel: MenuViewModelType) {
+    required init(viewModel: MenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: MenuView.self), bundle: nil)
     }

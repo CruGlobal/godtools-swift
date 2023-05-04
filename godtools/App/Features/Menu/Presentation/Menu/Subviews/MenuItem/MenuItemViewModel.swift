@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MenuItemViewModel: MenuItemViewModelType {
+class MenuItemViewModel {
     
     let title: String
     let selectionDisabled: Bool
     
-    required init(title: String, selectionDisabled: Bool) {
+    init(title: String, selectionDisabled: Bool) {
         
         self.title = title
         self.selectionDisabled = selectionDisabled

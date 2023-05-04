@@ -8,11 +8,11 @@
 
 import Foundation
 
-class MenuSectionHeaderViewModel: MenuSectionHeaderViewModelType {
+class MenuSectionHeaderViewModel {
     
     let headerTitle: String
     
-    required init(headerTitle: String) {
+    init(headerTitle: String) {
         
         self.headerTitle = headerTitle.uppercased()
     }
