@@ -1,5 +1,5 @@
 //
-//  MenuItemView.swift
+//  LegacyMenuItemView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/31/20.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class MenuItemView: UITableViewCell {
+class LegacyMenuItemView: UITableViewCell {
     
-    static let nibName: String = "MenuItemView"
-    static let reuseIdentifier: String = "MenuItemViewReuseIdentifier"
+    static let nibName: String = "LegacyMenuItemView"
+    static let reuseIdentifier: String = "LegacyMenuItemViewReuseIdentifier"
       
-    private var viewModel: MenuItemViewModelType?
+    private var viewModel: LegacyMenuItemViewModel?
     
     @IBOutlet weak private var selectedView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -33,7 +33,7 @@ class MenuItemView: UITableViewCell {
         titleLabel.text = nil
     }
     
-    func configure(viewModel: MenuItemViewModelType, hidesSeparator: Bool) {
+    func configure(viewModel: LegacyMenuItemViewModel, hidesSeparator: Bool) {
         
         self.viewModel = viewModel
         
