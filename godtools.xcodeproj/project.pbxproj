@@ -119,6 +119,8 @@
 		453A9EEC2A044D0C007BB892 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EE02A044D0C007BB892 /* MenuDataSource.swift */; };
 		453A9EED2A044D0C007BB892 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EE12A044D0C007BB892 /* MenuSection.swift */; };
 		453A9EEE2A044D0C007BB892 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EE22A044D0C007BB892 /* MenuItem.swift */; };
+		453A9EF12A044FFF007BB892 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EF02A044FFF007BB892 /* MenuView.swift */; };
+		453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EF22A045006007BB892 /* MenuViewModel.swift */; };
 		453AC11228F4A10400291791 /* FailedFollowUpsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AC10928F4A10400291791 /* FailedFollowUpsCache.swift */; };
 		453AC11328F4A10400291791 /* RealmFollowUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AC10B28F4A10400291791 /* RealmFollowUp.swift */; };
 		453AC11428F4A10400291791 /* FollowUpsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AC10C28F4A10400291791 /* FollowUpsService.swift */; };
@@ -1223,6 +1225,8 @@
 		453A9EE02A044D0C007BB892 /* MenuDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
 		453A9EE12A044D0C007BB892 /* MenuSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
 		453A9EE22A044D0C007BB892 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		453A9EF02A044FFF007BB892 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		453A9EF22A045006007BB892 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		453AC10928F4A10400291791 /* FailedFollowUpsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailedFollowUpsCache.swift; sourceTree = "<group>"; };
 		453AC10B28F4A10400291791 /* RealmFollowUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmFollowUp.swift; sourceTree = "<group>"; };
 		453AC10C28F4A10400291791 /* FollowUpsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpsService.swift; sourceTree = "<group>"; };
@@ -2975,6 +2979,15 @@
 				453A9EE12A044D0C007BB892 /* MenuSection.swift */,
 			);
 			path = MenuDataSource;
+			sourceTree = "<group>";
+		};
+		453A9EEF2A044FF6007BB892 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				453A9EF02A044FFF007BB892 /* MenuView.swift */,
+				453A9EF22A045006007BB892 /* MenuViewModel.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		453AC10728F4A10400291791 /* FollowUpsService */ = {
@@ -6524,6 +6537,7 @@
 				45F715E2290A12D70019B715 /* DeleteAccount */,
 				453A9ED22A044D0C007BB892 /* LegacyMenu */,
 				45F715D0290A12D70019B715 /* Mail */,
+				453A9EEF2A044FF6007BB892 /* Menu */,
 				45F715BD290A12D70019B715 /* Tutorial */,
 				45F715C2290A12D70019B715 /* WebContent */,
 			);
@@ -8357,6 +8371,7 @@
 				D42B87CD2822F72D000B001D /* BaseToolCardViewModel.swift in Sources */,
 				4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */,
 				45BDA5D02954F67D007E259B /* ResourceViewsService.swift in Sources */,
+				453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */,
 				45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */,
@@ -8837,6 +8852,7 @@
 				4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */,
 				45AD208525938B6A00A096A0 /* KeyboardState.swift in Sources */,
 				45AD1B1B25938A4E00A096A0 /* LearnToShareToolItem.swift in Sources */,
+				453A9EF12A044FFF007BB892 /* MenuView.swift in Sources */,
 				45F3D39D29A514D200446F69 /* OnboardingTutorialPageAnalyticsProperties.swift in Sources */,
 				453F84C12A029FC00005101E /* ArticleAemCacheResult.swift in Sources */,
 				45828BD1279CCBD200F6B5F3 /* MobileContentFlowView.swift in Sources */,

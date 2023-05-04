@@ -20,7 +20,7 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -38,20 +38,7 @@ class MenuFlow: Flow {
             isTranslucent: false
         )
         
-        let viewModel = LegacyMenuViewModel(
-            flowDelegate: self,
-            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
-            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
-        )
-        let view = LegacyMenuView(viewModel: viewModel)
+        let view: UIViewController = getMenuView()
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -215,6 +202,47 @@ class MenuFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func getMenuView() -> UIViewController {
+        
+        /*
+        let viewModel = LegacyMenuViewModel(
+            flowDelegate: self,
+            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
+        )
+        
+        let view = LegacyMenuView(viewModel: viewModel)*/
+        
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        
+        let viewModel = MenuViewModel(
+            flowDelegate: self
+        )
+        
+        let view = MenuView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<MenuView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            title: localizationServices.stringForMainBundle(key: "done"),
+            style: .done,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.doneTapped)
+        )
+        
+        return hostingView
     }
     
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
