@@ -226,7 +226,8 @@ class MenuFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewModel = MenuViewModel(
-            flowDelegate: self
+            flowDelegate: self,
+            localizationServices: localizationServices
         )
         
         let view = MenuView(viewModel: viewModel)
