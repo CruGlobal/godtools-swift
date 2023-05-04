@@ -22,7 +22,7 @@ class LogOutUserUseCase {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Never> {
+    func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Error> {
                 
         return userAuthentication.signOutPublisher(fromViewController: fromViewController)
             .flatMap({ (void: Void) -> AnyPublisher<Bool, Never> in

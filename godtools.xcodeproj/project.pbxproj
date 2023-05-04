@@ -248,6 +248,12 @@
 		455E98AB29A429B400D1EF35 /* OnboardingTutorialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E98AA29A429B400D1EF35 /* OnboardingTutorialPage.swift */; };
 		455E98AE29A42A3200D1EF35 /* OnboardingTutorialMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E98AD29A42A3200D1EF35 /* OnboardingTutorialMediaView.swift */; };
 		455E98B029A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455E98AF29A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift */; };
+		455F04702A00019A00536CB9 /* Flow+PresentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F046F2A00019A00536CB9 /* Flow+PresentError.swift */; };
+		455F04732A0002F100536CB9 /* AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */; };
+		455F04752A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */; };
+		455F04772A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */; };
+		455F04792A000D6100536CB9 /* LastAuthenticatedProviderCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04782A000D6100536CB9 /* LastAuthenticatedProviderCache.swift */; };
+		455F047F2A0038B000536CB9 /* AuthenticationProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */; };
 		4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */; };
 		4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */; };
 		4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */; };
@@ -1354,6 +1360,12 @@
 		455E98AA29A429B400D1EF35 /* OnboardingTutorialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialPage.swift; sourceTree = "<group>"; };
 		455E98AD29A42A3200D1EF35 /* OnboardingTutorialMediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialMediaView.swift; sourceTree = "<group>"; };
 		455E98AF29A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialMediaViewModel.swift; sourceTree = "<group>"; };
+		455F046F2A00019A00536CB9 /* Flow+PresentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentError.swift"; sourceTree = "<group>"; };
+		455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderInterface.swift; sourceTree = "<group>"; };
+		455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderAccessToken.swift; sourceTree = "<group>"; };
+		455F04782A000D6100536CB9 /* LastAuthenticatedProviderCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastAuthenticatedProviderCache.swift; sourceTree = "<group>"; };
+		455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderType.swift; sourceTree = "<group>"; };
 		4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageView.swift; sourceTree = "<group>"; };
 		4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageViewModel.swift; sourceTree = "<group>"; };
 		4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageView.swift; sourceTree = "<group>"; };
@@ -3749,6 +3761,17 @@
 			path = OnboardingTutorialMedia;
 			sourceTree = "<group>";
 		};
+		455F04712A0002E600536CB9 /* AuthenticationProviders */ = {
+			isa = PBXGroup;
+			children = (
+				455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */,
+				455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */,
+				455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */,
+				455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
+			);
+			path = AuthenticationProviders;
+			sourceTree = "<group>";
+		};
 		4561AC91279C4C6D003718C0 /* ContentPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -4912,6 +4935,7 @@
 				459602DF28400DBB00C66387 /* DownloadToolTranslations */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
+				455F046F2A00019A00536CB9 /* Flow+PresentError.swift */,
 				45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
 				45AD188C25938A4E00A096A0 /* FlowStep.swift */,
@@ -7107,7 +7131,9 @@
 		D409F2C4292EA25300D9D2FE /* UserAuthentication */ = {
 			isa = PBXGroup;
 			children = (
+				455F04782A000D6100536CB9 /* LastAuthenticatedProviderCache.swift */,
 				D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */,
+				455F04712A0002E600536CB9 /* AuthenticationProviders */,
 			);
 			path = UserAuthentication;
 			sourceTree = "<group>";
@@ -8343,6 +8369,7 @@
 				45AD1BB825938A4F00A096A0 /* ModalNavigationController.swift in Sources */,
 				456777BA287DB3770044AEB2 /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
 				452040922959E73F004D843E /* ChooseParallelLanguageListViewModel.swift in Sources */,
+				455F047F2A0038B000536CB9 /* AuthenticationProviderType.swift in Sources */,
 				45860A572923E7B30089C836 /* FixedVerticalSpacer.swift in Sources */,
 				45F71643290A12D70019B715 /* MenuItemViewModelType.swift in Sources */,
 				45AD1B9925938A4F00A096A0 /* ToolNavBarViewModel.swift in Sources */,
@@ -8435,6 +8462,7 @@
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
 				45BDA6192954FE3E007E259B /* ArticleAemRepositoryResult.swift in Sources */,
 				459E86DC28EDA86C00E197A5 /* DeepLinkParserType.swift in Sources */,
+				455F04732A0002F100536CB9 /* AuthenticationProviderInterface.swift in Sources */,
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				45BDA6112954FE3E007E259B /* ArticleJcrContent.swift in Sources */,
@@ -8582,6 +8610,7 @@
 				45EB9B7629F16CF200CA74A8 /* UIView+Constraints.swift in Sources */,
 				45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */,
 				D4BC79D129918C220040651B /* UserAnalytics.swift in Sources */,
+				455F04792A000D6100536CB9 /* LastAuthenticatedProviderCache.swift in Sources */,
 				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
 				45D63E74288F698C009B4610 /* LanguageModelType.swift in Sources */,
 				45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */,
@@ -8698,6 +8727,8 @@
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
+				455F04752A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */,
+				455F04772A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift in Sources */,
 				D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
@@ -9076,6 +9107,7 @@
 				455583D5269F2DA500C3FF14 /* MobileContentHeaderViewModel.swift in Sources */,
 				45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */,
 				4555832F269F2C7B00C3FF14 /* ToolPageCardTopConstantState.swift in Sources */,
+				455F04702A00019A00536CB9 /* Flow+PresentError.swift in Sources */,
 				D471CFC628B40F4200DCE61C /* ToolDomainModel.swift in Sources */,
 				4555832D269F2C7B00C3FF14 /* ToolPageCardsView.swift in Sources */,
 				D41B38AC287F0FDD00BD5899 /* FeaturedLessonCardsView.swift in Sources */,
@@ -10453,7 +10485,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 0.1.1;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {

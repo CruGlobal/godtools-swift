@@ -13,7 +13,6 @@ class MenuViewModel: MenuViewModelType {
     
     private let infoPlist: InfoPlist
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
-    private let authenticateUserUseCase: AuthenticateUserUseCase
     private let logOutUserUseCase: LogOutUserUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let localizationServices: LocalizationServices
@@ -31,12 +30,11 @@ class MenuViewModel: MenuViewModelType {
     let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.createEmptyDataSource())
     
-    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, authenticateUserUseCase: AuthenticateUserUseCase, logOutUserUseCase: LogOutUserUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
+    init(flowDelegate: FlowDelegate, infoPlist: InfoPlist, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, logOutUserUseCase: LogOutUserUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase) {
         
         self.flowDelegate = flowDelegate
         self.infoPlist = infoPlist
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
-        self.authenticateUserUseCase = authenticateUserUseCase
         self.logOutUserUseCase = logOutUserUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.localizationServices = localizationServices
@@ -71,20 +69,6 @@ class MenuViewModel: MenuViewModelType {
     
     private var analyticsSiteSubSection: String {
         return ""
-    }
-    
-    private func authenticateUser(fromViewController: UIViewController) {
-        
-        // TODO: We will need to be able to support authentication methods facebook, google, apple. To complete in GT-2012. ~Levi
-        
-        authenticateUserUseCase.authenticatePublisher(policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: fromViewController))
-            .receiveOnMain()
-            .sink { _ in
-            
-            } receiveValue: { [weak self] _ in
-                self?.reloadMenuDataSource()
-            }
-            .store(in: &cancellables)
     }
     
     private func reloadMenuDataSource() {
@@ -220,9 +204,11 @@ extension MenuViewModel {
         
         logOutUserUseCase.logOutPublisher(fromViewController: fromViewController)
             .receiveOnMain()
-            .sink { [weak self] (finished: Bool) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (finished: Bool) in
                 self?.reloadMenuDataSource()
-            }
+            })
             .store(in: &cancellables)
     }
     
