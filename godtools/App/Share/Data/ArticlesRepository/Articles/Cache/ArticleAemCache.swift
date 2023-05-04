@@ -38,12 +38,13 @@ class ArticleAemCache {
         }
     }
     
-    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
+    func getAemCacheObjectOnCurrentThread(aemUri: String) -> ArticleAemCacheObject? {
         
         let realm: Realm = realmDatabase.openRealm()
         
         return getAemCacheObject(realm: realm, aemUri: aemUri)
     }
+
     
     private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
         
@@ -72,98 +73,107 @@ class ArticleAemCache {
         }
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], completion: @escaping ((_ result: ArticleAemCacheResult) -> Void)) -> OperationQueue {
-                  
-        // NOTE: Function should be called from main thread because we're fetching aemCacheObjects on mainThreadRealm.
-        
-        typealias AemUri = String
-        
-        var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
-        var webArchiveUrls: [WebArchiveUrl] = Array()
-        
-        for aemData in aemDataObjects {
-            
-            guard let webUrl = URL(string: aemData.webUrl) else {
-                continue
-            }
-            
-            let dataIsNotCached: Bool
-            let uuidChanged: Bool
-            
-            if let aemCacheObject = getAemCacheObject(aemUri: aemData.aemUri),
-               let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
-               let uuid = aemData.articleJcrContent?.uuid,
-               !cachedUUID.isEmpty,
-               !uuid.isEmpty {
-                
-                dataIsNotCached = false
-                uuidChanged = cachedUUID != uuid
-            }
-            else {
-                
-                dataIsNotCached = true
-                uuidChanged = false
-            }
-            
-            if dataIsNotCached || uuidChanged {
-                
-                let webArchiveUrl = WebArchiveUrl(
-                    webUrl: webUrl,
-                    uuid: aemData.aemUri
-                )
-                
-                aemDataDictionary[aemData.aemUri] = aemData
-                
-                webArchiveUrls.append(webArchiveUrl)
-            }
-        }
-        
-        return webArchiveQueue.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
-            
-            guard result.successfulArchives.count > 0 else {
-                completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
-                return
-            }
-            
-            var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
-            
-            for webArchiveResult in result.successfulArchives {
-                
-                if let aemData = aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+    func storeAemDataObjects(aemDataObjects: [ArticleAemData], didStartWebArchiveClosure: @escaping ((_ webArchiveOperationQueue: OperationQueue) -> Void), completion: @escaping ((_ result: ArticleAemCacheResult) -> Void)) {
                     
-                    let archivedObject = ArticleAemCacheArchivedObject(
-                        aemData: aemData,
-                        webArchivePlistData: webArchiveResult.webArchivePlistData
+        realmDatabase.background { realm in
+            
+            typealias AemUri = String
+            
+            var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
+            var webArchiveUrls: [WebArchiveUrl] = Array()
+            
+            for aemData in aemDataObjects {
+                
+                guard let webUrl = URL(string: aemData.webUrl) else {
+                    continue
+                }
+                
+                let dataIsNotCached: Bool
+                let uuidChanged: Bool
+                
+                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri),
+                   let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
+                   let uuid = aemData.articleJcrContent?.uuid,
+                   !cachedUUID.isEmpty,
+                   !uuid.isEmpty {
+                    
+                    dataIsNotCached = false
+                    uuidChanged = cachedUUID != uuid
+                }
+                else {
+                    
+                    dataIsNotCached = true
+                    uuidChanged = false
+                }
+                
+                if dataIsNotCached || uuidChanged {
+                    
+                    let webArchiveUrl = WebArchiveUrl(
+                        webUrl: webUrl,
+                        uuid: aemData.aemUri
                     )
                     
-                    aemCacheArchivedObjects.append(archivedObject)
+                    aemDataDictionary[aemData.aemUri] = aemData
+                    
+                    webArchiveUrls.append(webArchiveUrl)
                 }
             }
             
-            self?.storeAemCacheArchivedObjects(aemCacheArchivedObjects: aemCacheArchivedObjects, completion: completion)
+            let webArchiveOperationQueue = self.webArchiveQueue.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
+                
+                guard let weakSelf = self else {
+                    completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
+                    return
+                }
+                
+                guard result.successfulArchives.count > 0 else {
+                    completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
+                    return
+                }
+                
+                var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
+                
+                for webArchiveResult in result.successfulArchives {
+                    
+                    if let aemData = aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+                        
+                        let archivedObject = ArticleAemCacheArchivedObject(
+                            aemData: aemData,
+                            webArchivePlistData: webArchiveResult.webArchivePlistData
+                        )
+                        
+                        aemCacheArchivedObjects.append(archivedObject)
+                    }
+                }
+                
+                weakSelf.realmDatabase.background { realm in
+                    
+                    let articleAemCacheResult = weakSelf.storeAemCacheArchivedObjects(realm: realm, aemCacheArchivedObjects: aemCacheArchivedObjects)
+                    
+                    completion(articleAemCacheResult)
+                }
+            }
+            
+            didStartWebArchiveClosure(webArchiveOperationQueue)
         }
     }
     
-    private func storeAemCacheArchivedObjects(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject], completion: @escaping ((_ result: ArticleAemCacheResult) -> Void)) {
+    private func storeAemCacheArchivedObjects(realm: Realm, aemCacheArchivedObjects: [ArticleAemCacheArchivedObject]) -> ArticleAemCacheResult {
                 
-        realmDatabase.background { [weak self] (realm: Realm) in
+        var cacheErrorData: [ArticleAemCacheErrorData] = Array()
+        
+        for archivedObject in aemCacheArchivedObjects {
             
-            var cacheErrorData: [ArticleAemCacheErrorData] = Array()
-            
-            for archivedObject in aemCacheArchivedObjects {
-                
-                if let errorData = self?.storeAemCacheArchivedObject(realm: realm, archivedObject: archivedObject) {
-                    cacheErrorData.append(errorData)
-                }
-            }
-            
-            let result = ArticleAemCacheResult(
-                numberOfArchivedObjects: aemCacheArchivedObjects.count,
-                cacheErrorData: cacheErrorData
-            )
-            
-            completion(result)
+            let errorData = storeAemCacheArchivedObject(realm: realm, archivedObject: archivedObject)
+            cacheErrorData.append(errorData)
         }
+        
+        let result = ArticleAemCacheResult(
+            numberOfArchivedObjects: aemCacheArchivedObjects.count,
+            cacheErrorData: cacheErrorData
+        )
+        
+        return result
     }
     
     private func storeAemCacheArchivedObject(realm: Realm, archivedObject: ArticleAemCacheArchivedObject) -> ArticleAemCacheErrorData {
