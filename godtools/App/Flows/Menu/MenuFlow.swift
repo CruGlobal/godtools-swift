@@ -206,6 +206,7 @@ class MenuFlow: Flow {
     
     private func getMenuView() -> UIViewController {
         
+        /*
         let viewModel = LegacyMenuViewModel(
             flowDelegate: self,
             infoPlist: appDiContainer.dataLayer.getInfoPlist(),
@@ -222,10 +223,8 @@ class MenuFlow: Flow {
         
         let view = LegacyMenuView(viewModel: viewModel)
         
-        return view
-        
-        
-        /*
+        return view*/
+    
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewModel = MenuViewModel(
@@ -246,7 +245,7 @@ class MenuFlow: Flow {
             action: #selector(viewModel.doneTapped)
         )
         
-        return hostingView*/
+        return hostingView
     }
     
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
