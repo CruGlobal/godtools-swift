@@ -10,13 +10,13 @@ import UIKit
 
 class ArticleCategoriesView: UIViewController {
     
-    private let viewModel: ArticleCategoriesViewModelType
+    private let viewModel: ArticleCategoriesViewModel
     
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
            
     @IBOutlet weak private var categoriesTableView: UITableView!
     
-    required init(viewModel: ArticleCategoriesViewModelType) {
+    required init(viewModel: ArticleCategoriesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ArticleCategoriesView.self), bundle: nil)
     }
@@ -125,7 +125,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         
-        let cellViewModel: ArticleCategoryCellViewModelType = viewModel.categoryWillAppear(index: indexPath.row)
+        let cellViewModel: ArticleCategoryCellViewModel = viewModel.categoryWillAppear(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel)
         

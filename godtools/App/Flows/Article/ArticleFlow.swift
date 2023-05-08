@@ -168,7 +168,7 @@ extension ArticleFlow {
             action: #selector(viewModel.closeTapped)
         )
         
-        let modal = ModalNavigationController.defaultModal(rootView: hostingView)
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
         
         return modal
     }

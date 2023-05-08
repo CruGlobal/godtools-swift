@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import GodToolsToolParser
 
-class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
+class ArticleCategoriesViewModel: NSObject {
         
     private let resource: ResourceModel
     private let language: LanguageDomainModel
@@ -78,7 +78,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     }
 
     private func downloadArticles(forceDownload: Bool) {
-          
+        
         cancelArticleDownload()
         
         isLoading.accept(value: true)
@@ -90,7 +90,12 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
             }
         })
     }
+}
 
+// MARK: - Inputs
+
+extension ArticleCategoriesViewModel {
+    
     func pageViewed() {
         
         let trackScreen = TrackScreenModel(
@@ -105,7 +110,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
     }
     
-    func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModelType {
+    func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {
         
         let category: GodToolsToolParser.Category = categories[index]
         

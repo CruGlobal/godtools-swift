@@ -20,7 +20,7 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -38,21 +38,7 @@ class MenuFlow: Flow {
             isTranslucent: false
         )
         
-        let viewModel = MenuViewModel(
-            flowDelegate: self,
-            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
-            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
-        )
-        let view = MenuView(viewModel: viewModel)
+        let view: UIViewController = getMenuView()
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -86,9 +72,36 @@ class MenuFlow: Flow {
             dismissTutorial()
             
         case .doneTappedFromMenu:
-            print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
+            
+        case .loginTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .login)
+            navigationController.present(view, animated: true)
+            
+        case .closeTappedFromLogin:
+            navigationController.dismiss(animated: true)
+            
+        case .createAccountTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .createAccount)
+            navigationController.present(view, animated: true)
+            
+        case .closeTappedFromCreateAccount:
+            navigationController.dismiss(animated: true)
                         
+        case .userCompletedSignInFromCreateAccount(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
+        case .userCompletedSignInFromLogin(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
             
@@ -127,8 +140,13 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .leaveAReviewTappedFromMenu:
-            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id542773210?action=write-review") else {
-                fatalError("Expected a valid URL")
+            
+            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().appleAppId
+            
+            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
+                let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
+                presentError(error: error)
+                return
             }
             
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
@@ -169,63 +187,106 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .deleteAccountTappedFromMenu:
+            navigationController.present(getDeleteAccountView(), animated: true)
             
-            let viewModel = DeleteAccountViewModel(
-                flowDelegate: self,
-                localizationServices: appDiContainer.localizationServices
-            )
+        case .closeTappedFromDeleteAccount:
+            navigationController.dismissPresented(animated: true, completion: nil)
             
-            let view = DeleteAccountView(viewModel: viewModel)
-            
-            let hostingView = DeleteAccountHostingView(view: view)
-                        
-            navigationController.pushViewController(hostingView, animated: true)
-            
-        case .backTappedFromDeleteAccount:
-            
-            navigationController.popViewController(animated: true)
-            
-        case .emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount:
-            
-            let finishedSendingMail = CallbackHandler { [weak self] in
-                self?.navigationController.dismiss(animated: true, completion: nil)
-            }
-            
-            let viewModel = MailViewModel(
-                toRecipients: ["help@cru.org"],
-                subject: "Please delete my account",
-                message: "I have created an account on the GodTools app and I would like to request that you delete my Okta account.",
-                isHtml: false,
-                finishedSendingMailHandler: finishedSendingMail
-            )
-            
-            navigateToNativeMailApp(viewModel: viewModel)
+        case .deleteAccountTappedFromDeleteAccount:
+            print("deleting account...")
+            assertionFailure("TODO: Implement delete account use case in GT-2010...")
+        
+        case .cancelTappedFromDeleteAccount:
+            navigationController.dismissPresented(animated: true, completion: nil)
                         
         default:
             break
         }
     }
     
-    private func getAboutView() -> UIViewController {
+    private func getMenuView() -> UIViewController {
         
-        let viewModel = AboutViewModel(
+        let viewModel = LegacyMenuViewModel(
             flowDelegate: self,
+            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
+            localizationServices: appDiContainer.localizationServices,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
         )
         
-        let view = AboutView(viewModel: viewModel)
+        let view = LegacyMenuView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<AboutView> = UIHostingController(rootView: view)
+        return view
         
-        _ = hostingView.addDefaultNavBackItem(
+        
+        /*
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        
+        let viewModel = MenuViewModel(
+            flowDelegate: self,
+            localizationServices: localizationServices
+        )
+        
+        let view = MenuView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<MenuView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            title: localizationServices.stringForMainBundle(key: "done"),
+            style: .done,
+            color: nil,
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.doneTapped)
         )
         
-        return hostingView
+        return hostingView*/
+    }
+    
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
+        
+        let viewBackgroundColor: Color = ColorPalette.gtBlue.color
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = SocialSignInViewModel(
+            flowDelegate: self,
+            presentAuthViewController: navigationController,
+            authenticationType: authenticationType,
+            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
+            localizationServices: appDiContainer.localizationServices
+        )
+        
+        let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        
+        let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
+        
+        hostingView.view.backgroundColor = viewBackgroundUIColor
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: .white,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: .white,
+            statusBarStyle: .lightContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
     }
     
     private func getAccountView() -> UIViewController {
@@ -252,6 +313,43 @@ class MenuFlow: Flow {
         )
         
         return hostingView
+    }
+    
+    private func getDeleteAccountView() -> UIViewController {
+        
+        let viewBackgroundColor: Color = Color.white
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = DeleteAccountViewModel(
+            flowDelegate: self,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        
+        let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
+        
+        hostingView.view.backgroundColor = viewBackgroundUIColor
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: .darkContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
     }
     
     private func getWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) -> UIViewController {

@@ -38,6 +38,14 @@ class MenuStringKeys {
         case copyrightInfo = "copyright_info"
     }
     
+    enum SocialSignIn: String {
+        case signInTitle = "signIn.title"
+        case subtitle = "signIn.subtitle"
+        case googleSignIn = "signIn.google"
+        case facebookSignIn = "signIn.facebook"
+        case appleSignIn = "signIn.apple"
+    }
+    
     enum Account: String {
         case navTitle = "account.navTitle"
         case activityButtonTitle = "account.activity.title"
@@ -55,5 +63,13 @@ class MenuStringKeys {
         
         case globalActivityButtonTitle = "account.globalActivity.title"
         case globalAnalyticsTitle = "accountActivity.globalAnalytics.header.title"
+    }
+    
+    enum DeleteAccount: String {
+        
+        case title = "deleteAccount.title"
+        case subtitle = "deleteAccount.subtitle"
+        case confirmButtonTitle = "deleteAccount.confirmButton.title"
+        case cancelButtonTitle = "deleteAccount.cancelButton.title"
     }
 }

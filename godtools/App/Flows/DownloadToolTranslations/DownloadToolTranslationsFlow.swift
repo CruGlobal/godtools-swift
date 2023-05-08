@@ -112,7 +112,7 @@ class DownloadToolTranslationsFlow: Flow {
         
         let view = DownloadToolView(viewModel: viewModel)
         
-        let modal = ModalNavigationController.defaultModal(rootView: view)
+        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
         
         navigationController.present(modal, animated: true, completion: nil)
         

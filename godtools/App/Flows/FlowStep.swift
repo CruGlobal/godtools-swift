@@ -93,6 +93,8 @@ enum FlowStep {
     case doneTappedFromMenu
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
+    case loginTappedFromMenu
+    case createAccountTappedFromMenu
     case activityTappedFromMenu
     case sendFeedbackTappedFromMenu
     case backTappedFromSendFeedback
@@ -111,16 +113,20 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
-    
-    // about
-    case backTappedFromAbout
-    
+        
     // user activity
     case backTappedFromActivity
     
+    // social sign-in
+    case closeTappedFromLogin
+    case closeTappedFromCreateAccount
+    case userCompletedSignInFromLogin(error: Error?)
+    case userCompletedSignInFromCreateAccount(error: Error?)
+        
     // delete account
-    case backTappedFromDeleteAccount
-    case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
+    case closeTappedFromDeleteAccount
+    case deleteAccountTappedFromDeleteAccount
+    case cancelTappedFromDeleteAccount
     
     // language settings
     case backTappedFromLanguageSettings

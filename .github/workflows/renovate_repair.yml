@@ -6,7 +6,7 @@ on:
 
 jobs:
   cocoapods:
-    runs-on: macos-11
+    runs-on: macos-12
     if: ${{ github.actor == 'renovate[bot]' }}
     steps:
       - name: Checkout code
