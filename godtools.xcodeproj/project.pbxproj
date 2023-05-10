@@ -8226,7 +8226,7 @@
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModelType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Extensions/NSError+Error.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",
 			);
