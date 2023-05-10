@@ -8,7 +8,8 @@
 
 import UIKit
 import AppsFlyerLib
-import FBSDKCoreKit
+import SocialAuthentication
+import FacebookCore
 import FirebaseDynamicLinks
 
 @UIApplicationMain
@@ -73,9 +74,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
         
         appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
-                
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        ConfigureFacebookOnAppLaunch.configure(
+            application: application,
+            launchOptions: launchOptions,
+            configuration: appConfig.facebookConfig
+        )
+                
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
@@ -105,9 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         
         reloadShortcutItems(application: application)
-        
-        AppEvents.activateApp()
-        
+                
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.trackAppLaunch()
     }
 

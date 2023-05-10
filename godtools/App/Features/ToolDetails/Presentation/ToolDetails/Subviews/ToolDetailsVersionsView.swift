@@ -10,39 +10,47 @@ import SwiftUI
 
 struct ToolDetailsVersionsView: View {
         
+    private let geometry: GeometryProxy
     private let cardHorizontalInsets: CGFloat = 20
     private let cardSpacing: CGFloat = 15
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
     
-    let geometry: GeometryProxy
     let toolVersionTappedClosure: (() -> Void)
+       
+    init(viewModel: ToolDetailsViewModel, geometry: GeometryProxy, toolVersionTappedClosure: @escaping (() -> Void)) {
         
+        self.viewModel = viewModel
+        self.geometry = geometry
+        self.toolVersionTappedClosure = toolVersionTappedClosure
+    }
+    
     var body: some View {
                 
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.versionsMessage)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
-                .padding(EdgeInsets(top: 0, leading: 30, bottom: 10, trailing: 30))
+            ToolDetailsSectionDescriptionTextView(
+                viewModel: viewModel,
+                geometry: geometry,
+                text: viewModel.versionsMessage
+            )
             
-            ForEach(viewModel.toolVersions) { toolVersion in
-                         
-                Rectangle()
-                    .frame(width: geometry.size.width, height: cardSpacing)
-                    .foregroundColor(.clear)
+            LazyVStack(alignment: .center, spacing: cardSpacing) {
                 
-                ToolDetailsVersionsCardView(
-                    viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion),
-                    width: geometry.size.width - (cardHorizontalInsets * 2)
-                )
-                .padding(EdgeInsets(top: 0, leading: cardHorizontalInsets, bottom: 0, trailing: cardHorizontalInsets))
-                .onTapGesture {
-                    viewModel.toolVersionTapped(toolVersion: toolVersion)
-                    toolVersionTappedClosure()
+                ForEach(viewModel.toolVersions) { toolVersion in
+                             
+                    ToolDetailsVersionsCardView(
+                        viewModel: viewModel.toolVersionCardWillAppear(toolVersion: toolVersion),
+                        width: geometry.size.width - (cardHorizontalInsets * 2)
+                    )
+                    .padding(EdgeInsets(top: 0, leading: cardHorizontalInsets, bottom: 0, trailing: cardHorizontalInsets))
+                    .onTapGesture {
+                        viewModel.toolVersionTapped(toolVersion: toolVersion)
+                        toolVersionTappedClosure()
+                    }
                 }
             }
+            .padding(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
         }
     }
 }

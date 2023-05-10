@@ -239,6 +239,13 @@ class MobileContentPagesViewModel: NSObject {
     
     func pageDidAppear(page: Int) {
         
+        if page >= 0 && page < pageModels.count {
+            
+            let currentPage: Page = pageModels[page]
+            
+            updateCachedPageDataForPageChange(currentPage: currentPage)
+        }
+        
         currentRenderedPageNumber = page
         
         if page > highestPageNumberViewed {
@@ -261,6 +268,48 @@ class MobileContentPagesViewModel: NSObject {
     func didChangeMostVisiblePage(page: Int) {
         
         currentRenderedPageNumber = page
+    }
+}
+
+// MARK: - Pages Data Cache
+
+extension MobileContentPagesViewModel {
+    
+    private func updateCachedPageDataForPageChange(currentPage: Page) {
+        
+        guard let currentPageIndex = pageModels.firstIndex(of: currentPage) else {
+            return
+        }
+
+        let currentPageRendererPagesViewDataCache: MobileContentPageRendererPagesViewDataCache = currentPageRenderer.value.pagesViewDataCache
+        
+        var cachedPageDataToKeep: [Page: MobileContentPageViewDataCache] = Dictionary()
+        
+        let cachedPageDataToKeepStartNumber: Int = currentPageIndex - 1
+        let cachedPageDataToKeepEndNumber: Int = currentPageIndex + 1
+        
+        for pageNumber in cachedPageDataToKeepStartNumber ... cachedPageDataToKeepEndNumber {
+            
+            guard pageNumber >= 0 && pageNumber < pageModels.count else {
+                continue
+            }
+            
+            let pageModel: Page = pageModels[pageNumber]
+            
+            let pageViewDataCache: MobileContentPageViewDataCache = currentPageRendererPagesViewDataCache.getPageViewDataCache(page: pageModel)
+            
+            guard !pageViewDataCache.isEmpty else {
+                continue
+            }
+            
+            cachedPageDataToKeep[pageModel] = pageViewDataCache
+        }
+        
+        currentPageRendererPagesViewDataCache.clearCache()
+        
+        for (page, pageViewDataCache) in cachedPageDataToKeep {
+            currentPageRendererPagesViewDataCache.storePageViewDataCache(page: page, pageViewDataCache: pageViewDataCache)
+        }
     }
 }
 

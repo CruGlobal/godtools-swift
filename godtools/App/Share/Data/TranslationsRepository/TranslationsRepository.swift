@@ -10,7 +10,6 @@ import Foundation
 import Combine
 import GodToolsToolParser
 import RequestOperation
-import SharedAppleExtensions
 
 class TranslationsRepository {
         
@@ -65,7 +64,7 @@ extension TranslationsRepository {
         
         let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: infoPlist, resourcesFileCache: resourcesFileCache)
         
-        return manifestParser.parse(manifestName: translation.manifestName).publisher
+        return manifestParser.parsePublisher(manifestName: translation.manifestName)
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
             
                 guard includeRelatedFiles else {
@@ -147,7 +146,7 @@ extension TranslationsRepository {
                 
                 let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
-                return manifestParser.parse(manifestName: translation.manifestName).publisher
+                return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .mapError({ error in
                         return  .otherError(error: error)
                     })
@@ -273,7 +272,7 @@ extension TranslationsRepository {
                 
                 let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
-                return manifestParser.parse(manifestName: translation.manifestName).publisher
+                return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .mapError({ error in
                         return .otherError(error: error)
                     })

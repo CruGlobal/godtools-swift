@@ -7,28 +7,31 @@
 //
 
 import Foundation
-import OktaAuthentication
 import Combine
 
 class GetUserAccountProfileNameUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     
-    init(cruOktaAuthentication: CruOktaAuthentication) {
+    init(userAuthentication: UserAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
+    }
+    
+    private func getEmptyAuthUser() -> AuthUserDomainModel {
+        return AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
     }
     
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
-        return cruOktaAuthentication.getAuthUserPublisher()
-            .catch({ (oktaError: OktaAuthenticationError) -> AnyPublisher<CruOktaUserDataModel, Never> in
+        return userAuthentication.getAuthUserPublisher()
+            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel, Never> in
                 
-                return Just(CruOktaUserDataModel(email: "", firstName: "", grMasterPersonId: "", lastName: "", ssoGuid: ""))
+                return Just(self.getEmptyAuthUser())
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
-                
+            .flatMap({ (authUser: AuthUserDomainModel) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+                                
                 let profileName: String
                 
                 if let firstName = authUser.firstName, let lastName = authUser.lastName {

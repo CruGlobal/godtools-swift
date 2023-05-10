@@ -59,9 +59,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
+        return GetAppUIDebuggingIsEnabledUseCase(
+            appBuild: dataLayer.getAppBuild()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            userAuthentication: dataLayer.getUserAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
@@ -123,7 +129,7 @@ class AppDomainLayerDependencies {
     
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            userAuthentication: dataLayer.getUserAuthentication(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
             mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
@@ -319,7 +325,7 @@ class AppDomainLayerDependencies {
     
     func getUserAccountProfileNameUseCase() -> GetUserAccountProfileNameUseCase {
         return GetUserAccountProfileNameUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
     
@@ -353,7 +359,7 @@ class AppDomainLayerDependencies {
     
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
 }

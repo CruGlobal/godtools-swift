@@ -37,6 +37,6 @@ extension MobileContentTabViewModel {
     
     func tabTapped() {
         
-        mobileContentAnalytics.trackEvents(events: tabModel.analyticsEvents, renderedPageContext: renderedPageContext)
+        mobileContentAnalytics.trackEvents(events: tabModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }

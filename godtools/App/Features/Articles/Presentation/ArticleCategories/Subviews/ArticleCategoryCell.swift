@@ -13,7 +13,7 @@ class ArticleCategoryCell: UITableViewCell {
     static let nibName: String = "ArticleCategoryCell"
     static let reuseIdentifier: String = "ArticleCategoryCellReuseIdentifier"
     
-    private var viewModel: ArticleCategoryCellViewModelType?
+    private var viewModel: ArticleCategoryCellViewModel?
     
     @IBOutlet weak private var articleImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -23,7 +23,7 @@ class ArticleCategoryCell: UITableViewCell {
         viewModel = nil
     }
     
-    func configure(viewModel: ArticleCategoryCellViewModelType) {
+    func configure(viewModel: ArticleCategoryCellViewModel) {
         
         self.viewModel = viewModel
         

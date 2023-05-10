@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "appauth-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/openid/AppAuth-iOS.git",
+      "state" : {
+        "revision" : "0eadcdec4ddb121865f3d66917549194afce1f2b",
+        "version" : "1.6.1"
+      }
+    },
+    {
       "identity" : "appsflyerframework",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git",
@@ -25,6 +34,15 @@
       "state" : {
         "revision" : "dd3eda2b05a3f459fc3073695ad1b28659066eab",
         "version" : "0.9.1"
+      }
+    },
+    {
+      "identity" : "facebook-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/facebook/facebook-ios-sdk.git",
+      "state" : {
+        "revision" : "5c7367dadcbe504702c041621dc09752bf2cd747",
+        "version" : "16.0.1"
       }
     },
     {
@@ -64,6 +82,15 @@
       }
     },
     {
+      "identity" : "googlesignin-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GoogleSignIn-iOS.git",
+      "state" : {
+        "revision" : "7932d33686c1dc4d7df7a919aae47361d1cdfda4",
+        "version" : "7.0.0"
+      }
+    },
+    {
       "identity" : "googleutilities",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleUtilities.git",
@@ -91,6 +118,15 @@
       }
     },
     {
+      "identity" : "gtmappauth",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GTMAppAuth.git",
+      "state" : {
+        "revision" : "cee3c709307912d040bd1e06ca919875a92339c6",
+        "version" : "2.0.0"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -104,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-ios.git",
       "state" : {
-        "revision" : "79a0b70547f7c40ea54c67487f935fa2f2eaaadc",
-        "version" : "3.2.3"
+        "revision" : "4e51b71c6ef1b645c9a83de112d627c919143137",
+        "version" : "4.1.3"
       }
     },
     {
@@ -115,24 +151,6 @@
       "state" : {
         "revision" : "819d0a2173aff699fb8c364b6fb906f7cdb1a692",
         "version" : "2.30909.0"
-      }
-    },
-    {
-      "identity" : "okta-authentication-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/CruGlobal/okta-authentication-ios.git",
-      "state" : {
-        "revision" : "08ecba67a8dd9463361888a010e9b5e183c09806",
-        "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "okta-oidc-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/okta/okta-oidc-ios.git",
-      "state" : {
-        "revision" : "91eac722b8e859ba7f15d65a9085a64a296bc065",
-        "version" : "3.11.2"
       }
     },
     {
@@ -169,6 +187,15 @@
       "state" : {
         "revision" : "9b222164f89e8437cb985640da979687bbb7b919",
         "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "social-authentication-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CruGlobal/social-authentication-ios.git",
+      "state" : {
+        "revision" : "f06aebfbf73deabbd1df209e7f9a238abdd52bd5",
+        "version" : "0.1.1"
       }
     },
     {

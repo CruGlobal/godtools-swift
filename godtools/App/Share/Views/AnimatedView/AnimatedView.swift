@@ -11,7 +11,7 @@ import Lottie
 
 class AnimatedView: UIView {
     
-    private let animationView: AnimationView = AnimationView()
+    private let animationView: LottieAnimationView = LottieAnimationView()
     
     private var viewModel: AnimatedViewModel?
         

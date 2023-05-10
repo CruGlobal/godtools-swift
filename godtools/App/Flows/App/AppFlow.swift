@@ -434,15 +434,18 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+        if let lastAuthProvider = appDiContainer.dataLayer.getUserAuthentication().getLastAuthenticatedProviderType() {
+            
+            let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+            
+            authenticateUserUseCase.authenticatePublisher(provider: lastAuthProvider, policy: .renewAccessToken)
+                .sink { finished in
 
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
-            .sink { finished in
+                } receiveValue: { success in
 
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
+                }
+                .store(in: &cancellables)
+        }
     }
     
     private func countAppSessionLaunch() {

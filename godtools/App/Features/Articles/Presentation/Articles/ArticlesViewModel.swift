@@ -23,7 +23,7 @@ class ArticlesViewModel: NSObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
         
-    private var articles: [AemUri] = Array()
+    private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
     
@@ -52,17 +52,17 @@ class ArticlesViewModel: NSObject {
                         
         navTitle.accept(value: category.label?.text ?? "")
 
-        let cachedArticles: [AemUri] = getCachedArticles()
+        let cachedArticleAemUris: [AemUri] = getCachedArticleAemUris()
         
-        reloadArticles(aemUris: cachedArticles)
-        
-        // currently downloading
-        if let continueArticleDownloadReceipt = continueArticleDownloadReceipt {
-            continueArticlesDownload(downloadArticlesReceipt: continueArticleDownloadReceipt)
-        }
-        else if cachedArticles.isEmpty {
-            downloadArticles(forceDownload: true)
-        }
+        reloadArticlesFromCache(aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
+            
+            if let continueArticleDownloadReceipt = self?.continueArticleDownloadReceipt {
+                self?.continueArticlesDownload(downloadArticlesReceipt: continueArticleDownloadReceipt)
+            }
+            else if cachedArticleAemUris.isEmpty {
+                self?.downloadArticles(forceDownload: true)
+            }
+        })
     }
     
     deinit {
@@ -95,17 +95,17 @@ class ArticlesViewModel: NSObject {
         
         downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemRepositoryResult?) in
             
-            guard let viewModel = self else {
+            guard let weakSelf = self else {
                 return
             }
             
-            guard let downloadResult = result else {
+            guard let result = result else {
                 return
             }
             
             DispatchQueue.main.async {
-                viewModel.continueArticleDownloadReceipt?.removeAllObserversFrom(object: viewModel)
-                viewModel.handleCompleteArticlesDownload(result: downloadResult)
+                self?.continueArticleDownloadReceipt?.removeAllObserversFrom(object: weakSelf)
+                self?.handleCompleteArticlesDownload(result: result)
             }
         }
     }
@@ -134,30 +134,35 @@ class ArticlesViewModel: NSObject {
                 
         isLoading.accept(value: false)
         
-        let cachedArticles: [AemUri] = getCachedArticles()
+        let cachedArticleAemUris: [AemUri] = getCachedArticleAemUris()
         
-        reloadArticles(aemUris: cachedArticles)
-        
-        if let downloadError = result.downloaderResult.downloadError, cachedArticles.isEmpty {
+        reloadArticlesFromCache(aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
             
-            let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
-                localizationServices: localizationServices,
-                error: downloadError
-            )
+            guard let weakSelf = self else {
+                return
+            }
             
-            let errorViewModel = ArticlesErrorMessageViewModel(
-                localizationServices: localizationServices,
-                message: downloadArticlesErrorViewModel.message
-            )
-            
-            errorMessage.accept(value: errorViewModel)
-        }
-        else {
-            errorMessage.accept(value: nil)
-        }
+            if let downloadError = result.downloaderResult.downloadError, cachedArticleAemUris.isEmpty {
+                
+                let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
+                    localizationServices: weakSelf.localizationServices,
+                    error: downloadError
+                )
+                
+                let errorViewModel = ArticlesErrorMessageViewModel(
+                    localizationServices: weakSelf.localizationServices,
+                    message: downloadArticlesErrorViewModel.message
+                )
+                
+                weakSelf.errorMessage.accept(value: errorViewModel)
+            }
+            else {
+                weakSelf.errorMessage.accept(value: nil)
+            }
+        })
     }
     
-    private func getCachedArticles() -> [AemUri] {
+    private func getCachedArticleAemUris() -> [AemUri] {
         
         guard let categoryId = category.id else {
             return []
@@ -181,10 +186,27 @@ class ArticlesViewModel: NSObject {
         return aemUris.sorted()
     }
     
-    private func reloadArticles(aemUris: [AemUri]) {
+    private func reloadArticlesFromCache(aemUris: [AemUri], completionOnMainThread: @escaping (() -> Void)) {
         
-        self.articles = aemUris
-        numberOfArticles.accept(value: aemUris.count)
+        articleManifestAemRepository.getAemCacheObjectsOnBackgroundThread(aemUris: aemUris) { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
+            
+            let sortedAemCacheObjects: [ArticleAemCacheObject] = aemCacheObjects.sorted(by: {
+                let thisTitle: String? = $0.aemData.articleJcrContent?.title
+                let thatTitle: String? = $1.aemData.articleJcrContent?.title
+                
+                if let thisTitle = thisTitle, let thatTitle = thatTitle {
+                    return thisTitle < thatTitle
+                }
+                
+                return false
+            })
+            
+            DispatchQueue.main.async {
+                self?.articleAemCacheObjects = sortedAemCacheObjects
+                self?.numberOfArticles.accept(value: sortedAemCacheObjects.count)
+                completionOnMainThread()
+            }
+        }
     }
 }
 
@@ -212,22 +234,14 @@ extension ArticlesViewModel {
     
     func articleTapped(index: Int) {
         
-        let aemUri: String = articles[index]
-        
-        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
-            return
-        }
+        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
         
         flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, aemCacheObject: aemCacheObject))
     }
     
-    func articleWillAppear(index: Int) -> ArticleCellViewModelType? {
+    func articleWillAppear(index: Int) -> ArticleCellViewModel {
         
-        let aemUri: String = articles[index]
-    
-        guard let aemCacheObject = articleManifestAemRepository.getAemCacheObject(aemUri: aemUri) else {
-            return nil
-        }
+        let aemCacheObject: ArticleAemCacheObject = articleAemCacheObjects[index]
         
         return ArticleCellViewModel(aemData: aemCacheObject.aemData)
     }

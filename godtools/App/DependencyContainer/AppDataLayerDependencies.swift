@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import OktaAuthentication
+import SocialAuthentication
 
 class AppDataLayerDependencies {
     
@@ -86,10 +86,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getCruOktaAuthentication() -> CruOktaAuthentication {
-        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
-    }
-    
     func getDeepLinkingService() -> DeepLinkingService {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
@@ -101,6 +97,10 @@ class AppDataLayerDependencies {
             api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getFacebookAuthentication() -> FacebookAuthentication {
+        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
@@ -180,6 +180,10 @@ class AppDataLayerDependencies {
         return LaunchCountRepository(
             cache: LaunchCountCache()
         )
+    }
+    
+    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
+        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -281,7 +285,12 @@ class AppDataLayerDependencies {
     }
     
     func getUserAuthentication() -> UserAuthentication {
-        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
+        return UserAuthentication(
+            authenticationProviders: [
+                .facebook: getFacebookAuthentication()
+            ],
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
+        )
     }
     
     func getUserCountersRepository() -> UserCountersRepository {

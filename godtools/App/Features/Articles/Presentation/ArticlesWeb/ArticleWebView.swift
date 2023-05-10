@@ -8,7 +8,6 @@
 
 import Foundation
 import WebKit
-import SharedAppleExtensions
 
 class ArticleWebView: UIViewController {
     
@@ -16,6 +15,8 @@ class ArticleWebView: UIViewController {
         
     private var webView: WKWebView!
     private var shareButton: UIBarButtonItem?
+    private var debugButton: UIBarButtonItem?
+    private var rightBarButtonItems: [UIBarButtonItem] = Array()
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
@@ -39,14 +40,6 @@ class ArticleWebView: UIViewController {
             
         setupLayout()
         setupBinding()
-                
-        shareButton = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navShare.uiImage,
-            color: .white,
-            target: self,
-            action: #selector(handleShare(barButtonItem:))
-        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +48,30 @@ class ArticleWebView: UIViewController {
     }
     
     private func setupLayout() {
+        
+        // right bar button items
+        let shareButton: UIBarButtonItem = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navShare.uiImage,
+            color: .white,
+            target: self,
+            action: #selector(shareButtonTapped)
+        )
+        
+        self.shareButton = shareButton
+                
+        let debugButton: UIBarButtonItem = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navDebug.uiImage,
+            color: .white,
+            target: self,
+            action: #selector(debugButtonTapped)
+        )
+        
+        self.debugButton = debugButton
+        
+        rightBarButtonItems = [shareButton, debugButton]
+        removeRightBarButtonItems()
         
         // loadingView
         loadingView.startAnimating()
@@ -75,15 +92,11 @@ class ArticleWebView: UIViewController {
         }
         
         viewModel.hidesShareButton.addObserver(self) { [weak self] (hidesShareButton) in
-            if let shareButton = self?.shareButton {
-                let shareButtonPosition: BarButtonItemBarPosition = .right
-                if hidesShareButton {
-                    self?.removeBarButtonItem(item: shareButton)
-                }
-                else {
-                    self?.addBarButtonItem(item: shareButton, barPosition: shareButtonPosition)
-                }
-            }
+            self?.reloadRightBarButtonItems()
+        }
+        
+        viewModel.hidesDebugButton.addObserver(self) { [weak self] (hidesDebugButton: Bool) in
+            self?.reloadRightBarButtonItems()
         }
         
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
@@ -103,7 +116,30 @@ class ArticleWebView: UIViewController {
         viewModel.loadWebPage(webView: webView)
     }
     
-    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+    private func reloadRightBarButtonItems() {
+        
+        removeRightBarButtonItems()
+        
+        if !viewModel.hidesShareButton.value, let shareButton = self.shareButton {
+            addBarButtonItem(item: shareButton, barPosition: .right)
+        }
+        
+        if !viewModel.hidesDebugButton.value, let debugButton = self.debugButton {
+            addBarButtonItem(item: debugButton, barPosition: .right)
+        }
+    }
+    
+    private func removeRightBarButtonItems() {
+        for buttonItem in rightBarButtonItems {
+            removeBarButtonItem(item: buttonItem)
+        }
+    }
+    
+    @objc private func debugButtonTapped() {
+        viewModel.debugTapped()
+    }
+    
+    @objc private func shareButtonTapped() {
         viewModel.sharedTapped()
     }
 }
