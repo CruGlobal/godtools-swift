@@ -19,7 +19,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             return nil
         }
         
-        return AuthenticationProviderAccessToken(provider: .facebook, tokenString: accessToken)
+        return AuthenticationProviderAccessToken.facebook(accessToken: accessToken)
     }
     
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
@@ -31,7 +31,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
                     return nil
                 }
                 
-                return AuthenticationProviderAccessToken(provider: .facebook, tokenString: accessToken)
+                return AuthenticationProviderAccessToken.facebook(accessToken: accessToken)
             }
             .eraseToAnyPublisher()
     }
