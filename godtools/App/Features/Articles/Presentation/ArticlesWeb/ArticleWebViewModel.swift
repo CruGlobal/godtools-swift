@@ -19,8 +19,10 @@ class ArticleWebViewModel: NSObject {
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
+    private let displayArticleAfterNumberOfSeconds: TimeInterval = 4
     
     private var loadingCurrentWebView: WKWebView?
+    private var displayArticleTimer: Timer?
     
     private weak var flowDelegate: FlowDelegate?
     private var cancellables = Set<AnyCancellable>()
@@ -56,6 +58,7 @@ class ArticleWebViewModel: NSObject {
     }
     
     deinit {
+        stopDisplayArticleTimer()
         stopLoadWebPage(webView: loadingCurrentWebView)
     }
     
@@ -87,24 +90,30 @@ class ArticleWebViewModel: NSObject {
         stopLoadWebPage(webView: loadingCurrentWebView)
         self.loadingCurrentWebView = webView
         
-        viewState.accept(value: .loadingArticle)
-                
-        webView.navigationDelegate = self
+        let webUrl: URL? = URL(string: aemCacheObject.aemData.webUrl)
+        let webArchiveFileUrl: URL? = aemCacheObject.webArchiveFileUrl
         
-        if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
-            
-            webView.load(URLRequest(url: webUrl))
-        }
-        else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
-            
-            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
-        }
-        else {
+        guard webUrl != nil || webArchiveFileUrl != nil else {
             
             let errorTitle: String = "Internal Error"
             let errorMessage: String = "Failed to load article webview.  Missing valid webUrl and webFileUrl."
             
             viewState.accept(value: .errorMessage(title: errorTitle, message: errorMessage))
+            
+            return
+        }
+        
+        viewState.accept(value: .loadingArticle)
+        startDispalyArticleTimer()
+        webView.navigationDelegate = self
+        
+        if let webUrl = webUrl, !shouldLoadFromFile {
+            
+            webView.load(URLRequest(url: webUrl))
+        }
+        else if let webFileUrl = webArchiveFileUrl {
+            
+            webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
         }
     }
     
@@ -117,6 +126,33 @@ class ArticleWebViewModel: NSObject {
         webView.uiDelegate = nil
         webView.navigationDelegate = nil
         webView.stopLoading()
+    }
+    
+    private func startDispalyArticleTimer() {
+        
+        stopDisplayArticleTimer()
+        
+        displayArticleTimer = Timer.scheduledTimer(
+            timeInterval: displayArticleAfterNumberOfSeconds,
+            target: self,
+            selector: #selector(displayArticleTimerDidEnd),
+            userInfo: nil,
+            repeats: false
+        )
+    }
+    
+    private func stopDisplayArticleTimer() {
+        
+        displayArticleTimer?.invalidate()
+        displayArticleTimer = nil
+    }
+    
+    @objc private func displayArticleTimerDidEnd() {
+        
+        stopDisplayArticleTimer()
+        
+        loadingCurrentWebView?.navigationDelegate = nil
+        viewState.accept(value: .viewingArticle)
     }
 }
 
@@ -192,11 +228,15 @@ extension ArticleWebViewModel: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
+        stopDisplayArticleTimer()
+        
         viewState.accept(value: .viewingArticle)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-                        
+             
+        stopDisplayArticleTimer()
+        
         let errorCode: Int = (error as NSError).code
         let notConnectedToNetwork: Bool = errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
         
