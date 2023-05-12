@@ -183,12 +183,12 @@ extension ArticleWebViewModel: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-                
+                        
         let errorCode: Int = (error as NSError).code
         let notConnectedToNetwork: Bool = errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
         
         if notConnectedToNetwork {
-            webView.stopLoading()
+            stopLoadWebPage(webView: loadingCurrentWebView)
             loadWebPage(webView: webView, shouldLoadFromFile: true)
         }
     }
