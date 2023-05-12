@@ -28,7 +28,7 @@ class ArticleWebViewModel: NSObject {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
     let hidesDebugButton: ObservableValue<Bool> = ObservableValue(value: true)
-    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
     
     init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
         
@@ -82,20 +82,29 @@ class ArticleWebViewModel: NSObject {
         return "article"
     }
     
-    private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
+    private func reloadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
         
         stopLoadWebPage(webView: loadingCurrentWebView)
         self.loadingCurrentWebView = webView
         
-        isLoading.accept(value: true)
-        
+        viewState.accept(value: .loadingArticle)
+                
         webView.navigationDelegate = self
         
         if let webUrl = URL(string: aemCacheObject.aemData.webUrl), !shouldLoadFromFile {
+            
             webView.load(URLRequest(url: webUrl))
         }
         else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
+            
             webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
+        }
+        else {
+            
+            let errorTitle: String = "Internal Error"
+            let errorMessage: String = "Failed to load article webview.  Missing valid webUrl and webFileUrl."
+            
+            viewState.accept(value: .errorMessage(title: errorTitle, message: errorMessage))
         }
     }
     
@@ -169,7 +178,11 @@ extension ArticleWebViewModel {
     }
     
     func loadWebPage(webView: WKWebView) {
-        loadWebPage(webView: webView, shouldLoadFromFile: false)
+        reloadWebPage(webView: webView, shouldLoadFromFile: false)
+    }
+    
+    func reloadArticleTapped(webView: WKWebView) {
+        reloadWebPage(webView: webView, shouldLoadFromFile: false)
     }
 }
 
@@ -178,8 +191,8 @@ extension ArticleWebViewModel {
 extension ArticleWebViewModel: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-                
-        isLoading.accept(value: false)
+        
+        viewState.accept(value: .viewingArticle)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -188,8 +201,15 @@ extension ArticleWebViewModel: WKNavigationDelegate {
         let notConnectedToNetwork: Bool = errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
         
         if notConnectedToNetwork {
-            stopLoadWebPage(webView: loadingCurrentWebView)
-            loadWebPage(webView: webView, shouldLoadFromFile: true)
+            
+            reloadWebPage(webView: webView, shouldLoadFromFile: true)
+        }
+        else {
+            
+            let errorTitle: String = "Load Article Error"
+            let errorMessage: String = error.localizedDescription
+            
+            viewState.accept(value: .errorMessage(title: errorTitle, message: errorMessage))
         }
     }
 }
