@@ -20,6 +20,8 @@ class ArticleWebViewModel: NSObject {
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
     
+    private var loadingCurrentWebView: WKWebView?
+    
     private weak var flowDelegate: FlowDelegate?
     private var cancellables = Set<AnyCancellable>()
     
@@ -53,6 +55,10 @@ class ArticleWebViewModel: NSObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        stopLoadWebPage(webView: loadingCurrentWebView)
+    }
+    
     private var analyticsScreenName: String {
         return "Article : \(aemCacheObject.aemData.articleJcrContent?.title ?? "")"
     }
@@ -78,6 +84,9 @@ class ArticleWebViewModel: NSObject {
     
     private func loadWebPage(webView: WKWebView, shouldLoadFromFile: Bool) {
         
+        stopLoadWebPage(webView: loadingCurrentWebView)
+        self.loadingCurrentWebView = webView
+        
         isLoading.accept(value: true)
         
         webView.navigationDelegate = self
@@ -88,6 +97,17 @@ class ArticleWebViewModel: NSObject {
         else if let webFileUrl = aemCacheObject.webArchiveFileUrl {
             webView.loadFileURL(webFileUrl, allowingReadAccessTo: webFileUrl)
         }
+    }
+    
+    private func stopLoadWebPage(webView: WKWebView?) {
+        
+        guard let webView = webView else {
+            return
+        }
+        
+        webView.uiDelegate = nil
+        webView.navigationDelegate = nil
+        webView.stopLoading()
     }
 }
 
