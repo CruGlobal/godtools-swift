@@ -738,6 +738,7 @@
 		45CDFB4D281730FA00AC4F2E /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = 45CDFB4C281730FA00AC4F2E /* GoogleTagManager */; };
 		45CE7FD42926A0940056168A /* AccountSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CE7FD32926A0940056168A /* AccountSectionsView.swift */; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
+		45CF8FEF2A0EC76400802A88 /* ArticleWebViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CF8FEE2A0EC76400802A88 /* ArticleWebViewState.swift */; };
 		45D1202829FABD5E00523FBA /* AuthUserDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D1202729FABD5E00523FBA /* AuthUserDomainModel.swift */; };
 		45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */; };
 		45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D48C8229F81082004E92B1 /* Colors.xcassets */; };
@@ -1828,6 +1829,7 @@
 		45CBA008261FB0D30036BEB3 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
 		45CBA014261FB0E30036BEB3 /* LessonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonViewModel.swift; sourceTree = "<group>"; };
 		45CE7FD32926A0940056168A /* AccountSectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSectionsView.swift; sourceTree = "<group>"; };
+		45CF8FEE2A0EC76400802A88 /* ArticleWebViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewState.swift; sourceTree = "<group>"; };
 		45D1202729FABD5E00523FBA /* AuthUserDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUserDomainModel.swift; sourceTree = "<group>"; };
 		45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewPlayerState.swift; sourceTree = "<group>"; };
 		45D48C8229F81082004E92B1 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -4678,6 +4680,7 @@
 				458CFE7229D4E0B9007B423C /* ArticleWebView.xib */,
 				458CFE7129D4E0B9007B423C /* ArticleWebViewModel.swift */,
 				458CFE7029D4E0B9007B423C /* ArticleWebViewModelFlowType.swift */,
+				45CF8FEE2A0EC76400802A88 /* ArticleWebViewState.swift */,
 			);
 			path = ArticlesWeb;
 			sourceTree = "<group>";
@@ -8226,7 +8229,7 @@
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModelType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Extensions/NSError+Error.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",
 			);
@@ -8360,6 +8363,7 @@
 				453F84C32A029FC00005101E /* ArticleAemCache.swift in Sources */,
 				45AD1BB825938A4F00A096A0 /* ModalNavigationController.swift in Sources */,
 				456777BA287DB3770044AEB2 /* ShareToolScreenCustomTutorialViewBuilder.swift in Sources */,
+				45CF8FEF2A0EC76400802A88 /* ArticleWebViewState.swift in Sources */,
 				452040922959E73F004D843E /* ChooseParallelLanguageListViewModel.swift in Sources */,
 				455F047F2A0038B000536CB9 /* AuthenticationProviderType.swift in Sources */,
 				45860A572923E7B30089C836 /* FixedVerticalSpacer.swift in Sources */,
@@ -9569,6 +9573,7 @@
 				CURRENT_PROJECT_VERSION = 927;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = GodTools;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -9583,6 +9588,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
