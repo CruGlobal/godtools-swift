@@ -19,7 +19,7 @@ class ArticleWebViewModel: NSObject {
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
     private let analytics: AnalyticsContainer
     private let flowType: ArticleWebViewModelFlowType
-    private let displayArticleAfterNumberOfSeconds: TimeInterval = 4
+    private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
     private var loadingCurrentWebView: WKWebView?
     private var displayArticleTimer: Timer?
