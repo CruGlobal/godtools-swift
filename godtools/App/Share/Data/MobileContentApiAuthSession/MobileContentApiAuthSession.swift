@@ -86,7 +86,7 @@ class MobileContentApiAuthSession {
             }
             .flatMap { (providerAccessToken: AuthenticationProviderAccessToken) in
                 
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: providerAccessToken.tokenString)
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerAccessToken: providerAccessToken)
                    .eraseToAnyPublisher()
             }
             .flatMap { authTokenDataModel in
