@@ -1,0 +1,13 @@
+coverage:
+  status:
+    project:
+      default:
+        threshold: 1
+    patch:
+      default:
+        target: 0%
+        threshold: 1
+codecov:
+  max_report_age: off
+github_checks:
+  annotations: false

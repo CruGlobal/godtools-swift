@@ -22,19 +22,41 @@ class MobileContentAuthTokenAPI {
         self.baseURL = config.mobileContentApiBaseUrl
     }
     
-    private func getAuthTokenRequest(oktaAccessToken: String) -> URLRequest {
+    private func getAuthTokenRequest(providerAccessToken: AuthenticationProviderAccessToken) -> URLRequest {
         
-        let headers: [String: String] = [
-            "Content-Type": "application/vnd.api+json"
-        ]
+        let attributes: [String: String]
+        
+        switch providerAccessToken {
+        case .apple(let idToken, let givenName, let familyName):
+            
+            attributes = [
+                "apple_id_token": idToken,
+                "apple_given_name": givenName,
+                "apple_family_name": familyName
+            ]
+            
+        case .facebook(let accessToken):
+            
+            attributes = [
+                "facebook_access_token": accessToken
+            ]
+            
+        case .google(let idToken):
+            
+            attributes = [
+                "google_id_token": idToken
+            ]
+        }
         
         let body: [String: Any] = [
             "data": [
                 "type": "auth-token-request",
-                "attributes": [
-                    "okta_access_token": oktaAccessToken
-                ]
+                "attributes": attributes
             ]
+        ]
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
         ]
         
         return requestBuilder.build(
@@ -47,9 +69,9 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(oktaAccessToken: String) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
+    func fetchAuthTokenPublisher(providerAccessToken: AuthenticationProviderAccessToken) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
         
-        return session.dataTaskPublisher(for: getAuthTokenRequest(oktaAccessToken: oktaAccessToken))
+        return session.dataTaskPublisher(for: getAuthTokenRequest(providerAccessToken: providerAccessToken))
             .tryMap {
                 
                 let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
