@@ -64,7 +64,7 @@ extension TranslationsRepository {
         
         let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: infoPlist, resourcesFileCache: resourcesFileCache)
         
-        return manifestParser.parse(manifestName: translation.manifestName).publisher
+        return manifestParser.parsePublisher(manifestName: translation.manifestName)
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
             
                 guard includeRelatedFiles else {
@@ -146,7 +146,7 @@ extension TranslationsRepository {
                 
                 let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
-                return manifestParser.parse(manifestName: translation.manifestName).publisher
+                return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .mapError({ error in
                         return  .otherError(error: error)
                     })
@@ -178,7 +178,7 @@ extension TranslationsRepository {
                      
                 let error: Error = urlResponseError.getError()
                 
-                guard !error.requestCancelled else {
+                guard !error.isUrlErrorCancelledCode else {
                     
                     return Fail(error: urlResponseError)
                         .eraseToAnyPublisher()
@@ -199,7 +199,7 @@ extension TranslationsRepository {
                     latestDownloadedTranslation = nil
                 }
                 
-                if !error.notConnectedToInternet {
+                if !error.isUrlErrorNotConnectedToInternetCode {
                     
                     return self.downloadAndCacheTranslationZipFiles(translation: translation)
                         .flatMap({ translationFilesDataModel -> AnyPublisher<TranslationManifestFileDataModel, URLResponseError> in
@@ -272,7 +272,7 @@ extension TranslationsRepository {
                 
                 let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
                 
-                return manifestParser.parse(manifestName: translation.manifestName).publisher
+                return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .mapError({ error in
                         return .otherError(error: error)
                     })

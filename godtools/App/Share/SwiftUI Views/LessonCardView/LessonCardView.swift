@@ -73,7 +73,7 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let viewModel = LessonCardViewModel(
             lesson: lesson,
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

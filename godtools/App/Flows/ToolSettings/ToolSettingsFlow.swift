@@ -83,6 +83,7 @@ class ToolSettingsFlow: Flow {
                 localizationServices: appDiContainer.localizationServices,
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+                incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
                 analytics: appDiContainer.dataLayer.getAnalytics()
             )
             
@@ -238,13 +239,16 @@ class ToolSettingsFlow: Flow {
             
             dismissReviewShareShareable(animated: true) { [weak self] in
                 
+                guard let self = self else { return }
+                
                 let viewModel = ShareShareableViewModel(
-                    imageToShare: imageToShare
+                    imageToShare: imageToShare,
+                    incrementUserCounterUseCase: self.appDiContainer.domainLayer.getIncrementUserCounterUseCase()
                 )
                 
                 let view = ShareShareableView(viewModel: viewModel)
                             
-                self?.navigationController.present(view, animated: true, completion: nil)
+                self.navigationController.present(view, animated: true, completion: nil)
             }
             
         default:
@@ -269,7 +273,7 @@ class ToolSettingsFlow: Flow {
         )
 
         let view = ShareToolScreenTutorialView(viewModel: viewModel)
-        let modal = ModalNavigationController(rootView: view)
+        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
 
         navigationController.present(
             modal,
@@ -283,13 +287,15 @@ class ToolSettingsFlow: Flow {
     private func navigateToLoadToolRemoteSession() {
         
         let viewModel = LoadToolRemoteSessionViewModel(
+            resourceId: toolData.renderer.value.resource.id,
             flowDelegate: self,
             localizationServices: appDiContainer.localizationServices,
-            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher
+            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         let view = LoadingView(viewModel: viewModel)
         
-        let modal = ModalNavigationController(rootView: view)
+        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
         
         navigationController.present(modal, animated: true, completion: nil)
         

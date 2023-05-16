@@ -9,40 +9,81 @@
 import SwiftUI
 
 struct GTBlueButton: View {
-    
+        
     let title: String
-    let fontSize: CGFloat
-    let width: CGFloat?
-    let height: CGFloat?
+    let font: Font
+    let width: CGFloat
+    let height: CGFloat
     let cornerRadius: CGFloat
+    let highlightsTitleOnTap: Bool
     let action: () -> Void
     
-    init(title: String, fontSize: CGFloat = 12, width: CGFloat? = nil, height: CGFloat? = nil, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, highlightsTitleOnTap: Bool = true, action: @escaping () -> Void) {
+        
         self.title = title
-        self.fontSize = fontSize
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
+        self.highlightsTitleOnTap = highlightsTitleOnTap
         self.action = action
+        
+        if let font = font {
+            self.font = font
+        }
+        else if let fontSize = fontSize {
+            self.font = GTBlueButton.getDefaultFont(fontSize: fontSize)
+        }
+        else {
+            self.font = GTBlueButton.getDefaultFont(fontSize: 12)
+        }
+    }
+    
+    private static func getDefaultFont(fontSize: CGFloat) -> Font {
+        return FontLibrary.sfProTextRegular.font(size: fontSize)
     }
     
     var body: some View {
-        Text(title)
-            .font(FontLibrary.sfProTextRegular.font(size: fontSize))
-            .foregroundColor(Color.white)
-            .padding()
+        
+        ZStack(alignment: .center) {
+            
+            Button(action: {
+                action()
+            }) {
+                
+                ZStack(alignment: .center) {
+                    
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: width, height: height)
+                        .cornerRadius(cornerRadius)
+                    
+                    if highlightsTitleOnTap {
+                        getButtonTitle()
+                    }
+                }
+            }
             .frame(width: width, height: height, alignment: .center)
             .background(ColorPalette.gtBlue.color)
             .cornerRadius(cornerRadius)
-            .onTapGesture {
-                action()
+            
+            if !highlightsTitleOnTap {
+                getButtonTitle()
             }
+        }
+    }
+    
+    @ViewBuilder private func getButtonTitle() -> some View {
+        
+        Text(title)
+            .font(font)
+            .foregroundColor(Color.white)
+            .padding()
     }
 }
 
 struct GTBlueButton_Previews: PreviewProvider {
     static var previews: some View {
-        GTBlueButton(title: "Test Button", cornerRadius: 6, action: {})
+        GTBlueButton(title: "Test Button", width: 240, height: 50, cornerRadius: 6, action: {})
             .padding()
             .previewLayout(.sizeThatFits)
     }

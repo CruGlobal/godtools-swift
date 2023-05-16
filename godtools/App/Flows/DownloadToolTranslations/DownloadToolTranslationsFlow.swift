@@ -33,10 +33,12 @@ class DownloadToolTranslationsFlow: Flow {
         self.getToolTranslationsFilesUseCase = appDiContainer.domainLayer.getToolTranslationsFilesUseCase()
         self.didDownloadToolTranslations = didDownloadToolTranslations
         
-        getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
-            self?.navigateToDownloadTool()
+        getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestAndRelatedFilesForRenderer, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.navigateToDownloadTool()
+            }
         })
-        .receive(on: DispatchQueue.main)
+        .receiveOnMain()
         .sink(receiveCompletion: { [weak self] completed in
             
             switch completed {
@@ -110,7 +112,7 @@ class DownloadToolTranslationsFlow: Flow {
         
         let view = DownloadToolView(viewModel: viewModel)
         
-        let modal = ModalNavigationController(rootView: view, navBarColor: .white, navBarIsTranslucent: false)
+        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
         
         navigationController.present(modal, animated: true, completion: nil)
         

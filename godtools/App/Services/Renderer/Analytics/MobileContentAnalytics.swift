@@ -13,12 +13,12 @@ class MobileContentAnalytics {
     
     private let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem]
         
-    required init(analytics: AnalyticsContainer) {
+    required init(analytics: AnalyticsContainer, userAnalytics: UserAnalytics) {
         
         let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
             .appsflyer: analytics.appsFlyerAnalytics,
             .firebase: analytics.firebaseAnalytics,
-            .snowplow: analytics.snowplowAnalytics
+            .user: userAnalytics
         ]
  
         self.analyticsSystems = analyticsSystems
@@ -32,8 +32,9 @@ class MobileContentAnalytics {
     }
     
     private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
-        
-        guard let action = event.action, !action.isEmpty else {
+
+        let action = event.action
+        guard !action.isEmpty else {
             return
         }
                 

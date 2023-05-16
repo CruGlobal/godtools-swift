@@ -255,9 +255,22 @@ class ToolPageCardView: MobileContentView, NibBased {
     }
     
     // MARK: -
-
-    static var cardHeaderHeight: CGFloat {
+    
+    static var minimumCardHeaderHeight: CGFloat {
         return 50
+    }
+
+    func getCardHeaderHeight() -> CGFloat {
+        
+        let minimumHeaderHeight: CGFloat = ToolPageCardView.minimumCardHeaderHeight
+        
+        let headerHeight: CGFloat = titleSeparatorLine.frame.origin.y
+        
+        guard headerHeight > minimumHeaderHeight else {
+            return minimumHeaderHeight
+        }
+        
+        return headerHeight
     }
     
     @objc func headerTapped() {

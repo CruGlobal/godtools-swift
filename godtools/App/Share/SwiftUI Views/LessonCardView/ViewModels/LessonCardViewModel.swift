@@ -13,7 +13,7 @@ protocol LessonCardDelegate: AnyObject {
     func lessonCardTapped(lesson: LessonDomainModel)
 }
 
-class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadProgress {
+class LessonCardViewModel: BaseLessonCardViewModel {
     
     // MARK: - Properties
     
@@ -26,17 +26,8 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
     private weak var delegate: LessonCardDelegate?
-
-    var attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
-    var translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
-    var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
-    var downloadResourceTranslationsReceipt: DownloadTranslationsReceipt?
     
     private var cancellables = Set<AnyCancellable>()
-    
-    var resourceId: String {
-        return lesson.id
-    }
     
     // MARK: - Init
     
@@ -55,15 +46,7 @@ class LessonCardViewModel: BaseLessonCardViewModel, ResourceItemInitialDownloadP
         
         setup()
     }
-    
-    // MARK: - Deinit
-    
-    deinit {
-        removeDataDownloaderObservers()
-        attachmentsDownloadProgress.removeObserver(self)
-        translationDownloadProgress.removeObserver(self)
-    }
-    
+
     // MARK: - Overrides
     
     override func lessonCardTapped() {
@@ -77,8 +60,6 @@ extension LessonCardViewModel {
     
     private func setup() {
         setupBinding()
-        
-        addDataDownloaderObservers()
     }
     
     private func reloadTitle(for primaryLanguage: LanguageDomainModel?) {
@@ -117,21 +98,5 @@ extension LessonCardViewModel {
                 self?.reloadTitle(for: primaryLanguage)
             }
             .store(in: &cancellables)
-        
-        attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async {
-                withAnimation {
-                    self?.attachmentsDownloadProgressValue = progress
-                }
-            }
-        }
-        
-        translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async {
-                withAnimation {
-                    self?.translationDownloadProgressValue = progress
-                }
-            }
-        }
     }
 }

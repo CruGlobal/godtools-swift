@@ -40,10 +40,13 @@ class MobileContentRendererNavigation {
             
             switch deepLink {
             
+            case .dashboard:
+                break
+                
             case .allToolsList:
                 break
             
-            case .article( _):
+            case .articleAemUri( _):
                 break
             
             case .favoritedToolsList:
@@ -119,11 +122,12 @@ class MobileContentRendererNavigation {
             renderedPageContext: event.renderedPageContext,
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
+            setCompletedTrainingTipUseCase: appDiContainer.domainLayer.getSetCompletedTrainingTipUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getTrainingTipCompletedUseCase: appDiContainer.domainLayer.getTrainingTipCompletedUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             localizationServices: appDiContainer.localizationServices,
-            viewedTrainingTips: appDiContainer.getViewedTrainingTipsService(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()
         })

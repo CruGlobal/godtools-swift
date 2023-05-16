@@ -29,7 +29,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
-    private var observersAdded: Bool = false
+    private var uiApplicationLifeCycleObserversAdded: Bool = false
     private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
@@ -48,7 +48,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
-        self.dataDownloader = appDiContainer.initialDataDownloader
+        self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
@@ -63,7 +63,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         rootController.addChildController(child: navigationController)
         
-        addObservers()
+        addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
         appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
@@ -71,27 +71,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeObservers()
+        removeUIApplicationLifeCycleObservers()
         removeDeepLinkingObservers()
-    }
-
-    private func loadInitialData() {
-        
-        dataDownloader.downloadInitialData()
-        
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
-        
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-
-        authenticateUserUseCase.authenticatePublisher(authType: .attemptToRenewAuthenticationOnly)
-            .sink { finished in
-
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
     }
     
     func navigate(step: FlowStep) {
@@ -115,6 +96,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             loadInitialData()
+            countAppSessionLaunch()
                         
         case .appLaunchedFromBackgroundState:
             
@@ -145,6 +127,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 }, completion: {(finished: Bool) in
                     loadingView.removeFromSuperview()
                 })
+                
+                countAppSessionLaunch()
             }
             
             self.resignedActiveDate = nil
@@ -393,12 +377,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToLearnToShareTool(resource: resource)
             
         case .continueTappedFromLearnToShareTool(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
-            dismissLearnToShareToolFlow()
+            dismissLearnToShareToolFlow {
+                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            }
             
         case .closeTappedFromLearnToShareTool(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
-            dismissLearnToShareToolFlow()
+            dismissLearnToShareToolFlow {
+                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            }
             
         case .closeTappedFromLessonEvaluation:
             dismissLessonEvaluation()
@@ -436,65 +422,43 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     }
 }
 
-// MARK: - Add / Remove Observers
+// MARK: - Launch
 
 extension AppFlow {
     
-    private func addObservers() {
-              
-        guard !observersAdded else {
-            return
-        }
-        observersAdded = true
+    private func loadInitialData() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func removeObservers() {
+        dataDownloader.downloadInitialData()
         
-        guard observersAdded else {
-            return
-        }
-        observersAdded = false
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
         
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func addDeepLinkingObservers() {
+        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        guard !isObservingDeepLinking else {
-            return
-        }
-        
-        isObservingDeepLinking = true
-        
-        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+        if let lastAuthProvider = appDiContainer.dataLayer.getUserAuthentication().getLastAuthenticatedProviderType() {
             
-            guard let deepLink = optionalDeepLink else {
-                return
-            }
+            let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
             
-            guard let weakSelf = self else {
-                return
-            }
-            
-            if !weakSelf.navigationStarted {
-                weakSelf.appLaunchedFromDeepLink = deepLink
-            }
-            else {
-                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
+            authenticateUserUseCase.authenticatePublisher(provider: lastAuthProvider, policy: .renewAccessToken)
+                .sink { finished in
+
+                } receiveValue: { success in
+
+                }
+                .store(in: &cancellables)
         }
     }
     
-    private func removeDeepLinkingObservers() {
+    private func countAppSessionLaunch() {
         
-        isObservingDeepLinking = false
-        deepLinkingService.deepLinkObserver.removeObserver(self)
+        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -518,7 +482,7 @@ extension AppFlow {
         let dashboardViewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
-            initialDataDownloader: appDiContainer.initialDataDownloader,
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
@@ -658,6 +622,39 @@ extension AppFlow {
 
 extension AppFlow {
     
+    private func addDeepLinkingObservers() {
+        
+        guard !isObservingDeepLinking else {
+            return
+        }
+        
+        isObservingDeepLinking = true
+        
+        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
+            
+            guard let deepLink = optionalDeepLink else {
+                return
+            }
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            if !weakSelf.navigationStarted {
+                weakSelf.appLaunchedFromDeepLink = deepLink
+            }
+            else {
+                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+        }
+    }
+    
+    private func removeDeepLinkingObservers() {
+        
+        isObservingDeepLinking = false
+        deepLinkingService.deepLinkObserver.removeObserver(self)
+    }
+    
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
         
         switch deepLink {
@@ -668,7 +665,7 @@ extension AppFlow {
                         
             navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
-        case .article(let articleUri):
+        case .articleAemUri(let aemUri):
             
             navigateToDashboard(startingTab: .favorites, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: { [weak self] in
                 
@@ -680,7 +677,7 @@ extension AppFlow {
                     flowDelegate: weakSelf,
                     appDiContainer: weakSelf.appDiContainer,
                     sharedNavigationController: weakSelf.navigationController,
-                    aemUri: articleUri
+                    aemUri: aemUri
                 )
                 
                 weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
@@ -694,6 +691,9 @@ extension AppFlow {
             
         case .allToolsList:
             navigateToDashboard(startingTab: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+            
+        case .dashboard:
+            navigateToDashboard(startingTab: .favorites)
         }
     }
 }
@@ -763,7 +763,6 @@ extension AppFlow {
     func getAllFavoriteTools() -> UIViewController {
         
         let viewModel = AllFavoriteToolsViewModel(
-            dataDownloader: appDiContainer.initialDataDownloader,
             localizationServices: appDiContainer.localizationServices,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
@@ -862,13 +861,14 @@ extension AppFlow {
         }
     }
     
-    private func dismissLearnToShareToolFlow() {
+    private func dismissLearnToShareToolFlow(completion: (() -> Void)?) {
         
         guard learnToShareToolFlow != nil else {
+            completion?()
             return
         }
         
-        navigationController.dismissPresented(animated: true, completion: nil)
+        navigationController.dismissPresented(animated: true, completion: completion)
         learnToShareToolFlow = nil
     }
 }
@@ -1027,11 +1027,37 @@ extension AppFlow {
     }
 }
 
-// MARK: - Notifications
+// MARK: - UIApplication Life Cycle Notifications
 
 extension AppFlow {
     
-    @objc private func handleNotification(notification: Notification) {
+    private func addUIApplicationLifeCycleObservers() {
+              
+        guard !uiApplicationLifeCycleObserversAdded else {
+            return
+        }
+        
+        uiApplicationLifeCycleObserversAdded = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    private func removeUIApplicationLifeCycleObservers() {
+        
+        guard uiApplicationLifeCycleObserversAdded else {
+            return
+        }
+        
+        uiApplicationLifeCycleObserversAdded = false
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {
         
         if notification.name == UIApplication.willResignActiveNotification {
             

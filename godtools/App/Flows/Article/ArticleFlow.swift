@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import SwiftUI
 
 class ArticleFlow: Flow {
     
@@ -16,7 +17,7 @@ class ArticleFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -84,6 +85,13 @@ class ArticleFlow: Flow {
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
+        case .debugTappedFromArticle(let article):
+            
+            navigationController.present(getArticleDebugView(article: article), animated: true)
+            
+        case .closeTappedFromArticleDebug:
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
         default:
             break
         }
@@ -92,7 +100,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    func getArticles(resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
+    private func getArticles(resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
@@ -118,13 +126,15 @@ extension ArticleFlow {
         return view
     }
     
-    func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             aemCacheObject: aemCacheObject,
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             flowType: .tool(resource: resource)
         )
@@ -137,5 +147,29 @@ extension ArticleFlow {
         )
         
         return view
+    }
+    
+    private func getArticleDebugView(article: ArticleDomainModel) -> UIViewController {
+        
+        let viewModel = ArticleDebugViewModel(
+            flowDelegate: self,
+            article: article
+        )
+        
+        let view = ArticleDebugView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<ArticleDebugView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
+        
+        return modal
     }
 }

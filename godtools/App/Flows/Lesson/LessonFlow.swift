@@ -22,7 +22,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -44,11 +44,12 @@ class LessonFlow: ToolNavigationFlow, Flow {
             renderer: renderer,
             resource: renderer.resource,
             primaryLanguage: renderer.primaryLanguage,
-            page: page,
+            initialPage: initialPage,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = LessonView(viewModel: viewModel)

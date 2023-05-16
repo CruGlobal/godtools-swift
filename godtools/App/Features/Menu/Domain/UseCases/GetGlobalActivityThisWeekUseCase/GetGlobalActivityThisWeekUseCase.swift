@@ -24,7 +24,7 @@ class GetGlobalActivityThisWeekUseCase {
     func getGlobalActivityPublisher() -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
         
         return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher()
-            .flatMap({ (dataModel: MobileContentGlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
+            .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
                 
                 guard let dataModel = dataModel else {
                     
@@ -33,22 +33,22 @@ class GetGlobalActivityThisWeekUseCase {
                 }
                 
                 let usersAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.data.attributes.users),
+                    count: self.getFormattedCount(count: dataModel.users),
                     label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.users.title")
                 )
                 
                 let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.data.attributes.gospelPresentations),
+                    count: self.getFormattedCount(count: dataModel.gospelPresentations),
                     label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.gospelPresentation.title")
                 )
                 
                 let launchesAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.data.attributes.launches),
+                    count: self.getFormattedCount(count: dataModel.launches),
                     label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.launches.title")
                 )
                 
                 let countriesAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.data.attributes.countries),
+                    count: self.getFormattedCount(count: dataModel.countries),
                     label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.countries.title")
                 )
                 

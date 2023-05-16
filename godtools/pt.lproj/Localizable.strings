@@ -77,6 +77,9 @@
 Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a funcionar. Podemos tentar novamente noutra altura.";
 "exit_tract_remote_share_session.message" = "Pretende sair da sessão de compartilhamento remoto agora?";
 "load_tool_remote_session.message" = "A iniciar o compartilhamento de tela…";
+"lesson_evaluation.title" = "Revisão";
+"lesson_evaluation.wasThisHelpful" = "Esta lição lhe serviu?";
+"lesson_evaluation.shareFaith" = "Até que ponto você se sente preparado para iniciar uma conversa espiritual?";
 "onboardingTutorial.0.title" = "Pronto para qualquer conversa";
 "onboardingTutorial.0.videoLink.title" = "Ver vídeo";
 "onboardingTutorial.1.title" = "Fale sobre Deus com qualquer pessoa";

@@ -111,12 +111,18 @@ class ToolDetailsViewModel: ObservableObject {
             
             nameValue = primaryTranslation.translatedName
             aboutDetailsValue = primaryTranslation.translatedDescription
+            bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
+            conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
+            outlineContent = primaryTranslation.toolDetailsOutline
             languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
             nameValue = englishTranslation.translatedName
             aboutDetailsValue = englishTranslation.translatedDescription
+            bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
+            conversationStartersContent = englishTranslation.toolDetailsConversationStarters
+            outlineContent = englishTranslation.toolDetailsOutline
             languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
         }
         else {
@@ -188,7 +194,7 @@ class ToolDetailsViewModel: ObservableObject {
             translationsRepository: translationsRepository
         )
         
-        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFiles(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
+        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
             
         })
         .receiveOnMain()
@@ -283,17 +289,8 @@ extension ToolDetailsViewModel {
     }
     
     func segmentTapped(index: Int) {
-        selectedSegment = segmentTypes[index]
         
-        // NOTE: This is a temporary fix that solves an issue when switching back to the about section, a user is unable to scroll through all of the text in the
-        // about section. This is basically acting as a way to force the view to refresh again after 0.1 seconds.
-        // This has something to do with using UIViewRepresentable that wraps a UITextView.  If we were using a SwiftUI Text element this issue wouldn't exist.
-        // Once minimum iOS 15 is supported see if TextWithLinks can be dropped.  See GT-1670. ~Levi
-        if selectedSegment == .about {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.selectedSegment = .about
-            }
-        }
+        selectedSegment = segmentTypes[index]
     }
     
     func urlTapped(url: URL) {

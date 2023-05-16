@@ -46,15 +46,18 @@ struct LessonsView: View {
                         .padding([.leading, .trailing], leadingTrailingPadding)
                         .listRowInsets(EdgeInsets())
                         
-                        ForEach(viewModel.lessons) { lesson in
+                        VStack(spacing: 0) {
                             
-                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
-                                .listRowInsets(EdgeInsets())
-                                .contentShape(Rectangle())
-                                .padding([.top, .bottom], 8)
-                                .padding([.leading, .trailing], leadingTrailingPadding)
-                            
+                            ForEach(viewModel.lessons) { lesson in
+                                
+                                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
+                                    .listRowInsets(EdgeInsets())
+                                    .contentShape(Rectangle())
+                                    .padding([.top, .bottom], 8)
+                                    .padding([.leading, .trailing], leadingTrailingPadding)
+                            }
                         }
+                        .padding(.bottom, 27)
                         .listRowInsets(EdgeInsets())
                         
                     } refreshHandler: {
@@ -77,7 +80,7 @@ struct LessonsView_Previews: PreviewProvider {
         
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.dataLayer.getAnalytics(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),

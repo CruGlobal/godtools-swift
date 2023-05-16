@@ -10,29 +10,29 @@ import SwiftUI
 
 struct ToolDetailsAboutView: View {
            
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    private let geometry: GeometryProxy
     
-    let width: CGFloat
-    
+    @ObservedObject private var viewModel: ToolDetailsViewModel
+        
     @State private var accordionExpandedConversationStarters: Bool = false
     @State private var accordionExpandedOutline: Bool = false
     @State private var accordionExpandedBibleReferences: Bool = false
     @State private var accordionExpandedLanguageAvailability: Bool = false
     
+    init(viewModel: ToolDetailsViewModel, geometry: GeometryProxy) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+    }
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            TextWithLinks(
-                text: viewModel.aboutDetails,
-                textColor: ColorPalette.gtGrey.uiColor,
-                font: FontLibrary.sfProTextRegular.uiFont(size: 16),
-                lineSpacing: 3,
-                width: width,
-                didInteractWithUrlClosure: { (url: URL) in
-                    viewModel.urlTapped(url: url)
-                    return true
-                }
+            ToolDetailsSectionDescriptionTextView(
+                viewModel: viewModel,
+                geometry: geometry,
+                text: viewModel.aboutDetails
             )
             
             Rectangle()
@@ -40,14 +40,28 @@ struct ToolDetailsAboutView: View {
                 .foregroundColor(.clear)
             
             VStack(spacing: 20) {
-                AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
                 
-                AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+                if viewModel.conversationStartersContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.conversationStartersTitle, contents: viewModel.conversationStartersContent, isExpanded: $accordionExpandedConversationStarters)
+                }
+                
+                if viewModel.outlineContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.outlineTitle, contents: viewModel.outlineContent, isExpanded: $accordionExpandedOutline)
+                }
 
-                AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
-
-                AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+                if viewModel.bibleReferencesContent.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
+                }
+                
+                if viewModel.availableLanguagesList.isEmpty == false {
+                    
+                    AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+                }
             }
+            .padding(ToolDetailsView.sectionDescriptionTextInsets)
             
             if accordionExpandedConversationStarters || accordionExpandedOutline || accordionExpandedBibleReferences || accordionExpandedLanguageAvailability {
                 Spacer()

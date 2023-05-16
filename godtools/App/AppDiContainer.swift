@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import OktaAuthentication
 
 class AppDiContainer {
         
@@ -17,7 +16,6 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let initialDataDownloader: InitialDataDownloader
     let localizationServices: LocalizationServices = LocalizationServices()
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
@@ -35,9 +33,7 @@ class AppDiContainer {
         resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-                                                      
-        initialDataDownloader = InitialDataDownloader(resourcesRepository: dataLayer.getResourcesRepository())
-                                      
+                                                                                            
         firebaseInAppMessaging = FirebaseInAppMessaging()
     }
     
@@ -90,7 +86,12 @@ class AppDiContainer {
     }
     
     func getMobileContentAnalytics() -> MobileContentAnalytics {
-        return MobileContentAnalytics(analytics: dataLayer.getAnalytics())
+        return MobileContentAnalytics(
+            analytics: dataLayer.getAnalytics(),
+            userAnalytics: UserAnalytics(
+                incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
+            )
+        )
     }
     
     func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
@@ -118,17 +119,6 @@ class AppDiContainer {
             parentFlow: parentFlow,
             delegate: navigationDelegate,
             appDiContainer: self
-        )
-    }
-    
-    func getOnboardingTutorialCustomViewBuilder(flowDelegate: FlowDelegate) -> CustomViewBuilderType {
-        return OnboardingTutorialCustomViewBuilder(
-            flowDelegate: flowDelegate,
-            getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: localizationServices,
-            tutorialVideoAnalytics: getTutorialVideoAnalytics(),
-            analyticsScreenName: "onboarding"
         )
     }
     
@@ -196,12 +186,6 @@ class AppDiContainer {
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
             trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics
-        )
-    }
-    
-    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
-        return ViewedTrainingTipsService(
-            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
         )
     }
 }

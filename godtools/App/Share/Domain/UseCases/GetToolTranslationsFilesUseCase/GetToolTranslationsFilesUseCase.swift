@@ -28,7 +28,7 @@ class GetToolTranslationsFilesUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getToolTranslationsFiles(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
+    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
                 
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
@@ -105,7 +105,6 @@ class GetToolTranslationsFilesUseCase {
                 return Just(maintainTranslationDownloadOrder).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()
             })
-            .receive(on: DispatchQueue.main) // NOTE: Need to switch to main queue and parse manifests again because Manifests can't be passed across threads at this time. ~Levi
             .flatMap({ translationManifests -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })

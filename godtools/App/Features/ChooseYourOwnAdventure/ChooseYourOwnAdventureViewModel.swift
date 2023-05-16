@@ -21,7 +21,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, page: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
@@ -54,7 +54,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             navBarTitleType = .title(title: "GodTools")
         }
         
-        super.init(renderer: renderer, page: page, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
     }
     
     override func pageDidAppear(page: Int) {
@@ -89,7 +89,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     func navBackTapped() {
         
-        let isFirstPage: Bool = currentPage == 0
+        let isFirstPage: Bool = currentRenderedPageNumber == 0
         
         if isFirstPage {
             flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)

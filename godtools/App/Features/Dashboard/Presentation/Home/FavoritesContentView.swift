@@ -19,7 +19,7 @@ struct FavoritesContentView: View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             if viewModel.hideTutorialBanner == false {
                 
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
@@ -41,8 +41,9 @@ struct FavoritesContentView: View {
                         Text(viewModel.pageTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
                             .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 12)
+                            .padding(.top, 24)
                             .padding(.bottom, 15)
+                            .padding(.leading, leadingTrailingPadding)
                         
                         FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
@@ -50,9 +51,8 @@ struct FavoritesContentView: View {
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
                             .listRowInsets(EdgeInsets())
-                        
-                        Spacer()
-                        
+                            .padding(.bottom, 23)
+                                                
                     } refreshHandler: {
                         viewModel.refreshData()
                     }
@@ -72,7 +72,7 @@ struct FavoritesContentView_Previews: PreviewProvider {
         
         let viewModel = FavoritesContentViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.dataLayer.getAnalytics(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),

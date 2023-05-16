@@ -8,7 +8,9 @@
 
 import UIKit
 import AppsFlyerLib
-import FBSDKCoreKit
+import SocialAuthentication
+import FacebookCore
+import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -73,10 +75,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
         
-        appDiContainer.dataLayer.getAnalytics().snowplowAnalytics.configure()
+        ConfigureFacebookOnAppLaunch.configure(
+            application: application,
+            launchOptions: launchOptions,
+            configuration: appConfig.facebookConfig
+        )
                 
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
@@ -106,9 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         
         reloadShortcutItems(application: application)
-        
-        AppEvents.activateApp()
-        
+                
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.trackAppLaunch()
     }
 
@@ -206,14 +208,16 @@ extension AppDelegate {
         
         appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
         
-        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            return true
+        }
         
         let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
         
-        if deepLinkedHandled {
-            return true
-        }
-        else if facebookHandled {
+        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        
+        if facebookHandled || deepLinkedHandled {
             return true
         }
         
@@ -238,7 +242,22 @@ extension AppDelegate {
         guard let url = userActivity.webpageURL else {
             return false
         }
-          
+        
+        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { [weak self] (dynamicLink: DynamicLink?, error: Error?) in
+            
+            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                _ = self?.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            }
+        }
+        
+        if firebaseDynamicLinkHandled {
+            return true
+        }
+        
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkHandled {

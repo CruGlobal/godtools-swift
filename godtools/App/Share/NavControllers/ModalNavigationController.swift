@@ -9,23 +9,39 @@
 import UIKit
 
 class ModalNavigationController: UINavigationController {
-    
-    private static let defaultNavBarColor: UIColor = .white
-    private static let defaultNavBarisTranslucent = false
-    
+        
     private let rootView: UIViewController
-    private let navBarColor: UIColor
-    private let navBarIsTranslucent: Bool
+    private let statusBarStyle: UIStatusBarStyle
     
-    required init(rootView: UIViewController, navBarColor: UIColor = ModalNavigationController.defaultNavBarColor, navBarIsTranslucent: Bool = ModalNavigationController.defaultNavBarisTranslucent) {
+    static func defaultModal(rootView: UIViewController, statusBarStyle: UIStatusBarStyle) -> ModalNavigationController {
+        
+        return ModalNavigationController(
+            rootView: rootView,
+            navBarColor: UIColor.white,
+            navBarIsTranslucent: false,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: statusBarStyle
+        )
+    }
+    
+    init(rootView: UIViewController, navBarColor: UIColor, navBarIsTranslucent: Bool, controlColor: UIColor, statusBarStyle: UIStatusBarStyle) {
         
         self.rootView = rootView
-        self.navBarColor = navBarColor
-        self.navBarIsTranslucent = navBarIsTranslucent
+        self.statusBarStyle = statusBarStyle
         
         super.init(nibName: nil, bundle: nil)
         
         modalPresentationStyle = .fullScreen
+        
+        navigationBar.setupNavigationBarAppearance(
+            backgroundColor: navBarColor,
+            controlColor: controlColor,
+            titleFont: nil,
+            titleColor: nil,
+            isTranslucent: navBarIsTranslucent
+        )
+                                
+        setViewControllers([rootView], animated: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,17 +54,8 @@ class ModalNavigationController: UINavigationController {
         print("x deinit: \(type(of: self))")
     }
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        navigationBar.setupNavigationBarAppearance(backgroundColor: navBarColor, controlColor: nil, titleFont: nil, titleColor: nil, isTranslucent: navBarIsTranslucent)
-                                
-        setViewControllers([rootView], animated: false)
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         
-        return .default
+        return statusBarStyle
     }
 }

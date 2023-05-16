@@ -109,7 +109,7 @@ class MobileContentPagesView: UIViewController {
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier
         )
         pageNavigationView.setContentInset(contentInset: .zero)
-        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute)
+        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute.value)
         
         if #available(iOS 11.0, *) {
             pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
@@ -128,6 +128,28 @@ class MobileContentPagesView: UIViewController {
             
             pagesView.initialPagePositions.removeAll()
             pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
+        }
+        
+        viewModel.pageNavigationSemanticContentAttribute.addObserver(self) { [weak self] (pageNavigationSemanticContentAttribute: UISemanticContentAttribute) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let currentPageNavigationSemanticContentAttribute: UISemanticContentAttribute = weakSelf.pageNavigationView.getSemanticContentAttribute()
+            let currentPage: Int = weakSelf.pageNavigationView.currentPage
+            let numberOfPages: Int = weakSelf.pageNavigationView.numberOfPages
+            
+            guard currentPageNavigationSemanticContentAttribute != pageNavigationSemanticContentAttribute else {
+                return
+            }
+            
+            guard numberOfPages > 0 else {
+                return
+            }
+            
+            weakSelf.pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: pageNavigationSemanticContentAttribute)
+            weakSelf.pageNavigationView.scrollToPage(page: currentPage, animated: false)
         }
     }
     

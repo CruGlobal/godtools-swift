@@ -89,7 +89,7 @@ class ToolPageCardsView: MobileContentView {
                 let cardBounceAnimation = ToolPageCardBounceAnimation(
                     card: firstCard,
                     cardTopConstraint: firstCardTopConstraint,
-                    cardStartingTopConstant: cardsView.getCardTopConstant(state: .starting(cardPosition: 0)),
+                    cardStartingTopConstant: cardsView.getCardTopConstant(state: .starting, cardPosition: 0),
                     layoutView: cardsParent,
                     delegate: cardsView
                 )
@@ -282,8 +282,7 @@ extension ToolPageCardsView {
     private var showCardBottomInset: CGFloat {
         
         let numberOfVisibleCardsFloatValue: CGFloat = CGFloat(allCards.filter({!$0.isHidden}).count)
-        let cardHeaderHeight: CGFloat = ToolPageCardView.cardHeaderHeight
-        let cardTopVisibilityHeight: CGFloat = floor(cardHeaderHeight * cardCollapsedVisibilityPercentage)
+        let cardTopVisibilityHeight: CGFloat = floor(ToolPageCardView.minimumCardHeaderHeight * cardCollapsedVisibilityPercentage)
         let collapsedCardsHeight: CGFloat = (cardTopVisibilityHeight * (numberOfVisibleCardsFloatValue - 1))
         let availableBottomSpaces: [CGFloat] = [collapsedCardsHeight, cardParentContentInsets.bottom]
         let maxBottomSpace: CGFloat = availableBottomSpaces.max() ?? 0
@@ -328,6 +327,8 @@ extension ToolPageCardsView {
         
         renderedCards.append(cardView)
         
+        let cardPosition: Int = getRenderedCardPosition(cardView: cardView) ?? 0
+        
         cardsParentView.addSubview(cardView)
 
         cardView.translatesAutoresizingMaskIntoConstraints = false
@@ -370,7 +371,7 @@ extension ToolPageCardsView {
         
         cardView.setHeightConstraint(height: cardHeight)
         
-        top.constant = getCardTopConstant(state: .hidden)
+        top.constant = getCardTopConstant(state: .hidden, cardPosition: cardPosition)
                     
         cardTopConstraints.append(top)
         
@@ -403,7 +404,7 @@ extension ToolPageCardsView {
         
         if animated, let cardPosition = getRenderedCardPosition(cardView: cardView) {
             
-            cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .hidden)
+            cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .hidden, cardPosition: cardPosition)
             
             removeRenderedCard(index: cardPosition, shouldRemoveFromView: false)
             
@@ -471,15 +472,21 @@ extension ToolPageCardsView {
         return screenHeight - topInset - bottomInset
     }
     
-    private func getCardTopConstant(state: ToolPageCardTopConstantState) -> CGFloat {
+    private func getCardTopConstant(state: ToolPageCardTopConstantState, cardPosition: Int) -> CGFloat {
         
         let numberOfVisibleCardsFloatValue: CGFloat = CGFloat(renderedCards.count)
-        let cardHeaderHeight: CGFloat = ToolPageCardView.cardHeaderHeight
         
         switch state {
             
-        case .starting(let cardPosition):
-            return UIScreen.main.bounds.size.height - safeArea.bottom - (cardHeaderHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
+        case .starting:
+            
+            var combinedCardHeaderHeightsFollowingCardPosition: CGFloat = 0
+            
+            for index in cardPosition ..< renderedCards.count {
+                combinedCardHeaderHeightsFollowingCardPosition += renderedCards[index].getCardHeaderHeight()
+            }
+            
+            return UIScreen.main.bounds.size.height - safeArea.bottom - combinedCardHeaderHeightsFollowingCardPosition
         
         case .showing:
             return showCardTopInset
@@ -487,8 +494,8 @@ extension ToolPageCardsView {
         case .showingKeyboard:
             return showCardTopInset
             
-        case .collapsed(let cardPosition):
-            let cardTopVisibilityHeight: CGFloat = floor(cardHeaderHeight * cardCollapsedVisibilityPercentage)
+        case .collapsed:
+            let cardTopVisibilityHeight: CGFloat = floor(ToolPageCardView.minimumCardHeaderHeight * cardCollapsedVisibilityPercentage)
             return UIScreen.main.bounds.size.height - safeArea.bottom - (cardTopVisibilityHeight * (numberOfVisibleCardsFloatValue - CGFloat(cardPosition)))
     
         case .hidden:
@@ -508,7 +515,7 @@ extension ToolPageCardsView {
                         
             for cardPosition in 0 ..< renderedCards.count {
                 
-                cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .starting(cardPosition: cardPosition))
+                cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .starting, cardPosition: cardPosition)
             }
             
         case .showingCard(let showingCardAtPosition):
@@ -533,10 +540,10 @@ extension ToolPageCardsView {
                 let shouldShowCard: Bool = cardPosition <= showCardAtPosition
                 
                 if shouldShowCard {
-                    cardTop = getCardTopConstant(state: .showing)
+                    cardTop = getCardTopConstant(state: .showing, cardPosition: cardPosition)
                 }
                 else {
-                    cardTop = getCardTopConstant(state: .collapsed(cardPosition: cardPosition))
+                    cardTop = getCardTopConstant(state: .collapsed, cardPosition: cardPosition)
                 }
                 
                 cardTopConstraints[cardPosition].constant = cardTop
@@ -549,7 +556,7 @@ extension ToolPageCardsView {
             for cardPosition in 0 ..< renderedCards.count {
                                 
                 if cardPosition <= showingCardAtPosition {
-                    cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .showingKeyboard)
+                    cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .showingKeyboard, cardPosition: cardPosition)
                 }
             }
                         
@@ -561,7 +568,7 @@ extension ToolPageCardsView {
                         
             for cardPosition in 0 ..< renderedCards.count {
                                 
-                cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .collapsed(cardPosition: cardPosition))
+                cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .collapsed, cardPosition: cardPosition)
             }
             
         case .initialized:
@@ -597,7 +604,7 @@ extension ToolPageCardsView {
         case .starting:
             break
             
-        case .showingCard(let showingCardAtPosition):
+        case .showingCard( _):
             break
             
         case .showingKeyboard:
@@ -637,5 +644,20 @@ extension ToolPageCardsView {
     
     func getNumberOfRenderedCards() -> Int {
         return renderedCards.count
+    }
+    
+    func getCombinedCardHeaderHeightForRenderedCards() -> CGFloat? {
+        
+        guard renderedCards.count >= 0 else {
+            return nil
+        }
+        
+        var combinedCardsHeaderHeight: CGFloat = 0
+        
+        for card in renderedCards {
+            combinedCardsHeaderHeight += card.getCardHeaderHeight()
+        }
+        
+        return combinedCardsHeaderHeight
     }
 }

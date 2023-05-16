@@ -8,8 +8,8 @@
 
 import Foundation
 
+@available(*, deprecated)
 protocol ViewedTrainingTipsCacheType {
     
-    func containsViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType) -> Bool
-    func storeViewedTrainingTip(viewedTrainingTip: ViewedTrainingTipType)
+    func containsViewedTrainingTip(id: String) -> Bool
 }

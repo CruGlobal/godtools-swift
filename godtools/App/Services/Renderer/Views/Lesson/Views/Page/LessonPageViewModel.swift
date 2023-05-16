@@ -13,14 +13,14 @@ class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
     private let analytics: AnalyticsContainer
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
             
         self.pageModel = pageModel
         self.analytics = analytics
         
-        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -36,7 +36,7 @@ extension LessonPageViewModel {
     
     func pageDidAppear() {
         
-        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                 
         let trackScreenModel = TrackScreenModel(
             screenName: analyticsScreenName,

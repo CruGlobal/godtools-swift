@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import YouTubeiOSPlayerHelper
 
 class ShareToolScreenTutorialView: UIViewController {
     //TODO: re-implement this tutorial using TutorialPagerView
@@ -94,14 +93,14 @@ class ShareToolScreenTutorialView: UIViewController {
     
     private func setSkipButton(hidden: Bool) {
         
-        let buttonPosition: ButtonItemPosition = .right
+        let buttonPosition: BarButtonItemBarPosition = .right
         
         if skipButton == nil && !hidden {
             
             skipButton = addBarButtonItem(
                 to: buttonPosition,
                 title: viewModel.skipTitle,
-                style: .done,
+                style: .plain,
                 color: ColorPalette.gtBlue.uiColor,
                 target: self,
                 action: #selector(handleSkip(barButtonItem:))

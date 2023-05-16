@@ -20,7 +20,7 @@ struct AllToolsList: View {
     
     var body: some View {
         
-        Group {
+        VStack(spacing: 0) {
             
             ToolSpotlightView(viewModel: viewModel.spotlightViewModel, width: width, leadingPadding: leadingTrailingPadding)
                 .listRowInsets(EdgeInsets())
@@ -33,12 +33,9 @@ struct AllToolsList: View {
                 .listRowInsets(EdgeInsets())
                 .padding([.leading, .trailing], leadingTrailingPadding)
             
-            
             ToolCardsView(viewModel: viewModel.toolCardsViewModel, cardType: .standard, width: width, leadingPadding: leadingTrailingPadding)
-            
-            Spacer(minLength: 20)
         }
-        
+        .padding(.bottom, 26)
     }
 }
 
@@ -51,7 +48,7 @@ struct AllToolsList_Previews: PreviewProvider {
         
         let viewModel = AllToolsContentViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

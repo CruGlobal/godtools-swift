@@ -14,5 +14,6 @@ protocol LoadingViewModelType {
     var hidesCloseButton: Bool { get }
     
     func closeTapped()
+    func pageViewed()
 }
 

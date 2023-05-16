@@ -59,12 +59,17 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
+        return GetAppUIDebuggingIsEnabledUseCase(
+            appBuild: dataLayer.getAppBuild()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            userAuthentication: dataLayer.getUserAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
@@ -89,6 +94,12 @@ class AppDomainLayerDependencies {
         return GetGlobalActivityThisWeekUseCase(
             globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
             localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
+        return IncrementUserCounterUseCase(
+            userCountersRepository: dataLayer.getUserCountersRepository()
         )
     }
     
@@ -118,15 +129,21 @@ class AppDomainLayerDependencies {
     
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication(),
+            userAuthentication: dataLayer.getUserAuthentication(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            snowplowAnalytics: dataLayer.getAnalytics().snowplowAnalytics
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
     }
     
     func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
         return GetOnboardingQuickLinksEnabledUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
+        )
+    }
+    
+    func getOnboardingQuickStartItemsUseCase() -> GetOnboardingQuickStartItemsUseCase {
+        return GetOnboardingQuickStartItemsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
@@ -140,6 +157,12 @@ class AppDomainLayerDependencies {
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
         return RemoveToolFromFavoritesUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
+    func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
+        return SetCompletedTrainingTipUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository()
         )
     }
     
@@ -267,6 +290,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
+        return GetTrainingTipCompletedUseCase(
+            repository: dataLayer.getCompletedTrainingTipRepository(),
+            service: dataLayer.getViewedTrainingTipsService(),
+            setCompletedTrainingTipUseCase: getSetCompletedTrainingTipUseCase()
+        )
+    }
+    
     func getTutorialUseCase() -> GetTutorialUseCase {
         return GetTutorialUseCase(
             localizationServices: dataLayer.getLocalizationServices(),
@@ -294,7 +325,7 @@ class AppDomainLayerDependencies {
     
     func getUserAccountProfileNameUseCase() -> GetUserAccountProfileNameUseCase {
         return GetUserAccountProfileNameUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
     
@@ -305,9 +336,30 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
+        return GetUserActivityBadgeUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
+        return GetUserActivityStatsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getUserActivityUseCase() -> GetUserActivityUseCase {
+        return GetUserActivityUseCase(
+            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
+            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
+            userCounterRepository: dataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
+        )
+    }
+    
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
-            cruOktaAuthentication: dataLayer.getCruOktaAuthentication()
+            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
 }

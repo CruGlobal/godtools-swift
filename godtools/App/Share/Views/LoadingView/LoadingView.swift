@@ -41,6 +41,12 @@ class LoadingView: UIViewController {
         setupBinding()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.pageViewed()
+    }
+    
     private func setupLayout() {
         messageLabel.text = ""
         loadingView.startAnimating()
@@ -62,7 +68,7 @@ class LoadingView: UIViewController {
     
     private func setCloseButton(hidden: Bool) {
         
-        let position: ButtonItemPosition = .right
+        let position: BarButtonItemBarPosition = .right
         
         if hidden, let closeButton = closeButton {
             

@@ -7,26 +7,31 @@
 //
 
 import Foundation
+import Combine
 
 class ShareToolViewModel: ShareToolViewModelType {
         
     private let resource: ResourceModel
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let analytics: AnalyticsContainer
     private let pageNumber: Int
     
     let shareMessage: String
     
-    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer) {
                 
         self.resource = resource
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.analytics = analytics
         self.pageNumber = pageNumber
         
-        var shareUrlString: String = "https://www.knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
+        var shareUrlString: String = "https://knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             shareUrlString = shareUrlString.appending("/").appending("\(pageNumber)")
@@ -78,5 +83,13 @@ class ShareToolViewModel: ShareToolViewModelType {
         )
                 
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+
+            }
+            .store(in: &cancellables)
     }
 }

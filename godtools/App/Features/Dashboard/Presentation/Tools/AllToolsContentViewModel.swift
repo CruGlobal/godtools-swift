@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class AllToolsContentViewModel: NSObject, ObservableObject {
+class AllToolsContentViewModel: ObservableObject {
     
     // MARK: - Properties
         
@@ -87,8 +87,6 @@ class AllToolsContentViewModel: NSObject, ObservableObject {
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
-        
-        super.init()
     }
 }
 

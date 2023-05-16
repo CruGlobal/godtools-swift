@@ -24,7 +24,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, page: Int?) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -58,8 +58,9 @@ class TractFlow: ToolNavigationFlow, Flow {
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
             liveShareStream: liveShareStream,
-            page: page,
-            trainingTipsEnabled: trainingTipsEnabled
+            initialPage: initialPage,
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = ToolView(viewModel: viewModel)

@@ -13,7 +13,7 @@ class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
     private let analytics: AnalyticsContainer
-    private let analyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
     
     private var cardPosition: Int?
     
@@ -25,7 +25,7 @@ class ToolPageViewModel: MobileContentPageViewModel {
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
                 
-        self.analyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -73,13 +73,14 @@ class ToolPageViewModel: MobileContentPageViewModel {
 extension ToolPageViewModel {
     
     func callToActionWillAppear() -> ToolPageCallToActionView? {
+
+        guard !hidesCallToAction else {
+            return nil
+        }
         
-        if !hidesCallToAction && pageModel.callToAction == nil {
-            
-            for viewFactory in renderedPageContext.pageViewFactories.factories {
-                if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
-                    return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
-                }
+        for viewFactory in renderedPageContext.pageViewFactories.factories {
+            if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
+                return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
             }
         }
         
@@ -88,7 +89,7 @@ extension ToolPageViewModel {
     
     func pageDidAppear() {
         
-        super.viewDidAppear(analyticsEvents: analyticsEventsObjects)
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                 
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,

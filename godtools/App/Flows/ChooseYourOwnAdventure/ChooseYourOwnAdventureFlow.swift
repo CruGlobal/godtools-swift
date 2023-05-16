@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -42,12 +42,13 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
             renderer: renderer,
-            page: nil,
+            initialPage: initialPage,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
             fontService: appDiContainer.getFontService(),
-            trainingTipsEnabled: false
+            trainingTipsEnabled: false,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel)

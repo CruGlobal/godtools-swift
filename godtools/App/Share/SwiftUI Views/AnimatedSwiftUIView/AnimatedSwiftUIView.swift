@@ -12,10 +12,10 @@ import SwiftUI
 
 struct AnimatedSwiftUIView: UIViewRepresentable {
     
-    private let viewModel: AnimatedViewModelType
+    private let viewModel: AnimatedViewModel
     private let contentMode: UIView.ContentMode
     
-    init(viewModel: AnimatedViewModelType, contentMode: UIView.ContentMode) {
+    init(viewModel: AnimatedViewModel, contentMode: UIView.ContentMode) {
         
         self.viewModel = viewModel
         self.contentMode = contentMode
@@ -25,7 +25,7 @@ struct AnimatedSwiftUIView: UIViewRepresentable {
                 
         let view: UIView = UIView(frame: .zero)
         
-        let animationView: AnimationView = AnimationView()
+        let animationView: LottieAnimationView = LottieAnimationView()
         
         animationView.animation = viewModel.animationData
         animationView.loopMode = viewModel.loop ? .loop : .playOnce

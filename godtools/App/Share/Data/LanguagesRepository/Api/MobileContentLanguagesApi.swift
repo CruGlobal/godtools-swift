@@ -54,12 +54,12 @@ class MobileContentLanguagesApi {
             .mapError {
                 return URLResponseError.requestError(error: $0 as Error)
             }
-            .decode(type: LanguagesDataModel.self, decoder: JSONDecoder())
-            .map {
-                return $0.data
-            }
+            .decode(type: JsonApiResponseData<[LanguageModel]>.self, decoder: JSONDecoder())
             .mapError {
                 return URLResponseError.decodeError(error: $0)
+            }
+            .map {
+                return $0.data
             }
             .eraseToAnyPublisher()
     }

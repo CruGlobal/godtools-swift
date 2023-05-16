@@ -1,3 +1,53 @@
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+"signIn.google" = "Sign in with Google";
+"signIn.facebook" = "Login with Facebook";
+"signIn.apple" = "Continue with Apple";
+
+"menu_getStarted" = "Get Started";
+"menu_support" = "Support";
+"menu_about" = "About";
+"menu.sendFeedback" = "Send Feedback";
+"menu.reportABug" = "Report a Bug";
+"menu.askAQuestion" = "Ask a Question";
+"menu.leaveAReview" = "Leave a Review";
+"share_god_tools" = "Share GodTools";
+
+"account.activity.sectionTitle" = "Your activity";
+"account.activity.toolOpens" = "Tool opens";
+"account.activity.lessonCompletions" = "Lesson completions";
+"account.activity.screenShares" = "Screen shares";
+"account.activity.linksShared" = "Links shared";
+"account.activity.languagesUsed" = "Languages used";
+"account.activity.sessions" = "Sessions";
+
+"account.badges.sectionTitle" = "Your badges";
+"badges.tipsCompleted.singular" = "Completed 1 training tip";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Read %d articles";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Read 1 article";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Shared %d images";
+
+"badges.imagesShared.singular" = "Shared 1 image";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Completed %d lessons";
+
+"badges.lessonsCompleted.singular" = "Completed 1 lesson";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Opened %d tools";
+
+"badges.toolsOpened.singular" = "Opened 1 tool";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Completed %d training tips";
+
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Joined %@";
 
@@ -21,8 +71,6 @@
 "menu.deleteAccount" = "Delete Account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
 "alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
-"deleteAccount.navTitle" = "Delete Account";
-"deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org.";
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
@@ -110,7 +158,7 @@
 "onboardingQuickStart.0.button.title" = "Read our articles";
 "onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
 "onboardingQuickStart.1.button.title" = "Try our Lessons";
-"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon which adds it to your favorites.";
+"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon, which adds it to your favorites.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Conversation Starter";
@@ -233,7 +281,6 @@ If you don't receive this message until later, the link may not still work. We c
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share the GodTools App";
 "share_a_story_with_us" = "Share a Story With Us";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
@@ -362,3 +409,9 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+// Delete Account
+"deleteAccount.title" = "Don't go so soon";
+"deleteAccount.subtitle" = "Are you sure you want to delete your GodTools account?";
+"deleteAccount.confirmButton.title" = "Delete my account";
+"deleteAccount.cancelButton.title" = "Keep my account";

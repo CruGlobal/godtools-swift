@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import OktaAuthentication
+import SocialAuthentication
 
 class AppDataLayerDependencies {
     
@@ -28,8 +28,7 @@ class AppDataLayerDependencies {
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
-            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging),
-            snowplowAnalytics: SnowplowAnalytics(config: appConfig, loggingEnabled: appBuild.configuration == .analyticsLogging)
+            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
     
@@ -81,8 +80,10 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getCruOktaAuthentication() -> CruOktaAuthentication {
-        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
+    func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
+        return CompletedTrainingTipRepository(
+            cache: RealmCompletedTrainingTipCache(realmDatabase: sharedRealmDatabase)
+        )
     }
     
     func getDeepLinkingService() -> DeepLinkingService {
@@ -96,6 +97,10 @@ class AppDataLayerDependencies {
             api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getFacebookAuthentication() -> FacebookAuthentication {
+        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
@@ -131,12 +136,18 @@ class AppDataLayerDependencies {
                 baseUrl: getAppConfig().mobileContentApiBaseUrl,
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
-            cache: GlobalAnalyticsUserDefaultsCache()
+            cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
         )
     }
     
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
+    }
+    
+    func getInitialDataDownloader() -> InitialDataDownloader {
+        return InitialDataDownloader(
+            resourcesRepository: getResourcesRepository()
+        )
     }
 
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
@@ -171,6 +182,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
+        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices()
     }
@@ -196,12 +211,6 @@ class AppDataLayerDependencies {
             ignoreCacheSession: sharedIgnoreCacheSession,
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
-        )
-    }
-    
-    func getOnboardingTutorialItemsRepository() -> OnboardingTutorialItemsRepository {
-        return OnboardingTutorialItemsRepository(
-            localizationServices: getLocalizationServices()
         )
     }
     
@@ -276,7 +285,32 @@ class AppDataLayerDependencies {
     }
     
     func getUserAuthentication() -> UserAuthentication {
-        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
+        return UserAuthentication(
+            authenticationProviders: [
+                .facebook: getFacebookAuthentication()
+            ],
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
+        )
+    }
+    
+    func getUserCountersRepository() -> UserCountersRepository {
+        
+        let api = UserCountersAPI(
+            config: getAppConfig(),
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            mobileContentApiAuthSession: getMobileContentApiAuthSession()
+        )
+        
+        let cache = RealmUserCountersCache(
+            realmDatabase: sharedRealmDatabase,
+            userCountersSync: RealmUserCountersCacheSync(realmDatabase: sharedRealmDatabase)
+        )
+        
+        return UserCountersRepository(
+            api: api,
+            cache: cache,
+            remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
+        )
     }
     
     func getUserDetailsRepository() -> UserDetailsRepository {
@@ -291,6 +325,12 @@ class AppDataLayerDependencies {
                 userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
+        )
+    }
+    
+    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
+        return ViewedTrainingTipsService(
+            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
         )
     }
     

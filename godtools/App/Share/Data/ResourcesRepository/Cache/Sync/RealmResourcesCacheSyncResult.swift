@@ -14,6 +14,5 @@ struct RealmResourcesCacheSyncResult {
     let resourcesRemoved: [ResourceModel]
     let translationsRemoved: [TranslationModel]
     let attachmentsRemoved: [AttachmentModel]
-    let latestAttachmentFiles: [AttachmentFile]
     let downloadedTranslationsRemoved: [DownloadedTranslationDataModel]
 }

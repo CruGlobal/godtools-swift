@@ -20,7 +20,7 @@ struct AllToolsContentView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if viewModel.hideFavoritingToolBanner == false {
                 FavoritingToolBannerView(viewModel: viewModel.getFavoritingToolBannerViewModel())
                     .transition(.move(edge: .top))
@@ -63,7 +63,7 @@ struct AllToolsContentView_Previews: PreviewProvider {
         
         let viewModel = AllToolsContentViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.initialDataDownloader,
+            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.localizationServices,
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

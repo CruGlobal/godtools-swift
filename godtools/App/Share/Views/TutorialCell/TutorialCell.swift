@@ -273,13 +273,4 @@ extension TutorialCell: YTPlayerViewDelegate {
            recueVideo()
         }
     }
-    
-    func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {
-    
-    }
-    
-    func playerView(_ playerView: YTPlayerError, receivedError error: YTPlayerError) {
-        print("\n TutorialCell: youTubeVideoPlayer receivedError")
-        print("  error: \(error)")
-    }
 }

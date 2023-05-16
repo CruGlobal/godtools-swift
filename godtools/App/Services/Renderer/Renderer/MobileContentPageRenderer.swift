@@ -21,8 +21,9 @@ class MobileContentPageRenderer {
     let translation: TranslationModel
     let manifestResourcesCache: ManifestResourcesCache
     let pageViewFactories: MobileContentRendererPageViewFactories
+    let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
-    required init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: ManifestResourcesCache) {
+    init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: ManifestResourcesCache) {
         
         self.sharedState = sharedState
         self.resource = resource
@@ -35,13 +36,13 @@ class MobileContentPageRenderer {
         self.navigation = navigation
     }
     
-    func getRenderablePageModels() -> [Page] {
+    func getAllPageModels() -> [Page] {
         return manifest.pages
     }
     
     func getPageModel(page: Int) -> Page? {
         
-        let pageModels: [Page] = getRenderablePageModels()
+        let pageModels: [Page] = getAllPageModels()
         
         guard page >= 0 && page < pageModels.count else {
             return nil
@@ -49,14 +50,14 @@ class MobileContentPageRenderer {
         return pageModels[page]
     }
     
-    func getVisibleRenderablePageModels() -> [Page] {
-        let pageModels: [Page] = getRenderablePageModels()
+    func getVisiblePageModels() -> [Page] {
+        let pageModels: [Page] = getAllPageModels()
         return pageModels.filter({!$0.isHidden})
     }
     
     func getPageForListenerEvents(eventIds: [EventId]) -> Int? {
                 
-        let pageModels: [Page] = getRenderablePageModels()
+        let pageModels: [Page] = getAllPageModels()
         
         for pageIndex in 0 ..< pageModels.count {
             
@@ -92,7 +93,8 @@ class MobileContentPageRenderer {
             navigation: navigation,
             primaryRendererLanguage: primaryLanguage,
             rendererState: sharedState,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            pageViewDataCache: pagesViewDataCache.getPageViewDataCache(page: pageModel)
         )
         
         return renderedPageContext
