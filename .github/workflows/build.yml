@@ -113,9 +113,9 @@ jobs:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
-      - name: Archive Firebase Gym Logs
+      - name: Archive Fastlane Gym Logs
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: firebase-gym-logs
+          name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"
