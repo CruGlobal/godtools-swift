@@ -17,8 +17,13 @@ class ArticleWebView: UIViewController {
     private var shareButton: UIBarButtonItem?
     private var debugButton: UIBarButtonItem?
     private var rightBarButtonItems: [UIBarButtonItem] = Array()
+    private var currentViewState: ArticleWebViewState?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
+    @IBOutlet weak private var errorMessageView: UIView!
+    @IBOutlet weak private var errorTitleLabel: UILabel!
+    @IBOutlet weak private var errorMessageLabel: UILabel!
+    @IBOutlet weak private var reloadArticleButton: UIButton!
         
     required init(viewModel: ArticleWebViewModel) {
         self.webView = WKWebView(frame: UIScreen.main.bounds)
@@ -40,6 +45,8 @@ class ArticleWebView: UIViewController {
             
         setupLayout()
         setupBinding()
+        
+        viewModel.loadWebPage(webView: webView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +81,10 @@ class ArticleWebView: UIViewController {
         removeRightBarButtonItems()
         
         // loadingView
-        loadingView.startAnimating()
+        loadingView.stopAnimating()
+        
+        // errorMessageView
+        setErrorViewHidden(hidden: true)
         
         // webView
         view.addSubview(webView)
@@ -83,6 +93,13 @@ class ArticleWebView: UIViewController {
         webView.alpha = 0
         webView.scrollView.showsVerticalScrollIndicator = true
         webView.scrollView.showsHorizontalScrollIndicator = false
+        
+        // reloadArticleButton
+        reloadArticleButton.addTarget(
+            self,
+            action: #selector(reloadArticleButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func setupBinding() {
@@ -99,21 +116,48 @@ class ArticleWebView: UIViewController {
             self?.reloadRightBarButtonItems()
         }
         
-        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+        viewModel.viewState.addObserver(self) { [weak self] (viewState: ArticleWebViewState) in
             
-            if isLoading {
-                self?.webView.alpha = 0
-                self?.loadingView.startAnimating()
-            }
-            else {
-                self?.loadingView.stopAnimating()
-                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                    self?.webView.alpha = 1
-                }, completion: nil)
+            self?.setViewState(viewState: viewState)
+        }
+    }
+    
+    private func setViewState(viewState: ArticleWebViewState) {
+        
+        if let currentViewState = self.currentViewState {
+            
+            switch currentViewState {
+                
+            case .errorMessage( _,  _):
+                errorTitleLabel.text = ""
+                errorMessageLabel.text = ""
+                setErrorViewHidden(hidden: true)
+                
+            case .loadingArticle:
+                loadingView.stopAnimating()
+                
+            case .viewingArticle:
+                webView.alpha = 0
             }
         }
         
-        viewModel.loadWebPage(webView: webView)
+        currentViewState = viewState
+        
+        switch viewState {
+            
+        case .errorMessage(let title, let message):
+            errorTitleLabel.text = title
+            errorMessageLabel.text = message
+            setErrorViewHidden(hidden: false)
+            
+        case .loadingArticle:
+            loadingView.startAnimating()
+            
+        case .viewingArticle:
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.webView.alpha = 1
+            }, completion: nil)
+        }
     }
     
     private func reloadRightBarButtonItems() {
@@ -129,6 +173,11 @@ class ArticleWebView: UIViewController {
         }
     }
     
+    private func setErrorViewHidden(hidden: Bool) {
+        errorMessageView.isHidden = hidden
+        reloadArticleButton.isHidden = hidden
+    }
+    
     private func removeRightBarButtonItems() {
         for buttonItem in rightBarButtonItems {
             removeBarButtonItem(item: buttonItem)
@@ -141,5 +190,9 @@ class ArticleWebView: UIViewController {
     
     @objc private func shareButtonTapped() {
         viewModel.sharedTapped()
+    }
+    
+    @objc private func reloadArticleButtonTapped() {
+        viewModel.reloadArticleTapped(webView: webView)
     }
 }
