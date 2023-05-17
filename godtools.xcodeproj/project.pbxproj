@@ -84,6 +84,11 @@
 		452040952959E73F004D843E /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */; };
 		4520409F2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */; };
 		452040A02959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */; };
+		4524FC532A1523C400896CCC /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524FC522A1523C400896CCC /* RealmDatabase+Read.swift */; };
+		4524FC552A1524B300896CCC /* RealmDatabase+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524FC542A1524B300896CCC /* RealmDatabase+Update.swift */; };
+		4524FC572A15254C00896CCC /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524FC562A15254C00896CCC /* RealmDatabase+Delete.swift */; };
+		4524FC5A2A15265500896CCC /* RealmDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524FC592A15265500896CCC /* RealmDatabaseTests.swift */; };
+		4524FC5C2A15267B00896CCC /* TestRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4524FC5B2A15267B00896CCC /* TestRealmObject.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
 		4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96B2893440E0011F16B /* TranslationManifestParser.swift */; };
 		4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96D289345480011F16B /* TranslationManifestParserType.swift */; };
@@ -1190,6 +1195,11 @@
 		4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
 		4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSetupParallelLanguageAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageAvailabilityDomainModel.swift; sourceTree = "<group>"; };
+		4524FC522A1523C400896CCC /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
+		4524FC542A1524B300896CCC /* RealmDatabase+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Update.swift"; sourceTree = "<group>"; };
+		4524FC562A15254C00896CCC /* RealmDatabase+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Delete.swift"; sourceTree = "<group>"; };
+		4524FC592A15265500896CCC /* RealmDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabaseTests.swift; sourceTree = "<group>"; };
+		4524FC5B2A15267B00896CCC /* TestRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRealmObject.swift; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
@@ -2835,6 +2845,15 @@
 				4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */,
 			);
 			path = GetSetupParallelLanguageAvailabilityUseCase;
+			sourceTree = "<group>";
+		};
+		4524FC582A15264900896CCC /* RealmDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				4524FC592A15265500896CCC /* RealmDatabaseTests.swift */,
+				4524FC5B2A15267B00896CCC /* TestRealmObject.swift */,
+			);
+			path = RealmDatabase;
 			sourceTree = "<group>";
 		};
 		45267B7325F196FD004DB4C4 /* Renderer */ = {
@@ -5597,7 +5616,10 @@
 			isa = PBXGroup;
 			children = (
 				45B212AA2922965F00C9A94D /* RealmDatabase.swift */,
+				4524FC562A15254C00896CCC /* RealmDatabase+Delete.swift */,
+				4524FC522A1523C400896CCC /* RealmDatabase+Read.swift */,
 				45B212A92922965F00C9A94D /* Realm+SafeWrite.swift */,
+				4524FC542A1524B300896CCC /* RealmDatabase+Update.swift */,
 				4556CEA229F2D57800643BBC /* Configuration */,
 			);
 			path = RealmDatabase;
@@ -6191,6 +6213,7 @@
 			isa = PBXGroup;
 			children = (
 				45D7781429A56FB400F23D99 /* DeepLinkingService */,
+				4524FC582A15264900896CCC /* RealmDatabase */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -8498,6 +8521,7 @@
 				45052142295F3B9D0018ABD0 /* RealmUserCountersSync.swift in Sources */,
 				45558330269F2C7B00C3FF14 /* ToolPageCardsViewModel.swift in Sources */,
 				45AD20C925938F3900A096A0 /* CallbackValueHandler.swift in Sources */,
+				4524FC572A15254C00896CCC /* RealmDatabase+Delete.swift in Sources */,
 				45AD1B1A25938A4E00A096A0 /* InMemoryLearnToShareToolItems.swift in Sources */,
 				45E39ECC27457A14006A59E4 /* AnimatedResource.swift in Sources */,
 				45AE974027C97A9400C2CB33 /* MultiplatformContentHeader.swift in Sources */,
@@ -8801,12 +8825,14 @@
 				45A5200E26C481DB009B68D4 /* ManifestResourcesCache.swift in Sources */,
 				45860A87292424030089C836 /* MobileContentGlobalAnalyticsApi.swift in Sources */,
 				451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */,
+				4524FC532A1523C400896CCC /* RealmDatabase+Read.swift in Sources */,
 				D45922DB2869F83500904B87 /* OpenTutorialBannerViewModel.swift in Sources */,
 				45AD1B1F25938A4E00A096A0 /* LearnToShareToolCell.swift in Sources */,
 				D1E98EDE27974F0000D1B738 /* LessonEvaluationView.swift in Sources */,
 				45F71676290A13530019B715 /* EmailSignUpService.swift in Sources */,
 				45860A86292424030089C836 /* GlobalAnalyticsRepository.swift in Sources */,
 				45558328269F2C7B00C3FF14 /* ToolPageCardViewModel.swift in Sources */,
+				4524FC552A1524B300896CCC /* RealmDatabase+Update.swift in Sources */,
 				45C2595928CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */,
 				45558329269F2C7B00C3FF14 /* ToolPageCardView.swift in Sources */,
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
@@ -9255,6 +9281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4524FC5C2A15267B00896CCC /* TestRealmObject.swift in Sources */,
 				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
 				45D7781629A56FD100F23D99 /* DeepLinkingServiceTests.swift in Sources */,
 				45D7782529A570FC00F23D99 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */,
@@ -9276,6 +9303,7 @@
 				45D7781D29A570E400F23D99 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45D7782429A570FC00F23D99 /* DeepLinkParserType.swift in Sources */,
 				45D7783129A572E500F23D99 /* JsonServices.swift in Sources */,
+				4524FC5A2A15265500896CCC /* RealmDatabaseTests.swift in Sources */,
 				45EB9B8D29F16EAC00CA74A8 /* LocaleTests.swift in Sources */,
 				450EE2A129A66CE400524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45D7781B29A570DD00F23D99 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
