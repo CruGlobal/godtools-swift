@@ -1,4 +1,39 @@
+"deleteAccount.title" = "Neej tik drīz";
+"deleteAccount.subtitle" = "Vai tiešām vēlies dzēst savu 'GodTools' kontu?";
+"deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
+"deleteAccount.cancelButton.title" = "Paturēt manu kontu";
+"signIn.title" = "Pierakstīties";
+"signIn.subtitle" = "Izveido kontu, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
+"signIn.google" = "Pierakstīties ar Google";
+"signIn.facebook" = "Ienākt, izmantojot Facebook";
+"signIn.apple" = "Turpināt, izmantojot Apple";
+"menu_getStarted" = "Sākt";
+"menu_support" = "Atbalsts";
+"menu_about" = "Par lietotni";
+"menu.sendFeedback" = "Nosūtīt atsauksmes";
+"menu.reportABug" = "Ziņot par kļūdu";
+"menu.askAQuestion" = "Uzdod jautājumu";
+"menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
+"
+account.activity.sectionTitle" = "Tava aktivitāte";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Atvērtie rīki";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Pabeigtās nodarbības";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Kopīgotie ekrāni";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Kopīgotās saites";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Izmantotās valodas";
+
+"account.activity.sessions" = "Sesijas";
 "badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: 1";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
@@ -28,7 +63,7 @@
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
 
-"account.globalActivity.title" = "Globālā aktivitāte";
+"account.globalActivity.title" = "Aktivitātes";
 "toolDetails.conversationStarters.title" = "Sarunas uzsākšanai";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
@@ -48,8 +83,6 @@
 "menu.deleteAccount" = "Dzēst kontu";
 "alert.mailAppUnavailable.title" = "E-pasta lietotne nav pieejama";
 "alert.mailAppUnavailable.message" = "Vietējā e-pasta lietotne šajā ierīcē nav konfigurēta vai nav pieejama.";
-"deleteAccount.navTitle" = "Dzēst kontu";
-"deleteAccount.deleteOktaAccountInstructions" = "Ja esi reģistrējis kontu 'GodTools' lietotnē, vari pieprasīt dzēst savu 'Okta' kontu, nosūtot e-pastu uz help@cru.org";
 "tool_menu_item.tools" = "Rīki";
 "lessons.pageTitle" = "Nodarbības, kas pielāgotas tev";
 "lessons.pageSubtitle" = "Praktiskas idejas attiecību veidošanai un nozīmīgu sarunu uzsākšanai.";
@@ -132,7 +165,7 @@
 "onboardingQuickStart.2.button.title" = "Izvēlies kādu no mūsu rīkiem";
 "onboardingTutorial.nextButton.title" = "Tālāk";
 "onboardingQuickStart.title" = "Ātrās sākšanas saites";
-"onboardingQuickStart.0.title" = "Vēlos iepazīt kristietību";
+"onboardingQuickStart.0.title" = "Vēlos uzzināt vairāk par Jēzu";
 "onboardingQuickStart.0.button.title" = "Lasi mūsu rakstus";
 "onboardingQuickStart.1.title" = "Vēlos uzzināt, kā veidot sarunas par Labo vēsti";
 "onboardingQuickStart.1.button.title" = "Izmēģini mūsu nodarbības";
