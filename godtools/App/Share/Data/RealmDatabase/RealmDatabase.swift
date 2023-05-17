@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class RealmDatabase {
     
@@ -43,5 +44,17 @@ class RealmDatabase {
                 async(realm)
             }
         }
+    }
+    
+    func backgroundRealmPublisher() -> AnyPublisher<Realm, Never> {
+        
+        return Future() { promise in
+            
+            self.background { realm in
+                
+                promise(.success(realm))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }
