@@ -87,7 +87,8 @@ class MenuFlow: Flow {
             
         case .closeTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
-                                    
+                                
+            
         case .userCompletedSignInFromCreateAccount(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {

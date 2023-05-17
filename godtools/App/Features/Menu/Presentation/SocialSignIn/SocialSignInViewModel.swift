@@ -58,10 +58,8 @@ class SocialSignInViewModel: ObservableObject {
     }
     
     private func authenticateUser(provider: AuthenticationProviderType) {
-                
-        let authenticateFromViewController: UIViewController = presentAuthViewController.getTopMostPresentedViewController() ?? presentAuthViewController
-        
-        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: authenticateFromViewController))
+                        
+        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController))
             .receiveOnMain()
             .sink { [weak self] subscriberCompletion in
                 
