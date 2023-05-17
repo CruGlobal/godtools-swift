@@ -120,8 +120,13 @@ enum FlowStep {
     // social sign-in
     case closeTappedFromLogin
     case closeTappedFromCreateAccount
-    case userCompletedSignInFromLogin(error: Error?)
-    case userCompletedSignInFromCreateAccount(error: Error?)
+    case loginWithFacebookTapped
+    case loginWithGoogleTapped
+    case loginWithAppleTapped
+    case createAccountWithFacebookTapped
+    case createAccountWithGoogleTapped
+    case createAccountWithAppleTapped
+    case userCompletedAuthentication(error: Error?)
         
     // delete account
     case closeTappedFromDeleteAccount

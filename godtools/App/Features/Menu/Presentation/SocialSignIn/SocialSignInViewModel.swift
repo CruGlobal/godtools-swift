@@ -12,9 +12,7 @@ import Combine
 
 class SocialSignInViewModel: ObservableObject {
     
-    private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
-    private let authenticateUserUseCase: AuthenticateUserUseCase
     private let localizationServices: LocalizationServices
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -45,45 +43,14 @@ class SocialSignInViewModel: ObservableObject {
         )
     }()
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, authenticationType: SocialSignInAuthenticationType, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
-        self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
-        self.authenticateUserUseCase = authenticateUserUseCase
         self.localizationServices = localizationServices
         
         titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
         subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
-    }
-    
-    private func authenticateUser(provider: AuthenticationProviderType) {
-                
-        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController))
-            .receiveOnMain()
-            .sink { [weak self] subscriberCompletion in
-                switch subscriberCompletion {
-                case .finished:
-                    self?.handleAuthenticationCompleted(error: nil)
-                case .failure(let error):
-                    self?.handleAuthenticationCompleted(error: error)
-                }
-            } receiveValue: { _ in
-
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func handleAuthenticationCompleted(error: Error?) {
-        
-        switch authenticationType {
-        
-        case .createAccount:
-            flowDelegate?.navigate(step: .userCompletedSignInFromCreateAccount(error: error))
-        
-        case .login:
-            flowDelegate?.navigate(step: .userCompletedSignInFromLogin(error: error))
-        }
     }
 }
 
@@ -103,14 +70,35 @@ extension SocialSignInViewModel {
     }
     
     func signInWithGoogleTapped() {
-        authenticateUser(provider: .google)
+        
+        switch authenticationType {
+        case .createAccount:
+            flowDelegate?.navigate(step: .createAccountWithGoogleTapped)
+            
+        case .login:
+            flowDelegate?.navigate(step: .loginWithGoogleTapped)
+        }
     }
     
     func signInWithFacebookTapped() {
-        authenticateUser(provider: .facebook)
+        
+        switch authenticationType {
+        case .createAccount:
+            flowDelegate?.navigate(step: .createAccountWithFacebookTapped)
+            
+        case .login:
+            flowDelegate?.navigate(step: .loginWithFacebookTapped)
+        }
     }
     
     func signInWithAppleTapped() {
-        authenticateUser(provider: .apple)
+        
+        switch authenticationType {
+        case .createAccount:
+            flowDelegate?.navigate(step: .createAccountWithAppleTapped)
+            
+        case .login:
+            flowDelegate?.navigate(step: .loginWithAppleTapped)
+        }
     }
 }
