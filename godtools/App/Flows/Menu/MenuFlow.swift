@@ -9,13 +9,11 @@
 import UIKit
 import MessageUI
 import SwiftUI
-import Combine
 
 class MenuFlow: Flow {
     
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
-    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -89,26 +87,15 @@ class MenuFlow: Flow {
             
         case .closeTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
+                                    
+        case .userCompletedSignInFromCreateAccount(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
             
-        case .loginWithFacebookTapped:
-            authenticateUser(provider: .facebook, createUser: false)
-            
-        case .loginWithGoogleTapped:
-            authenticateUser(provider: .google, createUser: false)
-            
-        case .loginWithAppleTapped:
-            authenticateUser(provider: .apple, createUser: false)
-            
-        case .createAccountWithFacebookTapped:
-            authenticateUser(provider: .facebook, createUser: true)
-            
-        case .createAccountWithGoogleTapped:
-            authenticateUser(provider: .google, createUser: true)
-            
-        case .createAccountWithAppleTapped:
-            authenticateUser(provider: .apple, createUser: true)
-                        
-        case .userCompletedAuthentication(let error):
+        case .userCompletedSignInFromLogin(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
                     self.presentError(error: error)
@@ -269,7 +256,9 @@ class MenuFlow: Flow {
         
         let viewModel = SocialSignInViewModel(
             flowDelegate: self,
+            presentAuthViewController: navigationController,
             authenticationType: authenticationType,
+            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )
         
@@ -298,35 +287,6 @@ class MenuFlow: Flow {
         modal.view.backgroundColor = viewBackgroundUIColor
                 
         return modal
-    }
-    
-    private func authenticateUser(provider: AuthenticationProviderType, createUser: Bool) {
-        
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-        
-        let presentAuthFromViewController: UIViewController = navigationController.getTopMostPresentedViewController() ?? navigationController
-        
-        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthFromViewController))
-            .receiveOnMain()
-            .sink { [weak self] subscriberCompletion in
-                
-                let authenticationError: Error?
-                
-                switch subscriberCompletion {
-                    
-                case .finished:
-                    authenticationError = nil
-                    
-                case .failure(let error):
-                    authenticationError = error
-                }
-                
-                self?.navigate(step: .userCompletedAuthentication(error: authenticationError))
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
     }
     
     private func getAccountView() -> UIViewController {
