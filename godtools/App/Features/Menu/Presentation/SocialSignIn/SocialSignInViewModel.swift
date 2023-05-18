@@ -58,16 +58,22 @@ class SocialSignInViewModel: ObservableObject {
     }
     
     private func authenticateUser(provider: AuthenticationProviderType) {
-                
+                        
         authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController))
             .receiveOnMain()
             .sink { [weak self] subscriberCompletion in
+                
+                let authenticationError: Error?
+                
                 switch subscriberCompletion {
                 case .finished:
-                    self?.handleAuthenticationCompleted(error: nil)
+                    authenticationError = nil
                 case .failure(let error):
-                    self?.handleAuthenticationCompleted(error: error)
+                    authenticationError = error
                 }
+                
+                self?.handleAuthenticationCompleted(error: authenticationError)
+                
             } receiveValue: { _ in
 
             }
