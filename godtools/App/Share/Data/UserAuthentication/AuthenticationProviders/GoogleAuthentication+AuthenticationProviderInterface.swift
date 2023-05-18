@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SocialAuthentication
 import Combine
+import GoogleSignIn
 
 extension GoogleAuthentication: AuthenticationProviderInterface {
     
@@ -60,5 +61,33 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
         
         return Just(()).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+    }
+    
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
+        
+        let authUser: AuthUserDomainModel?
+        
+        if let profile = getCurrentUserProfile() {
+        
+            authUser = mapProfileToAuthUser(profile: profile)
+        }
+        else {
+            
+            authUser = nil
+        }
+        
+        return Just(authUser).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    private func mapProfileToAuthUser(profile: GIDProfileData) -> AuthUserDomainModel {
+        
+        return AuthUserDomainModel(
+            email: profile.email,
+            firstName: profile.givenName,
+            grMasterPersonId: nil,
+            lastName: profile.familyName,
+            ssoGuid: nil
+        )
     }
 }

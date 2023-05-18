@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SocialAuthentication
 import Combine
+import FBSDKLoginKit
 
 extension FacebookAuthentication: AuthenticationProviderInterface {
     
@@ -59,5 +60,36 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
         
         return Just(()).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+    }
+    
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
+                
+        if let profile = getCurrentUserProfile() {
+                    
+            return Just(mapProfileToAuthUser(profile: profile)).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        return loadUserProfilePublisher()
+            .map { (profile: Profile?) in
+                
+                if let profile = profile {
+                    return self.mapProfileToAuthUser(profile: profile)
+                }
+                
+                return nil
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func mapProfileToAuthUser(profile: Profile) -> AuthUserDomainModel {
+        
+        return  AuthUserDomainModel(
+            email: profile.email ?? "",
+            firstName: profile.firstName,
+            grMasterPersonId: nil,
+            lastName: profile.lastName,
+            ssoGuid: nil
+        )
     }
 }
