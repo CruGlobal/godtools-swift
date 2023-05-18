@@ -64,7 +64,7 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec fastlane cru_shared_lane_run_tests
+        run: bundle exec fastlane cru_shared_lane_run_tests code_coverage:true output_directory:'./fastlane/run_tests_output_directory'
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -112,6 +112,13 @@ jobs:
         with:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
+
+      - name: Archive Fastlane Run Tests Output Directory
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: fastlane-run-tests-reports
+          path: "./fastlane/run_tests_output_directory/**"
 
       - name: Archive Fastlane Gym Logs
         if: always()
