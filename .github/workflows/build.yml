@@ -71,7 +71,6 @@ jobs:
         with:
           directory: /Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/
           fail_ci_if_error: true
-          files: ./*.xcresult
           root_dir: /Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
