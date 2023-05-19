@@ -66,10 +66,10 @@ jobs:
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
 
-      - name: Convert XCode Code Coverage Report .xcresult for Code Coverage Uploader
+      - name: Convert Xcode Code Coverage Report .xcresult for CodeCov Uploader via Slather
         run: bundle exec fastlane cru_shared_lane_slather_convert_xcresult cobertura_xml:true github:true output_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/ source_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/ verbose:true workspace:godtools.workspace proj:godtools.xcodeproj scheme:godtools
 
-      - name: Upload Xcode Code Coverate Report to Codecov
+      - name: Upload Slather Converted Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
         with:
           directory: /Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/
