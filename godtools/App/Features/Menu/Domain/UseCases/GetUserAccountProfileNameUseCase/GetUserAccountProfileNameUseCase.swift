@@ -18,29 +18,25 @@ class GetUserAccountProfileNameUseCase {
         self.userAuthentication = userAuthentication
     }
     
-    private func getEmptyAuthUser() -> AuthUserDomainModel {
-        return AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
-    }
-    
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
         return userAuthentication.getAuthUserPublisher()
-            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel, Never> in
+            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel?, Never> in
                 
-                return Just(self.getEmptyAuthUser())
+                return Just(nil)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: AuthUserDomainModel) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
                                 
                 let profileName: String
                 
-                if let firstName = authUser.firstName, let lastName = authUser.lastName {
+                if let firstName = authUser?.firstName, let lastName = authUser?.lastName {
                     profileName = firstName + " " + lastName
                 }
-                else if let firstName = authUser.firstName {
+                else if let firstName = authUser?.firstName {
                     profileName = firstName
                 }
-                else if let lastName = authUser.lastName {
+                else if let lastName = authUser?.lastName {
                     profileName = lastName
                 }
                 else {
