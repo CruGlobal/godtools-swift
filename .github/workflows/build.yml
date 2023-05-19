@@ -64,7 +64,16 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec fastlane cru_shared_lane_run_tests
+        run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: '/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          xcode: true
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
