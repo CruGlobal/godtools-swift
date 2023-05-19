@@ -133,6 +133,7 @@
 		453C1BDC2899A89A007332E2 /* AddToolToFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C1BDB2899A89A007332E2 /* AddToolToFavoritesUseCase.swift */; };
 		453C1BDE2899A8A5007332E2 /* RemoveToolFromFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C1BDD2899A8A5007332E2 /* RemoveToolFromFavoritesUseCase.swift */; };
 		453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */; };
+		453EA8DB2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */; };
 		453EF5CF2942168D00D17E24 /* MobileContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453EF5CE2942168D00D17E24 /* MobileContentViewModel.swift */; };
 		453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */; };
 		453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */; };
@@ -1242,6 +1243,7 @@
 		453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSelectorView.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		453EF5CE2942168D00D17E24 /* MobileContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewModel.swift; sourceTree = "<group>"; };
 		453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionView.swift; sourceTree = "<group>"; };
 		453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionViewModel.swift; sourceTree = "<group>"; };
@@ -3907,6 +3909,7 @@
 				455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */,
 				455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */,
 				455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
+				453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
 			);
 			path = AuthenticationProviders;
 			sourceTree = "<group>";
@@ -8378,6 +8381,7 @@
 				453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
 				45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */,
+				453EA8DB2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */,
 				D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */,
 				D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */,
@@ -10478,8 +10482,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.2.0;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
