@@ -27,15 +27,17 @@ class AuthenticateUserUseCase {
         // TODO: Uncomment and implement in GT-2012. ~Levi
         
         return authenticateByAuthTypePublisher(provider: provider, policy: policy)
-            .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel, Error> in
+            .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
                                 
                 return self.userAuthentication.getAuthUserPublisher()
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: AuthUserDomainModel) -> AnyPublisher<Bool, Error> in
+            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<Bool, Error> in
                 
-                self.postEmailSignUp(authUser: authUser)
-                self.setAnalyticsUserProperties(authUser: authUser)
+                if let authUser = authUser {
+                    self.postEmailSignUp(authUser: authUser)
+                    self.setAnalyticsUserProperties(authUser: authUser)
+                }
                 
                 return Just(true).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
