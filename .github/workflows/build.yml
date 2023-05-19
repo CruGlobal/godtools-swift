@@ -66,7 +66,7 @@ jobs:
       - name: Run Tests
         run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
 
-      - name: Upload coverage to Codecov
+      - name: Upload Xcode Code Coverate Report to Codecov
         uses: codecov/codecov-action@v3
         with:
           directory: '/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test'
@@ -114,6 +114,13 @@ jobs:
       - name: Push Commits To Remote
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: git push
+
+      - name: Archive Code Coverage Reports Directory
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-reports-search-directory
+          path: "/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/**"
 
       - name: Archive XCode Logs
         if: always()
