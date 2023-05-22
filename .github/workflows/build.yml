@@ -64,7 +64,7 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
+        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
@@ -73,7 +73,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
           xcode: true
-          xcodeArchivePath: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
+          xcode_archive_path: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result.xcresult
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
