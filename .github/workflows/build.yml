@@ -115,13 +115,6 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: git push
 
-      - name: Archive Code Coverage Reports Directory
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-reports-search-directory
-          path: "/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/**"
-
       - name: Archive XCode Logs
         if: always()
         uses: actions/upload-artifact@v3
