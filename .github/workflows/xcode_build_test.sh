@@ -1,0 +1,1 @@
+xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle

@@ -64,7 +64,7 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
+         run: bash xcode_build_test.sh
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
