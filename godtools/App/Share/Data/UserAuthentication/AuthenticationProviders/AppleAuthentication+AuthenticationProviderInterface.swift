@@ -24,15 +24,18 @@ extension AppleAuthentication: AuthenticationProviderInterface {
         return authenticatePublisher()
             .map { (response: AppleAuthenticationResponse) in
                 
-                guard let idToken = response.identityToken else {
+                guard
+                    let idToken = response.identityToken,
+                    let givenName = response.fullName?.givenName,
+                    let familyName = response.fullName?.familyName
+                else {
                     return nil
                 }
-                
-                // TODO: - include name once AppleAuth is updated
+                                
                 return AuthenticationProviderAccessToken.apple(
                     idToken: idToken,
-                    givenName: "first name",
-                    familyName: "last name"
+                    givenName: givenName,
+                    familyName: familyName
                 )
             }
             .eraseToAnyPublisher()
