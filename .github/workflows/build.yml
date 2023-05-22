@@ -67,7 +67,7 @@ jobs:
       #   run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
 
       - name: Run Tests
-         run: xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
+         run: xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath '/Users/runner/Library/Developer/Xcode/godtools/ResultBundle'
 
       # - name: Convert Xcode Code Coverage Report .xcresult for CodeCov Uploader via Slather
       #   run: bundle exec fastlane cru_shared_lane_slather_convert_xcresult cobertura_xml:true github:true output_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/ source_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/ verbose:true workspace:godtools.workspace proj:godtools.xcodeproj scheme:godtools
