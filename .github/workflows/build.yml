@@ -63,9 +63,6 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      - name: Run Tests
-         run: echo "run tests"
-
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
         with:
