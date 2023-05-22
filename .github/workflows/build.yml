@@ -63,21 +63,23 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      - name: Run Tests
-        run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
+      # - name: Run Tests
+      #   run: bundle exec fastlane cru_shared_lane_run_tests derived_data_path:'/Users/runner/Library/Developer/Xcode/DerivedData/godtools'
 
-      - name: Convert Xcode Code Coverage Report .xcresult for CodeCov Uploader via Slather
-        run: bundle exec fastlane cru_shared_lane_slather_convert_xcresult cobertura_xml:true github:true output_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/ source_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/ verbose:true workspace:godtools.workspace proj:godtools.xcodeproj scheme:godtools
+      - name: Run Tests
+         run: xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
+
+      # - name: Convert Xcode Code Coverage Report .xcresult for CodeCov Uploader via Slather
+      #   run: bundle exec fastlane cru_shared_lane_slather_convert_xcresult cobertura_xml:true github:true output_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/ source_directory:/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/ verbose:true workspace:godtools.workspace proj:godtools.xcodeproj scheme:godtools
 
       - name: Upload Slather Converted Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
         with:
-          directory: /Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/
           fail_ci_if_error: true
-          root_dir: /Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/Slather/
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
           xcode: true
+          xcodeArchivePath: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -124,7 +126,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-reports-search-directory
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/godtools/Logs/Test/**"
+          path: "/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/**"
 
       - name: Archive XCode Logs
         if: always()
