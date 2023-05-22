@@ -71,9 +71,7 @@ jobs:
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
         with:
-          directory: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/
           fail_ci_if_error: true
-          root_dir: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
           xcode: true
