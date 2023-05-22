@@ -64,9 +64,9 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-         run: xcodebuild build test -workspace "godtools.xcworkspace" -scheme "godtools" -destination "platform=iOS Simulator,name=iPhone 14" -resultBundlePath "/Users/runner/Library/Developer/Xcode/godtools/ResultBundle"
+         run: xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle
 
-      - name: Upload Slather Converted Xcode Code Coverage Report to CodeCov
+      - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
