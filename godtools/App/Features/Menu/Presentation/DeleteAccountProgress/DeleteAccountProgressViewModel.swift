@@ -13,6 +13,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
     
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let localizationServices: LocalizationServices
+    private let statusMessage: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -27,17 +28,36 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.deleteAccountUseCase = deleteAccountUseCase
         self.localizationServices = localizationServices
      
-        deleteAccountUseCase.deleteAccountPublisher()
+        statusMessage
+            .receiveOnMain()
+            .sink { [weak self] (message: String) in
+                self?.deleteStatus = message
+            }
+            .store(in: &cancellables)
+        
+        deleteAccountUseCase.deleteAccountPublisher(statusMessage: statusMessage)
             .receiveOnMain()
             .sink { [weak self] subscribersCompletion in
+                
+                let deleteAccountError: Error?
                 
                 switch subscribersCompletion {
                     
                 case .finished:
-                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+                    deleteAccountError = nil
                     
                 case .failure(let error):
-                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: error))
+                    deleteAccountError = error
+                }
+                
+                DispatchQueue.main.async {
+                    
+                    if let deleteAccountError = deleteAccountError {
+                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+                    }
+                    else {
+                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+                    }
                 }
                 
             } receiveValue: { _ in
