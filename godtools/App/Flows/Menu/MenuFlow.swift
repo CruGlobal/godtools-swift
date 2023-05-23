@@ -193,11 +193,22 @@ class MenuFlow: Flow {
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .deleteAccountTappedFromDeleteAccount:
-            print("deleting account...")
-            assertionFailure("TODO: Implement delete account use case in GT-2010...")
-        
+            navigationController.dismissPresented(animated: true) {
+                self.navigationController.present(self.getDeleteAccountProgressView(), animated: true)
+            }
+                    
         case .cancelTappedFromDeleteAccount:
             navigationController.dismissPresented(animated: true, completion: nil)
+
+        case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
+            navigationController.dismissPresented(animated: true) {
+                self.presentAlert(title: "Account Deleted", message: "Your account has been deleted.")
+            }
+            
+        case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
+            navigationController.dismissPresented(animated: true) {
+                self.presentError(error: error)
+            }
                         
         default:
             break
@@ -338,6 +349,36 @@ class MenuFlow: Flow {
             target: viewModel,
             action: #selector(viewModel.closeTapped)
         )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: .darkContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
+    }
+    
+    private func getDeleteAccountProgressView() -> UIViewController {
+        
+        let viewBackgroundColor: Color = Color.white
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = DeleteAccountProgressViewModel(
+            flowDelegate: self,
+            deleteAccountUseCase: appDiContainer.domainLayer.getDeleteAccountUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = DeleteAccountProgressView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        
+        let hostingView: UIHostingController<DeleteAccountProgressView> = UIHostingController(rootView: view)
+        
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,

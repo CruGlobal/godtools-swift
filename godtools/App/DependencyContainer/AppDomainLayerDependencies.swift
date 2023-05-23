@@ -77,6 +77,10 @@ class AppDomainLayerDependencies {
         return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
     }
     
+    func getDeleteAccountUseCase() -> DeleteAccountUseCase {
+        return DeleteAccountUseCase()
+    }
+    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
             getLanguageUseCase: getLanguageUseCase()
