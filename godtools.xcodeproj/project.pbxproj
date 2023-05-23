@@ -84,6 +84,10 @@
 		452040952959E73F004D843E /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */; };
 		4520409F2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */; };
 		452040A02959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */; };
+		45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */; };
+		45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */; };
+		45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */; };
+		45227BB22A1D0AD00021C131 /* Flow+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
 		4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96B2893440E0011F16B /* TranslationManifestParser.swift */; };
 		4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96D289345480011F16B /* TranslationManifestParserType.swift */; };
@@ -1191,6 +1195,10 @@
 		4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
 		4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSetupParallelLanguageAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageAvailabilityDomainModel.swift; sourceTree = "<group>"; };
+		45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
+		45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressView.swift; sourceTree = "<group>"; };
+		45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressViewModel.swift; sourceTree = "<group>"; };
+		45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentAlert.swift"; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
@@ -2838,6 +2846,24 @@
 			);
 			path = GetSetupParallelLanguageAvailabilityUseCase;
 			sourceTree = "<group>";
+		};
+		45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */,
+			);
+			path = DeleteAccountUseCase;
+			sourceTree = "<group>";
+		};
+		45227BAC2A1D02C00021C131 /* DeleteAccountProgress */ = {
+			isa = PBXGroup;
+			children = (
+				45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */,
+				45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */,
+			);
+			name = DeleteAccountProgress;
+			path = godtools/App/Features/Menu/Presentation/DeleteAccountProgress;
+			sourceTree = SOURCE_ROOT;
 		};
 		45267B7325F196FD004DB4C4 /* Renderer */ = {
 			isa = PBXGroup;
@@ -5076,6 +5102,7 @@
 				459602DF28400DBB00C66387 /* DownloadToolTranslations */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
+				45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */,
 				455F046F2A00019A00536CB9 /* Flow+PresentError.swift */,
 				45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
@@ -6642,6 +6669,8 @@
 			isa = PBXGroup;
 			children = (
 				45F7161A290A12D70019B715 /* AuthenticateUserUseCase */,
+				45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */,
+				45227BAC2A1D02C00021C131 /* DeleteAccountProgress */,
 				458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
@@ -8515,6 +8544,7 @@
 				454F994829C09E46001A0B33 /* OnboardingQuickStartItemDomainModel.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
+				45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */,
 				456777B5287DB3770044AEB2 /* ShareToolView.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
@@ -8584,6 +8614,7 @@
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
+				45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */,
 				D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */,
 				45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */,
 				450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
@@ -8639,6 +8670,7 @@
 				456777BD287DB3770044AEB2 /* LoadToolRemoteSessionViewModel.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
 				45D1202829FABD5E00523FBA /* AuthUserDomainModel.swift in Sources */,
+				45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */,
 				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */,
@@ -9071,6 +9103,7 @@
 				D455F3FB297F2BD7009D5F93 /* AccountActivityBadgeView.swift in Sources */,
 				45D63E88288F75B0009B4610 /* AttachmentModelType.swift in Sources */,
 				45F7164F290A12D70019B715 /* AccountViewModel.swift in Sources */,
+				45227BB22A1D0AD00021C131 /* Flow+PresentAlert.swift in Sources */,
 				45558336269F2C7B00C3FF14 /* ToolPageCallToActionViewModel.swift in Sources */,
 				456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */,
 				458CFE9429D4E0B9007B423C /* ArticlesErrorMessageViewModel.swift in Sources */,

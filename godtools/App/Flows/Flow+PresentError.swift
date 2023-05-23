@@ -17,16 +17,6 @@ extension Flow {
         let title: String = localizationServices.stringForMainBundle(key: "error")
         let message: String = error.localizedDescription
         
-        let viewModel = AlertMessageViewModel(
-            title: title,
-            message: message,
-            cancelTitle: nil,
-            acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
-            acceptHandler: nil
-        )
-        
-        let view = AlertMessageView(viewModel: viewModel)
-        
-        navigationController.present(view.controller, animated: true, completion: nil)
+        presentAlert(title: title, message: message)
     }
 }
