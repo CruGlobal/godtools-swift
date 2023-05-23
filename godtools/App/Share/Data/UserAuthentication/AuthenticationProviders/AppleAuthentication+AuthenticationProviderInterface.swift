@@ -43,10 +43,11 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
         
-        // TODO: - access token renewal will come through MobileContentAPI?
+        // TODO: - implement in GT-2042
         
-        return Just(AuthenticationProviderAccessToken.apple(idToken: "", givenName: "", familyName: ""))
-            .setFailureType(to: Error.self)
+        let error: Error = NSError.errorWithDescription(description: "Access token renewal not yet implemented")
+
+        return Fail(error: error)
             .eraseToAnyPublisher()
     }
     
