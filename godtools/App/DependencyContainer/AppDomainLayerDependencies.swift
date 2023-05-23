@@ -80,7 +80,8 @@ class AppDomainLayerDependencies {
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
-            userDetailsRepository: dataLayer.getUserDetailsRepository()
+            userDetailsRepository: dataLayer.getUserDetailsRepository(),
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
     }
     
