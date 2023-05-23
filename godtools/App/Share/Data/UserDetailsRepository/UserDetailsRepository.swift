@@ -45,8 +45,4 @@ class UserDetailsRepository {
             }
             .eraseToAnyPublisher()
     }
-    
-    func deleteUser() -> AnyPublisher<Void, Error> {
-        
-    }
 }
