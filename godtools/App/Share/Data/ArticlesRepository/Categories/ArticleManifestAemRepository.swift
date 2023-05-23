@@ -45,13 +45,9 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
         
         let downloadQueue = downloadAndCache(aemUris: aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             
-            guard let repository = self else {
-                return
-            }
-            
             let aemDataObjects: [ArticleAemData] = result.downloaderResult.aemDataObjects
             
-            repository.categoryArticlesCache.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
+            self?.categoryArticlesCache.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
                 
                 completion(result)
                 

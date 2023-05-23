@@ -26,7 +26,7 @@ extension ArticleAemRepositoryType {
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
-        return cache.getAemCacheObject(aemUri: aemUri)
+        return cache.getAemCacheObjectOnCurrentThread(aemUri: aemUri)
     }
     
     func downloadAndCache(aemUris: [String], forceDownload: Bool = false, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
@@ -51,15 +51,14 @@ extension ArticleAemRepositoryType {
             
             let aemDataObjects: [ArticleAemData] = downloaderResult.aemDataObjects
             
-            DispatchQueue.main.async {
+            repository.cache.storeAemDataObjects(aemDataObjects: aemDataObjects, didStartWebArchiveClosure: { (webArchiveOperationQueue: OperationQueue) in
                 
-                _ = repository.cache.storeAemDataObjects(aemDataObjects: aemDataObjects) { (cacheResult: ArticleAemCacheResult) in
-                    
-                    let result = ArticleAemRepositoryResult(downloaderResult: downloaderResult, cacheResult: cacheResult)
-                    
-                    completion(result)
-                }
-            }
+            }, completion: { (cacheResult: ArticleAemCacheResult) in
+                
+                let result = ArticleAemRepositoryResult(downloaderResult: downloaderResult, cacheResult: cacheResult)
+                
+                completion(result)
+            })
         }
     }
     
@@ -73,7 +72,7 @@ extension ArticleAemRepositoryType {
             
             let shouldUpdateAemUri: Bool
             
-            if let aemCacheObject = cache.getAemCacheObject(aemUri: aemUri) {
+            if let aemCacheObject = cache.getAemCacheObjectOnCurrentThread(aemUri: aemUri) {
                 
                 let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
                 let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)

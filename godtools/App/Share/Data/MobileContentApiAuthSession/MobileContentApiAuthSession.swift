@@ -76,15 +76,15 @@ class MobileContentApiAuthSession {
         }
     }
     
-    private func fetchRemoteAuthToken() -> AnyPublisher<String, URLResponseError> {
-        
+    private func fetchRemoteAuthToken(createUser: Bool = false) -> AnyPublisher<String, URLResponseError> {
+                
         return userAuthentication.renewAccessTokenPublisher()
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
-            .flatMap { oktaAccessToken in
+            .flatMap { (providerAccessToken: AuthenticationProviderAccessToken) in
                 
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: oktaAccessToken)
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerAccessToken: providerAccessToken, createUser: createUser)
                    .eraseToAnyPublisher()
             }
             .flatMap { authTokenDataModel in

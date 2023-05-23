@@ -12,6 +12,8 @@ class ArticleAemDataParser {
     
     private let articleJcrContentParser: ArticleAemJcrContentParser = ArticleAemJcrContentParser()
     private let errorDomain: String = String(describing: ArticleAemDataParser.self)
+    private let forwardSlash: String = "/"
+    private let htmlExtension: String = "html"
         
     init() {
         
@@ -21,8 +23,35 @@ class ArticleAemDataParser {
         return ["godtools", "godtools-variation", aemUrl.lastPathComponent, "master"]
     }
     
+    private func convertAemUrlToHtmlUrlWithVaration(aemUrl: URL, variation: String) -> String {
+        
+        let aemUrlPathExtension: String = aemUrl.pathExtension
+        var aemUrlString: String = aemUrl.absoluteString
+        
+        if !aemUrlPathExtension.isEmpty {
+            aemUrlString = aemUrlString.replacingOccurrences(of: "." + aemUrlPathExtension, with: "")
+        }
+        
+        var htmlUrlString: String
+        
+        if !variation.isEmpty {
+            
+            htmlUrlString = aemUrl.absoluteString + forwardSlash + variation.replacingOccurrences(of: forwardSlash, with: "")
+        }
+        else {
+            
+            htmlUrlString = aemUrl.absoluteString
+        }
+        
+        htmlUrlString += "." + htmlExtension
+        
+        htmlUrlString = htmlUrlString.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")
+                
+        return htmlUrlString
+    }
+    
     func parse(aemUrl: URL, aemJson: [String: Any]) -> Result<ArticleAemData, ArticleAemDataParserError> {
-              
+                     
         let variation: String
         let variationJson: [String: Any]
         
@@ -47,15 +76,13 @@ class ArticleAemDataParser {
             variation = ""
             variationJson = aemJson
         }
+                                
+        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(aemUri: aemUrl.absoluteString, jsonDictionary: variationJson)
         
-        let aemUri: String = aemUrl.absoluteString
-                
-        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(aemUri: aemUri, jsonDictionary: variationJson)
-        
-        let aemWebUrl: String = aemUrl.absoluteString + "/" + variation + ".html"
+        let aemWebUrl: String = convertAemUrlToHtmlUrlWithVaration(aemUrl: aemUrl, variation: variation)
         
         let aemData = ArticleAemData(
-            aemUri: aemUri,
+            aemUri: aemUrl.absoluteString,
             articleJcrContent: articleJcrContent,
             webUrl: aemWebUrl,
             updatedAt: Date()

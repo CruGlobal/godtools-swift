@@ -20,7 +20,7 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -38,21 +38,7 @@ class MenuFlow: Flow {
             isTranslucent: false
         )
         
-        let viewModel = MenuViewModel(
-            flowDelegate: self,
-            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
-            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
-        )
-        let view = MenuView(viewModel: viewModel)
+        let view: UIViewController = getMenuView()
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -92,16 +78,30 @@ class MenuFlow: Flow {
             let view = getSocialSignInView(authenticationType: .login)
             navigationController.present(view, animated: true)
             
-        case .backTappedFromLogin:
+        case .closeTappedFromLogin:
             navigationController.dismiss(animated: true)
             
         case .createAccountTappedFromMenu:
             let view = getSocialSignInView(authenticationType: .createAccount)
             navigationController.present(view, animated: true)
             
-        case .backTappedFromCreateAccount:
+        case .closeTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
-                        
+                                
+        case .userCompletedSignInFromCreateAccount(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
+        case .userCompletedSignInFromLogin(let error):
+            navigationController.dismissPresented(animated: true) {
+                if let error = error {
+                    self.presentError(error: error)
+                }
+            }
+            
         case .activityTappedFromMenu:
             navigationController.pushViewController(getAccountView(), animated: true)
             
@@ -140,8 +140,13 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .leaveAReviewTappedFromMenu:
-            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id542773210?action=write-review") else {
-                fatalError("Expected a valid URL")
+            
+            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().appleAppId
+            
+            guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
+                let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
+                presentError(error: error)
+                return
             }
             
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
@@ -199,6 +204,51 @@ class MenuFlow: Flow {
         }
     }
     
+    private func getMenuView() -> UIViewController {
+        
+        let viewModel = LegacyMenuViewModel(
+            flowDelegate: self,
+            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
+            localizationServices: appDiContainer.localizationServices,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
+        )
+        
+        let view = LegacyMenuView(viewModel: viewModel)
+        
+        return view
+        
+        
+        /*
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        
+        let viewModel = MenuViewModel(
+            flowDelegate: self,
+            localizationServices: localizationServices
+        )
+        
+        let view = MenuView(viewModel: viewModel)
+        
+        let hostingView: UIHostingController<MenuView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            title: localizationServices.stringForMainBundle(key: "done"),
+            style: .done,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.doneTapped)
+        )
+        
+        return hostingView*/
+    }
+    
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
         let viewBackgroundColor: Color = ColorPalette.gtBlue.color
@@ -206,7 +256,9 @@ class MenuFlow: Flow {
         
         let viewModel = SocialSignInViewModel(
             flowDelegate: self,
+            presentAuthViewController: navigationController,
             authenticationType: authenticationType,
+            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )
         

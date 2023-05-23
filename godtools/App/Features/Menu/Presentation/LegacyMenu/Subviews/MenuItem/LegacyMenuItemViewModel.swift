@@ -1,5 +1,5 @@
 //
-//  MenuItemViewModel.swift
+//  LegacyMenuItemViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/31/20.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MenuItemViewModel: MenuItemViewModelType {
+class LegacyMenuItemViewModel {
     
     let title: String
     let selectionDisabled: Bool
     
-    required init(title: String, selectionDisabled: Bool) {
+    init(title: String, selectionDisabled: Bool) {
         
         self.title = title
         self.selectionDisabled = selectionDisabled

@@ -140,6 +140,15 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getGoogleAuthentication() -> GoogleAuthentication {
+        
+        return GoogleAuthentication(
+            configuration: GoogleAuthenticationConfiguration(
+                clientId: "71275134527-st5s63prkvuh46t7ohb1gmhq39qokh78.apps.googleusercontent.com"
+            )
+        )
+    }
+    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -180,6 +189,10 @@ class AppDataLayerDependencies {
         return LaunchCountRepository(
             cache: LaunchCountCache()
         )
+    }
+    
+    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
+        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -286,7 +299,11 @@ class AppDataLayerDependencies {
     
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
-            facebookAuthentication: getFacebookAuthentication()
+            authenticationProviders: [
+                .facebook: getFacebookAuthentication(),
+                .google: getGoogleAuthentication()
+            ],
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
         )
     }
     

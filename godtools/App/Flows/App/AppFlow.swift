@@ -434,17 +434,18 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+        if let lastAuthProvider = appDiContainer.dataLayer.getUserAuthentication().getLastAuthenticatedProviderType() {
+            
+            let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
+            
+            authenticateUserUseCase.authenticatePublisher(provider: lastAuthProvider, policy: .renewAccessToken)
+                .sink { finished in
 
-        // TODO: We will need to be able to support authentication methods facebook, google, apple. To complete in GT-2012. ~Levi
-        
-        authenticateUserUseCase.authenticatePublisher(policy: .renewAccessToken)
-            .sink { finished in
+                } receiveValue: { success in
 
-            } receiveValue: { success in
-
-            }
-            .store(in: &cancellables)
+                }
+                .store(in: &cancellables)
+        }
     }
     
     private func countAppSessionLaunch() {

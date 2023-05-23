@@ -11,10 +11,9 @@ import SocialAuthentication
 
 class AppConfig {
     
-    private static let appleAppId: String = "542773210"
-    
     private let appBuild: AppBuild
     
+    let appleAppId: String = "542773210"
     let facebookConfig: FacebookConfiguration
     
     init(appBuild: AppBuild) {
@@ -35,7 +34,7 @@ class AppConfig {
     var appsFlyerConfiguration: AppsFlyerConfiguration {
             
             return AppsFlyerConfiguration(
-                appleAppId: AppConfig.appleAppId,
+                appleAppId: appleAppId,
                 appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
                 shouldUseUninstallSandbox: appBuild.isDebug
             )
