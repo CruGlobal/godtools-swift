@@ -11,7 +11,7 @@ import Combine
 
 extension MobileContentApi {
     
-    func deleteUsersMe(authToken: MobileContentApiAuthToken) -> AnyPublisher<EmptyCodable, Error> {
+    func deleteUsersMe(authToken: MobileContentApiAuthToken) -> AnyPublisher<Data, Error> {
         
         let request = MobileContentApiRequest(
             path: "users/me",
