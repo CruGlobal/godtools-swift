@@ -64,11 +64,14 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel, Error> {
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
         
-        let authUser = AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
+        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
+            return Just(nil).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
         
-        return Just(authUser).setFailureType(to: Error.self)
+        return lastAuthProvider.getAuthUserPublisher()
             .eraseToAnyPublisher()
     }
     
@@ -76,6 +79,7 @@ class UserAuthentication {
     
         return getAuthenticationProvider(provider: provider)
             .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> in
+                
                 return provider.authenticatePublisher(presentingViewController: fromViewController)
             })
             .map { (providerAccessToken: AuthenticationProviderAccessToken?) in
