@@ -24,18 +24,36 @@ struct DeleteAccountProgressView: View {
         
         GeometryReader { geometry in
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
+                
+                Spacer()
                 
                 Text(viewModel.title)
-                    .foregroundColor(Color.black)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextRegular.font(size: 18))
+                    .multilineTextAlignment(.center)
                 
                 Text(viewModel.deleteStatus)
-                    .foregroundColor(Color.black)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextRegular.font(size: 16))
+                    .multilineTextAlignment(.center)
+                    .padding(EdgeInsets(top: 7, leading: 0, bottom: 0, trailing: 0))
                 
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .foregroundColor(Color.black)
+                HStack(alignment: .center, spacing: 0) {
+                    
+                    Spacer()
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .foregroundColor(Color.black)
+                        .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Spacer()
+                }
+                
+                Spacer()
             }
+            .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
         }
     }
 }
