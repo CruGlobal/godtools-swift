@@ -93,22 +93,18 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
+    func signOutPublisher() -> AnyPublisher<Void, Error> {
              
-        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
-            return Just(()).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
-        return lastAuthProvider.signOutPublisher()
+        signOutOfAllProviders()
             .map { response in
                 self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
                 return response
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func signOutOfAllProviders() -> AnyPublisher<Void, Error> {
         
-        // TODO: Should we sign out of all providers? ~Levi
-        /*
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         let signOutPublishers = allProviders.map {
             $0.signOutPublisher()
@@ -116,6 +112,9 @@ class UserAuthentication {
         
         return Publishers.MergeMany(signOutPublishers)
             .collect()
-            .eraseToAnyPublisher()*/
+            .map { _ in
+                return ()
+            }
+            .eraseToAnyPublisher()
     }
 }
