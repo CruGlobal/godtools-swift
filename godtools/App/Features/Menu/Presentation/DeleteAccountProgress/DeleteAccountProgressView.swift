@@ -32,13 +32,7 @@ struct DeleteAccountProgressView: View {
                     .foregroundColor(Color.black)
                     .font(FontLibrary.sfProTextRegular.font(size: 18))
                     .multilineTextAlignment(.center)
-                
-                Text(viewModel.deleteStatus)
-                    .foregroundColor(Color.black)
-                    .font(FontLibrary.sfProTextRegular.font(size: 16))
-                    .multilineTextAlignment(.center)
-                    .padding(EdgeInsets(top: 7, leading: 0, bottom: 0, trailing: 0))
-                
+                                
                 HStack(alignment: .center, spacing: 0) {
                     
                     Spacer()
@@ -46,10 +40,10 @@ struct DeleteAccountProgressView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .foregroundColor(Color.black)
-                        .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
                     
                     Spacer()
                 }
+                .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
                 
                 Spacer()
             }

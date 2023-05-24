@@ -13,14 +13,12 @@ class DeleteAccountProgressViewModel: ObservableObject {
     
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let localizationServices: LocalizationServices
-    private let statusMessage: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published var title: String
-    @Published var deleteStatus: String = ""
     
     init(flowDelegate: FlowDelegate, deleteAccountUseCase: DeleteAccountUseCase, localizationServices: LocalizationServices) {
         
@@ -29,15 +27,8 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.localizationServices = localizationServices
         
         title = localizationServices.stringForMainBundle(key: "deleteAccountProgress.title")
-     
-        statusMessage
-            .receiveOnMain()
-            .sink { [weak self] (message: String) in
-                self?.deleteStatus = message
-            }
-            .store(in: &cancellables)
-        
-        deleteAccountUseCase.deleteAccountPublisher(statusMessage: statusMessage)
+             
+        deleteAccountUseCase.deleteAccountPublisher()
             .receiveOnMain()
             .sink { [weak self] subscribersCompletion in
                 

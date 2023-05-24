@@ -22,15 +22,11 @@ class DeleteAccountUseCase {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func deleteAccountPublisher(statusMessage: CurrentValueSubject<String, Never>) -> AnyPublisher<Void, URLResponseError> {
-        
-        statusMessage.send("Deleting api user related data...")
-        
+    func deleteAccountPublisher() -> AnyPublisher<Void, URLResponseError> {
+                
         return userDetailsRepository.deleteAuthorizedUserDetails()
             .flatMap({ (void: Void) -> AnyPublisher<Void, URLResponseError> in
-                
-                statusMessage.send("Signing out and revoking tokens...")
-                
+                                
                 return self.userAuthentication.signOutPublisher()
                     .mapError { (error: Error) in
                         return .otherError(error: error)
