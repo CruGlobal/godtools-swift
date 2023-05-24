@@ -2,85 +2,95 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>badges.articlesOpened</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@articlesCount@</string>
-		<key>articlesCount</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Read 1 article</string>
-			<key>other</key>
-			<string>Read %d articles</string>
-		</dict>
-	</dict>
-	<key>badges.imagesShared</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@imageCount@</string>
-		<key>imageCount</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Shared 1 image</string>
-			<key>other</key>
-			<string>Shared %d images</string>
-		</dict>
-	</dict>
-	<key>badges.lessonsCompleted</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@lessonsCount@</string>
-		<key>lessonsCount</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Completed 1 lesson</string>
-			<key>other</key>
-			<string>Completed %d lessons</string>
-		</dict>
-	</dict>
-	<key>badges.toolsOpened</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@toolsCount@</string>
-		<key>toolsCount</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Opened 1 tool</string>
-			<key>other</key>
-			<string>Opened %d tools</string>
-		</dict>
-	</dict>
-	<key>badges.tipsCompleted</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tipsCount@</string>
-		<key>tipsCount</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Completed 1 training tip</string>
-			<key>other</key>
-			<string>Completed %d training tips</string>
-		</dict>
-	</dict>
+<key>badges.imagesShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@imageCount@</string>
+<key>imageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Kopīgoto attēlu skaits: 0</string>
+<key>one</key>
+<string>Kopīgoto attēlu skaits: 1</string>
+<key>other</key>
+<string>Kopīgoto attēlu skaits: %d</string>
+</dict>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Atvērto rakstu skaits: 0</string>
+<key>one</key>
+<string>Atvērto rakstu skaits: 1</string>
+<key>other</key>
+<string>Atvērto rakstu skaits: %d</string>
+</dict>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Pabeigta(s) nodarbība(s): 0</string>
+<key>one</key>
+<string>Pabeigta(s) nodarbība(s): 1</string>
+<key>other</key>
+<string>Pabeigta(s) nodarbība(s): %d</string>
+</dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Atvērto rīku skaits: 0</string>
+<key>one</key>
+<string>Atvērto rīku skaits: 1</string>
+<key>other</key>
+<string>Atvērto rīku skaits: %d</string>
+</dict>
+</dict>
+<key>badges.tipsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@tipsCount@</string>
+<key>tipsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Izmantoti apmācības padomi: 0</string>
+<key>one</key>
+<string>Izmantoti apmācības padomi: 1</string>
+<key>other</key>
+<string>Izmantoti apmācības padomi: %d</string>
+</dict>
+</dict>
 </dict>
 </plist>
