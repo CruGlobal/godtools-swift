@@ -38,7 +38,7 @@ class MobileContentApi {
         self.baseUrl = baseUrl
     }
     
-    func sendRequest<T: Codable>(request: MobileContentApiRequest, session: URLSession = MobileContentApi.ignoreCacheSession) -> AnyPublisher<T, Error> {
+    func sendRequest(request: MobileContentApiRequest, session: URLSession = MobileContentApi.ignoreCacheSession) -> AnyPublisher<Data, Error> {
         
         let urlRequest: URLRequest = RequestBuilder().build(
             session: session,
@@ -61,6 +61,12 @@ class MobileContentApi {
                 
                 return tuple.data
             }
+            .eraseToAnyPublisher()
+    }
+    
+    func sendRequest<T: Codable>(request: MobileContentApiRequest, session: URLSession = MobileContentApi.ignoreCacheSession) -> AnyPublisher<T, Error> {
+        
+        return sendRequest(request: request, session: session)
             .decode(type: T.self, decoder: JSONDecoder())
             .mapError { error in
                 print("  WARNING: Failed to decode Codable \(String(describing: T.self)) for path \(request.path)")
