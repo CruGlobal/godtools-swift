@@ -2,6 +2,9 @@
 "deleteAccount.subtitle" = "Are you sure you want to delete your GodTools account?";
 "deleteAccount.confirmButton.title" = "Delete my account";
 "deleteAccount.cancelButton.title" = "Keep my account";
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
 "signIn.title" = "Sign in";
 "signIn.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
 "signIn.google" = "Sign in with Google";
@@ -15,8 +18,7 @@
 "menu.askAQuestion" = "Ask a Question";
 "menu.leaveAReview" = "Leave a Review";
 "account.badges.sectionTitle" = "Your badges";
-"
-account.activity.sectionTitle" = "Your activity";
+"account.activity.sectionTitle" = "Your activity";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Tool opens";

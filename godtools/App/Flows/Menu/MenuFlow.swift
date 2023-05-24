@@ -368,22 +368,21 @@ class MenuFlow: Flow {
     
     private func getConfirmDeleteAccountView() -> UIViewController {
         
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        
         let viewController = UIAlertController(
-            title: "Are you sure?",
-            message: "This will delete user account related data.  You will still be able to use GodTools.",
+            title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.title"),
+            message: "",
             preferredStyle: .actionSheet
         )
         
-        viewController.addAction(UIAlertAction(title: "Delete Account", style: .destructive, handler: { (action: UIAlertAction) in
-            
-            print("Delete Account")
-            
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.confirmButton.title"), style: .destructive, handler: { (action: UIAlertAction) in
+                        
             self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
         }))
         
-        viewController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             
-            print("Cancel")
         }))
         
         return viewController

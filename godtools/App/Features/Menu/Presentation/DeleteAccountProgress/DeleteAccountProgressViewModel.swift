@@ -19,7 +19,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var title: String = "Deleting account..."
+    @Published var title: String
     @Published var deleteStatus: String = ""
     
     init(flowDelegate: FlowDelegate, deleteAccountUseCase: DeleteAccountUseCase, localizationServices: LocalizationServices) {
@@ -27,6 +27,8 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.flowDelegate = flowDelegate
         self.deleteAccountUseCase = deleteAccountUseCase
         self.localizationServices = localizationServices
+        
+        title = localizationServices.stringForMainBundle(key: "deleteAccountProgress.title")
      
         statusMessage
             .receiveOnMain()
