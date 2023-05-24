@@ -194,8 +194,11 @@ class MenuFlow: Flow {
             
         case .deleteAccountTappedFromDeleteAccount:
             navigationController.dismissPresented(animated: true) {
-                self.navigationController.present(self.getDeleteAccountProgressView(), animated: true)
+                self.navigationController.present(self.getConfirmDeleteAccountView(), animated: true)
             }
+                        
+        case .deleteAccountTappedFromConfirmDeleteAccount:
+            navigationController.present(self.getDeleteAccountProgressView(), animated: true)
                     
         case .cancelTappedFromDeleteAccount:
             navigationController.dismissPresented(animated: true, completion: nil)
@@ -361,6 +364,29 @@ class MenuFlow: Flow {
         modal.view.backgroundColor = viewBackgroundUIColor
                 
         return modal
+    }
+    
+    private func getConfirmDeleteAccountView() -> UIViewController {
+        
+        let viewController = UIAlertController(
+            title: "Are you sure?",
+            message: "This will delete user account related data.  You will still be able to use GodTools.",
+            preferredStyle: .actionSheet
+        )
+        
+        viewController.addAction(UIAlertAction(title: "Delete Account", style: .destructive, handler: { (action: UIAlertAction) in
+            
+            print("Delete Account")
+            
+            self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
+        }))
+        
+        viewController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+            
+            print("Cancel")
+        }))
+        
+        return viewController
     }
     
     private func getDeleteAccountProgressView() -> UIViewController {
