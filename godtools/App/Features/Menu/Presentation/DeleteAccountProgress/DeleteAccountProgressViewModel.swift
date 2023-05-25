@@ -27,7 +27,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.localizationServices = localizationServices
         
         title = localizationServices.stringForMainBundle(key: "deleteAccountProgress.title")
-             
+                     
         deleteAccountUseCase.deleteAccountPublisher()
             .receiveOnMain()
             .sink { [weak self] subscribersCompletion in
@@ -43,16 +43,21 @@ class DeleteAccountProgressViewModel: ObservableObject {
                     deleteAccountError = error
                 }
                 
-                if let deleteAccountError = deleteAccountError {
-                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
-                }
-                else {
-                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
-                }
+                self?.didFinishAccountDeletion(error: deleteAccountError)
                 
             } receiveValue: { _ in
              
             }
             .store(in: &cancellables)
+    }
+    
+    private func didFinishAccountDeletion(error: Error?) {
+                
+        if let deleteAccountError = error {
+            flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+        }
+        else {
+            flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+        }
     }
 }
