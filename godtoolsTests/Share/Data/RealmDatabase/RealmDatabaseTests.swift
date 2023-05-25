@@ -136,6 +136,40 @@ class RealmDatabaseTests: XCTestCase {
         }
     }
     
+    func testUpdateExistingObject() {
+        
+        let testObjectIds: [String] = ["a", "a", "a", "a"]
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        var index: Int = 0
+        var lastObjectName: String = "-"
+        
+        for id in testObjectIds {
+            
+            let objectName: String = "name \(index)"
+            
+            if index == testObjectIds.count - 1 {
+                lastObjectName = objectName
+            }
+            
+            _ = realmDatabase.updateObjects(realm: realm) { (realm: Realm) in
+                
+                let object: TestRealmObject = TestRealmObject()
+                object.id = id
+                object.name = objectName
+                
+                return [object]
+            }
+            
+            index += 1
+        }
+        
+        let object: TestRealmObject? = realmDatabase.readObject(primaryKey: "a")
+
+        XCTAssertEqual(lastObjectName, object?.name)
+    }
+    
     func testReadUpdateDeleteObjects() {
         
         let testObjectIds: [String] = ["a", "b", "c", "d", "e", "f"]
