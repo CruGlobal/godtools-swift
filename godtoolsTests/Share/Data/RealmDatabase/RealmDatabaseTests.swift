@@ -31,6 +31,17 @@ class RealmDatabaseTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    private func getRandomTestObjectIds(count: Int) -> [String] {
+        
+        var ids: [String] = Array()
+        
+        for _ in 0 ..< count {
+            ids.append(UUID().uuidString)
+        }
+        
+        return ids
+    }
 
     private func addTestObjectsWithIds(ids: [String]) -> Error? {
         
@@ -50,14 +61,14 @@ class RealmDatabaseTests: XCTestCase {
             realmObjects.append(testRealmObject)
         }
         
-        return realmDatabase.updateObjects(realm: realm, shouldAddObjectsToRealm: true, writeClosure: { (realm: Realm) in
+        return realmDatabase.updateObjects(realm: realm, writeClosure: { (realm: Realm) in
             return realmObjects
         })
     }
     
     func testReadObjectsExist() {
         
-        let testObjectIds: [String] = ["x-1", "x-2", "x-3"]
+        let testObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
         _ = addTestObjectsWithIds(ids: testObjectIds)
         
@@ -68,7 +79,7 @@ class RealmDatabaseTests: XCTestCase {
             XCTAssertNotNil(object)
         }
         
-        let nonExistingObjectIds: [String] = ["x-4", "x-5", "x-6"]
+        let nonExistingObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
         for primaryKey in nonExistingObjectIds {
             
@@ -80,7 +91,7 @@ class RealmDatabaseTests: XCTestCase {
     
     func testReadObjectsWithRealmInstanceExist() {
         
-        let testObjectIds: [String] = ["x-1", "x-2", "x-3"]
+        let testObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
         _ = addTestObjectsWithIds(ids: testObjectIds)
         
@@ -93,7 +104,7 @@ class RealmDatabaseTests: XCTestCase {
             XCTAssertNotNil(object)
         }
         
-        let nonExistingObjectIds: [String] = ["x-4", "x-5", "x-6"]
+        let nonExistingObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
         for primaryKey in nonExistingObjectIds {
             
@@ -107,7 +118,7 @@ class RealmDatabaseTests: XCTestCase {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        let testObjectIds: [String] = ["a", "b", "c", "d", "e", "f"]
+        let testObjectIds: [String] = getRandomTestObjectIds(count: 6)
         
         _ = addTestObjectsWithIds(ids: testObjectIds)
         
@@ -138,7 +149,8 @@ class RealmDatabaseTests: XCTestCase {
     
     func testUpdateExistingObject() {
         
-        let testObjectIds: [String] = ["a", "a", "a", "a"]
+        let duplicateObjectId: String = "duplicate-object-id"
+        let testObjectIds: [String] = [duplicateObjectId, duplicateObjectId, duplicateObjectId, duplicateObjectId]
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -165,30 +177,28 @@ class RealmDatabaseTests: XCTestCase {
             index += 1
         }
         
-        let object: TestRealmObject? = realmDatabase.readObject(primaryKey: "a")
+        let object: TestRealmObject? = realmDatabase.readObject(primaryKey: duplicateObjectId)
 
         XCTAssertEqual(lastObjectName, object?.name)
     }
     
     func testReadUpdateDeleteObjects() {
         
-        let testObjectIds: [String] = ["a", "b", "c", "d", "e", "f"]
+        let testObjectIds: [String] = getRandomTestObjectIds(count: 6)
                                 
         let expectation = expectation(description: "")
              
         var finishedError: Error?
         
-        realmDatabase.updateObjectsPublisher(shouldAddObjectsToRealm: true, writeClosure: { (realm: Realm) in
+        realmDatabase.updateObjectsPublisher(writeClosure: { (realm: Realm) in
             
             // Add test objects
             
             var realmObjectsToAdd: [Object] = Array()
             
             for testObjectId in testObjectIds {
-                
-                let existingRealmObject: TestRealmObject? = self.realmDatabase.readObject(realm: realm, primaryKey: testObjectId)
-                
-                let testRealmObject: TestRealmObject = existingRealmObject ?? TestRealmObject()
+                                
+                let testRealmObject: TestRealmObject = TestRealmObject()
                 
                 testRealmObject.id = testObjectId
                 testRealmObject.name = "name - " + testObjectId
