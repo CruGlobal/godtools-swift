@@ -43,18 +43,15 @@ class DeleteAccountProgressViewModel: ObservableObject {
                     deleteAccountError = error
                 }
                 
-                DispatchQueue.main.async {
-                    
-                    if let deleteAccountError = deleteAccountError {
-                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
-                    }
-                    else {
-                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
-                    }
+                if let deleteAccountError = deleteAccountError {
+                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+                }
+                else {
+                    self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
                 }
                 
             } receiveValue: { _ in
-                
+             
             }
             .store(in: &cancellables)
     }
