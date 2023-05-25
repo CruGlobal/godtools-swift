@@ -23,14 +23,12 @@ class RealmGlobalAnalytics: Object {
         return "id"
     }
     
-    func mapFrom(decodable: MobileContentGlobalAnalyticsDecodable, shouldMapId: Bool) {
+    func mapFrom(decodable: MobileContentGlobalAnalyticsDecodable) {
         
         countries = decodable.countries
         createdAt = Date()
         gospelPresentations = decodable.gospelPresentations
-        if shouldMapId {
-            id = decodable.id
-        }
+        id = decodable.id
         launches = decodable.launches
         type = decodable.type
         users = decodable.users

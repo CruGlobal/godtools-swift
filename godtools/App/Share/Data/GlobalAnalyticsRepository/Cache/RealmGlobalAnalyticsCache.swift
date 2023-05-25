@@ -39,7 +39,9 @@ class RealmGlobalAnalyticsCache {
         
         return realmDatabase.updateObjectsPublisher(shouldAddObjectsToRealm: true) { (realm: Realm) in
             
-            let realmGlobalAnalytics: RealmGlobalAnalytics = self.createAndMapRealmGlobalAnalyticsObject(globalAnalytics: globalAnalytics)
+            let realmGlobalAnalytics: RealmGlobalAnalytics = RealmGlobalAnalytics()
+            
+            realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
             
             return [realmGlobalAnalytics]
         }
@@ -47,27 +49,5 @@ class RealmGlobalAnalyticsCache {
             return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: globalAnalytics)
         }
         .eraseToAnyPublisher()
-    }
-    
-    private func createAndMapRealmGlobalAnalyticsObject(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> RealmGlobalAnalytics {
-        
-        let realmGlobalAnalytics: RealmGlobalAnalytics
-        let existingGlobalAnalytics: RealmGlobalAnalytics? = realmDatabase.readObject(primaryKey: globalAnalytics.id)
-        let shouldMapId: Bool
-        
-        if let existingGlobalAnalytics = existingGlobalAnalytics {
-            
-            realmGlobalAnalytics = existingGlobalAnalytics
-            shouldMapId = false
-        }
-        else {
-            
-            realmGlobalAnalytics = RealmGlobalAnalytics()
-            shouldMapId = true
-        }
-                    
-        realmGlobalAnalytics.mapFrom(decodable: globalAnalytics, shouldMapId: shouldMapId)
-        
-        return realmGlobalAnalytics
     }
 }
