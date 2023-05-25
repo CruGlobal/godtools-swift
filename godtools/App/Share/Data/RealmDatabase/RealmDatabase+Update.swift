@@ -12,7 +12,7 @@ import Combine
 
 extension RealmDatabase {
     
-    func updateObjects(realm: Realm, shouldAddObjectsToRealm: Bool, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> Error? {
+    func updateObjects(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> Error? {
         
         do {
             
@@ -33,7 +33,7 @@ extension RealmDatabase {
         }
     }
     
-    func updateObjectsInBackground(shouldAddObjectsToRealm: Bool, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object]), completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    func updateObjectsInBackground(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object]), completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
         
         self.background { realm in
             
@@ -53,7 +53,7 @@ extension RealmDatabase {
         }
     }
     
-    func updateObjectsPublisher(shouldAddObjectsToRealm: Bool, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> AnyPublisher<Void, Error> {
+    func updateObjectsPublisher(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> AnyPublisher<Void, Error> {
         
         return Future() { promise in
             
