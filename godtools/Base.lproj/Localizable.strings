@@ -1,5 +1,10 @@
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
 "deleteAccount.title" = "Don't go so soon";
-"deleteAccount.subtitle" = "Are you sure you want to delete your GodTools account?";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
 "deleteAccount.confirmButton.title" = "Delete my account";
 "deleteAccount.cancelButton.title" = "Keep my account";
 "signIn.title" = "Sign in";
