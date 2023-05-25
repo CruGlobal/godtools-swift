@@ -48,4 +48,8 @@ class AppBuild {
             configuration =  .release
         }
     }
+    
+    var isTestsTarget: Bool {
+        return NSClassFromString("XCTest") != nil
+    }
 }
