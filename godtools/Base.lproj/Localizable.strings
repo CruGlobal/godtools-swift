@@ -5,6 +5,8 @@
 "deleteAccountProgress.title" = "Deleting account...";
 "confirmDeleteAccount.title" = "Are you sure?";
 "confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
 "signIn.title" = "Sign in";
 "signIn.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
 "signIn.google" = "Sign in with Google";

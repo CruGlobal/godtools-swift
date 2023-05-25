@@ -204,8 +204,15 @@ class MenuFlow: Flow {
             navigationController.dismissPresented(animated: true, completion: nil)
 
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
+            
+            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            
             navigationController.dismissPresented(animated: true) {
-                self.presentAlert(title: "Account Deleted", message: "Your account has been deleted.")
+                
+                let title: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.title")
+                let message: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.message")
+                
+                self.presentAlert(title: title, message: message)
             }
             
         case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
