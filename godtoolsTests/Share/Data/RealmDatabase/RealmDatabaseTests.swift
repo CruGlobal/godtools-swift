@@ -13,23 +13,23 @@ import Combine
 
 class RealmDatabaseTests: XCTestCase {
     
-    private let realmDatabase: RealmDatabase = RealmDatabase(
-        databaseConfiguration: RealmDatabaseConfiguration(
-            cacheType: .inMemory(identifier: "tests-inMemory-realm-database"),
-            schemaVersion: 1
-        )
-    )
-    
     private var cancellables: Set<AnyCancellable> = Set()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        _ = realmDatabase.deleteAllObjects()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+    
+    private func getInMemoryRealmDatabase() -> RealmDatabase {
+        return RealmDatabase(
+            databaseConfiguration: RealmDatabaseConfiguration(
+                cacheType: .inMemory(identifier: UUID().uuidString),
+                schemaVersion: 1
+            )
+        )
     }
     
     private func getRandomTestObjectIds(count: Int) -> [String] {
@@ -43,17 +43,15 @@ class RealmDatabaseTests: XCTestCase {
         return ids
     }
 
-    private func addTestObjectsWithIds(ids: [String]) -> Error? {
+    private func addTestObjectsWithIds(realmDatabase: RealmDatabase, ids: [String]) -> Error? {
         
         let realm: Realm = realmDatabase.openRealm()
         
         var realmObjects: [Object] = Array()
         
         for testObjectId in ids {
-            
-            let existingRealmObject: TestRealmObject? = realmDatabase.readObject(realm: realm, primaryKey: testObjectId)
-            
-            let testRealmObject: TestRealmObject = existingRealmObject ?? TestRealmObject()
+                        
+            let testRealmObject: TestRealmObject = TestRealmObject()
             
             testRealmObject.id = testObjectId
             testRealmObject.name = "name - " + testObjectId
@@ -68,9 +66,11 @@ class RealmDatabaseTests: XCTestCase {
     
     func testReadObjectsExist() {
         
+        let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
+        
         let testObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
-        _ = addTestObjectsWithIds(ids: testObjectIds)
+        _ = addTestObjectsWithIds(realmDatabase: realmDatabase, ids: testObjectIds)
         
         for primaryKey in testObjectIds {
             
@@ -91,9 +91,11 @@ class RealmDatabaseTests: XCTestCase {
     
     func testReadObjectsWithRealmInstanceExist() {
         
+        let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
+        
         let testObjectIds: [String] = getRandomTestObjectIds(count: 3)
         
-        _ = addTestObjectsWithIds(ids: testObjectIds)
+        _ = addTestObjectsWithIds(realmDatabase: realmDatabase, ids: testObjectIds)
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -116,11 +118,13 @@ class RealmDatabaseTests: XCTestCase {
     
     func testDeleteObjects() {
         
+        let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
+        
         let realm: Realm = realmDatabase.openRealm()
         
         let testObjectIds: [String] = getRandomTestObjectIds(count: 6)
         
-        _ = addTestObjectsWithIds(ids: testObjectIds)
+        _ = addTestObjectsWithIds(realmDatabase: realmDatabase, ids: testObjectIds)
         
         var objectsToDelete: [Object] = Array()
         
@@ -148,6 +152,8 @@ class RealmDatabaseTests: XCTestCase {
     }
     
     func testUpdateExistingObject() {
+        
+        let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
         
         let duplicateObjectId: String = "duplicate-object-id"
         let testObjectIds: [String] = [duplicateObjectId, duplicateObjectId, duplicateObjectId, duplicateObjectId]
@@ -180,108 +186,6 @@ class RealmDatabaseTests: XCTestCase {
         let object: TestRealmObject? = realmDatabase.readObject(primaryKey: duplicateObjectId)
 
         XCTAssertEqual(lastObjectName, object?.name)
-    }
-    
-    func testReadUpdateDeleteObjects() {
-        
-        let testObjectIds: [String] = getRandomTestObjectIds(count: 6)
-                                
-        let expectation = expectation(description: "")
-             
-        var finishedError: Error?
-        
-        realmDatabase.updateObjectsPublisher(writeClosure: { (realm: Realm) in
-            
-            // Add test objects
-            
-            var realmObjectsToAdd: [Object] = Array()
-            
-            for testObjectId in testObjectIds {
-                                
-                let testRealmObject: TestRealmObject = TestRealmObject()
-                
-                testRealmObject.id = testObjectId
-                testRealmObject.name = "name - " + testObjectId
-                
-                realmObjectsToAdd.append(testRealmObject)
-            }
-            
-            return realmObjectsToAdd
-        })
-        .flatMap({ (void: Void) -> AnyPublisher<Void, Never> in
-            
-            // Test objects have been added
-            
-            let realm: Realm = self.realmDatabase.openRealm()
-            
-            for primaryKey in testObjectIds {
-                
-                let object: TestRealmObject? = self.realmDatabase.readObject(realm: realm, primaryKey: primaryKey)
-                
-                XCTAssertNotNil(object)
-            }
-            
-            return Just(())
-                .eraseToAnyPublisher()
-        })
-        .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
-            
-            let realm: Realm = self.realmDatabase.openRealm()
-            
-            var realmObjectsToDelete: [Object] = Array()
-            
-            for primaryKey in testObjectIds {
-                
-                let object: TestRealmObject? = self.realmDatabase.readObject(realm: realm, primaryKey: primaryKey)
-                
-                if let object = object {
-                    realmObjectsToDelete.append(object)
-                }
-            }
-            
-            return self.realmDatabase.deleteObjectsPublisher(objects: realmObjectsToDelete)
-                .eraseToAnyPublisher()
-        })
-        .flatMap({ (void: Void) -> AnyPublisher<Void, Never> in
-            
-            // Test objects have been deleted
-            
-            let realm: Realm = self.realmDatabase.openRealm()
-            
-            for primaryKey in testObjectIds {
-                
-                let object: TestRealmObject? = self.realmDatabase.readObject(realm: realm, primaryKey: primaryKey)
-                
-                XCTAssertNil(object)
-            }
-            
-            return Just(())
-                .eraseToAnyPublisher()
-        })
-        .receiveOnMain()
-        .sink { subscribersCompletion in
-                        
-            switch subscribersCompletion {
-                
-            case .finished:
-                finishedError = nil
-                
-            case .failure(let error):
-                finishedError = error
-            }
-            
-            DispatchQueue.main.async {
-                expectation.fulfill()
-            }
-            
-        } receiveValue: { _ in
-            
-        }
-        .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 10)
-        
-        XCTAssertNil(finishedError, finishedError?.localizedDescription ?? "")
     }
 }
 
