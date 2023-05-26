@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import SwiftUI
+import Combine
 
 class MenuFlow: Flow {
     
@@ -74,15 +75,15 @@ class MenuFlow: Flow {
         case .doneTappedFromMenu:
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
-        case .loginTappedFromMenu:
-            let view = getSocialSignInView(authenticationType: .login)
+        case .loginTappedFromMenu(let authenticationCompletedSubject):
+            let view = getSocialSignInView(authenticationType: .login, authenticationCompletedSubject: authenticationCompletedSubject)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromLogin:
             navigationController.dismiss(animated: true)
             
-        case .createAccountTappedFromMenu:
-            let view = getSocialSignInView(authenticationType: .createAccount)
+        case .createAccountTappedFromMenu(let authenticationCompletedSubject):
+            let view = getSocialSignInView(authenticationType: .createAccount, authenticationCompletedSubject: authenticationCompletedSubject)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromCreateAccount:
@@ -249,7 +250,7 @@ class MenuFlow: Flow {
         return hostingView*/
     }
     
-    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType, authenticationCompletedSubject: PassthroughSubject<Void, Never>) -> UIViewController {
         
         let viewBackgroundColor: Color = ColorPalette.gtBlue.color
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
@@ -258,6 +259,7 @@ class MenuFlow: Flow {
             flowDelegate: self,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
+            authenticationCompletedSubject: authenticationCompletedSubject,
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )
