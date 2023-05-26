@@ -23,9 +23,7 @@ class AuthenticateUserUseCase {
     }
     
     func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
-                
-        // TODO: Uncomment and implement in GT-2012. ~Levi
-        
+                        
         return authenticateByAuthTypePublisher(provider: provider, policy: policy)
             .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
                                 
@@ -46,9 +44,7 @@ class AuthenticateUserUseCase {
     }
     
     private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
-                
-        // TODO: Implement in GT-2012. ~Levi
-                
+                                
         switch policy {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
