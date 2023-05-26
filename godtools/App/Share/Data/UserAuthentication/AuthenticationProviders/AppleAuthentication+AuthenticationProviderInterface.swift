@@ -58,10 +58,22 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     }
     
     func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
+                
+        let profile = getCurrentUserProfile()
         
-        // TODO: Should return an AuthUserDomainModel if user info can be obtained from AppleAuthentication. Implement in GT-2027. ~Levi
-        
-        return Just(nil).setFailureType(to: Error.self)
+        return Just(mapProfileToAuthUser(profile: profile))
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+    }
+    
+    private func mapProfileToAuthUser(profile: AppleUserProfile) -> AuthUserDomainModel {
+        
+        return AuthUserDomainModel(
+            email: profile.email ?? "",
+            firstName: profile.givenName,
+            grMasterPersonId: nil,
+            lastName: profile.familyName,
+            ssoGuid: nil
+        )
     }
 }
