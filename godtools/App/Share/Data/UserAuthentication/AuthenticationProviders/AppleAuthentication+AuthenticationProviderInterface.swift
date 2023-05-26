@@ -53,6 +53,8 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     func signOutPublisher() -> AnyPublisher<Void, Error> {
         
+        signOut()
+        
         return Just(()).setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
