@@ -193,11 +193,32 @@ class MenuFlow: Flow {
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .deleteAccountTappedFromDeleteAccount:
-            print("deleting account...")
-            assertionFailure("TODO: Implement delete account use case in GT-2010...")
-        
+            navigationController.dismissPresented(animated: true) {
+                self.navigationController.present(self.getConfirmDeleteAccountView(), animated: true)
+            }
+                        
+        case .deleteAccountTappedFromConfirmDeleteAccount:
+            navigationController.present(self.getDeleteAccountProgressView(), animated: true)
+                    
         case .cancelTappedFromDeleteAccount:
             navigationController.dismissPresented(animated: true, completion: nil)
+
+        case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
+            
+            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            
+            navigationController.dismissPresented(animated: true) {
+                
+                let title: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.title")
+                let message: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.message")
+                
+                self.presentAlert(title: title, message: message)
+            }
+            
+        case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
+            navigationController.dismissPresented(animated: true) {
+                self.presentError(error: error)
+            }
                         
         default:
             break
@@ -338,6 +359,58 @@ class MenuFlow: Flow {
             target: viewModel,
             action: #selector(viewModel.closeTapped)
         )
+        
+        let modal: ModalNavigationController = ModalNavigationController(
+            rootView: hostingView,
+            navBarColor: viewBackgroundUIColor,
+            navBarIsTranslucent: false,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            statusBarStyle: .darkContent
+        )
+        
+        modal.view.backgroundColor = viewBackgroundUIColor
+                
+        return modal
+    }
+    
+    private func getConfirmDeleteAccountView() -> UIViewController {
+        
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        
+        let viewController = UIAlertController(
+            title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.title"),
+            message: "",
+            preferredStyle: .actionSheet
+        )
+        
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.confirmButton.title"), style: .destructive, handler: { (action: UIAlertAction) in
+                        
+            self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
+        }))
+        
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "cancel"), style: .cancel, handler: { (action: UIAlertAction) in
+            
+        }))
+        
+        return viewController
+    }
+    
+    private func getDeleteAccountProgressView() -> UIViewController {
+        
+        let viewBackgroundColor: Color = Color.white
+        let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
+        
+        let viewModel = DeleteAccountProgressViewModel(
+            flowDelegate: self,
+            deleteAccountUseCase: appDiContainer.domainLayer.getDeleteAccountUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = DeleteAccountProgressView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        
+        let hostingView: UIHostingController<DeleteAccountProgressView> = UIHostingController(rootView: view)
+        
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,
