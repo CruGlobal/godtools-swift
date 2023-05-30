@@ -211,7 +211,7 @@ class AppDataLayerDependencies {
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
-                sharedUserDefaults: sharedUserDefaultsCache
+                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: sharedRealmDatabase)
             )
         )
     }
