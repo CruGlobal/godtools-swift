@@ -29,22 +29,7 @@ class AuthenticateUserUseCase {
         return authenticateByAuthTypePublisher(provider: provider, policy: policy)
             .flatMap({ authenticationProviderAccessToken -> AnyPublisher<Bool, Error> in
                 
-                guard let authenticationProviderAccessToken = authenticationProviderAccessToken else {
-                    
-                    return Just(false).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerAccessToken: authenticationProviderAccessToken, createUser: createUser)
-                    .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
-                        
-                        return true
-                    }
-                    .mapError { urlResponseError in
-                        
-                        return urlResponseError as Error
-                    }
-                    .eraseToAnyPublisher()
+                return self.authenticateWithMobileContentApi(providerAccessToken: authenticationProviderAccessToken, createUser: createUser)
                 
             })
             .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
@@ -82,6 +67,29 @@ class AuthenticateUserUseCase {
                 }
                 .eraseToAnyPublisher()
         }
+    }
+    
+    private func authenticateWithMobileContentApi(providerAccessToken: AuthenticationProviderAccessToken?, createUser: Bool) -> AnyPublisher<Bool, Error> {
+        
+        guard let providerAccessToken = providerAccessToken else {
+            
+            return Just(false).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
+            providerAccessToken: providerAccessToken,
+            createUser: createUser
+        )
+        .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
+            
+            return true
+        }
+        .mapError { urlResponseError in
+            
+            return urlResponseError as Error
+        }
+        .eraseToAnyPublisher()
     }
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {
