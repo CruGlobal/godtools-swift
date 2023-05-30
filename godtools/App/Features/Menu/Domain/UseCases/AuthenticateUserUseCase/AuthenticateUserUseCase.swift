@@ -77,7 +77,7 @@ class AuthenticateUserUseCase {
                 .eraseToAnyPublisher()
         }
         
-        return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
+        return mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
             providerAccessToken: providerAccessToken,
             createUser: createUser
         )
