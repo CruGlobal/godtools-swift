@@ -44,12 +44,7 @@ class MobileContentAuthTokenRepository {
     
     func getCachedAuthTokenModel() -> MobileContentAuthTokenDataModel? {
         
-        guard
-            let userId = getUserId(),
-            let token = cache.getAuthToken(for: userId)
-        else { return nil }
-        
-        return MobileContentAuthTokenDataModel(userId: userId, token: token)
+        return cache.getAuthTokenData()
     }
     
     func getCachedAuthToken() -> String? {
