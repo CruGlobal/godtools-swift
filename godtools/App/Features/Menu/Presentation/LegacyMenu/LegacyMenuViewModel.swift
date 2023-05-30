@@ -119,7 +119,7 @@ class LegacyMenuViewModel {
                     items = [.activity, .logout, .deleteAccount]
                 }
                 else {
-                    items = [.login, .createAccount, .deleteAccount]
+                    items = [.login, .createAccount]
                 }
                 
             case .support:
