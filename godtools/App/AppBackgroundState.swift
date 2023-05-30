@@ -25,9 +25,7 @@ class AppBackgroundState {
         guard !isStarted else {
             return
         }
-        
-        let environment: [String: String] = ProcessInfo().environment
-        
+                
         isStarted = true
         
         self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
