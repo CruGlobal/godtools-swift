@@ -14,6 +14,7 @@ class SocialSignInViewModel: ObservableObject {
     
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
+    private let authenticationCompletedSubject: PassthroughSubject<Void, Never>
     private let authenticateUserUseCase: AuthenticateUserUseCase
     private let localizationServices: LocalizationServices
     
@@ -45,11 +46,12 @@ class SocialSignInViewModel: ObservableObject {
         )
     }()
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticationCompletedSubject: PassthroughSubject<Void, Never>, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
+        self.authenticationCompletedSubject = authenticationCompletedSubject
         self.authenticateUserUseCase = authenticateUserUseCase
         self.localizationServices = localizationServices
         
@@ -81,6 +83,8 @@ class SocialSignInViewModel: ObservableObject {
     }
     
     private func handleAuthenticationCompleted(error: Error?) {
+        
+        authenticationCompletedSubject.send(())
         
         switch authenticationType {
         

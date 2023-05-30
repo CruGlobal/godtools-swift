@@ -21,6 +21,7 @@ class LegacyMenuViewModel {
     private let analytics: AnalyticsContainer
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -49,6 +50,14 @@ class LegacyMenuViewModel {
         navTitle.accept(value: localizationServices.stringForMainBundle(key: "settings"))
                 
         reloadMenuDataSource()
+        
+        authenticationCompletedSubject
+            .receiveOnMain()
+            .sink { [weak self] _ in
+            
+                self?.reloadMenuDataSource()
+            }
+            .store(in: &cancellables)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
@@ -283,7 +292,7 @@ extension LegacyMenuViewModel {
     }
     
     func loginTapped(fromViewController: UIViewController) {
-        flowDelegate?.navigate(step: .loginTappedFromMenu)
+        flowDelegate?.navigate(step: .loginTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
     }
     
     func activityTapped() {
@@ -291,7 +300,7 @@ extension LegacyMenuViewModel {
     }
     
     func createAccountTapped(fromViewController: UIViewController) {
-        flowDelegate?.navigate(step: .createAccountTappedFromMenu)
+        flowDelegate?.navigate(step: .createAccountTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
     }
     
     func logoutTapped(fromViewController: UIViewController) {
