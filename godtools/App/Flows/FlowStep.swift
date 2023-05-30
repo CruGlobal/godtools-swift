@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 enum FlowStep {
     
@@ -93,8 +94,8 @@ enum FlowStep {
     case doneTappedFromMenu
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
-    case loginTappedFromMenu
-    case createAccountTappedFromMenu
+    case loginTappedFromMenu(authenticationCompletedSubject: PassthroughSubject<Void, Never>)
+    case createAccountTappedFromMenu(authenticationCompletedSubject: PassthroughSubject<Void, Never>)
     case activityTappedFromMenu
     case sendFeedbackTappedFromMenu
     case backTappedFromSendFeedback
@@ -127,6 +128,11 @@ enum FlowStep {
     case closeTappedFromDeleteAccount
     case deleteAccountTappedFromDeleteAccount
     case cancelTappedFromDeleteAccount
+    case deleteAccountTappedFromConfirmDeleteAccount
+    
+    // delete account progress
+    case didFinishAccountDeletionWithSuccessFromDeleteAccountProgress
+    case didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: Error)
     
     // language settings
     case backTappedFromLanguageSettings

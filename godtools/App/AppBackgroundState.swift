@@ -26,6 +26,8 @@ class AppBackgroundState {
             return
         }
         
+        let environment: [String: String] = ProcessInfo().environment
+        
         isStarted = true
         
         self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
