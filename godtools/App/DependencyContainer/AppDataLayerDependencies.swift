@@ -210,7 +210,8 @@ class AppDataLayerDependencies {
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: MobileContentAuthTokenCache(
-                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
+                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
+                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: sharedRealmDatabase)
             )
         )
     }
