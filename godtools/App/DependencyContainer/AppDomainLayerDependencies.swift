@@ -69,7 +69,8 @@ class AppDomainLayerDependencies {
         return AuthenticateUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
     }
     

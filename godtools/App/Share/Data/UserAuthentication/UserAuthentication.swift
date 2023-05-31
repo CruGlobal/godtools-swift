@@ -75,7 +75,7 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
+    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
     
         return getAuthenticationProvider(provider: provider)
             .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> in
@@ -88,7 +88,7 @@ class UserAuthentication {
                     self.lastAuthenticatedProviderCache.store(provider: provider)
                 }
                 
-                return ()
+                return providerAccessToken
             }
             .eraseToAnyPublisher()
     }
