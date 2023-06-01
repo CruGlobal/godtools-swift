@@ -44,6 +44,12 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
+    func getAppleAuthentication() -> AppleAuthentication {
+        return AppleAuthentication(
+            appleUserPersistentStore: AppleUserPersistentStore()
+        )
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(
@@ -143,9 +149,7 @@ class AppDataLayerDependencies {
     func getGoogleAuthentication() -> GoogleAuthentication {
         
         return GoogleAuthentication(
-            configuration: GoogleAuthenticationConfiguration(
-                clientId: "71275134527-st5s63prkvuh46t7ohb1gmhq39qokh78.apps.googleusercontent.com"
-            )
+            configuration: sharedAppConfig.googleAuthenticationConfiguration
         )
     }
     
@@ -297,6 +301,7 @@ class AppDataLayerDependencies {
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
             authenticationProviders: [
+                .apple: getAppleAuthentication(),
                 .facebook: getFacebookAuthentication(),
                 .google: getGoogleAuthentication()
             ],
