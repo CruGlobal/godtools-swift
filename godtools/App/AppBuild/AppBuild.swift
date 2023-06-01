@@ -20,6 +20,7 @@ class AppBuild {
     }
     
     let configuration: AppBuild.Configuration
+    let environment: AppEnvironment
     let isDebug: Bool
 
     init(infoPlist: InfoPlist) {
@@ -46,6 +47,18 @@ class AppBuild {
         }
         else {
             configuration =  .release
+        }
+        
+        switch configuration {
+            
+        case .analyticsLogging:
+            environment = .production
+        case .staging:
+            environment = .staging
+        case .production:
+            environment = .production
+        case .release:
+            environment = .production
         }
     }
 }
