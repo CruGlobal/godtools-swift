@@ -48,6 +48,7 @@ public extension Publisher {
                 
                 return Just(value)
                     .setFailureType(to: Self.Failure.self)
+                    .subscribe(on: DispatchQueue.main)
                     .receive(on: DispatchQueue.main)
                     .eraseToAnyPublisher()
                 
