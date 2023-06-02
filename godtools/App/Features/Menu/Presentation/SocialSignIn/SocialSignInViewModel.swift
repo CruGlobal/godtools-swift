@@ -66,7 +66,7 @@ class SocialSignInViewModel: ObservableObject {
             policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController),
             createUser: authenticationType == .createAccount
         )
-        .receiveOnMain()
+        .receive(on: DispatchQueue.main)
         .sink { [weak self] subscriberCompletion in
             
             let authenticationError: Error?
