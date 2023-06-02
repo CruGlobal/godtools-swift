@@ -73,7 +73,7 @@ extension FeaturedLessonCardsViewModel {
     private func setupBinding() {
         
         getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] featuredLessons in
                 
                 self?.lessons = featuredLessons
@@ -81,7 +81,7 @@ extension FeaturedLessonCardsViewModel {
             .store(in: &cancellables)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] primaryLanguage in
                 
                 self?.setupTitle(with: primaryLanguage)

@@ -78,14 +78,14 @@ extension ToolSpotlightViewModel {
     private func setupBinding() {
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { language in
                 self.setTitleText(with: language)
             }
             .store(in: &cancellables)
         
         getSpotlightToolsUseCase.getSpotlightToolsPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .assign(to: \.tools, on: self)
             .store(in: &cancellables)
     }

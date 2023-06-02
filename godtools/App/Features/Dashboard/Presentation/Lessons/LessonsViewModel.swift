@@ -81,7 +81,7 @@ extension LessonsViewModel {
     private func setupBinding() {
         
         getLessonsUseCase.getLessonsPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] lessons in
                 
                 self?.isLoading = lessons.isEmpty
@@ -90,7 +90,7 @@ extension LessonsViewModel {
             .store(in: &cancellables)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] primaryLanguage in
                 self?.setupTitle(with: primaryLanguage)
             }

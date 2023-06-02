@@ -832,7 +832,6 @@
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45EB4E732989C94C00231C67 /* FullScreenVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4E722989C94C00231C67 /* FullScreenVideoView.swift */; };
 		45EB4E762989C9D600231C67 /* Flow+VideoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4E752989C9D600231C67 /* Flow+VideoModal.swift */; };
-		45EB9B6F29F16CF200CA74A8 /* Publisher+ReceiveOnMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B4729F16CF200CA74A8 /* Publisher+ReceiveOnMain.swift */; };
 		45EB9B7029F16CF200CA74A8 /* UIImage+CreateImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B4A29F16CF200CA74A8 /* UIImage+CreateImageWithColor.swift */; };
 		45EB9B7129F16CF200CA74A8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B4B29F16CF200CA74A8 /* UIImage+ScalePresevingAspectRatio.swift */; };
 		45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B4D29F16CF200CA74A8 /* UILabel+AttributedString.swift */; };
@@ -1915,7 +1914,6 @@
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45EB4E722989C94C00231C67 /* FullScreenVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoView.swift; sourceTree = "<group>"; };
 		45EB4E752989C9D600231C67 /* Flow+VideoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+VideoModal.swift"; sourceTree = "<group>"; };
-		45EB9B4729F16CF200CA74A8 /* Publisher+ReceiveOnMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publisher+ReceiveOnMain.swift"; sourceTree = "<group>"; };
 		45EB9B4A29F16CF200CA74A8 /* UIImage+CreateImageWithColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CreateImageWithColor.swift"; sourceTree = "<group>"; };
 		45EB9B4B29F16CF200CA74A8 /* UIImage+ScalePresevingAspectRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ScalePresevingAspectRatio.swift"; sourceTree = "<group>"; };
 		45EB9B4D29F16CF200CA74A8 /* UILabel+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+AttributedString.swift"; sourceTree = "<group>"; };
@@ -6336,28 +6334,11 @@
 		45EB9B4429F16CF200CA74A8 /* SharedAppleExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				45EB9B4529F16CF200CA74A8 /* Combine */,
 				45EB9B6229F16CF200CA74A8 /* Foundation */,
 				45EB9B6A29F16CF200CA74A8 /* SwiftUI */,
 				45EB9B4829F16CF200CA74A8 /* UIKit */,
 			);
 			path = SharedAppleExtensions;
-			sourceTree = "<group>";
-		};
-		45EB9B4529F16CF200CA74A8 /* Combine */ = {
-			isa = PBXGroup;
-			children = (
-				45EB9B4629F16CF200CA74A8 /* Publisher */,
-			);
-			path = Combine;
-			sourceTree = "<group>";
-		};
-		45EB9B4629F16CF200CA74A8 /* Publisher */ = {
-			isa = PBXGroup;
-			children = (
-				45EB9B4729F16CF200CA74A8 /* Publisher+ReceiveOnMain.swift */,
-			);
-			path = Publisher;
 			sourceTree = "<group>";
 		};
 		45EB9B4829F16CF200CA74A8 /* UIKit */ = {
@@ -9063,7 +9044,6 @@
 				45127A2A287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,
 				45AC77D829DCA3DA00A2224B /* MobileContentPageRendererPagesViewDataCache.swift in Sources */,
-				45EB9B6F29F16CF200CA74A8 /* Publisher+ReceiveOnMain.swift in Sources */,
 				45D63EA2288F77D4009B4610 /* ResourceModelType.swift in Sources */,
 				D48018C028EF650700389565 /* DashboardView.swift in Sources */,
 				456777D2287DB3770044AEB2 /* ShareShareableView.swift in Sources */,
