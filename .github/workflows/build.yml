@@ -64,7 +64,18 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec fastlane cru_shared_lane_run_tests
+        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
+        # TODO: See if Fastlane can be used to store .xcresult at -resultBundlePath for Code Coverage Upload Action GT-2043.
+        #run: bundle exec fastlane cru_shared_lane_run_tests xcargs:"-resultBundlePath='/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result'"
+
+      - name: Upload Xcode Code Coverage Report to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          xcode: true
+          xcode_archive_path: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result.xcresult
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -112,3 +123,10 @@ jobs:
         with:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
+
+      - name: Archive Fastlane Gym Logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: fastlane-gym-logs
+          path: "/Users/runner/Library/Logs/gym/godtools-*/**"

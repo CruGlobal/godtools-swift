@@ -54,4 +54,32 @@ class UserDetailsAPI {
             queryItems: nil
         )
     }
+    
+    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, URLResponseError> {
+        
+        let urlRequest = getDeleteAuthorizedUserDetailsRequest()
+        
+        return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+            .map { (data: Data) in
+                
+                return ()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getDeleteAuthorizedUserDetailsRequest() -> URLRequest {
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
+        ]
+        
+        return requestBuilder.build(
+            session: ignoreCacheSession,
+            urlString: baseURL + "/users/me",
+            method: .delete,
+            headers: headers,
+            httpBody: nil,
+            queryItems: nil
+        )
+    }
 }

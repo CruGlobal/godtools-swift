@@ -42,4 +42,10 @@ class UserDetailsRepository {
             }
             .eraseToAnyPublisher()
     }
+    
+    func deleteAuthorizedUserDetails() -> AnyPublisher<Void, URLResponseError> {
+        
+        return api.deleteAuthorizedUserDetailsPublisher()
+            .eraseToAnyPublisher()
+    }
 }

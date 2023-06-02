@@ -64,18 +64,22 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel, Error> {
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
         
-        let authUser = AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
+        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
+            return Just(nil).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
         
-        return Just(authUser).setFailureType(to: Error.self)
+        return lastAuthProvider.getAuthUserPublisher()
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
+    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
     
         return getAuthenticationProvider(provider: provider)
             .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> in
+                
                 return provider.authenticatePublisher(presentingViewController: fromViewController)
             })
             .map { (providerAccessToken: AuthenticationProviderAccessToken?) in
@@ -84,27 +88,23 @@ class UserAuthentication {
                     self.lastAuthenticatedProviderCache.store(provider: provider)
                 }
                 
-                return ()
+                return providerAccessToken
             }
             .eraseToAnyPublisher()
     }
     
-    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
+    func signOutPublisher() -> AnyPublisher<Void, Error> {
              
-        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
-            return Just(()).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
-        return lastAuthProvider.signOutPublisher()
+        signOutOfAllProviders()
             .map { response in
                 self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
                 return response
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func signOutOfAllProviders() -> AnyPublisher<Void, Error> {
         
-        // TODO: Should we sign out of all providers? ~Levi
-        /*
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         let signOutPublishers = allProviders.map {
             $0.signOutPublisher()
@@ -112,6 +112,9 @@ class UserAuthentication {
         
         return Publishers.MergeMany(signOutPublishers)
             .collect()
-            .eraseToAnyPublisher()*/
+            .map { _ in
+                return ()
+            }
+            .eraseToAnyPublisher()
     }
 }

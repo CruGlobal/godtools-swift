@@ -10,11 +10,12 @@ import Foundation
 import SocialAuthentication
 
 class AppConfig {
-    
+        
     private let appBuild: AppBuild
     
     let appleAppId: String = "542773210"
     let facebookConfig: FacebookConfiguration
+    let googleAuthenticationConfiguration: GoogleAuthenticationConfiguration
     
     init(appBuild: AppBuild) {
         
@@ -29,6 +30,27 @@ class AppConfig {
             isAdvertiserIDCollectionEnabled: false,
             isSKAdNetworkReportEnabled: false
         )
+        
+        googleAuthenticationConfiguration = AppConfig.getGoogleAuthenticationConfiguration(environment: appBuild.environment)
+    }
+    
+    private static func getGoogleAuthenticationConfiguration(environment: AppEnvironment) -> GoogleAuthenticationConfiguration {
+                        
+        let clientId: String
+        let serverClientId: String
+        
+        switch environment {
+        
+        case .staging:
+            clientId = "71275134527-st5s63prkvuh46t7ohb1gmhq39qokh78.apps.googleusercontent.com"
+            serverClientId = "71275134527-nvu2ehje1j6g459ofg5aldn1n21fadpg.apps.googleusercontent.com"
+            
+        case .production:
+            clientId = "71275134527-4stabhk838h3jpkt9mfrt1r8tisaj9r1.apps.googleusercontent.com"
+            serverClientId = "71275134527-h5adpeeefcevhhhng1ggi5ngn6ko6d3k.apps.googleusercontent.com"
+        }
+        
+        return GoogleAuthenticationConfiguration(clientId: clientId, serverClientId: serverClientId, hostedDomain: nil, openIDRealm: nil)
     }
     
     var appsFlyerConfiguration: AppsFlyerConfiguration {
@@ -42,19 +64,12 @@ class AppConfig {
     
     var mobileContentApiBaseUrl: String {
         
-        let stagingUrl: String = "https://mobile-content-api-stage.cru.org"
-        let productionUrl: String = "https://mobile-content-api.cru.org"
+        switch appBuild.environment {
         
-        switch appBuild.configuration {
-            
-        case .analyticsLogging:
-            return productionUrl
         case .staging:
-            return stagingUrl
+            return "https://mobile-content-api-stage.cru.org"
         case .production:
-            return productionUrl
-        case .release:
-            return productionUrl
+            return "https://mobile-content-api.cru.org"
         }
     }
     
@@ -77,19 +92,12 @@ class AppConfig {
     
     var firebaseGoogleServiceFileName: String {
         
-        let debugFileName: String = "GoogleService-Info-Debug"
-        let productionFileName: String = "GoogleService-Info"
+        switch appBuild.environment {
         
-        switch appBuild.configuration {
-            
-        case .analyticsLogging:
-            return productionFileName
         case .staging:
-            return debugFileName
+            return "GoogleService-Info-Debug"
         case .production:
-            return productionFileName
-        case .release:
-            return productionFileName
+            return "GoogleService-Info"
         }
     }
 }

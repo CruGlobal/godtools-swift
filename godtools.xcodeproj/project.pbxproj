@@ -84,6 +84,10 @@
 		452040952959E73F004D843E /* SetupParallelLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */; };
 		4520409F2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */; };
 		452040A02959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */; };
+		45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */; };
+		45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */; };
+		45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */; };
+		45227BB22A1D0AD00021C131 /* Flow+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
 		4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96B2893440E0011F16B /* TranslationManifestParser.swift */; };
 		4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96D289345480011F16B /* TranslationManifestParserType.swift */; };
@@ -133,6 +137,7 @@
 		453C1BDC2899A89A007332E2 /* AddToolToFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C1BDB2899A89A007332E2 /* AddToolToFavoritesUseCase.swift */; };
 		453C1BDE2899A8A5007332E2 /* RemoveToolFromFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C1BDD2899A8A5007332E2 /* RemoveToolFromFavoritesUseCase.swift */; };
 		453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */; };
+		453EA8DB2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */; };
 		453EF5CF2942168D00D17E24 /* MobileContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453EF5CE2942168D00D17E24 /* MobileContentViewModel.swift */; };
 		453F0B6126EA369000436EE4 /* MobileContentMultiSelectOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */; };
 		453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */; };
@@ -316,6 +321,8 @@
 		4561C41227C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561C40E27C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift */; };
 		456431DD284ACC5300846720 /* MobileContentRendererNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456431DC284ACC5200846720 /* MobileContentRendererNavigation.swift */; };
 		456431E1284ACCA400846720 /* DismissToolEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456431E0284ACCA400846720 /* DismissToolEvent.swift */; };
+		4566DCAE2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566DCAD2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift */; };
+		4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566DCAF2A2686C900B989A2 /* RealmMobileContentAuthToken.swift */; };
 		45677765287DB1530044AEB2 /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677763287DB1530044AEB2 /* TutorialFlow.swift */; };
 		45677769287DB1960044AEB2 /* GetTutorialUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677767287DB1960044AEB2 /* GetTutorialUseCase.swift */; };
 		4567776A287DB1960044AEB2 /* TutorialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45677768287DB1960044AEB2 /* TutorialModel.swift */; };
@@ -805,6 +812,8 @@
 		45D96093289B898D001A5A3E /* GetToolIsFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D96092289B898D001A5A3E /* GetToolIsFavoritedUseCase.swift */; };
 		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
+		45DF34522A28D41600BB717E /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34512A28D41500BB717E /* AppBuild.swift */; };
+		45DF34542A28D41E00BB717E /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34532A28D41E00BB717E /* AppEnvironment.swift */; };
 		45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC227457856006A59E4 /* TutorialAssetContent.swift */; };
 		45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC527457A14006A59E4 /* AnimatedView.swift */; };
 		45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39EC627457A14006A59E4 /* AnimatedViewModel.swift */; };
@@ -813,7 +822,6 @@
 		45E39ED427457CB5006A59E4 /* MobileContentAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED127457CB5006A59E4 /* MobileContentAnimationViewModel.swift */; };
 		45E39ED927457D32006A59E4 /* LearnToShareToolAssetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
-		45E658E628F0760A00E90350 /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E658E528F0760A00E90350 /* AppBuild.swift */; };
 		45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 45E7D4C32977430A008C7503 /* ZipArchive */; };
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
@@ -949,6 +957,7 @@
 		D1FF263825BA0C0E00C825DB /* FirebaseInAppMessagingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */; };
 		D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */; };
 		D40393C628D36F1400C098BD /* LanguageAvailabilityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40393C528D36F1400C098BD /* LanguageAvailabilityDomainModel.swift */; };
+		D407F72B2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D407F72A2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift */; };
 		D409F2A8291D9C2300D9D2FE /* MobileContentApiAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */; };
 		D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */; };
 		D409F2AD2928110E00D9D2FE /* UserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */; };
@@ -1190,6 +1199,10 @@
 		4520408D2959E73F004D843E /* SetupParallelLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageView.swift; sourceTree = "<group>"; };
 		4520409D2959ECF5004D843E /* GetSetupParallelLanguageAvailabilityUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSetupParallelLanguageAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		4520409E2959ECF5004D843E /* SetupParallelLanguageAvailabilityDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupParallelLanguageAvailabilityDomainModel.swift; sourceTree = "<group>"; };
+		45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
+		45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressView.swift; sourceTree = "<group>"; };
+		45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressViewModel.swift; sourceTree = "<group>"; };
+		45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentAlert.swift"; sourceTree = "<group>"; };
 		45267B7625F19709004DB4C4 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
@@ -1242,6 +1255,7 @@
 		453D1F012861CFEE00CEA3AC /* CircleSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSelectorView.swift; sourceTree = "<group>"; };
 		453D866324E08310004EA89F /* mn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mn; path = mn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		453D866424E08347004EA89F /* tpi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tpi; path = tpi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		453EF5CE2942168D00D17E24 /* MobileContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewModel.swift; sourceTree = "<group>"; };
 		453F0B5E26EA369000436EE4 /* MobileContentMultiSelectOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionView.swift; sourceTree = "<group>"; };
 		453F0B5F26EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectOptionViewModel.swift; sourceTree = "<group>"; };
@@ -1426,6 +1440,8 @@
 		4561C40E27C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionSectionViewModel.swift; sourceTree = "<group>"; };
 		456431DC284ACC5200846720 /* MobileContentRendererNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererNavigation.swift; sourceTree = "<group>"; };
 		456431E0284ACCA400846720 /* DismissToolEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissToolEvent.swift; sourceTree = "<group>"; };
+		4566DCAD2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMobileContentAuthTokenCache.swift; sourceTree = "<group>"; };
+		4566DCAF2A2686C900B989A2 /* RealmMobileContentAuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMobileContentAuthToken.swift; sourceTree = "<group>"; };
 		45677763287DB1530044AEB2 /* TutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
 		45677767287DB1960044AEB2 /* GetTutorialUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTutorialUseCase.swift; sourceTree = "<group>"; };
 		45677768287DB1960044AEB2 /* TutorialModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialModel.swift; sourceTree = "<group>"; };
@@ -1881,6 +1897,8 @@
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		45DF34512A28D41500BB717E /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
+		45DF34532A28D41E00BB717E /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		45E39EC227457856006A59E4 /* TutorialAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialAssetContent.swift; sourceTree = "<group>"; };
 		45E39EC527457A14006A59E4 /* AnimatedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedView.swift; sourceTree = "<group>"; };
 		45E39EC627457A14006A59E4 /* AnimatedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedViewModel.swift; sourceTree = "<group>"; };
@@ -1888,7 +1906,6 @@
 		45E39ED027457CB5006A59E4 /* MobileContentAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationView.swift; sourceTree = "<group>"; };
 		45E39ED127457CB5006A59E4 /* MobileContentAnimationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationViewModel.swift; sourceTree = "<group>"; };
 		45E39ED827457D32006A59E4 /* LearnToShareToolAssetContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolAssetContent.swift; sourceTree = "<group>"; };
-		45E658E528F0760A00E90350 /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
@@ -2078,6 +2095,7 @@
 		D1FF263725BA0C0E00C825DB /* FirebaseInAppMessagingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessagingType.swift; sourceTree = "<group>"; };
 		D1FF263D25BA0C1C00C825DB /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		D40393C528D36F1400C098BD /* LanguageAvailabilityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityDomainModel.swift; sourceTree = "<group>"; };
+		D407F72A2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiAuthSession.swift; sourceTree = "<group>"; };
 		D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenError.swift; sourceTree = "<group>"; };
 		D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsAPI.swift; sourceTree = "<group>"; };
@@ -2836,6 +2854,24 @@
 			);
 			path = GetSetupParallelLanguageAvailabilityUseCase;
 			sourceTree = "<group>";
+		};
+		45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */,
+			);
+			path = DeleteAccountUseCase;
+			sourceTree = "<group>";
+		};
+		45227BAC2A1D02C00021C131 /* DeleteAccountProgress */ = {
+			isa = PBXGroup;
+			children = (
+				45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */,
+				45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */,
+			);
+			name = DeleteAccountProgress;
+			path = godtools/App/Features/Menu/Presentation/DeleteAccountProgress;
+			sourceTree = SOURCE_ROOT;
 		};
 		45267B7325F196FD004DB4C4 /* Renderer */ = {
 			isa = PBXGroup;
@@ -3906,7 +3942,9 @@
 				455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */,
 				455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */,
 				455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */,
+				D407F72A2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift */,
 				455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
+				453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
 			);
 			path = AuthenticationProviders;
 			sourceTree = "<group>";
@@ -4041,6 +4079,15 @@
 				4515E9BE284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4566DCAC2A2686AB00B989A2 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				4566DCAD2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift */,
+				4566DCAF2A2686C900B989A2 /* RealmMobileContentAuthToken.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		45677761287DB1530044AEB2 /* Tutorial */ = {
@@ -4917,10 +4964,10 @@
 			isa = PBXGroup;
 			children = (
 				451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */,
-				45E658E528F0760A00E90350 /* AppBuild.swift */,
 				45AD21602593A62800A096A0 /* AppDelegate.swift */,
 				45AD21612593A62800A096A0 /* AppDiContainer.swift */,
 				45B86B2A28F1CDAA00691F26 /* InfoPlist.swift */,
+				45DF34502A28D40700BB717E /* AppBuild */,
 				45D48C8729F81692004E92B1 /* AppConfig */,
 				45D63E4F288F67CD009B4610 /* DependencyContainer */,
 				45AD174D25938A4D00A096A0 /* Features */,
@@ -5073,6 +5120,7 @@
 				459602DF28400DBB00C66387 /* DownloadToolTranslations */,
 				45AD189025938A4E00A096A0 /* Flow.swift */,
 				45A3A0C726B0BD54005DA490 /* Flow+NavigateToUrl.swift */,
+				45227BB12A1D0AD00021C131 /* Flow+PresentAlert.swift */,
 				455F046F2A00019A00536CB9 /* Flow+PresentError.swift */,
 				45127A29287CB42200CC21C4 /* Flow+PresentNativeMailApp.swift */,
 				45AD189725938A4E00A096A0 /* FlowDelegate.swift */,
@@ -6227,6 +6275,15 @@
 			path = GetToolIsFavoritedUseCase;
 			sourceTree = "<group>";
 		};
+		45DF34502A28D40700BB717E /* AppBuild */ = {
+			isa = PBXGroup;
+			children = (
+				45DF34512A28D41500BB717E /* AppBuild.swift */,
+				45DF34532A28D41E00BB717E /* AppEnvironment.swift */,
+			);
+			path = AppBuild;
+			sourceTree = "<group>";
+		};
 		45E39EC427457A14006A59E4 /* AnimatedView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6639,6 +6696,8 @@
 			isa = PBXGroup;
 			children = (
 				45F7161A290A12D70019B715 /* AuthenticateUserUseCase */,
+				45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */,
+				45227BAC2A1D02C00021C131 /* DeleteAccountProgress */,
 				458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
@@ -7666,6 +7725,7 @@
 				D4B060062915647B005852D0 /* KeychainServiceResponse.swift */,
 				D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */,
 				D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */,
+				4566DCAC2A2686AB00B989A2 /* Realm */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -8322,6 +8382,7 @@
 				4533C4CB28AC2C2400F9628B /* StoreInitialFavoritedToolsUseCase.swift in Sources */,
 				450D7B0428E32965006C3FDF /* DownloadedTranslationDataModel.swift in Sources */,
 				454D1C4227A4BDD700ED7F99 /* HorizontallyCenteredCollectionViewCellSize.swift in Sources */,
+				D407F72B2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				455583CF269F2DA500C3FF14 /* MobileContentFormView.swift in Sources */,
 				45B365322885963A0012BE53 /* TranslationManifestParserFactory.swift in Sources */,
 				45D63EA5288F77D4009B4610 /* ResourceModel.swift in Sources */,
@@ -8377,7 +8438,9 @@
 				45BDA5D02954F67D007E259B /* ResourceViewsService.swift in Sources */,
 				453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */,
 				45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */,
+				4566DCAE2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift in Sources */,
 				45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */,
+				453EA8DB2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */,
 				D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */,
 				D4B060022912C335005852D0 /* MobileContentAuthTokenCache.swift in Sources */,
@@ -8511,6 +8574,7 @@
 				454F994829C09E46001A0B33 /* OnboardingQuickStartItemDomainModel.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
+				45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */,
 				456777B5287DB3770044AEB2 /* ShareToolView.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
@@ -8566,6 +8630,7 @@
 				D42FEBD82876026A0002FAD9 /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */,
 				D45922E3286A376800904B87 /* LessonCardView.swift in Sources */,
 				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
+				4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
@@ -8580,6 +8645,7 @@
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
 				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
+				45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */,
 				D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */,
 				45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */,
 				450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
@@ -8635,6 +8701,7 @@
 				456777BD287DB3770044AEB2 /* LoadToolRemoteSessionViewModel.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
 				45D1202829FABD5E00523FBA /* AuthUserDomainModel.swift in Sources */,
+				45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */,
 				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */,
@@ -8668,6 +8735,7 @@
 				453649EC295E0B3F00B5B354 /* LanguageSettingsFlowCompletedState.swift in Sources */,
 				453A9EED2A044D0C007BB892 /* MenuSection.swift in Sources */,
 				45FB1CC1295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift in Sources */,
+				45DF34522A28D41600BB717E /* AppBuild.swift in Sources */,
 				453A9EE52A044D0C007BB892 /* LegacyMenuItemViewModel.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				D44F3AB1283678880008390D /* ToolCategoryButtonViewModel.swift in Sources */,
@@ -9067,6 +9135,7 @@
 				D455F3FB297F2BD7009D5F93 /* AccountActivityBadgeView.swift in Sources */,
 				45D63E88288F75B0009B4610 /* AttachmentModelType.swift in Sources */,
 				45F7164F290A12D70019B715 /* AccountViewModel.swift in Sources */,
+				45227BB22A1D0AD00021C131 /* Flow+PresentAlert.swift in Sources */,
 				45558336269F2C7B00C3FF14 /* ToolPageCallToActionViewModel.swift in Sources */,
 				456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */,
 				458CFE9429D4E0B9007B423C /* ArticlesErrorMessageViewModel.swift in Sources */,
@@ -9176,7 +9245,6 @@
 				453A9EE92A044D0C007BB892 /* LegacyMenuSectionHeaderView.swift in Sources */,
 				4573133A28C1821100481640 /* ToolDetailsToggleFavoriteButton.swift in Sources */,
 				D455F3F429773C30009D5F93 /* UserActivityBadgeDomainModel.swift in Sources */,
-				45E658E628F0760A00E90350 /* AppBuild.swift in Sources */,
 				45EB4E762989C9D600231C67 /* Flow+VideoModal.swift in Sources */,
 				45EB9B8429F16CF200CA74A8 /* Image+OptionalUIImage.swift in Sources */,
 				45AE973D27C97A9400C2CB33 /* MultiplatformCard.swift in Sources */,
@@ -9214,6 +9282,7 @@
 				45AD1BA625938A4F00A096A0 /* FlowStep.swift in Sources */,
 				453A9EE42A044D0C007BB892 /* LegacyMenuItemView.swift in Sources */,
 				D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */,
+				45DF34542A28D41E00BB717E /* AppEnvironment.swift in Sources */,
 				D1E98EDD27974F0000D1B738 /* LessonEvaluationViewModelType.swift in Sources */,
 				45AD22A12593CE8900A096A0 /* ColorPalette.swift in Sources */,
 				45838F0329E847D4003B5578 /* ToolDetailsSectionDescriptionTextView.swift in Sources */,
@@ -10478,8 +10547,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
