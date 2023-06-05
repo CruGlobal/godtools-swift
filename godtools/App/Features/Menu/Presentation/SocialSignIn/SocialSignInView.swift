@@ -30,12 +30,14 @@ struct SocialSignInView: View {
                 
                 VStack(alignment: .trailing) {
                     
-                    FixedVerticalSpacer(height: 22)
+                    Spacer()
                     
                     Image(ImageCatalog.loginBackground.rawValue)
                         .resizable()
                         .scaledToFit()
                         .frame(width: geometry.size.width)
+                    
+                    Spacer()
                     
                     VStack(alignment: .leading, spacing: 10) {
                         
@@ -66,6 +68,7 @@ struct SocialSignInView: View {
                         
                     }
                     .padding([.leading, .trailing], 36)
+                    .padding(.bottom, 35)
                 }
             }
         }
