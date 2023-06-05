@@ -14,13 +14,28 @@ import GoogleSignIn
 
 extension GoogleAuthentication: AuthenticationProviderInterface {
     
-    func getPersistedAccessToken() -> AuthenticationProviderAccessToken? {
+    private func getAuthenticationProviderTokenResponse(user: GIDGoogleUser) -> AuthenticationProviderTokenResponse? {
         
-        guard let persistedIdToken = getPersistedIdTokenString() else {
+        guard let idToken = user.idToken?.tokenString else {
             return nil
         }
         
-        return  .google(idToken: persistedIdToken)
+        return AuthenticationProviderTokenResponse(
+            accessToken: user.accessToken.tokenString,
+            expires: user.idToken?.expirationDate,
+            idToken: idToken,
+            refreshToken: user.refreshToken.tokenString,
+            tokenType: nil
+        )
+    }
+    
+    func getPersistedToken() -> AuthenticationProviderTokenResponse? {
+        
+        guard let currentUser = getCurrentUser() else {
+            return nil
+        }
+        
+        return getAuthenticationProviderTokenResponse(user: currentUser)
     }
     
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {

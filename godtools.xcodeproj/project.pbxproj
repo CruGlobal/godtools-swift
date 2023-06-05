@@ -301,7 +301,7 @@
 		455F04702A00019A00536CB9 /* Flow+PresentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F046F2A00019A00536CB9 /* Flow+PresentError.swift */; };
 		455F04732A0002F100536CB9 /* AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */; };
 		455F04752A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */; };
-		455F04772A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */; };
+		455F04772A0006DE00536CB9 /* AuthenticationProviderTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04762A0006DE00536CB9 /* AuthenticationProviderTokenResponse.swift */; };
 		455F04792A000D6100536CB9 /* LastAuthenticatedProviderCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F04782A000D6100536CB9 /* LastAuthenticatedProviderCache.swift */; };
 		455F047F2A0038B000536CB9 /* AuthenticationProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */; };
 		4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */; };
@@ -786,6 +786,7 @@
 		45D63EA5288F77D4009B4610 /* ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9A288F77D4009B4610 /* ResourceModel.swift */; };
 		45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */; };
 		45D63EA7288F77D4009B4610 /* ResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */; };
+		45D752142A2E33DF005E747F /* MobileContentAuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D752132A2E33DF005E747F /* MobileContentAuthToken.swift */; };
 		45D7781629A56FD100F23D99 /* DeepLinkingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */; };
 		45D7781729A570CB00F23D99 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86DA28EDA86C00E197A5 /* DeepLinkingService.swift */; };
 		45D7781829A570D000F23D99 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
@@ -1420,7 +1421,7 @@
 		455F046F2A00019A00536CB9 /* Flow+PresentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+PresentError.swift"; sourceTree = "<group>"; };
 		455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderInterface.swift; sourceTree = "<group>"; };
 		455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
-		455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderAccessToken.swift; sourceTree = "<group>"; };
+		455F04762A0006DE00536CB9 /* AuthenticationProviderTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderTokenResponse.swift; sourceTree = "<group>"; };
 		455F04782A000D6100536CB9 /* LastAuthenticatedProviderCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastAuthenticatedProviderCache.swift; sourceTree = "<group>"; };
 		455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderType.swift; sourceTree = "<group>"; };
 		4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageView.swift; sourceTree = "<group>"; };
@@ -1886,6 +1887,7 @@
 		45D63E9A288F77D4009B4610 /* ResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceModel.swift; sourceTree = "<group>"; };
 		45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentResourcesApi.swift; sourceTree = "<group>"; };
 		45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesRepository.swift; sourceTree = "<group>"; };
+		45D752132A2E33DF005E747F /* MobileContentAuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthToken.swift; sourceTree = "<group>"; };
 		45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceTests.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEventAnalyticsTracking.swift; sourceTree = "<group>"; };
 		45D96089289B871A001A5A3E /* GetAllFavoritedToolsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsUseCase.swift; sourceTree = "<group>"; };
@@ -3939,10 +3941,10 @@
 		455F04712A0002E600536CB9 /* AuthenticationProviders */ = {
 			isa = PBXGroup;
 			children = (
-				455F04762A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift */,
-				455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */,
-				455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */,
 				D407F72A2A13FE23009773F9 /* AppleAuthentication+AuthenticationProviderInterface.swift */,
+				455F04722A0002F100536CB9 /* AuthenticationProviderInterface.swift */,
+				455F04762A0006DE00536CB9 /* AuthenticationProviderTokenResponse.swift */,
+				455F047E2A0038B000536CB9 /* AuthenticationProviderType.swift */,
 				455F04742A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
 				453EA8DA2A1562650045EF06 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
 			);
@@ -7705,6 +7707,7 @@
 		D4B05FF72910644F005852D0 /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				45D752132A2E33DF005E747F /* MobileContentAuthToken.swift */,
 				D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */,
 				D4B05FFD2911BA9C005852D0 /* Models */,
 			);
@@ -8776,6 +8779,7 @@
 				4555831F269F2C7B00C3FF14 /* ToolPageViewFactory.swift in Sources */,
 				45558340269F2C7B00C3FF14 /* ToolPageHeaderViewModel.swift in Sources */,
 				45D63E78288F69C7009B4610 /* URLResponseError.swift in Sources */,
+				45D752142A2E33DF005E747F /* MobileContentAuthToken.swift in Sources */,
 				4546AE4629A3FBCB00FE332E /* GTPageControlButton.swift in Sources */,
 				D44F3AE928625C660008390D /* FavoriteToolsViewModel.swift in Sources */,
 				45AD202725938A9800A096A0 /* LocaleLocalizationBundle.swift in Sources */,
@@ -8788,7 +8792,7 @@
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
 				455F04752A00036400536CB9 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */,
-				455F04772A0006DE00536CB9 /* AuthenticationProviderAccessToken.swift in Sources */,
+				455F04772A0006DE00536CB9 /* AuthenticationProviderTokenResponse.swift in Sources */,
 				D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
