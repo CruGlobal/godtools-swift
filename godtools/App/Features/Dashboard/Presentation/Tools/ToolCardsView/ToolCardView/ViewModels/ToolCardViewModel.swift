@@ -81,9 +81,9 @@ extension ToolCardViewModel {
     }
     
     private func setupBinding() {
-                
+        
         getBannerImageUseCase.getBannerImagePublisher(for: tool.bannerImageId)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)            
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
         
