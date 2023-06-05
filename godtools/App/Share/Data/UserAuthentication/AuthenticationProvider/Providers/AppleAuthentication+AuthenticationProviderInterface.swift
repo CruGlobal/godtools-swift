@@ -13,11 +13,15 @@ import Combine
 
 extension AppleAuthentication: AuthenticationProviderInterface {
     
-    private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> AuthenticationProviderResponse {
+    private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> Result<AuthenticationProviderResponse, Error> {
         
-        return AuthenticationProviderResponse(
+        guard let idToken = appleAuthResponse.identityToken else {
+            return .failure(NSError.errorWithDescription(description: "Failed to get identity token."))
+        }
+        
+        let response = AuthenticationProviderResponse(
             accessToken: "",
-            idToken: appleAuthResponse.identityToken ?? "",
+            idToken: idToken,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
                 familyName: appleAuthResponse.fullName?.familyName,
@@ -26,6 +30,8 @@ extension AppleAuthentication: AuthenticationProviderInterface {
             providerType: .apple,
             refreshToken: ""
         )
+        
+        return .success(response)
     }
     
     func getPersistedResponse() -> AuthenticationProviderResponse? {
@@ -38,10 +44,11 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher()
-            .map { (response: AppleAuthenticationResponse) in
+            .flatMap ({ (response: AppleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                return self.getAuthenticationProviderResponse(appleAuthResponse: response)
-            }
+                return self.getAuthenticationProviderResponse(appleAuthResponse: response).publisher
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
