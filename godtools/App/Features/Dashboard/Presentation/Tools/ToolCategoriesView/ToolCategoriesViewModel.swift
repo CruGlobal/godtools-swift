@@ -66,7 +66,7 @@ extension ToolCategoriesViewModel {
     private func setupBinding() {
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { language in
                 
                 self.setTitleText(with: language)
@@ -74,7 +74,7 @@ extension ToolCategoriesViewModel {
             .store(in: &cancellables)
         
         getToolCategoriesUseCase.getToolCategoriesPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { categories in
                 
                 self.refreshCategoryButtons(with: categories)

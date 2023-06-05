@@ -142,7 +142,7 @@ extension OnboardingFlow {
         var skipButton: UIBarButtonItem?
         
         viewModel.hidesSkipButton
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { (hidden: Bool) in
                 
                 let skipButtonPosition: BarButtonItemBarPosition = .right

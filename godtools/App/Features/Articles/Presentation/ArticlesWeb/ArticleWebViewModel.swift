@@ -50,7 +50,7 @@ class ArticleWebViewModel: NSObject {
         hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
         
         getAppUIDebuggingIsEnabledUseCase.getIsEnabledPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
                 self?.hidesDebugButton.accept(value: !isEnabled)
             }

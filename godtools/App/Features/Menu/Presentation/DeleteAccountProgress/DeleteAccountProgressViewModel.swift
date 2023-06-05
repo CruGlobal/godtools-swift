@@ -37,7 +37,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
         let startDeleteAccountTime = Date()
         
         deleteAccountUseCase.deleteAccountPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .delay(for: .seconds(getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)), scheduler: DispatchQueue.main)
             .sink { [weak self] subscribersCompletion in
                 

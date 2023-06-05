@@ -88,14 +88,14 @@ extension ToolCardViewModel {
             .store(in: &cancellables)
         
         getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] parallelLanguage in
                 self?.reloadParallelLanguageName(parallelLanguage)
             }
             .store(in: &cancellables)
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: tool.id)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
     }
