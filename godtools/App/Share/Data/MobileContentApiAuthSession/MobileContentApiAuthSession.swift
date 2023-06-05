@@ -82,9 +82,9 @@ class MobileContentApiAuthSession {
             .mapError { error in
                 return URLResponseError.otherError(error: error)
             }
-            .flatMap { (providerAccessToken: AuthenticationProviderAccessToken) in
-                
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerAccessToken: providerAccessToken, createUser: createUser)
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) in
+                                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(authToken: authProviderResponse.getMobileContentAuthToken(), createUser: createUser)
                    .eraseToAnyPublisher()
             }
             .flatMap { authTokenDataModel in

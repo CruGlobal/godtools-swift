@@ -27,9 +27,9 @@ class AuthenticateUserUseCase {
     func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy, createUser: Bool = false) -> AnyPublisher<Bool, Error> {
                         
         return authenticateByAuthTypePublisher(provider: provider, policy: policy)
-            .flatMap({ authenticationProviderAccessToken -> AnyPublisher<Bool, Error> in
+            .flatMap({ (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<Bool, Error> in
                 
-                return self.authenticateWithMobileContentApi(providerAccessToken: authenticationProviderAccessToken, createUser: createUser)
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
                 
             })
             .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
@@ -50,35 +50,26 @@ class AuthenticateUserUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
+    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<AuthenticationProviderResponse, Error> {
                                 
         switch policy {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
             return userAuthentication.signInPublisher(provider: provider, fromViewController: fromViewController)
+                .eraseToAnyPublisher()
             
         case .renewAccessToken:
             
             return userAuthentication.renewAccessTokenPublisher()
-                .map { (providerAccessToken: AuthenticationProviderAccessToken) -> AuthenticationProviderAccessToken? in
-                    
-                    return providerAccessToken
-                }
                 .eraseToAnyPublisher()
         }
     }
     
-    private func authenticateWithMobileContentApi(providerAccessToken: AuthenticationProviderAccessToken?, createUser: Bool) -> AnyPublisher<Bool, Error> {
-        
-        guard let providerAccessToken = providerAccessToken else {
-            
-            return Just(false).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<Bool, Error> {
         
         return mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
-            providerAccessToken: providerAccessToken,
+            authToken: authProviderResponse.getMobileContentAuthToken(),
             createUser: createUser
         )
         .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in

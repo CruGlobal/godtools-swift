@@ -14,57 +14,59 @@ import GoogleSignIn
 
 extension GoogleAuthentication: AuthenticationProviderInterface {
     
-    private func getAuthenticationProviderTokenResponse(user: GIDGoogleUser) -> AuthenticationProviderTokenResponse? {
+    private func getResponseForPersistedData() -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let idToken = user.idToken?.tokenString else {
-            return nil
+        guard let user = getCurrentUser(), let idToken = user.idToken?.tokenString else {
+            
+            let error: Error = NSError.errorWithDescription(description: "Data not persisted.")
+            
+            return .failure(error)
         }
         
-        return AuthenticationProviderTokenResponse(
+        let response = AuthenticationProviderResponse(
             accessToken: user.accessToken.tokenString,
-            expires: user.idToken?.expirationDate,
             idToken: idToken,
-            refreshToken: user.refreshToken.tokenString,
-            tokenType: nil
+            profile: AuthenticationProviderProfile(
+                email: user.profile?.email,
+                familyName: user.profile?.familyName,
+                givenName: user.profile?.givenName
+            ),
+            providerType: .google,
+            refreshToken: user.refreshToken.tokenString
         )
+        
+        return .success(response)
     }
     
-    func getPersistedToken() -> AuthenticationProviderTokenResponse? {
+    func getPersistedResponse() -> AuthenticationProviderResponse? {
         
-        guard let currentUser = getCurrentUser() else {
+        switch getResponseForPersistedData() {
+            
+        case .success(let response):
+            return response
+            
+        case .failure( _):
             return nil
         }
-        
-        return getAuthenticationProviderTokenResponse(user: currentUser)
     }
     
-    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
+    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)
-            .map { (response: GoogleAuthenticationResponse) in
+            .flatMap({ (response: GoogleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                guard let idToken = response.idToken else {
-                    return nil
-                }
-                
-                return AuthenticationProviderAccessToken.google(idToken: idToken)
-            }
+                return self.getResponseForPersistedData().publisher
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return restorePreviousSignIn()
-            .flatMap({ (response: GoogleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderAccessToken, Error> in
+            .flatMap({ (response: GoogleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                guard let idToken = response.idToken else {
-                    return Fail(error: NSError.errorWithDescription(description: "Unable to refresh access token."))
-                        .eraseToAnyPublisher()
-                }
-                
-                let accessToken = AuthenticationProviderAccessToken.google(idToken: idToken)
-                
-                return Just(accessToken).setFailureType(to: Error.self)
+                return self.getResponseForPersistedData().publisher
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

@@ -10,7 +10,7 @@ import Foundation
 
 enum MobileContentAuthToken {
     
-    case apple(idToken: String, givenName: String, familyName: String)
+    case apple(idToken: String, givenName: String?, familyName: String?)
     case facebook(accessToken: String)
     case google(idToken: String)
 }

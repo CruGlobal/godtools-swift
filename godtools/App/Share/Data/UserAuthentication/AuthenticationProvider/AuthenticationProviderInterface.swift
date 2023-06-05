@@ -12,9 +12,9 @@ import Combine
 
 protocol AuthenticationProviderInterface {
         
-    func getPersistedToken() -> AuthenticationProviderTokenResponse?
-    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderTokenResponse, Error>
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderTokenResponse, Error>
+    func getPersistedResponse() -> AuthenticationProviderResponse?
+    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error>
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error>
     func signOutPublisher() -> AnyPublisher<Void, Error>
     func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error>
 }
