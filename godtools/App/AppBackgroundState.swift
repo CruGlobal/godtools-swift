@@ -25,7 +25,7 @@ class AppBackgroundState {
         guard !isStarted else {
             return
         }
-                
+        
         isStarted = true
         
         self.getAllFavoritedToolsLatestTranslationFilesUseCase = getAllFavoritedToolsLatestTranslationFilesUseCase
