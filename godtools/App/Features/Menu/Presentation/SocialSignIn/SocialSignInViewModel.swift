@@ -55,8 +55,15 @@ class SocialSignInViewModel: ObservableObject {
         self.authenticateUserUseCase = authenticateUserUseCase
         self.localizationServices = localizationServices
         
-        titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
-        subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
+        switch authenticationType {
+        case .createAccount:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
+        
+        case .login:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
+        }
     }
     
     private func authenticateUser(provider: AuthenticationProviderType) {
