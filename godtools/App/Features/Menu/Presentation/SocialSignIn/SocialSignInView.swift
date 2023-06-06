@@ -48,6 +48,7 @@ struct SocialSignInView: View {
                         Text(viewModel.subtitleText)
                             .font(FontLibrary.sfProTextRegular.font(size: 16))
                             .foregroundColor(.white)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         FixedVerticalSpacer(height: 10)
                         
