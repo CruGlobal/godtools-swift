@@ -84,7 +84,7 @@ extension BaseFavoriteToolsViewModel {
     private func setupBinding() {
         
         getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { favoritedTools in
                 
                 self.tools = favoritedTools
@@ -93,7 +93,7 @@ extension BaseFavoriteToolsViewModel {
             .store(in: &cancellables)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { primaryLanguage in
                 
                 self.setText(for: primaryLanguage)

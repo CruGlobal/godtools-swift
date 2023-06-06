@@ -41,7 +41,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
         
         getBannerImageUseCase.getBannerImagePublisher(for: toolVersion.bannerImageId)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
     }
