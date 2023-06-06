@@ -59,7 +59,7 @@ class RealmDatabaseTests: XCTestCase {
             realmObjects.append(testRealmObject)
         }
         
-        return realmDatabase.updateObjects(realm: realm, writeClosure: { (realm: Realm) in
+        return realmDatabase.writeObjects(realm: realm, writeClosure: { (realm: Realm) in
             return realmObjects
         })
     }
@@ -124,7 +124,7 @@ class RealmDatabaseTests: XCTestCase {
         }
     }
     
-    func testUpdateExistingObject() {
+    func testWriteExistingObject() {
         
         let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
         
@@ -144,7 +144,7 @@ class RealmDatabaseTests: XCTestCase {
                 lastObjectName = objectName
             }
             
-            _ = realmDatabase.updateObjects(realm: realm) { (realm: Realm) in
+            _ = realmDatabase.writeObjects(realm: realm) { (realm: Realm) in
                 
                 let object: TestRealmObject = TestRealmObject()
                 object.id = id

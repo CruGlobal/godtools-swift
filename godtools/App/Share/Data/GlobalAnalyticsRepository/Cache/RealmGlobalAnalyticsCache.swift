@@ -37,7 +37,7 @@ class RealmGlobalAnalyticsCache {
     
     func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
-        return realmDatabase.updateObjectsPublisher(shouldAddObjectsToRealm: true) { (realm: Realm) in
+        return realmDatabase.writeObjectsPublisher(shouldAddObjectsToRealm: true) { (realm: Realm) in
             
             let realmGlobalAnalytics: RealmGlobalAnalytics = RealmGlobalAnalytics()
             

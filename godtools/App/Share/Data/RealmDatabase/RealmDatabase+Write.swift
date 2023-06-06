@@ -1,5 +1,5 @@
 //
-//  RealmDatabase+Update.swift
+//  RealmDatabase+Write.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/17/23.
@@ -12,7 +12,7 @@ import Combine
 
 extension RealmDatabase {
     
-    func updateObjects(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> Error? {
+    func writeObjects(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> Error? {
         
         do {
             
@@ -33,11 +33,11 @@ extension RealmDatabase {
         }
     }
     
-    func updateObjectsInBackground(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object]), completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    func writeObjectsInBackground(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object]), completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
         
         self.background { realm in
             
-            let error: Error? = self.updateObjects(
+            let error: Error? = self.writeObjects(
                 realm: realm,
                 shouldAddObjectsToRealm: shouldAddObjectsToRealm,
                 updatePolicy: updatePolicy,
@@ -53,11 +53,11 @@ extension RealmDatabase {
         }
     }
     
-    func updateObjectsPublisher(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> AnyPublisher<Void, Error> {
+    func writeObjectsPublisher(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> AnyPublisher<Void, Error> {
         
         return Future() { promise in
             
-            self.updateObjectsInBackground(shouldAddObjectsToRealm: shouldAddObjectsToRealm, updatePolicy: updatePolicy, writeClosure: writeClosure) { result in
+            self.writeObjectsInBackground(shouldAddObjectsToRealm: shouldAddObjectsToRealm, updatePolicy: updatePolicy, writeClosure: writeClosure) { result in
                 
                 switch result {
                     

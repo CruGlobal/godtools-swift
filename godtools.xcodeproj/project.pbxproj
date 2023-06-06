@@ -677,7 +677,7 @@
 		45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */; };
 		45B365322885963A0012BE53 /* TranslationManifestParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */; };
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
-		45B54C582A2641FE0042CD0E /* RealmDatabase+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Update.swift */; };
+		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
 		45B54C5D2A2642220042CD0E /* RealmDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C5B2A2642220042CD0E /* RealmDatabaseTests.swift */; };
 		45B54C5E2A2642220042CD0E /* TestRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C5C2A2642220042CD0E /* TestRealmObject.swift */; };
@@ -1792,7 +1792,7 @@
 		45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslationsCache.swift; sourceTree = "<group>"; };
 		45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParserFactory.swift; sourceTree = "<group>"; };
 		45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
-		45B54C552A2641FE0042CD0E /* RealmDatabase+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Update.swift"; sourceTree = "<group>"; };
+		45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Write.swift"; sourceTree = "<group>"; };
 		45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Delete.swift"; sourceTree = "<group>"; };
 		45B54C5B2A2642220042CD0E /* RealmDatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabaseTests.swift; sourceTree = "<group>"; };
 		45B54C5C2A2642220042CD0E /* TestRealmObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRealmObject.swift; sourceTree = "<group>"; };
@@ -5656,7 +5656,7 @@
 				45B212AA2922965F00C9A94D /* RealmDatabase.swift */,
 				45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */,
 				45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */,
-				45B54C552A2641FE0042CD0E /* RealmDatabase+Update.swift */,
+				45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */,
 				4556CEA229F2D57800643BBC /* Configuration */,
 			);
 			path = RealmDatabase;
@@ -8524,7 +8524,7 @@
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
 				45558333269F2C7B00C3FF14 /* ToolPageModalsView.swift in Sources */,
 				D44F3AD72862429A0008390D /* GTWhiteButton.swift in Sources */,
-				45B54C582A2641FE0042CD0E /* RealmDatabase+Update.swift in Sources */,
+				45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
 				453A9EE72A044D0C007BB892 /* LegacyMenuSectionHeaderViewModel.swift in Sources */,
 				45EB9B8129F16CF200CA74A8 /* NSError+WithDescription.swift in Sources */,
