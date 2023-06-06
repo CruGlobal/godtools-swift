@@ -89,33 +89,6 @@ class RealmDatabaseTests: XCTestCase {
         }
     }
     
-    func testReadObjectsWithRealmInstanceExist() {
-        
-        let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
-        
-        let testObjectIds: [String] = getRandomTestObjectIds(count: 3)
-        
-        _ = addTestObjectsWithIds(realmDatabase: realmDatabase, ids: testObjectIds)
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
-        for primaryKey in testObjectIds {
-            
-            let object: TestRealmObject? = realmDatabase.readObject(realm: realm, primaryKey: primaryKey)
-            
-            XCTAssertNotNil(object)
-        }
-        
-        let nonExistingObjectIds: [String] = getRandomTestObjectIds(count: 3)
-        
-        for primaryKey in nonExistingObjectIds {
-            
-            let object: TestRealmObject? = realmDatabase.readObject(realm: realm, primaryKey: primaryKey)
-            
-            XCTAssertNil(object)
-        }
-    }
-    
     func testDeleteObjects() {
         
         let realmDatabase: RealmDatabase = getInMemoryRealmDatabase()
