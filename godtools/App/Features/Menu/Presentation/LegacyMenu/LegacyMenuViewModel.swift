@@ -52,7 +52,7 @@ class LegacyMenuViewModel {
         reloadMenuDataSource()
         
         authenticationCompletedSubject
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
             
                 self?.reloadMenuDataSource()
@@ -306,7 +306,7 @@ extension LegacyMenuViewModel {
     func logoutTapped(fromViewController: UIViewController) {
         
         logOutUserUseCase.logOutPublisher(fromViewController: fromViewController)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
             }, receiveValue: { [weak self] (finished: Bool) in
