@@ -43,7 +43,7 @@ class RealmDatabaseTests: XCTestCase {
         return ids
     }
 
-    private func addTestObjectsWithIds(realmDatabase: RealmDatabase, ids: [String]) -> Error? {
+    private func addTestObjectsWithIds(realmDatabase: RealmDatabase, ids: [String]) -> Result<[Object], Error> {
         
         let realm: Realm = realmDatabase.openRealm()
         

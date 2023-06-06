@@ -12,48 +12,45 @@ import Combine
 
 extension RealmDatabase {
     
-    func writeObjects(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> Error? {
+    func writeObjects<T: Object>(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [T])) -> Result<[T], Error> {
         
         do {
             
+            var objects: [T] = Array()
+            
             try realm.write {
                 
-                let objects: [Object] = writeClosure(realm)
+                objects = writeClosure(realm)
                 
                 if shouldAddObjectsToRealm {
                     realm.add(objects, update: updatePolicy)
                 }
             }
             
-            return nil
+            return .success(objects)
         }
         catch let error {
             
-            return error
+            return .failure(error)
         }
     }
     
-    func writeObjectsInBackground(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object]), completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    func writeObjectsInBackground<T: Object>(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [T]), completion: @escaping ((_ result: Result<[T], Error>) -> Void)) {
         
         self.background { realm in
             
-            let error: Error? = self.writeObjects(
+            let result: Result<[T], Error> = self.writeObjects(
                 realm: realm,
                 shouldAddObjectsToRealm: shouldAddObjectsToRealm,
                 updatePolicy: updatePolicy,
                 writeClosure: writeClosure
             )
             
-            if let error = error {
-                completion(.failure(error))
-            }
-            else {
-                completion(.success(()))
-            }
+            completion(result)
         }
     }
     
-    func writeObjectsPublisher(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [Object])) -> AnyPublisher<Void, Error> {
+    func writeObjectsPublisher<T: Object>(shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [T])) -> AnyPublisher<[T], Error> {
         
         return Future() { promise in
             
@@ -61,8 +58,8 @@ extension RealmDatabase {
                 
                 switch result {
                     
-                case .success(let void):
-                    promise(.success(void))
+                case .success(let objects):
+                    promise(.success(objects))
                     
                 case .failure(let error):
                     promise(.failure(error))
