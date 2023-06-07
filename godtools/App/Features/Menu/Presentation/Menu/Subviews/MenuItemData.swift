@@ -9,6 +9,7 @@
 import Foundation
 
 struct MenuItemData {
+    
     let iconName: String
     let title: String
 }

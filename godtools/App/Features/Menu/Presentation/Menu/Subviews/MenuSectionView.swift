@@ -9,12 +9,15 @@
 import SwiftUI
 
 struct MenuSectionView: View {
-    let sectionTitle: String
-    let menuItems: [MenuItemData]
+    
     private let sectionTitlePadding: CGFloat = 19
     private let menuItemSpacing: CGFloat = 19
     
+    let sectionTitle: String
+    let menuItems: [MenuItemData]
+    
     var body: some View {
+        
         VStack(alignment: .leading, spacing: 0) {
             
             Text(sectionTitle)

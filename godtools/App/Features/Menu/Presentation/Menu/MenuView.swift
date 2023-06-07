@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MenuView: View {
+   
     private let horizontalPadding: CGFloat = 15
     
     @ObservedObject private var viewModel: MenuViewModel
