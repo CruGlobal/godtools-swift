@@ -40,7 +40,9 @@ class MenuStringKeys {
     
     enum SocialSignIn: String {
         case signInTitle = "signIn.title"
-        case subtitle = "signIn.subtitle"
+        case signInSubtitle = "signIn.subtitle"
+        case createAccountTitle = "createAccount.title"
+        case createAccountSubtitle = "createAccount.subtitle"
         case googleSignIn = "signIn.google"
         case facebookSignIn = "signIn.facebook"
         case appleSignIn = "signIn.apple"
