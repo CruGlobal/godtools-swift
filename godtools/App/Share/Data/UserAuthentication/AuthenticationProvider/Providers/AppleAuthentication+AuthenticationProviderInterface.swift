@@ -12,36 +12,47 @@ import SocialAuthentication
 import Combine
 
 extension AppleAuthentication: AuthenticationProviderInterface {
-    func getPersistedAccessToken() -> AuthenticationProviderAccessToken? {
+    
+    private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> Result<AuthenticationProviderResponse, Error> {
+        
+        guard let idToken = appleAuthResponse.identityToken else {
+            return .failure(NSError.errorWithDescription(description: "Failed to get identity token."))
+        }
+        
+        let response = AuthenticationProviderResponse(
+            accessToken: "",
+            idToken: idToken,
+            profile: AuthenticationProviderProfile(
+                email: appleAuthResponse.email,
+                familyName: appleAuthResponse.fullName?.familyName,
+                givenName: appleAuthResponse.fullName?.givenName
+            ),
+            providerType: .apple,
+            refreshToken: ""
+        )
+        
+        return .success(response)
+    }
+    
+    func getPersistedResponse() -> AuthenticationProviderResponse? {
         
         // TODO: - access token renewal will come through MobileContentAPI?
         
         return nil
     }
     
-    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
+    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher()
-            .map { (response: AppleAuthenticationResponse) in
+            .flatMap ({ (response: AppleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                guard
-                    let idToken = response.identityToken,
-                    let givenName = response.fullName?.givenName,
-                    let familyName = response.fullName?.familyName
-                else {
-                    return nil
-                }
-                                
-                return AuthenticationProviderAccessToken.apple(
-                    idToken: idToken,
-                    givenName: givenName,
-                    familyName: familyName
-                )
-            }
+                return self.getAuthenticationProviderResponse(appleAuthResponse: response).publisher
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         // TODO: - implement in GT-2042
         

@@ -14,42 +14,60 @@ import FBSDKLoginKit
 
 extension FacebookAuthentication: AuthenticationProviderInterface {
     
-    func getPersistedAccessToken() -> AuthenticationProviderAccessToken? {
+    private func getResponseForPersistedData() -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let accessToken = getAccessTokenString() else {
-            return nil
+        guard let accessToken = getAccessToken(), let profile = getCurrentUserProfile() else {
+            
+            let error: Error = NSError.errorWithDescription(description: "Data not persisted.")
+            
+            return .failure(error)
         }
         
-        return AuthenticationProviderAccessToken.facebook(accessToken: accessToken)
+        let response = AuthenticationProviderResponse(
+            accessToken: accessToken.tokenString,
+            idToken: "",
+            profile: AuthenticationProviderProfile(
+                email: profile.email,
+                familyName: profile.lastName,
+                givenName: profile.firstName
+            ),
+            providerType: .facebook,
+            refreshToken: ""
+        )
+        
+        return .success(response)
     }
     
-    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
+    func getPersistedResponse() -> AuthenticationProviderResponse? {
+                
+        switch getResponseForPersistedData() {
+        
+        case .success(let response):
+            return response
+            
+        case .failure( _):
+            return nil
+        }
+    }
+    
+    func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)
-            .map { (response: FacebookAuthenticationResponse) in
+            .flatMap({ (response: FacebookAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                guard let accessToken = response.accessToken else {
-                    return nil
-                }
-                
-                return AuthenticationProviderAccessToken.facebook(accessToken: accessToken)
-            }
+                return self.getResponseForPersistedData().publisher
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return refreshCurrentAccessTokenPublisher()
-            .flatMap({ (void: Void) -> AnyPublisher<AuthenticationProviderAccessToken, Error> in
+            .flatMap({ (void: Void) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                if let providerAccessToken = self.getPersistedAccessToken() {
-                    return Just(providerAccessToken).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                else {
-                    return Fail(error: NSError.errorWithDescription(description: "Unable to refresh access token."))
-                        .eraseToAnyPublisher()
-                }
+                return self.getResponseForPersistedData().publisher
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
