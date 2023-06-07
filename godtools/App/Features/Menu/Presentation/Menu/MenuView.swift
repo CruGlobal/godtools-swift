@@ -10,7 +10,9 @@ import SwiftUI
 
 struct MenuView: View {
    
-    private let horizontalPadding: CGFloat = 24
+    static let contentHorizontalPadding: CGFloat = 22
+    static let sectionTitleVerticalSpacing: CGFloat = 24
+    static let itemSpacing: CGFloat = 24
     
     @ObservedObject private var viewModel: MenuViewModel
     
@@ -28,40 +30,66 @@ struct MenuView: View {
                     MenuSectionView(
                         sectionTitle: "Get Started",
                         menuItems: [
-                            MenuItemData(iconName: "school", title: "Tutorial"),
-                            MenuItemData(iconName: "translate", title: "Language settings")
+                            MenuItemView(imageAssetName: "school", title: "Tutorial", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "translate", title: "Language settings", tappedClosure: {
+
+                            })
                         ]
                     )
                     
                     MenuSectionView(
                         sectionTitle: "Account",
                         menuItems: [
-                            MenuItemData(iconName: "login", title: "Login / Activity"),
-                            MenuItemData(iconName: "person_add", title: "Create account / Logout")
+                            MenuItemView(imageAssetName: "login", title: "Login / Activity", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "person_add", title: "Create account / Logout", tappedClosure: {
+                                
+                            })
                         ]
                     )
                     
                     MenuSectionView(
                         sectionTitle: "Support", menuItems: [
-                            MenuItemData(iconName: "send", title: "Send feedback"),
-                            MenuItemData(iconName: "bug_report", title: "Report a bug"),
-                            MenuItemData(iconName: "live_help", title: "Ask a question")
+                            MenuItemView(imageAssetName: "send", title: "Send feedback", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "bug_report", title: "Report a bug", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "live_help", title: "Ask a question", tappedClosure: {
+                                
+                            })
                         ]
                     )
                     
                     MenuSectionView(
                         sectionTitle: "Share", menuItems: [
-                            MenuItemData(iconName: "rate_review", title: "Leave a review"),
-                            MenuItemData(iconName: "description", title: "Share a story with us"),
-                            MenuItemData(iconName: "share", title: "Share GodTools")
+                            MenuItemView(imageAssetName: "rate_review", title: "Leave a review", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "description", title: "Share a story with us", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "share", title: "Share GodTools", tappedClosure: {
+                                
+                            })
                         ]
                     )
                     
                     MenuSectionView(
                         sectionTitle: "About", menuItems: [
-                            MenuItemData(iconName: "format_list_bulleted", title: "Terms of use"),
-                            MenuItemData(iconName: "policy", title: "Privacy policy"),
-                            MenuItemData(iconName: "copyright", title: "Copyright info")
+                            MenuItemView(imageAssetName: "format_list_bulleted", title: "Terms of use", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "policy", title: "Privacy policy", tappedClosure: {
+                                
+                            }),
+                            MenuItemView(imageAssetName: "copyright", title: "Copyright info", tappedClosure: {
+                                
+                            })
                         ]
                     )
                     
@@ -70,7 +98,7 @@ struct MenuView: View {
                     )
                     
                 }
-                .padding(EdgeInsets(top: 0, leading: horizontalPadding, bottom: 0, trailing: horizontalPadding))
+                .padding(EdgeInsets(top: 0, leading: MenuView.contentHorizontalPadding, bottom: 0, trailing: MenuView.contentHorizontalPadding))
             }
         }
         .navigationBarBackButtonHidden(true)

@@ -9,31 +9,25 @@
 import SwiftUI
 
 struct MenuSectionView: View {
-    
-    private let sectionTitleVerticalPadding: CGFloat = 24
-    private let menuItemSpacing: CGFloat = 24
-    
+        
     let sectionTitle: String
-    let menuItems: [MenuItemData]
+    let menuItems: [MenuItemView]
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
             Text(sectionTitle)
-                .padding(EdgeInsets(top: sectionTitleVerticalPadding, leading: 0, bottom: sectionTitleVerticalPadding, trailing: 0))
+                .padding(EdgeInsets(top: MenuView.sectionTitleVerticalSpacing, leading: 0, bottom: MenuView.itemSpacing / 2, trailing: 0))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 17))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            VStack(alignment: .leading, spacing: menuItemSpacing) {
+            VStack(alignment: .leading, spacing: 0) {
                 
                 ForEach(0 ..< menuItems.count, id: \.self) { index in
                     
-                    MenuItemView(menuItemData: menuItems[index], tappedClosure: {
-                        
-                        print("menu item tapped at index: \(index)")
-                    })
+                    menuItems[index]
                 }
             }
             
@@ -44,7 +38,7 @@ struct MenuSectionView: View {
                 Rectangle()
                     .fill(ColorPalette.gtLightestGrey.color)
                     .frame(height: 1)
-                    .padding(EdgeInsets(top: sectionTitleVerticalPadding, leading: 0, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: MenuView.itemSpacing / 2, leading: 0, bottom: 0, trailing: 0))
             }
         }
     }

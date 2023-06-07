@@ -10,24 +10,29 @@ import SwiftUI
 
 struct MenuItemView: View {
     
-    let menuItemData: MenuItemData
+    let imageAssetName: String
+    let title: String
     let tappedClosure: (() -> Void)
 
     var body: some View {
         
         HStack {
             
-            Image(menuItemData.iconName)
+            Image(imageAssetName)
                 .frame(width: 24)
             
-            Text(menuItemData.title)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 16))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            tappedClosure()
+            Button(action: {
+
+                tappedClosure()
+            }) {
+                
+                Text(title)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextRegular.font(size: 16))
+                    .padding(EdgeInsets(top: MenuView.itemSpacing / 2, leading: 0, bottom: MenuView.itemSpacing / 2, trailing: 0))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
         }
     }
 }
