@@ -22,13 +22,13 @@ class MobileContentAuthTokenAPI {
         self.baseURL = config.mobileContentApiBaseUrl
     }
     
-    private func getAuthTokenRequest(providerAccessToken: AuthenticationProviderAccessToken, createUser: Bool) -> URLRequest {
+    private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
         
         var attributes: [String: Any] = [
             "create_user": createUser
         ]
         
-        switch providerAccessToken {
+        switch providerToken {
         case .apple(let idToken, let givenName, let familyName):
             
             attributes["apple_id_token"] = idToken
@@ -65,9 +65,9 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(providerAccessToken: AuthenticationProviderAccessToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
+    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
         
-        return session.dataTaskPublisher(for: getAuthTokenRequest(providerAccessToken: providerAccessToken, createUser: createUser))
+        return session.dataTaskPublisher(for: getAuthTokenRequest(providerToken: providerToken, createUser: createUser))
             .tryMap {
                 
                 let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
