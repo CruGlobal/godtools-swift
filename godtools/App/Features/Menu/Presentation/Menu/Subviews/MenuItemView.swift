@@ -25,6 +25,7 @@ struct MenuItemView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 16))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
         .onTapGesture {
             tappedClosure()
         }
