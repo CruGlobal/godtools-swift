@@ -69,7 +69,7 @@ class AuthenticateUserUseCase {
     private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<Bool, Error> {
         
         return mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
-            authToken: authProviderResponse.getMobileContentAuthToken(),
+            providerToken: authProviderResponse.getMobileContentAuthProviderToken(),
             createUser: createUser
         )
         .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in

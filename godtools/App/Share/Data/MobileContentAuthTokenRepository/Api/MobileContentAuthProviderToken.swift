@@ -1,5 +1,5 @@
 //
-//  MobileContentAuthToken.swift
+//  MobileContentAuthProviderToken.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/1/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentAuthToken {
+enum MobileContentAuthProviderToken {
     
     case apple(idToken: String, givenName: String?, familyName: String?)
     case facebook(accessToken: String)

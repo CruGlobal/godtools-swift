@@ -1,5 +1,5 @@
 //
-//  AuthenticationProviderResponse+MobileContentAuthToken.swift
+//  AuthenticationProviderResponse+MobileContentAuthProviderToken.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/5/23.
@@ -10,12 +10,12 @@ import Foundation
 
 extension AuthenticationProviderResponse {
     
-    func getMobileContentAuthToken() -> MobileContentAuthToken {
+    func getMobileContentAuthProviderToken() -> MobileContentAuthProviderToken {
         
-        return getMobileContentAuthToken(providerType: providerType)
+        return getMobileContentAuthProviderToken(providerType: providerType)
     }
     
-    private func getMobileContentAuthToken(providerType: AuthenticationProviderType) -> MobileContentAuthToken {
+    private func getMobileContentAuthProviderToken(providerType: AuthenticationProviderType) -> MobileContentAuthProviderToken {
         
         switch providerType {
             
