@@ -11,6 +11,7 @@ import SwiftUI
 struct MenuItemView: View {
     
     let menuItemData: MenuItemData
+    let tappedClosure: (() -> Void)
 
     var body: some View {
         
@@ -22,6 +23,10 @@ struct MenuItemView: View {
             Text(menuItemData.title)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 16))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .onTapGesture {
+            tappedClosure()
         }
     }
 }

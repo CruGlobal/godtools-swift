@@ -24,12 +24,16 @@ struct MenuSectionView: View {
                 .padding(EdgeInsets(top: sectionTitleVerticalPadding, leading: 0, bottom: sectionTitleVerticalPadding, trailing: 0))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 17))
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(alignment: .leading, spacing: menuItemSpacing) {
                 
                 ForEach(0 ..< menuItems.count, id: \.self) { index in
                     
-                    MenuItemView(menuItemData: menuItems[index])
+                    MenuItemView(menuItemData: menuItems[index], tappedClosure: {
+                        
+                        print("menu item tapped at index: \(index)")
+                    })
                 }
             }
             
