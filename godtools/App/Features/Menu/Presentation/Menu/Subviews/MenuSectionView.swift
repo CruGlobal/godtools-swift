@@ -10,8 +10,8 @@ import SwiftUI
 
 struct MenuSectionView: View {
     
-    private let sectionTitlePadding: CGFloat = 19
-    private let menuItemSpacing: CGFloat = 19
+    private let sectionTitleVerticalPadding: CGFloat = 24
+    private let menuItemSpacing: CGFloat = 24
     
     let sectionTitle: String
     let menuItems: [MenuItemData]
@@ -21,23 +21,27 @@ struct MenuSectionView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             Text(sectionTitle)
-                .padding(EdgeInsets(top: sectionTitlePadding, leading: 0, bottom: sectionTitlePadding, trailing: 0))
+                .padding(EdgeInsets(top: sectionTitleVerticalPadding, leading: 0, bottom: sectionTitleVerticalPadding, trailing: 0))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 17))
             
             VStack(alignment: .leading, spacing: menuItemSpacing) {
+                
                 ForEach(0 ..< menuItems.count, id: \.self) { index in
                     
                     MenuItemView(menuItemData: menuItems[index])
                 }
             }
-        }
-        
-        let hasMenuItems: Bool = menuItems.count > 0
-        
-        if hasMenuItems {
-            Divider()
-                .padding(EdgeInsets(top: sectionTitlePadding, leading: 0, bottom: 0, trailing: 0))
+            
+            let hasMenuItems: Bool = menuItems.count > 0
+            
+            if hasMenuItems {
+                
+                Rectangle()
+                    .fill(ColorPalette.gtLightestGrey.color)
+                    .frame(height: 1)
+                    .padding(EdgeInsets(top: sectionTitleVerticalPadding, leading: 0, bottom: 0, trailing: 0))
+            }
         }
     }
 }
