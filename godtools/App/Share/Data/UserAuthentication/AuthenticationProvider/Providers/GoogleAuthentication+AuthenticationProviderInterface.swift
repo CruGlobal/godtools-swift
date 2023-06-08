@@ -62,7 +62,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return restorePreviousSignIn()
             .flatMap({ (response: GoogleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in

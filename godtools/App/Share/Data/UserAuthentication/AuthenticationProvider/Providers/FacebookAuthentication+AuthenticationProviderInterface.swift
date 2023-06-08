@@ -62,7 +62,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return refreshCurrentAccessTokenPublisher()
             .flatMap({ (void: Void) -> AnyPublisher<AuthenticationProviderResponse, Error> in

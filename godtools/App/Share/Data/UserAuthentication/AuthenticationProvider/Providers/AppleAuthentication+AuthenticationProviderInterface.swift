@@ -53,7 +53,7 @@ extension AppleAuthentication: AuthenticationProviderInterface {
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         // TODO: - implement in GT-2042
         

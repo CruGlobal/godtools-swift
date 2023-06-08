@@ -61,7 +61,7 @@ class AuthenticateUserUseCase {
             
         case .renewAccessToken:
             
-            return userAuthentication.renewAccessTokenPublisher()
+            return userAuthentication.renewTokenPublisher()
                 .eraseToAnyPublisher()
         }
     }
