@@ -8,11 +8,17 @@
 
 import SwiftUI
 
-struct MenuSectionView: View {
+struct MenuSectionView<Content: View>: View {
         
     let sectionTitle: String
-    let menuItems: [MenuItemView]
+    let menuItemsViewBuilder: () -> Content
     
+    init(sectionTitle: String, @ViewBuilder menuItemsViewBuilder: @escaping () -> Content) {
+        
+        self.sectionTitle = sectionTitle
+        self.menuItemsViewBuilder = menuItemsViewBuilder
+    }
+        
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -25,20 +31,19 @@ struct MenuSectionView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                ForEach(0 ..< menuItems.count, id: \.self) { index in
-                    
-                    menuItems[index]
-                }
-            }
-            
-            let hasMenuItems: Bool = menuItems.count > 0
-            
-            if hasMenuItems {
+                let menuItems = menuItemsViewBuilder()
                 
-                Rectangle()
-                    .fill(ColorPalette.gtLightestGrey.color)
-                    .frame(height: 1)
-                    .padding(EdgeInsets(top: MenuView.itemSpacing / 2, leading: 0, bottom: 0, trailing: 0))
+                menuItems
+                
+                let hasMenuItems: Bool = !(menuItems is EmptyView)
+                
+                if hasMenuItems {
+                    
+                    Rectangle()
+                        .fill(ColorPalette.gtLightestGrey.color)
+                        .frame(height: 1)
+                        .padding(EdgeInsets(top: MenuView.itemSpacing / 2, leading: 0, bottom: 0, trailing: 0))
+                }
             }
         }
     }
