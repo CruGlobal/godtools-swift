@@ -61,26 +61,27 @@ class AuthenticateUserUseCase {
             
         case .renewAccessToken:
             
-            return userAuthentication.renewAccessTokenPublisher()
+            return userAuthentication.renewTokenPublisher()
                 .eraseToAnyPublisher()
         }
     }
     
     private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<Bool, Error> {
         
-        return mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(
-            providerToken: authProviderResponse.getMobileContentAuthProviderToken(),
-            createUser: createUser
-        )
-        .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
-            
-            return true
-        }
-        .mapError { urlResponseError in
-            
-            return urlResponseError as Error
-        }
-        .eraseToAnyPublisher()
+        return authProviderResponse.getMobileContentAuthProviderToken().publisher
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
+                    .mapError { urlResponseError in
+                        return urlResponseError as Error
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
+                
+                return true
+            }
+            .eraseToAnyPublisher()
     }
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {

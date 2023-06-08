@@ -10,23 +10,38 @@ import Foundation
 
 extension AuthenticationProviderResponse {
     
-    func getMobileContentAuthProviderToken() -> MobileContentAuthProviderToken {
+    func getMobileContentAuthProviderToken() -> Result<MobileContentAuthProviderToken, Error> {
         
         return getMobileContentAuthProviderToken(providerType: providerType)
     }
     
-    private func getMobileContentAuthProviderToken(providerType: AuthenticationProviderType) -> MobileContentAuthProviderToken {
+    private func getMobileContentAuthProviderToken(providerType: AuthenticationProviderType) -> Result<MobileContentAuthProviderToken, Error> {
         
         switch providerType {
             
         case .apple:
-            return .apple(idToken: idToken, givenName: profile.givenName, familyName: profile.familyName)
             
+            guard let idToken = self.idToken, !idToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing apple idToken."))
+            }
+            
+            return .success(.apple(idToken: idToken, givenName: profile.givenName, familyName: profile.familyName))
+                        
         case .facebook:
-            return .facebook(accessToken: accessToken)
+            
+            guard let accessToken = self.accessToken, !accessToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing facebook accesstoken."))
+            }
+            
+            return .success(.facebook(accessToken: accessToken))
             
         case .google:
-            return .google(idToken: idToken)
+            
+            guard let idToken = self.idToken, !idToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing google idToken."))
+            }
+            
+            return .success(.google(idToken: idToken))
         }
     }
 }
