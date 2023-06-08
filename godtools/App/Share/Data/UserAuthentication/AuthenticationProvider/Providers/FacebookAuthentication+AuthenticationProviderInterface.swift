@@ -25,14 +25,15 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
         
         let response = AuthenticationProviderResponse(
             accessToken: accessToken.tokenString,
-            idToken: "",
+            appleSignInAuthorizationCode: nil,
+            idToken: nil,
             profile: AuthenticationProviderProfile(
                 email: profile.email,
                 familyName: profile.lastName,
                 givenName: profile.firstName
             ),
             providerType: .facebook,
-            refreshToken: ""
+            refreshToken: nil
         )
         
         return .success(response)

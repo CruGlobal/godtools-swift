@@ -10,9 +10,10 @@ import Foundation
 
 struct AuthenticationProviderResponse {
  
-    let accessToken: String
-    let idToken: String
+    let accessToken: String?
+    let appleSignInAuthorizationCode: String?
+    let idToken: String?
     let profile: AuthenticationProviderProfile
     let providerType: AuthenticationProviderType
-    let refreshToken: String
+    let refreshToken: String?
 }

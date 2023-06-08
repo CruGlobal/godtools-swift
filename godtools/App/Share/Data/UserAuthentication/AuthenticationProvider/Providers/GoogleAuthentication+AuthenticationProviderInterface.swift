@@ -25,6 +25,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
         
         let response = AuthenticationProviderResponse(
             accessToken: user.accessToken.tokenString,
+            appleSignInAuthorizationCode: nil,
             idToken: idToken,
             profile: AuthenticationProviderProfile(
                 email: user.profile?.email,
@@ -54,7 +55,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
         
         return authenticatePublisher(from: presentingViewController)
             .flatMap({ (response: GoogleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
-                
+                                
                 return self.getResponseForPersistedData().publisher
                     .eraseToAnyPublisher()
             })

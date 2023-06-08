@@ -20,7 +20,8 @@ extension AppleAuthentication: AuthenticationProviderInterface {
         }
         
         let response = AuthenticationProviderResponse(
-            accessToken: "",
+            accessToken: nil,
+            appleSignInAuthorizationCode: appleAuthResponse.authorizationCode,
             idToken: idToken,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
@@ -28,7 +29,7 @@ extension AppleAuthentication: AuthenticationProviderInterface {
                 givenName: appleAuthResponse.fullName?.givenName
             ),
             providerType: .apple,
-            refreshToken: ""
+            refreshToken: nil
         )
         
         return .success(response)
