@@ -28,73 +28,73 @@ struct MenuView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     MenuSectionView(
-                        sectionTitle: "Get Started",
+                        sectionTitle: viewModel.getStartedSectionTitle,
                         menuItems: [
-                            MenuItemView(imageAssetName: "school", title: "Tutorial", tappedClosure: {
+                            MenuItemView(imageAssetName: "school", title: viewModel.tutorialOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "translate", title: "Language settings", tappedClosure: {
+                            MenuItemView(imageAssetName: "translate", title: viewModel.languageSettingsOptionTitle, tappedClosure: {
 
                             })
                         ]
                     )
                     
                     MenuSectionView(
-                        sectionTitle: "Account",
+                        sectionTitle: viewModel.accountSectionTitle,
                         menuItems: [
-                            MenuItemView(imageAssetName: "login", title: "Login / Activity", tappedClosure: {
+                            MenuItemView(imageAssetName: "login", title: viewModel.loginOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "person_add", title: "Create account / Logout", tappedClosure: {
+                            MenuItemView(imageAssetName: "person_add", title: viewModel.createAccountOptionTitle, tappedClosure: {
                                 
                             })
                         ]
                     )
                     
                     MenuSectionView(
-                        sectionTitle: "Support", menuItems: [
-                            MenuItemView(imageAssetName: "send", title: "Send feedback", tappedClosure: {
+                        sectionTitle: viewModel.supportSectionTitle, menuItems: [
+                            MenuItemView(imageAssetName: "send", title: viewModel.sendFeedbackOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "bug_report", title: "Report a bug", tappedClosure: {
+                            MenuItemView(imageAssetName: "bug_report", title: viewModel.reportABugOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "live_help", title: "Ask a question", tappedClosure: {
+                            MenuItemView(imageAssetName: "live_help", title: viewModel.askAQuestionOptionTitle, tappedClosure: {
                                 
                             })
                         ]
                     )
                     
                     MenuSectionView(
-                        sectionTitle: "Share", menuItems: [
-                            MenuItemView(imageAssetName: "rate_review", title: "Leave a review", tappedClosure: {
+                        sectionTitle: viewModel.shareSectionTitle, menuItems: [
+                            MenuItemView(imageAssetName: "rate_review", title: viewModel.leaveAReviewOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "description", title: "Share a story with us", tappedClosure: {
+                            MenuItemView(imageAssetName: "description", title: viewModel.shareAStoryWithUsOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "share", title: "Share GodTools", tappedClosure: {
+                            MenuItemView(imageAssetName: "share", title: viewModel.shareGodToolsOptionTitle, tappedClosure: {
                                 
                             })
                         ]
                     )
                     
                     MenuSectionView(
-                        sectionTitle: "About", menuItems: [
-                            MenuItemView(imageAssetName: "format_list_bulleted", title: "Terms of use", tappedClosure: {
+                        sectionTitle: viewModel.aboutSectionTitle, menuItems: [
+                            MenuItemView(imageAssetName: "format_list_bulleted", title: viewModel.termsOfUseOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "policy", title: "Privacy policy", tappedClosure: {
+                            MenuItemView(imageAssetName: "policy", title: viewModel.privacyPolicyOptionTitle, tappedClosure: {
                                 
                             }),
-                            MenuItemView(imageAssetName: "copyright", title: "Copyright info", tappedClosure: {
+                            MenuItemView(imageAssetName: "copyright", title: viewModel.copyrightInfoOptionTitle, tappedClosure: {
                                 
                             })
                         ]
                     )
                     
                     MenuSectionView(
-                        sectionTitle: "Version", menuItems: []
+                        sectionTitle: viewModel.versionSectionTitle, menuItems: []
                     )
                     
                 }
