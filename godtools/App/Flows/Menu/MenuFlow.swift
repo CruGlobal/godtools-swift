@@ -251,7 +251,13 @@ class MenuFlow: Flow {
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase()
         )
         
         let view = MenuView(viewModel: viewModel)
