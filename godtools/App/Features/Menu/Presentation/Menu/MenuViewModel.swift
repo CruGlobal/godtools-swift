@@ -11,7 +11,6 @@ import Combine
 
 class MenuViewModel: ObservableObject {
     
-    
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -19,6 +18,7 @@ class MenuViewModel: ObservableObject {
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let logOutUserUseCase: LogOutUserUseCase
+    private let getAppVersionUseCase: GetAppVersionUseCase
     private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -48,8 +48,9 @@ class MenuViewModel: ObservableObject {
     @Published var termsOfUseOptionTitle: String
     @Published var privacyPolicyOptionTitle: String
     @Published var copyrightInfoOptionTitle: String
+    @Published var appVersion: String = ""
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, logOutUserUseCase: LogOutUserUseCase) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -59,6 +60,7 @@ class MenuViewModel: ObservableObject {
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.logOutUserUseCase = logOutUserUseCase
+        self.getAppVersionUseCase = getAppVersionUseCase
         
         navTitle = localizationServices.stringForMainBundle(key: "settings")
         getStartedSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.SectionTitles.getStarted.rawValue)
@@ -84,6 +86,12 @@ class MenuViewModel: ObservableObject {
         privacyPolicyOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue)
         copyrightInfoOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue)
         
+        getAppVersionUseCase.getAppVersionPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appVersion: AppVersionDomainModel) in
+                self?.appVersion = appVersion.versionString
+            }
+            .store(in: &cancellables)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
