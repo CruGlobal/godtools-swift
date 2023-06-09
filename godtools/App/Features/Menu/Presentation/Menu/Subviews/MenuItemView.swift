@@ -10,20 +10,40 @@ import SwiftUI
 
 struct MenuItemView: View {
     
-    let imageAssetName: String
+    private let imageWidth: CGFloat = 24
+    
+    let imageAssetName: String?
+    let shouldReplaceNullAssetWithEmptySpace: Bool
     let title: String
-    let tappedClosure: (() -> Void)
+    let tappedClosure: (() -> Void)?
+    
+    init(imageAssetName: String?, shouldReplaceNullAssetWithEmptySpace: Bool = false, title: String, tappedClosure: (() -> Void)?) {
+        
+        self.imageAssetName = imageAssetName
+        self.shouldReplaceNullAssetWithEmptySpace = shouldReplaceNullAssetWithEmptySpace
+        self.title = title
+        self.tappedClosure = tappedClosure
+    }
 
     var body: some View {
         
         HStack {
             
-            Image(imageAssetName)
-                .frame(width: 24)
+            if let imageAssetName = imageAssetName, !imageAssetName.isEmpty {
+                
+                Image(imageAssetName)
+                    .frame(width: imageWidth)
+            }
+            else if shouldReplaceNullAssetWithEmptySpace {
+                
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: imageWidth, height: imageWidth)
+            }
             
             Button(action: {
 
-                tappedClosure()
+                tappedClosure?()
             }) {
                 
                 Text(title)
@@ -33,6 +53,7 @@ struct MenuItemView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
             }
+            .disabled(tappedClosure == nil)
         }
     }
 }
