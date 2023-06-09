@@ -51,7 +51,7 @@ struct MenuView: View {
                             sectionTitle: viewModel.accountSectionTitle,
                             menuItemsViewBuilder: {
                                 
-                                if viewModel.accountSectionVisibility == .visibleLoggedIn {
+                                if viewModel.accountSectionVisibility == .visibleLoggedOut {
                                     
                                     MenuItemView(imageAssetName: ImageCatalog.login.name, title: viewModel.loginOptionTitle, tappedClosure: {
                                         
@@ -63,7 +63,7 @@ struct MenuView: View {
                                         viewModel.createAccountTapped()
                                     })
                                 }
-                                else if viewModel.accountSectionVisibility == .visibleLoggedOut {
+                                else if viewModel.accountSectionVisibility == .visibleLoggedIn {
                                     
                                     MenuItemView(imageAssetName: ImageCatalog.person.name, title: viewModel.activityOptionTitle, tappedClosure: {
                                         
