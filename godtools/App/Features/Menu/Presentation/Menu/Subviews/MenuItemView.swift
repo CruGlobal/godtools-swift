@@ -11,6 +11,7 @@ import SwiftUI
 struct MenuItemView: View {
     
     private let imageWidth: CGFloat = 24
+    private let imageAlignment: Alignment = .leading
     
     let imageAssetName: String?
     let shouldReplaceNullAssetWithEmptySpace: Bool
@@ -27,18 +28,20 @@ struct MenuItemView: View {
 
     var body: some View {
         
-        HStack {
+        HStack(alignment: .center, spacing: 10) {
             
             if let imageAssetName = imageAssetName, !imageAssetName.isEmpty {
                 
                 Image(imageAssetName)
-                    .frame(width: imageWidth)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: imageWidth, height: imageWidth, alignment: imageAlignment)
             }
             else if shouldReplaceNullAssetWithEmptySpace {
                 
                 Rectangle()
                     .fill(Color.clear)
-                    .frame(width: imageWidth, height: imageWidth)
+                    .frame(width: imageWidth, height: imageWidth, alignment: imageAlignment)
             }
             
             Button(action: {
