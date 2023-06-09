@@ -24,7 +24,9 @@ struct MenuView: View {
     var body: some View {
         
         GeometryReader { geometry in
-            ScrollView{
+            
+            ScrollView(.vertical, showsIndicators: false) {
+               
                 VStack(alignment: .leading, spacing: 0) {
                     
                     MenuSectionView(
@@ -124,8 +126,10 @@ struct MenuView: View {
                     
                     MenuSectionView(
                         sectionTitle: viewModel.versionSectionTitle,
+                        overrideHidesSeparator: true,
                         menuItemsViewBuilder: {
                             
+                            MenuItemView(imageAssetName: nil, title: viewModel.appVersion, tappedClosure: nil)
                         }
                     )
                 }

@@ -11,11 +11,13 @@ import SwiftUI
 struct MenuSectionView<Content: View>: View {
         
     let sectionTitle: String
+    let overrideHidesSeparator: Bool
     let menuItemsViewBuilder: () -> Content
     
-    init(sectionTitle: String, @ViewBuilder menuItemsViewBuilder: @escaping () -> Content) {
+    init(sectionTitle: String, overrideHidesSeparator: Bool = false, @ViewBuilder menuItemsViewBuilder: @escaping () -> Content) {
         
         self.sectionTitle = sectionTitle
+        self.overrideHidesSeparator = overrideHidesSeparator
         self.menuItemsViewBuilder = menuItemsViewBuilder
     }
         
@@ -37,7 +39,7 @@ struct MenuSectionView<Content: View>: View {
                 
                 let hasMenuItems: Bool = !(menuItems is EmptyView)
                 
-                if hasMenuItems {
+                if hasMenuItems && !overrideHidesSeparator {
                     
                     Rectangle()
                         .fill(ColorPalette.gtLightestGrey.color)
