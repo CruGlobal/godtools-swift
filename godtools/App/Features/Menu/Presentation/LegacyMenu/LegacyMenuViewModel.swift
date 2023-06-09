@@ -82,10 +82,14 @@ class LegacyMenuViewModel {
     
     private func reloadMenuDataSource() {
         
-        let isAuthorized: Bool = getUserIsAuthenticatedUseCase.getUserIsAuthenticated()
+        // TODO: Disabling as we move to new MenuViewModel. ~Levi
+        //let isAuthorized: Bool = getUserIsAuthenticatedUseCase.getUserIsAuthenticated()
+        let isAuthorized: Bool = false
         
-        let accountCreationIsSupported: Bool = getAccountCreationIsSupportedUseCase.getAccountCreationIsSupported().isSupported
-       
+        // TODO: Disabling as we move to new MenuViewModel. ~Levi
+        //let accountCreationIsSupported: Bool = getAccountCreationIsSupportedUseCase.getAccountCreationIsSupported().isSupported
+        let accountCreationIsSupported: Bool = false
+        
         let tutorialIsAvailable: Bool = getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable()
         
         var sections: [MenuSection] = Array()
