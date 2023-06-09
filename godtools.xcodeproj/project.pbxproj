@@ -192,6 +192,8 @@
 		454F993F29C09B6F001A0B33 /* OnboardingQuickStartItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F993E29C09B6F001A0B33 /* OnboardingQuickStartItemViewModel.swift */; };
 		454F994629C09E07001A0B33 /* GetOnboardingQuickStartItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F994529C09E07001A0B33 /* GetOnboardingQuickStartItemsUseCase.swift */; };
 		454F994829C09E46001A0B33 /* OnboardingQuickStartItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F994729C09E46001A0B33 /* OnboardingQuickStartItemDomainModel.swift */; };
+		4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */; };
+		4550BC722A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */; };
 		455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */; };
 		4554205B28B17AEA00368CFE /* AttachmentFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
@@ -1317,6 +1319,8 @@
 		454F993E29C09B6F001A0B33 /* OnboardingQuickStartItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartItemViewModel.swift; sourceTree = "<group>"; };
 		454F994529C09E07001A0B33 /* GetOnboardingQuickStartItemsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickStartItemsUseCase.swift; sourceTree = "<group>"; };
 		454F994729C09E46001A0B33 /* OnboardingQuickStartItemDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartItemDomainModel.swift; sourceTree = "<group>"; };
+		4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashableCurrentValueSubject.swift; sourceTree = "<group>"; };
+		4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsAuthenticatedDomainModel.swift; sourceTree = "<group>"; };
 		4554205A28B17AEA00368CFE /* AttachmentFileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentFileDataModel.swift; sourceTree = "<group>"; };
 		4554512428948D220072EC6E /* LanguageSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsRepository.swift; sourceTree = "<group>"; };
 		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
@@ -5598,6 +5602,7 @@
 		45AD20B725938F1A00A096A0 /* Oberservables */ = {
 			isa = PBXGroup;
 			children = (
+				4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */,
 				45AD20B825938F1A00A096A0 /* ObservableValue.swift */,
 				45EC429A272C87430052F2AA /* PassthroughValue.swift */,
 				45AD20BA25938F1A00A096A0 /* Signal.swift */,
@@ -6751,6 +6756,7 @@
 			isa = PBXGroup;
 			children = (
 				45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */,
+				4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */,
 			);
 			path = GetUserIsAuthenticatedUseCase;
 			sourceTree = "<group>";
@@ -8735,6 +8741,7 @@
 				45CBA009261FB0D30036BEB3 /* LessonView.swift in Sources */,
 				45D63E87288F75B0009B4610 /* MobileContentAttachmentsApi.swift in Sources */,
 				45558417269F2F6100C3FF14 /* MobileContentAnalytics.swift in Sources */,
+				4550BC722A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift in Sources */,
 				4533C4CE28AC2C4C00F9628B /* LaunchCountRepository.swift in Sources */,
 				458CFE8129D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift in Sources */,
 				456777BD287DB3770044AEB2 /* LoadToolRemoteSessionViewModel.swift in Sources */,
@@ -9043,6 +9050,7 @@
 				D1FF263E25BA0C1C00C825DB /* FirebaseInAppMessaging.swift in Sources */,
 				455583FF269F2DA500C3FF14 /* MobileContentEmbeddedVideoViewModel.swift in Sources */,
 				455583F3269F2DA500C3FF14 /* MobileContentTabViewModel.swift in Sources */,
+				4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */,
 				45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
 				4573133F28C1821100481640 /* ToolDetailsVersionsCardView.swift in Sources */,

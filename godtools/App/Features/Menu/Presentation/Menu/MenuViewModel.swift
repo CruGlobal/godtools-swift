@@ -96,16 +96,16 @@ class MenuViewModel: ObservableObject {
             getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (accountCreation: AccountCreationIsSupportedDomainModel, userIsAuthenticated: Bool) in
+        .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
             
             // TODO: Finish implementing and testing. See GT-2063 which should allow for observing userIsAuthenticated changes. ~Levi
             
-            guard accountCreation.isSupported else {
+            guard accountCreationIsSupportedDomainModel.isSupported else {
                 self?.accountSectionVisibility = .hidden
                 return
             }
             
-            self?.accountSectionVisibility = userIsAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
+            self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
         }
         .store(in: &cancellables)
         
@@ -186,9 +186,8 @@ extension MenuViewModel {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (finished: Bool) in
+            }, receiveValue: { (finished: Bool) in
                 
-                // TODO: Menu should reflect changes after logging out. See GT-2063. ~Levi
             })
             .store(in: &cancellables)
     }

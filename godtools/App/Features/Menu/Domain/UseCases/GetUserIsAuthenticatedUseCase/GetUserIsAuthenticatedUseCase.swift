@@ -12,17 +12,41 @@ import Combine
 class GetUserIsAuthenticatedUseCase {
     
     private let userAuthentication: UserAuthentication
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(userAuthentication: UserAuthentication) {
+    init(userAuthentication: UserAuthentication, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
         
         self.userAuthentication = userAuthentication
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func getIsAuthenticatedPublisher() -> AnyPublisher<Bool, Never> {
+    func getIsAuthenticatedPublisher() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
         
-        let isAuthenticated: Bool = userAuthentication.getPersistedResponse() != nil
-        
-        return Just(isAuthenticated)
+        return mobileContentAuthTokenRepository.getAuthTokenChangedPublisher()
+            .map {
+                return self.mapToDomainModel(authToken: $0)
+            }
             .eraseToAnyPublisher()
+    }
+    
+    private func mapToDomainModel(authToken: MobileContentAuthTokenDataModel?) -> UserIsAuthenticatedDomainModel {
+        
+        let isAuthenticated: Bool
+        
+        if let authToken = authToken, let expirationDate = authToken.expirationDate {
+            
+            let currentDate: Date = Date()
+            let secondsTilExpiration: TimeInterval = currentDate.timeIntervalSince(expirationDate)
+            
+            isAuthenticated = secondsTilExpiration < 0
+        }
+        else {
+            
+            isAuthenticated = false
+        }
+        
+        return UserIsAuthenticatedDomainModel(
+            isAuthenticated: isAuthenticated
+        )
     }
 }

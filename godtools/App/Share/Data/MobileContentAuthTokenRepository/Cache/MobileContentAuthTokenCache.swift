@@ -7,8 +7,14 @@
 //
 
 import Foundation
+import Combine
 
 class MobileContentAuthTokenCache {
+    
+    typealias UserId = String
+    
+    private static let sharedHashableAuthTokenSubject: HashableCurrentValueSubject<UserId, MobileContentAuthTokenDataModel, Never> = HashableCurrentValueSubject()
+    private static let sharedAuthUserId: UserId = "shared_auth_user_id"
     
     private let keychainAccessor: MobileContentAuthTokenKeychainAccessor
     private let realmCache: RealmMobileContentAuthTokenCache
@@ -17,6 +23,8 @@ class MobileContentAuthTokenCache {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
         self.realmCache = realmCache
+        
+        updateHashableAuthTokenSubject(authToken: getAuthTokenData())
     }
     
     func storeAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) {
@@ -26,6 +34,8 @@ class MobileContentAuthTokenCache {
             try keychainAccessor.saveMobileContentAuthToken(authTokenDataModel)
             
             _ = realmCache.storeAuthTokenData(authTokenData: authTokenDataModel)
+            
+            updateHashableAuthTokenSubject(authToken: authTokenDataModel)
 
         } catch let error {
             
@@ -63,5 +73,26 @@ class MobileContentAuthTokenCache {
         keychainAccessor.deleteMobileContentAuthTokenAndUserId(userId: userId)
         
         _ = realmCache.deleteAuthTokenData(userId: userId)
+        
+        updateHashableAuthTokenSubject(authToken: nil)
+    }
+}
+
+// MARK: - AuthToken CurrentValueSubject
+
+extension MobileContentAuthTokenCache {
+    
+    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+        
+        return MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.getValueChangedPublisher(hash: MobileContentAuthTokenCache.sharedAuthUserId)
+            .eraseToAnyPublisher()
+    }
+    
+    func updateHashableAuthTokenSubject(authToken: MobileContentAuthTokenDataModel?) {
+        
+        MobileContentAuthTokenCache.sharedHashableAuthTokenSubject.storeValue(
+            hash: MobileContentAuthTokenCache.sharedAuthUserId,
+            value: authToken
+        )
     }
 }
