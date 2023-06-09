@@ -17,6 +17,8 @@ class MenuViewModel: ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
+    private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let logOutUserUseCase: LogOutUserUseCase
     private let getAppVersionUseCase: GetAppVersionUseCase
     private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
@@ -49,8 +51,9 @@ class MenuViewModel: ObservableObject {
     @Published var privacyPolicyOptionTitle: String
     @Published var copyrightInfoOptionTitle: String
     @Published var appVersion: String = ""
+    @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -59,6 +62,8 @@ class MenuViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
+        self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.logOutUserUseCase = logOutUserUseCase
         self.getAppVersionUseCase = getAppVersionUseCase
         
@@ -85,6 +90,22 @@ class MenuViewModel: ObservableObject {
         termsOfUseOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.termsOfUse.rawValue)
         privacyPolicyOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue)
         copyrightInfoOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue)
+                
+        Publishers.CombineLatest(
+            getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(),
+            getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (accountCreation: AccountCreationIsSupportedDomainModel, userIsAuthenticated: Bool) in
+            
+            guard accountCreation.isSupported else {
+                self?.accountSectionVisibility = .hidden
+                return
+            }
+            
+            self?.accountSectionVisibility = userIsAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
+        }
+        .store(in: &cancellables)
         
         getAppVersionUseCase.getAppVersionPublisher()
             .receive(on: DispatchQueue.main)

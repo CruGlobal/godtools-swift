@@ -44,22 +44,45 @@ struct MenuView: View {
                             })
                         }
                     )
-                    
-                    MenuSectionView(
-                        sectionTitle: viewModel.accountSectionTitle,
-                        menuItemsViewBuilder: {
-                            
-                            MenuItemView(imageAssetName: "login", title: viewModel.loginOptionTitle, tappedClosure: {
+   
+                    if viewModel.accountSectionVisibility != .hidden {
+                        
+                        MenuSectionView(
+                            sectionTitle: viewModel.accountSectionTitle,
+                            menuItemsViewBuilder: {
                                 
-                                viewModel.loginTapped()
-                            })
-                            
-                            MenuItemView(imageAssetName: "person_add", title: viewModel.createAccountOptionTitle, tappedClosure: {
-                                
-                                viewModel.createAccountTapped()
-                            })
-                        }
-                    )
+                                if viewModel.accountSectionVisibility == .visibleLoggedIn {
+                                    
+                                    MenuItemView(imageAssetName: "login", title: viewModel.loginOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.loginTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: "person_add", title: viewModel.createAccountOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.createAccountTapped()
+                                    })
+                                }
+                                else if viewModel.accountSectionVisibility == .visibleLoggedOut {
+                                    
+                                    MenuItemView(imageAssetName: "person", title: viewModel.activityOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.activityTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: "logout", title: viewModel.logoutOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.logoutTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: nil, title: viewModel.deleteAccountOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.deleteAccountTapped()
+                                    })
+                                }
+                            }
+                        )
+                    }
                     
                     MenuSectionView(
                         sectionTitle: viewModel.supportSectionTitle,
