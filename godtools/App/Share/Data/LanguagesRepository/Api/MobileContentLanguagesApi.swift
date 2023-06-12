@@ -20,7 +20,7 @@ class MobileContentLanguagesApi {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
             
         session = ignoreCacheSession.session
         baseUrl = config.mobileContentApiBaseUrl
@@ -38,28 +38,13 @@ class MobileContentLanguagesApi {
         )
     }
     
-    func getLanguages() -> AnyPublisher<[LanguageModel], URLResponseError> {
+    func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
         
-        return session.dataTaskPublisher(for: getLanguagesRequest())
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject.data
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
-            .decode(type: JsonApiResponseData<[LanguageModel]>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
-            .map {
-                return $0.data
+        let urlRequest: URLRequest = getLanguagesRequest()
+        
+        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+            .map { (languagesResponse: JsonApiResponseData<[LanguageModel]>) in
+                return languagesResponse.data
             }
             .eraseToAnyPublisher()
     }

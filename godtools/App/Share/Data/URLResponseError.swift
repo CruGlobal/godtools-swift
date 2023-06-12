@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Deprecating and going to use Error in place. ~Levi
 enum URLResponseError: Error {
 
     case decodeError(error: Error)

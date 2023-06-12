@@ -28,7 +28,7 @@ class GetToolTranslationsFilesUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
+    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
                 
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
@@ -45,30 +45,28 @@ class GetToolTranslationsFilesUseCase {
         }
         
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
-            .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, URLResponseError> in
+            .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
                 return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
-                    .flatMap { results in
+                    .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
-                            .mapError { error in
-                                return URLResponseError.otherError(error: error)
+                            .mapError { (error: DetermineToolTranslationsToDownloadError) in
+                                return error as Error
                             }
-                    }
+                            .eraseToAnyPublisher()
+                    })
                     .eraseToAnyPublisher()
             })
-            .mapError { error in
-                return URLResponseError.otherError(error: error)
-            }
-            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                    
                 let translations: [TranslationModel] = result.translations
                 
                 translationsToDownload = result.translations
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                    .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                    .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
@@ -77,7 +75,7 @@ class GetToolTranslationsFilesUseCase {
                     })
                     .eraseToAnyPublisher()
             })
-            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                 
                 var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
                 
@@ -102,27 +100,23 @@ class GetToolTranslationsFilesUseCase {
                     maintainTranslationDownloadOrder.append(translationManifest)
                 }
                 
-                return Just(maintainTranslationDownloadOrder).setFailureType(to: URLResponseError.self)
+                return Just(maintainTranslationDownloadOrder).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ translationManifests -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+            .flatMap({ translationManifests -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                    .mapError { error in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
-            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> in
+            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, Error> in
                 
                 guard let resource = translationManifests.first?.translation.resource else {
                     
                     let error = NSError.errorWithDescription(description: "Failed to get resource on translation model.")
-                    let responseError = URLResponseError.otherError(error: error)
                     
-                    return Fail(error: responseError)
+                    return Fail(error: error)
                         .eraseToAnyPublisher()
                 }
                 
@@ -141,7 +135,7 @@ class GetToolTranslationsFilesUseCase {
                 
                 let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)
                 
-                return Just(domainModel).setFailureType(to: URLResponseError.self)
+                return Just(domainModel).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

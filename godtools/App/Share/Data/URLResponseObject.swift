@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Removing in place of RequestOperation UrlRequestResponse. ~Levi
 class URLResponseObject {
     
     let data: Data

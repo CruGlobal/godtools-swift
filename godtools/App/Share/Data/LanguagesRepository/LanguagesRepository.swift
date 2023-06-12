@@ -48,15 +48,12 @@ class LanguagesRepository {
         return cache.getLanguages()
     }
     
-    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> {
+    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
         return api.getLanguages()
-            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> in
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)
-                    .mapError { error in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

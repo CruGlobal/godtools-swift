@@ -36,22 +36,11 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<URLResponseObject, URLResponseError> {
+    func getTranslationFile(fileName: String) -> AnyPublisher<UrlRequestResponse, Error> {
         
-        return session.dataTaskPublisher(for: getTranslationFileRequest(fileName: fileName))
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
+        let urlRequest: URLRequest = getTranslationFileRequest(fileName: fileName)
+        
+        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
             .eraseToAnyPublisher()
     }
     
@@ -69,22 +58,11 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String) -> AnyPublisher<URLResponseObject, URLResponseError> {
+    func getTranslationZipFile(translationId: String) -> AnyPublisher<UrlRequestResponse, Error> {
         
-        return session.dataTaskPublisher(for: getTranslationZipFileRequest(translationId: translationId))
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
+        let urlRequest: URLRequest = getTranslationZipFileRequest(translationId: translationId)
+        
+        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
             .eraseToAnyPublisher()
     }
 }

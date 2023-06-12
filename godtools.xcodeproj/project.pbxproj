@@ -10550,7 +10550,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
+				minimumVersion = 1.3.0;
 			};
 		};
 		45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */ = {
