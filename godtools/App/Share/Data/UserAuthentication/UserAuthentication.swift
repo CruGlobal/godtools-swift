@@ -14,11 +14,13 @@ class UserAuthentication {
         
     private let authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface]
     private let lastAuthenticatedProviderCache: LastAuthenticatedProviderCache
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache) {
+    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
                 
         self.authenticationProviders = authenticationProviders
         self.lastAuthenticatedProviderCache = lastAuthenticatedProviderCache
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
     private func getLastAuthenticatedProvider() -> AuthenticationProviderInterface? {
@@ -49,7 +51,7 @@ class UserAuthentication {
         return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
-    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
         
         guard let lastAuthenticatedProvider = getLastAuthenticatedProviderType() else {
             return Fail(error: NSError.errorWithDescription(description: "Last authenticated provider does not exist."))
@@ -62,6 +64,10 @@ class UserAuthentication {
                 return provider.renewTokenPublisher()
                     .eraseToAnyPublisher()
             })
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: false)
+            }
             .eraseToAnyPublisher()
     }
     
@@ -76,7 +82,7 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func signInPublisher(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
     
         return getAuthenticationProvider(provider: provider)
             .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
@@ -89,6 +95,10 @@ class UserAuthentication {
                 
                 return response
             }
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
+            }
             .eraseToAnyPublisher()
     }
     
@@ -99,6 +109,20 @@ class UserAuthentication {
                 self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
                 return response
             }
+            .eraseToAnyPublisher()
+    }
+    
+    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+        
+        return authProviderResponse.getMobileContentAuthProviderToken().publisher
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
+                    .mapError { urlResponseError in
+                        return urlResponseError as Error
+                    }
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     

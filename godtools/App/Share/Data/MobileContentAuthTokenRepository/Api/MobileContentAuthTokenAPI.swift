@@ -29,11 +29,15 @@ class MobileContentAuthTokenAPI {
         ]
         
         switch providerToken {
-        case .apple(let idToken, let givenName, let familyName):
+        case .appleGetRefreshToken(let authCode, let givenName, let familyName):
             
-            attributes["apple_id_token"] = idToken
+            attributes["apple_auth_code"] = authCode
             attributes["apple_given_name"] = givenName
             attributes["apple_family_name"] = familyName
+            
+        case .appleAuth(let refreshToken):
+            
+            attributes["apple_refresh_token"] = refreshToken
                         
         case .facebook(let accessToken):
             
