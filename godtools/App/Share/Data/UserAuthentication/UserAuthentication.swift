@@ -49,7 +49,7 @@ class UserAuthentication {
         return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         guard let lastAuthenticatedProvider = getLastAuthenticatedProviderType() else {
             return Fail(error: NSError.errorWithDescription(description: "Last authenticated provider does not exist."))
@@ -59,7 +59,7 @@ class UserAuthentication {
         return getAuthenticationProvider(provider: lastAuthenticatedProvider)
             .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                return provider.renewAccessTokenPublisher()
+                return provider.renewTokenPublisher()
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
