@@ -21,11 +21,18 @@ extension AuthenticationProviderResponse {
             
         case .apple:
             
-            guard let idToken = self.idToken, !idToken.isEmpty else {
-                return .failure(NSError.errorWithDescription(description: "Missing apple idToken."))
+            if let authCode = self.appleSignInAuthorizationCode, authCode.isEmpty == false {
+                
+                return .success(.appleGetRefreshToken(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                
+            } else if let refreshToken = self.refreshToken, refreshToken.isEmpty == false {
+                
+                return .success(.appleAuth(refreshToken: refreshToken))
+                
+            } else {
+                
+                return .failure(NSError.errorWithDescription(description: "Missing apple auth code or refresh token"))
             }
-            
-            return .success(.apple(idToken: idToken, givenName: profile.givenName, familyName: profile.familyName))
                         
         case .facebook:
             
