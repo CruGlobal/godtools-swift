@@ -11,7 +11,17 @@ import Combine
 
 class MenuViewModel: ObservableObject {
     
+    
     private let localizationServices: LocalizationServices
+    private let analytics: AnalyticsContainer
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
+    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let logOutUserUseCase: LogOutUserUseCase
+    private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -39,10 +49,16 @@ class MenuViewModel: ObservableObject {
     @Published var privacyPolicyOptionTitle: String
     @Published var copyrightInfoOptionTitle: String
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, logOutUserUseCase: LogOutUserUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
+        self.analytics = analytics
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
+        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.logOutUserUseCase = logOutUserUseCase
         
         navTitle = localizationServices.stringForMainBundle(key: "settings")
         getStartedSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.SectionTitles.getStarted.rawValue)
@@ -69,14 +85,155 @@ class MenuViewModel: ObservableObject {
         copyrightInfoOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue)
         
     }
+    
+    private func getMenuAnalyticsScreenName () -> String {
+        return "Menu"
+    }
+    
+    private func getShareAppAnalyticsScreenName () -> String {
+        return "Share App"
+    }
+    
+    private func getShareStoryAnalyticsScreenName () -> String {
+        return "Share Story"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "menu"
+    }
+    
+    private var analyticsSiteSubSection: String {
+        return ""
+    }
 }
 
 // MARK: - Inputs
 
 extension MenuViewModel {
     
-    @objc func doneTapped() {
+    func pageViewed() {
         
+        let trackScreen = TrackScreenModel(
+            screenName: getMenuAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+    }
+    
+    @objc func doneTapped() {
         flowDelegate?.navigate(step: .doneTappedFromMenu)
+    }
+    
+    func tutorialTapped() {
+        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+        flowDelegate?.navigate(step: .tutorialTappedFromMenu)
+    }
+    
+    func languageSettingsTapped() {
+        flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
+    }
+    
+    func loginTapped() {
+        flowDelegate?.navigate(step: .loginTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
+    }
+    
+    func activityTapped() {
+        flowDelegate?.navigate(step: .activityTappedFromMenu)
+    }
+    
+    func createAccountTapped() {
+        flowDelegate?.navigate(step: .createAccountTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
+    }
+    
+    func logoutTapped() {
+        
+        logOutUserUseCase.logOutPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (finished: Bool) in
+                
+                // TODO: Menu should reflect changes after logging out. ~Levi
+            })
+            .store(in: &cancellables)
+    }
+    
+    func deleteAccountTapped() {
+        flowDelegate?.navigate(step: .deleteAccountTappedFromMenu)
+    }
+    
+    func sendFeedbackTapped() {
+        flowDelegate?.navigate(step: .sendFeedbackTappedFromMenu)
+    }
+    
+    func reportABugTapped() {
+        flowDelegate?.navigate(step: .reportABugTappedFromMenu)
+    }
+    
+    func askAQuestionTapped() {
+        flowDelegate?.navigate(step: .askAQuestionTappedFromMenu)
+    }
+    
+    func leaveAReviewTapped() {
+        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu)
+    }
+    
+    func shareAStoryWithUsTapped() {
+        
+        flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
+        
+        let trackScreen = TrackScreenModel(
+            screenName: getShareStoryAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+    }
+    
+    func shareGodToolsTapped() {
+        
+        flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
+        
+        let trackAction = TrackActionModel(
+            screenName: getShareAppAnalyticsScreenName(),
+            actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            url: nil,
+            data: [AnalyticsConstants.Keys.shareAction: 1]
+        )
+        
+        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+        
+        let trackScreen = TrackScreenModel(
+            screenName: getShareAppAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        )
+        
+        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+    }
+    
+    func termsOfUseTapped() {
+        flowDelegate?.navigate(step: .termsOfUseTappedFromMenu)
+    }
+    
+    func privacyPolicyTapped() {
+        flowDelegate?.navigate(step: .privacyPolicyTappedFromMenu)
+    }
+    
+    func copyrightInfoTapped() {
+        flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
     }
 }

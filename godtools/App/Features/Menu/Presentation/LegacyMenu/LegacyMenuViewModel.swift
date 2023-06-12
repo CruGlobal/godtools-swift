@@ -305,7 +305,7 @@ extension LegacyMenuViewModel {
     
     func logoutTapped(fromViewController: UIViewController) {
         
-        logOutUserUseCase.logOutPublisher(fromViewController: fromViewController)
+        logOutUserUseCase.logOutPublisher()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 

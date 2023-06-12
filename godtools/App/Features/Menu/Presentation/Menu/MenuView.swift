@@ -29,74 +29,105 @@ struct MenuView: View {
                     
                     MenuSectionView(
                         sectionTitle: viewModel.getStartedSectionTitle,
-                        menuItems: [
+                        menuItemsViewBuilder: {
+                            
                             MenuItemView(imageAssetName: "school", title: viewModel.tutorialOptionTitle, tappedClosure: {
                                 
-                            }),
-                            MenuItemView(imageAssetName: "translate", title: viewModel.languageSettingsOptionTitle, tappedClosure: {
-
+                                viewModel.tutorialTapped()
                             })
-                        ]
+                            
+                            MenuItemView(imageAssetName: "translate", title: viewModel.languageSettingsOptionTitle, tappedClosure: {
+                                
+                                viewModel.languageSettingsTapped()
+                            })
+                        }
                     )
                     
                     MenuSectionView(
                         sectionTitle: viewModel.accountSectionTitle,
-                        menuItems: [
+                        menuItemsViewBuilder: {
+                            
                             MenuItemView(imageAssetName: "login", title: viewModel.loginOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.loginTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "person_add", title: viewModel.createAccountOptionTitle, tappedClosure: {
                                 
+                                viewModel.createAccountTapped()
                             })
-                        ]
+                        }
                     )
                     
                     MenuSectionView(
-                        sectionTitle: viewModel.supportSectionTitle, menuItems: [
+                        sectionTitle: viewModel.supportSectionTitle,
+                        menuItemsViewBuilder: {
+                            
                             MenuItemView(imageAssetName: "send", title: viewModel.sendFeedbackOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.sendFeedbackTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "bug_report", title: viewModel.reportABugOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.reportABugTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "live_help", title: viewModel.askAQuestionOptionTitle, tappedClosure: {
                                 
+                                viewModel.askAQuestionTapped()
                             })
-                        ]
+                        }
                     )
                     
                     MenuSectionView(
-                        sectionTitle: viewModel.shareSectionTitle, menuItems: [
+                        sectionTitle: viewModel.shareSectionTitle,
+                        menuItemsViewBuilder: {
+                            
                             MenuItemView(imageAssetName: "rate_review", title: viewModel.leaveAReviewOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.leaveAReviewTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "description", title: viewModel.shareAStoryWithUsOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.shareAStoryWithUsTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "share", title: viewModel.shareGodToolsOptionTitle, tappedClosure: {
                                 
+                                viewModel.shareGodToolsTapped()
                             })
-                        ]
+                        }
                     )
                     
                     MenuSectionView(
-                        sectionTitle: viewModel.aboutSectionTitle, menuItems: [
+                        sectionTitle: viewModel.aboutSectionTitle,
+                        menuItemsViewBuilder: {
+                            
                             MenuItemView(imageAssetName: "format_list_bulleted", title: viewModel.termsOfUseOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.termsOfUseTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "policy", title: viewModel.privacyPolicyOptionTitle, tappedClosure: {
                                 
-                            }),
+                                viewModel.privacyPolicyTapped()
+                            })
+                            
                             MenuItemView(imageAssetName: "copyright", title: viewModel.copyrightInfoOptionTitle, tappedClosure: {
                                 
+                                viewModel.copyrightInfoTapped()
                             })
-                        ]
+                        }
                     )
                     
                     MenuSectionView(
-                        sectionTitle: viewModel.versionSectionTitle, menuItems: []
+                        sectionTitle: viewModel.versionSectionTitle,
+                        menuItemsViewBuilder: {
+                            
+                        }
                     )
-                    
                 }
                 .padding(EdgeInsets(top: 0, leading: MenuView.contentHorizontalPadding, bottom: 0, trailing: MenuView.contentHorizontalPadding))
             }
@@ -104,5 +135,8 @@ struct MenuView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
         .background(Color.white)
+        .onAppear {
+            viewModel.pageViewed()
+        }
     }
 }
