@@ -11,14 +11,16 @@ import Combine
 
 class MenuViewModel: ObservableObject {
     
-    
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
+    private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
+    private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let logOutUserUseCase: LogOutUserUseCase
+    private let getAppVersionUseCase: GetAppVersionUseCase
     private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -48,8 +50,10 @@ class MenuViewModel: ObservableObject {
     @Published var termsOfUseOptionTitle: String
     @Published var privacyPolicyOptionTitle: String
     @Published var copyrightInfoOptionTitle: String
+    @Published var appVersion: String = ""
+    @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, logOutUserUseCase: LogOutUserUseCase) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -58,7 +62,10 @@ class MenuViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
+        self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
+        self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.logOutUserUseCase = logOutUserUseCase
+        self.getAppVersionUseCase = getAppVersionUseCase
         
         navTitle = localizationServices.stringForMainBundle(key: "settings")
         getStartedSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.SectionTitles.getStarted.rawValue)
@@ -83,7 +90,31 @@ class MenuViewModel: ObservableObject {
         termsOfUseOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.termsOfUse.rawValue)
         privacyPolicyOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue)
         copyrightInfoOptionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue)
+                
+        Publishers.CombineLatest(
+            getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(),
+            getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (accountCreation: AccountCreationIsSupportedDomainModel, userIsAuthenticated: Bool) in
+            
+            // TODO: Finish implementing and testing. See GT-2063 which should allow for observing userIsAuthenticated changes. ~Levi
+            
+            guard accountCreation.isSupported else {
+                self?.accountSectionVisibility = .hidden
+                return
+            }
+            
+            self?.accountSectionVisibility = userIsAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
+        }
+        .store(in: &cancellables)
         
+        getAppVersionUseCase.getAppVersionPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appVersion: AppVersionDomainModel) in
+                self?.appVersion = appVersion.versionString
+            }
+            .store(in: &cancellables)
     }
     
     private func getMenuAnalyticsScreenName () -> String {
@@ -157,7 +188,7 @@ extension MenuViewModel {
                 
             }, receiveValue: { [weak self] (finished: Bool) in
                 
-                // TODO: Menu should reflect changes after logging out. ~Levi
+                // TODO: Menu should reflect changes after logging out. See GT-2063. ~Levi
             })
             .store(in: &cancellables)
     }

@@ -24,56 +24,81 @@ struct MenuView: View {
     var body: some View {
         
         GeometryReader { geometry in
-            ScrollView{
+            
+            ScrollView(.vertical, showsIndicators: false) {
+               
                 VStack(alignment: .leading, spacing: 0) {
                     
                     MenuSectionView(
                         sectionTitle: viewModel.getStartedSectionTitle,
                         menuItemsViewBuilder: {
                             
-                            MenuItemView(imageAssetName: "school", title: viewModel.tutorialOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.school.name, title: viewModel.tutorialOptionTitle, tappedClosure: {
                                 
                                 viewModel.tutorialTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "translate", title: viewModel.languageSettingsOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.languageSettingsOptionTitle, tappedClosure: {
                                 
                                 viewModel.languageSettingsTapped()
                             })
                         }
                     )
-                    
-                    MenuSectionView(
-                        sectionTitle: viewModel.accountSectionTitle,
-                        menuItemsViewBuilder: {
-                            
-                            MenuItemView(imageAssetName: "login", title: viewModel.loginOptionTitle, tappedClosure: {
+   
+                    if viewModel.accountSectionVisibility != .hidden {
+                        
+                        MenuSectionView(
+                            sectionTitle: viewModel.accountSectionTitle,
+                            menuItemsViewBuilder: {
                                 
-                                viewModel.loginTapped()
-                            })
-                            
-                            MenuItemView(imageAssetName: "person_add", title: viewModel.createAccountOptionTitle, tappedClosure: {
-                                
-                                viewModel.createAccountTapped()
-                            })
-                        }
-                    )
+                                if viewModel.accountSectionVisibility == .visibleLoggedIn {
+                                    
+                                    MenuItemView(imageAssetName: ImageCatalog.login.name, title: viewModel.loginOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.loginTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: ImageCatalog.personAdd.name, title: viewModel.createAccountOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.createAccountTapped()
+                                    })
+                                }
+                                else if viewModel.accountSectionVisibility == .visibleLoggedOut {
+                                    
+                                    MenuItemView(imageAssetName: ImageCatalog.person.name, title: viewModel.activityOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.activityTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: ImageCatalog.logout.name, title: viewModel.logoutOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.logoutTapped()
+                                    })
+                                    
+                                    MenuItemView(imageAssetName: ImageCatalog.personRemove.name, title: viewModel.deleteAccountOptionTitle, tappedClosure: {
+                                        
+                                        viewModel.deleteAccountTapped()
+                                    })
+                                }
+                            }
+                        )
+                    }
                     
                     MenuSectionView(
                         sectionTitle: viewModel.supportSectionTitle,
                         menuItemsViewBuilder: {
                             
-                            MenuItemView(imageAssetName: "send", title: viewModel.sendFeedbackOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.send.name, title: viewModel.sendFeedbackOptionTitle, tappedClosure: {
                                 
                                 viewModel.sendFeedbackTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "bug_report", title: viewModel.reportABugOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.bugReport.name, title: viewModel.reportABugOptionTitle, tappedClosure: {
                                 
                                 viewModel.reportABugTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "live_help", title: viewModel.askAQuestionOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.liveHelp.name, title: viewModel.askAQuestionOptionTitle, tappedClosure: {
                                 
                                 viewModel.askAQuestionTapped()
                             })
@@ -84,17 +109,17 @@ struct MenuView: View {
                         sectionTitle: viewModel.shareSectionTitle,
                         menuItemsViewBuilder: {
                             
-                            MenuItemView(imageAssetName: "rate_review", title: viewModel.leaveAReviewOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.rateReview.name, title: viewModel.leaveAReviewOptionTitle, tappedClosure: {
                                 
                                 viewModel.leaveAReviewTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "description", title: viewModel.shareAStoryWithUsOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.description.name, title: viewModel.shareAStoryWithUsOptionTitle, tappedClosure: {
                                 
                                 viewModel.shareAStoryWithUsTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "share", title: viewModel.shareGodToolsOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.share.name, title: viewModel.shareGodToolsOptionTitle, tappedClosure: {
                                 
                                 viewModel.shareGodToolsTapped()
                             })
@@ -105,17 +130,17 @@ struct MenuView: View {
                         sectionTitle: viewModel.aboutSectionTitle,
                         menuItemsViewBuilder: {
                             
-                            MenuItemView(imageAssetName: "format_list_bulleted", title: viewModel.termsOfUseOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.formatListBulleted.name, title: viewModel.termsOfUseOptionTitle, tappedClosure: {
                                 
                                 viewModel.termsOfUseTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "policy", title: viewModel.privacyPolicyOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.policy.name, title: viewModel.privacyPolicyOptionTitle, tappedClosure: {
                                 
                                 viewModel.privacyPolicyTapped()
                             })
                             
-                            MenuItemView(imageAssetName: "copyright", title: viewModel.copyrightInfoOptionTitle, tappedClosure: {
+                            MenuItemView(imageAssetName: ImageCatalog.copyright.name, title: viewModel.copyrightInfoOptionTitle, tappedClosure: {
                                 
                                 viewModel.copyrightInfoTapped()
                             })
@@ -124,8 +149,10 @@ struct MenuView: View {
                     
                     MenuSectionView(
                         sectionTitle: viewModel.versionSectionTitle,
+                        overrideHidesSeparator: true,
                         menuItemsViewBuilder: {
                             
+                            MenuItemView(imageAssetName: nil, title: viewModel.appVersion, tappedClosure: nil)
                         }
                     )
                 }

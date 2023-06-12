@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetUserIsAuthenticatedUseCase {
     
@@ -17,8 +18,11 @@ class GetUserIsAuthenticatedUseCase {
         self.userAuthentication = userAuthentication
     }
     
-    func getUserIsAuthenticated() -> Bool {
+    func getIsAuthenticatedPublisher() -> AnyPublisher<Bool, Never> {
         
-        return userAuthentication.getPersistedResponse() != nil
+        let isAuthenticated: Bool = userAuthentication.getPersistedResponse() != nil
+        
+        return Just(isAuthenticated)
+            .eraseToAnyPublisher()
     }
 }

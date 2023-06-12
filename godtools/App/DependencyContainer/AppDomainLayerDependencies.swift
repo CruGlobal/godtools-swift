@@ -65,6 +65,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppVersionUseCase() -> GetAppVersionUseCase {
+        return GetAppVersionUseCase(
+            infoPlist: dataLayer.getInfoPlist()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
