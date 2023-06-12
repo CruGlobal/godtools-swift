@@ -13,6 +13,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
     
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let localizationServices: LocalizationServices
+    private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -27,9 +28,17 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.localizationServices = localizationServices
         
         title = localizationServices.stringForMainBundle(key: "deleteAccountProgress.title")
-             
+        
+        deleteAccount()
+    }
+    
+    private func deleteAccount() {
+        
+        let startDeleteAccountTime = Date()
+        
         deleteAccountUseCase.deleteAccountPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
+            .delay(for: .seconds(getRemainingSecondsToDisplayDeleteAccountProgress(startTime: startDeleteAccountTime)), scheduler: DispatchQueue.main)
             .sink { [weak self] subscribersCompletion in
                 
                 let deleteAccountError: Error?
@@ -43,19 +52,34 @@ class DeleteAccountProgressViewModel: ObservableObject {
                     deleteAccountError = error
                 }
                 
-                DispatchQueue.main.async {
-                    
-                    if let deleteAccountError = deleteAccountError {
-                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
-                    }
-                    else {
-                        self?.flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
-                    }
-                }
+                self?.didFinishAccountDeletion(error: deleteAccountError)
                 
             } receiveValue: { _ in
                 
             }
             .store(in: &cancellables)
+    }
+    
+    private func getRemainingSecondsToDisplayDeleteAccountProgress(startTime: Date) -> TimeInterval {
+        
+        let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(startTime)
+        
+        var remainingSeconds: TimeInterval = minimumSecondsToDisplayDeleteAccountProgress - elapsedTimeInSeconds
+        
+        if remainingSeconds < 0 {
+            remainingSeconds = 0
+        }
+        
+        return remainingSeconds
+    }
+    
+    private func didFinishAccountDeletion(error: Error?) {
+                
+        if let deleteAccountError = error {
+            flowDelegate?.navigate(step: .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: deleteAccountError))
+        }
+        else {
+            flowDelegate?.navigate(step: .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress)
+        }
     }
 }

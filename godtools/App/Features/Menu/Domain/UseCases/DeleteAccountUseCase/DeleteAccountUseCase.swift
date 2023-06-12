@@ -33,14 +33,9 @@ class DeleteAccountUseCase {
                     }
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (void: Void) -> AnyPublisher<Void, Never> in
+            .flatMap({ (void: Void) -> AnyPublisher<Void, URLResponseError> in
                         
                 self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
-                
-                return SetTimeout.setTimeoutPublisher(seconds: 1)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (void: Void) -> AnyPublisher<Void, URLResponseError> in
                 
                 return Just(void).setFailureType(to: URLResponseError.self)
                     .eraseToAnyPublisher()

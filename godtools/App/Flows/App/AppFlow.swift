@@ -517,7 +517,7 @@ extension AppFlow {
         )
 
         dashboardViewModel.shouldShowLanguageSettingsBarButtonItemPublisher
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { shouldShowBarButtonItem, barButtonItem in
                 
                 guard let barButtonItem = barButtonItem else { return }

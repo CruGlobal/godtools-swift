@@ -71,7 +71,7 @@ class AccountViewModel: ObservableObject {
         }
                 
         getUserAccountProfileNameUseCase.getProfileNamePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (profileNameDomainModel: AccountProfileNameDomainModel) in
                 
                 self?.isLoadingProfile = false
@@ -80,7 +80,7 @@ class AccountViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] userDetails in
                 
                 self?.joinedOnText = userDetails.joinedOnString
@@ -88,7 +88,7 @@ class AccountViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel]) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
@@ -98,7 +98,7 @@ class AccountViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getUserActivityUseCase.getUserActivityPublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { userActivity in

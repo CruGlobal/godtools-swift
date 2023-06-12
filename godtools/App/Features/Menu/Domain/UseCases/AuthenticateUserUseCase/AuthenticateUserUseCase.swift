@@ -14,19 +14,24 @@ class AuthenticateUserUseCase {
     private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
+    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
         
         self.userAuthentication = userAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
-                
-        // TODO: Uncomment and implement in GT-2012. ~Levi
-        
+    func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy, createUser: Bool = false) -> AnyPublisher<Bool, Error> {
+                        
         return authenticateByAuthTypePublisher(provider: provider, policy: policy)
+            .flatMap({ (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<Bool, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
+                
+            })
             .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
                                 
                 return self.userAuthentication.getAuthUserPublisher()
@@ -45,29 +50,38 @@ class AuthenticateUserUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<Bool, Error> {
-                
-        // TODO: Implement in GT-2012. ~Levi
-                
+    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<AuthenticationProviderResponse, Error> {
+                                
         switch policy {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
             return userAuthentication.signInPublisher(provider: provider, fromViewController: fromViewController)
-                .map { (void: Void) in
-                    return true
-                }
                 .eraseToAnyPublisher()
             
         case .renewAccessToken:
             
-            return userAuthentication.renewAccessTokenPublisher()
-                .flatMap({ (providerAccessToken: AuthenticationProviderAccessToken?) -> AnyPublisher<Bool, Error> in
-                    return Just(true).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                })
+            return userAuthentication.renewTokenPublisher()
                 .eraseToAnyPublisher()
         }
+    }
+    
+    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<Bool, Error> {
+        
+        return authProviderResponse.getMobileContentAuthProviderToken().publisher
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
+                    .mapError { urlResponseError in
+                        return urlResponseError as Error
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
+                
+                return true
+            }
+            .eraseToAnyPublisher()
     }
     
     private func postEmailSignUp(authUser: AuthUserDomainModel) {

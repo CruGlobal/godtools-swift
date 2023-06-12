@@ -88,12 +88,12 @@ extension LessonCardViewModel {
     private func setupBinding() {
         
         getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] primaryLanguage in
                 self?.reloadTitle(for: primaryLanguage)
             }

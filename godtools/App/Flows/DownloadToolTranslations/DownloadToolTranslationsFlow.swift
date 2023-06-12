@@ -38,7 +38,7 @@ class DownloadToolTranslationsFlow: Flow {
                 self?.navigateToDownloadTool()
             }
         })
-        .receiveOnMain()
+        .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { [weak self] completed in
             
             switch completed {

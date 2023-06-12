@@ -124,7 +124,7 @@ extension FavoritesContentViewModel {
     private func setupBinding() {
         
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] isEnabled in
                 
                 self?.hideTutorialBanner = !isEnabled
@@ -132,7 +132,7 @@ extension FavoritesContentViewModel {
             .store(in: &cancellables)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] primaryLanguage in
                 
                 self?.setupTitle(with: primaryLanguage)
