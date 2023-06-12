@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 import UIKit
+import RequestOperation
 
 class AttachmentsRepository {
     
@@ -29,26 +30,23 @@ class AttachmentsRepository {
     func getAttachmentImage(id: String) -> AnyPublisher<Image?, Never> {
         
         return getAttachment(id: id)
-            .mapError { error in
-                return .otherError(error: error)
-            }
-            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, URLResponseError> in
+            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
               
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ attachmentFileDataModel -> AnyPublisher<Image?, URLResponseError> in
+            .flatMap({ attachmentFileDataModel -> AnyPublisher<Image?, Error> in
                 
                 guard let uiImage = UIImage(data: attachmentFileDataModel.data) else {
                     return Just(nil)
-                        .setFailureType(to: URLResponseError.self)
+                        .setFailureType(to: Error.self)
                         .eraseToAnyPublisher()
                 }
                 
                 let image: Image = Image(uiImage: uiImage)
                 
                 return Just(image)
-                    .setFailureType(to: URLResponseError.self)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .catch { _ in
@@ -61,18 +59,15 @@ class AttachmentsRepository {
     func getAttachmentData(id: String) -> AnyPublisher<Data?, Never> {
 
         return getAttachment(id: id)
-            .mapError { error in
-                return .otherError(error: error)
-            }
-            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, URLResponseError> in
+            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ attachmentFileDataModel -> AnyPublisher<Data?, URLResponseError> in
+            .flatMap({ attachmentFileDataModel -> AnyPublisher<Data?, Error> in
                 
                 return Just(attachmentFileDataModel.data)
-                    .setFailureType(to: URLResponseError.self)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .catch { _ in
@@ -85,20 +80,14 @@ class AttachmentsRepository {
     func getAttachmentUrl(id: String) -> AnyPublisher<URL?, Never> {
          
         return getAttachment(id: id)
-            .mapError { error in
-                return .otherError(error: error)
-            }
-            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, URLResponseError> in
+            .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ attachmentFileDataModel -> AnyPublisher<URL?, URLResponseError> in
+            .flatMap({ attachmentFileDataModel -> AnyPublisher<URL?, Error> in
                 
                 return self.resourcesFileCache.getFile(location: attachmentFileDataModel.fileCacheLocation).publisher
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
                     .map { url in
                         return url
                     }
@@ -128,7 +117,7 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getAttachmentFromCacheElseRemote(attachment: AttachmentModel) -> AnyPublisher<AttachmentFileDataModel, URLResponseError> {
+    private func getAttachmentFromCacheElseRemote(attachment: AttachmentModel) -> AnyPublisher<AttachmentFileDataModel, Error> {
         
         return getAttachmentFromCache(attachment: attachment)
             .catch { (error: Error) in
@@ -171,33 +160,31 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheAttachment(attachment: AttachmentModel) -> AnyPublisher<AttachmentFileDataModel, URLResponseError> {
+    private func downloadAndCacheAttachment(attachment: AttachmentModel) -> AnyPublisher<AttachmentFileDataModel, Error> {
         
         guard let url = URL(string: attachment.file) else {
             let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute.")
-            return Fail(error: .otherError(error: error))
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
         
         return api.getAttachmentFile(url: url)
-            .flatMap({ responseObject -> AnyPublisher<(Data, FileCacheLocation), URLResponseError> in
+            .flatMap({ (requestResponse: UrlRequestResponse) -> AnyPublisher<(Data, FileCacheLocation), Error> in
                 
-                let justData = Just(responseObject.data)
-                    .setFailureType(to: URLResponseError.self)
+                let justData = Just(requestResponse.data)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
                 
                 let storeAttachment = self.resourcesFileCache.storeAttachmentFile(
                     attachmentId: attachment.id,
                     fileName: attachment.sha256,
-                    fileData: responseObject.data
-                ).mapError({ error in
-                    return URLResponseError.otherError(error: error)
-                })
+                    fileData: requestResponse.data
+                )
                 
                 return justData.zip(storeAttachment)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (data: Data, fileCacheLocation: FileCacheLocation) -> AnyPublisher<AttachmentFileDataModel, URLResponseError> in
+            .flatMap({ (data: Data, fileCacheLocation: FileCacheLocation) -> AnyPublisher<AttachmentFileDataModel, Error> in
             
                 let attachmentFileDataModel = AttachmentFileDataModel(
                     attachment: attachment,
@@ -206,7 +193,7 @@ extension AttachmentsRepository {
                 )
                 
                 return Just(attachmentFileDataModel)
-                    .setFailureType(to: URLResponseError.self)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
