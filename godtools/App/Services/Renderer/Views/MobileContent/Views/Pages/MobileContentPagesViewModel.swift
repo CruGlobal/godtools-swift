@@ -32,7 +32,7 @@ class MobileContentPagesViewModel: NSObject {
     private(set) weak var window: UIViewController?
     
     let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute>
+    let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> = ObservableValue(value: .forceLeftToRight)
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -49,9 +49,7 @@ class MobileContentPagesViewModel: NSObject {
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
-        
-        pageNavigationSemanticContentAttribute = ObservableValue(value: UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction))
-        
+                
         super.init()
               
         resourcesRepository.getResourcesChanged()
@@ -73,12 +71,8 @@ class MobileContentPagesViewModel: NSObject {
         self.window = window
         self.safeArea = safeArea
         
-        guard let pageRenderer = renderer.value.pageRenderers.first else {
-            return
-        }
-        
-        setPageRenderer(pageRenderer: pageRenderer)
-        
+        setRenderer(renderer: renderer.value, pageRendererIndex: nil)
+                
         if let initialPage = self.initialPage {
             
             navigateToPage(
@@ -158,7 +152,9 @@ class MobileContentPagesViewModel: NSObject {
         
         self.renderer.send(renderer)
         
-        pageNavigationSemanticContentAttribute.accept(value: UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction))
+        let languageDirection: UISemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
+        
+        pageNavigationSemanticContentAttribute.accept(value: languageDirection)
         
         setPageRenderer(pageRenderer: pageRenderer)
     }
