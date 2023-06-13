@@ -566,7 +566,6 @@
 		45AD1BD625938A4F00A096A0 /* PageNavigationCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD18C625938A4E00A096A0 /* PageNavigationCollectionView.xib */; };
 		45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18CA25938A4E00A096A0 /* AlertMessageView.swift */; };
 		45AD1BDA25938A4F00A096A0 /* AlertMessageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18CB25938A4E00A096A0 /* AlertMessageViewModelType.swift */; };
-		45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18CD25938A4E00A096A0 /* ResponseErrorAlertMessage.swift */; };
 		45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18CE25938A4E00A096A0 /* AlertMessageViewModel.swift */; };
 		45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D025938A4E00A096A0 /* GTSegmentType.swift */; };
 		45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D125938A4E00A096A0 /* GTSegment.swift */; };
@@ -1681,7 +1680,6 @@
 		45AD18C625938A4E00A096A0 /* PageNavigationCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageNavigationCollectionView.xib; sourceTree = "<group>"; };
 		45AD18CA25938A4E00A096A0 /* AlertMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageView.swift; sourceTree = "<group>"; };
 		45AD18CB25938A4E00A096A0 /* AlertMessageViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageViewModelType.swift; sourceTree = "<group>"; };
-		45AD18CD25938A4E00A096A0 /* ResponseErrorAlertMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseErrorAlertMessage.swift; sourceTree = "<group>"; };
 		45AD18CE25938A4E00A096A0 /* AlertMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessageViewModel.swift; sourceTree = "<group>"; };
 		45AD18D025938A4E00A096A0 /* GTSegmentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentType.swift; sourceTree = "<group>"; };
 		45AD18D125938A4E00A096A0 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
@@ -5262,7 +5260,6 @@
 			children = (
 				45AD206325938B1300A096A0 /* AlertMessage.swift */,
 				45AD206225938B1300A096A0 /* AlertMessageType.swift */,
-				45AD18CD25938A4E00A096A0 /* ResponseErrorAlertMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8649,7 +8646,6 @@
 				45558405269F2DA500C3FF14 /* MobileContentPagesView.swift in Sources */,
 				453A93F72705FDB80046B4FC /* PrimaryEvaluationOptionState.swift in Sources */,
 				45AD1B2025938A4E00A096A0 /* LearnToShareToolCellViewModel.swift in Sources */,
-				45AD1BDB25938A4F00A096A0 /* ResponseErrorAlertMessage.swift in Sources */,
 				45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */,
 				D44C69452809B6880000B970 /* ActivityIndicator.swift in Sources */,
 				45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */,
