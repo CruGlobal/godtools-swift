@@ -31,11 +31,13 @@ class MobileContentPagesViewModel: NSObject {
     
     private(set) weak var window: UIViewController?
     
-    let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> = ObservableValue(value: .forceLeftToRight)
     let rendererWillChangeSignal: Signal = Signal()
-    let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
-    let pagesRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
+    let reRendererPagesSignal: SignalValue<MobileContentPagesReRenderPagesModel> = SignalValue()
+    let navigatePageSignal: SignalValue<MobileContentPagesNavigationModel> = SignalValue()
+    let pagesRemovedSignal: SignalValue<[IndexPath]> = SignalValue()
+    //let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
+    //let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> = ObservableValue(value: .forceLeftToRight)
+    //let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -154,7 +156,8 @@ class MobileContentPagesViewModel: NSObject {
         
         let languageDirection: UISemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
         
-        pageNavigationSemanticContentAttribute.accept(value: languageDirection)
+        // TODO: Implement in GT-2067. ~Levi
+        //pageNavigationSemanticContentAttribute.accept(value: languageDirection)
         
         setPageRenderer(pageRenderer: pageRenderer)
     }
@@ -197,7 +200,12 @@ class MobileContentPagesViewModel: NSObject {
                 
         self.pageModels = pageModelsToRender
         
-        numberOfPages.accept(value: pageModels.count)
+        // TODO: Implement in GT-2067. ~Levi
+        //numberOfPages.accept(value: pageModels.count)
+    }
+    
+    func getNumberOfRenderedPages() -> Int {
+        return pageModels.count
     }
     
     // MARK: - Page Life Cycle
@@ -355,10 +363,12 @@ extension MobileContentPagesViewModel {
             animated: animated
         )
         
-        pageNavigation.accept(value: pageNavigationForReceivedPageListener)
+        // TODO: Implement in GT-2067. ~Levi
+        //pageNavigation.accept(value: pageNavigationForReceivedPageListener)
         
         if willReloadData {
-            numberOfPages.accept(value: pageModels.count)
+            // TODO: Implement in GT-2067. ~Levi
+            //numberOfPages.accept(value: pageModels.count)
         }
     }
 }
@@ -477,9 +487,10 @@ extension MobileContentPagesViewModel {
             return
         }
         
-        pageModels.remove(at: page)
-        numberOfPages.setValue(value: pageModels.count)
-        pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
+        // TODO: Implement in GT-2067. ~Levi
+        //pageModels.remove(at: page)
+        //numberOfPages.setValue(value: pageModels.count)
+        //pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
     }
     
     private func removeFollowingPagesFromPage(page: Int) {

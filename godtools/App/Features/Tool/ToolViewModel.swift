@@ -285,7 +285,8 @@ extension ToolViewModel {
                 animated: animated
             )
             
-            pageNavigation.accept(value: navigationModel)
+            // TODO: Implement in GT-2067. ~Levi
+            //pageNavigation.accept(value: navigationModel)
         }
         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {

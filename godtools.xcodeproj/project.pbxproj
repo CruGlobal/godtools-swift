@@ -352,6 +352,7 @@
 		4570B7062889B1760024C931 /* DownloadToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4570B7022889B1760024C931 /* DownloadToolView.xib */; };
 		45714ACB262100C800EF41FB /* LessonProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45714ACA262100C800EF41FB /* LessonProgressView.swift */; };
 		45714AD5262100E000EF41FB /* LessonProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45714AD4262100E000EF41FB /* LessonProgressView.xib */; };
+		45718F632A38D64D008EEDFA /* MobileContentPagesReRenderPagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45718F622A38D64D008EEDFA /* MobileContentPagesReRenderPagesModel.swift */; };
 		4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */; };
 		4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132928C1821100481640 /* ToolDetailsViewModel.swift */; };
 		4573133928C1821100481640 /* ToolDetailsVersionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132C28C1821100481640 /* ToolDetailsVersionsView.swift */; };
@@ -1439,6 +1440,7 @@
 		4570B7022889B1760024C931 /* DownloadToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadToolView.xib; sourceTree = "<group>"; };
 		45714ACA262100C800EF41FB /* LessonProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressView.swift; sourceTree = "<group>"; };
 		45714AD4262100E000EF41FB /* LessonProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressView.xib; sourceTree = "<group>"; };
+		45718F622A38D64D008EEDFA /* MobileContentPagesReRenderPagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesReRenderPagesModel.swift; sourceTree = "<group>"; };
 		4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		4573132928C1821100481640 /* ToolDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsViewModel.swift; sourceTree = "<group>"; };
 		4573132C28C1821100481640 /* ToolDetailsVersionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsVersionsView.swift; sourceTree = "<group>"; };
@@ -3451,6 +3453,7 @@
 				45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */,
 				455583B4269F2DA500C3FF14 /* MobileContentPagesNavigationModel.swift */,
 				45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */,
+				45718F622A38D64D008EEDFA /* MobileContentPagesReRenderPagesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8213,6 +8216,7 @@
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
 				D409F2BD292C023500D9D2FE /* UserDetailsDataModel.swift in Sources */,
+				45718F632A38D64D008EEDFA /* MobileContentPagesReRenderPagesModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
 				45D63E6F288F698C009B4610 /* RealmLanguagesCache.swift in Sources */,

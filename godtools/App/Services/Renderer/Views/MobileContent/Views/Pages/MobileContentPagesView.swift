@@ -82,22 +82,26 @@ class MobileContentPagesView: UIViewController {
 
         pageNavigationView.delegate = self
         
+        // TODO: Implement in GT-2067. ~Levi
+        /*
         viewModel.numberOfPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
             self?.pageNavigationView.reloadData()
-        }
+        }*/
         
+        /*
         viewModel.pageNavigation.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel?) in
             if let navigationModel = navigationModel {
                 self?.startNavigation(navigationModel: navigationModel)
             }
-        }
+        }*/
         
+        /*
         viewModel.pagesRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
             guard !indexPaths.isEmpty else {
                 return
             }
             self?.pageNavigationView.deletePagesAt(indexPaths: indexPaths)
-        }
+        }*/
     }
     
     func setupLayout() {
@@ -109,12 +113,15 @@ class MobileContentPagesView: UIViewController {
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier
         )
         pageNavigationView.setContentInset(contentInset: .zero)
-        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute.value)
+        // TODO: Implement in GT-2067. ~Levi
+        //pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute.value)
         pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
     }
     
     func setupBinding() {
         
+        // TODO: Implement in GT-2067. ~Levi
+        /*
         viewModel.rendererWillChangeSignal.addObserver(self) { [weak self] in
             
             guard let pagesView = self else {
@@ -123,8 +130,10 @@ class MobileContentPagesView: UIViewController {
             
             pagesView.initialPagePositions.removeAll()
             pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
-        }
+        }*/
         
+        // TODO: Implement in GT-2067. ~Levi
+        /*
         viewModel.pageNavigationSemanticContentAttribute.addObserver(self) { [weak self] (pageNavigationSemanticContentAttribute: UISemanticContentAttribute) in
             
             guard let weakSelf = self else {
@@ -142,7 +151,7 @@ class MobileContentPagesView: UIViewController {
             if numberOfPages > 0 {
                 weakSelf.pageNavigationView.scrollToPage(page: currentPage, animated: false)
             }
-        }
+        }*/
     }
     
     func didConfigurePageView(pageView: MobileContentPageView) {
@@ -262,10 +271,12 @@ class MobileContentPagesView: UIViewController {
 // MARK: - PageNavigationCollectionViewDelegate
 
 extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
-    
+        
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         
-        return viewModel.numberOfPages.value
+        // TODO: Implement in GT-2067. ~Levi
+        //return viewModel.numberOfPages.value
+        return viewModel.getNumberOfRenderedPages()
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
