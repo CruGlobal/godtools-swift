@@ -51,9 +51,8 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        // TODO: - implement in GT-2042
-        
-        let error: Error = NSError.errorWithDescription(description: "Access token renewal not yet implemented")
+        // Apple token renewal is handled in UserAuthentication since Apple token renewal occurs through Mobile-Content-Api.
+        let error: Error = NSError.errorWithDescription(description: "Access token renewal is handled in UserAuthentication.swift-- this method shouldn't be called.")
 
         return Fail(error: error)
             .eraseToAnyPublisher()
