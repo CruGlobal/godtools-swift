@@ -23,11 +23,11 @@ extension AuthenticationProviderResponse {
             
             if let authCode = self.appleSignInAuthorizationCode, authCode.isEmpty == false {
                 
-                return .success(.appleGetRefreshToken(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
                 
             } else if let refreshToken = self.refreshToken, refreshToken.isEmpty == false {
                 
-                return .success(.appleAuth(refreshToken: refreshToken))
+                return .success(.appleRefresh(refreshToken: refreshToken))
                 
             } else {
                 

@@ -15,14 +15,10 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let idToken = appleAuthResponse.identityToken else {
-            return .failure(NSError.errorWithDescription(description: "Failed to get identity token."))
-        }
-        
         let response = AuthenticationProviderResponse(
             accessToken: nil,
             appleSignInAuthorizationCode: appleAuthResponse.authorizationCode,
-            idToken: idToken,
+            idToken: appleAuthResponse.identityToken,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
                 familyName: appleAuthResponse.fullName?.familyName,
