@@ -65,29 +65,13 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
+    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, Error> {
         
-        return session.dataTaskPublisher(for: getAuthTokenRequest(providerToken: providerToken, createUser: createUser))
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject.data
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
-            .decode(type: JsonApiResponseData<MobileContentAuthTokenDecodable>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
-            .map {
-                return $0.data
+        let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
+        
+        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+            .map { (response: JsonApiResponseData<MobileContentAuthTokenDecodable>) in
+                return response.data
             }
             .eraseToAnyPublisher()
     }
