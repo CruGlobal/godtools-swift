@@ -110,12 +110,7 @@ class MobileContentPagesView: UIViewController {
         )
         pageNavigationView.setContentInset(contentInset: .zero)
         pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute.value)
-        
-        if #available(iOS 11.0, *) {
-            pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
     }
     
     func setupBinding() {
