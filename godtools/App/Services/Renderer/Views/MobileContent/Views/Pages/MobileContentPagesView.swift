@@ -135,16 +135,13 @@ class MobileContentPagesView: UIViewController {
             let currentPage: Int = weakSelf.pageNavigationView.currentPage
             let numberOfPages: Int = weakSelf.pageNavigationView.numberOfPages
             
-            guard currentPageNavigationSemanticContentAttribute != pageNavigationSemanticContentAttribute else {
-                return
+            if currentPageNavigationSemanticContentAttribute != pageNavigationSemanticContentAttribute {
+                weakSelf.pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: pageNavigationSemanticContentAttribute)
             }
             
-            guard numberOfPages > 0 else {
-                return
+            if numberOfPages > 0 {
+                weakSelf.pageNavigationView.scrollToPage(page: currentPage, animated: false)
             }
-            
-            weakSelf.pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: pageNavigationSemanticContentAttribute)
-            weakSelf.pageNavigationView.scrollToPage(page: currentPage, animated: false)
         }
     }
     
