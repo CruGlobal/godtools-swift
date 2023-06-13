@@ -11,7 +11,7 @@ PODS:
   - Starscream (4.0.4)
 
 DEPENDENCIES:
-  - FBSDKCoreKit (~> 8.2.0)
+  - FBSDKCoreKit (= 8.2.0)
   - Fuzi (~> 3.1.1)
   - GodToolsShared (= 0.8.1)
   - GoogleConversionTracking (~> 3.4.0)
@@ -33,6 +33,6 @@ SPEC CHECKSUMS:
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: d55586a7c2a3ffb927ef90f6360b60d5dac9f8f4
+PODFILE CHECKSUM: b303d75bfdf9962925c31cd752575c465f81cead
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
