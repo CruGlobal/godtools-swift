@@ -28,7 +28,6 @@ class LogOutUserUseCase {
             .flatMap({ (void: Void) -> AnyPublisher<Bool, Never> in
                 
                 self.setAnalyticsUserProperties()
-                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
                 
                 return Just(true)
                     .eraseToAnyPublisher()

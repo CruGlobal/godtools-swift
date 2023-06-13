@@ -107,6 +107,8 @@ class UserAuthentication {
         signOutOfAllProviders()
             .map { response in
                 self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
+                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
+                
                 return response
             }
             .eraseToAnyPublisher()
