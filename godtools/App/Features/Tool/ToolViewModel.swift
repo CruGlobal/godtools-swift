@@ -140,7 +140,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
     }
     
-    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
+    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
         
         let selectedLanguageValue: Int = navBarViewModel.value.selectedLanguage.value
         
@@ -148,7 +148,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         navBarViewModel.accept(value: viewModel)
         
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue)
+        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue, navigateToPage: navigateToPage)
     }
 }
 
@@ -200,7 +200,7 @@ extension ToolViewModel {
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
         
         if let pageRenderer = getPageRenderer(language: navBarViewModel.value.language) {
-            setPageRenderer(pageRenderer: pageRenderer)
+            setPageRenderer(pageRenderer: pageRenderer, navigateToPage: nil)
         }
         
         sendRemoteShareNavigationEvent(
@@ -272,27 +272,26 @@ extension ToolViewModel {
         }
         
         let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
-        let willReloadData: Bool = navBarLanguageChanged
+        let reloadPagesCollectionViewNeeded: Bool = navBarLanguageChanged
                 
         if let page = page {
             
             let pagePositions: ToolPagePositions = ToolPagePositions(cardPosition: cardPosition)
             
-            let navigationModel = MobileContentPagesNavigationModel(
-                willReloadData: willReloadData,
+            let navigationModel = MobileContentPagesNavigateToPageModel(
+                reloadPagesCollectionViewNeeded: reloadPagesCollectionViewNeeded,
                 page: page,
                 pagePositions: pagePositions,
                 animated: animated
             )
             
-            // TODO: Implement in GT-2067. ~Levi
-            //pageNavigation.accept(value: navigationModel)
+            navigatePageSignal.accept(value: navigationModel)
         }
         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
             navBarViewModel.value.selectedLanguage.accept(value: remoteShareLanguageIndex)
-            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex])
+            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigateToPage: nil)
         }
     }
     

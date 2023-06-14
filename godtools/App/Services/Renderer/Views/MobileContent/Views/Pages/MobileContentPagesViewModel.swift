@@ -16,7 +16,7 @@ class MobileContentPagesViewModel: NSObject {
     private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
-    private let initialPage: MobileContentPagesPage?
+    private let initialPage: MobileContentPagesPage
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
@@ -33,18 +33,15 @@ class MobileContentPagesViewModel: NSObject {
     
     let rendererWillChangeSignal: Signal = Signal()
     let reRendererPagesSignal: SignalValue<MobileContentPagesReRenderPagesModel> = SignalValue()
-    let navigatePageSignal: SignalValue<MobileContentPagesNavigationModel> = SignalValue()
+    let navigatePageSignal: SignalValue<MobileContentPagesNavigateToPageModel> = SignalValue()
     let pagesRemovedSignal: SignalValue<[IndexPath]> = SignalValue()
-    //let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    //let pageNavigationSemanticContentAttribute: ObservableValue<UISemanticContentAttribute> = ObservableValue(value: .forceLeftToRight)
-    //let pageNavigation: ObservableValue<MobileContentPagesNavigationModel?> = ObservableValue(value: nil)
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
-        self.initialPage = initialPage
+        self.initialPage = initialPage ?? .pageNumber(value: 0)
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -73,16 +70,11 @@ class MobileContentPagesViewModel: NSObject {
         self.window = window
         self.safeArea = safeArea
         
-        setRenderer(renderer: renderer.value, pageRendererIndex: nil)
-                
-        if let initialPage = self.initialPage {
-            
-            navigateToPage(
-                page: initialPage,
-                forceReloadPagesUI: false,
-                animated: false
-            )
-        }
+        setRenderer(
+            renderer: renderer.value,
+            pageRendererIndex: nil,
+            navigateToPage: initialPage
+        )
     }
     
     func handleDismissToolEvent() {
@@ -106,12 +98,16 @@ class MobileContentPagesViewModel: NSObject {
         }
         
         if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: [eventId]) {
-            
-            navigateToPage(
+
+            guard let navigateToPageModel = getNavigateToPageModel(
                 page: .pageNumber(value: didReceivePageListenerForPageNumber),
-                forceReloadPagesUI: false,       
+                forceReloadPagesCollectionView: false,
                 animated: true
-            )
+            ) else {
+                return nil
+            }
+            
+            navigatePageSignal.accept(value: navigateToPageModel)
         }
         
         return nil
@@ -125,7 +121,7 @@ class MobileContentPagesViewModel: NSObject {
         
         trainingTipsEnabled = enabled
         
-        setPageRenderer(pageRenderer: currentPageRenderer.value)
+        setPageRenderer(pageRenderer: currentPageRenderer.value, navigateToPage: nil)
     }
     
     // MARK: - Renderer / Page Renderer
@@ -134,7 +130,7 @@ class MobileContentPagesViewModel: NSObject {
         return renderer.value.pageRenderers[0]
     }
     
-    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
+    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
             
         let pageRenderer: MobileContentPageRenderer?
         
@@ -153,16 +149,11 @@ class MobileContentPagesViewModel: NSObject {
         }
         
         self.renderer.send(renderer)
-        
-        let languageDirection: UISemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderer.primaryLanguage.direction)
-        
-        // TODO: Implement in GT-2067. ~Levi
-        //pageNavigationSemanticContentAttribute.accept(value: languageDirection)
-        
-        setPageRenderer(pageRenderer: pageRenderer)
+                
+        setPageRenderer(pageRenderer: pageRenderer, navigateToPage: navigateToPage)
     }
     
-    func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
+    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigateToPage: MobileContentPagesPage?) {
         
         countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
@@ -199,9 +190,22 @@ class MobileContentPagesViewModel: NSObject {
         currentPageRenderer.send(pageRenderer)
                 
         self.pageModels = pageModelsToRender
+                
+        let navigateToPageModel: MobileContentPagesNavigateToPageModel?
         
-        // TODO: Implement in GT-2067. ~Levi
-        //numberOfPages.accept(value: pageModels.count)
+        if let navigateToPage = navigateToPage {
+            navigateToPageModel = getNavigateToPageModel(page: navigateToPage, forceReloadPagesCollectionView: true, animated: false)
+        }
+        else {
+            navigateToPageModel = nil
+        }
+        
+        let reRenderPagesModel = MobileContentPagesReRenderPagesModel(
+            pagesSemanticContentAttribute: UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction),
+            navigateToPageModel: navigateToPageModel
+        )
+        
+        reRendererPagesSignal.accept(value: reRenderPagesModel)
     }
     
     func getNumberOfRenderedPages() -> Int {
@@ -272,7 +276,7 @@ class MobileContentPagesViewModel: NSObject {
 
 extension MobileContentPagesViewModel {
     
-    private func navigateToPage(page: MobileContentPagesPage, forceReloadPagesUI: Bool, animated: Bool) {
+    private func getNavigateToPageModel(page: MobileContentPagesPage, forceReloadPagesCollectionView: Bool, animated: Bool) -> MobileContentPagesNavigateToPageModel? {
         
         let pageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         let allPages: [Page] = pageRenderer.getAllPageModels()
@@ -285,7 +289,7 @@ extension MobileContentPagesViewModel {
         case .pageId(let value):
                    
             guard let pageModelMatchingPageId = allPages.first(where: {$0.id == value}) else {
-                return
+                return nil
             }
             
             var pageModelsToRenderUpToPageToNavigateTo: [Page] = [pageModelMatchingPageId]
@@ -318,7 +322,7 @@ extension MobileContentPagesViewModel {
             }
             
             guard let page = page else {
-                return
+                return nil
             }
 
             if page.isHidden || initialPageRenderingType == .chooseYourOwnAdventure {
@@ -351,25 +355,17 @@ extension MobileContentPagesViewModel {
         }
 
         guard let navigateToPageNumber = pageModels.firstIndex(of: navigateToPageModel) else {
-            return
+            return nil
         }
         
-        let willReloadData: Bool = shouldReloadPagesUI || forceReloadPagesUI
+        let reloadPagesCollectionViewNeeded: Bool = shouldReloadPagesUI || forceReloadPagesCollectionView
                 
-        let pageNavigationForReceivedPageListener = MobileContentPagesNavigationModel(
-            willReloadData: willReloadData,
+        return MobileContentPagesNavigateToPageModel(
+            reloadPagesCollectionViewNeeded: reloadPagesCollectionViewNeeded,
             page: navigateToPageNumber,
             pagePositions: nil,
             animated: animated
         )
-        
-        // TODO: Implement in GT-2067. ~Levi
-        //pageNavigation.accept(value: pageNavigationForReceivedPageListener)
-        
-        if willReloadData {
-            // TODO: Implement in GT-2067. ~Levi
-            //numberOfPages.accept(value: pageModels.count)
-        }
     }
 }
 
@@ -455,7 +451,7 @@ extension MobileContentPagesViewModel {
                 
                 let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
                 
-                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex)
+                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigateToPage: nil)
             }
             .store(in: &cancellables)
     }
@@ -487,10 +483,8 @@ extension MobileContentPagesViewModel {
             return
         }
         
-        // TODO: Implement in GT-2067. ~Levi
-        //pageModels.remove(at: page)
-        //numberOfPages.setValue(value: pageModels.count)
-        //pagesRemoved.accept(value: [IndexPath(item: page, section: 0)])
+        pageModels.remove(at: page)
+        pagesRemovedSignal.accept(value: [IndexPath(item: page, section: 0)])
     }
     
     private func removeFollowingPagesFromPage(page: Int) {

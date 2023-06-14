@@ -9,8 +9,14 @@
 import Foundation
 import UIKit
 
-struct MobileContentPagesReRenderPagesModel {
+class MobileContentPagesReRenderPagesModel {
     
-    let pageNavigationDirection: UISemanticContentAttribute
-    let shouldReloadUICollectionView: Bool
+    let pagesSemanticContentAttribute: UISemanticContentAttribute?
+    let navigateToPageModel: MobileContentPagesNavigateToPageModel?
+    
+    init(pagesSemanticContentAttribute: UISemanticContentAttribute?, navigateToPageModel: MobileContentPagesNavigateToPageModel?) {
+        
+        self.pagesSemanticContentAttribute = pagesSemanticContentAttribute
+        self.navigateToPageModel = navigateToPageModel
+    }
 }
