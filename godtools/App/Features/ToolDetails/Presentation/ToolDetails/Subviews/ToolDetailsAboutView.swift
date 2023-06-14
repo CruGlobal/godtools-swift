@@ -10,29 +10,29 @@ import SwiftUI
 
 struct ToolDetailsAboutView: View {
            
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    private let geometry: GeometryProxy
     
-    let width: CGFloat
-    
+    @ObservedObject private var viewModel: ToolDetailsViewModel
+        
     @State private var accordionExpandedConversationStarters: Bool = false
     @State private var accordionExpandedOutline: Bool = false
     @State private var accordionExpandedBibleReferences: Bool = false
     @State private var accordionExpandedLanguageAvailability: Bool = false
     
+    init(viewModel: ToolDetailsViewModel, geometry: GeometryProxy) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+    }
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            TextWithLinks(
-                text: viewModel.aboutDetails,
-                textColor: ColorPalette.gtGrey.uiColor,
-                font: FontLibrary.sfProTextRegular.uiFont(size: 16),
-                lineSpacing: 3,
-                width: width,
-                didInteractWithUrlClosure: { (url: URL) in
-                    viewModel.urlTapped(url: url)
-                    return true
-                }
+            ToolDetailsSectionDescriptionTextView(
+                viewModel: viewModel,
+                geometry: geometry,
+                text: viewModel.aboutDetails
             )
             
             Rectangle()
@@ -61,6 +61,7 @@ struct ToolDetailsAboutView: View {
                     AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
                 }
             }
+            .padding(ToolDetailsView.sectionDescriptionTextInsets)
             
             if accordionExpandedConversationStarters || accordionExpandedOutline || accordionExpandedBibleReferences || accordionExpandedLanguageAvailability {
                 Spacer()

@@ -39,6 +39,7 @@ struct ResourceCardBannerImageView: View {
         
         OptionalImage(image: bannerImage, width: cardWidth, height: cardWidth / bannerImageAspectRatio)
             .cornerRadius(cornerRadius, corners: [.topLeft, .topRight])
+            .animation(.default)
     }
 }
 

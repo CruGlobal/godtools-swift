@@ -11,19 +11,32 @@ import SwiftUI
 struct GTWhiteButton: View {
     
     let title: String
-    let fontSize: CGFloat
-    let width: CGFloat?
-    let height: CGFloat?
+    let font: Font
+    let width: CGFloat
+    let height: CGFloat
     let cornerRadius: CGFloat
     let action: () -> Void
     
-    init(title: String, fontSize: CGFloat = 12, width: CGFloat? = nil, height: CGFloat? = nil, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
         self.title = title
-        self.fontSize = fontSize
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
         self.action = action
+        
+        if let font = font {
+            self.font = font
+        }
+        else if let fontSize = fontSize {
+            self.font = GTWhiteButton.getDefaultFont(fontSize: fontSize)
+        }
+        else {
+            self.font = GTWhiteButton.getDefaultFont(fontSize: 12)
+        }
+    }
+    
+    private static func getDefaultFont(fontSize: CGFloat) -> Font {
+        return FontLibrary.sfProTextRegular.font(size: fontSize)
     }
     
     var body: some View {
@@ -40,7 +53,7 @@ struct GTWhiteButton: View {
                     .cornerRadius(cornerRadius)
                 
                 Text(title)
-                    .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+                    .font(font)
                     .foregroundColor(ColorPalette.gtBlue.color)
                     .padding()
             }
@@ -58,7 +71,7 @@ struct GTWhiteButton: View {
 
 struct GTWhiteButton_Previews: PreviewProvider {
     static var previews: some View {
-        GTWhiteButton(title: "Test Button", action: {})
+        GTWhiteButton(title: "Test Button", width: 240, height: 50, action: {})
             .padding()
             .previewLayout(.sizeThatFits)
     }

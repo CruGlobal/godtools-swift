@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import OktaAuthentication
+import SocialAuthentication
 
 class AppDataLayerDependencies {
     
@@ -42,6 +42,12 @@ class AppDataLayerDependencies {
     
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
+    }
+    
+    func getAppleAuthentication() -> AppleAuthentication {
+        return AppleAuthentication(
+            appleUserPersistentStore: AppleUserPersistentStore()
+        )
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -80,8 +86,10 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getCruOktaAuthentication() -> CruOktaAuthentication {
-        return CruOktaAuthentication.getNewAuthenticationInstance(appBuild: sharedAppBuild)
+    func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
+        return CompletedTrainingTipRepository(
+            cache: RealmCompletedTrainingTipCache(realmDatabase: sharedRealmDatabase)
+        )
     }
     
     func getDeepLinkingService() -> DeepLinkingService {
@@ -95,6 +103,10 @@ class AppDataLayerDependencies {
             api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getFacebookAuthentication() -> FacebookAuthentication {
+        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
@@ -131,6 +143,13 @@ class AppDataLayerDependencies {
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
+    func getGoogleAuthentication() -> GoogleAuthentication {
+        
+        return GoogleAuthentication(
+            configuration: sharedAppConfig.googleAuthenticationConfiguration
         )
     }
     
@@ -176,6 +195,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
+        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices()
     }
@@ -191,7 +214,8 @@ class AppDataLayerDependencies {
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: MobileContentAuthTokenCache(
-                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
+                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
+                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: sharedRealmDatabase)
             )
         )
     }
@@ -201,12 +225,6 @@ class AppDataLayerDependencies {
             ignoreCacheSession: sharedIgnoreCacheSession,
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
-        )
-    }
-    
-    func getOnboardingTutorialItemsRepository() -> OnboardingTutorialItemsRepository {
-        return OnboardingTutorialItemsRepository(
-            localizationServices: getLocalizationServices()
         )
     }
     
@@ -281,7 +299,14 @@ class AppDataLayerDependencies {
     }
     
     func getUserAuthentication() -> UserAuthentication {
-        return UserAuthentication(cruOktaAuthentication: getCruOktaAuthentication())
+        return UserAuthentication(
+            authenticationProviders: [
+                .apple: getAppleAuthentication(),
+                .facebook: getFacebookAuthentication(),
+                .google: getGoogleAuthentication()
+            ],
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
+        )
     }
     
     func getUserCountersRepository() -> UserCountersRepository {
@@ -316,6 +341,12 @@ class AppDataLayerDependencies {
                 userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
+        )
+    }
+    
+    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
+        return ViewedTrainingTipsService(
+            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
         )
     }
     

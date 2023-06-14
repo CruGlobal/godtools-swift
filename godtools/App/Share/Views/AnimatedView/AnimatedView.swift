@@ -11,9 +11,9 @@ import Lottie
 
 class AnimatedView: UIView {
     
-    private let animationView: AnimationView = AnimationView()
+    private let animationView: LottieAnimationView = LottieAnimationView()
     
-    private var viewModel: AnimatedViewModelType?
+    private var viewModel: AnimatedViewModel?
         
     override init(frame: CGRect) {
         
@@ -22,7 +22,7 @@ class AnimatedView: UIView {
         setupLayout()
     }
     
-    required init(frame: CGRect, viewModel: AnimatedViewModelType) {
+    required init(frame: CGRect, viewModel: AnimatedViewModel) {
                 
         self.viewModel = viewModel
         
@@ -50,7 +50,7 @@ class AnimatedView: UIView {
         animationView.constrainEdgesToView(view: self)
     }
     
-    func configure(viewModel: AnimatedViewModelType) {
+    func configure(viewModel: AnimatedViewModel) {
         
         self.viewModel = viewModel
         

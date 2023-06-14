@@ -20,7 +20,7 @@ class GetOnboardingTutorialAvailabilityUseCase {
     }
     
     func getOnboardingTutorialIsAvailable() -> OnboardingTutorialAvailabilityDomainModel {
-        
+                        
         let launchCount: Int = launchCountRepository.getLaunchCount()
         let onboardingTutorialViewed: Bool = onboardingTutorialViewedRepository.getOnboardingTutorialViewed()
                 

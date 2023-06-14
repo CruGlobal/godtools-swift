@@ -248,9 +248,8 @@ extension ToolPageView {
         }
         else if !hidesCards {
             
-            let numberOfVisibleCardsFloatValue: CGFloat =  CGFloat(numberOfVisibleCards)
-            let cardHeaderHeight: CGFloat = ToolPageCardView.cardHeaderHeight
-            heroHeight.constant = maximumHeight - (numberOfVisibleCardsFloatValue * cardHeaderHeight)
+            let combineCardHeaderHeight: CGFloat = cardsView?.getCombinedCardHeaderHeightForRenderedCards() ?? 0
+            heroHeight.constant = maximumHeight - combineCardHeaderHeight
         }
                      
         heroTop.constant = headerHeight + topInset

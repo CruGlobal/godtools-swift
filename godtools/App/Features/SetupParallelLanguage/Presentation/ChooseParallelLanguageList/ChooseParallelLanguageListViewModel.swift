@@ -37,7 +37,7 @@ class ChooseParallelLanguageListViewModel {
         numberOfLanguages = ObservableValue(value: 0)
         
         Publishers.CombineLatest(getSettingsLanguagesUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher())
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages, settingsPrimaryLanguage) in
                 self?.setLanguagesList(languages: languages, settingsPrimaryLanguage: settingsPrimaryLanguage)
             }

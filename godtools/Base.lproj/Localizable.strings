@@ -1,4 +1,51 @@
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
+"createAccount.title" = "Create account";
+"createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
+"deleteAccount.title" = "Don't go so soon";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
+"deleteAccount.confirmButton.title" = "Delete my account";
+"deleteAccount.cancelButton.title" = "Keep my account";
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
+"signIn.google" = "Sign in with Google";
+"signIn.facebook" = "Login with Facebook";
+"signIn.apple" = "Continue with Apple";
+"menu_getStarted" = "Get Started";
+"menu_support" = "Support";
+"menu_about" = "About";
+"menu.sendFeedback" = "Send Feedback";
+"menu.reportABug" = "Report a Bug";
+"menu.askAQuestion" = "Ask a Question";
+"menu.leaveAReview" = "Leave a Review";
 "account.badges.sectionTitle" = "Your badges";
+"account.activity.sectionTitle" = "Your activity";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Tool opens";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Lesson completions";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Screen shares";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Links shared";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Languages used";
+
+"account.activity.sessions" = "Sessions";
 "badges.tipsCompleted.singular" = "Completed 1 training tip";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
@@ -48,8 +95,6 @@
 "menu.deleteAccount" = "Delete Account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
 "alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
-"deleteAccount.navTitle" = "Delete Account";
-"deleteAccount.deleteOktaAccountInstructions" = "If you have created an account on the GodTools app you can request to delete your Okta account at help@cru.org.";
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
@@ -133,7 +178,7 @@
 "onboardingQuickStart.2.button.title" = "Choose one of our tools";
 "onboardingTutorial.nextButton.title" = "Next";
 "onboardingQuickStart.title" = "Quick start links";
-"onboardingQuickStart.0.title" = "I want to explore Christianity";
+"onboardingQuickStart.0.title" = "I want to learn more about Jesus.";
 "onboardingQuickStart.0.button.title" = "Read our articles";
 "onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
 "onboardingQuickStart.1.button.title" = "Try our Lessons";

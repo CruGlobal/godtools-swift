@@ -13,12 +13,16 @@ import GodToolsToolParser
 class GetUserActivityUseCase {
     
     private let getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase
+    private let getUserActivityStatsUseCase: GetUserActivityStatsUseCase
     private let userCounterRepository: UserCountersRepository
+    private let completedTrainingTipRepository: CompletedTrainingTipRepository
     
-    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, userCounterRepository: UserCountersRepository) {
+    init(getUserActivityBadgeUseCase: GetUserActivityBadgeUseCase, getUserActivityStatsUseCase: GetUserActivityStatsUseCase, userCounterRepository: UserCountersRepository, completedTrainingTipRepository: CompletedTrainingTipRepository) {
         
         self.getUserActivityBadgeUseCase = getUserActivityBadgeUseCase
+        self.getUserActivityStatsUseCase = getUserActivityStatsUseCase
         self.userCounterRepository = userCounterRepository
+        self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
     func getUserActivityPublisher() -> AnyPublisher<UserActivityDomainModel, Never> {
@@ -26,7 +30,7 @@ class GetUserActivityUseCase {
         return userCounterRepository.getUserCountersChanged(reloadFromRemote: true)
             .flatMap { _ in
                 
-                let allUserCounters = self.userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
+                let allUserCounters = self.getAllUserCounters()
                 
                 let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters)
                 
@@ -36,14 +40,35 @@ class GetUserActivityUseCase {
             .eraseToAnyPublisher()
     }
     
+    private func getAllUserCounters() -> [UserCounterDomainModel] {
+        
+        var userCounters = userCounterRepository.getUserCounters().map { UserCounterDomainModel(dataModel: $0) }
+        
+        userCounters.append(getCompletedTrainingTipCounter())
+        
+        return userCounters
+    }
+    
+    private func getCompletedTrainingTipCounter() -> UserCounterDomainModel {
+        
+        let numberTipsCompleted = completedTrainingTipRepository.getNumberOfCompletedTrainingTips()
+        
+        return UserCounterDomainModel(
+            id: UserCounterNames.shared.TIPS_COMPLETED,
+            count: numberTipsCompleted
+        )
+    }
+    
     private func getUserActivityDomainModel(from counters: [UserCounterDomainModel]) -> UserActivityDomainModel {
         
         let userCounterDictionary = buildUserCounterDictionary(from: counters)
         
         let userActivity = UserActivity(counters: userCounterDictionary)
-        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
         
-        return UserActivityDomainModel(badges: badges)
+        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
+        let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity)
+        
+        return UserActivityDomainModel(badges: badges, stats: stats)
     }
     
     private func buildUserCounterDictionary(from counters: [UserCounterDomainModel]) -> [String: KotlinInt] {

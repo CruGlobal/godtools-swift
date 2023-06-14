@@ -19,11 +19,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let analytics: AnalyticsContainer = appDiContainer.dataLayer.getAnalytics()
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
-        let viewedTrainingTipsService: ViewedTrainingTipsService = appDiContainer.getViewedTrainingTipsService()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.localizationServices
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
+        
+        let getTrainingTipCompletedUseCase = appDiContainer.domainLayer.getTrainingTipCompletedUseCase()
                 
         switch type {
         
@@ -49,13 +50,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
-                followUpService: followUpsService,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                followUpService: followUpsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 mobileContentAnalytics: mobileContentAnalytics,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
             )
             
             pageViewFactories = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
@@ -68,13 +68,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
-                followUpService: followUpsService,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                followUpService: followUpsService
             )
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 mobileContentAnalytics: mobileContentAnalytics,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
             )
             
             pageViewFactories = [toolPageViewFactory, trainingViewFactory]
@@ -83,7 +82,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             
             let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
                 mobileContentAnalytics: mobileContentAnalytics,
-                viewedTrainingTipsService: viewedTrainingTipsService
+                getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
             )
             
             pageViewFactories = [trainingViewFactory]

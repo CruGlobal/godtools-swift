@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticleWebView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="errorMessageLabel" destination="HKE-rF-2sP" id="8mn-bt-e8e"/>
+                <outlet property="errorMessageView" destination="lL7-TT-McQ" id="CcG-ov-p8K"/>
+                <outlet property="errorTitleLabel" destination="GMv-uh-4yE" id="cU2-1w-lGV"/>
+                <outlet property="loadingView" destination="hy6-qi-bd7" id="4WG-Wn-g15"/>
+                <outlet property="reloadArticleButton" destination="kgi-cC-VzQ" id="8tu-QX-dzR"/>
+                <outlet property="view" destination="iN0-l3-epB" id="jWO-ji-mdR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hy6-qi-bd7" userLabel="loadingView">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lL7-TT-McQ" userLabel="errorMessageView">
+                    <rect key="frame" x="0.0" y="420" width="414" height="56"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Title Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMv-uh-4yE" userLabel="errorTitleLabel">
+                            <rect key="frame" x="30" y="0.0" width="354" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKE-rF-2sP" userLabel="errorMessageLabel">
+                            <rect key="frame" x="30" y="35.5" width="354" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="HKE-rF-2sP" firstAttribute="top" secondItem="GMv-uh-4yE" secondAttribute="bottom" constant="15" id="0f2-Rb-dFp"/>
+                        <constraint firstItem="HKE-rF-2sP" firstAttribute="leading" secondItem="lL7-TT-McQ" secondAttribute="leading" constant="30" id="2lQ-so-koz"/>
+                        <constraint firstItem="GMv-uh-4yE" firstAttribute="leading" secondItem="lL7-TT-McQ" secondAttribute="leading" constant="30" id="2nc-Oh-GEJ"/>
+                        <constraint firstAttribute="trailing" secondItem="HKE-rF-2sP" secondAttribute="trailing" constant="30" id="6gM-wU-YaQ"/>
+                        <constraint firstItem="GMv-uh-4yE" firstAttribute="top" secondItem="lL7-TT-McQ" secondAttribute="top" id="JZC-M9-dzL"/>
+                        <constraint firstAttribute="trailing" secondItem="GMv-uh-4yE" secondAttribute="trailing" constant="30" id="Ofh-Np-uVU"/>
+                        <constraint firstAttribute="bottom" secondItem="HKE-rF-2sP" secondAttribute="bottom" id="bI1-J3-ehD"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgi-cC-VzQ" userLabel="reloadArticleButton">
+                    <rect key="frame" x="30" y="772" width="354" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="g7X-nm-crF"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Reload Article"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="kgi-cC-VzQ" secondAttribute="bottom" constant="40" id="NE8-4R-GPq"/>
+                <constraint firstItem="kgi-cC-VzQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="bgZ-sD-F3P"/>
+                <constraint firstItem="lL7-TT-McQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="fJx-H3-s9Z"/>
+                <constraint firstItem="hy6-qi-bd7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fM0-n8-20J"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kgi-cC-VzQ" secondAttribute="trailing" constant="30" id="iaQ-bd-LxI"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="lL7-TT-McQ" secondAttribute="trailing" id="o3g-RB-dui"/>
+                <constraint firstItem="hy6-qi-bd7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="p3F-6T-dg6"/>
+                <constraint firstItem="lL7-TT-McQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vzW-2Z-liV"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -7,37 +7,42 @@
 //
 
 import UIKit
-import OktaAuthentication
 import Combine
 
 class AuthenticateUserUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(cruOktaAuthentication: CruOktaAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
+    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<Bool, Error> {
-        
-        return authenticateByAuthTypePublisher(authType: authType)
-            .flatMap({ (accessToken: OktaAccessToken) -> AnyPublisher<CruOktaUserDataModel, Error> in
+    func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy, createUser: Bool = false) -> AnyPublisher<Bool, Error> {
+                        
+        return authenticateByAuthTypePublisher(provider: provider, policy: policy)
+            .flatMap({ (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<Bool, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
+                
+            })
+            .flatMap({ (success: Bool) -> AnyPublisher<AuthUserDomainModel?, Error> in
                                 
-                return self.cruOktaAuthentication.getAuthUserPublisher()
-                    .mapError { oktaError in
-                        return oktaError.getError()
-                    }
+                return self.userAuthentication.getAuthUserPublisher()
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<Bool, Error> in
+            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<Bool, Error> in
                 
-                self.postEmailSignUp(authUser: authUser)
-                self.setAnalyticsUserProperties(authUser: authUser)
+                if let authUser = authUser {
+                    self.postEmailSignUp(authUser: authUser)
+                    self.setAnalyticsUserProperties(authUser: authUser)
+                }
                 
                 return Just(true).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
@@ -45,41 +50,41 @@ class AuthenticateUserUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel) -> AnyPublisher<OktaAccessToken, Error> {
-        
-        switch authType {
+    private func authenticateByAuthTypePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy) -> AnyPublisher<AuthenticationProviderResponse, Error> {
+                                
+        switch policy {
             
-        case .attemptToRenewAuthenticationElseAuthenticate(let fromViewController):
+        case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
             
-            return cruOktaAuthentication.signInPublisher(fromViewController: fromViewController)
-                .setFailureType(to: Error.self)
-                .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, Error> in
-                    
-                    return response.result.publisher
-                        .mapError { oktaError in
-                            return oktaError.getError()
-                        }
-                        .eraseToAnyPublisher()
-                })
+            return userAuthentication.signInPublisher(provider: provider, fromViewController: fromViewController)
                 .eraseToAnyPublisher()
             
-        case .attemptToRenewAuthenticationOnly:
+        case .renewAccessToken:
             
-            return cruOktaAuthentication.renewAccessTokenPublisher()
-                .setFailureType(to: Error.self)
-                .flatMap({ (response: OktaAuthenticationResponse) -> AnyPublisher<OktaAccessToken, Error> in
-                    
-                    return response.result.publisher
-                        .mapError { oktaError in
-                            return oktaError.getError()
-                        }
-                        .eraseToAnyPublisher()
-                })
+            return userAuthentication.renewTokenPublisher()
                 .eraseToAnyPublisher()
         }
     }
     
-    private func postEmailSignUp(authUser: CruOktaUserDataModel) {
+    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<Bool, Error> {
+        
+        return authProviderResponse.getMobileContentAuthProviderToken().publisher
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
+                    .mapError { urlResponseError in
+                        return urlResponseError as Error
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
+                
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func postEmailSignUp(authUser: AuthUserDomainModel) {
         
         let emailSignUp = EmailSignUpModel(
             email: authUser.email,
@@ -90,7 +95,7 @@ class AuthenticateUserUseCase {
         _ = emailSignUpService.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
     }
     
-    private func setAnalyticsUserProperties(authUser: CruOktaUserDataModel) {
+    private func setAnalyticsUserProperties(authUser: AuthUserDomainModel) {
         
         firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,

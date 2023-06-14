@@ -8,10 +8,11 @@
 
 import Foundation
 import GodToolsToolParser
+import Combine
 
 class TranslationManifestParser {
     
-    private let parser: IosManifestParser
+    private let parser: ManifestParser
     private let parserConfig: ParserConfig
     private let resourcesFileCache: ResourcesSHA256FileCache
     
@@ -30,7 +31,7 @@ class TranslationManifestParser {
     
     init(parserConfig: ParserConfig, resourcesFileCache: ResourcesSHA256FileCache) {
         
-        self.parser = IosManifestParser(
+        self.parser = ManifestParser(
             parserFactory: TranslationManifestParserFactory(resourcesFileCache: resourcesFileCache),
             defaultConfig: parserConfig
         )
@@ -39,8 +40,27 @@ class TranslationManifestParser {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func parse(manifestName: String) -> Result<Manifest, Error> {
+    func parsePublisher(manifestName: String) -> AnyPublisher<Manifest, Error> {
+        
+        return Future() { promise in
+
+            self.parseAsync(manifestName: manifestName) { (result: Result<Manifest, Error>) in
                 
+                switch result {
+                    
+                case .success(let manifest):
+                    promise(.success(manifest))
+                    
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func parseAsync(manifestName: String, completion: @escaping ((_ result: Result<Manifest, Error>) -> Void)) {
+        
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
         
         switch resourcesFileCache.getFileExists(location: location) {
@@ -48,23 +68,29 @@ class TranslationManifestParser {
         case .success(let fileExists):
             
             guard fileExists else {
-                return .failure(NSError.errorWithDescription(description: "Could not find translation manifest file in file cache."))
+                completion(.failure(NSError.errorWithDescription(description: "Could not find translation manifest file in file cache.")))
+                return
             }
             
         case .failure(let error):
-            return .failure(error)
+            completion(.failure(error))
+            return
         }
         
-        let result: ParserResult = self.parser.parseManifestBlocking(fileName: manifestName, config: self.parserConfig)
-        
-        if let resultData = result as? ParserResult.Data {
-            return .success(resultData.manifest)
-        }
-        else if let resultError = result as? ParserResult.Error, let kotlinException = resultError.error {
-            return .failure(NSError.errorWithDescription(description: "Failed to parse tool manifest, found kotlin exception \(kotlinException)"))
-        }
-        else {
-            return .failure(NSError.errorWithDescription(description: "Failed to parse tool manifest."))
+        DispatchQueue.main.async {
+            
+            self.parser.parseManifest(fileName: manifestName, config: self.parserConfig) { (parserResult: ParserResult?, error: Error?) in
+                    
+                if let resultData = parserResult as? ParserResult.Data {
+                    completion(.success(resultData.manifest))
+                }
+                else if let resultError = parserResult as? ParserResult.Error, let kotlinException = resultError.error {
+                    completion(.failure(NSError.errorWithDescription(description: "Failed to parse tool manifest, found kotlin exception \(kotlinException)")))
+                }
+                else {
+                    completion(.failure(NSError.errorWithDescription(description: "Failed to parse tool manifest.")))
+                }
+            }
         }
     }
 }

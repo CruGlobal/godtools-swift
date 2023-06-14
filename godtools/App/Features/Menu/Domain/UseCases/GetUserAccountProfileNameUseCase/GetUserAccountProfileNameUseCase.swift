@@ -7,37 +7,36 @@
 //
 
 import Foundation
-import OktaAuthentication
 import Combine
 
 class GetUserAccountProfileNameUseCase {
     
-    private let cruOktaAuthentication: CruOktaAuthentication
+    private let userAuthentication: UserAuthentication
     
-    init(cruOktaAuthentication: CruOktaAuthentication) {
+    init(userAuthentication: UserAuthentication) {
         
-        self.cruOktaAuthentication = cruOktaAuthentication
+        self.userAuthentication = userAuthentication
     }
     
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
-        return cruOktaAuthentication.getAuthUserPublisher()
-            .catch({ (oktaError: OktaAuthenticationError) -> AnyPublisher<CruOktaUserDataModel, Never> in
+        return userAuthentication.getAuthUserPublisher()
+            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel?, Never> in
                 
-                return Just(CruOktaUserDataModel(email: "", firstName: "", grMasterPersonId: "", lastName: "", ssoGuid: ""))
+                return Just(nil)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (authUser: CruOktaUserDataModel) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
-                
+            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
+                                
                 let profileName: String
                 
-                if let firstName = authUser.firstName, let lastName = authUser.lastName {
+                if let firstName = authUser?.firstName, let lastName = authUser?.lastName {
                     profileName = firstName + " " + lastName
                 }
-                else if let firstName = authUser.firstName {
+                else if let firstName = authUser?.firstName {
                     profileName = firstName
                 }
-                else if let lastName = authUser.lastName {
+                else if let lastName = authUser?.lastName {
                     profileName = lastName
                 }
                 else {

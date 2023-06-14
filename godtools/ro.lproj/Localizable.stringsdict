@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>badges.imagesShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@imageCount@</string>
+<key>imageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Shared 1 image</string>
+<key>few</key>
+<string/>
+<key>other</key>
+<string>Shared %d images</string>
+</dict>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Read 1 article</string>
+<key>few</key>
+<string/>
+<key>other</key>
+<string>Read %d articles</string>
+</dict>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Completed 1 lesson</string>
+<key>few</key>
+<string/>
+<key>other</key>
+<string>Completed %d lessons</string>
+</dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Opened 1 tool</string>
+<key>few</key>
+<string/>
+<key>other</key>
+<string>Opened %d tools</string>
+</dict>
+</dict>
+<key>badges.tipsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@tipsCount@</string>
+<key>tipsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Completed 1 training tip</string>
+<key>few</key>
+<string/>
+<key>other</key>
+<string>Completed %d training tips</string>
+</dict>
+</dict>
+</dict>
+</plist>

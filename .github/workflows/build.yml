@@ -9,21 +9,29 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: macos-13
     env:
-      DEVELOPER_DIR: /Applications/Xcode_14.0.app/Contents/Developer
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
 
     steps:
       
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Select Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.2'
 
       # Required for KotlinMultiplatform
       - name: Setup Java
@@ -56,13 +64,36 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec fastlane cru_shared_lane_run_tests
+        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
+        # TODO: See if Fastlane can be used to store .xcresult at -resultBundlePath for Code Coverage Upload Action GT-2043.
+        #run: bundle exec fastlane cru_shared_lane_run_tests xcargs:"-resultBundlePath='/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result'"
+
+      - name: Upload Xcode Code Coverage Report to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          xcode: true
+          xcode_archive_path: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result.xcresult
+
+      - name: Configure AWS credentials
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ONESKY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Import OneSky Keys
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: dkershner6/aws-ssm-getparameters-action@v1
+        with:
+          parameterPairs: |
+            /shared/onesky/PUBLIC_KEY = ONESKY_PUBLIC_KEY,
+            /shared/onesky/SECRET_KEY = ONESKY_SECRET_KEY
 
       - name: Download And Commit Latest OneSky Localizations
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          ONESKY_PUBLIC_KEY: ${{ secrets.ONESKY_PUBLIC_KEY }}
-          ONESKY_SECRET_KEY: ${{ secrets.ONESKY_SECRET_KEY }}
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
       - name: Import App Store Connect API Key
@@ -92,3 +123,10 @@ jobs:
         with:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
+
+      - name: Archive Fastlane Gym Logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: fastlane-gym-logs
+          path: "/Users/runner/Library/Logs/gym/godtools-*/**"

@@ -67,7 +67,7 @@ class ChooseLanguageViewModel {
         }
         
         Publishers.CombineLatest3(getSettingsLanguagesUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(), getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] languages, settingsPrimaryLanguage, settingsParallelLanguage in
                 self?.allLanguages = languages
                 self?.settingsPrimaryLanguage = settingsPrimaryLanguage
@@ -77,7 +77,7 @@ class ChooseLanguageViewModel {
             .store(in: &cancellables)
         
         getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (settingsParallelLanguage: LanguageDomainModel?) in
                 
                 let hidesDeleteLanguageButtonValue: Bool

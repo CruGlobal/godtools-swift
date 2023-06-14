@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 enum FlowStep {
     
@@ -91,17 +92,21 @@ enum FlowStep {
     
     // menu
     case doneTappedFromMenu
-    case languageSettingsTappedFromMenu
     case tutorialTappedFromMenu
-    case myAccountTappedFromMenu
-    case aboutTappedFromMenu
-    case helpTappedFromMenu
-    case backTappedFromHelp
-    case contactUsTappedFromMenu
-    case backTappedFromContactUs
-    case shareGodToolsTappedFromMenu
+    case languageSettingsTappedFromMenu
+    case loginTappedFromMenu(authenticationCompletedSubject: PassthroughSubject<Void, Never>)
+    case createAccountTappedFromMenu(authenticationCompletedSubject: PassthroughSubject<Void, Never>)
+    case activityTappedFromMenu
+    case sendFeedbackTappedFromMenu
+    case backTappedFromSendFeedback
+    case reportABugTappedFromMenu
+    case backTappedFromReportABug
+    case askAQuestionTappedFromMenu
+    case backTappedFromAskAQuestion
+    case leaveAReviewTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
+    case shareGodToolsTappedFromMenu
     case termsOfUseTappedFromMenu
     case backTappedFromTermsOfUse
     case privacyPolicyTappedFromMenu
@@ -109,16 +114,25 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
+        
+    // user activity
+    case backTappedFromActivity
     
-    // about
-    case backTappedFromAbout
-    
-    // my account
-    case backTappedFromMyAccount
-    
+    // social sign-in
+    case closeTappedFromLogin
+    case closeTappedFromCreateAccount
+    case userCompletedSignInFromLogin(error: Error?)
+    case userCompletedSignInFromCreateAccount(error: Error?)
+        
     // delete account
-    case backTappedFromDeleteAccount
-    case emailHelpDeskToDeleteOktaAccountTappedFromDeleteAccount
+    case closeTappedFromDeleteAccount
+    case deleteAccountTappedFromDeleteAccount
+    case cancelTappedFromDeleteAccount
+    case deleteAccountTappedFromConfirmDeleteAccount
+    
+    // delete account progress
+    case didFinishAccountDeletionWithSuccessFromDeleteAccountProgress
+    case didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: Error)
     
     // language settings
     case backTappedFromLanguageSettings
@@ -137,6 +151,8 @@ enum FlowStep {
     case backTappedFromArticle
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
+    case debugTappedFromArticle(article: ArticleDomainModel)
+    case closeTappedFromArticleDebug
     
     // article deep link
     case didDownloadArticleFromLoadingArticle(aemCacheObject: ArticleAemCacheObject)

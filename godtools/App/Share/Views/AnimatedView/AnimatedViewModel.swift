@@ -9,19 +9,19 @@
 import UIKit
 import Lottie
 
-class AnimatedViewModel: AnimatedViewModelType {
+class AnimatedViewModel {
     
-    let animationData: Animation?
+    let animationData: LottieAnimation?
     let autoPlay: Bool
     let loop: Bool
     
-    required init(animationDataResource: AnimatedResource, autoPlay: Bool, loop: Bool) {
+    init(animationDataResource: AnimatedResource, autoPlay: Bool, loop: Bool) {
         
         switch animationDataResource {
         case .filepathJsonFile(let filepath):
-            animationData = Animation.filepath(filepath, animationCache: nil)
+            animationData = LottieAnimation.filepath(filepath, animationCache: nil)
         case .mainBundleJsonFile(let filename):
-            animationData = Animation.named(filename, bundle: Bundle.main, subdirectory: nil, animationCache: nil)
+            animationData = LottieAnimation.named(filename, bundle: Bundle.main, subdirectory: nil, animationCache: nil)
         }
                 
         self.autoPlay = autoPlay

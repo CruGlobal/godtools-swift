@@ -54,7 +54,7 @@ class SetupParallelLanguageViewModel {
         setupParallelLanguageViewedRepository.storeSetupParallelLanguageViewed(viewed: true)
         
         getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
                 
                 let buttonText: String
