@@ -116,6 +116,9 @@ class MobileContentPagesView: UIViewController {
             if let navigateToPageModel = reRenderPagesModel.navigateToPageModel {
                 self?.navigateToPage(navigateToPageModel: navigateToPageModel)
             }
+            else {
+                self?.pageNavigationView.reloadData()
+            }
         }
         
         viewModel.navigatePageSignal.addObserver(self) { [weak self] (navigateToPageModel: MobileContentPagesNavigateToPageModel) in
