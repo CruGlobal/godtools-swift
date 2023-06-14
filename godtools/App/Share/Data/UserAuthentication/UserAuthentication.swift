@@ -138,29 +138,30 @@ class UserAuthentication {
     
     private func renewAppleTokenPublisher(with provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        guard let appleAuthProvider = provider as? AppleAuthentication else {
-            
-            return Fail(error: NSError.errorWithDescription(description: "Expected auth provider is not Apple!"))
-                .eraseToAnyPublisher()
-        }
-        
-        // what happens if the refresh token is nil here?
-        let appleRefreshToken = self.mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
-        
-        let userProfile = appleAuthProvider.getCurrentUserProfile()
-        let authProviderProfile = AuthenticationProviderProfile(email: userProfile.email, familyName: userProfile.familyName, givenName: userProfile.givenName)
-        
-        let appleAuthProviderResponse = AuthenticationProviderResponse(
-            accessToken: nil,
-            appleSignInAuthorizationCode: nil,
-            idToken: nil,
-            profile: authProviderProfile,
-            providerType: .apple,
-            refreshToken: appleRefreshToken
-        )
-        
-        return Just(appleAuthProviderResponse)
-            .setFailureType(to: Error.self)
+        return provider.getAuthUserPublisher()
+            .flatMap { authUserDomainModel -> AnyPublisher<AuthenticationProviderResponse, Error> in
+                
+                let authProviderProfile = AuthenticationProviderProfile(
+                    email: authUserDomainModel?.email,
+                    familyName: authUserDomainModel?.lastName,
+                    givenName: authUserDomainModel?.firstName
+                )
+                
+                let persistedAppleRefreshToken = self.mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
+                
+                let appleAuthProviderResponse = AuthenticationProviderResponse(
+                    accessToken: nil,
+                    appleSignInAuthorizationCode: nil,
+                    idToken: nil,
+                    profile: authProviderProfile,
+                    providerType: .apple,
+                    refreshToken: persistedAppleRefreshToken
+                )
+                
+                return Just(appleAuthProviderResponse)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
