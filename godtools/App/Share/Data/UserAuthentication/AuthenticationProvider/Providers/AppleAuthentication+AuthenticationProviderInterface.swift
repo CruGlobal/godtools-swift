@@ -15,9 +15,13 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> Result<AuthenticationProviderResponse, Error> {
         
+        guard let authCode = appleAuthResponse.authorizationCode else {
+             return .failure(NSError.errorWithDescription(description: "Failed to get authorization code."))
+         }
+        
         let response = AuthenticationProviderResponse(
             accessToken: nil,
-            appleSignInAuthorizationCode: appleAuthResponse.authorizationCode,
+            appleSignInAuthorizationCode: authCode,
             idToken: appleAuthResponse.identityToken,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
