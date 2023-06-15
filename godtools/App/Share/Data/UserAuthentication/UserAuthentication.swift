@@ -45,11 +45,11 @@ class UserAuthentication {
         return lastAuthenticatedProviderCache.getLastAuthenticatedProvider()
     }
     
-    func getPersistedAccessToken() -> String? {
-        return getLastAuthenticatedProvider()?.getPersistedAccessToken()?.tokenString
+    func getPersistedResponse() -> AuthenticationProviderResponse? {
+        return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         guard let lastAuthenticatedProvider = getLastAuthenticatedProviderType() else {
             return Fail(error: NSError.errorWithDescription(description: "Last authenticated provider does not exist."))
@@ -57,8 +57,9 @@ class UserAuthentication {
         }
         
         return getAuthenticationProvider(provider: lastAuthenticatedProvider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken, Error> in
-                return provider.renewAccessTokenPublisher()
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+                
+                return provider.renewTokenPublisher()
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -75,20 +76,18 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> {
+    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
     
         return getAuthenticationProvider(provider: provider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> in
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
                 return provider.authenticatePublisher(presentingViewController: fromViewController)
             })
-            .map { (providerAccessToken: AuthenticationProviderAccessToken?) in
+            .map { (response: AuthenticationProviderResponse) in
                 
-                if providerAccessToken != nil {
-                    self.lastAuthenticatedProviderCache.store(provider: provider)
-                }
+                self.lastAuthenticatedProviderCache.store(provider: provider)
                 
-                return providerAccessToken
+                return response
             }
             .eraseToAnyPublisher()
     }
