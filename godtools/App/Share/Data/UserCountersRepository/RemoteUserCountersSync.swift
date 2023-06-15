@@ -39,12 +39,9 @@ class RemoteUserCountersSync {
             let incrementValue = userCounter.incrementValue
             
             api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue)
-                .flatMap { userCounterUpdatedFromRemote in
+                .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
                     
                     return self.cache.syncUserCounter(userCounterUpdatedFromRemote, incrementValueBeforeRemoteUpdate: incrementValue)
-                        .mapError { error in
-                            return URLResponseError.otherError(error: error)
-                        }
                         .eraseToAnyPublisher()
                 }
                 .sink(receiveCompletion: { _ in

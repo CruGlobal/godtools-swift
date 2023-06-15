@@ -42,14 +42,15 @@ class MobileContentApiAuthSession {
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, Error> {
         
         return getAuthToken()
-            .flatMap { authToken -> AnyPublisher<Data, URLResponseError> in
+            .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
 
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
                 
             }
             .catch({ (error: Error) -> AnyPublisher<Data, Error> in
                 
-                if error.is401Error {
+                // TODO: Update RequestOperation to include is401Error ? ~Levi
+                if error.code == 401 {
                     
                     return self.fetchFreshAuthTokenAndReattemptDataTask(urlRequest: urlRequest, session: urlSession)
                     
@@ -117,7 +118,7 @@ class MobileContentApiAuthSession {
     private func fetchFreshAuthTokenAndReattemptDataTask(urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
         
         return fetchRemoteAuthToken()
-            .flatMap { (authToken: String) -> AnyPublisher<Data, URLResponseError> in
+            .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
             
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: session)
                     .eraseToAnyPublisher()

@@ -72,9 +72,6 @@ class AuthenticateUserUseCase {
             .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
                 
                 return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-                    .mapError { urlResponseError in
-                        return urlResponseError as Error
-                    }
                     .eraseToAnyPublisher()
             })
             .map { (authTokenDataModel: MobileContentAuthTokenDataModel) in
