@@ -373,8 +373,7 @@ class AppDomainLayerDependencies {
     
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
+            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
 }
