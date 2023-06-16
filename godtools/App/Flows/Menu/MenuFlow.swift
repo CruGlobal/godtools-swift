@@ -75,15 +75,15 @@ class MenuFlow: Flow {
         case .doneTappedFromMenu:
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
-        case .loginTappedFromMenu(let authenticationCompletedSubject):
-            let view = getSocialSignInView(authenticationType: .login, authenticationCompletedSubject: authenticationCompletedSubject)
+        case .loginTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .login)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromLogin:
             navigationController.dismiss(animated: true)
             
-        case .createAccountTappedFromMenu(let authenticationCompletedSubject):
-            let view = getSocialSignInView(authenticationType: .createAccount, authenticationCompletedSubject: authenticationCompletedSubject)
+        case .createAccountTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .createAccount)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromCreateAccount:
@@ -279,7 +279,7 @@ class MenuFlow: Flow {
         return hostingView
     }
     
-    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType, authenticationCompletedSubject: PassthroughSubject<Void, Never>) -> UIViewController {
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
         let viewBackgroundColor: Color = ColorPalette.gtBlue.color
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
@@ -288,7 +288,6 @@ class MenuFlow: Flow {
             flowDelegate: self,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
-            authenticationCompletedSubject: authenticationCompletedSubject,
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )
