@@ -54,7 +54,8 @@ class MobileContentAuthTokenCache {
         return MobileContentAuthTokenDataModel(
             expirationDate: authTokenData?.expirationDate,
             userId: userId,
-            token: authToken
+            token: authToken,
+            appleRefreshToken: getAppleRefreshToken(for: userId)
         )
     }
     
@@ -66,6 +67,11 @@ class MobileContentAuthTokenCache {
     func getUserId() -> String? {
         
         return keychainAccessor.getMobileContentUserId()
+    }
+    
+    func getAppleRefreshToken(for userId: String) -> String? {
+        
+        return keychainAccessor.getAppleRefreshToken(userId: userId)
     }
     
     func deleteAuthToken(for userId: String) {

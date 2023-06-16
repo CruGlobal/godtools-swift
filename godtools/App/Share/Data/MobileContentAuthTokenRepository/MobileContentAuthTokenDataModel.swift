@@ -13,6 +13,7 @@ struct MobileContentAuthTokenDataModel {
     let expirationDate: Date?
     let userId: String
     let token: String
+    let appleRefreshToken: String?
     
     var isExpired: Bool {
         
@@ -34,5 +35,6 @@ extension MobileContentAuthTokenDataModel {
         self.expirationDate = decodable.expirationDate
         self.userId = decodable.userId
         self.token = decodable.token
+        self.appleRefreshToken = decodable.appleRefreshToken
     }
 }

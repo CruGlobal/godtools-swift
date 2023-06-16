@@ -15,20 +15,21 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     
     private func getAuthenticationProviderResponse(appleAuthResponse: AppleAuthenticationResponse) -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let idToken = appleAuthResponse.identityToken else {
-            return .failure(NSError.errorWithDescription(description: "Failed to get identity token."))
+        guard let authCode = appleAuthResponse.authorizationCode else {
+            return .failure(NSError.errorWithDescription(description: "Failed to get authorization code."))
         }
         
         let response = AuthenticationProviderResponse(
-            accessToken: "",
-            idToken: idToken,
+            accessToken: nil,
+            appleSignInAuthorizationCode: authCode,
+            idToken: appleAuthResponse.identityToken,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
                 familyName: appleAuthResponse.fullName?.familyName,
                 givenName: appleAuthResponse.fullName?.givenName
             ),
             providerType: .apple,
-            refreshToken: ""
+            refreshToken: nil
         )
         
         return .success(response)
@@ -52,11 +53,10 @@ extension AppleAuthentication: AuthenticationProviderInterface {
             .eraseToAnyPublisher()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
+    func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        // TODO: - implement in GT-2042
-        
-        let error: Error = NSError.errorWithDescription(description: "Access token renewal not yet implemented")
+        // Apple token renewal is handled in UserAuthentication since Apple token renewal occurs through Mobile-Content-Api.
+        let error: Error = NSError.errorWithDescription(description: "Access token renewal is handled in UserAuthentication.swift-- this method shouldn't be called.")
 
         return Fail(error: error)
             .eraseToAnyPublisher()
