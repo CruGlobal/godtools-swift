@@ -33,12 +33,9 @@ class GetUserIsAuthenticatedUseCase {
         
         let isAuthenticated: Bool
         
-        if let authToken = authToken, let expirationDate = authToken.expirationDate {
+        if let authToken = authToken {
             
-            let currentDate: Date = Date()
-            let secondsTilExpiration: TimeInterval = currentDate.timeIntervalSince(expirationDate)
-            
-            isAuthenticated = secondsTilExpiration < 0
+            isAuthenticated = !authToken.isExpired
         }
         else {
             
