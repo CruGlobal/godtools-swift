@@ -124,7 +124,7 @@ class UserAuthentication {
     
     private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
         
-        return authProviderResponse.getMobileContentAuthProviderToken().publisher
+        return getMobileContentAuthProviderToken(from: authProviderResponse).publisher
             .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
                 
                 return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
@@ -178,5 +178,44 @@ class UserAuthentication {
                 return ()
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getMobileContentAuthProviderToken(from authProviderResponse: AuthenticationProviderResponse) -> Result<MobileContentAuthProviderToken, Error> {
+        
+        switch authProviderResponse.providerType {
+            
+        case .apple:
+            
+            if let authCode = authProviderResponse.appleSignInAuthorizationCode, authCode.isEmpty == false {
+                
+                let profile = authProviderResponse.profile
+                
+                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                
+            } else if let refreshToken = authProviderResponse.refreshToken, refreshToken.isEmpty == false {
+                
+                return .success(.appleRefresh(refreshToken: refreshToken))
+                
+            } else {
+                
+                return .failure(NSError.errorWithDescription(description: "Missing apple auth code or refresh token"))
+            }
+                        
+        case .facebook:
+            
+            guard let accessToken = authProviderResponse.accessToken, !accessToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing facebook accesstoken."))
+            }
+            
+            return .success(.facebook(accessToken: accessToken))
+            
+        case .google:
+            
+            guard let idToken = authProviderResponse.idToken, !idToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing google idToken."))
+            }
+            
+            return .success(.google(idToken: idToken))
+        }
     }
 }
