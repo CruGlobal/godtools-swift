@@ -15,6 +15,13 @@ class RealmDatabase {
     private let config: Realm.Configuration
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
     
+    private lazy var isInMemory: Bool = {
+        return config.inMemoryIdentifier != nil
+    }()
+    private lazy var inMemRealm: Realm = {
+        return try! Realm(configuration: config)
+    }()
+    
     init(databaseConfiguration: RealmDatabaseConfiguration) {
         
         self.databaseConfiguration = databaseConfiguration
@@ -22,11 +29,20 @@ class RealmDatabase {
     }
 
     func openRealm() -> Realm {
+        if isInMemory {
+            
+            return inMemRealm
+        }
+        
         return try! Realm(configuration: config)
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
-                
+        if isInMemory {
+            async(inMemRealm)
+            return
+        }
+        
         backgroundQueue.async {
             autoreleasepool {
                 

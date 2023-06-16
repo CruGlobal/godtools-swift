@@ -32,4 +32,9 @@ struct UserCounterDecodable: Decodable {
         
         count = try attributesContainer.decode(Int.self, forKey: .count)
     }
+    
+    init(id: String, count: Int) {
+        self.id = id
+        self.count = count
+    }
 }
