@@ -44,6 +44,12 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
+    func getAppleAuthentication() -> AppleAuthentication {
+        return AppleAuthentication(
+            appleUserPersistentStore: AppleUserPersistentStore()
+        )
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(
@@ -140,6 +146,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getGoogleAuthentication() -> GoogleAuthentication {
+        
+        return GoogleAuthentication(
+            configuration: sharedAppConfig.googleAuthenticationConfiguration
+        )
+    }
+    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -201,7 +214,8 @@ class AppDataLayerDependencies {
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: MobileContentAuthTokenCache(
-                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor()
+                mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
+                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: sharedRealmDatabase)
             )
         )
     }
@@ -287,9 +301,12 @@ class AppDataLayerDependencies {
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
             authenticationProviders: [
-                .facebook: getFacebookAuthentication()
+                .apple: getAppleAuthentication(),
+                .facebook: getFacebookAuthentication(),
+                .google: getGoogleAuthentication()
             ],
-            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache(),
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
     

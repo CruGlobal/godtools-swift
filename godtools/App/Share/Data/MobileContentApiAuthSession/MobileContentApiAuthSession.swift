@@ -76,18 +76,11 @@ class MobileContentApiAuthSession {
         }
     }
     
-    private func fetchRemoteAuthToken() -> AnyPublisher<String, URLResponseError> {
-        
-        // TODO: The internals of this method will need to be updated since we no longer support okta.  See GT-2025.  ~Levi
-        
-        return userAuthentication.renewAccessTokenPublisher()
+    private func fetchRemoteAuthToken(createUser: Bool = false) -> AnyPublisher<String, URLResponseError> {
+                
+        return userAuthentication.renewTokenPublisher()
             .mapError { error in
                 return URLResponseError.otherError(error: error)
-            }
-            .flatMap { (providerAccessToken: AuthenticationProviderAccessToken) in
-                
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(oktaAccessToken: providerAccessToken.tokenString)
-                   .eraseToAnyPublisher()
             }
             .flatMap { authTokenDataModel in
                 

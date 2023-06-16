@@ -14,6 +14,7 @@ class SocialSignInViewModel: ObservableObject {
     
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
+    private let authenticationCompletedSubject: PassthroughSubject<Void, Never>
     private let authenticateUserUseCase: AuthenticateUserUseCase
     private let localizationServices: LocalizationServices
     
@@ -45,36 +46,56 @@ class SocialSignInViewModel: ObservableObject {
         )
     }()
     
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticationCompletedSubject: PassthroughSubject<Void, Never>, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
+        self.authenticationCompletedSubject = authenticationCompletedSubject
         self.authenticateUserUseCase = authenticateUserUseCase
         self.localizationServices = localizationServices
         
-        titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
-        subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
+        switch authenticationType {
+        case .createAccount:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
+        
+        case .login:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
+        }
     }
     
     private func authenticateUser(provider: AuthenticationProviderType) {
-                
-        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController))
-            .receiveOnMain()
-            .sink { [weak self] subscriberCompletion in
-                switch subscriberCompletion {
-                case .finished:
-                    self?.handleAuthenticationCompleted(error: nil)
-                case .failure(let error):
-                    self?.handleAuthenticationCompleted(error: error)
-                }
-            } receiveValue: { _ in
-
+        
+        authenticateUserUseCase.authenticatePublisher(
+            provider: provider,
+            policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController),
+            createUser: authenticationType == .createAccount
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] subscriberCompletion in
+            
+            let authenticationError: Error?
+            
+            switch subscriberCompletion {
+            case .finished:
+                authenticationError = nil
+            case .failure(let error):
+                authenticationError = error
             }
-            .store(in: &cancellables)
+            
+            self?.handleAuthenticationCompleted(error: authenticationError)
+            
+        } receiveValue: { _ in
+            
+        }
+        .store(in: &cancellables)
     }
     
     private func handleAuthenticationCompleted(error: Error?) {
+        
+        authenticationCompletedSubject.send(())
         
         switch authenticationType {
         

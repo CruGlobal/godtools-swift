@@ -69,12 +69,21 @@ class AppDomainLayerDependencies {
         return AuthenticateUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
             emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
         )
     }
     
     func getBannerImageUseCase() -> GetBannerImageUseCase {
         return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
+    }
+    
+    func getDeleteAccountUseCase() -> DeleteAccountUseCase {
+        return DeleteAccountUseCase(
+            userAuthentication: dataLayer.getUserAuthentication(),
+            userDetailsRepository: dataLayer.getUserDetailsRepository(),
+            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
+        )
     }
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
@@ -130,8 +139,7 @@ class AppDomainLayerDependencies {
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     

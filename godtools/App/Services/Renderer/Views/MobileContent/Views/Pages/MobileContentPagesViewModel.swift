@@ -55,7 +55,7 @@ class MobileContentPagesViewModel: NSObject {
         super.init()
               
         resourcesRepository.getResourcesChanged()
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateTranslationsIfNeeded()
             }
@@ -446,7 +446,7 @@ extension MobileContentPagesViewModel {
         }
         
         translationsRepository.getTranslationManifestsFromRemote(translations: translationsNeededDownloading, manifestParserType: .renderer, includeRelatedFiles: true, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { [weak self] (manifestFileDataModels: [TranslationManifestFileDataModel]) in

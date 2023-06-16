@@ -14,11 +14,13 @@ class UserAuthentication {
         
     private let authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface]
     private let lastAuthenticatedProviderCache: LastAuthenticatedProviderCache
+    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache) {
+    init(authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface], lastAuthenticatedProviderCache: LastAuthenticatedProviderCache, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
                 
         self.authenticationProviders = authenticationProviders
         self.lastAuthenticatedProviderCache = lastAuthenticatedProviderCache
+        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
     private func getLastAuthenticatedProvider() -> AuthenticationProviderInterface? {
@@ -45,11 +47,11 @@ class UserAuthentication {
         return lastAuthenticatedProviderCache.getLastAuthenticatedProvider()
     }
     
-    func getPersistedAccessToken() -> String? {
-        return getLastAuthenticatedProvider()?.getPersistedAccessToken()?.tokenString
+    func getPersistedResponse() -> AuthenticationProviderResponse? {
+        return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
-    func renewAccessTokenPublisher() -> AnyPublisher<AuthenticationProviderAccessToken, Error> {
+    func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
         
         guard let lastAuthenticatedProvider = getLastAuthenticatedProviderType() else {
             return Fail(error: NSError.errorWithDescription(description: "Last authenticated provider does not exist."))
@@ -57,54 +59,114 @@ class UserAuthentication {
         }
         
         return getAuthenticationProvider(provider: lastAuthenticatedProvider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken, Error> in
-                return provider.renewAccessTokenPublisher()
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+                
+                if lastAuthenticatedProvider == .apple {
+                    
+                    return self.renewAppleTokenPublisher(with: provider)
+                    
+                } else {
+                    
+                    return provider.renewTokenPublisher()
+                        .eraseToAnyPublisher()
+                }
+                
+            })
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: false)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
+        
+        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
+            return Just(nil).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        return lastAuthProvider.getAuthUserPublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    func signInPublisher(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    
+        return getAuthenticationProvider(provider: provider)
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+                
+                return provider.authenticatePublisher(presentingViewController: fromViewController)
+            })
+            .map { (response: AuthenticationProviderResponse) in
+                
+                self.lastAuthenticatedProviderCache.store(provider: provider)
+                
+                return response
+            }
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func signOutPublisher() -> AnyPublisher<Void, Error> {
+             
+        signOutOfAllProviders()
+            .map { response in
+                self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
+                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
+                
+                return response
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+        
+        return getMobileContentAuthProviderToken(from: authProviderResponse).publisher
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+                
+                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
+                    .mapError { urlResponseError in
+                        return urlResponseError as Error
+                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel, Error> {
+    private func renewAppleTokenPublisher(with provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        let authUser = AuthUserDomainModel(email: "", firstName: nil, grMasterPersonId: nil, lastName: nil, ssoGuid: nil)
-        
-        return Just(authUser).setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-    
-    func signInPublisher(provider: AuthenticationProviderType, fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
-    
-        return getAuthenticationProvider(provider: provider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderAccessToken?, Error> in
-                return provider.authenticatePublisher(presentingViewController: fromViewController)
-            })
-            .map { (providerAccessToken: AuthenticationProviderAccessToken?) in
+        return provider.getAuthUserPublisher()
+            .flatMap { authUserDomainModel -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                if providerAccessToken != nil {
-                    self.lastAuthenticatedProviderCache.store(provider: provider)
-                }
+                let authProviderProfile = AuthenticationProviderProfile(
+                    email: authUserDomainModel?.email,
+                    familyName: authUserDomainModel?.lastName,
+                    givenName: authUserDomainModel?.firstName
+                )
                 
-                return ()
+                let persistedAppleRefreshToken = self.mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
+                
+                let appleAuthProviderResponse = AuthenticationProviderResponse(
+                    accessToken: nil,
+                    appleSignInAuthorizationCode: nil,
+                    idToken: nil,
+                    profile: authProviderProfile,
+                    providerType: .apple,
+                    refreshToken: persistedAppleRefreshToken
+                )
+                
+                return Just(appleAuthProviderResponse)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func signOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Void, Error> {
-             
-        guard let lastAuthProvider = getLastAuthenticatedProvider() else {
-            return Just(()).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+    private func signOutOfAllProviders() -> AnyPublisher<Void, Error> {
         
-        return lastAuthProvider.signOutPublisher()
-            .map { response in
-                self.lastAuthenticatedProviderCache.deleteLastAuthenticatedProvider()
-                return response
-            }
-            .eraseToAnyPublisher()
-        
-        // TODO: Should we sign out of all providers? ~Levi
-        /*
         let allProviders: [AuthenticationProviderInterface] = Array(authenticationProviders.values)
         let signOutPublishers = allProviders.map {
             $0.signOutPublisher()
@@ -112,6 +174,48 @@ class UserAuthentication {
         
         return Publishers.MergeMany(signOutPublishers)
             .collect()
-            .eraseToAnyPublisher()*/
+            .map { _ in
+                return ()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getMobileContentAuthProviderToken(from authProviderResponse: AuthenticationProviderResponse) -> Result<MobileContentAuthProviderToken, Error> {
+        
+        switch authProviderResponse.providerType {
+            
+        case .apple:
+            
+            if let authCode = authProviderResponse.appleSignInAuthorizationCode, authCode.isEmpty == false {
+                
+                let profile = authProviderResponse.profile
+                
+                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                
+            } else if let refreshToken = authProviderResponse.refreshToken, refreshToken.isEmpty == false {
+                
+                return .success(.appleRefresh(refreshToken: refreshToken))
+                
+            } else {
+                
+                return .failure(NSError.errorWithDescription(description: "Missing apple auth code or refresh token"))
+            }
+                        
+        case .facebook:
+            
+            guard let accessToken = authProviderResponse.accessToken, !accessToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing facebook accesstoken."))
+            }
+            
+            return .success(.facebook(accessToken: accessToken))
+            
+        case .google:
+            
+            guard let idToken = authProviderResponse.idToken, !idToken.isEmpty else {
+                return .failure(NSError.errorWithDescription(description: "Missing google idToken."))
+            }
+            
+            return .success(.google(idToken: idToken))
+        }
     }
 }

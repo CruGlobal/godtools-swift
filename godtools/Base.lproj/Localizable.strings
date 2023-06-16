@@ -1,9 +1,25 @@
 "signIn.title" = "Sign in";
-"signIn.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
+"createAccount.title" = "Create account";
+"createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
+"deleteAccount.title" = "Don't go so soon";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
+"deleteAccount.confirmButton.title" = "Delete my account";
+"deleteAccount.cancelButton.title" = "Keep my account";
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
 "signIn.google" = "Sign in with Google";
 "signIn.facebook" = "Login with Facebook";
 "signIn.apple" = "Continue with Apple";
-
 "menu_getStarted" = "Get Started";
 "menu_support" = "Support";
 "menu_about" = "About";
@@ -11,17 +27,25 @@
 "menu.reportABug" = "Report a Bug";
 "menu.askAQuestion" = "Ask a Question";
 "menu.leaveAReview" = "Leave a Review";
-"share_god_tools" = "Share GodTools";
-
-"account.activity.sectionTitle" = "Your activity";
-"account.activity.toolOpens" = "Tool opens";
-"account.activity.lessonCompletions" = "Lesson completions";
-"account.activity.screenShares" = "Screen shares";
-"account.activity.linksShared" = "Links shared";
-"account.activity.languagesUsed" = "Languages used";
-"account.activity.sessions" = "Sessions";
-
 "account.badges.sectionTitle" = "Your badges";
+"account.activity.sectionTitle" = "Your activity";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Tool opens";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Lesson completions";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Screen shares";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Links shared";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Languages used";
+
+"account.activity.sessions" = "Sessions";
 "badges.tipsCompleted.singular" = "Completed 1 training tip";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
@@ -154,7 +178,7 @@
 "onboardingQuickStart.2.button.title" = "Choose one of our tools";
 "onboardingTutorial.nextButton.title" = "Next";
 "onboardingQuickStart.title" = "Quick start links";
-"onboardingQuickStart.0.title" = "I want to explore Christianity";
+"onboardingQuickStart.0.title" = "I want to learn more about Jesus.";
 "onboardingQuickStart.0.button.title" = "Read our articles";
 "onboardingQuickStart.1.title" = "I want to learn about having gospel conversations";
 "onboardingQuickStart.1.button.title" = "Try our Lessons";
@@ -281,6 +305,7 @@ If you don't receive this message until later, the link may not still work. We c
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "Share the GodTools App";
 "share_a_story_with_us" = "Share a Story With Us";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
@@ -409,9 +434,3 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
-
-// Delete Account
-"deleteAccount.title" = "Don't go so soon";
-"deleteAccount.subtitle" = "Are you sure you want to delete your GodTools account?";
-"deleteAccount.confirmButton.title" = "Delete my account";
-"deleteAccount.cancelButton.title" = "Keep my account";
