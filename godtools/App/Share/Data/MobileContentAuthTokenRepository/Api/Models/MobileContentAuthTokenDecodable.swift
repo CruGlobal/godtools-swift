@@ -13,6 +13,7 @@ struct MobileContentAuthTokenDecodable: Codable {
     let token: String
     let expirationDate: Date?
     let userId: String
+    let appleRefreshToken: String?
     
     enum DataKeys: String, CodingKey {
         case attributes
@@ -22,6 +23,7 @@ struct MobileContentAuthTokenDecodable: Codable {
         case token
         case expiration
         case userId = "user-id"
+        case appleRefreshToken = "apple-refresh-token"
     }
     
     init(from decoder: Decoder) throws {
@@ -36,6 +38,8 @@ struct MobileContentAuthTokenDecodable: Codable {
         
         let expirationDateString = try attributesContainer.decodeIfPresent(String.self, forKey: .expiration) ?? ""
         expirationDate = MobileContentAuthTokenDecodable.parseExpirationDateFromString(expirationDateString)
+        
+        appleRefreshToken = try attributesContainer.decodeIfPresent(String.self, forKey: .appleRefreshToken)
     }
     
     private static func parseExpirationDateFromString(_ dateString: String) -> Date? {

@@ -305,7 +305,8 @@ class AppDataLayerDependencies {
                 .facebook: getFacebookAuthentication(),
                 .google: getGoogleAuthentication()
             ],
-            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache()
+            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache(),
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
     

@@ -14,6 +14,7 @@ class MobileContentAuthTokenKeychainAccessor {
     enum Service: String {
         case mobileContent
         case mobileContentAuthToken
+        case appleRefreshToken
     }
     
     enum Account: String {
@@ -24,6 +25,7 @@ class MobileContentAuthTokenKeychainAccessor {
         
         try saveUserId(authTokenDataModel.userId)
         try saveAuthToken(authTokenDataModel)
+        try saveAppleRefreshToken(authTokenDataModel.appleRefreshToken, userId: authTokenDataModel.userId)
     }
     
     func deleteMobileContentAuthTokenAndUserId(userId: String) {
@@ -33,6 +35,9 @@ class MobileContentAuthTokenKeychainAccessor {
         
         let userIdDeleteQuery = buildDeleteQueryForUserId()
         let _ = SecItemDelete(userIdDeleteQuery)
+        
+        let appleRefreshTokenDeleteQuery = buildDeleteQueryForAppleRefreshToken(userId: userId)
+        let _ = SecItemDelete(appleRefreshTokenDeleteQuery)
     }
     
     func getMobileContentAuthToken(userId: String) -> String? {
@@ -58,6 +63,26 @@ class MobileContentAuthTokenKeychainAccessor {
     func getMobileContentUserId() -> String? {
         
         let getQuery = buildGetQueryForUserId()
+        
+        var getResult: AnyObject?
+        let getStatus = SecItemCopyMatching(getQuery, &getResult)
+        let getResponse = KeychainServiceResponse(osStatus: getStatus)
+        
+        switch getResponse {
+            
+        case .success:
+            
+            return decodeString(from: getResult)
+            
+        default:
+            
+            return nil
+        }
+    }
+    
+    func getAppleRefreshToken(userId: String) -> String? {
+        
+        let getQuery = buildGetQueryForAppleRefreshToken(userId: userId)
         
         var getResult: AnyObject?
         let getStatus = SecItemCopyMatching(getQuery, &getResult)
@@ -124,6 +149,30 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
+    private func saveAppleRefreshToken(_ appleRefreshToken: String?, userId: String) throws {
+        
+        guard let appleRefreshToken = appleRefreshToken else { return }
+        
+        let saveQuery = buildSaveQueryFromAppleRefreshToken(appleRefreshToken: appleRefreshToken, userId: userId)
+        let saveStatus = SecItemAdd(saveQuery, nil)
+        
+        let saveResponse = KeychainServiceResponse(osStatus: saveStatus)
+        
+        switch saveResponse {
+            
+        case .success:
+            return
+            
+        case .duplicateItem:
+            
+            try updateExistingAppleRefreshToken(appleRefreshToken, userId: userId)
+            
+        case .unhandledError(let error):
+            
+            throw error
+        }
+    }
+    
     private func updateExistingMobileContentAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) throws {
         
         let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromAuthToken(authTokenDataModel)
@@ -166,6 +215,27 @@ extension MobileContentAuthTokenKeychainAccessor {
         }
     }
     
+    private func updateExistingAppleRefreshToken(_ appleRefreshToken: String, userId: String) throws {
+        
+        let (updateQuery, updateAttributes) = buildUpdateQueryAndAttributesFromAppleRefreshToken(appleRefreshToken: appleRefreshToken, userId: userId)
+        
+        let updateStatus = SecItemUpdate(updateQuery, updateAttributes)
+        let updateResponse = KeychainServiceResponse(osStatus: updateStatus)
+        
+        switch updateResponse {
+            
+        case .success:
+            return
+            
+        case .unhandledError(let error):
+            
+            throw error
+            
+        default:
+            return
+        }
+    }
+    
     private func buildSaveQueryFromAuthToken(_ authTokenDataModel: MobileContentAuthTokenDataModel) -> CFDictionary {
         
         return [
@@ -183,6 +253,16 @@ extension MobileContentAuthTokenKeychainAccessor {
             kSecAttrService as String: Service.mobileContent.rawValue,
             kSecAttrAccount as String: Account.userId.rawValue,
             kSecValueData as String: Data(userId.utf8)
+        ] as CFDictionary
+    }
+    
+    private func buildSaveQueryFromAppleRefreshToken(appleRefreshToken: String, userId: String) -> CFDictionary {
+                
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.appleRefreshToken.rawValue,
+            kSecAttrAccount as String: userId,
+            kSecValueData as String: Data(appleRefreshToken.utf8)
         ] as CFDictionary
     }
     
@@ -211,6 +291,21 @@ extension MobileContentAuthTokenKeychainAccessor {
         let updateAttributes = [
             kSecAttrAccount as String: Account.userId.rawValue,
             kSecValueData as String: Data(userId.utf8)
+        ] as CFDictionary
+        
+        return (updateQuery, updateAttributes)
+    }
+    
+    private func buildUpdateQueryAndAttributesFromAppleRefreshToken(appleRefreshToken: String, userId: String) -> (query: CFDictionary, updateAttributes: CFDictionary) {
+        
+        let updateQuery = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.appleRefreshToken.rawValue
+        ] as CFDictionary
+        
+        let updateAttributes = [
+            kSecAttrAccount as String: userId,
+            kSecValueData as String: Data(appleRefreshToken.utf8)
         ] as CFDictionary
         
         return (updateQuery, updateAttributes)
@@ -251,6 +346,25 @@ extension MobileContentAuthTokenKeychainAccessor {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: Service.mobileContent.rawValue,
             kSecAttrAccount as String: Account.userId.rawValue,
+        ] as CFDictionary
+    }
+    
+    private func buildGetQueryForAppleRefreshToken(userId: String) -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.appleRefreshToken.rawValue,
+            kSecAttrAccount as String: userId,
+            kSecReturnData as String: true
+        ] as CFDictionary
+    }
+    
+    private func buildDeleteQueryForAppleRefreshToken(userId: String) -> CFDictionary {
+        
+        return [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: Service.appleRefreshToken.rawValue,
+            kSecAttrAccount as String: userId
         ] as CFDictionary
     }
     

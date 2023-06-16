@@ -37,6 +37,7 @@ class MobileContentApiAuthSession {
         )
         
         return sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+            .eraseToAnyPublisher()
     }
     
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, Error> {
@@ -45,52 +46,40 @@ class MobileContentApiAuthSession {
             .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
 
                 return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
+                    .eraseToAnyPublisher()
                 
             }
             .catch({ (error: Error) -> AnyPublisher<Data, Error> in
                 
-                // TODO: Update RequestOperation to include is401Error ? ~Levi
-                if error.code == 401 {
-                    
+                let notAuthorized: Bool = error.code == 401
+                
+                if notAuthorized {
                     return self.fetchFreshAuthTokenAndReattemptDataTask(urlRequest: urlRequest, session: urlSession)
-                    
-                } else {
-                    
-                    return Fail(outputType: Data.self, failure: error)
                         .eraseToAnyPublisher()
                 }
+                
+                return Fail(error: error)
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
     private func getAuthToken() -> AnyPublisher<String, Error> {
         
-        if let cachedAuthToken = mobileContentAuthTokenRepository.getCachedAuthToken() {
+        if let cachedAuthTokenDataModel = mobileContentAuthTokenRepository.getCachedAuthTokenModel(), !cachedAuthTokenDataModel.isExpired {
             
-            return Just(cachedAuthToken)
-                .setFailureType(to: Error.self)
+            return Just(cachedAuthTokenDataModel.token).setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
-            
-        } else {
-            
-            return fetchRemoteAuthToken()
         }
+        
+        return fetchRemoteAuthToken()
+            .eraseToAnyPublisher()
     }
     
     private func fetchRemoteAuthToken(createUser: Bool = false) -> AnyPublisher<String, Error> {
                 
         return userAuthentication.renewTokenPublisher()
-            .flatMap { (authProviderResponse: AuthenticationProviderResponse) in
-                       
-                return authProviderResponse.getMobileContentAuthProviderToken().publisher
-                    .eraseToAnyPublisher()
-            }
-            .flatMap { providerToken in
-                
-                return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-                   .eraseToAnyPublisher()
-            }
-            .flatMap { authTokenDataModel in
+            .flatMap { (authTokenDataModel: MobileContentAuthTokenDataModel) in
                 
                 return Just(authTokenDataModel.token)
                     .eraseToAnyPublisher()
@@ -100,17 +89,11 @@ class MobileContentApiAuthSession {
     
     private func attemptDataTaskWithAuthToken(_ authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
 
-        let authenticatedRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
+        let authenticatedRequest: URLRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
 
-        return attemptDataTask(with: authenticatedRequest, session: session)
-            .eraseToAnyPublisher()
-    }
-    
-    private func attemptDataTask(with urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
-        
-        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+        return session.sendUrlRequestPublisher(urlRequest: authenticatedRequest)
             .map {
-                return $0.data
+                $0.data
             }
             .eraseToAnyPublisher()
     }
