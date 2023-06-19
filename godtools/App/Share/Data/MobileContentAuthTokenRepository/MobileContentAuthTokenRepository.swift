@@ -20,17 +20,17 @@ class MobileContentAuthTokenRepository {
         self.cache = cache
     }
     
-    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> {
+    func fetchRemoteAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
         
         return api.fetchAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-            .flatMap({ [weak self] authTokenDecodable -> AnyPublisher<MobileContentAuthTokenDataModel, URLResponseError> in
+            .flatMap({ [weak self] authTokenDecodable -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
                 
                 let authTokenDataModel = MobileContentAuthTokenDataModel(decodable: authTokenDecodable)
                 
                 self?.cache.storeAuthToken(authTokenDataModel)
                 
                 return Just(authTokenDataModel)
-                    .setFailureType(to: URLResponseError.self)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
                 
             })

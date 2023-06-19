@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceModelMetatoolData: Decodable {
+struct ResourceModelMetatoolData: Codable {
     
     let id: String
     let type: String

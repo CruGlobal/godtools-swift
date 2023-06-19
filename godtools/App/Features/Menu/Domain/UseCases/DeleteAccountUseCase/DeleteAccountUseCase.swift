@@ -22,22 +22,19 @@ class DeleteAccountUseCase {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func deleteAccountPublisher() -> AnyPublisher<Void, URLResponseError> {
+    func deleteAccountPublisher() -> AnyPublisher<Void, Error> {
                 
         return userDetailsRepository.deleteAuthorizedUserDetails()
-            .flatMap({ (void: Void) -> AnyPublisher<Void, URLResponseError> in
+            .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
                                 
                 return self.userAuthentication.signOutPublisher()
-                    .mapError { (error: Error) in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (void: Void) -> AnyPublisher<Void, URLResponseError> in
+            .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
                         
                 self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
                 
-                return Just(void).setFailureType(to: URLResponseError.self)
+                return Just(void).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

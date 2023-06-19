@@ -29,21 +29,18 @@ class UserDetailsRepository {
         return cache.getAuthUserDetails()
     }
     
-    func fetchRemoteUserDetails() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchRemoteUserDetails() -> AnyPublisher<UserDetailsDataModel, Error> {
         
         return api.fetchUserDetailsPublisher()
-            .flatMap { userDetails in
+            .flatMap { (userDetails: UserDetailsDataModel) in
                 
                 return self.cache.syncUserDetails(userDetails)
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func deleteAuthorizedUserDetails() -> AnyPublisher<Void, URLResponseError> {
+    func deleteAuthorizedUserDetails() -> AnyPublisher<Void, Error> {
         
         return api.deleteAuthorizedUserDetailsPublisher()
             .eraseToAnyPublisher()

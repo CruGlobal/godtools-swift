@@ -43,10 +43,10 @@ class GetUserAccountDetailsUseCase {
     private func fetchRemoteUserAccountDetailsPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
         return repository.fetchRemoteUserDetails()
-            .flatMap({ userDetailsDataModel -> AnyPublisher<UserDetailsDataModel?, URLResponseError> in
+            .flatMap({ userDetailsDataModel -> AnyPublisher<UserDetailsDataModel?, Error> in
                 
                 return Just(userDetailsDataModel)
-                    .setFailureType(to: URLResponseError.self)
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .catch { error in
