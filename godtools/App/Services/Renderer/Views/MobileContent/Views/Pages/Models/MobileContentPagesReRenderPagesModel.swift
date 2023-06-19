@@ -12,11 +12,11 @@ import UIKit
 class MobileContentPagesReRenderPagesModel {
     
     let pagesSemanticContentAttribute: UISemanticContentAttribute?
-    let navigateToPageModel: MobileContentPagesNavigateToPageModel?
+    let pageNavigation: MobileContentPagesNavigationEvent?
     
-    init(pagesSemanticContentAttribute: UISemanticContentAttribute?, navigateToPageModel: MobileContentPagesNavigateToPageModel?) {
+    init(pagesSemanticContentAttribute: UISemanticContentAttribute?, pageNavigation: MobileContentPagesNavigationEvent?) {
         
         self.pagesSemanticContentAttribute = pagesSemanticContentAttribute
-        self.navigateToPageModel = navigateToPageModel
+        self.pageNavigation = pageNavigation
     }
 }

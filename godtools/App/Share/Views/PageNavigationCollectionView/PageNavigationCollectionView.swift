@@ -241,13 +241,17 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
     }
     
-    func insertPagesAt(indexPaths: [IndexPath]) {
+    func insertPagesAt(indexes: [Int]) {
         
-        UIView.performWithoutAnimation {
-            collectionView.performBatchUpdates({
-                collectionView.insertItems(at: indexPaths)
-            }, completion: nil)
-        }
+        let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
+        
+        collectionView.insertItems(at: indexPaths)
+        
+//        UIView.performWithoutAnimation {
+//            collectionView.performBatchUpdates({
+//                collectionView.insertItems(at: indexPaths)
+//            }, completion: nil)
+//        }
     }
     
     func deletePagesAt(indexPaths: [IndexPath]) {
@@ -385,6 +389,8 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
 extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        print(scrollView.contentOffset)
         
         let currentPage: Int = self.currentPage
         

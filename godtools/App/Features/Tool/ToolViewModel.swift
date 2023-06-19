@@ -140,7 +140,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
     }
     
-    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
+    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
         
         let selectedLanguageValue: Int = navBarViewModel.value.selectedLanguage.value
         
@@ -148,7 +148,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         navBarViewModel.accept(value: viewModel)
         
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue, navigateToPage: navigateToPage)
+        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue)
     }
 }
 
@@ -200,7 +200,7 @@ extension ToolViewModel {
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
         
         if let pageRenderer = getPageRenderer(language: navBarViewModel.value.language) {
-            setPageRenderer(pageRenderer: pageRenderer, navigateToPage: nil)
+            setPageRenderer(pageRenderer: pageRenderer)
         }
         
         sendRemoteShareNavigationEvent(
@@ -276,6 +276,9 @@ extension ToolViewModel {
                 
         if let page = page {
             
+            // TODO: Implement back in GT-1904. ~Levi
+            
+            /*
             let pagePositions: ToolPagePositions = ToolPagePositions(cardPosition: cardPosition)
             
             let navigationModel = MobileContentPagesNavigateToPageModel(
@@ -285,13 +288,13 @@ extension ToolViewModel {
                 animated: animated
             )
             
-            navigatePageSignal.accept(value: navigationModel)
+            navigatePageSignal.accept(value: navigationModel)*/
         }
         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
             navBarViewModel.value.selectedLanguage.accept(value: remoteShareLanguageIndex)
-            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigateToPage: nil)
+            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex])
         }
     }
     
