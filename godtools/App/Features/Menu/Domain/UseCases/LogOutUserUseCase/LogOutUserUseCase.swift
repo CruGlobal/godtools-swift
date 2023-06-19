@@ -20,7 +20,7 @@ class LogOutUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Error> {
+    func logOutPublisher() -> AnyPublisher<Bool, Error> {
                 
         return userAuthentication.signOutPublisher()
             .flatMap({ (void: Void) -> AnyPublisher<Bool, Never> in

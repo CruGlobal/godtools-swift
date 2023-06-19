@@ -75,15 +75,15 @@ class MenuFlow: Flow {
         case .doneTappedFromMenu:
             flowDelegate?.navigate(step: .doneTappedFromMenu)
             
-        case .loginTappedFromMenu(let authenticationCompletedSubject):
-            let view = getSocialSignInView(authenticationType: .login, authenticationCompletedSubject: authenticationCompletedSubject)
+        case .loginTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .login)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromLogin:
             navigationController.dismiss(animated: true)
             
-        case .createAccountTappedFromMenu(let authenticationCompletedSubject):
-            let view = getSocialSignInView(authenticationType: .createAccount, authenticationCompletedSubject: authenticationCompletedSubject)
+        case .createAccountTappedFromMenu:
+            let view = getSocialSignInView(authenticationType: .createAccount)
             navigationController.present(view, animated: true)
             
         case .closeTappedFromCreateAccount:
@@ -227,32 +227,21 @@ class MenuFlow: Flow {
     }
     
     private func getMenuView() -> UIViewController {
-        
-        let viewModel = LegacyMenuViewModel(
-            flowDelegate: self,
-            infoPlist: appDiContainer.dataLayer.getInfoPlist(),
-            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase()
-        )
-        
-        let view = LegacyMenuView(viewModel: viewModel)
-        
-        return view
-        
-        
-        /*
+    
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            localizationServices: localizationServices
+            localizationServices: localizationServices,
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getOptInOnboardingTutorialAvailableUseCase: appDiContainer.getOptInOnboardingTutorialAvailableUseCase(),
+            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
+            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase()
         )
         
         let view = MenuView(viewModel: viewModel)
@@ -268,10 +257,10 @@ class MenuFlow: Flow {
             action: #selector(viewModel.doneTapped)
         )
         
-        return hostingView*/
+        return hostingView
     }
     
-    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType, authenticationCompletedSubject: PassthroughSubject<Void, Never>) -> UIViewController {
+    private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
         let viewBackgroundColor: Color = ColorPalette.gtBlue.color
         let viewBackgroundUIColor: UIColor = UIColor(viewBackgroundColor)
@@ -280,7 +269,6 @@ class MenuFlow: Flow {
             flowDelegate: self,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
-            authenticationCompletedSubject: authenticationCompletedSubject,
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
             localizationServices: appDiContainer.localizationServices
         )

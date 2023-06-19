@@ -42,6 +42,12 @@ class MobileContentAuthTokenRepository {
         return cache.getUserId()
     }
     
+    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+        
+        return cache.getAuthTokenChangedPublisher()
+            .eraseToAnyPublisher()
+    }
+    
     func getCachedAuthTokenModel() -> MobileContentAuthTokenDataModel? {
         
         return cache.getAuthTokenData()

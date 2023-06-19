@@ -23,6 +23,20 @@ class UserAuthentication {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
+    func getIsAuthenticatedChangedPublisher() -> AnyPublisher<Bool, Never> {
+        
+        return mobileContentAuthTokenRepository.getAuthTokenChangedPublisher()
+            .map { (authToken: MobileContentAuthTokenDataModel?) in
+                
+                guard let authToken = authToken else {
+                    return false
+                }
+                
+                return !authToken.isExpired
+            }
+            .eraseToAnyPublisher()
+    }
+    
     private func getLastAuthenticatedProvider() -> AuthenticationProviderInterface? {
         
         guard let lastAuthenticatedProvider = lastAuthenticatedProviderCache.getLastAuthenticatedProvider() else {
