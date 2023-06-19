@@ -241,6 +241,15 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
     }
     
+    func insertPagesAt(indexPaths: [IndexPath]) {
+        
+        UIView.performWithoutAnimation {
+            collectionView.performBatchUpdates({
+                collectionView.insertItems(at: indexPaths)
+            }, completion: nil)
+        }
+    }
+    
     func deletePagesAt(indexPaths: [IndexPath]) {
                 
         guard collectionView.numberOfItems(inSection: 0) > 0 else {
