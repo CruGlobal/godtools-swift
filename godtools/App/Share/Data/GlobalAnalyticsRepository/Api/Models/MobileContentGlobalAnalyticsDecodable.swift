@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentGlobalAnalyticsDecodable: Decodable {
+struct MobileContentGlobalAnalyticsDecodable: Codable {
     
     let countries: Int
     let id: String

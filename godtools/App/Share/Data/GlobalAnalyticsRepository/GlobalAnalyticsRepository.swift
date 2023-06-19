@@ -44,15 +44,12 @@ class GlobalAnalyticsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getGlobalAnalyticsFromRemote() -> AnyPublisher<GlobalAnalyticsDataModel, URLResponseError> {
+    func getGlobalAnalyticsFromRemote() -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
         return api.getGlobalAnalyticsPublisher()
-            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, URLResponseError> in
+            .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
                 
                 return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)
-                    .mapError {
-                        return URLResponseError.otherError(error: $0)
-                    }
                     .map {
                         return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: $0)
                     }
