@@ -23,9 +23,6 @@ class InitialDataDownloader {
     func downloadInitialData() {
         
         resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
-            .mapError { error in
-                return URLResponseError.otherError(error: error)
-            }
             .sink(receiveCompletion: { completed in
 
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in

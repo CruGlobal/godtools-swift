@@ -71,6 +71,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
+        
+        if #available(iOS 16, *) {
+            collectionView.selfSizingInvalidation = .disabled
+        }
     }
     
     // MARK: -
@@ -217,6 +221,11 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
+        
+        guard semanticContentAttribute != collectionView.semanticContentAttribute else {
+            return
+        }
+        
         collectionView.semanticContentAttribute = semanticContentAttribute
     }
     

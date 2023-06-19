@@ -1,8 +1,5 @@
-"signIn.title" = "Sign in";
-"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
 "createAccount.title" = "Create account";
 "createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
-
 "deleteAccountProgress.title" = "Deleting account...";
 "confirmDeleteAccount.title" = "Are you sure?";
 "confirmDeleteAccount.confirmButton.title" = "Delete Account";
@@ -12,11 +9,8 @@
 "deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
 "deleteAccount.confirmButton.title" = "Delete my account";
 "deleteAccount.cancelButton.title" = "Keep my account";
-"deleteAccountProgress.title" = "Deleting account...";
-"confirmDeleteAccount.title" = "Are you sure?";
-"confirmDeleteAccount.confirmButton.title" = "Delete Account";
-"accountDeletedAlert.title" = "Account Deleted";
-"accountDeletedAlert.message" = "Your account has been deleted.";
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
 "signIn.google" = "Sign in with Google";
 "signIn.facebook" = "Login with Facebook";
 "signIn.apple" = "Continue with Apple";
@@ -28,7 +22,8 @@
 "menu.askAQuestion" = "Ask a Question";
 "menu.leaveAReview" = "Leave a Review";
 "account.badges.sectionTitle" = "Your badges";
-"account.activity.sectionTitle" = "Your activity";
+"
+account.activity.sectionTitle" = "Your activity";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Tool opens";

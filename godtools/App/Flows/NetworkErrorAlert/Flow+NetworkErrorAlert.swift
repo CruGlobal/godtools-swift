@@ -10,9 +10,11 @@ import Foundation
 
 extension Flow {
     
-    func presentNetworkError(responseError: URLResponseError) {
+    func presentNetworkError(responseError: Error) {
         
-        guard !responseError.getError().isUrlErrorCancelledCode else {
+        let isCancelled: Bool = responseError.isUrlErrorCancelledCode
+        
+        guard !isCancelled else {
             return
         }
         
@@ -21,7 +23,7 @@ extension Flow {
         let title: String
         let message: String
         
-        if responseError.getError().isUrlErrorNotConnectedToInternetCode {
+        if responseError.isUrlErrorNotConnectedToInternetCode {
 
             title = localizationServices.stringForMainBundle(key: "no_internet_title")
             message = localizationServices.stringForMainBundle(key: "no_internet")
@@ -29,17 +31,7 @@ extension Flow {
         else {
             
             title = localizationServices.stringForMainBundle(key: "error")
-            
-            switch responseError {
-            case .decodeError( _):
-                message = localizationServices.stringForMainBundle(key: "download_error")
-            case .otherError( _):
-                message = localizationServices.stringForMainBundle(key: "download_error")
-            case .requestError(let error):
-                message = error.localizedDescription
-            case .statusCode(let urlResponseObject):
-                message = "Server Error \(String(describing: urlResponseObject.httpStatusCode))."
-            }
+            message = responseError.localizedDescription
         }
         
         let viewModel = AlertMessageViewModel(

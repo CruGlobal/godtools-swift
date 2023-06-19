@@ -65,6 +65,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppVersionUseCase() -> GetAppVersionUseCase {
+        return GetAppVersionUseCase(
+            infoPlist: dataLayer.getInfoPlist()
+        )
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -139,8 +145,7 @@ class AppDomainLayerDependencies {
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            mobileContentAuthTokenRepository: dataLayer.getMobileContentAuthTokenRepository()
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
     
