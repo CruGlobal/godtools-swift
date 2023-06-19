@@ -18,11 +18,13 @@ class GetUserIsAuthenticatedUseCase {
         self.userAuthentication = userAuthentication
     }
     
-    func getIsAuthenticatedPublisher() -> AnyPublisher<Bool, Never> {
+    func getIsAuthenticatedPublisher() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
         
-        let isAuthenticated: Bool = userAuthentication.getPersistedResponse() != nil
-        
-        return Just(isAuthenticated)
+        return userAuthentication.getIsAuthenticatedChangedPublisher()
+            .map { (isAuthenticated: Bool) in
+                
+                return UserIsAuthenticatedDomainModel(isAuthenticated: isAuthenticated)
+            }
             .eraseToAnyPublisher()
     }
 }

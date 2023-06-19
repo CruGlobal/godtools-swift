@@ -21,7 +21,6 @@ class MenuViewModel: ObservableObject {
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let logOutUserUseCase: LogOutUserUseCase
     private let getAppVersionUseCase: GetAppVersionUseCase
-    private let authenticationCompletedSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -96,16 +95,14 @@ class MenuViewModel: ObservableObject {
             getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (accountCreation: AccountCreationIsSupportedDomainModel, userIsAuthenticated: Bool) in
-            
-            // TODO: Finish implementing and testing. See GT-2063 which should allow for observing userIsAuthenticated changes. ~Levi
-            
-            guard accountCreation.isSupported else {
+        .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
+                        
+            guard accountCreationIsSupportedDomainModel.isSupported else {
                 self?.accountSectionVisibility = .hidden
                 return
             }
             
-            self?.accountSectionVisibility = userIsAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
+            self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
         }
         .store(in: &cancellables)
         
@@ -169,7 +166,7 @@ extension MenuViewModel {
     }
     
     func loginTapped() {
-        flowDelegate?.navigate(step: .loginTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
+        flowDelegate?.navigate(step: .loginTappedFromMenu)
     }
     
     func activityTapped() {
@@ -177,7 +174,7 @@ extension MenuViewModel {
     }
     
     func createAccountTapped() {
-        flowDelegate?.navigate(step: .createAccountTappedFromMenu(authenticationCompletedSubject: authenticationCompletedSubject))
+        flowDelegate?.navigate(step: .createAccountTappedFromMenu)
     }
     
     func logoutTapped() {
@@ -186,9 +183,8 @@ extension MenuViewModel {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (finished: Bool) in
+            }, receiveValue: { (finished: Bool) in
                 
-                // TODO: Menu should reflect changes after logging out. See GT-2063. ~Levi
             })
             .store(in: &cancellables)
     }
