@@ -276,19 +276,16 @@ extension ToolViewModel {
                 
         if let page = page {
             
-            // TODO: Implement back in GT-1904. ~Levi
-            
-            /*
             let pagePositions: ToolPagePositions = ToolPagePositions(cardPosition: cardPosition)
             
-            let navigationModel = MobileContentPagesNavigateToPageModel(
+            let event = MobileContentPagesNavigationEvent(
                 reloadPagesCollectionViewNeeded: reloadPagesCollectionViewNeeded,
                 page: page,
                 pagePositions: pagePositions,
                 animated: animated
             )
             
-            navigatePageSignal.accept(value: navigationModel)*/
+            super.sendPagesNavigationEvent(event: event)
         }
         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {

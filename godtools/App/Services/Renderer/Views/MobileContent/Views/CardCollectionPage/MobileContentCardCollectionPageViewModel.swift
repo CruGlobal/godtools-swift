@@ -6,18 +6,21 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import GodToolsToolParser
 
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
     private let analytics: AnalyticsContainer
+    
+    let pagePavigationSemanticContentAttribute: UISemanticContentAttribute
         
     init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.analytics = analytics
+        self.pagePavigationSemanticContentAttribute = UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.direction)
         
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }

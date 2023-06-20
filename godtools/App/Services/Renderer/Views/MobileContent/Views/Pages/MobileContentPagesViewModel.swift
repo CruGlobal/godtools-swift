@@ -220,19 +220,19 @@ class MobileContentPagesViewModel: NSObject {
     
     func pageDidDisappear(page: Int) {
               
-        let didNavigateBack: Bool = currentRenderedPageNumber < page
-        let shouldRemoveAllFollowingPages: Bool = initialPageRenderingType == .chooseYourOwnAdventure && didNavigateBack
-        
-        if shouldRemoveAllFollowingPages {
-            removeFollowingPagesFromPage(page: currentRenderedPageNumber)
-        }
-        
         removePageIfHidden(page: page)
     }
     
     func didChangeMostVisiblePage(page: Int) {
         
         currentRenderedPageNumber = page
+    }
+    
+    func didEndPageScrolling(page: Int) {
+        
+        if initialPageRenderingType == .chooseYourOwnAdventure {
+            removeFollowingPagesFromPage(page: page)
+        }
     }
 }
 
@@ -308,7 +308,7 @@ extension MobileContentPagesViewModel {
         
         if let pageIndex = pageModels.firstIndex(where: {$0.id == page.id}) {
             
-            event = MobileContentPagesNavigationEvent(page: pageIndex, insertPages: nil, animated: animated)
+            event = MobileContentPagesNavigationEvent(reloadPagesCollectionViewNeeded: false, page: pageIndex, pagePositions: nil, animated: animated)
         }
         else {
             
@@ -330,15 +330,15 @@ extension MobileContentPagesViewModel {
                 }
             }
             
-            event = MobileContentPagesNavigationEvent(page: insertAtIndex, insertPages: [insertAtIndex], animated: animated)
-            
             pageModels.insert(page, at: insertAtIndex)
+            
+            event = MobileContentPagesNavigationEvent(reloadPagesCollectionViewNeeded: true, page: insertAtIndex, pagePositions: nil, animated: animated)
         }
         
         return event
     }
     
-    private func sendPagesNavigationEvent(event: MobileContentPagesNavigationEvent) {
+    func sendPagesNavigationEvent(event: MobileContentPagesNavigationEvent) {
         
         navigatePageSignal.accept(value: event)
     }
@@ -352,7 +352,7 @@ extension MobileContentPagesViewModel {
             let allPages: [Page] = pageRenderer.getAllPageModels()
             
             if let introPage = allPages.first {
-                return [introPage, allPages[1]]
+                return [introPage]
             }
             
             return []

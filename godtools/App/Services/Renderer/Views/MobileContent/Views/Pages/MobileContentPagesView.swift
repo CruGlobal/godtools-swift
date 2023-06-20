@@ -17,6 +17,7 @@ class MobileContentPagesView: UIViewController {
     
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var completePageNavigationAfterCollectionDataReload: MobileContentPagesNavigationEvent?
+    private var completePagePositionsAfterPageNavigation: MobileContentPagesNavigationEvent?
     private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
           
@@ -122,41 +123,18 @@ class MobileContentPagesView: UIViewController {
                 return
             }
             
-            if let insertPageIndexes = event.insertPages {
-                weakSelf.pageNavigationView.insertPagesAt(indexes: insertPageIndexes)
-            }
+            weakSelf.completePagePositionsAfterPageNavigation = event
             
-            weakSelf.pageNavigationView.scrollToPage(page: event.page, animated: event.animated)
-        }
-        
-        /*
-        viewModel.rendererWillChangeSignal.addObserver(self) { [weak self] in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.initialPagePositions.removeAll()
-            weakSelf.initialPagePositions = weakSelf.getAllVisiblePagesPositions()
-        }
-        
-        viewModel.reRendererPagesSignal.addObserver(self) { [weak self] (reRenderPagesModel: MobileContentPagesReRenderPagesModel) in
+            if event.reloadPagesCollectionViewNeeded {
                 
-            if let pagesSemanticContentAttribute = reRenderPagesModel.pagesSemanticContentAttribute {
-                self?.pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: pagesSemanticContentAttribute)
-            }
-            
-            if let navigateToPageModel = reRenderPagesModel.navigateToPageModel {
-                self?.navigateToPage(navigateToPageModel: navigateToPageModel)
+                weakSelf.completePageNavigationAfterCollectionDataReload = event
+                
+                weakSelf.pageNavigationView.reloadData()
             }
             else {
-                self?.pageNavigationView.reloadData()
+                
+                weakSelf.pageNavigationView.scrollToPage(page: event.page, animated: event.animated)
             }
-        }
-        
-        viewModel.navigatePageSignal.addObserver(self) { [weak self] (navigateToPageModel: MobileContentPagesNavigateToPageModel) in
-            
-            self?.navigateToPage(navigateToPageModel: navigateToPageModel)
         }
         
         viewModel.pagesRemovedSignal.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
@@ -166,7 +144,7 @@ class MobileContentPagesView: UIViewController {
             }
             
             self?.pageNavigationView.deletePagesAt(indexPaths: indexPaths)
-        }*/
+        }
     }
     
     func didConfigurePageView(pageView: MobileContentPageView) {
@@ -249,29 +227,29 @@ class MobileContentPagesView: UIViewController {
         guard let pageNavigation = completePageNavigationAfterCollectionDataReload else {
             return
         }
-                
-        if pageNavigationView.currentPage == pageNavigation.page {
-            
-            completePageNavigationAfterCollectionDataReload = nil
-            
-            pageNavigationView.scrollToPage(
-                page: pageNavigation.page,
-                animated: false
-            )
-            
-            // TODO: Does this need to be implemented? ~Levi
-            /*
-            if let pagePositions = navigateToPageModel.pagePositions {
-                setCurrentPagePositions(pagePositions: pagePositions, animated: navigateToPageModel.animated)
-            }*/
+        
+        self.completePageNavigationAfterCollectionDataReload = nil
+        
+        pageNavigationView.scrollToPage(page: pageNavigation.page, animated: pageNavigation.animated)
+    }
+    
+    private func completePagePositionsAfterPageNavigationIfNeeded() {
+        
+        guard let event = completePagePositionsAfterPageNavigation else {
+            return
         }
-        else {
-                        
-            pageNavigationView.scrollToPage(
-                page: pageNavigation.page,
-                animated: pageNavigation.animated
-            )
+        
+        self.completePagePositionsAfterPageNavigation = nil
+        
+        guard pageNavigationView.currentPage == event.page else {
+            return
         }
+        
+        guard let pagePositions = event.pagePositions else {
+            return
+        }
+        
+        setCurrentPagePositions(pagePositions: pagePositions, animated: event.animated)
     }
 }
 
@@ -303,7 +281,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         didConfigurePageView(pageView: pageView)
         
-        completePageNavigationAfterCollectionDataReloadIfNeeded()
+        //completePageNavigationAfterCollectionDataReloadIfNeeded()
         
         return cell
     }
@@ -348,6 +326,13 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
+    }
+    
+    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, page: Int) {
+        
+        completePagePositionsAfterPageNavigationIfNeeded()
+        
+        viewModel.didEndPageScrolling(page: page)
     }
 }
 

@@ -19,6 +19,7 @@ import UIKit
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
+    @objc optional func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, page: Int)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -305,6 +306,8 @@ class PageNavigationCollectionView: UIView, NibBased {
                 pageDidAppear(pageCell: pageCell, page: currentPage)
             }
         }
+        
+        delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, page: currentPage)
     }
     
     // MARK: -
@@ -389,9 +392,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
 extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        print(scrollView.contentOffset)
-        
+                
         let currentPage: Int = self.currentPage
         
         delegate?.pageNavigationDidScrollPage?(pageNavigation: self, page: currentPage)

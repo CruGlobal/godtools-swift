@@ -10,14 +10,16 @@ import Foundation
 
 class MobileContentPagesNavigationEvent {
     
+    let reloadPagesCollectionViewNeeded: Bool
     let page: Int
-    let insertPages: [Int]?
+    let pagePositions: MobileContentViewPositionState?
     let animated: Bool
     
-    init(page: Int, insertPages: [Int]?, animated: Bool) {
+    init(reloadPagesCollectionViewNeeded: Bool, page: Int, pagePositions: MobileContentViewPositionState?, animated: Bool) {
         
+        self.reloadPagesCollectionViewNeeded = reloadPagesCollectionViewNeeded
         self.page = page
-        self.insertPages = insertPages
+        self.pagePositions = pagePositions
         self.animated = animated
     }
 }
