@@ -13,13 +13,11 @@ class DeleteAccountUseCase {
     
     private let userAuthentication: UserAuthentication
     private let userDetailsRepository: UserDetailsRepository
-    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(userAuthentication: UserAuthentication, userDetailsRepository: UserDetailsRepository, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(userAuthentication: UserAuthentication, userDetailsRepository: UserDetailsRepository) {
         
         self.userAuthentication = userAuthentication
         self.userDetailsRepository = userDetailsRepository
-        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
     func deleteAccountPublisher() -> AnyPublisher<Void, Error> {
@@ -28,13 +26,6 @@ class DeleteAccountUseCase {
             .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
                                 
                 return self.userAuthentication.signOutPublisher()
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
-                        
-                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
-                
-                return Just(void).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
