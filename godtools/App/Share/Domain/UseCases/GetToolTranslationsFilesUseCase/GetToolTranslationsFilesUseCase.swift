@@ -33,7 +33,7 @@ class GetToolTranslationsFilesUseCase {
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
         
-        var translationsToDownload: [TranslationModel] = Array()
+        var translationOrder: [TranslationModel] = Array()
         
         switch filter {
         case .downloadManifestAndRelatedFilesForRenderer:
@@ -59,11 +59,11 @@ class GetToolTranslationsFilesUseCase {
                     })
                     .eraseToAnyPublisher()
             })
-            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
+            .flatMap({ (result: DetermineToolTranslationsToDownloadResult) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                    
                 let translations: [TranslationModel] = result.translations
                 
-                translationsToDownload = result.translations
+                translationOrder = result.translations
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
@@ -75,42 +75,14 @@ class GetToolTranslationsFilesUseCase {
                     })
                     .eraseToAnyPublisher()
             })
-            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
-                
-                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
-                
-                for translationToDownload in translationsToDownload {
-                    
-                    let translationManifest: TranslationManifestFileDataModel?
-                    
-                    if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.id == translationToDownload.id}) {
-                        translationManifest = downloadedTranslationManifest
-                    }
-                    else if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.resource?.id == translationToDownload.resource?.id && $0.translation.language?.id == translationToDownload.language?.id}) {
-                        translationManifest = downloadedTranslationManifest
-                    }
-                    else {
-                        translationManifest = nil
-                    }
-                    
-                    guard let translationManifest = translationManifest else {
-                        continue
-                    }
-                    
-                    maintainTranslationDownloadOrder.append(translationManifest)
-                }
-                
-                return Just(maintainTranslationDownloadOrder).setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ translationManifests -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
+            .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, Error> in
+            .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> in
                 
                 guard let resource = translationManifests.first?.translation.resource else {
                     
@@ -133,7 +105,10 @@ class GetToolTranslationsFilesUseCase {
                     )
                 })
                 
-                let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)
+                let domainModel = ToolTranslationsDomainModel(
+                    tool: resource,
+                    languageTranslationManifests: self.getSortLanguageTranslationManifests(languageTranslationManifests: languageManifets, translationOrder: translationOrder)
+                )
                 
                 return Just(domainModel).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
@@ -151,6 +126,23 @@ class GetToolTranslationsFilesUseCase {
         
         downloadStarted?()
     }
+    
+    private func getSortLanguageTranslationManifests(languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest], translationOrder: [TranslationModel]) -> [MobileContentRendererLanguageTranslationManifest] {
+        
+        var sortedLanguageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        for translation in translationOrder {
+            
+            guard let languageManifest = languageTranslationManifests.first(where: {$0.translation.id == translation.id}) else {
+                continue
+            }
+            
+            sortedLanguageTranslationManifests.append(languageManifest)
+        }
+        
+        return sortedLanguageTranslationManifests
+    }
 }
+
 
 
