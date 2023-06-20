@@ -13,7 +13,7 @@ class DownloadToolTranslationsFlow: Flow {
     
     private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
-    private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, URLResponseError>) -> Void)
+    private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)
     
     private var downloadToolView: DownloadToolView?
     private var downloadToolModal: UIViewController?
@@ -24,7 +24,7 @@ class DownloadToolTranslationsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, URLResponseError>) -> Void)) {
+    required init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
         
         self.presentInFlow = presentInFlow
         self.appDiContainer = appDiContainer
@@ -38,7 +38,7 @@ class DownloadToolTranslationsFlow: Flow {
                 self?.navigateToDownloadTool()
             }
         })
-        .receiveOnMain()
+        .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { [weak self] completed in
             
             switch completed {

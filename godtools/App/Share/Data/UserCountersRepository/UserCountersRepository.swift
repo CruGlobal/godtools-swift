@@ -52,15 +52,12 @@ class UserCountersRepository {
         return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
+    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return api.fetchUserCountersPublisher()
-            .flatMap { userCounters in
+            .flatMap { (userCounters: [UserCounterDecodable]) in
                 
                 return self.cache.syncUserCounters(userCounters)
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

@@ -127,6 +127,11 @@ enum FlowStep {
     case closeTappedFromDeleteAccount
     case deleteAccountTappedFromDeleteAccount
     case cancelTappedFromDeleteAccount
+    case deleteAccountTappedFromConfirmDeleteAccount
+    
+    // delete account progress
+    case didFinishAccountDeletionWithSuccessFromDeleteAccountProgress
+    case didFinishAccountDeletionWithErrorFromDeleteAccountProgress(error: Error)
     
     // language settings
     case backTappedFromLanguageSettings

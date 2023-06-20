@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageModel: LanguageModelType, Decodable {
+struct LanguageModel: LanguageModelType, Codable {
     
     let code: String
     let direction: String

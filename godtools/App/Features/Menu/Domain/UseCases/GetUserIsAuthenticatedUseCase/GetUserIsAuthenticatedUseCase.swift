@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetUserIsAuthenticatedUseCase {
     
@@ -17,8 +18,13 @@ class GetUserIsAuthenticatedUseCase {
         self.userAuthentication = userAuthentication
     }
     
-    func getUserIsAuthenticated() -> Bool {
+    func getIsAuthenticatedPublisher() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
         
-        return userAuthentication.getPersistedAccessToken() != nil
+        return userAuthentication.getIsAuthenticatedChangedPublisher()
+            .map { (isAuthenticated: Bool) in
+                
+                return UserIsAuthenticatedDomainModel(isAuthenticated: isAuthenticated)
+            }
+            .eraseToAnyPublisher()
     }
 }

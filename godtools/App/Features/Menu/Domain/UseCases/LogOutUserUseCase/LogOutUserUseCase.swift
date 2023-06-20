@@ -13,22 +13,19 @@ class LogOutUserUseCase {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalytics
-    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalytics) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics
-        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
-    func logOutPublisher(fromViewController: UIViewController) -> AnyPublisher<Bool, Error> {
+    func logOutPublisher() -> AnyPublisher<Bool, Error> {
                 
-        return userAuthentication.signOutPublisher(fromViewController: fromViewController)
+        return userAuthentication.signOutPublisher()
             .flatMap({ (void: Void) -> AnyPublisher<Bool, Never> in
                 
                 self.setAnalyticsUserProperties()
-                self.mobileContentAuthTokenRepository.deleteCachedAuthToken()
                 
                 return Just(true)
                     .eraseToAnyPublisher()

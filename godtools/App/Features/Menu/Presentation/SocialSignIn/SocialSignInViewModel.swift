@@ -53,35 +53,46 @@ class SocialSignInViewModel: ObservableObject {
         self.authenticateUserUseCase = authenticateUserUseCase
         self.localizationServices = localizationServices
         
-        titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
-        subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.subtitle.rawValue)
+        switch authenticationType {
+        case .createAccount:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
+        
+        case .login:
+            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
+            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
+        }
     }
     
     private func authenticateUser(provider: AuthenticationProviderType) {
-                        
-        authenticateUserUseCase.authenticatePublisher(provider: provider, policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController))
-            .receiveOnMain()
-            .sink { [weak self] subscriberCompletion in
-                
-                let authenticationError: Error?
-                
-                switch subscriberCompletion {
-                case .finished:
-                    authenticationError = nil
-                case .failure(let error):
-                    authenticationError = error
-                }
-                
-                self?.handleAuthenticationCompleted(error: authenticationError)
-                
-            } receiveValue: { _ in
-
+        
+        authenticateUserUseCase.authenticatePublisher(
+            provider: provider,
+            policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController),
+            createUser: authenticationType == .createAccount
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] subscriberCompletion in
+            
+            let authenticationError: Error?
+            
+            switch subscriberCompletion {
+            case .finished:
+                authenticationError = nil
+            case .failure(let error):
+                authenticationError = error
             }
-            .store(in: &cancellables)
+            
+            self?.handleAuthenticationCompleted(error: authenticationError)
+            
+        } receiveValue: { _ in
+            
+        }
+        .store(in: &cancellables)
     }
     
     private func handleAuthenticationCompleted(error: Error?) {
-        
+                
         switch authenticationType {
         
         case .createAccount:

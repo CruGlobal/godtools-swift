@@ -1,5 +1,10 @@
+"deleteAccountProgress.title" = "Notiek konta dzēšana...";
+"confirmDeleteAccount.title" = "Vai esi pārliecināts?";
+"confirmDeleteAccount.confirmButton.title" = "Izdzēst kontu";
+"accountDeletedAlert.title" = "Konts dzēsts";
+"accountDeletedAlert.message" = "Tavs konts ir izdzēsts.";
 "deleteAccount.title" = "Neej tik drīz";
-"deleteAccount.subtitle" = "Vai tiešām vēlies dzēst savu 'GodTools' kontu?";
+"deleteAccount.subtitle" = "Tu nevarēsi piekļūt savai rīku izlasei vai aktivitātei, ja tavs konts tiks izdzēsts.";
 "deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
 "deleteAccount.cancelButton.title" = "Paturēt manu kontu";
 "signIn.title" = "Pierakstīties";

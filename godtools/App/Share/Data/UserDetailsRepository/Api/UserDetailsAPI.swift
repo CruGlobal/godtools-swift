@@ -24,15 +24,12 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
         
         let urlRequest = getUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
             .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
             .map {
                 return $0.data
             }
@@ -49,6 +46,34 @@ class UserDetailsAPI {
             session: ignoreCacheSession,
             urlString: baseURL + "/users/me",
             method: .get,
+            headers: headers,
+            httpBody: nil,
+            queryItems: nil
+        )
+    }
+    
+    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, Error> {
+        
+        let urlRequest = getDeleteAuthorizedUserDetailsRequest()
+        
+        return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
+            .map { (data: Data) in
+                
+                return ()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getDeleteAuthorizedUserDetailsRequest() -> URLRequest {
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/vnd.api+json"
+        ]
+        
+        return requestBuilder.build(
+            session: ignoreCacheSession,
+            urlString: baseURL + "/users/me",
+            method: .delete,
             headers: headers,
             httpBody: nil,
             queryItems: nil

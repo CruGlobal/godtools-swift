@@ -76,7 +76,7 @@ extension ToolCardsViewModel {
     private func setupBinding() {
         
         getAllToolsUseCase.getToolsForCategoryPublisher(category: categoryFilterValuePublisher)
-            .receiveOnMain()
+            .receive(on: DispatchQueue.main)
             .sink { tools in
                 
                 self.delegate?.toolsAreLoading(tools.isEmpty)
