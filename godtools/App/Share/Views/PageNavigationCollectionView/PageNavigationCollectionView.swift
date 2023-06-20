@@ -247,12 +247,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
         
         collectionView.insertItems(at: indexPaths)
-        
-//        UIView.performWithoutAnimation {
-//            collectionView.performBatchUpdates({
-//                collectionView.insertItems(at: indexPaths)
-//            }, completion: nil)
-//        }
     }
     
     func deletePagesAt(indexPaths: [IndexPath]) {
