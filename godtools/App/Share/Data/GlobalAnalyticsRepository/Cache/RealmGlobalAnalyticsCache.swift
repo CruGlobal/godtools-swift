@@ -19,56 +19,34 @@ class RealmGlobalAnalyticsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getGlobalAnalytics(id: String) -> RealmGlobalAnalytics? {
+    func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
         
-        return realmDatabase.openRealm().object(ofType: RealmGlobalAnalytics.self, forPrimaryKey: id)
-    }
-    
-    func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<RealmGlobalAnalytics?, Never> {
         return realmDatabase.openRealm().objects(RealmGlobalAnalytics.self).objectWillChange
-            .map {
-                return self.realmDatabase.openRealm().object(ofType: RealmGlobalAnalytics.self, forPrimaryKey: id)
+            .map { _ in
+                
+                let realmObject: RealmGlobalAnalytics? = self.realmDatabase.readObject(primaryKey: id)
+                
+                if let realmObject = realmObject {
+                    return GlobalAnalyticsDataModel(realmGlobalAnalytics: realmObject)
+                }
+                
+                return nil
             }
             .eraseToAnyPublisher()
     }
     
-    func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
+    func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
-        return Future() { promise in
-
-            self.realmDatabase.background { (realm: Realm) in
-                
-                let realmGlobalAnalytics: RealmGlobalAnalytics
-                
-                if let existingRealmGlobalAnalytics = realm.object(ofType: RealmGlobalAnalytics.self, forPrimaryKey: globalAnalytics.id) {
-                   
-                    realmGlobalAnalytics = existingRealmGlobalAnalytics
-                }
-                else {
-                    
-                    let newRealmGlobalAnalytics = RealmGlobalAnalytics()
-                    
-                    newRealmGlobalAnalytics.id = globalAnalytics.id
-                    
-                    realmGlobalAnalytics = newRealmGlobalAnalytics
-                }
-                
-                do {
-                    
-                    try realm.write {
-                        
-                        realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
-                        
-                        realm.add(realmGlobalAnalytics, update: .all)
-                    }
-                    
-                    promise(.success(globalAnalytics))
-                }
-                catch let error {
-                    
-                    promise(.failure(error))
-                }
-            }
+        return realmDatabase.writeObjectsPublisher(shouldAddObjectsToRealm: true) { (realm: Realm) in
+            
+            let realmGlobalAnalytics: RealmGlobalAnalytics = RealmGlobalAnalytics()
+            
+            realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
+            
+            return [realmGlobalAnalytics]
+        }
+        .map { _ in
+            return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: globalAnalytics)
         }
         .eraseToAnyPublisher()
     }

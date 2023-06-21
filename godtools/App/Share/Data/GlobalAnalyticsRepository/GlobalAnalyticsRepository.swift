@@ -33,14 +33,6 @@ class GlobalAnalyticsRepository {
             .store(in: &cancellables)
             
         return cache.getGlobalAnalyticsChangedPublisher(id: MobileContentGlobalAnalyticsApi.sharedGlobalAnalyticsId)
-            .map { (realmGlobalAnalytics: RealmGlobalAnalytics?) in
-                
-                if let realmGlobalAnalytics = realmGlobalAnalytics {
-                    return GlobalAnalyticsDataModel(realmGlobalAnalytics: realmGlobalAnalytics)
-                }
-                
-                return nil
-            }
             .eraseToAnyPublisher()
     }
     
@@ -50,9 +42,6 @@ class GlobalAnalyticsRepository {
             .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
                 
                 return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)
-                    .map {
-                        return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: $0)
-                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
