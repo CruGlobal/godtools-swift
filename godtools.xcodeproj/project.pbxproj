@@ -70,6 +70,7 @@
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
+		451A175F2A4373F10012A292 /* MobileContentPagesReRenderPagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A175E2A4373F10012A292 /* MobileContentPagesReRenderPagesModel.swift */; };
 		451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */; };
 		451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */; };
 		451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */; };
@@ -469,7 +470,6 @@
 		458CFEA629D4E172007B423C /* UserActivityStatDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA429D4E172007B423C /* UserActivityStatDomainModel.swift */; };
 		458CFEA729D4E172007B423C /* GetUserActivityStatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA529D4E172007B423C /* GetUserActivityStatsUseCase.swift */; };
 		458CFEA929D4E1CC007B423C /* AccountActivityStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA829D4E1CB007B423C /* AccountActivityStatView.swift */; };
-		458D5BA22A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */; };
 		458EFEDC26B1D08C009EEB03 /* ToolBackButtonImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */; };
 		458EFEDE26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
@@ -1184,6 +1184,7 @@
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
+		451A175E2A4373F10012A292 /* MobileContentPagesReRenderPagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesReRenderPagesModel.swift; sourceTree = "<group>"; };
 		451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackgroundState.swift; sourceTree = "<group>"; };
 		451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewPositionState.swift; sourceTree = "<group>"; };
 		451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionState.swift; sourceTree = "<group>"; };
@@ -1585,7 +1586,6 @@
 		458CFEA429D4E172007B423C /* UserActivityStatDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActivityStatDomainModel.swift; sourceTree = "<group>"; };
 		458CFEA529D4E172007B423C /* GetUserActivityStatsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserActivityStatsUseCase.swift; sourceTree = "<group>"; };
 		458CFEA829D4E1CB007B423C /* AccountActivityStatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountActivityStatView.swift; sourceTree = "<group>"; };
-		458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesReRenderPagesModel.swift; sourceTree = "<group>"; };
 		458EFEDB26B1D08C009EEB03 /* ToolBackButtonImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBackButtonImageType.swift; sourceTree = "<group>"; };
 		458EFEDD26B1D135009EEB03 /* ToolBackButtonImageType+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolBackButtonImageType+Image.swift"; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
@@ -3730,7 +3730,7 @@
 				45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */,
 				45ADB1B42A40B7F400817DF2 /* MobileContentPagesNavigationEvent.swift */,
 				45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */,
-				458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */,
+				451A175E2A4373F10012A292 /* MobileContentPagesReRenderPagesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8735,6 +8735,7 @@
 				45BDA5CD2954F67D007E259B /* FailedResourceViewsCache.swift in Sources */,
 				4555832C269F2C7B00C3FF14 /* ToolPageCardBounceAnimation.swift in Sources */,
 				45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */,
+				451A175F2A4373F10012A292 /* MobileContentPagesReRenderPagesModel.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
 				45F7162F290A12D70019B715 /* MailView.swift in Sources */,
 				D44F3AB328368A330008390D /* OptionalRoundedBorder.swift in Sources */,
@@ -9281,7 +9282,6 @@
 				456777E4287DB42C0044AEB2 /* ToolSettingsChooseLanguageView.swift in Sources */,
 				45FB160727DBDDB60009DF8E /* LessonFlowCompletedState.swift in Sources */,
 				D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */,
-				458D5BA22A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift in Sources */,
 				4567776A287DB1960044AEB2 /* TutorialModel.swift in Sources */,
 				45FB160827DBDDB60009DF8E /* LessonFlow.swift in Sources */,
 				453235B827BEB6290050D08F /* ChooseYourOwnAdventureNavBarTitleType.swift in Sources */,

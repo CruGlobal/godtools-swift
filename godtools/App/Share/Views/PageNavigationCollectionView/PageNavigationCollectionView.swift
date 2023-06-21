@@ -19,7 +19,7 @@ import UIKit
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
-    @objc optional func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, page: Int)
+    @objc optional func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -123,7 +123,6 @@ class PageNavigationCollectionView: UIView, NibBased {
             isAnimatingScroll = true
         }
         else {
-            // Set this to true because when animated is false we don't get any of the scrollView delegate methods called.
             shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: page, animated: animated)
         }
         
@@ -140,6 +139,14 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     func scrollToLastPage(animated: Bool) {
         scrollToPage(page: numberOfPages - 1, animated: animated)
+    }
+    
+    func cancelScroll() {
+        
+        self.shouldNotifyPageDidAppearForDataReload = nil
+        
+        let currentPage: Int = self.currentPage
+        scrollToPage(page: currentPage, animated: false)
     }
     
     // MARK: -
@@ -292,16 +299,17 @@ class PageNavigationCollectionView: UIView, NibBased {
     private func didEndPageScrolling() {
         
         let currentPage: Int = self.currentPage
+        
         if internalCurrentStoppedOnPage != currentPage {
+            
             internalCurrentStoppedOnPage = currentPage
             
             let indexPath = IndexPath(item: currentPage, section: 0)
             if let pageCell = collectionView.cellForItem(at: indexPath) {
                 pageDidAppear(pageCell: pageCell, page: currentPage)
+                delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: pageCell, page: currentPage)
             }
         }
-        
-        delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, page: currentPage)
     }
     
     // MARK: -
@@ -357,6 +365,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
             
             mostVisiblePageChanged(pageCell: cell, page: page)
             pageDidAppear(pageCell: cell, page: page)
+            delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: cell, page: page)
         }
     }
     
