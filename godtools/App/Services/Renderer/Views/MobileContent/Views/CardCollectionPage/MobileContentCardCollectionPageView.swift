@@ -56,8 +56,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
             ),
             cellSpacing: 24
         )
-        
-        cardPageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pagePavigationSemanticContentAttribute)
 
         // previousCardButton
         addSubview(previousCardButton)
