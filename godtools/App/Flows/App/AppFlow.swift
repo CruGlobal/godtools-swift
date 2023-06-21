@@ -180,7 +180,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
             let translationsRepository: TranslationsRepository = appDiContainer.dataLayer.getTranslationsRepository()
-            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
             let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
             let settingsPrimaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
             
@@ -484,7 +484,7 @@ extension AppFlow {
             flowDelegate: self,
             initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
@@ -763,7 +763,7 @@ extension AppFlow {
     func getAllFavoriteTools() -> UIViewController {
         
         let viewModel = AllFavoriteToolsViewModel(
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
@@ -808,7 +808,7 @@ extension AppFlow {
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
@@ -886,7 +886,7 @@ extension AppFlow {
             lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
             lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            localization: appDiContainer.localizationServices
+            localization: appDiContainer.dataLayer.getLocalizationServices()
         )
         let view = LessonEvaluationView(viewModel: viewModel)
         
@@ -924,7 +924,7 @@ extension AppFlow {
             
             let viewModel = SetupParallelLanguageViewModel(
                 flowDelegate: weakSelf,
-                localizationServices: appDiContainer.localizationServices,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                 setupParallelLanguageViewedRepository: appDiContainer.dataLayer.getSetupParallelLanguageViewedRepository(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
             )

@@ -129,6 +129,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getLearnToShareToolItemsUseCase() -> GetLearnToShareToolItemsUseCase {
+        return GetLearnToShareToolItemsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getLessonUseCase() -> GetLessonUseCase {
         return GetLessonUseCase()
     }

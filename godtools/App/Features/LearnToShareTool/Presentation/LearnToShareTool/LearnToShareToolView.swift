@@ -10,7 +10,7 @@ import UIKit
 
 class LearnToShareToolView: UIViewController {
     
-    private let viewModel: LearnToShareToolViewModelType
+    private let viewModel: LearnToShareToolViewModel
     
     private var backButton: UIBarButtonItem?
     private var closeButton: UIBarButtonItem?
@@ -19,7 +19,7 @@ class LearnToShareToolView: UIViewController {
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
     
-    required init(viewModel: LearnToShareToolViewModelType) {
+    required init(viewModel: LearnToShareToolViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: LearnToShareToolView.self), bundle: nil)
     }
@@ -58,8 +58,8 @@ class LearnToShareToolView: UIViewController {
         
         // tutorialPagesView
         learnToShareToolPagesView.registerPageCell(
-            nib: UINib(nibName: LearnToShareToolCell.nibName, bundle: nil),
-            cellReuseIdentifier: LearnToShareToolCell.reuseIdentifier
+            nib: UINib(nibName: LearnToShareToolItemView.nibName, bundle: nil),
+            cellReuseIdentifier: LearnToShareToolItemView.reuseIdentifier
         )
         
         handlePageChange(page: 0)
@@ -136,12 +136,12 @@ extension LearnToShareToolView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: LearnToShareToolCell = learnToShareToolPagesView.getReusablePageCell(
-            cellReuseIdentifier: LearnToShareToolCell.reuseIdentifier,
+        let cell: LearnToShareToolItemView = learnToShareToolPagesView.getReusablePageCell(
+            cellReuseIdentifier: LearnToShareToolItemView.reuseIdentifier,
             indexPath: indexPath
-        ) as! LearnToShareToolCell
+        ) as! LearnToShareToolItemView
         
-        let cellViewModel: LearnToShareToolCellViewModelType = viewModel.willDisplayLearnToShareToolPage(index: indexPath.row)
+        let cellViewModel: LearnToShareToolItemViewModel = viewModel.getLearnToShareToolItemViewModel(index: indexPath.row)
         
         cell.configure(viewModel: cellViewModel)
         
