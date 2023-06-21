@@ -61,4 +61,8 @@ class AppBuild {
             environment = .production
         }
     }
+    
+    var isTestsTarget: Bool {
+        return NSClassFromString("XCTest") != nil
+    }
 }
