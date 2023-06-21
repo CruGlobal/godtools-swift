@@ -15,7 +15,7 @@ extension Flow {
         
         guard MFMailComposeViewController.canSendMail() else {
                         
-            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
             
             let viewModel = AlertMessageViewModel(
                 title: localizationServices.stringForMainBundle(key: "alert.mailAppUnavailable.title"),

@@ -81,7 +81,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),

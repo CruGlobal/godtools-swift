@@ -36,7 +36,7 @@ class ArticleDeepLinkFlow: Flow {
                 flowDelegate: self,
                 aemUri: aemUri,
                 articleAemRepository: articleAemRepository,
-                localizationServices: appDiContainer.localizationServices
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices()
             )
             
             let view = LoadingArticleView(viewModel: viewModel)
@@ -55,7 +55,7 @@ class ArticleDeepLinkFlow: Flow {
             
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
-            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
             
             navigationController.dismiss(animated: true) { [weak self] in
                 

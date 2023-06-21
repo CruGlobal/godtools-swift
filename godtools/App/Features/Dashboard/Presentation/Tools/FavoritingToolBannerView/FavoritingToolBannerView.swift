@@ -34,7 +34,7 @@ struct FavoritingToolBannerView_Previews: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let viewModel = FavoritingToolBannerViewModel(localizationServices: appDiContainer.localizationServices, delegate: nil)
+        let viewModel = FavoritingToolBannerViewModel(localizationServices: appDiContainer.dataLayer.getLocalizationServices(), delegate: nil)
         
         FavoritingToolBannerView(viewModel: viewModel)
             .frame(width: 375)

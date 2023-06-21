@@ -1,5 +1,5 @@
 //
-//  LearnToShareToolCellViewModel.swift
+//  LearnToShareToolItemViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/25/20.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class LearnToShareToolCellViewModel: LearnToShareToolCellViewModelType {
+class LearnToShareToolItemViewModel {
     
-    let assetContent: LearnToShareToolAssetContent
+    let assetContent: LearnToShareToolItemAssetContent
     let title: String
     let message: String
     
-    required init(learnToShareToolItem: LearnToShareToolItem) {
+    init(learnToShareToolItem: LearnToShareToolItemDomainModel) {
         
         title = learnToShareToolItem.title
         message = learnToShareToolItem.message

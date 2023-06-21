@@ -1,5 +1,5 @@
 //
-//  LearnToShareToolCell.swift
+//  LearnToShareToolItemView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/25/20.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class LearnToShareToolCell: UICollectionViewCell {
+class LearnToShareToolItemView: UICollectionViewCell {
     
-    static let nibName: String = "LearnToShareToolCell"
-    static let reuseIdentifier: String = "LearnToShareToolCellReuseIdentifier"
+    static let nibName: String = "LearnToShareToolItemView"
+    static let reuseIdentifier: String = "LearnToShareToolItemReuseIdentifier"
     
-    private var viewModel: LearnToShareToolCellViewModelType?
+    private var viewModel: LearnToShareToolItemViewModel?
     
     @IBOutlet weak private var featuredImageView: UIImageView!
     @IBOutlet weak private var animatedView: AnimatedView!
@@ -30,7 +30,7 @@ class LearnToShareToolCell: UICollectionViewCell {
         animatedView.destroyAnimation()
     }
     
-    func configure(viewModel: LearnToShareToolCellViewModelType) {
+    func configure(viewModel: LearnToShareToolItemViewModel) {
         
         self.viewModel = viewModel
                

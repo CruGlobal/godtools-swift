@@ -42,7 +42,7 @@ struct ToolCardsView_Previews: PreviewProvider {
         
         let viewModel = ToolCardsViewModel(
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

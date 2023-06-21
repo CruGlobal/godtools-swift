@@ -78,7 +78,7 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             shareableImageDomainModel: ShareableImageDomainModel(image: UIImage(), imageId: nil, toolAbbreviation: nil),
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
     }
 }
