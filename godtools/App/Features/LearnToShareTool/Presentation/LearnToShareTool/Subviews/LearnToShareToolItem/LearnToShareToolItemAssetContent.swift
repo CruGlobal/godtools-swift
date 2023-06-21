@@ -1,5 +1,5 @@
 //
-//  LearnToShareToolAssetContent.swift
+//  LearnToShareToolItemAssetContent.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum LearnToShareToolAssetContent {
+enum LearnToShareToolItemAssetContent {
     
     case animation(viewModel: AnimatedViewModel)
     case image(image: UIImage)

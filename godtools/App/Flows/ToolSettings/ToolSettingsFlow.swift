@@ -43,7 +43,7 @@ class ToolSettingsFlow: Flow {
             
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getShareableImageUseCase: appDiContainer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
@@ -80,7 +80,7 @@ class ToolSettingsFlow: Flow {
                 resource: resource,
                 language: language,
                 pageNumber: toolData.pageNumber,
-                localizationServices: appDiContainer.localizationServices,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
@@ -158,7 +158,7 @@ class ToolSettingsFlow: Flow {
                 
                 let viewModel = ShareToolRemoteSessionURLViewModel(
                     toolRemoteShareUrl: remoteShareUrl,
-                    localizationServices: appDiContainer.localizationServices,
+                    localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                     getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                     getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                     analytics: appDiContainer.dataLayer.getAnalytics()
@@ -220,7 +220,7 @@ class ToolSettingsFlow: Flow {
                 getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 analytics: appDiContainer.dataLayer.getAnalytics(),
                 shareableImageDomainModel: shareableImageDomainModel,
-                localizationServices: appDiContainer.localizationServices
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices()
             )
             
             let view = ReviewShareShareableView(viewModel: viewModel)
@@ -258,11 +258,11 @@ class ToolSettingsFlow: Flow {
     
     private func navigateToShareToolScreenTutorial() {
         
-        let tutorialItemsProvider = ShareToolScreenTutorialItemProvider(localizationServices: appDiContainer.localizationServices)
+        let tutorialItemsProvider = ShareToolScreenTutorialItemProvider(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
                     
         let viewModel = ShareToolScreenTutorialViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             tutorialItemsProvider: tutorialItemsProvider,
             shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
             resource: toolData.renderer.value.resource,
@@ -289,7 +289,7 @@ class ToolSettingsFlow: Flow {
         let viewModel = LoadToolRemoteSessionViewModel(
             resourceId: toolData.renderer.value.resource.id,
             flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
@@ -334,7 +334,7 @@ class ToolSettingsFlow: Flow {
             }
         }
         
-        let viewModel = LanguagesListViewModel(languages: languagesList, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.localizationServices, closeTappedClosure: { [weak self] in
+        let viewModel = LanguagesListViewModel(languages: languagesList, selectedLanguageId: selectedLanguage?.id, localizationServices: appDiContainer.dataLayer.getLocalizationServices(), closeTappedClosure: { [weak self] in
             
             self?.dismissLanguagesList()
             
