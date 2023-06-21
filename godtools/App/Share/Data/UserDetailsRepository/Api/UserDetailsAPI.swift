@@ -24,15 +24,12 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
         
         let urlRequest = getUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
             .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
             .map {
                 return $0.data
             }
@@ -55,7 +52,7 @@ class UserDetailsAPI {
         )
     }
     
-    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, URLResponseError> {
+    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, Error> {
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest()
         

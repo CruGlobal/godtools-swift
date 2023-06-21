@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserDetailsDataModel: Decodable {
+struct UserDetailsDataModel: Codable {
     
     let id: String
     let createdAt: Date?

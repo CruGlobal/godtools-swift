@@ -38,30 +38,13 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, URLResponseError> {
+    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest()
         
-        return session.dataTaskPublisher(for: urlRequest)
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject.data
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
-            .decode(type: JsonApiResponseData<MobileContentGlobalAnalyticsDecodable>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
-            .map {
-                return $0.data
+        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+            .map { (response: JsonApiResponseData<MobileContentGlobalAnalyticsDecodable>) in
+                return response.data
             }
             .eraseToAnyPublisher()
     }

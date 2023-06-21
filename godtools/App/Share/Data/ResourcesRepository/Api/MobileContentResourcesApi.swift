@@ -34,26 +34,11 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, URLResponseError> {
+    func getResourcesPlusLatestTranslationsAndAttachments() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        return session.dataTaskPublisher(for: getResourcesPlusLatestTranslationsAndAttachmentsRequest())
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject.data
-            }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
-            .decode(type: ResourcesPlusLatestTranslationsAndAttachmentsModel.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
+        let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest()
+        
+        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
             .eraseToAnyPublisher()
     }
 }

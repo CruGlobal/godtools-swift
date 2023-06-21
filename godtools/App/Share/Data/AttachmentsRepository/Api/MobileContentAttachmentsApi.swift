@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class MobileContentAttachmentsApi {
     
@@ -20,22 +21,11 @@ class MobileContentAttachmentsApi {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    func getAttachmentFile(url: URL) -> AnyPublisher<URLResponseObject, URLResponseError> {
+    func getAttachmentFile(url: URL) -> AnyPublisher<UrlRequestResponse, Error> {
         
-        return session.dataTaskPublisher(for: url)
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject
-            }
-            .mapError { error in
-                return .requestError(error: error)
-            }
+        let urlRequest: URLRequest = URLRequest(url: url)
+        
+        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
             .eraseToAnyPublisher()
     }
 }

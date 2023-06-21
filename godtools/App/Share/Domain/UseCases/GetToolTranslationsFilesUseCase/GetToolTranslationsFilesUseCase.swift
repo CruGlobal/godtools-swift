@@ -28,12 +28,12 @@ class GetToolTranslationsFilesUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> {
+    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
                 
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
         
-        var translationsToDownload: [TranslationModel] = Array()
+        var translationOrder: [TranslationModel] = Array()
         
         switch filter {
         case .downloadManifestAndRelatedFilesForRenderer:
@@ -45,30 +45,28 @@ class GetToolTranslationsFilesUseCase {
         }
         
         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
-            .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, URLResponseError> in
+            .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
                 return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
-                    .flatMap { results in
+                    .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                         return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
-                            .mapError { error in
-                                return URLResponseError.otherError(error: error)
+                            .mapError { (error: DetermineToolTranslationsToDownloadError) in
+                                return error as Error
                             }
-                    }
+                            .eraseToAnyPublisher()
+                    })
                     .eraseToAnyPublisher()
             })
-            .mapError { error in
-                return URLResponseError.otherError(error: error)
-            }
-            .flatMap({ result -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+            .flatMap({ (result: DetermineToolTranslationsToDownloadResult) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                    
                 let translations: [TranslationModel] = result.translations
                 
-                translationsToDownload = result.translations
+                translationOrder = result.translations
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                    .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+                    .catch({ (error: Error) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
@@ -77,52 +75,20 @@ class GetToolTranslationsFilesUseCase {
                     })
                     .eraseToAnyPublisher()
             })
-            .flatMap({ downloadedTranslations -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
-                
-                var maintainTranslationDownloadOrder: [TranslationManifestFileDataModel] = Array()
-                
-                for translationToDownload in translationsToDownload {
-                    
-                    let translationManifest: TranslationManifestFileDataModel?
-                    
-                    if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.id == translationToDownload.id}) {
-                        translationManifest = downloadedTranslationManifest
-                    }
-                    else if let downloadedTranslationManifest = downloadedTranslations.first(where: {$0.translation.resource?.id == translationToDownload.resource?.id && $0.translation.language?.id == translationToDownload.language?.id}) {
-                        translationManifest = downloadedTranslationManifest
-                    }
-                    else {
-                        translationManifest = nil
-                    }
-                    
-                    guard let translationManifest = translationManifest else {
-                        continue
-                    }
-                    
-                    maintainTranslationDownloadOrder.append(translationManifest)
-                }
-                
-                return Just(maintainTranslationDownloadOrder).setFailureType(to: URLResponseError.self)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ translationManifests -> AnyPublisher<[TranslationManifestFileDataModel], URLResponseError> in
+            .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                     
                 let translations: [TranslationModel] = translationManifests.map({ $0.translation })
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-                    .mapError { error in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
-            .flatMap({ translationManifests -> AnyPublisher<ToolTranslationsDomainModel, URLResponseError> in
+            .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> in
                 
                 guard let resource = translationManifests.first?.translation.resource else {
                     
                     let error = NSError.errorWithDescription(description: "Failed to get resource on translation model.")
-                    let responseError = URLResponseError.otherError(error: error)
                     
-                    return Fail(error: responseError)
+                    return Fail(error: error)
                         .eraseToAnyPublisher()
                 }
                 
@@ -139,9 +105,12 @@ class GetToolTranslationsFilesUseCase {
                     )
                 })
                 
-                let domainModel = ToolTranslationsDomainModel(tool: resource, languageTranslationManifests: languageManifets)
+                let domainModel = ToolTranslationsDomainModel(
+                    tool: resource,
+                    languageTranslationManifests: self.sortLanguageTranslationManifestsByTranslationOrder(translationOrder: translationOrder, languageTranslationManifests: languageManifets)
+                )
                 
-                return Just(domainModel).setFailureType(to: URLResponseError.self)
+                return Just(domainModel).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -157,6 +126,23 @@ class GetToolTranslationsFilesUseCase {
         
         downloadStarted?()
     }
+    
+    private func sortLanguageTranslationManifestsByTranslationOrder(translationOrder: [TranslationModel], languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> [MobileContentRendererLanguageTranslationManifest] {
+        
+        var sortedLanguageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
+        
+        for translation in translationOrder {
+            
+            guard let languageManifest = languageTranslationManifests.first(where: {$0.translation.id == translation.id}) else {
+                continue
+            }
+            
+            sortedLanguageTranslationManifests.append(languageManifest)
+        }
+        
+        return sortedLanguageTranslationManifests
+    }
 }
+
 
 

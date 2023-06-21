@@ -14,14 +14,12 @@ class AuthenticateUserUseCase {
     private let userAuthentication: UserAuthentication
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
-    private let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     
-    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository) {
+    init(userAuthentication: UserAuthentication, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
         
         self.userAuthentication = userAuthentication
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
-        self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
     func authenticatePublisher(provider: AuthenticationProviderType, policy: AuthenticationPolicy, createUser: Bool = false) -> AnyPublisher<Bool, Error> {

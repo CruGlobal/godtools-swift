@@ -13,8 +13,8 @@ class RealmGlobalAnalytics: Object {
     
     @objc dynamic var countries: Int = 0
     @objc dynamic var createdAt: Date = Date()
-    @objc dynamic var id: String = ""
     @objc dynamic var gospelPresentations: Int = 0
+    @objc dynamic var id: String = ""
     @objc dynamic var launches: Int = 0
     @objc dynamic var type: String = ""
     @objc dynamic var users: Int = 0
@@ -28,6 +28,7 @@ class RealmGlobalAnalytics: Object {
         countries = decodable.countries
         createdAt = Date()
         gospelPresentations = decodable.gospelPresentations
+        id = decodable.id
         launches = decodable.launches
         type = decodable.type
         users = decodable.users
