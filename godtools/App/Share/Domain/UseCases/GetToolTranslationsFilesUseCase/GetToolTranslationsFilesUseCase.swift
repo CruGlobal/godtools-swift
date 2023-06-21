@@ -107,7 +107,7 @@ class GetToolTranslationsFilesUseCase {
                 
                 let domainModel = ToolTranslationsDomainModel(
                     tool: resource,
-                    languageTranslationManifests: self.getSortLanguageTranslationManifests(languageTranslationManifests: languageManifets, translationOrder: translationOrder)
+                    languageTranslationManifests: self.sortLanguageTranslationManifestsByTranslationOrder(translationOrder: translationOrder, languageTranslationManifests: languageManifets)
                 )
                 
                 return Just(domainModel).setFailureType(to: Error.self)
@@ -127,7 +127,7 @@ class GetToolTranslationsFilesUseCase {
         downloadStarted?()
     }
     
-    private func getSortLanguageTranslationManifests(languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest], translationOrder: [TranslationModel]) -> [MobileContentRendererLanguageTranslationManifest] {
+    private func sortLanguageTranslationManifestsByTranslationOrder(translationOrder: [TranslationModel], languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> [MobileContentRendererLanguageTranslationManifest] {
         
         var sortedLanguageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         
