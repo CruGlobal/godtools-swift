@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType {
+class ShareToolRemoteSessionURLViewModel {
         
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -16,7 +16,7 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
     
     let shareMessage: String
     
-    required init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
               
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
@@ -27,6 +27,11 @@ class ShareToolRemoteSessionURLViewModel: ShareToolRemoteSessionURLViewModelType
             toolRemoteShareUrl
         )
     }
+}
+
+// MARK: - Inputs
+
+extension ShareToolRemoteSessionURLViewModel {
     
     func pageViewed() {
         

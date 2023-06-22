@@ -11,7 +11,7 @@ import UIKit
 class ShareToolScreenTutorialView: UIViewController {
     //TODO: re-implement this tutorial using TutorialPagerView
     
-    private let viewModel: ShareToolScreenTutorialViewModelType
+    private let viewModel: ShareToolScreenTutorialViewModel
     
     private var closeButton: UIBarButtonItem?
     private var skipButton: UIBarButtonItem?
@@ -20,7 +20,7 @@ class ShareToolScreenTutorialView: UIViewController {
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
     
-    required init(viewModel: ShareToolScreenTutorialViewModelType) {
+    required init(viewModel: ShareToolScreenTutorialViewModel) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ShareToolScreenTutorialView.self), bundle: nil)
     }
@@ -146,7 +146,7 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TutorialCell.reuseIdentifier,
             indexPath: indexPath) as! TutorialCell
         
-        let cellViewModel = viewModel.tutorialItemWillAppear(index: indexPath.item)
+        let cellViewModel = viewModel.getTutorialItemViewModel(index: indexPath.item)
 
         cell.configure(viewModel: cellViewModel)
         

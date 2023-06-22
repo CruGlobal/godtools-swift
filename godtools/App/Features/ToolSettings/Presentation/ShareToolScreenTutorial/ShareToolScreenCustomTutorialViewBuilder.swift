@@ -10,7 +10,7 @@ import UIKit
 
 class ShareToolScreenCustomTutorialViewBuilder: CustomViewBuilderType {
     
-    required init() {
+    init() {
         
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ShareToolViewModel: ShareToolViewModelType {
+class ShareToolViewModel {
         
     private let resource: ResourceModel
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -56,6 +56,11 @@ class ShareToolViewModel: ShareToolViewModelType {
     private var analyticsSiteSubSection: String {
         return ""
     }
+}
+
+// MARK: - Inputs
+
+extension ShareToolViewModel {
     
     func pageViewed() {
         

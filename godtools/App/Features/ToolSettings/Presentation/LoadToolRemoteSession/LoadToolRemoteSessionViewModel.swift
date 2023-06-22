@@ -21,7 +21,7 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
     let message: ObservableValue<String> = ObservableValue(value: "")
     let hidesCloseButton: Bool = false
     
-    required init(resourceId: String, flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(resourceId: String, flowDelegate: FlowDelegate, localizationServices: LocalizationServices, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.resourceId = resourceId
         self.flowDelegate = flowDelegate
@@ -38,6 +38,11 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
         
         message.accept(value: localizationServices.stringForMainBundle(key: "load_tool_remote_session.message"))
     }
+}
+
+// MARK: - Inputs
+
+extension LoadToolRemoteSessionViewModel {
     
     func closeTapped() {
         

@@ -22,6 +22,11 @@ class ShareShareableViewModel {
         self.imageToShare = imageToShare
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
     }
+}
+
+// MARK: - Inputs
+
+extension ShareShareableViewModel {
     
     func pageViewed() {
         

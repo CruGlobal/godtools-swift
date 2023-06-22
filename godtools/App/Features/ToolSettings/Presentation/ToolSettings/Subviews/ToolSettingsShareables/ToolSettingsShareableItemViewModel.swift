@@ -17,7 +17,7 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
     @Published var image: SwiftUI.Image = Image("")
     @Published var title: String = ""
     
-    required init(shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) {
+    init(shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) {
         
         self.shareable = shareable
         self.manifestResourcesCache = manifestResourcesCache

@@ -44,7 +44,7 @@ class ToolSettingsFlow: Flow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getShareableImageUseCase: appDiContainer.getShareableImageUseCase(),
+            getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             primaryLanguageSubject: settingsPrimaryLanguage,
             parallelLanguageSubject: settingsParallelLanguage,

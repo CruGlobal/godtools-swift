@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
+class ShareToolScreenTutorialViewModel {
     //TODO: re-implement this tutorial using TutorialPagerViewModel
     
     private let localizationServices: LocalizationServices
@@ -51,7 +51,7 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
         return "shareToolScreen"
     }
     
-    func tutorialItemWillAppear(index: Int) -> TutorialCellViewModelType {
+    func getTutorialItemViewModel(index: Int) -> TutorialCellViewModelType {
                 
         return TutorialCellViewModel(
             item: tutorialItems.value[index],
@@ -62,6 +62,11 @@ class ShareToolScreenTutorialViewModel: ShareToolScreenTutorialViewModelType {
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase
         )
     }
+}
+
+// MARK: - Inputs
+
+extension ShareToolScreenTutorialViewModel {
     
     func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromShareToolScreenTutorial)
