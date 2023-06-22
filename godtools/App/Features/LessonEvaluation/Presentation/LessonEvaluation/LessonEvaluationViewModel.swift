@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LessonEvaluationViewModel: LessonEvaluationViewModelType {
+class LessonEvaluationViewModel {
     
     private let lesson: ResourceModel
     private let pageIndexReached: Int
@@ -32,7 +32,7 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localization: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localization: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.lesson = lesson
@@ -51,6 +51,11 @@ class LessonEvaluationViewModel: LessonEvaluationViewModelType {
         shareFaith = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
         sendButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
     }
+}
+
+// MARK: - Inputs
+
+extension LessonEvaluationViewModel {
     
     func closeTapped() {
         

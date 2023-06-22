@@ -236,7 +236,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .userClosedLesson(let lesson, let highestPageNumberViewed):
                 
-                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.getLessonsEvaluationRepository()
+                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.dataLayer.getLessonsEvaluationRepository()
                 let lessonEvaluated: Bool
                 let numberOfEvaluationAttempts: Int
                 
@@ -883,7 +883,7 @@ extension AppFlow {
             flowDelegate: self,
             lesson: lesson,
             pageIndexReached: pageIndexReached,
-            lessonEvaluationRepository: appDiContainer.getLessonsEvaluationRepository(),
+            lessonEvaluationRepository: appDiContainer.dataLayer.getLessonsEvaluationRepository(),
             lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             localization: appDiContainer.dataLayer.getLocalizationServices()
