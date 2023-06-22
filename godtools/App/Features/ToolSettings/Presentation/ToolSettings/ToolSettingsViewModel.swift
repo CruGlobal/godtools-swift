@@ -40,7 +40,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
@@ -93,6 +93,19 @@ class ToolSettingsViewModel: ObservableObject {
         numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
     
+    func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
+        
+        return ToolSettingsShareableItemViewModel(
+            shareable: currentPageRenderer.value.manifest.shareables[index],
+            manifestResourcesCache: currentPageRenderer.value.manifestResourcesCache
+        )
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolSettingsViewModel {
+    
     func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromToolSettings)
     }
@@ -129,14 +142,6 @@ class ToolSettingsViewModel: ObservableObject {
     func swapLanguageTapped() {
         
         flowDelegate?.navigate(step: .swapLanguagesTappedFromToolSettings)
-    }
-    
-    func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
-        
-        return ToolSettingsShareableItemViewModel(
-            shareable: currentPageRenderer.value.manifest.shareables[index],
-            manifestResourcesCache: currentPageRenderer.value.manifestResourcesCache
-        )
     }
     
     func shareableTapped(index: Int) {

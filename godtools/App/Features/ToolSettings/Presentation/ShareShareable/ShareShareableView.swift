@@ -12,7 +12,7 @@ class ShareShareableView: UIActivityViewController {
     
     private let viewModel: ShareShareableViewModel
     
-    required init(viewModel: ShareShareableViewModel) {
+    init(viewModel: ShareShareableViewModel) {
         
         self.viewModel = viewModel
         

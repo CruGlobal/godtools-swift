@@ -18,7 +18,7 @@ class LanguagesListViewModel: ObservableObject {
     
     @Published var languages: [LanguageDomainModel] = Array()
         
-    required init(languages: [LanguageDomainModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: LanguageDomainModel) -> Void), deleteTappedClosure: (() -> Void)?) {
+    init(languages: [LanguageDomainModel], selectedLanguageId: String?, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void), languageTappedClosure: @escaping ((_ language: LanguageDomainModel) -> Void), deleteTappedClosure: (() -> Void)?) {
         
         self.selectedLanguageId = selectedLanguageId
         self.localizationServices = localizationServices
@@ -44,6 +44,11 @@ class LanguagesListViewModel: ObservableObject {
     func getLanguagesListItemViewModel(language: LanguageDomainModel) -> BaseLanguagesListItemViewModel {
         return LanguagesListItemViewModel(language: language, selectedLanguageId: selectedLanguageId)
     }
+}
+
+// MARK: - Inputs
+
+extension LanguagesListViewModel {
     
     func closeTapped() {
             

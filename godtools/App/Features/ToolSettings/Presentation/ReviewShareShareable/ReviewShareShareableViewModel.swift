@@ -34,17 +34,6 @@ class ReviewShareShareableViewModel: ObservableObject {
         self.shareImageButtonTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareImagePreview.shareImageButton.title")
     }
     
-    func closeTapped() {
-        
-        flowDelegate?.navigate(step: .closeTappedFromReviewShareShareable)
-    }
-    
-    func shareImageTapped() {
-        
-        flowDelegate?.navigate(step: .shareImageTappedFromReviewShareShareable(shareImage: imageToShare))
-        trackShareImageTappedAnalytics()
-    }
-    
     private func trackShareImageTappedAnalytics() {
         
         let trackAction = TrackActionModel(
@@ -59,5 +48,21 @@ class ReviewShareShareableViewModel: ObservableObject {
         )
         
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+    }
+}
+
+// MARK: - Inputs
+
+extension ReviewShareShareableViewModel {
+    
+    func closeTapped() {
+        
+        flowDelegate?.navigate(step: .closeTappedFromReviewShareShareable)
+    }
+    
+    func shareImageTapped() {
+        
+        flowDelegate?.navigate(step: .shareImageTappedFromReviewShareShareable(shareImage: imageToShare))
+        trackShareImageTappedAnalytics()
     }
 }
