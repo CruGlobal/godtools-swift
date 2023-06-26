@@ -10,7 +10,7 @@ import UIKit
 
 class LessonEvaluationView: UIView, NibBased {
     
-    private let viewModel: LessonEvaluationViewModelType
+    private let viewModel: LessonEvaluationViewModel
     
     private let buttonCornerRadius: CGFloat = 24
             
@@ -23,7 +23,7 @@ class LessonEvaluationView: UIView, NibBased {
     @IBOutlet weak private var chooseScaleSliderView: ChooseScaleSliderView!
     @IBOutlet weak private var sendButton: UIButton!
     
-    required init(viewModel: LessonEvaluationViewModelType) {
+    init(viewModel: LessonEvaluationViewModel) {
         
         self.viewModel = viewModel
         
