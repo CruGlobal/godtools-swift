@@ -83,7 +83,7 @@ class DownloadToolTranslationsFlow: Flow {
         }
         
         let favoritedResourcesRepository: FavoritedResourcesRepository = appDiContainer.dataLayer.getFavoritedResourcesRepository()
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let resource: ResourceModel? = determineToolTranslationsToDownload.getResource()
         
         let downloadMessage: String

@@ -20,7 +20,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         let analytics: AnalyticsContainer = appDiContainer.dataLayer.getAnalytics()
         let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
         let fontService: FontService = appDiContainer.getFontService()
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
