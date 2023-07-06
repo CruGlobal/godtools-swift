@@ -64,12 +64,6 @@ class AppDiContainer {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
-    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
-        return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: realmDatabase)
-        )
-    }
-    
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
         return LessonFeedbackAnalytics(
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
@@ -132,10 +126,6 @@ class AppDiContainer {
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
-    }
-    
-    func getShareableImageUseCase() -> GetShareableImageUseCase {
-        return GetShareableImageUseCase()
     }
     
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {

@@ -215,6 +215,10 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getShareableImageUseCase() -> GetShareableImageUseCase {
+        return GetShareableImageUseCase()
+    }
+    
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
         return GetShortcutItemsUseCase(
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
