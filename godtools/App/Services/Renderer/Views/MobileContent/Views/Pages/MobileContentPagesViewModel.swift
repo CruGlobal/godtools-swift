@@ -70,11 +70,7 @@ class MobileContentPagesViewModel: NSObject {
         self.window = window
         self.safeArea = safeArea
         
-        setRenderer(
-            renderer: renderer.value,
-            pageRendererIndex: nil,
-            navigateToPage: initialPage
-        )
+        setRenderer(renderer: renderer.value, pageRendererIndex: nil)
     }
     
     func handleDismissToolEvent() {
@@ -130,7 +126,7 @@ class MobileContentPagesViewModel: NSObject {
         return renderer.value.pageRenderers[0]
     }
     
-    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
+    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
             
         let pageRenderer: MobileContentPageRenderer?
         
@@ -519,7 +515,7 @@ extension MobileContentPagesViewModel {
                 
                 let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
                 
-                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigateToPage: nil)
+                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex)
             }
             .store(in: &cancellables)
     }

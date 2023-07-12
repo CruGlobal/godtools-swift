@@ -140,7 +140,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
     }
     
-    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
+    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?) {
         
         let selectedLanguageValue: Int = navBarViewModel.value.selectedLanguage.value
         
@@ -148,7 +148,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         navBarViewModel.accept(value: viewModel)
         
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue, navigateToPage: navigateToPage)
+        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageValue)
     }
 }
 
