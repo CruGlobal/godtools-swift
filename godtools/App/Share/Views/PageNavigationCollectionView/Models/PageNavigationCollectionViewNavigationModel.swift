@@ -7,9 +7,36 @@
 //
 
 import Foundation
+import UIKit
 
-struct PageNavigationCollectionViewNavigationModel {
+class PageNavigationCollectionViewNavigationModel {
     
+    let navigationDirection: UISemanticContentAttribute
     let page: Int
     let animated: Bool
+    let reloadCollectionViewDataNeeded: Bool
+    
+    init(navigationDirection: UISemanticContentAttribute, page: Int, animated: Bool, reloadCollectionViewDataNeeded: Bool) {
+        
+        self.navigationDirection = navigationDirection
+        self.page = page
+        self.animated = animated
+        self.reloadCollectionViewDataNeeded = reloadCollectionViewDataNeeded
+    }
+    
+    init(navigationDirection: UISemanticContentAttribute, page: Int, animated: Bool) {
+        
+        self.navigationDirection = navigationDirection
+        self.page = page
+        self.animated = animated
+        self.reloadCollectionViewDataNeeded = false
+    }
+    
+    init(page: Int, animated: Bool) {
+        
+        self.navigationDirection = .forceLeftToRight
+        self.page = page
+        self.animated = animated
+        self.reloadCollectionViewDataNeeded = false
+    }
 }
