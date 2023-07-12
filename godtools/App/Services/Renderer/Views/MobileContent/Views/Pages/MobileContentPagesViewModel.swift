@@ -34,7 +34,7 @@ class MobileContentPagesViewModel: NSObject {
     let rendererWillChangeSignal: Signal = Signal()
     let reRendererPagesSignal: SignalValue<MobileContentPagesReRenderPagesModel> = SignalValue()
     let navigatePageSignal: SignalValue<MobileContentPagesNavigateToPageModel> = SignalValue()
-    let pagesRemovedSignal: SignalValue<[IndexPath]> = SignalValue()
+    let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -533,7 +533,7 @@ extension MobileContentPagesViewModel {
         }
         
         pageModels.remove(at: page)
-        pagesRemovedSignal.accept(value: [IndexPath(item: page, section: 0)])
+        pagesRemovedSignal.accept(value: [page])
     }
     
     private func removeFollowingPagesFromPage(page: Int) {
