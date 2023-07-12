@@ -200,7 +200,7 @@ extension ToolViewModel {
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
         
         if let pageRenderer = getPageRenderer(language: navBarViewModel.value.language) {
-            setPageRenderer(pageRenderer: pageRenderer, navigateToPage: nil)
+            setPageRenderer(pageRenderer: pageRenderer)
         }
         
         sendRemoteShareNavigationEvent(
@@ -291,7 +291,7 @@ extension ToolViewModel {
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
             navBarViewModel.value.selectedLanguage.accept(value: remoteShareLanguageIndex)
-            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigateToPage: nil)
+            setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex])
         }
     }
     

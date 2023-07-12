@@ -121,7 +121,7 @@ class MobileContentPagesViewModel: NSObject {
         
         trainingTipsEnabled = enabled
         
-        setPageRenderer(pageRenderer: currentPageRenderer.value, navigateToPage: nil)
+        setPageRenderer(pageRenderer: currentPageRenderer.value)
     }
     
     // MARK: - Renderer / Page Renderer
@@ -150,66 +150,85 @@ class MobileContentPagesViewModel: NSObject {
         
         self.renderer.send(renderer)
                 
-        setPageRenderer(pageRenderer: pageRenderer, navigateToPage: navigateToPage)
+        setPageRenderer(pageRenderer: pageRenderer)
     }
     
-    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigateToPage: MobileContentPagesPage?) {
-        
+    func setPageRenderer(pageRenderer: MobileContentPageRenderer) {
+            
         countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
-        let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
-        let pageModelsToRender: [Page]
-        
-        switch initialPageRenderingType {
-        
-        case .chooseYourOwnAdventure:
-            
-            let pagesShouldMatchRenderedPages: Bool = pageRenderers.count > 1 && pageModels.count > 1
-            
-            var newPageModelsToRenderer: [Page] = Array()
-            
-            if pagesShouldMatchRenderedPages {
-                
-                newPageModelsToRenderer = getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: pageRenderer)
-            }
-            
-            if newPageModelsToRenderer.isEmpty && pageRenderer.getAllPageModels().count > 0 {
-                
-                newPageModelsToRenderer = [pageRenderer.getAllPageModels()[0]]
-            }
-
-            pageModelsToRender = newPageModelsToRenderer
-            
-        case .visiblePages:
-            
-            pageModelsToRender = pageRenderer.getVisiblePageModels()
-        }
-        
-        rendererWillChangeSignal.accept()
-        
         currentPageRenderer.send(pageRenderer)
-                
-        self.pageModels = pageModelsToRender
-                
-        let navigateToPageModel: MobileContentPagesNavigateToPageModel?
         
-        if let navigateToPage = navigateToPage {
-            navigateToPageModel = getNavigateToPageModel(page: navigateToPage, forceReloadPagesCollectionView: true, animated: false)
+        let isInitialPageRender: Bool = pageModels.isEmpty
+        
+        if isInitialPageRender {
+            
+            pageModels = getInitialPages(pageRenderer: pageRenderer)
         }
         else {
-            navigateToPageModel = nil
+            
+            pageModels = getPagesFromPageRendererMatchingPages(pages: pageModels, pagesFromPageRenderer: pageRenderer)
         }
-        
-        let reRenderPagesModel = MobileContentPagesReRenderPagesModel(
-            pagesSemanticContentAttribute: UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction),
-            navigateToPageModel: navigateToPageModel
-        )
-        
-        reRendererPagesSignal.accept(value: reRenderPagesModel)
     }
     
     func getNumberOfRenderedPages() -> Int {
         return pageModels.count
+    }
+    
+    private func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        switch initialPageRenderingType {
+        
+        case .chooseYourOwnAdventure:
+            
+            let allPages: [Page] = pageRenderer.getAllPageModels()
+            
+            if let introPage = allPages.first {
+                return [introPage]
+            }
+            
+            return []
+        
+        case .visiblePages:
+            return pageRenderer.getVisiblePageModels()
+        }
+    }
+    
+    private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
+            
+        let allPages: [Page] = pageRenderer.getAllPageModels()
+                
+        switch initialPage {
+        
+        case .pageId(let value):
+            return allPages.first(where: {$0.id == value})
+       
+        case .pageNumber(let value):
+            
+            if value >= 0 && value < allPages.count {
+                return allPages[value]
+            }
+            
+            return nil
+        }
+    }
+    
+    private func getPagesFromPageRendererMatchingPages(pages: [Page], pagesFromPageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        var matchingPagesFromPageRenderer: [Page] = Array()
+        
+        let allPagesInPageRenderer: [Page] = pagesFromPageRenderer.getAllPageModels()
+        
+        for page in pages {
+                        
+            guard let matchingPage = allPagesInPageRenderer.filter({$0.id == page.id}).first else {
+                continue
+            }
+            
+            matchingPagesFromPageRenderer.append(matchingPage)
+        }
+        
+        return matchingPagesFromPageRenderer
     }
     
     // MARK: - Page Life Cycle
