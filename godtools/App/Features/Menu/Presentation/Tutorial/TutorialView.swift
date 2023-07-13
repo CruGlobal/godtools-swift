@@ -55,6 +55,16 @@ class TutorialView: UIViewController {
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
         
         tutorialPagesView.delegate = self
+        
+        tutorialPagesView.scrollToPage(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: .forceLeftToRight,
+                page: 0,
+                animated: false,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil
+            )
+        )
     }
     
     private func setupLayout() {
@@ -157,6 +167,10 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
                 
+    }
+    
+    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
         viewModel.pageDidAppear(page: page)
     }
 }

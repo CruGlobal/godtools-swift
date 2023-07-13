@@ -157,6 +157,10 @@ extension LearnToShareToolView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
+    }
+    
+    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
         pageControl.currentPage = page
         
         viewModel.pageDidAppear(page: page)

@@ -166,6 +166,10 @@ extension ShareToolScreenTutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
+    }
+    
+    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
         pageControl.currentPage = page
     }
 }

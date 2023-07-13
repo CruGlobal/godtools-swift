@@ -253,6 +253,13 @@ extension PageNavigationCollectionView {
         
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
+    
+    private func didEndPageScrolling(pageCell: UICollectionViewCell, page: Int) {
+        
+        logMessage(message: "did end page scrolling: \(currentPage)")
+        
+        delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
 }
 
 // MARK: - Insert/Delete Pages
@@ -401,6 +408,12 @@ extension PageNavigationCollectionView {
     }
     
     private func navigationCompleted(completed: PageNavigationCollectionViewNavigationCompleted) {
+        
+        if !completed.pageNavigation.animated {
+            
+            mostVisiblePageChanged(pageCell: completed.pageCell, page: completed.pageNavigation.page)
+            didEndPageScrolling(pageCell: completed.pageCell, page: completed.pageNavigation.page)
+        }
         
         pageNavigationCompletedClosure?(completed)
         
@@ -551,7 +564,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
             
             let indexPath = IndexPath(item: currentPage, section: 0)
             if let pageCell = collectionView.cellForItem(at: indexPath) {
-                delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: pageCell, page: currentPage)
+                didEndPageScrolling(pageCell: pageCell, page: currentPage)
             }
         }
     }
