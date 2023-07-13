@@ -136,7 +136,7 @@ extension ToolView: ToolPageViewDelegate {
 extension ToolView: ToolSettingsToolType {
     
     func setRenderer(renderer: MobileContentRenderer) {
-        viewModel.setRenderer(renderer: renderer, pageRendererIndex: nil)
+        viewModel.setRenderer(renderer: renderer, pageRendererIndex: nil, navigationEvent: nil)
     }
     
     func setTrainingTipsEnabled(enabled: Bool) {
