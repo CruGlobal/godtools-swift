@@ -15,22 +15,27 @@ import UIKit
     
     @objc optional func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int)
     @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
-    @objc optional func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
+    @objc optional func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
     
+    struct CurrentNavigation {
+        let pageNavigation: PageNavigationCollectionViewNavigationModel
+        let isNavigationFromDataReload: Bool
+    }
+    
     private let layout: UICollectionViewLayout
-        
-    private var internalCurrentChangedPage: Int = 0
-    private var internalCurrentStoppedOnPage: Int = 0
-    private var shouldNotifyPageDidAppearForDataReload: PageNavigationCollectionViewNavigationModel?
+    private let loggingEnabled: Bool = false
     
-    private(set) var isAnimatingScroll: Bool = false
-    
+    private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
+    private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
+    private var internalCurrentChangedPage: Int = -1
+    private var internalCurrentStoppedOnPage: Int = -1
+            
     @IBOutlet weak private var collectionView: UICollectionView!
     
     weak var delegate: PageNavigationCollectionViewDelegate?
@@ -52,9 +57,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         loadNib()
         setupLayout()
-        
-        shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: 0, animated: false)
-        
+                        
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -71,6 +74,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
+        collectionView.semanticContentAttribute = .forceLeftToRight
         
         if #available(iOS 16, *) {
             collectionView.selfSizingInvalidation = .disabled
@@ -92,53 +96,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func reloadData() {
-        shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: currentPage, animated: false)
         collectionView.reloadData()
-    }
-    
-    // MARK: - Navigation
-    
-    func scrollToPreviousPage(animated: Bool) {
-        if !isOnFirstPage {
-            scrollToPage(page: currentPage - 1, animated: animated)
-        }
-    }
-    
-    func scrollToNextPage(animated: Bool) {
-        if !isOnLastPage {
-            scrollToPage(page: currentPage + 1, animated: animated)
-        }
-    }
-    
-    func scrollToPage(page: Int, animated: Bool) {
-        
-        let numberOfPages: Int = self.numberOfPages
-        
-        guard page >= 0 && page < numberOfPages else {
-            return
-        }
-        
-        if animated {
-            isAnimatingScroll = true
-        }
-        else {
-            // Set this to true because when animated is false we don't get any of the scrollView delegate methods called.
-            shouldNotifyPageDidAppearForDataReload = PageNavigationCollectionViewNavigationModel(page: page, animated: animated)
-        }
-        
-        collectionView.scrollToItem(
-            at: IndexPath(item: page, section: 0),
-            at: .centeredHorizontally,
-            animated: animated
-        )
-    }
-    
-    func scrollToFirstPage(animated: Bool) {
-        scrollToPage(page: 0, animated: animated)
-    }
-    
-    func scrollToLastPage(animated: Bool) {
-        scrollToPage(page: numberOfPages - 1, animated: animated)
     }
     
     // MARK: -
@@ -211,17 +169,33 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView.numberOfItems(inSection: 0)
     }
     
+    func setPagingEnabled(pagingEnabled: Bool) {
+        collectionView.isPagingEnabled = pagingEnabled
+    }
+    
     func setContentInset(contentInset: UIEdgeInsets) {
         collectionView.contentInset = contentInset
         collectionView.reloadData()
+    }
+    
+    func setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior) {
+        collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
+    }
+    
+    func getContentOffset() -> CGPoint {
+        return collectionView.contentOffset
     }
     
     func setContentOffset(contentOffset: CGPoint, animated: Bool) {
         collectionView.setContentOffset(contentOffset, animated: animated)
     }
     
+    func getSemanticContentAttribute() -> UISemanticContentAttribute {
+        return collectionView.semanticContentAttribute
+    }
+    
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
-        
+            
         guard semanticContentAttribute != collectionView.semanticContentAttribute else {
             return
         }
@@ -229,44 +203,12 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.semanticContentAttribute = semanticContentAttribute
     }
     
-    func setPagingEnabled(pagingEnabled: Bool) {
-        collectionView.isPagingEnabled = pagingEnabled
-    }
-    
-    func getContentOffset() -> CGPoint {
-        return collectionView.contentOffset
-    }
-    
-    func setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior) {
-        collectionView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
-    }
-    
-    func deletePagesAt(indexPaths: [IndexPath]) {
-                
-        guard collectionView.numberOfItems(inSection: 0) > 0 else {
-            return
-        }
-        
-        let currentPage: Int = self.currentPage
-        var pageNumberForDeletedPages: Int = currentPage
-        
-        for indexPath in indexPaths {
-            if indexPath.item < currentPage {
-                pageNumberForDeletedPages -= 1
-            }
-        }
-        
-        UIView.performWithoutAnimation {
-            collectionView.performBatchUpdates({
-                collectionView.deleteItems(at: indexPaths)
-            }, completion: nil)
-        }
-        
-        scrollToPage(page: pageNumberForDeletedPages, animated: false)
-    }
-    
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
         return collectionView.indexPath(for: pageCell)
+    }
+    
+    func getCellAtIndex(index: Int) -> UICollectionViewCell? {
+        return getCellForItem(indexPath: IndexPath(item: index, section: 0))
     }
     
     func getCellForItem(indexPath: IndexPath) -> UICollectionViewCell? {
@@ -277,39 +219,196 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView.visibleCells
     }
     
-    func getSemanticContentAttribute() -> UISemanticContentAttribute {
-        return collectionView.semanticContentAttribute
-    }
-    
-    private func didEndPageScrolling() {
+    private func logMessage(message: String) {
         
-        let currentPage: Int = self.currentPage
-        if internalCurrentStoppedOnPage != currentPage {
-            internalCurrentStoppedOnPage = currentPage
-            
-            let indexPath = IndexPath(item: currentPage, section: 0)
-            if let pageCell = collectionView.cellForItem(at: indexPath) {
-                pageDidAppear(pageCell: pageCell, page: currentPage)
-            }
+        guard loggingEnabled else {
+            return
         }
+        
+        print("\n PageNavigationCollectionView: \(message)")
     }
-    
-    // MARK: -
+}
+
+// MARK: - Page Life Cycle
+
+extension PageNavigationCollectionView {
     
     private func mostVisiblePageChanged(pageCell: UICollectionViewCell, page: Int) {
+        
+        logMessage(message: "most visible page changed: \(page)")
+        
         delegate?.pageNavigationDidChangeMostVisiblePage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
-    private func pageWillAppear(pageCell: UICollectionViewCell, page: Int) {
-        delegate?.pageNavigationPageWillAppear?(pageNavigation: self, pageCell: pageCell, page: page)
-    }
-    
     private func pageDidAppear(pageCell: UICollectionViewCell, page: Int) {
+        
+        logMessage(message: "page did appear: \(page)")
+        
         delegate?.pageNavigationPageDidAppear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageDidDisappear(pageCell: UICollectionViewCell, page: Int) {
+        
+        logMessage(message: "page did disappear: \(page)")
+        
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
+    }
+}
+
+// MARK: - Insert/Delete Pages
+
+extension PageNavigationCollectionView {
+    
+    func insertPagesAt(indexes: [Int]) {
+        
+        logMessage(message: "insert pages at: \(indexes)")
+                
+        let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
+        
+        collectionView.insertItems(at: indexPaths)
+    }
+    
+    func deletePagesAt(indexes: [Int]) {
+        
+        guard indexes.count > 0 else {
+            return
+        }
+        
+        guard numberOfPages > 0 else {
+            return
+        }
+        
+        logMessage(message: "delete pages at: \(indexes)")
+                
+        let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
+        
+        let currentPage: Int = self.currentPage
+        var pageNumberForDeletedPages: Int = currentPage
+        
+        for indexPath in indexPaths {
+            if indexPath.item < currentPage {
+                pageNumberForDeletedPages -= 1
+            }
+        }
+                
+        UIView.performWithoutAnimation {
+            collectionView.performBatchUpdates({
+                collectionView.deleteItems(at: indexPaths)
+            }, completion: nil)
+        }
+        
+        scrollToPage(page: pageNumberForDeletedPages, animated: false)
+    }
+}
+
+// MARK: - Page Navigation
+
+extension PageNavigationCollectionView {
+    
+    func scrollToPreviousPage(animated: Bool) {
+        if !isOnFirstPage {
+            scrollToPage(page: currentPage - 1, animated: animated)
+        }
+    }
+    
+    func scrollToNextPage(animated: Bool) {
+        if !isOnLastPage {
+            scrollToPage(page: currentPage + 1, animated: animated)
+        }
+    }
+    
+    func scrollToFirstPage(animated: Bool) {
+        scrollToPage(page: 0, animated: animated)
+    }
+    
+    func scrollToLastPage(animated: Bool) {
+        scrollToPage(page: numberOfPages - 1, animated: animated)
+    }
+    
+    func scrollToPage(page: Int, animated: Bool) {
+                
+        scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel(navigationDirection: nil, page: page, animated: animated, reloadCollectionViewDataNeeded: false))
+    }
+    
+    func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
+             
+        pageNavigationCompletedClosure = completion
+                
+        let page: Int = pageNavigation.page
+            
+        let pageNavigationDirectionChanged: Bool
+        
+        if let navigationDirection = pageNavigation.navigationDirection, navigationDirection != collectionView.semanticContentAttribute {
+            
+            pageNavigationDirectionChanged = true
+            collectionView.semanticContentAttribute = navigationDirection
+        }
+        else {
+            
+            pageNavigationDirectionChanged = false
+        }
+        
+        let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged
+        
+        currentPageNavigation = PageNavigationCollectionView.CurrentNavigation(pageNavigation: pageNavigation, isNavigationFromDataReload: reloadDataNeeded)
+                
+        if reloadDataNeeded {
+                                    
+            collectionView.reloadData()
+        }
+        else {
+            
+            completeScrollToPageForCurrentPageNavigation(pageNavigation: pageNavigation)
+        }
+    }
+    
+    private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel) {
+                
+        let currentPage: Int = self.currentPage
+        
+        if currentPage == pageNavigation.page, let pageCell = getCellAtIndex(index: pageNavigation.page) {
+                        
+            let completed = PageNavigationCollectionViewNavigationCompleted(
+                cancelled: false,
+                pageCell: pageCell,
+                pageNavigation: pageNavigation
+            )
+            
+            navigationCompleted(completed: completed)
+        }
+        else {
+                        
+            let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: pageNavigation.animated)
+            
+            if !didScroll {
+                assertionFailure("\n PageNavigationCollectionView: Failed to navigate.  Should the data be reloaded?  Try setting provided pageNavigation reloadCollectionViewDataNeeded to true.  \(pageNavigation)")
+                currentPageNavigation = nil
+                pageNavigationCompletedClosure = nil
+            }
+        }
+    }
+    
+    private func navigationCompleted(completed: PageNavigationCollectionViewNavigationCompleted) {
+        
+        pageNavigationCompletedClosure?(completed)
+        
+        currentPageNavigation = nil
+        pageNavigationCompletedClosure = nil
+    }
+    
+    private func internalScrollToItemOnCollectionView(item: Int, animated: Bool) -> Bool {
+        
+        guard item >= 0 && item < numberOfPages else {
+            return false
+        }
+        
+        collectionView.scrollToItem(
+            at: IndexPath(item: item, section: 0),
+            at: .centeredHorizontally,
+            animated: animated
+        )
+        
+        return true
     }
 }
 
@@ -326,7 +425,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+                
         let cell: UICollectionViewCell? = delegate?.pageNavigation(pageNavigation: self, cellForPageAt: indexPath)
         
         cell?.backgroundColor = pageBackgroundColor
@@ -336,17 +435,31 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        let page: Int = indexPath.row
                 
-        pageWillAppear(pageCell: cell, page: page)
+        let page: Int = indexPath.row
         
-        if let shouldNotifyPageDidAppearForDataReload = self.shouldNotifyPageDidAppearForDataReload, page == shouldNotifyPageDidAppearForDataReload.page {
+        pageDidAppear(pageCell: cell, page: page)
+                
+        guard let currentPageNavigation = self.currentPageNavigation else {
+            return
+        }
+        
+        let didCompletePageNavigation: Bool = page == currentPageNavigation.pageNavigation.page
+        
+        if currentPageNavigation.isNavigationFromDataReload, currentPageNavigation.pageNavigation.page != page {
             
-            self.shouldNotifyPageDidAppearForDataReload = nil
+            completeScrollToPageForCurrentPageNavigation(pageNavigation: currentPageNavigation.pageNavigation)
+        }
+        
+        if didCompletePageNavigation {
+
+            let completedNavigation = PageNavigationCollectionViewNavigationCompleted(
+                cancelled: false,
+                pageCell: cell,
+                pageNavigation: currentPageNavigation.pageNavigation
+            )
             
-            mostVisiblePageChanged(pageCell: cell, page: page)
-            pageDidAppear(pageCell: cell, page: page)
+            navigationCompleted(completed: completedNavigation)
         }
     }
     
@@ -376,7 +489,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
 extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+                
         let currentPage: Int = self.currentPage
         
         delegate?.pageNavigationDidScrollPage?(pageNavigation: self, page: currentPage)
@@ -392,18 +505,42 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
+        logMessage(message: "did end dragging: decelerate: \(decelerate)")
+        
         if !decelerate {
             didEndPageScrolling()
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        logMessage(message: "did end decelerating")
+        
         didEndPageScrolling()
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        isAnimatingScroll = false
+        
+        logMessage(message: "did end scrolling animation")
+                
         didEndPageScrolling()
         delegate?.pageNavigationDidEndScrollingAnimation?(pageNavigation: self)
+    }
+    
+    private func didEndPageScrolling() {
+        
+        let currentPage: Int = self.currentPage
+        
+        logMessage(message: "did end page scrolling for page: \(currentPage)")
+                
+        if internalCurrentStoppedOnPage != currentPage {
+            
+            internalCurrentStoppedOnPage = currentPage
+            
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            if let pageCell = collectionView.cellForItem(at: indexPath) {
+                delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: pageCell, page: currentPage)
+            }
+        }
     }
 }
