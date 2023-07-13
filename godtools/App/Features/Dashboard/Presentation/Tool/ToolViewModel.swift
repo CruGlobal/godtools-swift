@@ -278,7 +278,8 @@ extension ToolViewModel {
                 navigationDirection: nil,
                 page: page ?? super.currentRenderedPageNumber,
                 animated: animated,
-                reloadCollectionViewDataNeeded: navBarLanguageChanged
+                reloadCollectionViewDataNeeded: navBarLanguageChanged,
+                insertPages: nil
             ),
             pagePositions: ToolPagePositions(
                 cardPosition: cardPosition

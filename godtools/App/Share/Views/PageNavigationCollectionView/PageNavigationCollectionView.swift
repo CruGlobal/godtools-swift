@@ -327,15 +327,21 @@ extension PageNavigationCollectionView {
     
     func scrollToPage(page: Int, animated: Bool) {
                 
-        scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel(navigationDirection: nil, page: page, animated: animated, reloadCollectionViewDataNeeded: false))
+        scrollToPage(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: page,
+                animated: animated,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil
+            )
+        )
     }
     
     func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
              
         pageNavigationCompletedClosure = completion
-                
-        let page: Int = pageNavigation.page
-            
+                            
         let pageNavigationDirectionChanged: Bool
         
         if let navigationDirection = pageNavigation.navigationDirection, navigationDirection != collectionView.semanticContentAttribute {
@@ -344,8 +350,14 @@ extension PageNavigationCollectionView {
             collectionView.semanticContentAttribute = navigationDirection
         }
         else {
-            
+    
             pageNavigationDirectionChanged = false
+        }
+        
+        if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
+            
+            let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
+            collectionView.insertItems(at: indexPaths)
         }
         
         let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged

@@ -175,7 +175,8 @@ class MobileContentPagesViewModel: NSObject {
                     navigationDirection: getRendererLanguageDirection(),
                     page: currentRenderedPageNumber,
                     animated: false,
-                    reloadCollectionViewDataNeeded: true
+                    reloadCollectionViewDataNeeded: true,
+                    insertPages: nil
                 ),
                 pagePositions: nil
             )
@@ -186,7 +187,8 @@ class MobileContentPagesViewModel: NSObject {
                 navigationDirection: getRendererLanguageDirection(),
                 page: navigationEventToSend.pageNavigation.page,
                 animated: navigationEventToSend.pageNavigation.animated,
-                reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded
+                reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
+                insertPages: nil
             ),
             pagePositions: navigationEventToSend.pagePositions
         )
@@ -403,7 +405,13 @@ extension MobileContentPagesViewModel {
         if let pageIndex = pageModels.firstIndex(where: {$0.id == page.id}) {
             
             navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(navigationDirection: nil, page: pageIndex, animated: animated, reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded),
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: pageIndex,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    insertPages: nil
+                ),
                 pagePositions: nil
             )
         }
@@ -430,7 +438,13 @@ extension MobileContentPagesViewModel {
             pageModels.insert(page, at: insertAtIndex)
             
             navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(navigationDirection: nil, page: insertAtIndex, animated: animated, reloadCollectionViewDataNeeded: true),
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: insertAtIndex,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    insertPages: [insertAtIndex]
+                ),
                 pagePositions: nil
             )
         }
