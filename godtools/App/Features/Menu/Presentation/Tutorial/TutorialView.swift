@@ -164,12 +164,8 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
         
         viewModel.pageDidChange(page: page)
     }
-    
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-                
-    }
-    
-    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         viewModel.pageDidAppear(page: page)
     }

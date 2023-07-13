@@ -13,12 +13,11 @@ import UIKit
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell
     
-    @objc optional func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int)
+    @objc optional func pageNavigationDidScroll(pageNavigation: PageNavigationCollectionView, page: Int)
     @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
+    @objc optional func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
-    @objc optional func pageNavigationDidEndScrollingAnimation(pageNavigation: PageNavigationCollectionView)
-    @objc optional func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -254,11 +253,11 @@ extension PageNavigationCollectionView {
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
-    private func didEndPageScrolling(pageCell: UICollectionViewCell, page: Int) {
+    private func didScrollToPage(pageCell: UICollectionViewCell, page: Int) {
         
-        logMessage(message: "did end page scrolling: \(currentPage)")
+        logMessage(message: "did scroll to page: \(currentPage)")
         
-        delegate?.pageNavigationDidEndPageScrolling?(pageNavigation: self, pageCell: pageCell, page: page)
+        delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
 }
 
@@ -412,7 +411,7 @@ extension PageNavigationCollectionView {
         if !completed.pageNavigation.animated {
             
             mostVisiblePageChanged(pageCell: completed.pageCell, page: completed.pageNavigation.page)
-            didEndPageScrolling(pageCell: completed.pageCell, page: completed.pageNavigation.page)
+            didScrollToPage(pageCell: completed.pageCell, page: completed.pageNavigation.page)
         }
         
         pageNavigationCompletedClosure?(completed)
@@ -517,7 +516,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
                 
         let currentPage: Int = self.currentPage
         
-        delegate?.pageNavigationDidScrollPage?(pageNavigation: self, page: currentPage)
+        delegate?.pageNavigationDidScroll?(pageNavigation: self, page: currentPage)
         
         if internalCurrentChangedPage != currentPage {
             internalCurrentChangedPage = currentPage
@@ -549,7 +548,6 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
         logMessage(message: "did end scrolling animation")
                 
         didEndPageScrolling()
-        delegate?.pageNavigationDidEndScrollingAnimation?(pageNavigation: self)
     }
     
     private func didEndPageScrolling() {
@@ -564,7 +562,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
             
             let indexPath = IndexPath(item: currentPage, section: 0)
             if let pageCell = collectionView.cellForItem(at: indexPath) {
-                didEndPageScrolling(pageCell: pageCell, page: currentPage)
+                didScrollToPage(pageCell: pageCell, page: currentPage)
             }
         }
     }

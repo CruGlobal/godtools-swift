@@ -250,11 +250,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         viewModel.didChangeMostVisiblePage(page: page)
     }
     
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-                
-    }
-    
-    func pageNavigationDidEndPageScrolling(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if let contentPageCell = pageCell as? MobileContentPageCell {
             
