@@ -169,15 +169,15 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
         return cell
     }
     
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+        updatePreviousAndNextButtonVisibility(page: page)
+    }
+    
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         updatePreviousAndNextButtonVisibility(page: page)
         
         viewModel.cardDidAppear(card: page)
-    }
-    
-    func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-        updatePreviousAndNextButtonVisibility(page: page)
     }
 }

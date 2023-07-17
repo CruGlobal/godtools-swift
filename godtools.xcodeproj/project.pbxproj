@@ -432,8 +432,7 @@
 		458CFEA629D4E172007B423C /* UserActivityStatDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA429D4E172007B423C /* UserActivityStatDomainModel.swift */; };
 		458CFEA729D4E172007B423C /* GetUserActivityStatsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA529D4E172007B423C /* GetUserActivityStatsUseCase.swift */; };
 		458CFEA929D4E1CC007B423C /* AccountActivityStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFEA829D4E1CB007B423C /* AccountActivityStatView.swift */; };
-		458D5BA12A3A07570078B015 /* MobileContentPagesNavigateToPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5B9F2A3A07560078B015 /* MobileContentPagesNavigateToPageModel.swift */; };
-		458D5BA22A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */; };
+		458D5BA12A3A07570078B015 /* MobileContentPagesNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		4592A0EA29D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592A0E929D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift */; };
 		459602E328400DBB00C66387 /* DownloadToolTranslationsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */; };
@@ -451,8 +450,8 @@
 		459BD090289AD4310075901B /* GetToolTranslationsFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD089289AD4310075901B /* GetToolTranslationsFilesUseCase.swift */; };
 		459C526F289418EB00DA9E95 /* TranslationManifestFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C526E289418EB00DA9E95 /* TranslationManifestFileDataModel.swift */; };
 		459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */; };
-		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A032A30BC2600070934 /* MenuItemView.swift */; };
 		459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A042A30BC2600070934 /* MenuSectionView.swift */; };
 		459E86B528ED1A9B00E197A5 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B328ED1A9B00E197A5 /* AppsFlyer.swift */; };
@@ -613,15 +612,15 @@
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
 		45B54C5D2A2642220042CD0E /* RealmDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C5B2A2642220042CD0E /* RealmDatabaseTests.swift */; };
 		45B54C5E2A2642220042CD0E /* TestRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C5C2A2642220042CD0E /* TestRealmObject.swift */; };
-		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45B86B2B28F1CDAA00691F26 /* InfoPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B86B2A28F1CDAA00691F26 /* InfoPlist.swift */; };
 		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
@@ -819,6 +818,7 @@
 		45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20EA259391B000A096A0 /* JsonServicesType.swift */; };
 		45D95CCE271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */; };
 		45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D9608C289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift */; };
+		45DC60CF2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC60CE2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift */; };
 		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45DF34522A28D41600BB717E /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34512A28D41500BB717E /* AppBuild.swift */; };
@@ -1543,8 +1543,7 @@
 		458CFEA429D4E172007B423C /* UserActivityStatDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActivityStatDomainModel.swift; sourceTree = "<group>"; };
 		458CFEA529D4E172007B423C /* GetUserActivityStatsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserActivityStatsUseCase.swift; sourceTree = "<group>"; };
 		458CFEA829D4E1CB007B423C /* AccountActivityStatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountActivityStatView.swift; sourceTree = "<group>"; };
-		458D5B9F2A3A07560078B015 /* MobileContentPagesNavigateToPageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigateToPageModel.swift; sourceTree = "<group>"; };
-		458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesReRenderPagesModel.swift; sourceTree = "<group>"; };
+		458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigationEvent.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		4592A0E929D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialPrimaryButton.swift; sourceTree = "<group>"; };
 		459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolTranslationsFlow.swift; sourceTree = "<group>"; };
@@ -1892,6 +1891,7 @@
 		45D7781529A56FD100F23D99 /* DeepLinkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingServiceTests.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentEventAnalyticsTracking.swift; sourceTree = "<group>"; };
 		45D9608C289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsLatestTranslationFilesUseCase.swift; sourceTree = "<group>"; };
+		45DC60CE2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewNavigationCompleted.swift; sourceTree = "<group>"; };
 		45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledCache.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2729,6 +2729,7 @@
 		451CCF1E27A9DAEF00E8D2D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				45DC60CE2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift */,
 				451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */,
 			);
 			path = Models;
@@ -3668,9 +3669,8 @@
 			isa = PBXGroup;
 			children = (
 				45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */,
-				458D5B9F2A3A07560078B015 /* MobileContentPagesNavigateToPageModel.swift */,
+				458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */,
 				45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */,
-				458D5BA02A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8309,17 +8309,17 @@
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
-				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */,
-				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */,
-				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
-				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */,
-				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */,
-				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */,
-				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */,
-				457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
-				45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */,
-				45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */,
-				45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */,
+				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
+				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
+				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
+				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */,
+				457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */,
+				45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */,
+				45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -8383,7 +8383,7 @@
 				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
 				D4B522D929D761B700D85213 /* Localizable.stringsdict in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
-				45B6482925E593110098BAF1 /* BuildFile in Resources */,
+				45B6482925E593110098BAF1 /* (null) in Resources */,
 				458CFE9329D4E0B9007B423C /* ArticlesErrorMessageView.xib in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
@@ -8428,7 +8428,7 @@
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
 				D4E243DF29F30DAD00EA4BB7 /* Roboto-Medium.ttf in Resources */,
-				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
+				45B6480A25E581660098BAF1 /* (null) in Resources */,
 				45F7162E290A12D70019B715 /* WebContentView.xib in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
 				452040942959E73F004D843E /* SetupParallelLanguageView.xib in Resources */,
@@ -8592,7 +8592,7 @@
 				450E3D082958916A000FF6D0 /* LessonEvaluationRealmCache.swift in Sources */,
 				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */,
 				455CB5832A439C5100E95834 /* LearnToShareToolItemDomainModel.swift in Sources */,
-				459C56D225FF954F00F15967 /* BuildFile in Sources */,
+				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */,
 				4561B414295B32E700F5AF5B /* OnboardingQuickStartView.swift in Sources */,
@@ -8610,7 +8610,7 @@
 				453F84CE2A029FC00005101E /* ArticleAemData.swift in Sources */,
 				459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45C152A82A44896C00F2A1E8 /* ChooseYourOwnAdventureNavBarModel.swift in Sources */,
-				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
+				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
 				4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */,
 				45FF773D28B66D370027DDE4 /* ShortcutItemType.swift in Sources */,
 				45F71629290A12D70019B715 /* WebContentType.swift in Sources */,
@@ -8656,7 +8656,7 @@
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */,
 				D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */,
-				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
+				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */,
 				459E86EC28EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
@@ -8679,6 +8679,7 @@
 				45C152292A43D1BD00F2A1E8 /* DeleteLanguageListItemViewModel.swift in Sources */,
 				45EB9B7C29F16CF200CA74A8 /* UIViewController+Containment.swift in Sources */,
 				45E3477B2A49BFD00014CCD1 /* BackwardCompatibleList.swift in Sources */,
+				45DC60CF2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift in Sources */,
 				4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */,
 				4556CEA929F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift in Sources */,
 				D44C693F2805AE910000B970 /* AllToolsContentViewModel.swift in Sources */,
@@ -8728,7 +8729,7 @@
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
 				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,
-				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
+				45B6482025E58EE70098BAF1 /* (null) in Sources */,
 				D420DA2B28295E5E0035ABCB /* ToolCardsView.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
 				45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */,
@@ -8831,7 +8832,7 @@
 				D119788F271A090400E08580 /* TutorialPagerViewModel.swift in Sources */,
 				4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */,
 				45E347692A49BE230014CCD1 /* Flow.swift in Sources */,
-				45B6480925E581660098BAF1 /* BuildFile in Sources */,
+				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
@@ -8994,7 +8995,7 @@
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
 				D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
-				459C56D325FF954F00F15967 /* BuildFile in Sources */,
+				459C56D325FF954F00F15967 /* (null) in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				450E3D092958916A000FF6D0 /* LessonEvaluationDataModel.swift in Sources */,
@@ -9039,7 +9040,7 @@
 				45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */,
 				45EB9B7329F16CF200CA74A8 /* UIButton+ImageColor.swift in Sources */,
 				D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */,
-				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
+				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				45C152412A43D1BD00F2A1E8 /* ReviewShareShareableViewModel.swift in Sources */,
 				456FBE0327A48D190033FBCB /* HorizontallyCenteredCollectionViewLayout.swift in Sources */,
@@ -9059,7 +9060,7 @@
 				4515D4042A2E73AB0001545D /* AuthenticationProviderInterface.swift in Sources */,
 				45F7166A290A12D70019B715 /* LogOutUserUseCase.swift in Sources */,
 				4561B40B295B32E700F5AF5B /* OnboardingTutorialView.swift in Sources */,
-				458D5BA12A3A07570078B015 /* MobileContentPagesNavigateToPageModel.swift in Sources */,
+				458D5BA12A3A07570078B015 /* MobileContentPagesNavigationEvent.swift in Sources */,
 				457579E426E96ABE00C898D2 /* MobileContentMultiSelectView.swift in Sources */,
 				45AD1BC525938A4F00A096A0 /* UIViewController+LottieNavItem.swift in Sources */,
 				45F71630290A12D70019B715 /* MailViewModelType.swift in Sources */,
@@ -9085,7 +9086,7 @@
 				45C2595928CAC46E005D2387 /* UserDidSetSettingsPrimaryLanguageUseCase.swift in Sources */,
 				45558329269F2C7B00C3FF14 /* ToolPageCardView.swift in Sources */,
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
-				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
+				45B6480C25E581660098BAF1 /* (null) in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */,
 				45D63E84288F75B0009B4610 /* AttachmentsRepository.swift in Sources */,
@@ -9179,7 +9180,7 @@
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				45E347592A49BD990014CCD1 /* AppRootController.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
-				45B6482825E593110098BAF1 /* BuildFile in Sources */,
+				45B6482825E593110098BAF1 /* (null) in Sources */,
 				450D7B0A28E34ACA006C3FDF /* RealmLanguagesCacheSyncResult.swift in Sources */,
 				453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */,
 				45C152DA2A448A6200F2A1E8 /* ToolCategoryType.swift in Sources */,
@@ -9498,7 +9499,6 @@
 				45BDA61E2954FE3E007E259B /* CategoryArticleModel.swift in Sources */,
 				45FB160727DBDDB60009DF8E /* LessonFlowCompletedState.swift in Sources */,
 				D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */,
-				458D5BA22A3A07570078B015 /* MobileContentPagesReRenderPagesModel.swift in Sources */,
 				4567776A287DB1960044AEB2 /* TutorialModel.swift in Sources */,
 				45FB160827DBDDB60009DF8E /* LessonFlow.swift in Sources */,
 				45D63E76288F698C009B4610 /* MobileContentLanguagesApi.swift in Sources */,
@@ -10708,7 +10708,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -10716,7 +10716,7 @@
 				minimumVersion = 10.11.0;
 			};
 		};
-		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */ = {
+		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
 			requirement = {
@@ -10724,7 +10724,7 @@
 				minimumVersion = 6.4.0;
 			};
 		};
-		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */ = {
+		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleanalytics/google-tag-manager-ios-sdk.git";
 			requirement = {
@@ -10732,7 +10732,7 @@
 				minimumVersion = 7.4.0;
 			};
 		};
-		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */ = {
+		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
@@ -10740,7 +10740,7 @@
 				minimumVersion = 1.3.1;
 			};
 		};
-		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */ = {
+		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
 			requirement = {
@@ -10748,7 +10748,7 @@
 				minimumVersion = 4.0.4;
 			};
 		};
-		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */ = {
+		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cezheng/Fuzi.git";
 			requirement = {
@@ -10756,7 +10756,7 @@
 				minimumVersion = 3.1.3;
 			};
 		};
-		45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */ = {
+		45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
@@ -10764,7 +10764,7 @@
 				minimumVersion = 0.3.1;
 			};
 		};
-		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
+		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -10772,7 +10772,7 @@
 				minimumVersion = 4.1.3;
 			};
 		};
-		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */ = {
+		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
 			requirement = {
@@ -10780,7 +10780,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */ = {
+		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
@@ -10788,7 +10788,7 @@
 				minimumVersion = 10.19.0;
 			};
 		};
-		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */ = {
+		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
 			requirement = {
@@ -10801,77 +10801,77 @@
 /* Begin XCSwiftPackageProductDependency section */
 		457771B129A00C5C00EA8115 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
 		457771B329A00C5C00EA8115 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		457771B529A00C5C00EA8115 /* FirebaseDynamicLinks */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDynamicLinks;
 		};
 		457771B729A00C5C00EA8115 /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseInAppMessaging-Beta";
 		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */;
+			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
 			productName = AppsFlyerLib;
 		};
 		45CDFB4C281730FA00AC4F2E /* GoogleTagManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */;
+			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
 			productName = GoogleTagManager;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */;
+			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */;
 			productName = RequestOperation;
 		};
 		45D40C672A5315B400E8E4AE /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */;
+			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
 		};
 		45D40C6A2A5315D500E8E4AE /* Fuzi */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */;
+			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */;
 			productName = Fuzi;
 		};
 		45D48C8529F81324004E92B1 /* SocialAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */;
+			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */;
 			productName = SocialAuthentication;
 		};
 		45E39EDB27457E0C006A59E4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 		45E7D4C32977430A008C7503 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
+			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
 		};
 		45EDBCEF27359CD70099495B /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
 		};
 		45EDBCF127359CD70099495B /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
 		};
 		D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */;
+			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
 			productName = YouTubeiOSPlayerHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
