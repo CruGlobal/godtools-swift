@@ -140,7 +140,7 @@ class MenuFlow: Flow {
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
             
-        case .leaveAReviewTappedFromMenu:
+        case .leaveAReviewTappedFromMenu(let baseAnalyticsAttributes):
             
             let appleAppId: String = appDiContainer.dataLayer.getAppConfig().appleAppId
             
@@ -150,7 +150,9 @@ class MenuFlow: Flow {
                 return
             }
             
-            UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
+            let trackExitLinkAnalytics = ExitLinkModel(baseAnalyticsAttributes: baseAnalyticsAttributes, url: writeReviewURL)
+            
+            navigateToURL(url: writeReviewURL, trackExitLinkAnalytics: trackExitLinkAnalytics)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())

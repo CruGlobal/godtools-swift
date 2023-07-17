@@ -133,6 +133,18 @@ class MenuViewModel: ObservableObject {
     private var analyticsSiteSubSection: String {
         return ""
     }
+    
+    private func getBaseAnalyticsAttributes() -> BaseAnalyticsAttributesModel {
+        
+        return BaseAnalyticsAttributesModel(
+            screenName: getMenuAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
+            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            data: nil
+        )
+    }
 }
 
 // MARK: - Inputs
@@ -206,7 +218,8 @@ extension MenuViewModel {
     }
     
     func leaveAReviewTapped() {
-        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu)
+        
+        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu(baseAnalyticsAttributes: getBaseAnalyticsAttributes()))
     }
     
     func shareAStoryWithUsTapped() {
