@@ -10,9 +10,9 @@ import UIKit
 
 extension Flow {
     
-    func navigateToURL(url: URL, exitLink: ExitLinkModel) {
+    func navigateToURL(url: URL, trackExitLinkAnalytics: ExitLinkModel) {
         
-        appDiContainer.getExitLinkAnalytics().trackExitLink(exitLink: exitLink)
+        appDiContainer.getExitLinkAnalytics().trackExitLink(exitLink: trackExitLinkAnalytics)
         
         UIApplication.shared.open(url)
     }
