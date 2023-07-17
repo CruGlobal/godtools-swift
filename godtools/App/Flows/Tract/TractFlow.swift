@@ -49,7 +49,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.getTractRemoteShareSubscriber(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             fontService: appDiContainer.getFontService(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
@@ -107,7 +107,7 @@ class TractFlow: ToolNavigationFlow, Flow {
                     self?.closeTool()
                 }
                 
-                let localizationServices: LocalizationServices = appDiContainer.localizationServices
+                let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,

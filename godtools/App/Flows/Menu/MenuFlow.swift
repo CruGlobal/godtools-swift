@@ -111,13 +111,13 @@ class MenuFlow: Flow {
 
         case .shareGodToolsTappedFromMenu:
 
-            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
+            let textToShare: String = appDiContainer.dataLayer.getLocalizationServices().stringForMainBundle(key: "share_god_tools_share_sheet_text")
             let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
 
             navigationController.present(view, animated: true, completion: nil)
             
         case .sendFeedbackTappedFromMenu:
-            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.localizationServices)
+            let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
             
@@ -125,7 +125,7 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .reportABugTappedFromMenu:
-            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.localizationServices)
+            let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: reportABugWebContent, backTappedFromWebContentStep: .backTappedFromReportABug)
             
@@ -133,7 +133,7 @@ class MenuFlow: Flow {
             navigationController.popViewController(animated: true)
             
         case .askAQuestionTappedFromMenu:
-            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.localizationServices)
+            let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: askAQuestionWebContent, backTappedFromWebContentStep: .backTappedFromAskAQuestion)
             
@@ -153,7 +153,7 @@ class MenuFlow: Flow {
             UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
             
         case .shareAStoryWithUsTappedFromMenu:
-            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
+            let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
             
@@ -162,7 +162,7 @@ class MenuFlow: Flow {
             
         case .termsOfUseTappedFromMenu:
             
-            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.localizationServices)
+            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: termsOfUserWebContent, backTappedFromWebContentStep: .backTappedFromTermsOfUse)
             
@@ -171,7 +171,7 @@ class MenuFlow: Flow {
             
         case .privacyPolicyTappedFromMenu:
             
-            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.localizationServices)
+            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: privacyPolicyWebContent, backTappedFromWebContentStep: .backTappedFromPrivacyPolicy)
             
@@ -180,7 +180,7 @@ class MenuFlow: Flow {
             
         case .copyrightInfoTappedFromMenu:
             
-            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
+            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
             pushWebContentView(webContent: copyrightInfoWebContent, backTappedFromWebContentStep: .backTappedFromCopyrightInfo)
             
@@ -270,7 +270,7 @@ class MenuFlow: Flow {
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
             authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
-            localizationServices: appDiContainer.localizationServices
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
@@ -304,7 +304,7 @@ class MenuFlow: Flow {
         
         let viewModel = AccountViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getUserAccountProfileNameUseCase: appDiContainer.domainLayer.getUserAccountProfileNameUseCase(),

@@ -32,7 +32,7 @@ class ArticleFlow: Flow {
             manifest: languageTranslationManifest.manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics()
@@ -109,7 +109,7 @@ extension ArticleFlow {
             category: category,
             manifest: manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

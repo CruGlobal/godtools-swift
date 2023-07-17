@@ -222,7 +222,7 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
         viewModel.tipPageDidChange(page: page)
     }
     
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         viewModel.tipPageDidAppear(page: page)
     }
 }

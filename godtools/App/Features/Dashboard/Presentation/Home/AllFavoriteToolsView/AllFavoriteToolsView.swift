@@ -50,7 +50,7 @@ struct AllFavoriteToolsView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = AllFavoriteToolsViewModel(
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

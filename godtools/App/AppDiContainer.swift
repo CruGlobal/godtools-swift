@@ -16,7 +16,6 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
-    let localizationServices: LocalizationServices = LocalizationServices()
     let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
@@ -63,16 +62,6 @@ class AppDiContainer {
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
-    }
-    
-    func getLearnToShareToolItemsProvider() -> LearnToShareToolItemsProviderType {
-        return InMemoryLearnToShareToolItems(localization: localizationServices)
-    }
-    
-    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
-        return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: realmDatabase)
-        )
     }
     
     func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
@@ -137,10 +126,6 @@ class AppDiContainer {
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
-    }
-    
-    func getShareableImageUseCase() -> GetShareableImageUseCase {
-        return GetShareableImageUseCase()
     }
     
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {

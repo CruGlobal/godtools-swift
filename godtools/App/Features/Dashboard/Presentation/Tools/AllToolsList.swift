@@ -49,7 +49,7 @@ struct AllToolsList_Previews: PreviewProvider {
         let viewModel = AllToolsContentViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            localizationServices: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),

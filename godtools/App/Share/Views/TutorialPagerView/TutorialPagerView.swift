@@ -154,7 +154,7 @@ extension TutorialPagerView: PageNavigationCollectionViewDelegate {
         }
     }
     
-    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if pageNavigation == tutorialPagesView {
             

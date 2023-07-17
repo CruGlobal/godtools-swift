@@ -32,9 +32,8 @@ class MobileContentPagesViewModel: NSObject {
     private(set) weak var window: UIViewController?
     
     let rendererWillChangeSignal: Signal = Signal()
-    let reRendererPagesSignal: SignalValue<MobileContentPagesReRenderPagesModel> = SignalValue()
-    let navigatePageSignal: SignalValue<MobileContentPagesNavigateToPageModel> = SignalValue()
-    let pagesRemovedSignal: SignalValue<[IndexPath]> = SignalValue()
+    let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
+    let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -70,11 +69,7 @@ class MobileContentPagesViewModel: NSObject {
         self.window = window
         self.safeArea = safeArea
         
-        setRenderer(
-            renderer: renderer.value,
-            pageRendererIndex: nil,
-            navigateToPage: initialPage
-        )
+        setRenderer(renderer: renderer.value, pageRendererIndex: nil, navigationEvent: nil)
     }
     
     func handleDismissToolEvent() {
@@ -88,7 +83,7 @@ class MobileContentPagesViewModel: NSObject {
     }
     
     func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
-        
+            
         trackContentEvent(eventId: eventId)
         
         let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
@@ -97,19 +92,8 @@ class MobileContentPagesViewModel: NSObject {
             handleDismissToolEvent()
         }
         
-        if let didReceivePageListenerForPageNumber = currentPageRenderer.getPageForListenerEvents(eventIds: [eventId]) {
-
-            guard let navigateToPageModel = getNavigateToPageModel(
-                page: .pageNumber(value: didReceivePageListenerForPageNumber),
-                forceReloadPagesCollectionView: false,
-                animated: true
-            ) else {
-                return nil
-            }
-            
-            navigatePageSignal.accept(value: navigateToPageModel)
-        }
-        
+        _ = checkIfEventIsPageListenerAndNavigate(eventId: eventId)
+                
         return nil
     }
     
@@ -121,7 +105,7 @@ class MobileContentPagesViewModel: NSObject {
         
         trainingTipsEnabled = enabled
         
-        setPageRenderer(pageRenderer: currentPageRenderer.value, navigateToPage: nil)
+        setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil)
     }
     
     // MARK: - Renderer / Page Renderer
@@ -130,7 +114,11 @@ class MobileContentPagesViewModel: NSObject {
         return renderer.value.pageRenderers[0]
     }
     
-    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigateToPage: MobileContentPagesPage?) {
+    private func getRendererLanguageDirection() -> UISemanticContentAttribute {
+        return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
+    }
+    
+    func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
             
         let pageRenderer: MobileContentPageRenderer?
         
@@ -150,66 +138,131 @@ class MobileContentPagesViewModel: NSObject {
         
         self.renderer.send(renderer)
                 
-        setPageRenderer(pageRenderer: pageRenderer, navigateToPage: navigateToPage)
+        setPageRenderer(pageRenderer: pageRenderer, navigationEvent: navigationEvent)
     }
     
-    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigateToPage: MobileContentPagesPage?) {
-        
+    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigationEvent: MobileContentPagesNavigationEvent?) {
+            
         countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
-        let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
-        let pageModelsToRender: [Page]
-        
-        switch initialPageRenderingType {
-        
-        case .chooseYourOwnAdventure:
-            
-            let pagesShouldMatchRenderedPages: Bool = pageRenderers.count > 1 && pageModels.count > 1
-            
-            var newPageModelsToRenderer: [Page] = Array()
-            
-            if pagesShouldMatchRenderedPages {
-                
-                newPageModelsToRenderer = getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: pageRenderer)
-            }
-            
-            if newPageModelsToRenderer.isEmpty && pageRenderer.getAllPageModels().count > 0 {
-                
-                newPageModelsToRenderer = [pageRenderer.getAllPageModels()[0]]
-            }
-
-            pageModelsToRender = newPageModelsToRenderer
-            
-        case .visiblePages:
-            
-            pageModelsToRender = pageRenderer.getVisiblePageModels()
-        }
-        
-        rendererWillChangeSignal.accept()
-        
         currentPageRenderer.send(pageRenderer)
-                
-        self.pageModels = pageModelsToRender
-                
-        let navigateToPageModel: MobileContentPagesNavigateToPageModel?
         
-        if let navigateToPage = navigateToPage {
-            navigateToPageModel = getNavigateToPageModel(page: navigateToPage, forceReloadPagesCollectionView: true, animated: false)
+        let isInitialPageRender: Bool = pageModels.isEmpty
+        
+        let navigationEventToSend: MobileContentPagesNavigationEvent
+
+        if isInitialPageRender {
+            
+            pageModels = getInitialPages(pageRenderer: pageRenderer)
         }
         else {
-            navigateToPageModel = nil
+            
+            pageModels = getPagesFromPageRendererMatchingPages(pages: pageModels, pagesFromPageRenderer: pageRenderer)
         }
         
-        let reRenderPagesModel = MobileContentPagesReRenderPagesModel(
-            pagesSemanticContentAttribute: UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction),
-            navigateToPageModel: navigateToPageModel
+        if let navigationEvent = navigationEvent {
+            
+            navigationEventToSend = navigationEvent
+        }
+        else if isInitialPageRender, let intialNavigationEvent = getInitialPageNavigation(pageRenderer: pageRenderer) {
+            
+            navigationEventToSend = intialNavigationEvent
+        }
+        else {
+            
+            navigationEventToSend = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: getRendererLanguageDirection(),
+                    page: currentRenderedPageNumber,
+                    animated: false,
+                    reloadCollectionViewDataNeeded: true,
+                    insertPages: nil
+                ),
+                pagePositions: nil
+            )
+        }
+                
+        let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: getRendererLanguageDirection(),
+                page: navigationEventToSend.pageNavigation.page,
+                animated: navigationEventToSend.pageNavigation.animated,
+                reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
+                insertPages: nil
+            ),
+            pagePositions: navigationEventToSend.pagePositions
         )
         
-        reRendererPagesSignal.accept(value: reRenderPagesModel)
+        sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
     }
     
     func getNumberOfRenderedPages() -> Int {
         return pageModels.count
+    }
+    
+    private func getInitialPageNavigation(pageRenderer: MobileContentPageRenderer) -> MobileContentPagesNavigationEvent? {
+            
+        guard let initialPage = getInitialPageModel(pageRenderer: pageRenderer) else {
+            return nil
+        }
+        
+        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
+    }
+    
+    private func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        switch initialPageRenderingType {
+        
+        case .chooseYourOwnAdventure:
+            
+            let allPages: [Page] = pageRenderer.getAllPageModels()
+            
+            if let introPage = allPages.first {
+                return [introPage]
+            }
+            
+            return []
+        
+        case .visiblePages:
+            return pageRenderer.getVisiblePageModels()
+        }
+    }
+    
+    private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
+            
+        let allPages: [Page] = pageRenderer.getAllPageModels()
+                
+        switch initialPage {
+        
+        case .pageId(let value):
+            return allPages.first(where: {$0.id == value})
+       
+        case .pageNumber(let value):
+            
+            if value >= 0 && value < allPages.count {
+                return allPages[value]
+            }
+            
+            return nil
+        }
+    }
+    
+    private func getPagesFromPageRendererMatchingPages(pages: [Page], pagesFromPageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        var matchingPagesFromPageRenderer: [Page] = Array()
+        
+        let allPagesInPageRenderer: [Page] = pagesFromPageRenderer.getAllPageModels()
+        
+        for page in pages {
+                        
+            guard let matchingPage = allPagesInPageRenderer.filter({$0.id == page.id}).first else {
+                continue
+            }
+            
+            matchingPagesFromPageRenderer.append(matchingPage)
+        }
+        
+        return matchingPagesFromPageRenderer
     }
     
     // MARK: - Page Life Cycle
@@ -325,6 +378,86 @@ extension MobileContentPagesViewModel {
 
 extension MobileContentPagesViewModel {
     
+    private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
+            
+        let allPages: [Page] = currentPageRenderer.value.getAllPageModels()
+        
+        guard let pageListeningForEvent = allPages.first(where: {$0.listeners.contains(eventId)}) else {
+            return false
+        }
+                
+        navigateToPage(page: pageListeningForEvent, animated: true)
+        
+        return true
+    }
+        
+    func navigateToPage(page: Page, animated: Bool) {
+        
+        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(page: page, animated: animated, reloadCollectionViewDataNeeded: false)
+        
+        sendPageNavigationEvent(navigationEvent: navigationEvent)
+    }
+        
+    private func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
+        
+        let navigationEvent: MobileContentPagesNavigationEvent
+        
+        if let pageIndex = pageModels.firstIndex(where: {$0.id == page.id}) {
+            
+            navigationEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: pageIndex,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    insertPages: nil
+                ),
+                pagePositions: nil
+            )
+        }
+        else {
+            
+            let pagePosition: Int32 = page.position
+            let lastPageIndex: Int = pageModels.count - 1
+            
+            var insertAtIndex: Int = lastPageIndex
+            
+            for index in 0 ..< pageModels.count {
+                
+                let currentPagePosition: Int32 = pageModels[index].position
+                
+                if currentPagePosition > pagePosition {
+                    insertAtIndex = index
+                    break
+                }
+                else if index == lastPageIndex {
+                    insertAtIndex = lastPageIndex + 1
+                }
+            }
+            
+            pageModels.insert(page, at: insertAtIndex)
+            
+            navigationEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: insertAtIndex,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    insertPages: [insertAtIndex]
+                ),
+                pagePositions: nil
+            )
+        }
+        
+        return navigationEvent
+    }
+    
+    func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
+            
+        pageNavigationEventSignal.accept(value: navigationEvent)
+    }
+    
+    /*
     private func getNavigateToPageModel(page: MobileContentPagesPage, forceReloadPagesCollectionView: Bool, animated: Bool) -> MobileContentPagesNavigateToPageModel? {
         
         let pageRenderer: MobileContentPageRenderer = currentPageRenderer.value
@@ -415,7 +548,7 @@ extension MobileContentPagesViewModel {
             pagePositions: nil,
             animated: animated
         )
-    }
+    }*/
 }
 
 // MARK: - Private
@@ -500,28 +633,9 @@ extension MobileContentPagesViewModel {
                 
                 let pageRendererIndex: Int? = currentRenderer.pageRenderers.firstIndex(where: {$0.language.id == currentPageRenderer.language.id})
                 
-                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigateToPage: nil)
+                self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
             }
             .store(in: &cancellables)
-    }
-    
-    private func getRendererPageModelsMatchingCurrentRenderedPageModels(pageRenderer: MobileContentPageRenderer) -> [Page] {
-        
-        var rendererPageModelsMatchingCurrentRenderedPageModels: [Page] = Array()
-        
-        let currentRenderedPageModels: [Page] = pageModels
-        let allPageModelsInNewRenderer: [Page] = pageRenderer.getAllPageModels()
-        
-        for pageModel in currentRenderedPageModels {
-                        
-            guard let setRendererPageModel = allPageModelsInNewRenderer.filter({$0.id == pageModel.id}).first else {
-                continue
-            }
-            
-            rendererPageModelsMatchingCurrentRenderedPageModels.append(setRendererPageModel)
-        }
-        
-        return rendererPageModelsMatchingCurrentRenderedPageModels
     }
     
     private func removePage(page: Int) {
@@ -533,7 +647,7 @@ extension MobileContentPagesViewModel {
         }
         
         pageModels.remove(at: page)
-        pagesRemovedSignal.accept(value: [IndexPath(item: page, section: 0)])
+        pagesRemovedSignal.accept(value: [page])
     }
     
     private func removeFollowingPagesFromPage(page: Int) {

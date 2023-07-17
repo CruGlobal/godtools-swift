@@ -1,3 +1,5 @@
+"createAccount.title" = "Reģistrēt kontu";
+"createAccount.subtitle" = "Izveido kontu, lai tev būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "deleteAccountProgress.title" = "Notiek konta dzēšana...";
 "confirmDeleteAccount.title" = "Vai esi pārliecināts?";
 "confirmDeleteAccount.confirmButton.title" = "Izdzēst kontu";
@@ -8,7 +10,7 @@
 "deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
 "deleteAccount.cancelButton.title" = "Paturēt manu kontu";
 "signIn.title" = "Pierakstīties";
-"signIn.subtitle" = "Izveido kontu, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
+"signIn.subtitle" = "Ieej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";
@@ -39,28 +41,28 @@ account.activity.sectionTitle" = "Tava aktivitāte";
 "account.activity.languagesUsed" = "Izmantotās valodas";
 
 "account.activity.sessions" = "Sesijas";
-"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: 1";
+"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: %d";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
 "badges.articlesOpened.plural" = "Atvērto rakstu skaits: %d";
 
 /* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Atvērto rakstu skaits: 1";
+"badges.articlesOpened.singular" = "Atvērto rakstu skaits: %d";
 
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "Kopīgoto attēlu skaits: %d";
 
-"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: 1";
+"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: %d";
 
 /* leave %d in phrase - this is the number of lessons that the user has completed */
 "badges.lessonsCompleted.plural" = "Pabeigta(s) nodarbība(s): %d";
 
-"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): 1";
+"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): %d";
 
 /* leave %d in phrase - this is the number of tools that the user has opened */
 "badges.toolsOpened.plural" = "Atvērto rīku skaits: %d";
 
-"badges.toolsOpened.singular" = "Atvērto rīku skaits: 1";
+"badges.toolsOpened.singular" = "Atvērto rīku skaits: %d";
 
 /* leave %d in phrase - this is the number of tips that the user has completed */
 "badges.tipsCompleted.plural" = "Izmantoti apmācības padomi: %d";

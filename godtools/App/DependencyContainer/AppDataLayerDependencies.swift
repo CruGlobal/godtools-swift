@@ -199,6 +199,12 @@ class AppDataLayerDependencies {
         return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
+        return LessonEvaluationRepository(
+            cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices()
     }
@@ -291,6 +297,7 @@ class AppDataLayerDependencies {
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
+            appBuild: getAppBuild(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),

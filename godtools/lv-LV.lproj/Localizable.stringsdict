@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Kopīgoto attēlu skaits: 0</string>
+<string>Kopīgoto attēlu skaits: %d</string>
 <key>one</key>
-<string>Kopīgoto attēlu skaits: 1</string>
+<string>Kopīgoto attēlu skaits: %d</string>
 <key>other</key>
 <string>Kopīgoto attēlu skaits: %d</string>
 </dict>
@@ -31,9 +31,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Atvērto rakstu skaits: 0</string>
+<string>Atvērto rakstu skaits: %d</string>
 <key>one</key>
-<string>Atvērto rakstu skaits: 1</string>
+<string>Atvērto rakstu skaits: %d</string>
 <key>other</key>
 <string>Atvērto rakstu skaits: %d</string>
 </dict>
@@ -49,9 +49,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Pabeigta(s) nodarbība(s): 0</string>
+<string>Pabeigta(s) nodarbība(s): %d</string>
 <key>one</key>
-<string>Pabeigta(s) nodarbība(s): 1</string>
+<string>Pabeigta(s) nodarbība(s): %d</string>
 <key>other</key>
 <string>Pabeigta(s) nodarbība(s): %d</string>
 </dict>
@@ -67,9 +67,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Atvērto rīku skaits: 0</string>
+<string>Atvērto rīku skaits: %d</string>
 <key>one</key>
-<string>Atvērto rīku skaits: 1</string>
+<string>Atvērto rīku skaits: %d</string>
 <key>other</key>
 <string>Atvērto rīku skaits: %d</string>
 </dict>
@@ -85,9 +85,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Izmantoti apmācības padomi: 0</string>
+<string>Izmantoti apmācības padomi: %d</string>
 <key>one</key>
-<string>Izmantoti apmācības padomi: 1</string>
+<string>Izmantoti apmācības padomi: %d</string>
 <key>other</key>
 <string>Izmantoti apmācības padomi: %d</string>
 </dict>

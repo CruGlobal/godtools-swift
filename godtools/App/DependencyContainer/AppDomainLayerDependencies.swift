@@ -129,6 +129,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getLearnToShareToolItemsUseCase() -> GetLearnToShareToolItemsUseCase {
+        return GetLearnToShareToolItemsUseCase(
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getLessonUseCase() -> GetLessonUseCase {
         return GetLessonUseCase()
     }
@@ -207,6 +213,10 @@ class AppDomainLayerDependencies {
             launchCountRepository: dataLayer.getLaunchCountRepository(),
             setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
+    }
+    
+    func getShareableImageUseCase() -> GetShareableImageUseCase {
+        return GetShareableImageUseCase()
     }
     
     func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
