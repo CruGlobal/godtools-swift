@@ -31,7 +31,7 @@ class MobileContentRendererNavigation {
         self.appDiContainer = appDiContainer
     }
     
-    func buttonWithUrlTapped(url: URL, exitLink: ExitLinkModel) {
+    func buttonWithUrlTapped(url: URL, trackExitLinkAnalytics: ExitLinkModel) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -63,7 +63,7 @@ class MobileContentRendererNavigation {
         }
         else {
             
-            parentFlow?.navigateToURL(url: url, exitLink: exitLink)
+            parentFlow?.navigateToURL(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics)
         }
     }
     
