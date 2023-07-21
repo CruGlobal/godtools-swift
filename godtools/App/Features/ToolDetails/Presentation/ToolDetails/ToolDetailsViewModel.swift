@@ -295,7 +295,7 @@ extension ToolDetailsViewModel {
     
     func urlTapped(url: URL) {
                 
-        let exitLink = ExitLinkModel(
+        let trackExitLinkAnalytics = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
@@ -304,7 +304,7 @@ extension ToolDetailsViewModel {
             url: url
         )
         
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {

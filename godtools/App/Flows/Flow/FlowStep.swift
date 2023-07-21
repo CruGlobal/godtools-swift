@@ -65,7 +65,7 @@ enum FlowStep {
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
-    case urlLinkTappedFromToolDetail(url: URL, exitLink: ExitLinkModel)
+    case urlLinkTappedFromToolDetail(url: URL, trackExitLinkAnalytics: ExitLinkModel)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)
@@ -102,7 +102,7 @@ enum FlowStep {
     case backTappedFromReportABug
     case askAQuestionTappedFromMenu
     case backTappedFromAskAQuestion
-    case leaveAReviewTappedFromMenu
+    case leaveAReviewTappedFromMenu(baseAnalyticsAttributes: BaseAnalyticsAttributesModel)
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
     case shareGodToolsTappedFromMenu

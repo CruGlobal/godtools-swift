@@ -95,7 +95,7 @@ extension MobileContentPageViewModel {
     
     func buttonWithUrlTapped(url: URL) {
                
-        let exitLink = ExitLinkModel(
+        let exitLinkAnalytics = ExitLinkModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
@@ -104,7 +104,7 @@ extension MobileContentPageViewModel {
             url: url
         )
                         
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, exitLink: exitLink)
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, trackExitLinkAnalytics: exitLinkAnalytics)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

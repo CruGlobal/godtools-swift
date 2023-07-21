@@ -299,8 +299,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 chooseYourOwnAdventureFlow = nil
             }
             
-        case .urlLinkTappedFromToolDetail(let url, let exitLink):
-            navigateToURL(url: url, exitLink: exitLink)
+        case .urlLinkTappedFromToolDetail(let url, let trackExitLinkAnalytics):
+            navigateToURL(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -977,20 +977,24 @@ extension AppFlow {
         rootController.addChildController(child: menuFlow.navigationController)
         
         let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+        let menuView: UIView = menuFlow.navigationController.view
+        let appView: UIView = navigationController.view
+        
+        menuView.frame = CGRect(x: screenWidth * -1, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
         
         if animated {
-                        
-            menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
-                        
-            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
-                self?.navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
+                                                
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
+                
+                menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+                appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+                                
             }, completion: nil)
         }
         else {
             
-            menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
-            navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
+            menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+            appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
         }
     }
     
@@ -1003,24 +1007,29 @@ extension AppFlow {
         menuFlow.navigationController.dismiss(animated: animated, completion: nil)
         
         let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+        let menuView: UIView = menuFlow.navigationController.view
+        let appView: UIView = navigationController.view
         
-        menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
-        navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
-        
+        menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+        appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+                
         if animated {
             
-            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
-                self?.navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
+                                
+                menuView.frame = CGRect(x: screenWidth * -1, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+                appView.frame = CGRect(x: 0, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+                
             }, completion: { [weak self] ( finished: Bool) in
+                
                 menuFlow.navigationController.removeAsChildController()
                 self?.menuFlow = nil
             })
         }
         else {
+                        
+            appView.frame = CGRect(x: 0, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
             
-            menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
-            navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
             menuFlow.navigationController.removeAsChildController()
             self.menuFlow = nil
         }
