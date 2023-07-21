@@ -64,7 +64,7 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run Tests
-        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme godtools -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
+        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-Production -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
         # TODO: See if Fastlane can be used to store .xcresult at -resultBundlePath for Code Coverage Upload Action GT-2043.
         #run: bundle exec fastlane cru_shared_lane_run_tests xcargs:"-resultBundlePath='/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result'"
 
