@@ -1,3 +1,11 @@
+"menu_getStarted" = "Comenzar";
+"menu_support" = "Soporte";
+"menu_about" = "Acerca de";
+"menu.sendFeedback" = "Enviar comentarios";
+"menu.reportABug" = "Informar de un error";
+"menu.askAQuestion" = "Haz una pregunta";
+"menu.leaveAReview" = "Deja una opinión";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Acerca de";
 
@@ -212,7 +220,7 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 "help" = "Preguntas frecuentes";
 "contact_us" = "Cóntactanos";
 "preview_mode_translators_only" = "Modo vista previa (solo traductores)";
-"share_god_tools" = "Comparte la aplicación GodTools";
+"share_god_tools" = "Comparte GodTools";
 "share_a_story_with_us" = "Comparte una historia con nosotros";
 "terms_of_use" = "Términos de uso";
 "privacy_policy" = "Política de privacidad";
