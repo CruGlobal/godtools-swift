@@ -1,3 +1,11 @@
+"menu_getStarted" = "Commencez";
+"menu_support" = "Soutien";
+"menu_about" = "À propos";
+"menu.sendFeedback" = "Envoyer un commentaire";
+"menu.reportABug" = "Signaler un bug";
+"menu.askAQuestion" = "Poser une question";
+"menu.leaveAReview" = "Laisser un commentaire";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "À propos";
 
@@ -207,11 +215,11 @@
 "help" = "Foire aux questions";
 "contact_us" = "Nous contacter";
 "preview_mode_translators_only" = "Mode aperçu (traducteurs uniquement)";
-"share_god_tools" = "Partager l'application GodTools";
+"share_god_tools" = "Partager GodTools";
 "share_a_story_with_us" = "Partager une histoire avec nous";
 "terms_of_use" = "Conditions d'utilisation";
 "privacy_policy" = "Politique de confidentialité";
-"copyright_info" = "Copyright Détails";
+"copyright_info" = "Information du Copyright";
 "share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools : https://godtoolsapp.com 
 
 Une version en ligne est disponible sur https://knowgod.com";

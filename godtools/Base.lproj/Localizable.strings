@@ -2,7 +2,7 @@
 "createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
 "deleteAccountProgress.title" = "Deleting account...";
 "confirmDeleteAccount.title" = "Are you sure?";
-"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"confirmDeleteAccount.confirmButton.title" = "Delete account";
 "accountDeletedAlert.title" = "Account Deleted";
 "accountDeletedAlert.message" = "Your account has been deleted.";
 "deleteAccount.title" = "Don't go so soon";
@@ -14,13 +14,13 @@
 "signIn.google" = "Sign in with Google";
 "signIn.facebook" = "Login with Facebook";
 "signIn.apple" = "Continue with Apple";
-"menu_getStarted" = "Get Started";
+"menu_getStarted" = "Get started";
 "menu_support" = "Support";
 "menu_about" = "About";
-"menu.sendFeedback" = "Send Feedback";
-"menu.reportABug" = "Report a Bug";
-"menu.askAQuestion" = "Ask a Question";
-"menu.leaveAReview" = "Leave a Review";
+"menu.sendFeedback" = "Send feedback";
+"menu.reportABug" = "Report a bug";
+"menu.askAQuestion" = "Ask a question";
+"menu.leaveAReview" = "Leave a review";
 "account.badges.sectionTitle" = "Your badges";
 "
 account.activity.sectionTitle" = "Your activity";
@@ -87,7 +87,7 @@ account.activity.sectionTitle" = "Your activity";
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Not available in %@";
 
-"menu.deleteAccount" = "Delete Account";
+"menu.deleteAccount" = "Delete account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
 "alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
 "tool_menu_item.tools" = "Tools";
@@ -285,7 +285,7 @@ If you don't receive this message until later, the link may not still work. We c
 "menu_account" = "Account";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
-"language_settings" = "Language Settings";
+"language_settings" = "Language settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
 
@@ -300,11 +300,11 @@ If you don't receive this message until later, the link may not still work. We c
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share the GodTools App";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
-"copyright_info" = "Copyright Info";
+"share_god_tools" = "Share GodTools";
+"share_a_story_with_us" = "Share a story with us";
+"terms_of_use" = "Terms of use";
+"privacy_policy" = "Privacy policy";
+"copyright_info" = "Copyright info";
 "share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
 
 An online version can be found at https://knowgod.com/";
