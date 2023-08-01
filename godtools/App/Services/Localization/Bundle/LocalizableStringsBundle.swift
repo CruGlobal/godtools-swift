@@ -1,18 +1,18 @@
 //
-//  LocalizationBundle.swift
+//  LocalizableStringsBundle.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/10/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/1/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class LocalizationBundle {
+class LocalizableStringsBundle {
     
     let bundle: Bundle
     
-    required init(bundle: Bundle) {
+    init(bundle: Bundle) {
         
         self.bundle = bundle
     }
