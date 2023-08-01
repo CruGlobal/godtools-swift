@@ -22,8 +22,7 @@
 "menu.askAQuestion" = "Ask a question";
 "menu.leaveAReview" = "Leave a review";
 "account.badges.sectionTitle" = "Your badges";
-"
-account.activity.sectionTitle" = "Your activity";
+"account.activity.sectionTitle" = "Your activity";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Tool opens";
