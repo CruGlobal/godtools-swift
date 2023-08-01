@@ -22,8 +22,7 @@
 "menu.askAQuestion" = "Ajukan pertanyaan";
 "menu.leaveAReview" = "Berikan ulasan";
 "account.badges.sectionTitle" = "Lencana Saudara";
-"
-account.activity.sectionTitle" = "Aktifitas Saudara";
+"account.activity.sectionTitle" = "Aktifitas Saudara";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Alat dibuka";
