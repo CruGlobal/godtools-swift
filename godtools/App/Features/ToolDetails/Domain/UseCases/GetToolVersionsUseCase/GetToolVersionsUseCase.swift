@@ -61,19 +61,19 @@ class GetToolVersionsUseCase {
             
             name = primaryTranslation.translatedName
             description = primaryTranslation.translatedTagline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)?.bundle ?? Bundle.main
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             description = englishTranslation.translatedTagline
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
         }
         else {
             
             name = resourceVersion.name
             description = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
         }
         
         let primaryLanguageTranslatedName: String?

@@ -48,11 +48,11 @@ class GetToolCategoriesUseCase {
         let bundle: Bundle
         if let localeId = language?.localeIdentifier {
             
-            bundle = localizationServices.bundleLoader.bundleForResource(resourceName: localeId) ?? Bundle.main
+            bundle = localizationServices.bundleLoader.bundleForResource(resourceName: localeId, fileType: .strings)?.bundle ?? Bundle.main
             
         } else {
             
-            bundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            bundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
         }
         
         let allToolsCategoryTranslation = localizationServices.stringForBundle(bundle: bundle, key: "find_tools")

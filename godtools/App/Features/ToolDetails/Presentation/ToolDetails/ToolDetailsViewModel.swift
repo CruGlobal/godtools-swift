@@ -114,7 +114,7 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
             conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
             outlineContent = primaryTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)?.bundle ?? Bundle.main
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
@@ -123,13 +123,13 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
             conversationStartersContent = englishTranslation.toolDetailsConversationStarters
             outlineContent = englishTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
         }
         else {
             
             nameValue = resource.name
             aboutDetailsValue = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
         }
                 
         name = nameValue
