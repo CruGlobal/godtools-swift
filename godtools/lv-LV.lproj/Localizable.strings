@@ -22,8 +22,7 @@
 "menu.askAQuestion" = "Uzdod jautājumu";
 "menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
-"
-account.activity.sectionTitle" = "Tava aktivitāte";
+"account.activity.sectionTitle" = "Tava aktivitāte";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Atvērtie rīki";
