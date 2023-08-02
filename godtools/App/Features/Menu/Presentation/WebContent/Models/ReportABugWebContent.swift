@@ -11,7 +11,7 @@ import Foundation
 struct ReportABugWebContent: WebContentType {
     
     let navTitle: String
-    let url: URL? = URL(string: "https://form.asana.com/?k=2XgC7iGos5JKqEsgyr_WWA&d=657768513276")
+    let url: URL? = URL(string: "https://godtoolsapp.com/report-bug/")
     let analyticsScreenName: String = "Report A Bug"
     let analyticsSiteSection: String = "menu"
     

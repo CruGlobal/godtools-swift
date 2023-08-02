@@ -11,7 +11,7 @@ import Foundation
 struct SendFeedbackWebContent: WebContentType {
     
     let navTitle: String
-    let url: URL? = URL(string: "https://form.asana.com/?k=zjG5sVjCeB0MCIjKea1IWg&d=657768513276")
+    let url: URL? = URL(string: "https://godtoolsapp.com/send-feedback/")
     let analyticsScreenName: String = "Send Feedback"
     let analyticsSiteSection: String = "menu"
     
