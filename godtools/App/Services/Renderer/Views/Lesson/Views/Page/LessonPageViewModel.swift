@@ -13,14 +13,14 @@ class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
     private let analytics: AnalyticsContainer
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics) {
             
         self.pageModel = pageModel
         self.analytics = analytics
         
-        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext

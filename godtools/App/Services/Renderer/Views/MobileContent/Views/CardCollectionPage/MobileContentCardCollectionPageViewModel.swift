@@ -14,7 +14,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     private let cardCollectionPage: CardCollectionPage
     private let analytics: AnalyticsContainer
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.analytics = analytics

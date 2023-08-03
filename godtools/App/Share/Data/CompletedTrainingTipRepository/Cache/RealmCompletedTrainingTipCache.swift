@@ -19,7 +19,9 @@ class RealmCompletedTrainingTipCache {
     
     func getCompletedTrainingTip(id: String) -> CompletedTrainingTipDataModel? {
         
-        guard let realmCompletedTrainingTip = realmDatabase.openRealm().object(ofType: RealmCompletedTrainingTip.self, forPrimaryKey: id) else { return nil }
+        guard let realmCompletedTrainingTip = realmDatabase.openRealm().object(ofType: RealmCompletedTrainingTip.self, forPrimaryKey: id) else {
+            return nil
+        }
         
         return CompletedTrainingTipDataModel(realmCompletedTrainingTip: realmCompletedTrainingTip)
     }

@@ -17,7 +17,7 @@ class MobileContentParagraphViewModel: MobileContentViewModel {
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     
-    init(paragraphModel: Paragraph, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(paragraphModel: Paragraph, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.paragraphModel = paragraphModel
         

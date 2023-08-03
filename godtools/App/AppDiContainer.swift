@@ -12,7 +12,6 @@ class AppDiContainer {
         
     private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase
-    private let resourcesFileCache: ResourcesSHA256FileCache
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
@@ -28,9 +27,7 @@ class AppDiContainer {
         
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-                                        
-        resourcesFileCache = ResourcesSHA256FileCache(realmDatabase: realmDatabase)
-                
+                                                        
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
                                                                                             
         firebaseInAppMessaging = FirebaseInAppMessaging()
@@ -70,23 +67,6 @@ class AppDiContainer {
         )
     }
     
-    func getManifestResourcesCache() -> ManifestResourcesCache {
-        return ManifestResourcesCache(resourcesFileCache: resourcesFileCache)
-    }
-    
-    func getMobileContentAnalytics() -> MobileContentAnalytics {
-        return MobileContentAnalytics(
-            analytics: dataLayer.getAnalytics(),
-            userAnalytics: UserAnalytics(
-                incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
-            )
-        )
-    }
-    
-    func getMobileContentEventAnalyticsTracking() -> MobileContentEventAnalyticsTracking {
-        return MobileContentEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
@@ -98,8 +78,23 @@ class AppDiContainer {
             navigation: navigation,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
-            manifestResourcesCache: getManifestResourcesCache()
+            manifestResourcesCache: getMobileContentRendererManifestResourcesCache()
         )
+    }
+    
+    func getMobileContentRendererAnalytics() -> MobileContentRendererAnalytics {
+        return MobileContentRendererAnalytics(
+            analytics: dataLayer.getAnalytics(),
+            userAnalytics: getMobileContentRendererUserAnalytics()
+        )
+    }
+    
+    func getMobileContentRendererEventAnalyticsTracking() -> MobileContentRendererEventAnalyticsTracking {
+        return MobileContentRendererEventAnalyticsTracking(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
+    }
+    
+    func getMobileContentRendererManifestResourcesCache() -> MobileContentRendererManifestResourcesCache {
+        return MobileContentRendererManifestResourcesCache(resourcesFileCache: dataLayer.getResourcesFileCache())
     }
     
     func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate) -> MobileContentRendererNavigation {
@@ -108,6 +103,12 @@ class AppDiContainer {
             parentFlow: parentFlow,
             delegate: navigationDelegate,
             appDiContainer: self
+        )
+    }
+    
+    private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
+        return MobileContentRendererUserAnalytics(
+            incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
     }
     

@@ -12,11 +12,11 @@ import SwiftUI
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let fontService: FontService
     private let analytics: AnalyticsContainer
         
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, analytics: AnalyticsContainer) {
+    init(mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, analytics: AnalyticsContainer) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService

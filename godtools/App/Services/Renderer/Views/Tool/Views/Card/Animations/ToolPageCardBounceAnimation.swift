@@ -31,7 +31,7 @@ class ToolPageCardBounceAnimation {
     private weak var layoutView: UIView?
     private weak var delegate: ToolPageCardBounceAnimationDelegate?
     
-    required init(card: ToolPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView, delegate: ToolPageCardBounceAnimationDelegate) {
+    init(card: ToolPageCardView, cardTopConstraint: NSLayoutConstraint, cardStartingTopConstant: CGFloat, layoutView: UIView, delegate: ToolPageCardBounceAnimationDelegate) {
         
         self.card = card
         self.cardTopConstraint = cardTopConstraint

@@ -14,7 +14,7 @@ class MobileContentHeadingView: MobileContentView {
     
     private var textView: MobileContentTextView?
     
-    required init(viewModel: MobileContentHeadingViewModel) {
+    init(viewModel: MobileContentHeadingViewModel) {
         
         self.viewModel = viewModel
         

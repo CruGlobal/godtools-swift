@@ -13,10 +13,10 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
     
     private let animationModel: Animation
     
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     let animatedViewModel: AnimatedViewModel?
     
-    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.animationModel = animationModel
         self.mobileContentAnalytics = mobileContentAnalytics

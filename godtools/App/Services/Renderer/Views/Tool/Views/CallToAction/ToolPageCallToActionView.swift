@@ -22,7 +22,7 @@ class ToolPageCallToActionView: MobileContentView, NibBased {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var nextButton: UIButton!
     
-    required init(viewModel: ToolPageCallToActionViewModel) {
+    init(viewModel: ToolPageCallToActionViewModel) {
         
         self.viewModel = viewModel
         

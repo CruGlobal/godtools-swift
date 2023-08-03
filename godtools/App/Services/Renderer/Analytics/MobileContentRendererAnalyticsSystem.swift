@@ -1,5 +1,5 @@
 //
-//  MobileContentAnalyticsSystem.swift
+//  MobileContentRendererAnalyticsSystem.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/24/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MobileContentAnalyticsSystem {
+protocol MobileContentRendererAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?)
 }

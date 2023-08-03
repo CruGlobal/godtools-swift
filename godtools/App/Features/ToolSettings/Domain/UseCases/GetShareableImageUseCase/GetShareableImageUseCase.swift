@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class GetShareableImageUseCase {
     
-    func getShareableImage(from shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) -> ShareableImageDomainModel? {
+    func getShareableImage(from shareable: Shareable, manifestResourcesCache: MobileContentRendererManifestResourcesCache) -> ShareableImageDomainModel? {
         guard let shareableImage = shareable as? ShareableImage, let resource = shareableImage.resource, let imageToShare = manifestResourcesCache.getUIImage(resource: resource) else {
             return nil
         }

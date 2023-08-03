@@ -1,5 +1,5 @@
 //
-//  FirebaseAnalytics+MobileContentAnalyticsSystem.swift
+//  FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/9/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FirebaseAnalytics: MobileContentAnalyticsSystem {
+extension FirebaseAnalytics: MobileContentRendererAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
         

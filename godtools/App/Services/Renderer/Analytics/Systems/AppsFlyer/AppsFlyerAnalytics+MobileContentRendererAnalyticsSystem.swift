@@ -1,5 +1,5 @@
 //
-//  AppsFlyerAnalytics+MobileContentAnalyticsSystem.swift
+//  AppsFlyerAnalytics+MobileContentRendererAnalyticsSystem.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/9/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension AppsFlyerAnalytics: MobileContentAnalyticsSystem {
+extension AppsFlyerAnalytics: MobileContentRendererAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
         trackAction(actionName: action, data: data)

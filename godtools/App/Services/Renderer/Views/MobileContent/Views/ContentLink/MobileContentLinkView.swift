@@ -14,7 +14,7 @@ class MobileContentLinkView: MobileContentView {
     private let backgroundView: UIView = UIView(frame: .zero)
     private let titleLabel: UILabel = UILabel(frame: .zero)
     
-    required init(viewModel: MobileContentLinkViewModel) {
+    init(viewModel: MobileContentLinkViewModel) {
         
         self.viewModel = viewModel
         

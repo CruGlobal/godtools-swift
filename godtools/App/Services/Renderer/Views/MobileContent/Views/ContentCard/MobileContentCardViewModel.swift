@@ -13,9 +13,9 @@ class MobileContentCardViewModel: MobileContentViewModel {
     
     private let cardModel: Card
     
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     
-    init(cardModel: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(cardModel: Card, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.cardModel = cardModel
         self.mobileContentAnalytics = mobileContentAnalytics

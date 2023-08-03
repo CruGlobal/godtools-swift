@@ -12,7 +12,7 @@ class ToolPagePositions: MobileContentViewPositionState {
     
     let cardPosition: Int?
     
-    required init(cardPosition: Int?) {
+    init(cardPosition: Int?) {
         
         self.cardPosition = cardPosition
     }

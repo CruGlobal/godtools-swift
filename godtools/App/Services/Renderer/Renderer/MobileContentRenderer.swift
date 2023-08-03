@@ -13,14 +13,14 @@ class MobileContentRenderer {
             
     private let sharedState: State
     private let pageViewFactories: MobileContentRendererPageViewFactories
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     
     let navigation: MobileContentRendererNavigation
     let resource: ResourceModel
     let primaryLanguage: LanguageDomainModel
     let pageRenderers: [MobileContentPageRenderer]
     
-    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: ManifestResourcesCache) {
+    init(navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         let sharedState: State = State()
         let resource: ResourceModel = toolTranslations.tool

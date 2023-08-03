@@ -68,7 +68,9 @@ class GetUserAccountDetailsUseCase {
     
     private func buildJoinedOnString(from userDetails: UserDetailsDataModel) -> String {
         
-        guard let createdAt = userDetails.createdAt else { return "" }
+        guard let createdAt = userDetails.createdAt else {
+            return ""
+        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium

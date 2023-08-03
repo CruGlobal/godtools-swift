@@ -14,7 +14,7 @@ class ArticleCategoryCellViewModel {
     let articleImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String?> = ObservableValue(value: "")
     
-    init(category: GodToolsToolParser.Category, manifestResourcesCache: ManifestResourcesCache) {
+    init(category: GodToolsToolParser.Category, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         title.accept(value: category.label?.text ?? "")
         

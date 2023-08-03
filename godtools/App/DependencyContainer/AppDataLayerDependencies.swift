@@ -240,7 +240,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    private func getResourcesFileCache() -> ResourcesSHA256FileCache {
+    func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
     

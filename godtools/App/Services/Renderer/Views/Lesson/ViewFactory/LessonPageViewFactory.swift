@@ -12,9 +12,9 @@ import GodToolsToolParser
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
     private let analytics: AnalyticsContainer
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
         
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics) {
     
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics

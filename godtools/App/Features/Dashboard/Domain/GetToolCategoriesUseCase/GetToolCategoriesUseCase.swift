@@ -73,7 +73,10 @@ class GetToolCategoriesUseCase {
 private extension Array where Element == ResourceModel {
     
     func sortedByPrimaryLanguageAvailable(primaryLanguage: LanguageDomainModel?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) -> [ResourceModel] {
-        guard let primaryLanguageId = primaryLanguage?.id else { return self }
+        
+        guard let primaryLanguageId = primaryLanguage?.id else {
+            return self
+        }
         
         return sorted(by: { resource1, resource2 in
                         
