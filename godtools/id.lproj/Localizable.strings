@@ -1,3 +1,80 @@
+"createAccount.title" = "Membuat akun";
+"createAccount.subtitle" = "Buat akun untuk mendapatkan kisah-kisah nyata, dorongan, dan tip praktis dengan ujung jari Saudara.";
+"deleteAccountProgress.title" = "Menghapus akun";
+"confirmDeleteAccount.title" = "Apakah Saudara yakin?";
+"confirmDeleteAccount.confirmButton.title" = "Hapus akun";
+"accountDeletedAlert.title" = "Akun terhapus";
+"accountDeletedAlert.message" = "Akun Saudara sudah terhapus";
+"deleteAccount.title" = "Jangan pergi terlalu cepat";
+"deleteAccount.subtitle" = "Jika Saudara menghapus akun Saudara, Saudara tidak dapat membuka alat-alat favorit atau aktifitas akun Saudara";
+"deleteAccount.confirmButton.title" = "Hapus akun saya";
+"deleteAccount.cancelButton.title" = "Pertahankan akun saya";
+"signIn.title" = "Masuk";
+"signIn.subtitle" = "Masuk ke akun Saudara untuk mendapatkan kisah-kisah nyata, dorongan, dan tip praktis dengan ujung jari Saudara.";
+"signIn.google" = "Masuk dengan Google";
+"signIn.facebook" = "Masuk dengan Facebook";
+"signIn.apple" = "Lanjutkan dengan Apple";
+"menu_getStarted" = "Memulai";
+"menu_support" = "Dukungan";
+"menu_about" = "Tentang";
+"menu.sendFeedback" = "Kirim umpan balik";
+"menu.reportABug" = "Laporkan bug";
+"menu.askAQuestion" = "Ajukan pertanyaan";
+"menu.leaveAReview" = "Berikan ulasan";
+"account.badges.sectionTitle" = "Lencana Saudara";
+"account.activity.sectionTitle" = "Aktifitas Saudara";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Alat dibuka";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Pelajaran diselesaikan";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Layar dibagikan";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Tautan telah dibagikan";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Bahasa-bahasa yang digunakan";
+
+"account.activity.sessions" = "Sesi";
+"badges.tipsCompleted.singular" = "Menyelesaikan 1 tip latihan";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "%d artikel dibaca";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Satu artikel dibaca";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "%d gambar telah dibagikan";
+
+"badges.imagesShared.singular" = "Satu gambar dibagikan";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "%d pelajaran diselesaikan";
+
+"badges.lessonsCompleted.singular" = "Satu pelajaran diselesaikan";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "%d alat telah dibuka";
+
+"badges.toolsOpened.singular" = "Satu alat dibuka";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "%d tip latihan telah diselesaikan";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Bergabung pada %@";
+
+"account.globalActivity.title" = "Aktifitas global";
+"toolDetails.conversationStarters.title" = "Memulai percakapan";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Garis besar";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Tentang";
 

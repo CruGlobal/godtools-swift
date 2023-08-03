@@ -69,6 +69,8 @@ class MobileContentPagesViewModel: NSObject {
         self.window = window
         self.safeArea = safeArea
         
+        incrementToolOpenUserCounter()
+        
         setRenderer(renderer: renderer.value, pageRendererIndex: nil, navigationEvent: nil)
     }
     
@@ -723,6 +725,33 @@ extension MobileContentPagesViewModel {
     
     private func languageUsageAlreadyCountedThisSession(localeId: String) -> Bool {
         return languagelocaleIdUsed.contains(localeId)
+    }
+    
+    private func incrementToolOpenUserCounter() {
+        
+        let toolOpenInteraction: IncrementUserCounterUseCase.UserCounterInteraction?
+        
+        if resource.isToolType {
+            toolOpenInteraction = .toolOpen(tool: resource.id)
+        }
+        else if resource.isLessonType {
+            toolOpenInteraction = .lessonOpen(tool: resource.id)
+        }
+        else {
+            toolOpenInteraction = nil
+        }
+        
+        guard let toolOpenInteraction = toolOpenInteraction else {
+            return
+        }
+        
+        incrementUserCounterUseCase.incrementUserCounter(for: toolOpenInteraction)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     private func trackLanguageUsageCountedThisSession(localeId: String) {

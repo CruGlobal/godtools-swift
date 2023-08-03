@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d gambar dibagikan</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Membaca %d article</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d pelajaran terselesaikan</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -55,7 +55,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d Alat-alat terbuka</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d tip-tip latihan terselesaikan</string>
 </dict>
 </dict>
 </dict>

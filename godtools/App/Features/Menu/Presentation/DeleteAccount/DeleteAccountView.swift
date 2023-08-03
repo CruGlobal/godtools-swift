@@ -78,9 +78,11 @@ struct DeleteAccountView_Preview: PreviewProvider {
     
     static var previews: some View {
                 
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
         let viewModel = DeleteAccountViewModel(
             flowDelegate: MockFlowDelegate(),
-            localizationServices: LocalizationServices()
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
         return DeleteAccountView(viewModel: viewModel, backgroundColor: Color.white)

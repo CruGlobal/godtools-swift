@@ -12,8 +12,10 @@ import Combine
 class UserAnalytics {
     
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
+    private let maxAllowedLessonCompletionIncrementsPerSession: Int = 1
     
     private var cancellables = Set<AnyCancellable>()
+    private var trackLessonCompletionsCount: Int = 0
     
     init(incrementUserCounterUseCase: IncrementUserCounterUseCase) {
 
@@ -27,14 +29,21 @@ extension UserAnalytics: MobileContentAnalyticsSystem {
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String : Any]?) {
 
-        guard action.hasPrefix(UserAnalytics.lessonCompletionsActionPrefix) else { return }
+        guard action.hasPrefix(UserAnalytics.lessonCompletionsActionPrefix) else {
+            return
+        }
         
-        incrementUserCounterUseCase.incrementUserCounter(for: .lessonCompletion(mobileContentAction: action))
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
+        if trackLessonCompletionsCount < maxAllowedLessonCompletionIncrementsPerSession || maxAllowedLessonCompletionIncrementsPerSession == 0 {
+                        
+            incrementUserCounterUseCase.incrementUserCounter(for: .lessonCompletion(mobileContentAction: action))
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &cancellables)
+        }
+        
+        trackLessonCompletionsCount += 1
     }
 }
