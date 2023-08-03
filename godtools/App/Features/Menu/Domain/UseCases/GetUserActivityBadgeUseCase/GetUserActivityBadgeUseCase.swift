@@ -78,9 +78,11 @@ class GetUserActivityBadgeUseCase {
 
         }
         
-        let formatString = localizationServices.stringForMainBundle(key: stringLocalizationKey)
+        let formatString = localizationServices.stringForMainBundle(key: stringLocalizationKey, fileType: .stringsdict)
         
-        return String.localizedStringWithFormat(formatString, progressTarget)
+        let badgeText: String = String.localizedStringWithFormat(formatString, progressTarget)
+        
+        return badgeText
     }
     
     private func getIconImageName(badgeType: Badge.BadgeType, variant: Int) -> String {

@@ -206,7 +206,7 @@ class AppDataLayerDependencies {
     }
     
     func getLocalizationServices() -> LocalizationServices {
-        return LocalizationServices()
+        return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }
     
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
