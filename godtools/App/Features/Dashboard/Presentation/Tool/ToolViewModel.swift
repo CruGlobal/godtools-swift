@@ -8,7 +8,6 @@
 
 import UIKit
 import GodToolsToolParser
-import Combine
 
 class ToolViewModel: MobileContentPagesViewModel {
     
@@ -23,7 +22,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let liveShareStream: String?
     
     private weak var flowDelegate: FlowDelegate?
-    private var cancellables = Set<AnyCancellable>()
     
     let navBarViewModel: ObservableValue<ToolNavBarViewModel>
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
@@ -130,14 +128,6 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
-        
-        incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &cancellables)
     }
     
     override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {

@@ -9,8 +9,9 @@
 import Foundation
 import RealmSwift
 import GodToolsToolParser
+import Combine
 
-class ArticleCategoriesViewModel: NSObject {
+class ArticleCategoriesViewModel {
         
     private let resource: ResourceModel
     private let language: LanguageDomainModel
@@ -20,17 +21,20 @@ class ArticleCategoriesViewModel: NSObject {
     private let manifestResourcesCache: ManifestResourcesCache
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let analytics: AnalyticsContainer
     
     private var categories: [GodToolsToolParser.Category] = Array()
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var cancellables = Set<AnyCancellable>()
+    private var pageViewCount: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
     
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -41,10 +45,9 @@ class ArticleCategoriesViewModel: NSObject {
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.analytics = analytics
-        
-        super.init()
-                                            
+                                                    
         reloadCategories()
         
         downloadArticles(forceDownload: false)
@@ -98,6 +101,17 @@ extension ArticleCategoriesViewModel {
     
     func pageViewed() {
         
+        if pageViewCount == 0 {
+            
+            incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &cancellables)
+        }
+        
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
@@ -108,6 +122,8 @@ extension ArticleCategoriesViewModel {
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
+        
+        pageViewCount += 1
     }
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {

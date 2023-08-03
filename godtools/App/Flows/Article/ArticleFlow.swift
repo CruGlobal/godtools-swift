@@ -35,6 +35,7 @@ class ArticleFlow: Flow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
