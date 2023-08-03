@@ -13,19 +13,19 @@ class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
     private let analytics: AnalyticsContainer
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
     private var cardPosition: Int?
     
     let hidesCallToAction: Bool
     
-    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics) {
                 
         self.pageModel = pageModel
         self.analytics = analytics
         self.hidesCallToAction = pageModel.isLastPage
                 
-        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext

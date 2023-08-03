@@ -1,5 +1,5 @@
 //
-//  MobileContentAnalytics.swift
+//  MobileContentRendererAnalytics.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/9/20.
@@ -9,13 +9,13 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAnalytics {
+class MobileContentRendererAnalytics {
     
-    private let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem]
+    private let analyticsSystems: [AnalyticsEvent.System: MobileContentRendererAnalyticsSystem]
         
-    required init(analytics: AnalyticsContainer, userAnalytics: UserAnalytics) {
+    init(analytics: AnalyticsContainer, userAnalytics: MobileContentRendererUserAnalytics) {
         
-        let analyticsSystems: [AnalyticsEvent.System: MobileContentAnalyticsSystem] = [
+        let analyticsSystems: [AnalyticsEvent.System: MobileContentRendererAnalyticsSystem] = [
             .appsflyer: analytics.appsFlyerAnalytics,
             .firebase: analytics.firebaseAnalytics,
             .user: userAnalytics

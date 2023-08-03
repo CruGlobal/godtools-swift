@@ -13,7 +13,7 @@ class TrainingPageViewModel: MobileContentViewModel {
     
     private let pageModel: TipPage
     
-    init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: TipPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.pageModel = pageModel
         

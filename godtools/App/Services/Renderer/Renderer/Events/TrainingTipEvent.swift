@@ -15,7 +15,7 @@ class TrainingTipEvent {
     let trainingTipId: String
     let tipModel: Tip
     
-    required init(renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip) {
+    init(renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip) {
         
         self.renderedPageContext = renderedPageContext
         self.trainingTipId = trainingTipId

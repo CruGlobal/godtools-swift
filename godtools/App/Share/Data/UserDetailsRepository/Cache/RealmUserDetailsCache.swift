@@ -31,8 +31,14 @@ class RealmUserDetailsCache {
     }
     
     func getAuthUserDetails() -> UserDetailsDataModel? {
-        guard let userId = authTokenRepository.getUserId() else { return nil }
-        guard let realmUserDetails = realmDatabase.openRealm().object(ofType: RealmUserDetails.self, forPrimaryKey: userId) else { return nil }
+        
+        guard let userId = authTokenRepository.getUserId() else {
+            return nil
+        }
+        
+        guard let realmUserDetails = realmDatabase.openRealm().object(ofType: RealmUserDetails.self, forPrimaryKey: userId) else {
+            return nil
+        }
         
         return UserDetailsDataModel(realmUserDetails: realmUserDetails)
     }

@@ -12,13 +12,13 @@ import GodToolsToolParser
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
     private let analytics: AnalyticsContainer
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
         
-    required init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
+    init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
         
         self.analytics = analytics
         self.mobileContentAnalytics = mobileContentAnalytics

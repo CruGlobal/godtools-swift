@@ -15,7 +15,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     private let pageModel: Page
     private let hidesBackgroundImage: Bool
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.hidesBackgroundImage = hidesBackgroundImage

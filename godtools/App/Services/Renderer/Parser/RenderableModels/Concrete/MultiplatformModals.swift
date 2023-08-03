@@ -13,7 +13,7 @@ class MultiplatformModals {
     
     let modals: [Modal]
     
-    required init(modals: [Modal]) {
+    init(modals: [Modal]) {
         
         self.modals = modals
     }

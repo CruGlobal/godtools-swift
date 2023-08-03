@@ -13,7 +13,7 @@ class MobileContentFlowViewModel: MobileContentViewModel {
     
     private let contentFlow: GodToolsToolParser.Flow
     
-    init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.contentFlow = contentFlow
         

@@ -1,5 +1,5 @@
 //
-//  MobileContentEventAnalyticsTracking.swift
+//  MobileContentRendererEventAnalyticsTracking.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/19/21.
@@ -9,14 +9,14 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentEventAnalyticsTracking {
+class MobileContentRendererEventAnalyticsTracking {
     
     private static let actionContentEvent: String = "content_event"
     private static let paramEventId: String = "event_id"
     
     private let firebaseAnalytics: FirebaseAnalytics
     
-    required init(firebaseAnalytics: FirebaseAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalytics) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }
@@ -24,7 +24,7 @@ class MobileContentEventAnalyticsTracking {
     func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageDomainModel) {
         
         let data: [String: Any] = [
-            MobileContentEventAnalyticsTracking.paramEventId: eventId.description()
+            MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()
         ]
         
         firebaseAnalytics.trackAction(
@@ -33,7 +33,7 @@ class MobileContentEventAnalyticsTracking {
             siteSubSection: "",
             contentLanguage: language.localeIdentifier,
             secondaryContentLanguage: nil,
-            actionName: MobileContentEventAnalyticsTracking.actionContentEvent,
+            actionName: MobileContentRendererEventAnalyticsTracking.actionContentEvent,
             data: data
         )
     }

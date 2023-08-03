@@ -1,5 +1,5 @@
 //
-//  UserAnalytics.swift
+//  MobileContentRendererUserAnalytics.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 2/6/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserAnalytics {
+class MobileContentRendererUserAnalytics {
     
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let maxAllowedLessonCompletionIncrementsPerSession: Int = 1
@@ -23,13 +23,13 @@ class UserAnalytics {
     }
 }
 
-extension UserAnalytics: MobileContentAnalyticsSystem {
+extension MobileContentRendererUserAnalytics: MobileContentRendererAnalyticsSystem {
     
     private static let lessonCompletionsActionPrefix = "lesson_completions"
     
     func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String : Any]?) {
 
-        guard action.hasPrefix(UserAnalytics.lessonCompletionsActionPrefix) else {
+        guard action.hasPrefix(MobileContentRendererUserAnalytics.lessonCompletionsActionPrefix) else {
             return
         }
         

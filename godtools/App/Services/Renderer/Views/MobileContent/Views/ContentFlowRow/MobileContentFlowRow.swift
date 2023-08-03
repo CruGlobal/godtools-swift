@@ -17,7 +17,7 @@ class MobileContentFlowRow: MobileContentView {
     
     private var flowItems: [MobileContentFlowRowItem] = Array()
     
-    required init(frame: CGRect, rowGravity: Gravity.Horizontal) {
+    init(frame: CGRect, rowGravity: Gravity.Horizontal) {
         
         self.rowGravity = rowGravity
         

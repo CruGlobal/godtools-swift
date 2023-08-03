@@ -1,5 +1,5 @@
 //
-//  MobileContentAnalyticsEvent.swift
+//  MobileContentRendererAnalyticsEvent.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/25/20.
@@ -9,18 +9,18 @@
 import Foundation
 import GodToolsToolParser
 
-class MobileContentAnalyticsEvent: NSObject {
+class MobileContentRendererAnalyticsEvent: NSObject {
     
     private let renderedPageContext: MobileContentRenderedPageContext
     
     private var delayTimer: Timer?
     private var triggered: Bool = false
     
-    private weak var mobileContentAnalytics: MobileContentAnalytics?
+    private weak var mobileContentAnalytics: MobileContentRendererAnalytics?
     
     let analyticsEvent: AnalyticsEvent
         
-    required init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentAnalytics, renderedPageContext: MobileContentRenderedPageContext) {
+    init(analyticsEvent: AnalyticsEvent, mobileContentAnalytics: MobileContentRendererAnalytics, renderedPageContext: MobileContentRenderedPageContext) {
         
         self.analyticsEvent = analyticsEvent
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -29,9 +29,9 @@ class MobileContentAnalyticsEvent: NSObject {
         super.init()
     }
     
-    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEvent], mobileContentAnalytics: MobileContentAnalytics, renderedPageContext: MobileContentRenderedPageContext) -> [MobileContentAnalyticsEvent] {
+    static func initAnalyticsEvents(analyticsEvents: [AnalyticsEvent], mobileContentAnalytics: MobileContentRendererAnalytics, renderedPageContext: MobileContentRenderedPageContext) -> [MobileContentRendererAnalyticsEvent] {
         
-        let events: [MobileContentAnalyticsEvent] = analyticsEvents.map({MobileContentAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, renderedPageContext: renderedPageContext)})
+        let events: [MobileContentRendererAnalyticsEvent] = analyticsEvents.map({MobileContentRendererAnalyticsEvent(analyticsEvent: $0, mobileContentAnalytics: mobileContentAnalytics, renderedPageContext: renderedPageContext)})
         
         return events
     }

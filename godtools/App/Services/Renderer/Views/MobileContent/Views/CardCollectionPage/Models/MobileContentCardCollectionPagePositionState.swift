@@ -12,7 +12,7 @@ class MobileContentCardCollectionPagePositionState: MobileContentViewPositionSta
     
     let currentCardId: String
     
-    required init(currentCardId: String) {
+    init(currentCardId: String) {
         
         self.currentCardId = currentCardId
     }

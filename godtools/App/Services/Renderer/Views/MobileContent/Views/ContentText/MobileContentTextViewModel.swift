@@ -19,7 +19,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
     let textColor: UIColor
     
-    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
         
         self.textModel = textModel
         self.fontService = fontService

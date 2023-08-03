@@ -23,7 +23,7 @@ class LessonPageView: MobileContentPageView {
     @IBOutlet weak private var topInsetTopConstraint: NSLayoutConstraint!
     @IBOutlet weak private var bottomInsetBottomConstraint: NSLayoutConstraint!
     
-    required init(viewModel: LessonPageViewModel, safeArea: UIEdgeInsets) {
+    init(viewModel: LessonPageViewModel, safeArea: UIEdgeInsets) {
         
         self.viewModel = viewModel
         self.safeArea = safeArea

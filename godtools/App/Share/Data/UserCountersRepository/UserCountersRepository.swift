@@ -25,7 +25,9 @@ class UserCountersRepository {
     
     func getUserCounter(id: String) -> UserCounterDomainModel? {
         
-        guard let userCounterDataModel = cache.getUserCounter(id: id) else { return nil }
+        guard let userCounterDataModel = cache.getUserCounter(id: id) else {
+            return nil
+        }
         
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }

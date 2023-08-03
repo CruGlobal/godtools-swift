@@ -14,7 +14,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     private let callToActionModel: CallToAction?
     private let fontService: FontService
         
-    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
         
         self.callToActionModel = callToActionModel
         self.fontService = fontService

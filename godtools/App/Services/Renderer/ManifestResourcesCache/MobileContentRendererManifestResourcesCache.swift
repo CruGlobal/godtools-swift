@@ -1,5 +1,5 @@
 //
-//  ManifestResourcesCache.swift
+//  MobileContentRendererManifestResourcesCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/18/20.
@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class ManifestResourcesCache {
+class MobileContentRendererManifestResourcesCache {
     
     private let resourcesFileCache: ResourcesSHA256FileCache
         

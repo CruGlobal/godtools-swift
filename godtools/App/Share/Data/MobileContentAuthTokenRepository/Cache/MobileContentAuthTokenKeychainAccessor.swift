@@ -151,7 +151,9 @@ extension MobileContentAuthTokenKeychainAccessor {
     
     private func saveAppleRefreshToken(_ appleRefreshToken: String?, userId: String) throws {
         
-        guard let appleRefreshToken = appleRefreshToken else { return }
+        guard let appleRefreshToken = appleRefreshToken else {
+            return
+        }
         
         let saveQuery = buildSaveQueryFromAppleRefreshToken(appleRefreshToken: appleRefreshToken, userId: userId)
         let saveStatus = SecItemAdd(saveQuery, nil)
@@ -370,7 +372,10 @@ extension MobileContentAuthTokenKeychainAccessor {
     
     private func decodeString(from result: AnyObject?) -> String? {
         
-        guard let resultData = result as? Data else { return nil }
+        guard let resultData = result as? Data else {
+            return nil
+        }
+        
         return String(data: resultData, encoding: .utf8)
     }
 }

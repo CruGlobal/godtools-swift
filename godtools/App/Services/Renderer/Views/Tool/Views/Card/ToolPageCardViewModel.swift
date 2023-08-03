@@ -16,7 +16,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     private let numberOfVisbleCards: Int
      
     let hidesHeaderTrainingTip: Bool
@@ -25,7 +25,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.analytics = analytics
@@ -48,7 +48,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
             hidesNextButton = true
         }
         
-        visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: cardModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
