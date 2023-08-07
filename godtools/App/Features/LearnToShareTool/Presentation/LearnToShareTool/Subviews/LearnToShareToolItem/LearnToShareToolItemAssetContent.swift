@@ -6,11 +6,11 @@
 //  Copyright © 2021 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 enum LearnToShareToolItemAssetContent {
     
     case animation(viewModel: AnimatedViewModel)
-    case image(image: UIImage)
+    case image(image: Image)
     case none
 }
