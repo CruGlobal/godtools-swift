@@ -21,7 +21,7 @@ class LocalizableStringsBundle {
                 
         let localizedString: String = bundle.localizedString(forKey: key, value: nil, table: nil)
         
-        if localizedString.isEmpty || localizedString.lowercased() == key.lowercased() {
+        if localizedString.isEmpty {
             return nil
         }
         
