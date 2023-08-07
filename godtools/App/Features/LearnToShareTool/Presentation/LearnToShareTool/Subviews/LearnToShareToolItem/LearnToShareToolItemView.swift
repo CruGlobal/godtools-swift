@@ -2,58 +2,68 @@
 //  LearnToShareToolItemView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/25/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/7/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class LearnToShareToolItemView: UICollectionViewCell {
+struct LearnToShareToolItemView: View {
     
-    static let nibName: String = "LearnToShareToolItemView"
-    static let reuseIdentifier: String = "LearnToShareToolItemReuseIdentifier"
+    private let contentHorizontalSpacing: CGFloat = 30
+    private let animationAspectRatio: CGSize = CGSize(width: 414, height: 304)
+    private let geometry: GeometryProxy
     
-    private var viewModel: LearnToShareToolItemViewModel?
+    @ObservedObject private var viewModel: LearnToShareToolItemViewModel
     
-    @IBOutlet weak private var featuredImageView: UIImageView!
-    @IBOutlet weak private var animatedView: AnimatedView!
-    @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var messageTextView: UITextView!
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        viewModel = nil
-        featuredImageView.isHidden = true
-        featuredImageView.image = nil
-        animatedView.isHidden = true
-        animatedView.destroyAnimation()
-    }
-    
-    func configure(viewModel: LearnToShareToolItemViewModel) {
+    init(viewModel: LearnToShareToolItemViewModel, geometry: GeometryProxy) {
         
         self.viewModel = viewModel
+        self.geometry = geometry
+    }
+    
+    var body: some View {
+        
+        VStack(spacing: 0) {
+            
+            switch viewModel.assetContent {
+            
+            case .animation(let animationViewModel):
                
-        switch viewModel.assetContent {
-            
-        case .animation(let animatedViewModel):
-            animatedView.configure(viewModel: animatedViewModel)
-            animatedView.isHidden = false
-        
-        case .image(let image):
-            featuredImageView.image = image
-            featuredImageView.isHidden = false
-            
-        case .none:
-            break
-        }
+                let animationWidth: CGFloat = geometry.size.width * 1
+                let animationHeight: CGFloat = (animationWidth / animationAspectRatio.width) * animationAspectRatio.height
                 
-        titleLabel.text = viewModel.title
-        titleLabel.setLineSpacing(lineSpacing: 1)
-        titleLabel.textAlignment = .center
-        
-        messageTextView.text = viewModel.message
-        messageTextView.setLineSpacing(lineSpacing: 5)
-        messageTextView.textAlignment = .center
+                AnimatedSwiftUIView(viewModel: animationViewModel, contentMode: .scaleAspectFit)
+                    .frame(width: animationWidth, height: animationHeight)
+            
+            case .image(let image):
+                
+                image
+                    .resizable()
+                    .scaledToFit()
+           
+            case .none:
+                
+                Rectangle()
+                    .fill(.clear)
+                    .frame(width: 150, height: 150)
+                    .border(.gray)
+            }
+            
+            Text(viewModel.title)
+                .foregroundColor(ColorPalette.gtBlue.color)
+                .font(FontLibrary.sfProTextSemibold.font(size: 27))
+                .multilineTextAlignment(.center)
+                .lineSpacing(1)
+                .padding(EdgeInsets(top: 30, leading: contentHorizontalSpacing, bottom: 0, trailing: contentHorizontalSpacing))
+            
+            Text(viewModel.message)
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .font(FontLibrary.sfProTextRegular.font(size: 17))
+                .multilineTextAlignment(.center)
+                .lineSpacing(5)
+                .padding(EdgeInsets(top: 18, leading: contentHorizontalSpacing, bottom: 0, trailing: contentHorizontalSpacing))
+        }
+        .frame(width: geometry.size.width)
     }
 }
