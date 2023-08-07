@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class LearnToShareToolFlow: Flow {
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -32,15 +36,8 @@ class LearnToShareToolFlow: Flow {
             titleColor: nil,
             isTranslucent: true
         )
-                
-        let viewModel = LearnToShareToolViewModel(
-            flowDelegate: self,
-            resource: resource,
-            getLearnToShareToolItemsUseCase: appDiContainer.domainLayer.getLearnToShareToolItemsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
-        )
-        let view = LearnToShareToolView(viewModel: viewModel)
-        navigationController.setViewControllers([view], animated: false)
+        
+        navigationController.setViewControllers([getLearnToShareToolView(resource: resource)], animated: false)
     }
     
     func navigate(step: FlowStep) {
@@ -56,5 +53,49 @@ class LearnToShareToolFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func getLearnToShareToolView(resource: ResourceModel) -> UIViewController {
+        
+        let viewModel = LearnToShareToolViewModel(
+            flowDelegate: self,
+            resource: resource,
+            getLearnToShareToolItemsUseCase: appDiContainer.domainLayer.getLearnToShareToolItemsUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = LearnToShareToolView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController<LearnToShareToolView>(rootView: view)
+        
+        let backButton: UIBarButtonItem = hostingView.addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navBack.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        viewModel.hidesBackButtonPublisher
+            .sink { (backButtonHidden: Bool) in
+                
+                if backButtonHidden {
+                    hostingView.removeBarButtonItem(item: backButton)
+                }
+                else {
+                    hostingView.addBarButtonItem(item: backButton, barPosition: .left)
+                }
+            }
+            .store(in: &cancellables)
+        
+        return hostingView
     }
 }
