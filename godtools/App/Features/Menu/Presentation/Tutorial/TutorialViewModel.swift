@@ -16,7 +16,6 @@ class TutorialViewModel: ObservableObject {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
-    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
@@ -48,15 +47,6 @@ class TutorialViewModel: ObservableObject {
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
-        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(
-            screenName: "tutorial",
-            siteSection: "tutorial",
-            siteSubsection: "",
-            continueButtonTappedActionName: "",
-            continueButtonTappedData: nil,
-            screenTrackIndexOffset: 1
-        )
-        
         getTutorialUseCase.getTutorialPublisher()
             .sink { [weak self] (tutorialDomainModel: TutorialDomainModel) in
                 
@@ -64,6 +54,18 @@ class TutorialViewModel: ObservableObject {
                 self?.currentPageDidChange(page: 0)
             }
             .store(in: &cancellables)
+    }
+    
+    private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {
+        return "tutorial-\(tutorialItemIndex + 1)"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "tutorial"
+    }
+    
+    private var analyticsSiteSubsection: String {
+        return ""
     }
     
     private var tutorialItems: [TutorialItemDomainModel] {
@@ -87,9 +89,9 @@ class TutorialViewModel: ObservableObject {
                 
         hidesBackButtonSubject.send(isOnFirstPage)
                                 
-        let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
-        let analyticsSiteSection = tutorialPagerAnalyticsModel.siteSection
-        let analyticsSiteSubSection = tutorialPagerAnalyticsModel.siteSubsection
+        let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
+        let analyticsSiteSection = analyticsSiteSection
+        let analyticsSiteSubSection = analyticsSiteSubsection
         
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
@@ -171,7 +173,7 @@ extension TutorialViewModel {
             
             tutorialVideoAnalytics.trackVideoPlayed(
                 videoId: videoId,
-                screenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: tutorialItemIndex),
+                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialItemIndex),
                 contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
                 secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
             )
