@@ -56,6 +56,7 @@ struct ToolDetailsMediaView: View {
                     videoId: videoId,
                     videoPlayerParameters: playerParameters,
                     configuration: nil,
+                    videoPlayingClosure: nil,
                     videoEndedClosure: nil
                 )
                 

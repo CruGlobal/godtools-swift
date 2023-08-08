@@ -20,11 +20,12 @@ struct VideoView: UIViewRepresentable {
     private let youtubePlayerView: YTPlayerView
     private let loadingView: UIView
     private let loadingActivityIndicator: UIActivityIndicatorView
+    private let videoPlayingClosure: (() -> Void)?
     private let videoEndedClosure: (() -> Void)?
     
     @Binding var playerState: VideoViewPlayerState
     
-    init(playerState: Binding<VideoViewPlayerState>, frameSize: CGSize, videoId: String, videoPlayerParameters: [String: Any]?, configuration: VideoViewConfiguration?, videoEndedClosure: (() -> Void)?) {
+    init(playerState: Binding<VideoViewPlayerState>, frameSize: CGSize, videoId: String, videoPlayerParameters: [String: Any]?, configuration: VideoViewConfiguration?, videoPlayingClosure: (() -> Void)?, videoEndedClosure: (() -> Void)?) {
         
         let bounds: CGRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
@@ -32,6 +33,7 @@ struct VideoView: UIViewRepresentable {
         self.videoId = videoId
         self.videoPlayerParameters = videoPlayerParameters
         self.configuration = configuration
+        self.videoPlayingClosure = videoPlayingClosure
         self.videoEndedClosure = videoEndedClosure
         
         containerView = UIView(frame: bounds)
@@ -135,6 +137,10 @@ extension VideoView {
         setLoadingViewHidden(hidden: true, animated: true)
         
         updatePlayerState()
+    }
+    
+    func videoPlaying() {
+        videoPlayingClosure?()
     }
     
     func videoEnded() {

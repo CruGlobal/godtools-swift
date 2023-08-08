@@ -14,15 +14,17 @@ struct TutorialItemView: View {
     private let videoAssetHorizontalSpacing: CGFloat = 30
     private let imageAssetHorizontalSpacing: CGFloat = 30
     private let geometry: GeometryProxy
+    private let videoPlayingClosure: (() -> Void)?
     
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
     @ObservedObject private var viewModel: TutorialItemViewModel
     
-    init(viewModel: TutorialItemViewModel, geometry: GeometryProxy) {
+    init(viewModel: TutorialItemViewModel, geometry: GeometryProxy, videoPlayingClosure: (() -> Void)?) {
         
         self.viewModel = viewModel
         self.geometry = geometry
+        self.videoPlayingClosure = videoPlayingClosure
     }
     
     var body: some View {
@@ -63,6 +65,7 @@ struct TutorialItemView: View {
                         videoId: youtubeVideoId,
                         videoPlayerParameters: viewModel.youtubePlayerParameters,
                         configuration: nil,
+                        videoPlayingClosure: videoPlayingClosure,
                         videoEndedClosure: nil
                     )
                     .frame(width: videoViewWidth, height: videoViewHeight)

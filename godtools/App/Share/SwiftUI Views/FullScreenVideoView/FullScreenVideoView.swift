@@ -28,7 +28,7 @@ struct FullScreenVideoView: View {
                 let videoWidth: CGFloat = geometry.size.width
                 let videoHeight: CGFloat = (videoWidth / aspectRatio.width) * aspectRatio.height
                 
-                VideoView(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: backgroundColor, videoBackgroundColor: backgroundColor, loadingViewBackgroundColor: backgroundColor, loadingActivityIndicatorColor: .white), videoEndedClosure: {
+                VideoView(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: backgroundColor, videoBackgroundColor: backgroundColor, loadingViewBackgroundColor: backgroundColor, loadingActivityIndicatorColor: .white), videoPlayingClosure: nil, videoEndedClosure: {
                     viewModel.videoEnded()
                 })
                 .frame(width: videoWidth, height: videoHeight)

@@ -36,8 +36,11 @@ struct TutorialView: View {
                         ForEach(0 ..< viewModel.numberOfPages, id: \.self) { index in
                             
                             TutorialItemView(
-                                viewModel: viewModel.tutorialPageWillAppear(index: index),
-                                geometry: geometry
+                                viewModel: viewModel.tutorialPageWillAppear(tutorialItemIndex: index),
+                                geometry: geometry,
+                                videoPlayingClosure: {
+                                    viewModel.tutorialVideoPlayTapped(tutorialItemIndex: index)
+                                }
                             )
                             .tag(index)
                             
