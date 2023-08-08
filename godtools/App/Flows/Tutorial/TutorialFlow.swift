@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 class TutorialFlow: Flow {
         
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -19,7 +23,7 @@ class TutorialFlow: Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
@@ -35,19 +39,11 @@ class TutorialFlow: Flow {
             titleColor: nil,
             isTranslucent: false
         )
-        
-        let viewModel = TutorialViewModel(
-            flowDelegate: self,
-            getTutorialUseCase: appDiContainer.domainLayer.getTutorialUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
+               
+        navigationController.setViewControllers(
+            [getTutorialView()],
+            animated: sharedNavigationController != nil
         )
-        let view = TutorialView(viewModel: viewModel)
-        
-        let animated: Bool = sharedNavigationController != nil
-        navigationController.setViewControllers([view], animated: animated)
     }
     
     func navigate(step: FlowStep) {
@@ -63,5 +59,54 @@ class TutorialFlow: Flow {
         default:
             break
         }
+    }
+}
+
+extension TutorialFlow {
+    
+    private func getTutorialView() -> UIViewController {
+        
+        let viewModel = TutorialViewModel(
+            flowDelegate: self,
+            getTutorialUseCase: appDiContainer.domainLayer.getTutorialUseCase(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics(),
+            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
+        )
+        
+        let view = TutorialView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController<TutorialView>(rootView: view)
+        
+        let backButton: UIBarButtonItem = hostingView.addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navBack.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.backTapped)
+        )
+        
+        _ = hostingView.addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.uiImage,
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped)
+        )
+        
+        viewModel.hidesBackButtonPublisher
+            .sink { (backButtonHidden: Bool) in
+                
+                if backButtonHidden {
+                    hostingView.removeBarButtonItem(item: backButton)
+                }
+                else {
+                    hostingView.addBarButtonItem(item: backButton, barPosition: .left)
+                }
+            }
+            .store(in: &cancellables)
+        
+        return hostingView
     }
 }
