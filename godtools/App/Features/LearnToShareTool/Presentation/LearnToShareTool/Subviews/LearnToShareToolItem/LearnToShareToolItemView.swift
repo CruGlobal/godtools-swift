@@ -51,8 +51,8 @@ struct LearnToShareToolItemView: View {
             }
             
             Text(viewModel.title)
-                .foregroundColor(ColorPalette.gtBlue.color)
-                .font(FontLibrary.sfProTextSemibold.font(size: 27))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .font(FontLibrary.sfProTextBold.font(size: 27))
                 .multilineTextAlignment(.center)
                 .lineSpacing(1)
                 .padding(EdgeInsets(top: 30, leading: contentHorizontalSpacing, bottom: 0, trailing: contentHorizontalSpacing))
