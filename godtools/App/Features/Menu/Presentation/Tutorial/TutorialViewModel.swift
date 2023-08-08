@@ -19,6 +19,7 @@ class TutorialViewModel: ObservableObject {
     private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
+    private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var tutorialDomainModel: TutorialDomainModel? = nil {
         didSet {
             numberOfPages = tutorialDomainModel?.tutorialItems.count ?? 0
@@ -136,10 +137,10 @@ class TutorialViewModel: ObservableObject {
 
 extension TutorialViewModel {
     
-    func tutorialPageWillAppear(index: Int) -> TutorialItemViewModel {
+    func tutorialPageWillAppear(tutorialItemIndex: Int) -> TutorialItemViewModel {
         
         return TutorialItemViewModel(
-            tutorialItem: tutorialItems[index]
+            tutorialItem: tutorialItems[tutorialItemIndex]
         )
     }
     
@@ -152,6 +153,29 @@ extension TutorialViewModel {
     
     @objc func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromTutorial)
+    }
+    
+    func tutorialVideoPlayTapped(tutorialItemIndex: Int) {
+          
+        let tutorialItem: TutorialItemDomainModel = tutorialItems[tutorialItemIndex]
+        
+        guard let videoId = tutorialItem.youTubeVideoId, !videoId.isEmpty else {
+            return
+        }
+        
+        let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(videoId)
+        
+        if !youTubeVideoTracked {
+            
+            trackedAnalyticsForYouTubeVideoIds.append(videoId)
+            
+            tutorialVideoAnalytics.trackVideoPlayed(
+                videoId: videoId,
+                screenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: tutorialItemIndex),
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            )
+        }
     }
     
     func continueTapped() {
