@@ -52,7 +52,7 @@ class GetToolDetailsMediaUseCase {
                     return self.getImageMediaElseEmpty(resource: resource)
                 }
                 
-                let resource: AnimatedResource = .filepathJsonFile(filepath: url.path)
+                let resource: AnimatedResource = .deviceFileManagerfilepathJsonFile(filepath: url.path)
                 let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
                 
                 return Just(.animation(viewModel: viewModel))

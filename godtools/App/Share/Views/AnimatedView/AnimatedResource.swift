@@ -10,6 +10,6 @@ import Foundation
 
 enum AnimatedResource {
     
-    case filepathJsonFile(filepath: String)
+    case deviceFileManagerfilepathJsonFile(filepath: String)
     case mainBundleJsonFile(filename: String)
 }
