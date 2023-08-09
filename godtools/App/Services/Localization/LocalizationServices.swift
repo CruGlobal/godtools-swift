@@ -27,9 +27,9 @@ class LocalizationServices {
             
             return stringForLocale
         }
-        else if let stringForSytem = getSystemLocalizedString(key: key, fileType: fileType) {
+        else if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
             
-            return stringForSytem
+            return stringForSystem
         }
         else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
             
@@ -43,9 +43,9 @@ class LocalizationServices {
     
     func stringForMainBundle(key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
-        if let stringForSytem = getSystemLocalizedString(key: key, fileType: fileType) {
+        if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
             
-            return stringForSytem
+            return stringForSystem
         }
         else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
             
