@@ -28,6 +28,17 @@ class LocaleLocalizableStringsBundle: LocalizableStringsBundle {
         }
     }
     
+    static func loadFromMainBundle(localeIdentifier: String, fileType: LocalizableStringsFileType) -> LocaleLocalizableStringsBundle? {
+        
+        let bundleLoader: LocalizableStringsBundleLoader = LocalizableStringsBundleLoader(localizableStringsFilesBundle: Bundle.main)
+        
+        return LocaleLocalizableStringsBundle(
+            localeIdentifier: localeIdentifier,
+            localeBundleLoader: bundleLoader,
+            fileType: fileType
+        )
+    }
+    
     override init(bundle: Bundle) {
         fatalError("init(bundle:) has not been implemented")
     }
