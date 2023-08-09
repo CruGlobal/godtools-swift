@@ -857,6 +857,10 @@
 		45E41B7A2A83D14600F886A2 /* LocalizableStringsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B752A83D14600F886A2 /* LocalizableStringsBundle.swift */; };
 		45E41B7B2A83D14600F886A2 /* LocaleLocalizableStringsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B762A83D14600F886A2 /* LocaleLocalizableStringsBundle.swift */; };
 		45E41B7C2A83D14600F886A2 /* LocalizationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B772A83D14600F886A2 /* LocalizationServices.swift */; };
+		45E41B7E2A83D48600F886A2 /* LocalizableStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B7D2A83D48600F886A2 /* LocalizableStringsRepository.swift */; };
+		45E41B812A83DFE700F886A2 /* LocalizationServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B802A83DFE700F886A2 /* LocalizationServicesTests.swift */; };
+		45E41B832A83E7DF00F886A2 /* LocalizableStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B822A83E7DF00F886A2 /* LocalizableStringsRepositoryTests.swift */; };
+		45E41B862A83E83A00F886A2 /* LocalizableStringsBundleLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E41B852A83E83A00F886A2 /* LocalizableStringsBundleLoaderTests.swift */; };
 		45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 45E7D4C32977430A008C7503 /* ZipArchive */; };
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
@@ -1936,6 +1940,10 @@
 		45E41B752A83D14600F886A2 /* LocalizableStringsBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStringsBundle.swift; sourceTree = "<group>"; };
 		45E41B762A83D14600F886A2 /* LocaleLocalizableStringsBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLocalizableStringsBundle.swift; sourceTree = "<group>"; };
 		45E41B772A83D14600F886A2 /* LocalizationServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationServices.swift; sourceTree = "<group>"; };
+		45E41B7D2A83D48600F886A2 /* LocalizableStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStringsRepository.swift; sourceTree = "<group>"; };
+		45E41B802A83DFE700F886A2 /* LocalizationServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationServicesTests.swift; sourceTree = "<group>"; };
+		45E41B822A83E7DF00F886A2 /* LocalizableStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStringsRepositoryTests.swift; sourceTree = "<group>"; };
+		45E41B852A83E83A00F886A2 /* LocalizableStringsBundleLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStringsBundleLoaderTests.swift; sourceTree = "<group>"; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
@@ -6472,6 +6480,7 @@
 			isa = PBXGroup;
 			children = (
 				45D7781429A56FB400F23D99 /* DeepLinkingService */,
+				45E41B7F2A83DFD900F886A2 /* LocalizationServices */,
 				45B54C5A2A2642220042CD0E /* RealmDatabase */,
 			);
 			path = Data;
@@ -6687,6 +6696,7 @@
 			isa = PBXGroup;
 			children = (
 				45E41B772A83D14600F886A2 /* LocalizationServices.swift */,
+				45E41B7D2A83D48600F886A2 /* LocalizableStringsRepository.swift */,
 				45E41B742A83D14600F886A2 /* Bundle */,
 				45E41B712A83D14600F886A2 /* BundleLoader */,
 			);
@@ -6709,6 +6719,24 @@
 				45E41B752A83D14600F886A2 /* LocalizableStringsBundle.swift */,
 			);
 			path = Bundle;
+			sourceTree = "<group>";
+		};
+		45E41B7F2A83DFD900F886A2 /* LocalizationServices */ = {
+			isa = PBXGroup;
+			children = (
+				45E41B802A83DFE700F886A2 /* LocalizationServicesTests.swift */,
+				45E41B822A83E7DF00F886A2 /* LocalizableStringsRepositoryTests.swift */,
+				45E41B842A83E83200F886A2 /* BundleLoader */,
+			);
+			path = LocalizationServices;
+			sourceTree = "<group>";
+		};
+		45E41B842A83E83200F886A2 /* BundleLoader */ = {
+			isa = PBXGroup;
+			children = (
+				45E41B852A83E83A00F886A2 /* LocalizableStringsBundleLoaderTests.swift */,
+			);
+			path = BundleLoader;
 			sourceTree = "<group>";
 		};
 		45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */ = {
@@ -9527,6 +9555,7 @@
 				45AE974827C97A9400C2CB33 /* Flow+MobileContentRenderableModel.swift in Sources */,
 				45052140295F3B9D0018ABD0 /* RealmUserCounter.swift in Sources */,
 				D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDecodable.swift in Sources */,
+				45E41B7E2A83D48600F886A2 /* LocalizableStringsRepository.swift in Sources */,
 				45558337269F2C7B00C3FF14 /* ToolPageCallToActionView.swift in Sources */,
 				45EB9B7829F16CF200CA74A8 /* UITextView+AttributedString.swift in Sources */,
 				45AD206C25938B4400A096A0 /* OnboardPrimaryButton.swift in Sources */,
@@ -9583,17 +9612,20 @@
 				45D7782529A570FC00F23D99 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */,
 				45D7781A29A570DA00F23D99 /* DeepLinkingManifestType.swift in Sources */,
 				450EE29C29A668E700524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */,
+				45E41B862A83E83A00F886A2 /* LocalizableStringsBundleLoaderTests.swift in Sources */,
 				450EE29B29A668E400524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
 				450EE29629A668D500524F64 /* ToolPathDeepLinkParser.swift in Sources */,
 				45EB9B8C29F16EAC00CA74A8 /* Collection+SafeLookupTests.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45D7781E29A570E700F23D99 /* ParsedDeepLinkType.swift in Sources */,
+				45E41B832A83E7DF00F886A2 /* LocalizableStringsRepositoryTests.swift in Sources */,
 				45D7782B29A570FC00F23D99 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */,
 				450EE29529A668D300524F64 /* ToolDeepLinkToolPath.swift in Sources */,
 				45D7781929A570D400F23D99 /* IncomingDeepLinkUrl.swift in Sources */,
 				45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45D7781F29A570E900F23D99 /* ToolDeepLink.swift in Sources */,
 				45D7782E29A5714C00F23D99 /* GodToolsDeepLinkingManifest.swift in Sources */,
+				45E41B812A83DFE700F886A2 /* LocalizationServicesTests.swift in Sources */,
 				45D7781C29A570DF00F23D99 /* DeepLinkingParserManifestType.swift in Sources */,
 				45D7781829A570D000F23D99 /* IncomingDeepLinkType.swift in Sources */,
 				45D7781D29A570E400F23D99 /* DeepLinkingParserManifestUrl.swift in Sources */,
