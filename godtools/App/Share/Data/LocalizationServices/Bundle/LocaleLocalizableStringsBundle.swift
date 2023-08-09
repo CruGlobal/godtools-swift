@@ -21,7 +21,7 @@ class LocaleLocalizableStringsBundle: LocalizableStringsBundle {
         self.localeIdentifier = localeIdentifier
                 
         if let localeBundle = localeBundleLoader.bundleForResource(resourceName: localeIdentifier, fileType: fileType) {
-            super.init(bundle: localeBundle.bundle)
+            super.init(bundle: localeBundle.bundle, fileType: fileType)
         }
         else {
             return nil
@@ -39,7 +39,7 @@ class LocaleLocalizableStringsBundle: LocalizableStringsBundle {
         )
     }
     
-    override init(bundle: Bundle) {
+    override init(bundle: Bundle, fileType: LocalizableStringsFileType) {
         fatalError("init(bundle:) has not been implemented")
     }
 }

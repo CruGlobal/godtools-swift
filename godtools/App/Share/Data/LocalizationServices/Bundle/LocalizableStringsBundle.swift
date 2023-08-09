@@ -13,10 +13,12 @@ class LocalizableStringsBundle {
     private static let uniqueValue: String = UUID().uuidString
     
     let bundle: Bundle
+    let fileType: LocalizableStringsFileType
     
-    init(bundle: Bundle) {
+    init(bundle: Bundle, fileType: LocalizableStringsFileType) {
         
         self.bundle = bundle
+        self.fileType = fileType
     }
     
     func stringForKey(key: String) -> String? {
