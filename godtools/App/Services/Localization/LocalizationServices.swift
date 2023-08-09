@@ -41,6 +41,26 @@ class LocalizationServices {
         }
     }
     
+    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
+        
+        if let localeIdentifier = localeIdentifier, !localeIdentifier.isEmpty, let stringForLocale = getLocaleLocalizedString(localeIdentifier: localeIdentifier, key: key, fileType: fileType) {
+            
+            return stringForLocale
+        }
+        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
+            
+            return englishString
+        }
+        else if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
+            
+            return stringForSystem
+        }
+        else {
+            
+            return key
+        }
+    }
+    
     func stringForMainBundle(key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
         if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
@@ -62,7 +82,7 @@ class LocalizationServices {
         return stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle(bundle: bundle), key: key, fileType: fileType)
     }
     
-    private func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String, fileType: LocalizableStringsFileType) -> String {
+    func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String, fileType: LocalizableStringsFileType) -> String {
         
         if let stringForBundle = stringsBundle.stringForKey(key: key) {
             
@@ -78,18 +98,6 @@ class LocalizationServices {
         }
         
         return key
-    }
-    
-    // TODO: Move into UseCase so tool_category_ logic doesn't live in data layer class. ~Levi
-    func toolCategoryStringForBundle(bundle: Bundle, category: String) -> String {
-        
-        return stringForBundle(bundle: bundle, key: "tool_category_\(category)", fileType: .strings)
-    }
-    
-    // TODO: Move into UseCase so tool_category_ logic doesn't live in data layer class. ~Levi
-    func toolCategoryStringForLocale(localeIdentifier: String?, category: String) -> String {
-        
-        return stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "tool_category_\(category)", fileType: .strings)
     }
 }
 
