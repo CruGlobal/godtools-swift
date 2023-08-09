@@ -9,183 +9,76 @@
 import Foundation
 
 class LocalizationServices {
-    
-    private var englishLocalizableStrings: LocalizableStringsBundle?
-    private var lastLocaleLocalizableStrings: LocaleLocalizableStringsBundle?
-    private var systemLocalizableStrings: LocaleLocalizableStringsBundle?
+        
+    private let stringsRepositories: [LocalizableStringsFileType: LocalizableStringsRepository]
     
     let bundleLoader: LocalizableStringsBundleLoader
     
     init(localizableStringsFilesBundle: Bundle?) {
         
         self.bundleLoader = LocalizableStringsBundleLoader(localizableStringsFilesBundle: localizableStringsFilesBundle)
+        
+        stringsRepositories = [
+            .strings: LocalizableStringsRepository(localizableStringsBundleLoader: bundleLoader, fileType: .strings),
+            .stringsdict: LocalizableStringsRepository(localizableStringsBundleLoader: bundleLoader, fileType: .stringsdict)
+        ]
     }
     
-    func stringForLocaleElseSystem(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
+    func stringForEnglish(key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
-        if let localeIdentifier = localeIdentifier, !localeIdentifier.isEmpty, let stringForLocale = getLocaleLocalizedString(localeIdentifier: localeIdentifier, key: key, fileType: fileType) {
-            
-            return stringForLocale
-        }
-        else if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
-            
-            return stringForSystem
-        }
-        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
-            
-            return englishString
-        }
-        else {
-            
-            return key
-        }
+        return stringsRepositories[fileType]?.stringForEnglish(key: key) ?? key
+    }
+    
+    func stringForSystemElseEnglish(key: String, fileType: LocalizableStringsFileType = .strings) -> String {
+        
+        return stringsRepositories[fileType]?.stringForSystemElseEnglish(key: key) ?? key
     }
     
     func stringForLocaleElseEnglish(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
-        
-        if let localeIdentifier = localeIdentifier, !localeIdentifier.isEmpty, let stringForLocale = getLocaleLocalizedString(localeIdentifier: localeIdentifier, key: key, fileType: fileType) {
-            
-            return stringForLocale
-        }
-        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
-            
-            return englishString
-        }
-        else if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
-            
-            return stringForSystem
-        }
-        else {
-            
-            return key
-        }
+
+        return stringsRepositories[fileType]?.stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: key) ?? key
     }
     
+    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
+        
+        return stringsRepositories[fileType]?.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: key) ?? key
+    }
+    
+    @available(*, deprecated) // TODO: Eventually want to remove this method and use above methods. ~Levi
     func stringForMainBundle(key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
-        if let stringForSystem = getSystemLocalizedString(key: key, fileType: fileType) {
+        let stringsRepository: LocalizableStringsRepository? = stringsRepositories[fileType]
+        
+        if let stringForSystem = stringsRepository?.stringForSystem(key: key) {
             
             return stringForSystem
         }
-        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
+        else if let englishString = stringsRepository?.stringForEnglish(key: key) {
             
             return englishString
         }
-        else {
-            
-            return key
-        }
+        
+        return key
     }
     
+    @available(*, deprecated) // TODO: Eventually want to remove this method and use above methods. ~Levi
     func stringForBundle(bundle: Bundle, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
-        return stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle(bundle: bundle), key: key, fileType: fileType)
+        return stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle(bundle: bundle, fileType: fileType), key: key)
     }
     
-    func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String, fileType: LocalizableStringsFileType) -> String {
+    @available(*, deprecated) // TODO: Eventually want to remove this method and use above methods. ~Levi
+    private func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String) -> String {
         
         if let stringForBundle = stringsBundle.stringForKey(key: key) {
             
             return stringForBundle
         }
-        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
+        else if let englishString = stringsRepositories[stringsBundle.fileType]?.stringForEnglish(key: key) {
             
             return englishString
         }
-        else if let mainBundleString = LocalizableStringsBundle(bundle: Bundle.main).stringForKey(key: key) {
-            
-            return mainBundleString
-        }
         
         return key
-    }
-}
-
-// MARK: - Locale Identifier Localization
-
-extension LocalizationServices {
-    
-    func getLocaleStringsBundle(localeIdentifier: String, fileType: LocalizableStringsFileType) -> LocalizableStringsBundle? {
-                
-        if let lastLocaleLocalizableStrings = lastLocaleLocalizableStrings, lastLocaleLocalizableStrings.localeIdentifier.lowercased() == localeIdentifier.lowercased() {
-            
-            return lastLocaleLocalizableStrings
-        }
-        else {
-            
-            let localeLocalizableStringsBundle = LocaleLocalizableStringsBundle(localeIdentifier: localeIdentifier, localeBundleLoader: bundleLoader, fileType: fileType)
-            lastLocaleLocalizableStrings = localeLocalizableStringsBundle
-            
-            return localeLocalizableStringsBundle
-        }
-    }
-    
-    func getLocaleLocalizedString(localeIdentifier: String, key: String, fileType: LocalizableStringsFileType) -> String? {
-        
-        return getLocaleStringsBundle(localeIdentifier: localeIdentifier, fileType: fileType)?.stringForKey(key: key)
-    }
-}
-
-// MARK: - System Preferred Localization
-
-extension LocalizationServices {
-    
-    private func getSystemLocaleIdentifier() -> String {
-        
-        let localizationFilesBundle: Bundle = bundleLoader.localizableStringsFilesBundle
-        let preferredLocalizations: [String] = Bundle.preferredLocalizations(from: localizationFilesBundle.localizations, forPreferences: Locale.preferredLanguages)
-        
-        return preferredLocalizations.first ?? Locale.current.identifier
-    }
-    
-    func getSystemLocalizableStringsBundle(fileType: LocalizableStringsFileType) -> LocalizableStringsBundle? {
-        
-        let systemLocaleIdentifier: String = getSystemLocaleIdentifier()
-        let systemLocaleChanged: Bool = systemLocaleIdentifier != systemLocalizableStrings?.localeIdentifier
-        
-        if systemLocalizableStrings == nil || systemLocaleChanged {
-            
-            if let newSystemLocalizableStrings = LocaleLocalizableStringsBundle(localeIdentifier: systemLocaleIdentifier, localeBundleLoader: bundleLoader, fileType: fileType) {
-                systemLocalizableStrings = newSystemLocalizableStrings
-            }
-            else if let currentSystemLocalizableStrings = systemLocalizableStrings, currentSystemLocalizableStrings.localeIdentifier != "en" {
-                systemLocalizableStrings = LocaleLocalizableStringsBundle(localeIdentifier: "en", localeBundleLoader: bundleLoader, fileType: fileType)
-            }
-        }
-        
-        return systemLocalizableStrings
-    }
-    
-    func getSystemLocalizedString(key: String, fileType: LocalizableStringsFileType) -> String? {
-        
-        return getSystemLocalizableStringsBundle(fileType: fileType)?.stringForKey(key: key)
-    }
-}
-
-// MARK: - English
-
-extension LocalizationServices {
-    
-    func getEnglishLocalizableStringsBundle(fileType: LocalizableStringsFileType) -> LocalizableStringsBundle? {
-        
-        let localizableStingsBundle: LocalizableStringsBundle?
-        
-        if let englishLocalizableStrings = englishLocalizableStrings {
-            localizableStingsBundle = englishLocalizableStrings
-        }
-        else if let englishBundle = bundleLoader.getEnglishBundle(fileType: fileType) {
-            localizableStingsBundle = englishBundle
-            englishLocalizableStrings = englishBundle
-        }
-        else {
-            localizableStingsBundle = nil
-        }
-            
-        return localizableStingsBundle
-    }
-    
-    func getEnglishLocalizedString(key: String, fileType: LocalizableStringsFileType) -> String? {
-        
-        return getEnglishLocalizableStringsBundle(fileType: fileType)?.stringForKey(key: key)
     }
 }
