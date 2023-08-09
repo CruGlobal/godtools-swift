@@ -59,26 +59,22 @@ class LocalizationServices {
     
     func stringForBundle(bundle: Bundle, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
         
-        var bundleOrder: [Bundle] = [bundle]
-        
-        if let englishBundle = bundleLoader.getEnglishBundle(fileType: fileType)?.bundle {
-            bundleOrder.append(englishBundle)
-        }
-        
-        bundleOrder.append(Bundle.main)
-        
-        return stringForBundleOrder(bundleOrder: bundleOrder, key: key)
+        return stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle(bundle: bundle), key: key, fileType: fileType)
     }
     
-    func stringForBundleOrder(bundleOrder: [Bundle], key: String) -> String {
+    private func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String, fileType: LocalizableStringsFileType) -> String {
         
-        for bundle in bundleOrder {
+        if let stringForBundle = stringsBundle.stringForKey(key: key) {
             
-            let localizedString: String = bundle.localizedString(forKey: key, value: nil, table: nil)
+            return stringForBundle
+        }
+        else if let englishString = getEnglishLocalizedString(key: key, fileType: fileType) {
             
-            if !localizedString.isEmpty && localizedString != key {
-                return localizedString
-            }
+            return englishString
+        }
+        else if let mainBundleString = LocalizableStringsBundle(bundle: Bundle.main).stringForKey(key: key) {
+            
+            return mainBundleString
         }
         
         return key
