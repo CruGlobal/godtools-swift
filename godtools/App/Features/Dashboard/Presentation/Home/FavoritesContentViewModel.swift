@@ -143,7 +143,7 @@ extension FavoritesContentViewModel {
     
     private func setupTitle(with language: LanguageDomainModel?) {
 
-        pageTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.pageTitle")
+        pageTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.pageTitle")
     }
 }
 

@@ -44,12 +44,12 @@ class LessonEvaluationViewModel {
         
         let primaryLocaleIdentifier: String? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
         
-        title = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.title")
-        wasThisHelpful = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.wasThisHelpful")
-        yesButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "yes")
-        noButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "no")
-        shareFaith = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
-        sendButtonTitle = localization.stringForLocaleElseSystem(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
+        title = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.title")
+        wasThisHelpful = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.wasThisHelpful")
+        yesButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "yes")
+        noButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "no")
+        shareFaith = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
+        sendButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
     }
 }
 

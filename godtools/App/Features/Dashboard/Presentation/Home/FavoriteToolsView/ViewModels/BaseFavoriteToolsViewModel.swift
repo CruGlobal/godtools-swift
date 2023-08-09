@@ -74,7 +74,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     
     func setText(for language: LanguageDomainModel?) {
         
-        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.title")
+        sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.title")
     }
 }
 

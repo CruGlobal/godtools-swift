@@ -91,6 +91,6 @@ extension FeaturedLessonCardsViewModel {
     
     private func setupTitle(with language: LanguageDomainModel?) {
         
-        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteLessons.title")
+        sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteLessons.title")
     }
 }

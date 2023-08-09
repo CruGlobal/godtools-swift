@@ -118,7 +118,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -130,7 +130,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {

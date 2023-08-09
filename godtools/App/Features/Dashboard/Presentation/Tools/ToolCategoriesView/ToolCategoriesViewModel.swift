@@ -95,6 +95,6 @@ extension ToolCategoriesViewModel {
     
     private func setTitleText(with language: LanguageDomainModel?) {
         
-        categoryTitleText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "allTools.categories.title")
+        categoryTitleText = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "allTools.categories.title")
     }
 }
