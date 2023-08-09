@@ -27,9 +27,4 @@ class LocalizableStringsBundle {
         
         return localizedString
     }
-    
-    func stringForKeyElseKey(key: String) -> String {
-        
-        return stringForKey(key: key) ?? key
-    }
 }
