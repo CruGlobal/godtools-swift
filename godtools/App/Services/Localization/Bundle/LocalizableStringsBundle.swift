@@ -10,6 +10,8 @@ import Foundation
 
 class LocalizableStringsBundle {
     
+    private static let uniqueValue: String = UUID().uuidString
+    
     let bundle: Bundle
     
     init(bundle: Bundle) {
@@ -19,9 +21,13 @@ class LocalizableStringsBundle {
     
     func stringForKey(key: String) -> String? {
                 
-        let localizedString: String = bundle.localizedString(forKey: key, value: nil, table: nil)
+        let localizedString: String = bundle.localizedString(forKey: key, value: LocalizableStringsBundle.uniqueValue, table: nil)
         
-        if localizedString.isEmpty {
+        guard localizedString != LocalizableStringsBundle.uniqueValue else {
+            return nil
+        }
+        
+        guard !localizedString.isEmpty else {
             return nil
         }
         
