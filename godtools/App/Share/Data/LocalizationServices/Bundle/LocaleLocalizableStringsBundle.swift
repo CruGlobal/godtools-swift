@@ -21,14 +21,25 @@ class LocaleLocalizableStringsBundle: LocalizableStringsBundle {
         self.localeIdentifier = localeIdentifier
                 
         if let localeBundle = localeBundleLoader.bundleForResource(resourceName: localeIdentifier, fileType: fileType) {
-            super.init(bundle: localeBundle.bundle)
+            super.init(bundle: localeBundle.bundle, fileType: fileType)
         }
         else {
             return nil
         }
     }
     
-    override init(bundle: Bundle) {
+    static func loadFromMainBundle(localeIdentifier: String, fileType: LocalizableStringsFileType) -> LocaleLocalizableStringsBundle? {
+        
+        let bundleLoader: LocalizableStringsBundleLoader = LocalizableStringsBundleLoader(localizableStringsFilesBundle: Bundle.main)
+        
+        return LocaleLocalizableStringsBundle(
+            localeIdentifier: localeIdentifier,
+            localeBundleLoader: bundleLoader,
+            fileType: fileType
+        )
+    }
+    
+    override init(bundle: Bundle, fileType: LocalizableStringsFileType) {
         fatalError("init(bundle:) has not been implemented")
     }
 }

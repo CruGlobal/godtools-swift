@@ -91,8 +91,8 @@ extension ToolSpotlightViewModel {
     }
     
     private func setTitleText(with language: LanguageDomainModel?) {
-        spotlightTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "allTools.spotlight.title")
-        spotlightSubtitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "allTools.spotlight.description")
+        spotlightTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "allTools.spotlight.title")
+        spotlightSubtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "allTools.spotlight.description")
     }
 }
 

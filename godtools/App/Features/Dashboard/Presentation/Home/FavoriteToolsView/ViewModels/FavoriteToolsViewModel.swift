@@ -44,10 +44,10 @@ class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     
     override func setText(for language: LanguageDomainModel?) {
         
-        viewAllButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.viewAll") + " >"
-        noFavoriteToolsTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.title")
-        noFavoriteToolsDescription = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.description")
-        noFavoriteToolsButtonText = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.button")
+        viewAllButtonText = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.favoriteTools.viewAll") + " >"
+        noFavoriteToolsTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.title")
+        noFavoriteToolsDescription = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.description")
+        noFavoriteToolsButtonText = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.noTools.button")
         
         super.setText(for: language)
     }

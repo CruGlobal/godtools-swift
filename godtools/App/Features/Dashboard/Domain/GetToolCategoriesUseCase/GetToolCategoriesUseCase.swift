@@ -45,21 +45,13 @@ class GetToolCategoriesUseCase {
     
     private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?) -> [ToolCategoryDomainModel] {
         
-        let bundle: Bundle
-        if let localeId = language?.localeIdentifier {
-            
-            bundle = localizationServices.bundleLoader.bundleForResource(resourceName: localeId, fileType: .strings)?.bundle ?? Bundle.main
-            
-        } else {
-            
-            bundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
-        }
+        let allToolsCategoryTranslation: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: language?.localeIdentifier, key: "find_tools")
         
-        let allToolsCategoryTranslation = localizationServices.stringForBundle(bundle: bundle, key: "find_tools")
         let allToolsCategory = ToolCategoryDomainModel(type: .allTools, translatedName: allToolsCategoryTranslation)
         
         let categories: [ToolCategoryDomainModel] = ids.map { categoryId in
-            let translatedName = localizationServices.toolCategoryStringForBundle(bundle: bundle, category: categoryId)
+            
+            let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: language?.localeIdentifier, key: "tool_category_\(categoryId)")
             
             return ToolCategoryDomainModel(type: .category(id: categoryId), translatedName: translatedName)
         }

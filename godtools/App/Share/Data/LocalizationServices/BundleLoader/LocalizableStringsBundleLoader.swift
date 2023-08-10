@@ -68,8 +68,7 @@ class LocalizableStringsBundleLoader {
             return nil
         }
         
-     
-        let localizableStringsBundle = LocalizableStringsBundle(bundle: bundle)
+        let localizableStringsBundle = LocalizableStringsBundle(bundle: bundle, fileType: fileType)
         
         return localizableStringsBundle
     }
