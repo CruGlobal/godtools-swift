@@ -19,9 +19,16 @@ class UserDetailsRepository {
         self.cache = cache
     }
     
-    func getUserDetailsChanged() -> AnyPublisher<Void, Never> {
+    func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
-        return cache.getUserDetailsChanged()
+        return cache.getAuthUserDetailsChangedPublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
+        
+        return cache.getUserDetailsChangedPublisher(id: id)
+            .eraseToAnyPublisher()
     }
     
     func getCachedAuthUserDetails() -> UserDetailsDataModel? {
@@ -29,20 +36,22 @@ class UserDetailsRepository {
         return cache.getAuthUserDetails()
     }
     
-    func fetchRemoteUserDetails() -> AnyPublisher<UserDetailsDataModel, Error> {
+    func getAuthUserDetailsFromRemotePublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
         
         return api.fetchUserDetailsPublisher()
-            .flatMap { (userDetails: UserDetailsDataModel) in
+            .flatMap { (usersMeCodable: MobileContentApiUsersMeCodable) in
                 
-                return self.cache.syncUserDetails(userDetails)
+                let userDetails = UserDetailsDataModel(userDetailsType: usersMeCodable)
+                
+                return self.cache.storeUserDetailsPublisher(userDetails: userDetails)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func deleteAuthorizedUserDetails() -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher() -> AnyPublisher<Void, Error> {
         
-        return api.deleteAuthorizedUserDetailsPublisher()
+        return api.deleteAuthUserDetailsPublisher()
             .eraseToAnyPublisher()
     }
 }

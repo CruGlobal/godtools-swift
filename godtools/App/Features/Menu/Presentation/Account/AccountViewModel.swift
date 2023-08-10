@@ -17,7 +17,6 @@ class AccountViewModel: ObservableObject {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
-    private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let analytics: AnalyticsContainer
@@ -41,14 +40,13 @@ class AccountViewModel: ObservableObject {
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
-        self.getUserAccountProfileNameUseCase = getUserAccountProfileNameUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.analytics = analytics
@@ -70,19 +68,13 @@ class AccountViewModel: ObservableObject {
             globalActivityTitle = localizedGlobalActivityTitle
         }
                 
-        getUserAccountProfileNameUseCase.getProfileNamePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (profileNameDomainModel: AccountProfileNameDomainModel) in
-                
-                self?.isLoadingProfile = false
-                self?.profileName = profileNameDomainModel.value
-            }
-            .store(in: &cancellables)
-        
         getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] userDetails in
+            .sink { [weak self] (userDetails: UserAccountDetailsDomainModel) in
                 
+                self?.isLoadingProfile = false
+                
+                self?.profileName = userDetails.name
                 self?.joinedOnText = userDetails.joinedOnString
             }
             .store(in: &cancellables)

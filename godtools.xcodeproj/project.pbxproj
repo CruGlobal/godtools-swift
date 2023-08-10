@@ -426,6 +426,11 @@
 		458F955B2A65C36F00DDE624 /* BaseAnalyticsAttributesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F955A2A65C36F00DDE624 /* BaseAnalyticsAttributesModel.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		4592A0EA29D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592A0E929D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift */; };
+		4595E0DB2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */; };
+		4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */; };
+		4595E0DF2A8529C800D88DAE /* UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */; };
+		4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0E22A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift */; };
+		4595E0E52A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0E42A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift */; };
 		459602E328400DBB00C66387 /* DownloadToolTranslationsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */; };
 		4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4597101529CDE02400C47040 /* View+CornerRadius.swift */; };
 		459A33FB29BFE46B00C49308 /* OnboardingQuickStartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A33FA29BFE46B00C49308 /* OnboardingQuickStartItemView.swift */; };
@@ -929,8 +934,6 @@
 		45F7164F290A12D70019B715 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715FB290A12D70019B715 /* AccountViewModel.swift */; };
 		45F71664290A12D70019B715 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71612290A12D70019B715 /* AccountView.swift */; };
 		45F71665290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */; };
-		45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */; };
-		45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */; };
 		45F71669290A12D70019B715 /* AuthenticateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */; };
 		45F7166A290A12D70019B715 /* LogOutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */; };
 		45F71676290A13530019B715 /* EmailSignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7166C290A13530019B715 /* EmailSignUpService.swift */; };
@@ -998,8 +1001,6 @@
 		D409F2B3292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B2292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift */; };
 		D409F2B7292C014700D9D2FE /* RealmUserDetailsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B6292C014700D9D2FE /* RealmUserDetailsCache.swift */; };
 		D409F2BA292C017C00D9D2FE /* RealmUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */; };
-		D409F2BD292C023500D9D2FE /* UserDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2BC292C023500D9D2FE /* UserDetailsDataModel.swift */; };
-		D409F2C0292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2BF292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift */; };
 		D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */; };
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D40EE3AC281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */; };
@@ -1545,6 +1546,11 @@
 		458F955A2A65C36F00DDE624 /* BaseAnalyticsAttributesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAnalyticsAttributesModel.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		4592A0E929D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialPrimaryButton.swift; sourceTree = "<group>"; };
+		4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiUsersMeCodable.swift; sourceTree = "<group>"; };
+		4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModel.swift; sourceTree = "<group>"; };
+		4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModelType.swift; sourceTree = "<group>"; };
+		4595E0E22A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift"; sourceTree = "<group>"; };
+		4595E0E42A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmUserDetails+UserDetailsDataModelType.swift"; sourceTree = "<group>"; };
 		459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolTranslationsFlow.swift; sourceTree = "<group>"; };
 		4597101529CDE02400C47040 /* View+CornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		459A33FA29BFE46B00C49308 /* OnboardingQuickStartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartItemView.swift; sourceTree = "<group>"; };
@@ -2010,8 +2016,6 @@
 		45F715FB290A12D70019B715 /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45F71612290A12D70019B715 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserIsAuthenticatedUseCase.swift; sourceTree = "<group>"; };
-		45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserAccountProfileNameUseCase.swift; sourceTree = "<group>"; };
-		45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProfileNameDomainModel.swift; sourceTree = "<group>"; };
 		45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserUseCase.swift; sourceTree = "<group>"; };
 		45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutUserUseCase.swift; sourceTree = "<group>"; };
 		45F7166C290A13530019B715 /* EmailSignUpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpService.swift; sourceTree = "<group>"; };
@@ -2136,8 +2140,6 @@
 		D409F2B2292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsUseCase.swift; sourceTree = "<group>"; };
 		D409F2B6292C014700D9D2FE /* RealmUserDetailsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetailsCache.swift; sourceTree = "<group>"; };
 		D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetails.swift; sourceTree = "<group>"; };
-		D409F2BC292C023500D9D2FE /* UserDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModel.swift; sourceTree = "<group>"; };
-		D409F2BF292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetailsCacheSync.swift; sourceTree = "<group>"; };
 		D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDetailsDomainModel.swift; sourceTree = "<group>"; };
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D40EE3AB281C69F800EAD1FE /* FavoritingToolBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerViewModel.swift; sourceTree = "<group>"; };
@@ -7140,7 +7142,6 @@
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				45C2AF4B2A818F15004958AB /* GetTutorialUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
-				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
 				D455F3FC29805BD9009D5F93 /* GetUserActivityBadgeUseCase */,
 				458CFEA329D4E172007B423C /* GetUserActivityStatsUseCase */,
 				D455F3EB29773007009D5F93 /* GetUserActivityUseCase */,
@@ -7157,15 +7158,6 @@
 				4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */,
 			);
 			path = GetUserIsAuthenticatedUseCase;
-			sourceTree = "<group>";
-		};
-		45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */,
-				45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */,
-			);
-			path = GetUserAccountProfileNameUseCase;
 			sourceTree = "<group>";
 		};
 		45F7161A290A12D70019B715 /* AuthenticateUserUseCase */ = {
@@ -7553,6 +7545,8 @@
 			isa = PBXGroup;
 			children = (
 				D409F2B0292BEC3300D9D2FE /* UserDetailsRepository.swift */,
+				4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */,
+				4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */,
 				D409F2AE2928111300D9D2FE /* Api */,
 				D409F2B5292C012D00D9D2FE /* Cache */,
 			);
@@ -7573,7 +7567,6 @@
 			children = (
 				D409F2B6292C014700D9D2FE /* RealmUserDetailsCache.swift */,
 				D409F2B8292C016300D9D2FE /* Models */,
-				D409F2BE292C0D5A00D9D2FE /* Sync */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -7582,6 +7575,7 @@
 			isa = PBXGroup;
 			children = (
 				D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */,
+				4595E0E42A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -7589,17 +7583,10 @@
 		D409F2BB292C022800D9D2FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D409F2BC292C023500D9D2FE /* UserDetailsDataModel.swift */,
+				4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */,
+				4595E0E22A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		D409F2BE292C0D5A00D9D2FE /* Sync */ = {
-			isa = PBXGroup;
-			children = (
-				D409F2BF292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift */,
-			);
-			path = Sync;
 			sourceTree = "<group>";
 		};
 		D409F2C4292EA25300D9D2FE /* UserAuthentication */ = {
@@ -8845,7 +8832,6 @@
 				45BDA6222954FE3E007E259B /* RealmCategoryArticle.swift in Sources */,
 				45F71677290A13530019B715 /* RealmEmailSignUpsCache.swift in Sources */,
 				D44F3AB6283BC5030008390D /* ToolCategoryButtonState.swift in Sources */,
-				45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */,
 				45BDA6452954FF08007E259B /* HTMLDocument+ResourceUrls.swift in Sources */,
 				451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */,
 				45EB9B8029F16CF200CA74A8 /* Locale+Extensions.swift in Sources */,
@@ -8879,7 +8865,6 @@
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
 				45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
-				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */,
 				453F84C52A029FC00005101E /* RealmArticleJcrContent.swift in Sources */,
@@ -9073,7 +9058,6 @@
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
-				D409F2BD292C023500D9D2FE /* UserDetailsDataModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
 				458CFE8229D4E0B9007B423C /* ShareArticleViewModelType.swift in Sources */,
@@ -9175,6 +9159,7 @@
 				D409F2B1292BEC3300D9D2FE /* UserDetailsRepository.swift in Sources */,
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
 				45F71631290A12D70019B715 /* MailViewModel.swift in Sources */,
+				4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */,
 				D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */,
@@ -9207,6 +9192,7 @@
 				45558323269F2C7B00C3FF14 /* ToolPageViewModel.swift in Sources */,
 				45558321269F2C7B00C3FF14 /* ToolPagePositions.swift in Sources */,
 				45677780287DB21F0044AEB2 /* ToolTrainingTipView.swift in Sources */,
+				4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */,
 				45AD1F6625938A9800A096A0 /* ToolTrainingTipsOnboardingViewsCacheType.swift in Sources */,
 				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
@@ -9348,6 +9334,7 @@
 				455582E4269F2C1000C3FF14 /* TrainingTipViewModel.swift in Sources */,
 				453AC11728F4A10400291791 /* FollowUpModelType.swift in Sources */,
 				458CFE8829D4E0B9007B423C /* ArticleCellViewModel.swift in Sources */,
+				4595E0DF2A8529C800D88DAE /* UserDetailsDataModelType.swift in Sources */,
 				451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */,
 				4555833A269F2C7B00C3FF14 /* ToolPageHeroView.swift in Sources */,
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,
@@ -9428,6 +9415,7 @@
 				4515D4082A2E73AB0001545D /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				D4F1DE8D2967538A00A2F674 /* IncrementUserCounterUseCase.swift in Sources */,
 				453AC11228F4A10400291791 /* FailedFollowUpsCache.swift in Sources */,
+				4595E0DB2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift in Sources */,
 				4581D98B297AE09900D056D6 /* RealmGlobalAnalytics.swift in Sources */,
 				45EB9B7F29F16CF200CA74A8 /* Collection+SafeLookup.swift in Sources */,
 				45AD1BC825938A4F00A096A0 /* UIViewController+AppNavBackButton.swift in Sources */,
@@ -9461,7 +9449,6 @@
 				45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */,
 				45C2AF4F2A818F15004958AB /* TutorialDomainModel.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
-				D409F2C0292C0D7200D9D2FE /* RealmUserDetailsCacheSync.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
@@ -9537,6 +9524,7 @@
 				45F3D39229A4FC9A00446F69 /* OnboardingTutorialReadyForEveryConversationViewModel.swift in Sources */,
 				45C2AF592A8192BB004958AB /* TutorialItemView.swift in Sources */,
 				45CE7FD42926A0940056168A /* AccountSectionsView.swift in Sources */,
+				4595E0E52A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift in Sources */,
 				D168FDCA26F922650083D578 /* TutorialPagerViewModelType.swift in Sources */,
 				45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */,
 				45EB9B7429F16CF200CA74A8 /* UIColor+HexColor.swift in Sources */,
