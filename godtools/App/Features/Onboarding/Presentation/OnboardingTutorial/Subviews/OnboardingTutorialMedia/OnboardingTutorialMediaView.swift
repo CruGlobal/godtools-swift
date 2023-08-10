@@ -24,13 +24,13 @@ struct OnboardingTutorialMediaView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .fixedSize(horizontal: false, vertical: true)
-                .font(FontLibrary.sfProDisplayLight.font(size: 26))
+                .font(FontLibrary.sfProDisplayLight.font(size: 27))
                 .padding(EdgeInsets(top: geometry.size.height * 0.1, leading: 30, bottom: 0, trailing: 30))
             
             Text(viewModel.message)
                 .multilineTextAlignment(.center)
                 .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextLight.font(size: 18))
+                .font(FontLibrary.sfProTextLight.font(size: 17))
                 .padding(EdgeInsets(top: 16, leading: 30, bottom: 0, trailing: 30))
             
             Spacer()

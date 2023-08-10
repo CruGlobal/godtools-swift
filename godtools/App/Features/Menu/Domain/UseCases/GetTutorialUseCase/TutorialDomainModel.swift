@@ -1,5 +1,5 @@
 //
-//  TutorialModel.swift
+//  TutorialDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/22/21.
@@ -8,10 +8,9 @@
 
 import Foundation
 
-struct TutorialModel {
+struct TutorialDomainModel {
     
-    let tutorialItems: [TutorialItemType]
+    let tutorialItems: [TutorialItemDomainModel]
     let defaultContinueButtonTitle: String
     let lastPageContinueButtonTitle: String
 }
-

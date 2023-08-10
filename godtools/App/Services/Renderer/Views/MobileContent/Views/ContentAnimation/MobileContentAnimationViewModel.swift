@@ -29,7 +29,7 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             
             case .success(let fileUrl):
                 animatedViewModel = AnimatedViewModel(
-                    animationDataResource: .filepathJsonFile(filepath: fileUrl.path),
+                    animationDataResource: .deviceFileManagerfilepathJsonFile(filepath: fileUrl.path),
                     autoPlay: animationModel.autoPlay,
                     loop: animationModel.loop
                 )

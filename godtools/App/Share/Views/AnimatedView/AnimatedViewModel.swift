@@ -18,8 +18,10 @@ class AnimatedViewModel {
     init(animationDataResource: AnimatedResource, autoPlay: Bool, loop: Bool) {
         
         switch animationDataResource {
-        case .filepathJsonFile(let filepath):
+        
+        case .deviceFileManagerfilepathJsonFile(let filepath):
             animationData = LottieAnimation.filepath(filepath, animationCache: nil)
+        
         case .mainBundleJsonFile(let filename):
             animationData = LottieAnimation.named(filename, bundle: Bundle.main, subdirectory: nil, animationCache: nil)
         }
