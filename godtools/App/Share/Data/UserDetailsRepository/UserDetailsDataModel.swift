@@ -17,6 +17,16 @@ struct UserDetailsDataModel: UserDetailsDataModelType {
     let name: String?
     let ssoGuid: String?
     
+    init(id: String, createdAt: Date?, familyName: String?, givenName: String?, name: String?, ssoGuid: String?) {
+        
+        self.id = id
+        self.createdAt = createdAt
+        self.familyName = familyName
+        self.givenName = givenName
+        self.name = name
+        self.ssoGuid = ssoGuid
+    }
+    
     init(userDetailsType: UserDetailsDataModelType) {
         
         id = userDetailsType.id
@@ -25,5 +35,12 @@ struct UserDetailsDataModel: UserDetailsDataModelType {
         givenName = userDetailsType.givenName
         name = userDetailsType.name
         ssoGuid = userDetailsType.ssoGuid
+    }
+    
+    static func emptyDataModel() -> UserDetailsDataModel {
+        
+        return UserDetailsDataModel(
+            userDetailsType: UserDetailsDataModel(id: "", createdAt: nil, familyName: nil, givenName: nil, name: nil, ssoGuid: nil)
+        )
     }
 }

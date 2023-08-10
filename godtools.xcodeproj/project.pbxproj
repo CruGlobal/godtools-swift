@@ -929,8 +929,6 @@
 		45F7164F290A12D70019B715 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715FB290A12D70019B715 /* AccountViewModel.swift */; };
 		45F71664290A12D70019B715 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71612290A12D70019B715 /* AccountView.swift */; };
 		45F71665290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */; };
-		45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */; };
-		45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */; };
 		45F71669290A12D70019B715 /* AuthenticateUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */; };
 		45F7166A290A12D70019B715 /* LogOutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */; };
 		45F71676290A13530019B715 /* EmailSignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7166C290A13530019B715 /* EmailSignUpService.swift */; };
@@ -2008,8 +2006,6 @@
 		45F715FB290A12D70019B715 /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45F71612290A12D70019B715 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserIsAuthenticatedUseCase.swift; sourceTree = "<group>"; };
-		45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserAccountProfileNameUseCase.swift; sourceTree = "<group>"; };
-		45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProfileNameDomainModel.swift; sourceTree = "<group>"; };
 		45F7161C290A12D70019B715 /* AuthenticateUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserUseCase.swift; sourceTree = "<group>"; };
 		45F7161E290A12D70019B715 /* LogOutUserUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutUserUseCase.swift; sourceTree = "<group>"; };
 		45F7166C290A13530019B715 /* EmailSignUpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpService.swift; sourceTree = "<group>"; };
@@ -7098,7 +7094,6 @@
 				452D55312A3356F000DE70BF /* GetAppVersionUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
-				45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */,
 				D455F3FC29805BD9009D5F93 /* GetUserActivityBadgeUseCase */,
 				458CFEA329D4E172007B423C /* GetUserActivityStatsUseCase */,
 				D455F3EB29773007009D5F93 /* GetUserActivityUseCase */,
@@ -7115,15 +7110,6 @@
 				4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */,
 			);
 			path = GetUserIsAuthenticatedUseCase;
-			sourceTree = "<group>";
-		};
-		45F71617290A12D70019B715 /* GetUserAccountProfileNameUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				45F71619290A12D70019B715 /* AccountProfileNameDomainModel.swift */,
-				45F71618290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift */,
-			);
-			path = GetUserAccountProfileNameUseCase;
 			sourceTree = "<group>";
 		};
 		45F7161A290A12D70019B715 /* AuthenticateUserUseCase */ = {
@@ -8800,7 +8786,6 @@
 				45BDA6222954FE3E007E259B /* RealmCategoryArticle.swift in Sources */,
 				45F71677290A13530019B715 /* RealmEmailSignUpsCache.swift in Sources */,
 				D44F3AB6283BC5030008390D /* ToolCategoryButtonState.swift in Sources */,
-				45F71666290A12D70019B715 /* GetUserAccountProfileNameUseCase.swift in Sources */,
 				45BDA6452954FF08007E259B /* HTMLDocument+ResourceUrls.swift in Sources */,
 				4541979F2A7940F60085A1AD /* LocalizableStringsBundle.swift in Sources */,
 				451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */,
@@ -8836,7 +8821,6 @@
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
 				45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
-				45F71667290A12D70019B715 /* AccountProfileNameDomainModel.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */,
 				453F84C52A029FC00005101E /* RealmArticleJcrContent.swift in Sources */,
