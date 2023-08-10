@@ -347,7 +347,7 @@ class AppDomainLayerDependencies {
     
     func getUserAccountProfileNameUseCase() -> GetUserAccountProfileNameUseCase {
         return GetUserAccountProfileNameUseCase(
-            userAuthentication: dataLayer.getUserAuthentication()
+            userDetailsRepository: dataLayer.getUserDetailsRepository()
         )
     }
     

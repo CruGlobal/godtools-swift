@@ -11,41 +11,30 @@ import Combine
 
 class GetUserAccountProfileNameUseCase {
     
-    private let userAuthentication: UserAuthentication
+    private let userDetailsRepository: UserDetailsRepository
     
-    init(userAuthentication: UserAuthentication) {
+    init(userDetailsRepository: UserDetailsRepository) {
         
-        self.userAuthentication = userAuthentication
+        self.userDetailsRepository = userDetailsRepository
+    }
+    
+    private func getEmptyProfileName() -> AccountProfileNameDomainModel {
+        return AccountProfileNameDomainModel(value: "")
     }
     
     func getProfileNamePublisher() -> AnyPublisher<AccountProfileNameDomainModel, Never> {
      
-        return userAuthentication.getAuthUserPublisher()
-            .catch({ (error: Error) -> AnyPublisher<AuthUserDomainModel?, Never> in
+        return userDetailsRepository.getAuthUserDetailsChangedPublisher()
+            .map { _ in
                 
-                return Just(nil)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<AccountProfileNameDomainModel, Never> in
-                                
-                let profileName: String
-                
-                if let firstName = authUser?.firstName, let lastName = authUser?.lastName {
-                    profileName = firstName + " " + lastName
-                }
-                else if let firstName = authUser?.firstName {
-                    profileName = firstName
-                }
-                else if let lastName = authUser?.lastName {
-                    profileName = lastName
-                }
-                else {
-                    profileName = ""
+                guard let cachedAuthUserDetails = self.userDetailsRepository.getCachedAuthUserDetails(),
+                      let name = cachedAuthUserDetails.name else {
+                    
+                    return self.getEmptyProfileName()
                 }
                 
-                return Just(AccountProfileNameDomainModel(value: profileName))
-                    .eraseToAnyPublisher()
-            })
+                return AccountProfileNameDomainModel(value: name)
+            }
             .eraseToAnyPublisher()
     }
 }

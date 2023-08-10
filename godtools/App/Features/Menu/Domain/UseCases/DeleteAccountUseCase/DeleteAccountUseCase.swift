@@ -22,7 +22,7 @@ class DeleteAccountUseCase {
     
     func deleteAccountPublisher() -> AnyPublisher<Void, Error> {
                 
-        return userDetailsRepository.deleteAuthorizedUserDetails()
+        return userDetailsRepository.deleteAuthUserDetailsPublisher()
             .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
                                 
                 return self.userAuthentication.signOutPublisher()

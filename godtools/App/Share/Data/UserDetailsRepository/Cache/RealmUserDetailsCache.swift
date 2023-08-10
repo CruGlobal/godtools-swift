@@ -13,20 +13,36 @@ import Combine
 class RealmUserDetailsCache {
     
     private let realmDatabase: RealmDatabase
-    private let userDetailsSync: RealmUserDetailsCacheSync
     private let authTokenRepository: MobileContentAuthTokenRepository
     
-    init(realmDatabase: RealmDatabase, userDetailsSync: RealmUserDetailsCacheSync, authTokenRepository: MobileContentAuthTokenRepository) {
+    init(realmDatabase: RealmDatabase, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.realmDatabase = realmDatabase
-        self.userDetailsSync = userDetailsSync
         self.authTokenRepository = authTokenRepository
     }
     
-    func getUserDetailsChanged() -> AnyPublisher<Void, Never> {
+    func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserDetails.self)
-            .objectWillChange
+        return realmDatabase.openRealm().objects(RealmUserDetails.self).objectWillChange
+            .map { _ in
+                return self.getAuthUserDetails()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
+        
+        return realmDatabase.openRealm().objects(RealmUserDetails.self).objectWillChange
+            .map { _ in
+                
+                let realmObject: RealmUserDetails? = self.realmDatabase.readObject(primaryKey: id)
+                
+                if let realmObject = realmObject {
+                    return UserDetailsDataModel(userDetailsType: realmObject)
+                }
+                
+                return nil
+            }
             .eraseToAnyPublisher()
     }
     
@@ -43,8 +59,18 @@ class RealmUserDetailsCache {
         return UserDetailsDataModel(userDetailsType: realmUserDetails)
     }
     
-    func syncUserDetails(_ userDetails: UserDetailsDataModel) -> AnyPublisher<UserDetailsDataModel, Error> {
+    func storeUserDetailsPublisher(userDetails: UserDetailsDataModel) -> AnyPublisher<UserDetailsDataModel, Error> {
         
-        return userDetailsSync.syncUserDetails(userDetails)
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+            
+            let newUserDetails: RealmUserDetails = RealmUserDetails()
+            newUserDetails.mapFrom(model: userDetails)
+            
+            return [newUserDetails]
+        }
+        .map { _ in
+            return userDetails
+        }
+        .eraseToAnyPublisher()
     }
 }

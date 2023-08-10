@@ -23,7 +23,7 @@ class GetUserAccountDetailsUseCase {
     
     func getUserAccountDetailsPublisher() -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
-        return Publishers.CombineLatest(fetchRemoteUserAccountDetailsPublisher(), repository.getUserDetailsChanged())
+        return Publishers.CombineLatest(fetchRemoteUserAccountDetailsPublisher(), repository.getAuthUserDetailsChangedPublisher())
             .flatMap { _ in
                 
                 guard let userDetails = self.repository.getCachedAuthUserDetails() else {
@@ -42,7 +42,7 @@ class GetUserAccountDetailsUseCase {
     
     private func fetchRemoteUserAccountDetailsPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
-        return repository.fetchRemoteUserDetails()
+        return repository.getAuthUserDetailsFromRemotePublisher()
             .flatMap({ userDetailsDataModel -> AnyPublisher<UserDetailsDataModel?, Error> in
                 
                 return Just(userDetailsDataModel)
