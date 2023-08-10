@@ -32,7 +32,9 @@ class UserDetailsRepository {
     func fetchRemoteUserDetails() -> AnyPublisher<UserDetailsDataModel, Error> {
         
         return api.fetchUserDetailsPublisher()
-            .flatMap { (userDetails: UserDetailsDataModel) in
+            .flatMap { (usersMeCodable: MobileContentApiUsersMeCodable) in
+                
+                let userDetails = UserDetailsDataModel(userDetailsType: usersMeCodable)
                 
                 return self.cache.syncUserDetails(userDetails)
                     .eraseToAnyPublisher()

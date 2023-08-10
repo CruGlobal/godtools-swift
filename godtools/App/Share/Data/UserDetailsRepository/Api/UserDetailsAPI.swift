@@ -24,12 +24,12 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
         let urlRequest = getUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.data
             }

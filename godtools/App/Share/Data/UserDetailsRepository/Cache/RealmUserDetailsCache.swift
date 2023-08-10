@@ -40,7 +40,7 @@ class RealmUserDetailsCache {
             return nil
         }
         
-        return UserDetailsDataModel(realmUserDetails: realmUserDetails)
+        return UserDetailsDataModel(userDetailsType: realmUserDetails)
     }
     
     func syncUserDetails(_ userDetails: UserDetailsDataModel) -> AnyPublisher<UserDetailsDataModel, Error> {
