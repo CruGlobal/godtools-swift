@@ -23,7 +23,7 @@ class TrainingPageView: MobileContentView, NibBased {
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var bottomGradientView: UIView!
     
-    required init(viewModel: TrainingPageViewModel) {
+    init(viewModel: TrainingPageViewModel) {
         
         self.viewModel = viewModel
         self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)

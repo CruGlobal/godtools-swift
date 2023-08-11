@@ -12,14 +12,14 @@ import GodToolsToolParser
 class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
     
     private let multiSelectOptionModel: Multiselect.Option
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     
     private var isSelectedFlowWatcher: FlowWatcher?
     
     let backgroundColor: ObservableValue<UIColor>
     let hidesShadow: Bool
     
-    init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(multiSelectOptionModel: Multiselect.Option, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.multiSelectOptionModel = multiSelectOptionModel
         self.mobileContentAnalytics = mobileContentAnalytics

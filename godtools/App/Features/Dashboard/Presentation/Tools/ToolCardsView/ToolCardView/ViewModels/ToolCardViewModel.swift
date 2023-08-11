@@ -101,14 +101,15 @@ extension ToolCardViewModel {
     }
         
     private func setStrings() {
+        
         title = tool.name
         
-        let currentTranslationLanguage = tool.currentTranslationLanguage
-        let localeIdentifier = currentTranslationLanguage.localeIdentifier
+        let currentTranslationLanguage: LanguageDomainModel = tool.currentTranslationLanguage
+        let localeIdentifier: String = currentTranslationLanguage.localeIdentifier
         
-        category = localizationServices.toolCategoryStringForLocale(localeIdentifier: localeIdentifier, category: tool.category)
-        detailsButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
-        openButtonTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: localeIdentifier, key: "open")
+        category = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "tool_category_\(tool.category)")
+        detailsButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
+        openButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "open")
         
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
     }

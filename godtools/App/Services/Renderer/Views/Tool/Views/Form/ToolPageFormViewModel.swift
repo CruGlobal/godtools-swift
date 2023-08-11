@@ -17,7 +17,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.followUpService = followUpService
         self.localizationServices = localizationServices

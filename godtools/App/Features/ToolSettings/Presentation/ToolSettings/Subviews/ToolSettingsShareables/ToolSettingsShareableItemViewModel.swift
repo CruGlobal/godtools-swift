@@ -12,12 +12,12 @@ import GodToolsToolParser
 class ToolSettingsShareableItemViewModel: ObservableObject {
     
     private let shareable: Shareable
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     
     @Published var image: SwiftUI.Image = Image("")
     @Published var title: String = ""
     
-    init(shareable: Shareable, manifestResourcesCache: ManifestResourcesCache) {
+    init(shareable: Shareable, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         self.shareable = shareable
         self.manifestResourcesCache = manifestResourcesCache

@@ -30,7 +30,9 @@ class RealmUserCountersCache {
     
     func getUserCounter(id: String) -> UserCounterDataModel? {
         
-        guard let realmUserCounter = realmDatabase.openRealm().object(ofType: RealmUserCounter.self, forPrimaryKey: id) else { return nil }
+        guard let realmUserCounter = realmDatabase.openRealm().object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
+            return nil
+        }
         
         return UserCounterDataModel(realmUserCounter: realmUserCounter)
     }

@@ -55,7 +55,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             analytics: appDiContainer.dataLayer.getAnalytics(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            mobileContentEventAnalytics: appDiContainer.getMobileContentEventAnalyticsTracking(),
+            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
             liveShareStream: liveShareStream,
             initialPage: initialPage,

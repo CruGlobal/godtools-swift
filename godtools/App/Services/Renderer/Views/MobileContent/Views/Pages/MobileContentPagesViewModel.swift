@@ -14,7 +14,7 @@ class MobileContentPagesViewModel: NSObject {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
-    private let mobileContentEventAnalytics: MobileContentEventAnalyticsTracking
+    private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
     
@@ -36,7 +36,7 @@ class MobileContentPagesViewModel: NSObject {
     let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])

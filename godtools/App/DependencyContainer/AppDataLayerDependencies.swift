@@ -240,7 +240,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    private func getResourcesFileCache() -> ResourcesSHA256FileCache {
+    func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
     
@@ -346,7 +346,6 @@ class AppDataLayerDependencies {
             ),
             cache: RealmUserDetailsCache(
                 realmDatabase: sharedRealmDatabase,
-                userDetailsSync: RealmUserDetailsCacheSync(realmDatabase: sharedRealmDatabase),
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
         )

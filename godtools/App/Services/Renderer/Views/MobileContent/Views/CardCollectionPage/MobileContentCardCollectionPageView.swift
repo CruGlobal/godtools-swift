@@ -20,7 +20,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private var cards: [MobileContentCardCollectionPageCardView] = Array()
     
-    required init(viewModel: MobileContentCardCollectionPageViewModel) {
+    init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
         self.cardPageNavigationView = PageNavigationCollectionView(layout: cardCollectionLayout)

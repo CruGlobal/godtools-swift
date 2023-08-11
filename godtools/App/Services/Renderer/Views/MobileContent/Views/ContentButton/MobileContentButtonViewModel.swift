@@ -20,7 +20,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     
     private var visibilityFlowWatcher: FlowWatcher?
     
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     let backgroundColor: UIColor
     let buttonWidth: MobileContentViewWidth
     let titleColor: UIColor
@@ -28,7 +28,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
         
         self.buttonModel = buttonModel
         self.mobileContentAnalytics = mobileContentAnalytics

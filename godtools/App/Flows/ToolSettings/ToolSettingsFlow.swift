@@ -239,16 +239,18 @@ class ToolSettingsFlow: Flow {
             
             dismissReviewShareShareable(animated: true) { [weak self] in
                 
-                guard let self = self else { return }
+                guard let weakSelf = self else {
+                    return
+                }
                 
                 let viewModel = ShareShareableViewModel(
                     imageToShare: imageToShare,
-                    incrementUserCounterUseCase: self.appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+                    incrementUserCounterUseCase: weakSelf.appDiContainer.domainLayer.getIncrementUserCounterUseCase()
                 )
                 
                 let view = ShareShareableView(viewModel: viewModel)
                             
-                self.navigationController.present(view, animated: true, completion: nil)
+                weakSelf.navigationController.present(view, animated: true, completion: nil)
             }
             
         default:

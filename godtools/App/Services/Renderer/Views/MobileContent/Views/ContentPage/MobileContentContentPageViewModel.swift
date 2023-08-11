@@ -14,7 +14,7 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel {
     private let contentPage: Page
     private let analytics: AnalyticsContainer
     
-    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
+    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, analytics: AnalyticsContainer) {
         
         self.contentPage = contentPage
         self.analytics = analytics

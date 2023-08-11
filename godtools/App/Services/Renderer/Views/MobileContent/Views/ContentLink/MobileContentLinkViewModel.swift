@@ -16,10 +16,10 @@ class MobileContentLinkViewModel: MobileContentViewModel {
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     let titleColor: UIColor
     
-    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService) {
+    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
         
         self.linkModel = linkModel
         self.mobileContentAnalytics = mobileContentAnalytics

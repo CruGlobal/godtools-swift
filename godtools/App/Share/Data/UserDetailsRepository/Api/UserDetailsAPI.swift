@@ -24,19 +24,19 @@ class UserDetailsAPI {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
-        let urlRequest = getUserDetailsRequest()
+        let urlRequest: URLRequest = getAuthUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseData<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.data
             }
             .eraseToAnyPublisher()
     }
     
-    private func getUserDetailsRequest() -> URLRequest {
+    private func getAuthUserDetailsRequest() -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -52,7 +52,7 @@ class UserDetailsAPI {
         )
     }
     
-    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher() -> AnyPublisher<Void, Error> {
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest()
         

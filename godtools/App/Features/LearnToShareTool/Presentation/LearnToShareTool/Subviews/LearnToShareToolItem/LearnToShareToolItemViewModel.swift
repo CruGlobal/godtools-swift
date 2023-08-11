@@ -6,9 +6,11 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import SwiftUI
+import Combine
 
-class LearnToShareToolItemViewModel {
+class LearnToShareToolItemViewModel: ObservableObject {
     
     let assetContent: LearnToShareToolItemAssetContent
     let title: String
@@ -29,9 +31,9 @@ class LearnToShareToolItemViewModel {
             
             assetContent = .animation(viewModel: animatedViewModel)
         }
-        else if let imageName = learnToShareToolItem.imageName, !imageName.isEmpty, let image = UIImage(named: imageName) {
+        else if let imageName = learnToShareToolItem.imageName, !imageName.isEmpty {
             
-            assetContent = .image(image: image)
+            assetContent = .image(image: Image(imageName))
         }
         else {
             

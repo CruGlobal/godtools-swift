@@ -17,7 +17,7 @@ class ToolPageModalsView: MobileContentView {
     
     private weak var windowViewController: UIViewController?
     
-    required init(viewModel: ToolPageModalsViewModel, windowViewController: UIViewController) {
+    init(viewModel: ToolPageModalsViewModel, windowViewController: UIViewController) {
         
         self.viewModel = viewModel
         self.windowViewController = windowViewController

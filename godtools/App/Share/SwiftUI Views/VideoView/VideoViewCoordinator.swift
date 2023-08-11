@@ -27,6 +27,10 @@ class VideoViewCoordinator: NSObject, YTPlayerViewDelegate {
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
+        if state == .playing {
+            videoView.videoPlaying()
+        }
+        
         if state == .ended {
             videoView.videoEnded()
         }

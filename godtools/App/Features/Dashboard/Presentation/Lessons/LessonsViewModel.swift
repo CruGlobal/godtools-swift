@@ -99,8 +99,8 @@ extension LessonsViewModel {
     
     private func setupTitle(with language: LanguageDomainModel?) {
         
-        sectionTitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "lessons.pageTitle")
-        subtitle = localizationServices.stringForLocaleElseSystem(localeIdentifier: language?.localeIdentifier, key: "lessons.pageSubtitle")
+        sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageTitle")
+        subtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageSubtitle")
     }
 }
 

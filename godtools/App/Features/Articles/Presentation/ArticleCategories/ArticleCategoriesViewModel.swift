@@ -18,7 +18,7 @@ class ArticleCategoriesViewModel {
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
-    private let manifestResourcesCache: ManifestResourcesCache
+    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
@@ -34,7 +34,7 @@ class ArticleCategoriesViewModel {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: MobileContentRendererManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

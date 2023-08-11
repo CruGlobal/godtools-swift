@@ -69,7 +69,7 @@ struct OnboardingTutorialView: View {
                 
                 FixedVerticalSpacer(height: 30)
                 
-                GTPageControl(numberOfPages: 4, currentPage: $viewModel.currentPage)
+                PageControl(numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
             }
             .frame(maxWidth: .infinity)

@@ -60,7 +60,9 @@ class MobileContentAuthTokenRepository {
     
     func deleteCachedAuthToken() {
         
-        guard let userId = getUserId() else { return }
+        guard let userId = getUserId() else {
+            return
+        }
         
         cache.deleteAuthToken(for: userId)
     }

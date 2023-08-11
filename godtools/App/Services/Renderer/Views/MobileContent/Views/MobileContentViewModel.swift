@@ -11,13 +11,13 @@ import GodToolsToolParser
 
 class MobileContentViewModel: NSObject {
     
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     
     let baseModel: BaseModel?
     let baseModels: [BaseModel]
     let renderedPageContext: MobileContentRenderedPageContext
     
-    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(baseModel: BaseModel?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.baseModel = baseModel
         
@@ -34,7 +34,7 @@ class MobileContentViewModel: NSObject {
         super.init()
     }
     
-    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(baseModels: [BaseModel], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.baseModel = baseModels.first
         self.baseModels = baseModels
@@ -53,7 +53,7 @@ class MobileContentViewModel: NSObject {
         return renderedPageContext.language.direction == .leftToRight ? .left : .right
     }
     
-    func viewDidAppear(visibleAnalyticsEvents: [MobileContentAnalyticsEvent]) {
+    func viewDidAppear(visibleAnalyticsEvents: [MobileContentRendererAnalyticsEvent]) {
         
         for event in visibleAnalyticsEvents {
             
@@ -61,7 +61,7 @@ class MobileContentViewModel: NSObject {
         }
     }
     
-    func viewDidDisappear(visibleAnalyticsEvents: [MobileContentAnalyticsEvent]) {
+    func viewDidDisappear(visibleAnalyticsEvents: [MobileContentRendererAnalyticsEvent]) {
         
         for event in visibleAnalyticsEvents {
             

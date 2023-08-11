@@ -16,7 +16,7 @@ class MobileContentRenderedPageContext {
     let isLastPage: Bool
     let safeArea: UIEdgeInsets
     let manifest: Manifest
-    let resourcesCache: ManifestResourcesCache
+    let resourcesCache: MobileContentRendererManifestResourcesCache
     let resource: ResourceModel
     let language: LanguageDomainModel
     let translation: TranslationModel
@@ -29,7 +29,7 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
         
         self.pageModel = pageModel
         self.page = page

@@ -146,10 +146,12 @@ extension ToolSettingsViewModel {
     
     func shareableTapped(index: Int) {
         
-        let manifestResourcesCache: ManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
+        let manifestResourcesCache: MobileContentRendererManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
         let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
         
-        guard let shareableImageDomainModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else { return }
+        guard let shareableImageDomainModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else {
+            return
+        }
         
         flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareableImageDomainModel: shareableImageDomainModel))
     }

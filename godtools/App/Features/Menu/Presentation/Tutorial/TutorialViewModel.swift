@@ -2,29 +2,41 @@
 //  TutorialViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/27/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/7/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
+import Combine
 
-class TutorialViewModel: TutorialViewModelType {
+class TutorialViewModel: ObservableObject {
         
     private let getTutorialUseCase: GetTutorialUseCase
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let analytics: AnalyticsContainer
-    private let tutorialPagerAnalyticsModel: TutorialPagerAnalytics
+    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
-    private var tutorialModel: TutorialModel?
+    private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
+    private var tutorialDomainModel: TutorialDomainModel? = nil {
+        didSet {
+            numberOfPages = tutorialDomainModel?.tutorialItems.count ?? 0
+        }
+    }
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published var numberOfPages: Int = 0
+    @Published var continueTitle: String = ""
+    @Published var currentPage: Int = 0 {
+        didSet {
+            currentPageDidChange(page: currentPage)
+        }
+    }
+    
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: false)
-    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
-    let numberOfPages: ObservableValue<Int> = ObservableValue(value: 0)
-    let continueTitle: ObservableValue<String> = ObservableValue(value: "")
     
     init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
@@ -35,74 +47,51 @@ class TutorialViewModel: TutorialViewModelType {
         self.analytics = analytics
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
-        tutorialPagerAnalyticsModel = TutorialPagerAnalytics(
-            screenName: "tutorial",
-            siteSection: "tutorial",
-            siteSubsection: "",
-            continueButtonTappedActionName: "",
-            continueButtonTappedData: nil,
-            screenTrackIndexOffset: 1
-        )
-        
-        reloadTutorial(tutorial: getTutorialUseCase.getTutorial())
-    }
-    
-    private func reloadTutorial(tutorial: TutorialModel) {
-        
-        self.tutorialModel = tutorial
-        numberOfPages.accept(value: tutorial.tutorialItems.count)
-    }
-    
-    private var tutorialItems: [TutorialItemType] {
-        return tutorialModel?.tutorialItems ?? []
-    }
-    
-    func tutorialPageWillAppear(index: Int) -> TutorialCellViewModelType {
-        
-        return TutorialCellViewModel(
-            item: tutorialItems[index],
-            customViewBuilder: nil,
-            tutorialVideoAnalytics: tutorialVideoAnalytics,
-            analyticsScreenName: tutorialPagerAnalyticsModel.analyticsScreenName(page: index),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase
-        )
-    }
-    
-    func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromTutorial)
-    }
-    
-    func pageDidChange(page: Int) {
-                  
-        currentPage.accept(value: page)
-        
-        let isFirstPage: Bool = page == 0
-        let isOnLastPage: Bool = page >= tutorialItems.count - 1
-        
-        hidesBackButton.accept(value: isFirstPage)
+        getTutorialUseCase.getTutorialPublisher()
+            .sink { [weak self] (tutorialDomainModel: TutorialDomainModel) in
                 
-        let continueTitleValue: String
-        if isOnLastPage {
-            continueTitleValue = tutorialModel?.lastPageContinueButtonTitle ?? ""
-        }
-        else {
-            continueTitleValue = tutorialModel?.defaultContinueButtonTitle ?? ""
+                self?.tutorialDomainModel = tutorialDomainModel
+                self?.currentPageDidChange(page: 0)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {
+        return "tutorial-\(tutorialItemIndex + 1)"
+    }
+    
+    private var analyticsSiteSection: String {
+        return "tutorial"
+    }
+    
+    private var analyticsSiteSubsection: String {
+        return ""
+    }
+    
+    private var tutorialItems: [TutorialItemDomainModel] {
+        return tutorialDomainModel?.tutorialItems ?? []
+    }
+    
+    private var isOnFirstPage: Bool {
+        return currentPage == 0
+    }
+    
+    private var isOnLastPage: Bool {
+        
+        guard numberOfPages > 0 else {
+            return false
         }
         
-        continueTitle.accept(value: continueTitleValue)
+        return currentPage >= numberOfPages - 1
     }
     
-    func pageDidAppear(page: Int) {
-                    
-        let isFirstPage: Bool = page == 0
-        let isLastPage: Bool = page == tutorialItems.count - 1
+    private func currentPageDidChange(page: Int) {
                 
-        currentPage.accept(value: page)
-        
-        let analyticsScreenName = tutorialPagerAnalyticsModel.analyticsScreenName(page: page)
-        let analyticsSiteSection = tutorialPagerAnalyticsModel.siteSection
-        let analyticsSiteSubSection = tutorialPagerAnalyticsModel.siteSubsection
+        hidesBackButtonSubject.send(isOnFirstPage)
+                                
+        let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
+        let analyticsSiteSection = analyticsSiteSection
+        let analyticsSiteSubSection = analyticsSiteSubsection
         
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
@@ -125,21 +114,79 @@ class TutorialViewModel: TutorialViewModelType {
             data: nil
         )
         
-        if isFirstPage {
+        if isOnFirstPage {
             analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
         }
-        else if isLastPage {
+        else if isOnLastPage {
             analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
+        }
+        
+        if isOnLastPage {
+            continueTitle = tutorialDomainModel?.lastPageContinueButtonTitle ?? ""
+        }
+        else {
+            continueTitle = tutorialDomainModel?.defaultContinueButtonTitle ?? ""
+        }
+    }
+    
+    var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
+        return hidesBackButtonSubject
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Inputs
+
+extension TutorialViewModel {
+    
+    func tutorialPageWillAppear(tutorialItemIndex: Int) -> TutorialItemViewModel {
+        
+        return TutorialItemViewModel(
+            tutorialItem: tutorialItems[tutorialItemIndex]
+        )
+    }
+    
+    @objc func backTapped() {
+        
+        if !isOnFirstPage {
+            currentPage = currentPage - 1
+        }
+    }
+    
+    @objc func closeTapped() {
+        flowDelegate?.navigate(step: .closeTappedFromTutorial)
+    }
+    
+    func tutorialVideoPlayTapped(tutorialItemIndex: Int) {
+          
+        let tutorialItem: TutorialItemDomainModel = tutorialItems[tutorialItemIndex]
+        
+        guard let videoId = tutorialItem.youTubeVideoId, !videoId.isEmpty else {
+            return
+        }
+        
+        let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(videoId)
+        
+        if !youTubeVideoTracked {
+            
+            trackedAnalyticsForYouTubeVideoIds.append(videoId)
+            
+            tutorialVideoAnalytics.trackVideoPlayed(
+                videoId: videoId,
+                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialItemIndex),
+                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
+                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            )
         }
     }
     
     func continueTapped() {
         
-        let nextPage: Int = currentPage.value + 1
-        let reachedEnd: Bool = nextPage >= tutorialItems.count
-        
-        if reachedEnd {
+        if isOnLastPage {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+        }
+        else {
+            currentPage = currentPage + 1
         }
     }
 }

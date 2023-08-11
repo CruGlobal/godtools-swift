@@ -10,5 +10,6 @@ import Foundation
 
 struct UserAccountDetailsDomainModel {
     
+    let name: String
     let joinedOnString: String
 }

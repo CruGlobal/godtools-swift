@@ -520,7 +520,9 @@ extension AppFlow {
             .receive(on: DispatchQueue.main)
             .sink { shouldShowBarButtonItem, barButtonItem in
                 
-                guard let barButtonItem = barButtonItem else { return }
+                guard let barButtonItem = barButtonItem else {
+                    return
+                }
                 
                 if shouldShowBarButtonItem {
                     

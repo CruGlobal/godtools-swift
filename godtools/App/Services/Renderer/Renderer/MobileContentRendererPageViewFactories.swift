@@ -13,12 +13,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, appDiContainer: AppDiContainer) {
+    init(type: MobileContentRendererPageViewFactoriesType, appDiContainer: AppDiContainer) {
                 
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
         let analytics: AnalyticsContainer = appDiContainer.dataLayer.getAnalytics()
-        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
+        let mobileContentAnalytics: MobileContentRendererAnalytics = appDiContainer.getMobileContentRendererAnalytics()
         let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()

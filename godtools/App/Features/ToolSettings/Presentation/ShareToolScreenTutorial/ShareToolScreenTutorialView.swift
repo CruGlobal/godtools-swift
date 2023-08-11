@@ -9,7 +9,6 @@
 import UIKit
 
 class ShareToolScreenTutorialView: UIViewController {
-    //TODO: re-implement this tutorial using TutorialPagerView
     
     private let viewModel: ShareToolScreenTutorialViewModel
     
