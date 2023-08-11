@@ -9,28 +9,32 @@
 import SwiftUI
 
 struct ToolCardsCarouselView: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: ToolCardProvider
-    let cardType: ToolCardType
-    let width: CGFloat
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Constants
-    
+        
     private enum Sizes {
         static let spotlightCardWidthMultiplier: CGFloat = 200/375
     }
     
-    // MARK: - Body
+    private let cardType: ToolCardType
+    private let width: CGFloat
+    private let leadingTrailingPadding: CGFloat
+    
+    @ObservedObject private var viewModel: ToolCardProvider
+    
+    init(viewModel: ToolCardProvider, cardType: ToolCardType, width: CGFloat, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.cardType = cardType
+        self.width = width
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         
         ScrollView(.horizontal, showsIndicators: false) {
             
             HStack(spacing: 15) {
-                if let maxNumberCardsToShow = viewModel.maxNumberCardsToShow, viewModel.tools.count > maxNumberCardsToShow {
+                
+                if let maxNumberCardsToShow = viewModel.maxNumberOfCardsToShow, viewModel.tools.count > maxNumberCardsToShow {
                     
                     ForEach(viewModel.tools[0..<maxNumberCardsToShow]) { tool in
                         

@@ -12,10 +12,16 @@ struct ToolDetailsVersionsCardView: View {
     
     private let bannerHeight: CGFloat = 87
     
-    @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
+    @ObservedObject private var viewModel: ToolDetailsVersionsCardViewModel
     
     let width: CGFloat
         
+    init(viewModel: ToolDetailsVersionsCardViewModel, width: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+    }
+    
     var body: some View {
         
         ZStack {

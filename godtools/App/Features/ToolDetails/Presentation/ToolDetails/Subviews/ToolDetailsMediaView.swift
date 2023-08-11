@@ -15,7 +15,7 @@ struct ToolDetailsMediaView: View {
     
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
         
     init(viewModel: ToolDetailsViewModel, width: CGFloat) {
         

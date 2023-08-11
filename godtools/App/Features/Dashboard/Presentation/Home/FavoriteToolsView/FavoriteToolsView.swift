@@ -9,14 +9,18 @@
 import SwiftUI
 
 struct FavoriteToolsView: View {
+        
+    private let width: CGFloat
+    private let leadingPadding: CGFloat
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: FavoriteToolsViewModel
-    let width: CGFloat
-    let leadingPadding: CGFloat
-    
-    // MARK: - Body
+    @ObservedObject private var viewModel: FavoriteToolsViewModel
+        
+    init(viewModel: FavoriteToolsViewModel, width: CGFloat, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+        self.leadingPadding = leadingPadding
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {

@@ -9,13 +9,16 @@
 import SwiftUI
 
 struct FavoriteToolsHeaderView: View {
+        
+    private let leadingPadding: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: FavoriteToolsViewModel
     
-    @ObservedObject var viewModel: FavoriteToolsViewModel
-    let leadingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: FavoriteToolsViewModel, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingPadding = leadingPadding
+    }
     
     var body: some View {
         HStack(alignment: .bottom) {

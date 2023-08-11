@@ -14,9 +14,7 @@ protocol OpenTutorialBannerViewModelDelegate: AnyObject {
 }
 
 class OpenTutorialBannerViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
+        
     private let localizationServices: LocalizationServices
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -24,14 +22,10 @@ class OpenTutorialBannerViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     private weak var delegate: OpenTutorialBannerViewModelDelegate?
-    
-    // MARK: - Published
-    
+        
     @Published var showTutorialText: String
     @Published var openTutorialButtonText: String
-    
-    // MARK: - Init
-    
+        
     init(flowDelegate: FlowDelegate?, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, delegate: OpenTutorialBannerViewModelDelegate?) {
         
         self.flowDelegate = flowDelegate

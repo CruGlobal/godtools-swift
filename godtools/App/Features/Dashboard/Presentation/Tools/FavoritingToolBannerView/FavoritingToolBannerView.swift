@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct FavoritingToolBannerView: View {
+        
+    @ObservedObject private var viewModel: FavoritingToolBannerViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: FavoritingToolBannerViewModel
-    
-    // MARK: - Body
+    init(viewModel: FavoritingToolBannerViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

@@ -11,28 +11,22 @@ import SwiftUI
 import Combine
 
 class FeaturedLessonCardsViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
+        
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
-    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let translationsRepository: TranslationsRepository
     
-    private weak var delegate: LessonCardDelegate?
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Published
-    
+    private weak var delegate: LessonCardDelegate?
+        
     @Published var sectionTitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
-    
-    // MARK: - Init
-    
+        
     init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository, delegate: LessonCardDelegate?) {
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices

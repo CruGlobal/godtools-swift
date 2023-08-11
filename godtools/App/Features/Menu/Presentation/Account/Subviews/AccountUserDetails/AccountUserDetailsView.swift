@@ -10,7 +10,12 @@ import SwiftUI
 
 struct AccountUserDetailsView: View {
     
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
+    
+    init(viewModel: AccountViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

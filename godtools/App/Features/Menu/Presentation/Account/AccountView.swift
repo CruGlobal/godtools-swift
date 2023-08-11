@@ -10,8 +10,13 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
         
+    init(viewModel: AccountViewModel) {
+        
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         
         GeometryReader { geometry in

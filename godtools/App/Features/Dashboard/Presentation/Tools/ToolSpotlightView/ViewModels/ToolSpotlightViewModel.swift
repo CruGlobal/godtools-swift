@@ -14,12 +14,9 @@ protocol ToolSpotlightViewModelDelegate: AnyObject {
 }
 
 class ToolSpotlightViewModel: ToolCardProvider {
-    
-    // MARK: - Properties
-    
+        
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
-    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -27,17 +24,13 @@ class ToolSpotlightViewModel: ToolCardProvider {
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     
-    private weak var delegate: ToolSpotlightViewModelDelegate?
-    
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Published
-    
+    private weak var delegate: ToolSpotlightViewModelDelegate?
+        
     @Published var spotlightTitle: String = ""
     @Published var spotlightSubtitle: String = ""
-    
-    // MARK: - Init
-    
+        
     init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolSpotlightViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
@@ -51,7 +44,7 @@ class ToolSpotlightViewModel: ToolCardProvider {
         
         self.delegate = delegate
         
-        super.init()
+        super.init(maxNumberOfCardsToShow: nil)
         
         setupBinding()
     }

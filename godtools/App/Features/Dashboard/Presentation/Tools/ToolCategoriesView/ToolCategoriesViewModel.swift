@@ -14,25 +14,19 @@ protocol ToolCategoriesViewModelDelegate: AnyObject {
 }
 
 class ToolCategoriesViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
+        
     private let localizationServices: LocalizationServices
-    
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     
-    private weak var delegate: ToolCategoriesViewModelDelegate?
     private var cancellables = Set<AnyCancellable>()
-        
-    // MARK: - Published
     
+    private weak var delegate: ToolCategoriesViewModelDelegate?
+            
     @Published var categoryTitleText: String = ""
     @Published var buttonViewModels = [ToolCategoryButtonViewModel]()
     @Published var selectedCategoryId: String? = nil
-    
-    // MARK: - Init
-    
+        
     init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, delegate: ToolCategoriesViewModelDelegate?) {
         self.localizationServices = localizationServices
         

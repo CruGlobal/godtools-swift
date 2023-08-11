@@ -9,14 +9,18 @@
 import SwiftUI
 
 struct FeaturedLessonCardsView: View {
+        
+    private let width: CGFloat
+    private let leadingPadding: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: FeaturedLessonCardsViewModel
     
-    @ObservedObject var viewModel: FeaturedLessonCardsViewModel
-    let width: CGFloat
-    let leadingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: FeaturedLessonCardsViewModel, width: CGFloat, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+        self.leadingPadding = leadingPadding
+    }
     
     var body: some View {
         

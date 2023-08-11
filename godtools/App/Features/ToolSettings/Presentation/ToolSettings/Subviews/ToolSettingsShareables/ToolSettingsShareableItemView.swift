@@ -11,7 +11,12 @@ struct ToolSettingsShareableItemView: View {
     
     private let itemSize: CGSize = CGSize(width: 112, height: 112)
     
-    @ObservedObject var viewModel: ToolSettingsShareableItemViewModel
+    @ObservedObject private var viewModel: ToolSettingsShareableItemViewModel
+    
+    init(viewModel: ToolSettingsShareableItemViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

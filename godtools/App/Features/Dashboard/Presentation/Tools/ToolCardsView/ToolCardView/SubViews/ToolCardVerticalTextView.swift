@@ -9,15 +9,19 @@
 import SwiftUI
 
 struct ToolCardVerticalTextView: View {
+        
+    private let cardType: ToolCardType
+    private let cardWidth: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: BaseToolCardViewModel
     
-    @ObservedObject var viewModel: BaseToolCardViewModel
-    let cardType: ToolCardType
-    let cardWidth: CGFloat
-    
-    // MARK: - Body
-    
+    init(viewModel: BaseToolCardViewModel, cardType: ToolCardType, cardWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.cardType = cardType
+        self.cardWidth = cardWidth
+    }
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             

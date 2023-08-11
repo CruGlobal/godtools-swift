@@ -14,22 +14,18 @@ protocol LessonCardDelegate: AnyObject {
 }
 
 class LessonCardViewModel: BaseLessonCardViewModel {
-    
-    // MARK: - Properties
-    
-    let lesson: LessonDomainModel
-    let dataDownloader: InitialDataDownloader
-    
+        
     private let translationsRepository: TranslationsRepository
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
-    private weak var delegate: LessonCardDelegate?
-    
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Init
+    private weak var delegate: LessonCardDelegate?
+    
+    let lesson: LessonDomainModel
+    let dataDownloader: InitialDataDownloader
     
     init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, delegate: LessonCardDelegate?) {
         self.lesson = lesson
@@ -46,15 +42,11 @@ class LessonCardViewModel: BaseLessonCardViewModel {
         
         setup()
     }
-
-    // MARK: - Overrides
     
     override func lessonCardTapped() {
         delegate?.lessonCardTapped(lesson: lesson)
     }
 }
-
-// MARK: - Private
 
 extension LessonCardViewModel {
     

@@ -10,7 +10,12 @@ import SwiftUI
 
 struct ToolDetailsTitleHeaderView: View {
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
+    
+    init(viewModel: ToolDetailsViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

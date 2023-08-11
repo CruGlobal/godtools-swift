@@ -12,10 +12,17 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
     
     private let logoAspectRatio: CGSize = CGSize(width: 221, height: 131)
     
-    @ObservedObject var viewModel: OnboardingTutorialReadyForEveryConversationViewModel
+    @ObservedObject private var viewModel: OnboardingTutorialReadyForEveryConversationViewModel
     
     let geometry: GeometryProxy
     let watchVideoTappedClosure: (() -> Void)
+    
+    init(viewModel: OnboardingTutorialReadyForEveryConversationViewModel, geometry: GeometryProxy, watchVideoTappedClosure: @escaping (() -> Void)) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+        self.watchVideoTappedClosure = watchVideoTappedClosure
+    }
     
     var body: some View {
         

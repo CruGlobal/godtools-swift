@@ -13,7 +13,12 @@ struct LanguagesListItemView: View {
     private let highlightColor: Color = Color(.sRGB, red: 209 / 256, green: 238 / 256, blue: 213 / 256, opacity: 1)
     private let verticalSpacing: CGFloat = 15
     
-    @ObservedObject var viewModel: BaseLanguagesListItemViewModel
+    @ObservedObject private var viewModel: BaseLanguagesListItemViewModel
+    
+    init(viewModel: BaseLanguagesListItemViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
