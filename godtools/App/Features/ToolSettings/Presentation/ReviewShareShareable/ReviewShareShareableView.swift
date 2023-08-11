@@ -14,7 +14,12 @@ struct ReviewShareShareableView: View {
     private let maxPreviewImageSize: CGFloat = 250
     private let bottomSpacing: CGFloat = 50
     
-    @ObservedObject var viewModel: ReviewShareShareableViewModel
+    @ObservedObject private var viewModel: ReviewShareShareableViewModel
+    
+    init(viewModel: ReviewShareShareableViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

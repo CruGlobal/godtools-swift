@@ -9,13 +9,16 @@
 import SwiftUI
 
 struct FavoritesContentView: View {
+        
+    private let leadingTrailingPadding: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: FavoritesContentViewModel
     
-    @ObservedObject var viewModel: FavoritesContentViewModel
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: FavoritesContentViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         

@@ -9,10 +9,17 @@ import SwiftUI
 
 struct ToolSettingsOptionsView: View {
             
-    @ObservedObject var viewModel: ToolSettingsViewModel
+    @ObservedObject private var viewModel: ToolSettingsViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
+    
+    init(viewModel: ToolSettingsViewModel, leadingInset: CGFloat, trailingInset: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingInset = leadingInset
+        self.trailingInset = trailingInset
+    }
     
     var body: some View {
         

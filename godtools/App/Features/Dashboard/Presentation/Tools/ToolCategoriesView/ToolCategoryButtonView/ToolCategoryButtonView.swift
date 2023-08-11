@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct ToolCategoryButtonView: View {
+        
+    @ObservedObject private var viewModel: ToolCategoryButtonViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: ToolCategoryButtonViewModel
-    
-    // MARK: - Body
+    init(viewModel: ToolCategoryButtonViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack(alignment: .topLeading) {

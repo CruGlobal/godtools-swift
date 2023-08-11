@@ -9,24 +9,12 @@
 import Foundation
 
 class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
-    
-    // MARK: - Properties
-    
-    private weak var flowDelegate: FlowDelegate?
+        
     private let analytics: AnalyticsContainer
-    
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
-    override var tools: [ToolDomainModel] {
-        didSet {
-            if tools.isEmpty {
-                closePage()
-            }
-        }
-    }
-    
-    // MARK: - Init
-    
+    private weak var flowDelegate: FlowDelegate?
+        
     init(localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, flowDelegate: FlowDelegate?, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
@@ -34,10 +22,16 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
         
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         
-        super.init(localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: nil)
+        super.init(localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: nil, maxNumberOfCardsToShow: nil)
     }
-    
-    // MARK: - Overrides
+        
+    override var tools: [ToolDomainModel] {
+        didSet {
+            if tools.isEmpty {
+                closePage()
+            }
+        }
+    }
     
     override func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         return ToolCardViewModel(

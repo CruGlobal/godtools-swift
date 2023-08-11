@@ -14,7 +14,12 @@ struct OnboardingQuickStartView: View {
     private let itemSpacing: CGFloat = 10
     private let itemHorizontalPadding: CGFloat = 30
     
-    @ObservedObject var viewModel: OnboardingQuickStartViewModel
+    @ObservedObject private var viewModel: OnboardingQuickStartViewModel
+    
+    init(viewModel: OnboardingQuickStartViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
          

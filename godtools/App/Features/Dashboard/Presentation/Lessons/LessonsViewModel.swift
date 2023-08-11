@@ -10,14 +10,10 @@ import Foundation
 import Combine
 
 class LessonsViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
-    private weak var flowDelegate: FlowDelegate?
+        
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
@@ -27,15 +23,13 @@ class LessonsViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Published
+    private weak var flowDelegate: FlowDelegate?
     
     @Published var isLoading: Bool = false
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
-    
-    // MARK: - Init
-    
+        
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader

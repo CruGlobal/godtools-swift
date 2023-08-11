@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct NoFavoriteToolsView: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: FavoriteToolsViewModel
-    
-    // MARK: - Body
+        
+    @ObservedObject private var viewModel: FavoriteToolsViewModel
+
+    init(viewModel: FavoriteToolsViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack {

@@ -11,11 +11,19 @@ struct ToolSettingsChooseLanguageView: View {
     
     private let languageDropDownHeight: CGFloat = 52
     
-    @ObservedObject var viewModel: ToolSettingsViewModel
+    @ObservedObject private var viewModel: ToolSettingsViewModel
     
     let geometryProxy: GeometryProxy
     let leadingInset: CGFloat
     let trailingInset: CGFloat
+    
+    init(viewModel: ToolSettingsViewModel, geometryProxy: GeometryProxy, leadingInset: CGFloat, trailingInset: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.geometryProxy = geometryProxy
+        self.leadingInset = leadingInset
+        self.trailingInset = trailingInset
+    }
         
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {

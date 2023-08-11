@@ -9,21 +9,22 @@
 import Foundation
 
 class ToolCardProvider: NSObject, ObservableObject {
-    
-    // MARK: - Properties
-    
-    var maxNumberCardsToShow: Int? = nil
-    
-    // MARK: - Published
-    
+
+    let maxNumberOfCardsToShow: Int?
+        
     @Published var tools: [ToolDomainModel] = []
-    
-    // MARK: - Public
+        
+    init(maxNumberOfCardsToShow: Int?) {
+        
+        self.maxNumberOfCardsToShow = maxNumberOfCardsToShow
+    }
     
     func cardViewModel(for tool: ToolDomainModel) -> BaseToolCardViewModel {
         assertionFailure("This method should be overriden in the subclass")
         return BaseToolCardViewModel()
     }
     
-    func toolTapped(_ tool: ToolDomainModel) {}
+    func toolTapped(_ tool: ToolDomainModel) {
+        
+    }
 }

@@ -9,20 +9,21 @@
 import SwiftUI
 
 struct LessonCardView: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: BaseLessonCardViewModel
-    let cardWidth: CGFloat
-    
-    // MARK: - Constants
-    
+        
     private enum Sizes {
         static let cornerRadius: CGFloat = 6
         static let leadingPadding: CGFloat = 15
     }
     
-    // MARK: - Body
+    private let cardWidth: CGFloat
+        
+    @ObservedObject private var viewModel: BaseLessonCardViewModel
+    
+    init(viewModel: BaseLessonCardViewModel, cardWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.cardWidth = cardWidth
+    }
     
     var body: some View {
         ZStack(alignment: .top) {

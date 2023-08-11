@@ -9,14 +9,10 @@
 import SwiftUI
 
 struct BannerView<Content: View>: View {
-    
-    // MARK: - Properties
-    
+        
     let content: () -> Content
     let closeButtonTapHandler: () -> Void
-    
-    // MARK: - Body
-    
+        
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ColorPalette.banner.color

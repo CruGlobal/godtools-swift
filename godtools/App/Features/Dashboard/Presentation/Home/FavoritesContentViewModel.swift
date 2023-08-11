@@ -14,10 +14,7 @@ protocol FavoritesContentViewModelDelegate: AnyObject {
 }
 
 class FavoritesContentViewModel: ObservableObject {
-    
-    // MARK: - Properties
-        
-    private weak var flowDelegate: FlowDelegate?
+            
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -36,6 +33,8 @@ class FavoritesContentViewModel: ObservableObject {
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private weak var flowDelegate: FlowDelegate?
         
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
@@ -62,14 +61,10 @@ class FavoritesContentViewModel: ObservableObject {
             delegate: self
         )
     }()
-    
-    // MARK: - Published
-    
+        
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
     @Published var isLoading: Bool = true
-
-    // MARK: - Init
     
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, translationsRepository: TranslationsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         self.flowDelegate = flowDelegate

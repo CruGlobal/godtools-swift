@@ -9,13 +9,16 @@
 import SwiftUI
 
 struct LessonsView: View {
+        
+    @ObservedObject private var viewModel: LessonsViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: LessonsViewModel
     let leadingTrailingPadding: CGFloat
     
-    // MARK: - Body
+    init(viewModel: LessonsViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         

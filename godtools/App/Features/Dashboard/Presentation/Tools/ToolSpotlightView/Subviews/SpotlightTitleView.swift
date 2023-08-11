@@ -9,14 +9,10 @@
 import SwiftUI
 
 struct SpotlightTitleView: View {
-    
-    // MARK: - Properties
-    
+        
     let title: String
     let subtitle: String
-    
-    // MARK: - Body
-    
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             

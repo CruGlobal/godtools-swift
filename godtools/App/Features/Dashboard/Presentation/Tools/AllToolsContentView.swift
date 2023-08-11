@@ -9,15 +9,16 @@
 import SwiftUI
 
 struct AllToolsContentView: View {
+        
+    private let leadingTrailingPadding: CGFloat
+        
+    @ObservedObject private var viewModel: AllToolsContentViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Init
-    
-    // MARK: - Body
+    init(viewModel: AllToolsContentViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         VStack(spacing: 0) {

@@ -11,10 +11,17 @@ struct ToolSettingsShareablesView: View {
     
     private let relatedContentSize: CGSize = CGSize(width: 112, height: 112)
     
-    @ObservedObject var viewModel: ToolSettingsViewModel
+    @ObservedObject private var viewModel: ToolSettingsViewModel
     
     let leadingInset: CGFloat
     let trailingInset: CGFloat
+    
+    init(viewModel: ToolSettingsViewModel, leadingInset: CGFloat, trailingInset: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingInset = leadingInset
+        self.trailingInset = trailingInset
+    }
         
     var body: some View {
         

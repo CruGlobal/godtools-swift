@@ -10,7 +10,12 @@ import SwiftUI
 
 struct OnboardingTutorialView: View {
         
-    @ObservedObject var viewModel: OnboardingTutorialViewModel
+    @ObservedObject private var viewModel: OnboardingTutorialViewModel
+    
+    init(viewModel: OnboardingTutorialViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

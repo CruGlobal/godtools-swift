@@ -9,15 +9,19 @@
 import SwiftUI
 
 struct ToolSpotlightView: View {
+        
+    private let width: CGFloat
+    private let leadingPadding: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: ToolSpotlightViewModel
     
-    @ObservedObject var viewModel: ToolSpotlightViewModel
-    let width: CGFloat
-    let leadingPadding: CGFloat
-    
-    // MARK: - Body
-    
+    init(viewModel: ToolSpotlightViewModel, width: CGFloat, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+        self.leadingPadding = leadingPadding
+    }
+        
     var body: some View {
         
         if viewModel.tools.isEmpty == false {
