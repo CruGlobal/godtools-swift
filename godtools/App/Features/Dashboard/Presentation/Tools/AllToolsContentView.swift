@@ -36,7 +36,7 @@ struct AllToolsContentView: View {
                 GeometryReader { geo in
                     let width = geo.size.width
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    PullToRefreshList(rootViewType: Self.self) {
                         
                         AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
                         

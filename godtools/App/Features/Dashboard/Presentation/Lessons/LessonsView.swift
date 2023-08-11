@@ -22,53 +22,40 @@ struct LessonsView: View {
     
     var body: some View {
         
-        Group {
-            if viewModel.isLoading {
+        GeometryReader { geometry in
+            
+            let width: CGFloat = geometry.size.width
+            
+            PullToRefreshList(rootViewType: Self.self) {
                 
-                ActivityIndicator(style: .medium, isAnimating: .constant(true))
-                
-            } else {
-                
-                GeometryReader { geo in
-                    let width = geo.size.width
+                VStack(alignment: .leading, spacing: 5) {
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
-                        
-                        VStack(alignment: .leading, spacing: 5) {
-                            
-                            Text(viewModel.sectionTitle)
-                                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                            
-                            Text(viewModel.subtitle)
-                                .font(FontLibrary.sfProTextRegular.font(size: 14))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                        }
-                        .padding(.top, 24)
-                        .padding(.bottom, 7)
-                        .padding([.leading, .trailing], leadingTrailingPadding)
-                        .listRowInsets(EdgeInsets())
-                        
-                        VStack(spacing: 0) {
-                            
-                            ForEach(viewModel.lessons) { lesson in
-                                
-                                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
-                                    .listRowInsets(EdgeInsets())
-                                    .contentShape(Rectangle())
-                                    .padding([.top, .bottom], 8)
-                                    .padding([.leading, .trailing], leadingTrailingPadding)
-                            }
-                        }
-                        .padding(.bottom, 27)
-                        .listRowInsets(EdgeInsets())
-                        
-                    } refreshHandler: {
-                        viewModel.refreshData()
-                    }
-                    .animation(.default, value: viewModel.lessons)
+                    Text(viewModel.sectionTitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 22))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                    
+                    Text(viewModel.subtitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 14))
+                        .foregroundColor(ColorPalette.gtGrey.color)
                 }
+                .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
+                
+                VStack(spacing: 0) {
+                    
+                    ForEach(viewModel.lessons) { lesson in
+                        
+                        LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
+                            .contentShape(Rectangle())
+                            .padding([.top, .bottom], 8)
+                            .padding([.leading, .trailing], leadingTrailingPadding)
+                    }
+                }
+                .padding(.bottom, 27)
+                
+            } refreshHandler: {
+                viewModel.refreshData()
             }
+            .animation(.default, value: viewModel.lessons)
         }
         .onAppear {
             viewModel.pageViewed()

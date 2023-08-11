@@ -23,7 +23,7 @@ struct AllFavoriteToolsView: View {
             let width = geo.size.width
             let leadingTrailingPadding = DashboardView.getMargin(for: width)
             
-            BackwardCompatibleList(rootViewType: Self.self) {
+            PullToRefreshList(rootViewType: Self.self) {
                 Group {
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))

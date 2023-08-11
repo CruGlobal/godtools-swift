@@ -39,7 +39,7 @@ struct FavoritesContentView: View {
                 GeometryReader { geo in
                     let width = geo.size.width
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    PullToRefreshList(rootViewType: Self.self) {
                         
                         Text(viewModel.pageTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
