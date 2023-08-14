@@ -34,23 +34,12 @@ struct LessonCardView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                let bannerImageWidth: CGFloat = cardWidth
-                let bannerImageHeight: CGFloat = floor((bannerImageWidth / bannerImageAspectRatio.width) * bannerImageAspectRatio.height)
-                
-                if let bannerImage = viewModel.bannerImage {
-                    
-                    bannerImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: bannerImageWidth, height: bannerImageHeight)
-                        .clipped()
-                }
-                else {
-                    
-                    Rectangle()
-                        .fill(ColorPalette.gtLightestGrey.color)
-                        .frame(width: bannerImageWidth, height: bannerImageHeight)
-                }
+                OptionalImage(
+                    image: viewModel.bannerImage,
+                    imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
+                    contentMode: .fill,
+                    placeholderColor: ColorPalette.gtLightestGrey.color
+                )
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
