@@ -1,5 +1,5 @@
 //
-//  AttachmentFileDataModel.swift
+//  AttachmentDataModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/20/22.
@@ -9,9 +9,9 @@
 import Foundation
 import SwiftUI
 
-struct AttachmentFileDataModel {
+struct AttachmentDataModel {
     
-    let attachment: AttachmentModel
+    let attachmentModel: AttachmentModel
     let data: Data
     let fileCacheLocation: FileCacheLocation
 }
