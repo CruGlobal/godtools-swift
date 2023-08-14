@@ -40,10 +40,7 @@ class GetUserAccountDetailsUseCase {
                     .eraseToAnyPublisher()
             }
             
-            let accountDetails = UserAccountDetailsDomainModel(
-                name: cachedAuthUserDetails.name ?? "",
-                joinedOnString: self.buildJoinedOnString(from: cachedAuthUserDetails)
-            )
+            let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(userDetails: cachedAuthUserDetails)
                         
             return Just(accountDetails)
                 .eraseToAnyPublisher()
@@ -59,9 +56,32 @@ class GetUserAccountDetailsUseCase {
         )
     }
     
-    private func buildJoinedOnString(from userDetails: UserDetailsDataModel) -> String {
+    private func mapUserDetails(userDetails: UserDetailsDataModel) -> UserAccountDetailsDomainModel {
         
-        guard let createdAt = userDetails.createdAt else {
+        return UserAccountDetailsDomainModel(
+            name: getName(userDetails: userDetails),
+            joinedOnString: getJoinedOnDate(userDetails: userDetails)
+        )
+    }
+    
+    private func getName(userDetails: UserDetailsDataModel) -> String {
+        
+        if let name = userDetails.name, !name.isEmpty {
+            return name
+        }
+        else if let firstName = userDetails.givenName, !firstName.isEmpty, let lastName = userDetails.familyName {
+            return firstName + " " + lastName
+        }
+        else if let firstName = userDetails.givenName {
+            return firstName
+        }
+        
+        return ""
+    }
+    
+    private func getJoinedOnDate(userDetails: UserDetailsDataModel) -> String {
+        
+        guard let createdAtDate = userDetails.createdAt else {
             return ""
         }
         
@@ -69,12 +89,9 @@ class GetUserAccountDetailsUseCase {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         
-        let joinedOnDateString = dateFormatter.string(from: createdAt)
+        let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let joinedOnString = String.localizedStringWithFormat(
-            self.localizationServices.stringForMainBundle(key: "account.joinedOn"),
-            joinedOnDateString
-        )
+        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForMainBundle(key: "account.joinedOn"), formattedCreatedAtDateString)
         
         return joinedOnString
     }
