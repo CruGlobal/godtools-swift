@@ -29,7 +29,6 @@ struct ToolCardsView: View {
         ForEach(viewModel.tools) { tool in
             
             ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardType: cardType, cardWidth: width - 2 * leadingPadding)
-                .listRowInsets(EdgeInsets())
                 .contentShape(Rectangle())
                 .padding([.top, .bottom], 8)
                 .padding([.leading, .trailing], leadingPadding)

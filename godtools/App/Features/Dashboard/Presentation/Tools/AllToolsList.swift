@@ -27,14 +27,11 @@ struct AllToolsList: View {
         VStack(spacing: 0) {
             
             ToolSpotlightView(viewModel: viewModel.spotlightViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                .listRowInsets(EdgeInsets())
             
             ToolCategoriesView(viewModel: viewModel.categoriesViewModel, leadingPadding: leadingTrailingPadding)
-                .listRowInsets(EdgeInsets())
                 .animation(.default, value: viewModel.categoriesViewModel.selectedCategoryId)
             
             SeparatorView()
-                .listRowInsets(EdgeInsets())
                 .padding([.leading, .trailing], leadingTrailingPadding)
             
             ToolCardsView(viewModel: viewModel.toolCardsViewModel, cardType: .standard, width: width, leadingPadding: leadingTrailingPadding)
