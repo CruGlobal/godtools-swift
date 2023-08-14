@@ -23,6 +23,7 @@ struct FavoritesContentView: View {
     var body: some View {
         
         VStack(spacing: 0) {
+            
             if viewModel.hideTutorialBanner == false {
                 
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
@@ -37,9 +38,10 @@ struct FavoritesContentView: View {
             } else {
                 
                 GeometryReader { geo in
+                    
                     let width = geo.size.width
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    PullToRefreshList(rootViewType: Self.self) {
                         
                         Text(viewModel.pageTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
@@ -48,12 +50,13 @@ struct FavoritesContentView: View {
                             .padding(.bottom, 15)
                             .padding(.leading, leadingTrailingPadding)
                         
-                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.bottom, 10)
+                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding, lessonTappedClosure: { (lesson: LessonDomainModel) in
+                            
+                            viewModel.lessonTapped(lesson: lesson)
+                        })
+                        .padding(.bottom, 10)
                         
                         FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
                             .padding(.bottom, 23)
                                                 
                     } refreshHandler: {
