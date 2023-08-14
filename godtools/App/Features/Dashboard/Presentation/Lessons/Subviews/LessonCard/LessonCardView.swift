@@ -10,8 +10,11 @@ import SwiftUI
 
 struct LessonCardView: View {
         
+    private let backgroundColor: Color = Color.white
     private let cornerRadius: CGFloat = 6
     private let cardWidth: CGFloat
+    private let bannerImageAspectRatio: CGSize = CGSize(width: 335, height: 87)
+    private let contentHorizontalPadding: CGFloat = 15
     private let cardTappedClosure: (() -> Void)?
         
     @ObservedObject private var viewModel: LessonCardViewModel
@@ -24,6 +27,64 @@ struct LessonCardView: View {
     }
     
     var body: some View {
+        
+        ZStack {
+            
+            backgroundColor
+            
+            VStack(alignment: .leading, spacing: 0) {
+                
+                let bannerImageWidth: CGFloat = cardWidth
+                let bannerImageHeight: CGFloat = floor((bannerImageWidth / bannerImageAspectRatio.width) * bannerImageAspectRatio.height)
+                
+                if let bannerImage = viewModel.bannerImage {
+                    
+                    bannerImage
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: bannerImageWidth, height: bannerImageHeight)
+                        .clipped()
+                }
+                else {
+                    
+                    Rectangle()
+                        .fill(ColorPalette.gtLightestGrey.color)
+                        .frame(width: bannerImageWidth, height: bannerImageHeight)
+                }
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    Text(viewModel.title)
+                        .font(FontLibrary.sfProTextBold.font(size: 17))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .lineSpacing(2)
+                        .lineLimit(3)
+                        .padding(.trailing, 41)
+                    
+                    FixedVerticalSpacer(height: 9)
+                    
+                    HStack {
+                        
+                        Spacer()
+                        
+                        ResourceCardLanguageView(
+                            languageName: viewModel.translationAvailableText
+                        )
+                    }
+                }
+                .padding([.top, .bottom], 15)
+                .padding([.leading, .trailing], contentHorizontalPadding)
+                .frame(width: cardWidth, alignment: .topLeading)
+                
+            }
+            .frame(width: cardWidth)
+        }
+        .frame(width: cardWidth)
+        .cornerRadius(cornerRadius)
+        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 1, y: 1)
+        
+        
+        /*
         
         ZStack {
             
@@ -58,7 +119,7 @@ struct LessonCardView: View {
         .contentShape(Rectangle()) // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
         .onTapGesture {
             cardTappedClosure?()
-        }
+        }*/
     }
 }
 
