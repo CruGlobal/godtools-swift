@@ -10,15 +10,20 @@ import SwiftUI
 
 struct ToolDetailsView: View {
     
-    static let sectionDescriptionTextInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
-    
     private static let headerViewId: String = "HeaderViewId"
+    
+    static let sectionDescriptionTextInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
     
     @State private var selectedSegmentIndex: Int = 0
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
+    
+    init(viewModel: ToolDetailsViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

@@ -9,14 +9,17 @@
 import SwiftUI
 
 struct ToolCardView: View {
+
+    private enum Sizes {
+        static let cornerRadius: CGFloat = 6
+        static let leadingPadding: CGFloat = 15
+        static let navButtonWidthMultiplier: CGFloat = 192/335
+    }
     
-    // MARK: - Properties
+    private let cardType: ToolCardType
+    private let cardWidth: CGFloat
     
-    @ObservedObject var viewModel: BaseToolCardViewModel
-    let cardType: ToolCardType
-    let cardWidth: CGFloat
-    
-    var whiteSpaceHeight: CGFloat? {
+    private var whiteSpaceHeight: CGFloat? {
         switch cardType {
         case .standard, .standardWithNavButtons:
             return nil
@@ -27,15 +30,14 @@ struct ToolCardView: View {
         }
     }
     
-    // MARK: - Constants
+    @ObservedObject private var viewModel: BaseToolCardViewModel
     
-    private enum Sizes {
-        static let cornerRadius: CGFloat = 6
-        static let leadingPadding: CGFloat = 15
-        static let navButtonWidthMultiplier: CGFloat = 192/335
+    init(viewModel: BaseToolCardViewModel, cardType: ToolCardType, cardWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.cardType = cardType
+        self.cardWidth = cardWidth
     }
-    
-    // MARK: - Body
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -64,7 +66,7 @@ struct ToolCardView: View {
                             if cardType == .squareWithNavButtons {
                                 Spacer(minLength: 0)
                                 
-                                ToolCardNavButtonView(sizeToFit: cardWidth, leadingPadding: Sizes.leadingPadding, buttonSpacing: 4, viewModel: viewModel)
+                                ToolCardNavButtonView(viewModel: viewModel, sizeToFit: cardWidth, leadingPadding: Sizes.leadingPadding, buttonSpacing: 4)
                             }
                         }
                         .padding(.leading, Sizes.leadingPadding)
@@ -80,7 +82,7 @@ struct ToolCardView: View {
                     }
                     
                     if cardType == .standardWithNavButtons {
-                        ToolCardNavButtonView(sizeToFit: cardWidth * Sizes.navButtonWidthMultiplier, leadingPadding: 0, buttonSpacing: 8, viewModel: viewModel)
+                        ToolCardNavButtonView(viewModel: viewModel, sizeToFit: cardWidth * Sizes.navButtonWidthMultiplier, leadingPadding: 0, buttonSpacing: 8)
                             .padding(.trailing, 14)
                     }
                 }

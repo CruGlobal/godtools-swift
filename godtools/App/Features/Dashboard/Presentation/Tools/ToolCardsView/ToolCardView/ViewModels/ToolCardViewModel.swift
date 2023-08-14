@@ -18,12 +18,8 @@ protocol ToolCardViewModelDelegate: AnyObject {
 }
 
 class ToolCardViewModel: BaseToolCardViewModel {
-    
-    // MARK: - Properties
-    
-    let tool: ToolDomainModel
+        
     private let localizationServices: LocalizationServices
-    
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -32,9 +28,9 @@ class ToolCardViewModel: BaseToolCardViewModel {
     private weak var delegate: ToolCardViewModelDelegate?
         
     private var cancellables = Set<AnyCancellable>()
-        
-    // MARK: - Init
     
+    let tool: ToolDomainModel
+            
     init(tool: ToolDomainModel, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardViewModelDelegate?) {
         
         self.tool = tool

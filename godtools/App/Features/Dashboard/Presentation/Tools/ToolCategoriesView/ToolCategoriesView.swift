@@ -10,13 +10,16 @@ import SwiftUI
 
 struct ToolCategoriesView: View {
     
-    // MARK: - Properties
+    private let leadingPadding: CGFloat
     
-    @ObservedObject var viewModel: ToolCategoriesViewModel
-    let leadingPadding: CGFloat
+    @ObservedObject private var viewModel: ToolCategoriesViewModel
     
-    // MARK: - Body
-    
+    init(viewModel: ToolCategoriesViewModel, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingPadding = leadingPadding
+    }
+        
     var body: some View {
         VStack(alignment: .leading) {
             

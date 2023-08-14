@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct OpenTutorialBannerView: View {
+        
+    @ObservedObject private var viewModel: OpenTutorialBannerViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: OpenTutorialBannerViewModel
-    
-    // MARK: - Body
+    init(viewModel: OpenTutorialBannerViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

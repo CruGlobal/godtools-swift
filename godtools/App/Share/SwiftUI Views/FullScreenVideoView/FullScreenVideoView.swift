@@ -12,9 +12,15 @@ struct FullScreenVideoView: View {
     
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
-    @ObservedObject var viewModel: FullScreenVideoViewModel
+    @ObservedObject private var viewModel: FullScreenVideoViewModel
     
     let backgroundColor: Color
+    
+    init(viewModel: FullScreenVideoViewModel, backgroundColor: Color) {
+        
+        self.viewModel = viewModel
+        self.backgroundColor = backgroundColor
+    }
     
     var body: some View {
         

@@ -10,27 +10,28 @@ import SwiftUI
 
 struct AllToolsList: View {
     
-    // MARK: - Properties
+    private let width: CGFloat
+    private let leadingTrailingPadding: CGFloat
+       
+    @ObservedObject private var viewModel: AllToolsContentViewModel
     
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    let width: CGFloat
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: AllToolsContentViewModel, width: CGFloat, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         
         VStack(spacing: 0) {
             
             ToolSpotlightView(viewModel: viewModel.spotlightViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                .listRowInsets(EdgeInsets())
             
             ToolCategoriesView(viewModel: viewModel.categoriesViewModel, leadingPadding: leadingTrailingPadding)
-                .listRowInsets(EdgeInsets())
                 .animation(.default, value: viewModel.categoriesViewModel.selectedCategoryId)
             
             SeparatorView()
-                .listRowInsets(EdgeInsets())
                 .padding([.leading, .trailing], leadingTrailingPadding)
             
             ToolCardsView(viewModel: viewModel.toolCardsViewModel, cardType: .standard, width: width, leadingPadding: leadingTrailingPadding)
@@ -38,8 +39,6 @@ struct AllToolsList: View {
         .padding(.bottom, 26)
     }
 }
-
-// MARK: - Preview
 
 struct AllToolsList_Previews: PreviewProvider {
     static var previews: some View {

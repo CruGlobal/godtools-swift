@@ -14,10 +14,7 @@ protocol FavoritesContentViewModelDelegate: AnyObject {
 }
 
 class FavoritesContentViewModel: ObservableObject {
-    
-    // MARK: - Properties
-        
-    private weak var flowDelegate: FlowDelegate?
+            
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
@@ -36,6 +33,8 @@ class FavoritesContentViewModel: ObservableObject {
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private weak var flowDelegate: FlowDelegate?
         
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
@@ -45,8 +44,7 @@ class FavoritesContentViewModel: ObservableObject {
             getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            translationsRepository: translationsRepository,
-            delegate: self
+            translationsRepository: translationsRepository
         )
     }()
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
@@ -62,22 +60,18 @@ class FavoritesContentViewModel: ObservableObject {
             delegate: self
         )
     }()
-    
-    // MARK: - Published
-    
+        
     @Published var pageTitle: String = ""
     @Published var hideTutorialBanner: Bool = true
     @Published var isLoading: Bool = true
-
-    // MARK: - Init
     
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, translationsRepository: TranslationsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+        
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         self.analytics = analytics
         self.translationsRepository = translationsRepository
-        
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getBannerImageUseCase = getBannerImageUseCase
@@ -89,7 +83,33 @@ class FavoritesContentViewModel: ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
                                 
-        setupBinding()
+        getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEnabled in
+                
+                self?.hideTutorialBanner = !isEnabled
+            }
+            .store(in: &cancellables)
+        
+        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] primaryLanguage in
+                
+                self?.setupTitle(with: primaryLanguage)
+                self?.isLoading = false
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Inputs
+
+extension FavoritesContentViewModel {
+    
+    func lessonTapped(lesson: LessonDomainModel) {
+        
+        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(lesson: lesson))
+        trackFeaturedLessonTappedAnalytics(for: lesson)
     }
 }
 
@@ -121,26 +141,6 @@ extension FavoritesContentViewModel {
 
 extension FavoritesContentViewModel {
     
-    private func setupBinding() {
-        
-        getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isEnabled in
-                
-                self?.hideTutorialBanner = !isEnabled
-            }
-            .store(in: &cancellables)
-        
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] primaryLanguage in
-                
-                self?.setupTitle(with: primaryLanguage)
-                self?.isLoading = false
-            }
-            .store(in: &cancellables)
-    }
-    
     private func setupTitle(with language: LanguageDomainModel?) {
 
         pageTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "favorites.pageTitle")
@@ -158,16 +158,6 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
         flowDelegate?.navigate(step: .openTutorialTappedFromTools)
         
         closeBanner()
-    }
-}
-
-// MARK: - LessonCardDelegate
-
-extension FavoritesContentViewModel: LessonCardDelegate {
-    
-    func lessonCardTapped(lesson: LessonDomainModel) {
-        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(lesson: lesson))
-        trackFeaturedLessonTappedAnalytics(for: lesson)
     }
 }
 

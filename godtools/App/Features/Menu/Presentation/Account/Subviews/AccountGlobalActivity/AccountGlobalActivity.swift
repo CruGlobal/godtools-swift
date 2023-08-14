@@ -12,9 +12,15 @@ struct AccountGlobalActivity: View {
     
     private let itemSpacing: CGFloat = 20
     
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
     
     let sectionFrameWidth: CGFloat
+    
+    init(viewModel: AccountViewModel, sectionFrameWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.sectionFrameWidth = sectionFrameWidth
+    }
     
     var body: some View {
         

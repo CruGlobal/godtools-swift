@@ -10,7 +10,12 @@ import SwiftUI
 
 struct DashboardTabBarView: View {
     
-    @ObservedObject var viewModel: DashboardViewModel
+    @ObservedObject private var viewModel: DashboardViewModel
+    
+    init(viewModel: DashboardViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

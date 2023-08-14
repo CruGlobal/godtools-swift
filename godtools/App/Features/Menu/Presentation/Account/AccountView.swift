@@ -10,13 +10,18 @@ import SwiftUI
 
 struct AccountView: View {
     
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
         
+    init(viewModel: AccountViewModel) {
+        
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         
         GeometryReader { geometry in
-            
-            ScrollView(.vertical, showsIndicators: false) {
+               
+            PullToRefreshScrollView(showsIndicators: false) {
                 
                 VStack(alignment: .leading, spacing: 0) {
                                         
@@ -24,6 +29,10 @@ struct AccountView: View {
                                         
                     AccountSectionsView(viewModel: viewModel, geometry: geometry)
                 }
+                
+            } refreshHandler: {
+                
+                viewModel.pullToRefresh()
             }
         }
         .navigationTitle(viewModel.navTitle)

@@ -12,9 +12,15 @@ struct OnboardingTutorialMediaView: View {
         
     private let animationAspectRatio: CGSize = CGSize(width: 154, height: 139)
     
-    @ObservedObject var viewModel: OnboardingTutorialMediaViewModel
+    @ObservedObject private var viewModel: OnboardingTutorialMediaViewModel
         
     let geometry: GeometryProxy
+    
+    init(viewModel: OnboardingTutorialMediaViewModel, geometry: GeometryProxy) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+    }
     
     var body: some View {
         

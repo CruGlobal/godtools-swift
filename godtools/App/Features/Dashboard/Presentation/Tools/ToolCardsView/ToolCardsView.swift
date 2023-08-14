@@ -9,22 +9,26 @@
 import SwiftUI
 
 struct ToolCardsView: View {
+        
+    private let cardType: ToolCardType
+    private let width: CGFloat
+    private let leadingPadding: CGFloat
+        
+    @ObservedObject private var viewModel: ToolCardProvider
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: ToolCardProvider
-    let cardType: ToolCardType
-    let width: CGFloat
-    let leadingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: ToolCardProvider, cardType: ToolCardType, width: CGFloat, leadingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.cardType = cardType
+        self.width = width
+        self.leadingPadding = leadingPadding
+    }
     
     var body: some View {
         
         ForEach(viewModel.tools) { tool in
             
             ToolCardView(viewModel: viewModel.cardViewModel(for: tool), cardType: cardType, cardWidth: width - 2 * leadingPadding)
-                .listRowInsets(EdgeInsets())
                 .contentShape(Rectangle())
                 .padding([.top, .bottom], 8)
                 .padding([.leading, .trailing], leadingPadding)

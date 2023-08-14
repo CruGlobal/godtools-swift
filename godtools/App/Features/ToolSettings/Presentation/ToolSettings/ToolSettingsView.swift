@@ -9,11 +9,16 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
-    @ObservedObject var viewModel: ToolSettingsViewModel
-    
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
     private let separatorLineSpacing: CGFloat = 20
     private let bottomSpace: CGFloat = 15
+    
+    @ObservedObject private var viewModel: ToolSettingsViewModel
+    
+    init(viewModel: ToolSettingsViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         GeometryReader { geometry in

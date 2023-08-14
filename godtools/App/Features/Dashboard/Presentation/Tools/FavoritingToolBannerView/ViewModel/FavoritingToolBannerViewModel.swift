@@ -13,18 +13,13 @@ protocol FavoritingToolBannerViewModelDelegate: AnyObject {
 }
 
 class FavoritingToolBannerViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
+        
     private let localizationServices: LocalizationServices
+    
     private weak var delegate: FavoritingToolBannerViewModelDelegate?
-    
-    // MARK: - Published
-    
+        
     @Published var message: String
-    
-    // MARK: - Init
-    
+        
     init(localizationServices: LocalizationServices, delegate: FavoritingToolBannerViewModelDelegate?) {
         self.localizationServices = localizationServices
         self.delegate = delegate

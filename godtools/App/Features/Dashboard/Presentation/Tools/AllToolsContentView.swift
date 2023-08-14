@@ -9,15 +9,16 @@
 import SwiftUI
 
 struct AllToolsContentView: View {
+        
+    private let leadingTrailingPadding: CGFloat
+        
+    @ObservedObject private var viewModel: AllToolsContentViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: AllToolsContentViewModel
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Init
-    
-    // MARK: - Body
+    init(viewModel: AllToolsContentViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,11 +34,15 @@ struct AllToolsContentView: View {
             } else {
                 
                 GeometryReader { geo in
+                    
                     let width = geo.size.width
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    PullToRefreshScrollView(showsIndicators: true) {
                         
-                        AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            
+                            AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
+                        }
                         
                     } refreshHandler: {
                         viewModel.refreshTools()

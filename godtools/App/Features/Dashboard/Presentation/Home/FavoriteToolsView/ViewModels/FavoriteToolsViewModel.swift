@@ -15,31 +15,21 @@ protocol FavoriteToolsViewModelDelegate: ToolCardViewModelDelegate {
 }
 
 class FavoriteToolsViewModel: BaseFavoriteToolsViewModel {
- 
-    // MARK: - Constants
-    
-    private let maxNumberCardsShown = 5
-    
-    // MARK: - Properties
-    
+     
+    private let defaultMaxNumberOfCardsToShow: Int = 5
+        
     private weak var delegate: FavoriteToolsViewModelDelegate?
-    
-    // MARK: - Published
-    
+        
     @Published var viewAllButtonText: String = ""
     @Published var noFavoriteToolsTitle: String = ""
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
-    
-    // MARK: - Init
-    
+        
     init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: FavoriteToolsViewModelDelegate?) {
         
         self.delegate = delegate
         
-        super.init(localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: delegate)
-        
-        maxNumberCardsToShow = maxNumberCardsShown
+        super.init(localizationServices: localizationServices, getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase, getBannerImageUseCase: getBannerImageUseCase, getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: getToolIsFavoritedUseCase, toolCardViewModelDelegate: delegate, maxNumberOfCardsToShow: defaultMaxNumberOfCardsToShow)
     }
     
     override func setText(for language: LanguageDomainModel?) {

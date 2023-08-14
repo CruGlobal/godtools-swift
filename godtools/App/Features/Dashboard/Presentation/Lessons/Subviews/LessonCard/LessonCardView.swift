@@ -9,40 +9,40 @@
 import SwiftUI
 
 struct LessonCardView: View {
+        
+    private let cornerRadius: CGFloat = 6
+    private let cardWidth: CGFloat
+    private let cardTappedClosure: (() -> Void)?
+        
+    @ObservedObject private var viewModel: LessonCardViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: BaseLessonCardViewModel
-    let cardWidth: CGFloat
-    
-    // MARK: - Constants
-    
-    private enum Sizes {
-        static let cornerRadius: CGFloat = 6
-        static let leadingPadding: CGFloat = 15
+    init(viewModel: LessonCardViewModel, cardWidth: CGFloat, cardTappedClosure: (() -> Void)?) {
+        
+        self.viewModel = viewModel
+        self.cardWidth = cardWidth
+        self.cardTappedClosure = cardTappedClosure
     }
     
-    // MARK: - Body
-    
     var body: some View {
-        ZStack(alignment: .top) {
+        
+        ZStack {
             
-            RoundedCardBackgroundView(cornerRadius: Sizes.cornerRadius)
+            RoundedCardBackgroundView(cornerRadius: cornerRadius, fillColor: .white)
             
             VStack(alignment: .leading, spacing: 0) {
-                ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, isSquareLayout: false, cardWidth: cardWidth, cornerRadius: Sizes.cornerRadius)
                 
-                ResourceCardProgressView(frontProgress: viewModel.translationDownloadProgressValue, backProgress: viewModel.attachmentsDownloadProgressValue)
-                
-                VStack(alignment: .leading, spacing: 9) {
+                ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, isSquareLayout: false, cardWidth: cardWidth, cornerRadius: cornerRadius)
+                                
+                VStack(alignment: .leading, spacing: 0) {
                     
                     Text(viewModel.title)
                         .font(FontLibrary.sfProTextBold.font(size: 17))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .lineSpacing(2)
                         .lineLimit(3)
-                        .fixedSize(horizontal: false, vertical: true)
                         .padding(.trailing, 41)
+                    
+                    FixedVerticalSpacer(height: 9)
                     
                     HStack {
                         Spacer()
@@ -50,26 +50,32 @@ struct LessonCardView: View {
                     }
                 }
                 .padding([.top, .bottom], 15)
-                .padding([.leading, .trailing], Sizes.leadingPadding)
+                .padding([.leading, .trailing], 15)
                 .frame(width: cardWidth, alignment: .topLeading)
             }
             
         }
-        .fixedSize(horizontal: true, vertical: true)
-        // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
-        .contentShape(Rectangle())
-        .animation(.default, value: viewModel.bannerImage)
+        .contentShape(Rectangle()) // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
         .onTapGesture {
-            viewModel.lessonCardTapped()
+            cardTappedClosure?()
         }
     }
 }
 
 struct LessonCardView_Previews: PreviewProvider {
+    
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let lesson = LessonDomainModel(abbreviation: "five", bannerImageId: "1", dataModelId: "9", description: "five reasons", languageIds: [], name: "Five Reasons to be Courageous")
+        
+        let lesson = LessonDomainModel(
+            abbreviation: "five",
+            bannerImageId: "1",
+            dataModelId: "9",
+            description: "five reasons",
+            languageIds: [],
+            name: "Five Reasons to be Courageous"
+        )
         
         let viewModel = LessonCardViewModel(
             lesson: lesson,
@@ -77,10 +83,9 @@ struct LessonCardView_Previews: PreviewProvider {
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            delegate: nil
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
         )
         
-        LessonCardView(viewModel: viewModel, cardWidth: 345)
+        LessonCardView(viewModel: viewModel, cardWidth: 345, cardTappedClosure: nil)
     }
 }

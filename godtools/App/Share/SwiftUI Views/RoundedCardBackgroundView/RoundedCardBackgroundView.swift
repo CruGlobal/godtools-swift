@@ -9,14 +9,16 @@
 import SwiftUI
 
 struct RoundedCardBackgroundView: View {
+        
+    let cornerRadius: CGFloat
+    let fillColor: Color
     
-    // MARK: - Properties
-    
-    var cornerRadius: CGFloat = 6
-    var fillColor: Color = .white
-    
-    // MARK: - Body
-    
+    init(cornerRadius: CGFloat = 6, fillColor: Color = .white) {
+        
+        self.cornerRadius = cornerRadius
+        self.fillColor = fillColor
+    }
+        
     var body: some View {
         RoundedRectangle(cornerRadius: cornerRadius, style: .circular)
             .fill(fillColor)

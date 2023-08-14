@@ -10,10 +10,7 @@ import Foundation
 import Combine
 
 class AllToolsContentViewModel: ObservableObject {
-    
-    // MARK: - Properties
-        
-    private weak var flowDelegate: FlowDelegate?
+            
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
@@ -28,6 +25,8 @@ class AllToolsContentViewModel: ObservableObject {
     private let getToolCategoriesUseCase: GetToolCategoriesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
+    
+    private weak var flowDelegate: FlowDelegate?
         
     private(set) lazy var spotlightViewModel: ToolSpotlightViewModel = {
         ToolSpotlightViewModel(
@@ -62,14 +61,10 @@ class AllToolsContentViewModel: ObservableObject {
             delegate: self
         )
     }()
-    
-    // MARK: - Published
-    
+        
     @Published var isLoading: Bool = false
     @Published var hideFavoritingToolBanner: Bool
-    
-    // MARK: - Init
-    
+        
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader

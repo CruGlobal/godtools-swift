@@ -10,13 +10,13 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    @ObservedObject var viewModel: DashboardViewModel
-    
     private static let marginMultiplier: CGFloat = 15/375
     
+    @ObservedObject private var viewModel: DashboardViewModel
+    
     init(viewModel: DashboardViewModel) {
+       
         self.viewModel = viewModel
-        
     }
     
     var body: some View {

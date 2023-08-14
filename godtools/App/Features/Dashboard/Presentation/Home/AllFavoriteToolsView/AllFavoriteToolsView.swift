@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct AllFavoriteToolsView: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: AllFavoriteToolsViewModel
-    
-    // MARK: - Body
+        
+    @ObservedObject private var viewModel: AllFavoriteToolsViewModel
+        
+    init(viewModel: AllFavoriteToolsViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         
@@ -22,20 +23,26 @@ struct AllFavoriteToolsView: View {
             let width = geo.size.width
             let leadingTrailingPadding = DashboardView.getMargin(for: width)
             
-            BackwardCompatibleList(rootViewType: Self.self) {
-                Group {
-                    Text(viewModel.sectionTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 22))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .padding(.leading, leadingTrailingPadding)
-                        .padding(.top, 30)
-                        .padding(.bottom, 15)
+            PullToRefreshScrollView(showsIndicators: true) {
+                
+                LazyVStack(alignment: .leading, spacing: 0) {
                     
-                    ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
+                    Group {
+                        Text(viewModel.sectionTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 22))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.leading, leadingTrailingPadding)
+                            .padding(.top, 30)
+                            .padding(.bottom, 15)
+                        
+                        ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
+                    }
                 }
-                .listRowInsets(EdgeInsets())
-            } refreshHandler: {}
-                .animation(.default, value: viewModel.tools)
+                
+            } refreshHandler: {
+                
+            }
+            .animation(.default, value: viewModel.tools)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {

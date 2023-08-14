@@ -16,9 +16,11 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         case noTools
         case tools
     }
- 
-    // MARK: - Properties
     
+    private var cancellables = Set<AnyCancellable>()
+    
+    private weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
+     
     let localizationServices: LocalizationServices
     
     let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
@@ -27,19 +29,11 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
     let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    
-    weak var toolCardViewModelDelegate: ToolCardViewModelDelegate?
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    // MARK: - Published
-    
+        
     @Published var viewState: ViewState = .loading
     @Published var sectionTitle: String = ""
-    
-    // MARK: - Init
-    
-    init(localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?) {
+        
+    init(localizationServices: LocalizationServices, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toolCardViewModelDelegate: ToolCardViewModelDelegate?, maxNumberOfCardsToShow: Int?) {
         self.localizationServices = localizationServices
         
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
@@ -51,7 +45,7 @@ class BaseFavoriteToolsViewModel: ToolCardProvider {
         
         self.toolCardViewModelDelegate = toolCardViewModelDelegate
         
-        super.init()
+        super.init(maxNumberOfCardsToShow: maxNumberOfCardsToShow)
         
         setupBinding()
     }

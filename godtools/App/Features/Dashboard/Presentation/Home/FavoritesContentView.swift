@@ -9,17 +9,21 @@
 import SwiftUI
 
 struct FavoritesContentView: View {
+        
+    private let leadingTrailingPadding: CGFloat
     
-    // MARK: - Properties
+    @ObservedObject private var viewModel: FavoritesContentViewModel
     
-    @ObservedObject var viewModel: FavoritesContentViewModel
-    let leadingTrailingPadding: CGFloat
-    
-    // MARK: - Body
+    init(viewModel: FavoritesContentViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         
         VStack(spacing: 0) {
+            
             if viewModel.hideTutorialBanner == false {
                 
                 OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
@@ -34,26 +38,32 @@ struct FavoritesContentView: View {
             } else {
                 
                 GeometryReader { geo in
+                    
                     let width = geo.size.width
                     
-                    BackwardCompatibleList(rootViewType: Self.self) {
+                    PullToRefreshScrollView(showsIndicators: true) {
                         
-                        Text(viewModel.pageTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 30))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 24)
-                            .padding(.bottom, 15)
-                            .padding(.leading, leadingTrailingPadding)
-                        
-                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            
+                            Text(viewModel.pageTitle)
+                                .font(FontLibrary.sfProTextRegular.font(size: 30))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                                .padding(.top, 24)
+                                .padding(.bottom, 15)
+                                .padding(.leading, leadingTrailingPadding)
+                            
+                            FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding, lessonTappedClosure: { (lesson: LessonDomainModel) in
+                                
+                                viewModel.lessonTapped(lesson: lesson)
+                            })
                             .padding(.bottom, 10)
+                            
+                            FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                                .padding(.bottom, 23)
+                        }
                         
-                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .listRowInsets(EdgeInsets())
-                            .padding(.bottom, 23)
-                                                
                     } refreshHandler: {
+                        
                         viewModel.refreshData()
                     }
                 }

@@ -12,10 +12,17 @@ struct OnboardingQuickStartItemView: View {
     
     private let backgroundColor: Color = Color.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
     
-    @ObservedObject var viewModel: OnboardingQuickStartItemViewModel
+    @ObservedObject private var viewModel: OnboardingQuickStartItemViewModel
     
     let geometry: GeometryProxy
     let itemTappedClosure: (() -> Void)
+    
+    init(viewModel: OnboardingQuickStartItemViewModel, geometry: GeometryProxy, itemTappedClosure: @escaping (() -> Void)) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+        self.itemTappedClosure = itemTappedClosure
+    }
     
     var body: some View {
         

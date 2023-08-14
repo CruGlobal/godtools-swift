@@ -9,19 +9,13 @@
 import Foundation
 
 class ToolCategoryButtonViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    
+        
     let category: ToolCategoryDomainModel
-
-    // MARK: - Published
     
     @Published var categoryText: String = ""
     @Published var greyOutText: Bool = false
     @Published var showBorder: Bool = false
-        
-    // MARK: - Init
-    
+            
     init(category: ToolCategoryDomainModel, selectedCategoryId: String?) {
         self.category = category
         

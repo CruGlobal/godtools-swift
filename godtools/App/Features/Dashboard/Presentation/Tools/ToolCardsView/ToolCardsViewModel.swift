@@ -14,25 +14,20 @@ protocol ToolCardsViewModelDelegate: ToolCardViewModelDelegate {
 }
 
 class ToolCardsViewModel: ToolCardProvider {
-    
-    // MARK: - Properties
-    
+        
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
-    
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getBannerImageUseCase: GetBannerImageUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    
-    private weak var delegate: ToolCardsViewModelDelegate?
-    private var cancellables = Set<AnyCancellable>()
-    
     private let categoryFilterValuePublisher = CurrentValueSubject<String?, Never>(nil)
     
-    // MARK: - Init
+    private var cancellables = Set<AnyCancellable>()
     
+    private weak var delegate: ToolCardsViewModelDelegate?
+        
     init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase,  getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, delegate: ToolCardsViewModelDelegate?) {
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
@@ -45,7 +40,7 @@ class ToolCardsViewModel: ToolCardProvider {
         
         self.delegate = delegate
         
-        super.init()
+        super.init(maxNumberOfCardsToShow: nil)
         
         setupBinding()
     }

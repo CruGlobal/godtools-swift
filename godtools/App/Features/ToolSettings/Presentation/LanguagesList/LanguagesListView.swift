@@ -10,7 +10,12 @@ import SwiftUI
 
 struct LanguagesListView: View {
         
-    @ObservedObject var viewModel: LanguagesListViewModel
+    @ObservedObject private var viewModel: LanguagesListViewModel
+    
+    init(viewModel: LanguagesListViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

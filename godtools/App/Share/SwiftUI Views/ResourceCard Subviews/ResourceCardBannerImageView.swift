@@ -9,16 +9,7 @@
 import SwiftUI
 
 struct ResourceCardBannerImageView: View {
-    
-    // MARK: - Properties
-    
-    let bannerImage: Image?
-    let isSquareLayout: Bool
-    let cardWidth: CGFloat
-    let cornerRadius: CGFloat
-    
-    // MARK: - Constants
-    
+
     private enum Sizes {
         enum Standard {
             static let cardWidth: CGFloat = 335
@@ -32,7 +23,10 @@ struct ResourceCardBannerImageView: View {
         }
     }
     
-    // MARK: - Body
+    let bannerImage: Image?
+    let isSquareLayout: Bool
+    let cardWidth: CGFloat
+    let cornerRadius: CGFloat
     
     var body: some View {
         let bannerImageAspectRatio = isSquareLayout ? Sizes.Square.bannerImageAspectRatio : Sizes.Standard.bannerImageAspectRatio

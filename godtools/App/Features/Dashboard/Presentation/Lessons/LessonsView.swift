@@ -9,63 +9,60 @@
 import SwiftUI
 
 struct LessonsView: View {
+        
+    @ObservedObject private var viewModel: LessonsViewModel
     
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: LessonsViewModel
     let leadingTrailingPadding: CGFloat
     
-    // MARK: - Body
+    init(viewModel: LessonsViewModel, leadingTrailingPadding: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.leadingTrailingPadding = leadingTrailingPadding
+    }
     
     var body: some View {
         
-        Group {
-            if viewModel.isLoading {
-                
-                ActivityIndicator(style: .medium, isAnimating: .constant(true))
-                
-            } else {
-                
-                GeometryReader { geo in
-                    let width = geo.size.width
-                    
-                    BackwardCompatibleList(rootViewType: Self.self) {
+        GeometryReader { geometry in
                         
-                        VStack(alignment: .leading, spacing: 5) {
-                            
-                            Text(viewModel.sectionTitle)
-                                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                            
-                            Text(viewModel.subtitle)
-                                .font(FontLibrary.sfProTextRegular.font(size: 14))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                        }
-                        .padding(.top, 24)
-                        .padding(.bottom, 7)
-                        .padding([.leading, .trailing], leadingTrailingPadding)
-                        .listRowInsets(EdgeInsets())
+            PullToRefreshScrollView(showsIndicators: true) {
+                
+                LazyVStack(alignment: .leading, spacing: 0) {
+                 
+                    VStack(alignment: .leading, spacing: 0) {
                         
-                        VStack(spacing: 0) {
-                            
-                            ForEach(viewModel.lessons) { lesson in
-                                
-                                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
-                                    .listRowInsets(EdgeInsets())
-                                    .contentShape(Rectangle())
-                                    .padding([.top, .bottom], 8)
-                                    .padding([.leading, .trailing], leadingTrailingPadding)
-                            }
-                        }
-                        .padding(.bottom, 27)
-                        .listRowInsets(EdgeInsets())
+                        Text(viewModel.sectionTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 22))
+                            .foregroundColor(ColorPalette.gtGrey.color)
                         
-                    } refreshHandler: {
-                        viewModel.refreshData()
+                        FixedVerticalSpacer(height: 5)
+                        
+                        Text(viewModel.subtitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 14))
+                            .foregroundColor(ColorPalette.gtGrey.color)
                     }
-                    .animation(.default, value: viewModel.lessons)
+                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
+                    
+                    VStack(spacing: 0) {
+                        
+                        ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
+                            
+                            let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
+                            
+                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
+                                
+                                viewModel.lessonCardTapped(lesson: lesson)
+                            })
+                            .padding([.top, .bottom], 8)
+                            .padding([.leading, .trailing], leadingTrailingPadding)
+                        }
+                    }
+                    .padding(.bottom, 27)
                 }
+                
+            } refreshHandler: {
+                viewModel.refreshData()
             }
+            .animation(.default, value: viewModel.lessons)
         }
         .onAppear {
             viewModel.pageViewed()

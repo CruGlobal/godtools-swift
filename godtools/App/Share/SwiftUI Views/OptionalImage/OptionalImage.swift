@@ -9,20 +9,33 @@
 import SwiftUI
 
 struct OptionalImage: View {
+    
     let image: Image?
     let width: CGFloat
     let height: CGFloat
-    var placeholderColor: Color = .white
+    let placeholderColor: Color
+    
+    init(image: Image?, width: CGFloat, height: CGFloat, placeholderColor: Color = .white) {
+        
+        self.image = image
+        self.width = width
+        self.height = height
+        self.placeholderColor = placeholderColor
+    }
     
     var body: some View {
+      
         if let image = image {
+            
             image
                 .resizable()
                 .scaledToFill()
                 .frame(width: width, height: height)
                 .clipped()
             
-        } else {
+        }
+        else {
+           
             Rectangle()
                 .fill(placeholderColor)
                 .frame(width: width, height: height)

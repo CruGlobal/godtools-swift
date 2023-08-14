@@ -9,24 +9,23 @@
 import SwiftUI
 
 struct ToolCardNavButtonView: View {
-    
-    // MARK: - Properties
-    
-    @ObservedObject var viewModel: BaseToolCardViewModel
+        
     private let buttonWidth: CGFloat
     private let buttonSpacing: CGFloat
     
-    init(sizeToFit width: CGFloat, leadingPadding: CGFloat, buttonSpacing: CGFloat, viewModel: BaseToolCardViewModel) {
+    @ObservedObject private var viewModel: BaseToolCardViewModel
+    
+    init(viewModel: BaseToolCardViewModel, sizeToFit width: CGFloat, leadingPadding: CGFloat, buttonSpacing: CGFloat) {
+        
         let whiteSpaceAroundButtons = 2 * leadingPadding + buttonSpacing
         let buttonWidth = (width - whiteSpaceAroundButtons)/2
         
+        self.viewModel = viewModel
         self.buttonWidth = buttonWidth
         self.buttonSpacing = buttonSpacing
         self.viewModel = viewModel
     }
-    
-    // MARK: - Body
-    
+        
     var body: some View {
         HStack(spacing: buttonSpacing) {
             
@@ -57,7 +56,7 @@ struct ToolCardNavButtonView_Previews: PreviewProvider {
             delegate: nil
         )
         
-        ToolCardNavButtonView(sizeToFit: 200, leadingPadding: 20, buttonSpacing: 4, viewModel: viewModel)
+        ToolCardNavButtonView(viewModel: viewModel, sizeToFit: 200, leadingPadding: 20, buttonSpacing: 4)
             .previewLayout(.sizeThatFits)
     }
 }
