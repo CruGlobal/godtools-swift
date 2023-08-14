@@ -609,6 +609,7 @@
 		45B3652B2885055E0012BE53 /* RealmTranslationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */; };
 		45B365322885963A0012BE53 /* TranslationManifestParserFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */; };
 		45B4FC7C2A827D730037DB36 /* TutorialItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B4FC7B2A827D730037DB36 /* TutorialItemDomainModel.swift */; };
+		45B538992A8AAA960033B34E /* LessonsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B538982A8AAA960033B34E /* LessonsHeaderView.swift */; };
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
 		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
@@ -1725,6 +1726,7 @@
 		45B3652A2885055E0012BE53 /* RealmTranslationsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslationsCache.swift; sourceTree = "<group>"; };
 		45B365312885963A0012BE53 /* TranslationManifestParserFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParserFactory.swift; sourceTree = "<group>"; };
 		45B4FC7B2A827D730037DB36 /* TutorialItemDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemDomainModel.swift; sourceTree = "<group>"; };
+		45B538982A8AAA960033B34E /* LessonsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsHeaderView.swift; sourceTree = "<group>"; };
 		45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
 		45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Write.swift"; sourceTree = "<group>"; };
 		45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Delete.swift"; sourceTree = "<group>"; };
@@ -4809,6 +4811,7 @@
 			isa = PBXGroup;
 			children = (
 				45A8FB8C2A86C54E003554B6 /* LessonCard */,
+				45B538972A8AAA8C0033B34E /* LessonsHeader */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -5499,6 +5502,14 @@
 				4529B96D289345480011F16B /* TranslationManifestParserType.swift */,
 			);
 			path = ManifestParser;
+			sourceTree = "<group>";
+		};
+		45B538972A8AAA8C0033B34E /* LessonsHeader */ = {
+			isa = PBXGroup;
+			children = (
+				45B538982A8AAA960033B34E /* LessonsHeaderView.swift */,
+			);
+			path = LessonsHeader;
 			sourceTree = "<group>";
 		};
 		45B54C5A2A2642220042CD0E /* RealmDatabase */ = {
@@ -9107,6 +9118,7 @@
 				45AE974E27C97A9500C2CB33 /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */,
 				45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */,
+				45B538992A8AAA960033B34E /* LessonsHeaderView.swift in Sources */,
 				45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */,
 				45558341269F2C7B00C3FF14 /* ToolPageHeaderView.swift in Sources */,
 				450D7B0528E32965006C3FDF /* DownloadedTranslationDataModelType.swift in Sources */,
