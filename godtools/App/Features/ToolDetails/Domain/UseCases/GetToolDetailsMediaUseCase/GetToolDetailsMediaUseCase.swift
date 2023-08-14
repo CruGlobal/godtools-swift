@@ -45,7 +45,7 @@ class GetToolDetailsMediaUseCase {
     
     private func getAnimatedMediaElseImage(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentUrl(id: resource.attrAboutBannerAnimation)
+        return attachmentsRepository.getAttachmentUrlPublisher(id: resource.attrAboutBannerAnimation)
             .flatMap({ url -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let url = url else {
@@ -64,7 +64,7 @@ class GetToolDetailsMediaUseCase {
     
     private func getImageMediaElseEmpty(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentImage(id: resource.attrBanner)
+        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBanner)
             .flatMap({ image -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let image = image else {

@@ -27,9 +27,9 @@ class AttachmentsRepository {
         self.bundle = bundle
     }
     
-    func getAttachmentImage(id: String) -> AnyPublisher<Image?, Never> {
+    func getAttachmentImagePublisher(id: String) -> AnyPublisher<Image?, Never> {
         
-        return getAttachment(id: id)
+        return getAttachmentModel(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
               
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -56,9 +56,9 @@ class AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAttachmentData(id: String) -> AnyPublisher<Data?, Never> {
+    func getAttachmentDataPublisher(id: String) -> AnyPublisher<Data?, Never> {
 
-        return getAttachment(id: id)
+        return getAttachmentModel(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -77,9 +77,9 @@ class AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAttachmentUrl(id: String) -> AnyPublisher<URL?, Never> {
+    func getAttachmentUrlPublisher(id: String) -> AnyPublisher<URL?, Never> {
          
-        return getAttachment(id: id)
+        return getAttachmentModel(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentFileDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -104,7 +104,7 @@ class AttachmentsRepository {
 
 extension AttachmentsRepository {
     
-    private func getAttachment(id: String) -> AnyPublisher<AttachmentModel, Error> {
+    private func getAttachmentModel(id: String) -> AnyPublisher<AttachmentModel, Error> {
         
         guard let attachment = cache.getAttachment(id: id) else {
             

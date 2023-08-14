@@ -21,6 +21,6 @@ class GetBannerImageUseCase {
     
     func getBannerImagePublisher(for attachmentId: String) -> AnyPublisher<Image?, Never> {
         
-        return attachmentsRepository.getAttachmentImage(id: attachmentId)
+        return attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
     }
 }
