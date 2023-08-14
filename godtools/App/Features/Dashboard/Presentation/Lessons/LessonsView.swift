@@ -24,37 +24,40 @@ struct LessonsView: View {
         
         GeometryReader { geometry in
                         
-            PullToRefreshList(rootViewType: Self.self) {
+            PullToRefreshScrollView(showsIndicators: true) {
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    
-                    Text(viewModel.sectionTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 22))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                    
-                    FixedVerticalSpacer(height: 5)
-                    
-                    Text(viewModel.subtitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 14))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                }
-                .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
-                
-                VStack(spacing: 0) {
-                    
-                    ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
+                LazyVStack(alignment: .leading, spacing: 0) {
+                 
+                    VStack(alignment: .leading, spacing: 0) {
                         
-                        let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
+                        Text(viewModel.sectionTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 22))
+                            .foregroundColor(ColorPalette.gtGrey.color)
                         
-                        LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
-                            
-                            viewModel.lessonCardTapped(lesson: lesson)
-                        })
-                        .padding([.top, .bottom], 8)
-                        .padding([.leading, .trailing], leadingTrailingPadding)
+                        FixedVerticalSpacer(height: 5)
+                        
+                        Text(viewModel.subtitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 14))
+                            .foregroundColor(ColorPalette.gtGrey.color)
                     }
+                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
+                    
+                    VStack(spacing: 0) {
+                        
+                        ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
+                            
+                            let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
+                            
+                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
+                                
+                                viewModel.lessonCardTapped(lesson: lesson)
+                            })
+                            .padding([.top, .bottom], 8)
+                            .padding([.leading, .trailing], leadingTrailingPadding)
+                        }
+                    }
+                    .padding(.bottom, 27)
                 }
-                .padding(.bottom, 27)
                 
             } refreshHandler: {
                 viewModel.refreshData()

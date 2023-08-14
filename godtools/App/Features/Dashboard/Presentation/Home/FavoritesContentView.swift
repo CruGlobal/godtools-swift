@@ -41,25 +41,29 @@ struct FavoritesContentView: View {
                     
                     let width = geo.size.width
                     
-                    PullToRefreshList(rootViewType: Self.self) {
+                    PullToRefreshScrollView(showsIndicators: true) {
                         
-                        Text(viewModel.pageTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 30))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 24)
-                            .padding(.bottom, 15)
-                            .padding(.leading, leadingTrailingPadding)
-                        
-                        FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding, lessonTappedClosure: { (lesson: LessonDomainModel) in
+                        LazyVStack(alignment: .leading, spacing: 0) {
                             
-                            viewModel.lessonTapped(lesson: lesson)
-                        })
-                        .padding(.bottom, 10)
+                            Text(viewModel.pageTitle)
+                                .font(FontLibrary.sfProTextRegular.font(size: 30))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                                .padding(.top, 24)
+                                .padding(.bottom, 15)
+                                .padding(.leading, leadingTrailingPadding)
+                            
+                            FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding, lessonTappedClosure: { (lesson: LessonDomainModel) in
+                                
+                                viewModel.lessonTapped(lesson: lesson)
+                            })
+                            .padding(.bottom, 10)
+                            
+                            FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
+                                .padding(.bottom, 23)
+                        }
                         
-                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                            .padding(.bottom, 23)
-                                                
                     } refreshHandler: {
+                        
                         viewModel.refreshData()
                     }
                 }
