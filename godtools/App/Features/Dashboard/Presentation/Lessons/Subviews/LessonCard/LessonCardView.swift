@@ -119,7 +119,7 @@ struct LessonCardView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let lesson = LessonDomainModel(
-            abbreviation: "five",
+            analyticsToolName: "five",
             bannerImageId: "1",
             dataModelId: "9",
             description: "five reasons",

@@ -10,7 +10,7 @@ import Foundation
 
 struct LessonDomainModel {
     
-    let abbreviation: String
+    let analyticsToolName: String
     let bannerImageId: String
     let dataModelId: String
     let description: String
@@ -18,20 +18,9 @@ struct LessonDomainModel {
     let name: String
 }
 
-extension LessonDomainModel {
+extension LessonDomainModel: Equatable {
     
-    // TODO: - remove this once we're done refactoring to pass LessonDomainModels around instead of ResourceModels
-    init(resource: ResourceModel) {
-        abbreviation = resource.abbreviation
-        bannerImageId = resource.attrBanner
-        dataModelId = resource.id
-        languageIds = resource.languageIds
-        name = resource.name
-        description = resource.resourceDescription        
-    }
 }
-
-extension LessonDomainModel: Equatable {}
 
 extension LessonDomainModel: Identifiable {
     

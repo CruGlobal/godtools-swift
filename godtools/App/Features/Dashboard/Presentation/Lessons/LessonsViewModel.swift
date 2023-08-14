@@ -116,7 +116,7 @@ class LessonsViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                AnalyticsConstants.Keys.tool: lesson.abbreviation
+                AnalyticsConstants.Keys.tool: lesson.analyticsToolName
             ]
         )
         

@@ -248,7 +248,7 @@ extension FavoritesContentViewModel {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                AnalyticsConstants.Keys.tool: lesson.abbreviation
+                AnalyticsConstants.Keys.tool: lesson.analyticsToolName
               ]
         )
         
