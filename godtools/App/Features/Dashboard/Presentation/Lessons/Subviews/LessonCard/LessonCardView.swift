@@ -56,8 +56,8 @@ struct LessonCardView: View {
                         
                         Spacer()
                         
-                        ResourceCardLanguageView(
-                            languageName: viewModel.translationAvailableText
+                        ToolCardLanguageAvailabilityView(
+                            languageAvailability: viewModel.languageAvailability
                         )
                     }
                 }
@@ -96,7 +96,7 @@ struct LessonCardView: View {
                     
                     HStack {
                         Spacer()
-                        ResourceCardLanguageView(languageName: viewModel.translationAvailableText)
+                        ToolCardLanguageAvailabilityView(languageAvailability: viewModel.translationAvailableText)
                     }
                 }
                 .padding([.top, .bottom], 15)
@@ -122,9 +122,9 @@ struct LessonCardView_Previews: PreviewProvider {
             analyticsToolName: "five",
             bannerImageId: "1",
             dataModelId: "9",
-            description: "five reasons",
             languageIds: [],
-            name: "Five Reasons to be Courageous"
+            languageAvailability: "Chinese x",
+            title: "Five Reasons to be Courageous"
         )
         
         let viewModel = LessonCardViewModel(

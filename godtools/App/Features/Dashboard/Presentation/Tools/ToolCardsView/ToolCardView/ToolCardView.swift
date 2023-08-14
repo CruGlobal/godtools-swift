@@ -75,7 +75,7 @@ struct ToolCardView: View {
                         
                         if cardType.isStandardLayout {
                             
-                            ResourceCardLanguageView(languageName: viewModel.parallelLanguageName)
+                            ToolCardLanguageAvailabilityView(languageAvailability: viewModel.parallelLanguageName)
                                 .padding(.top, 4)
                                 .padding(.trailing, 14)
                         }
