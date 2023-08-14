@@ -25,12 +25,12 @@ class LessonsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var isLoading: Bool = false
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
         
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
+        
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
@@ -42,43 +42,11 @@ class LessonsViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.translationsRepository = translationsRepository
-        
-        setupBinding()
-    }
-}
-
-// MARK: - Public
-
-extension LessonsViewModel {
-    
-    func cardViewModel(for lesson: LessonDomainModel) -> BaseLessonCardViewModel {
-        return LessonCardViewModel(
-            lesson: lesson,
-            dataDownloader: dataDownloader,
-            translationsRepository: translationsRepository,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            delegate: self
-        )
-    }
-    
-    func refreshData() {
-        dataDownloader.downloadInitialData()
-    }
-}
-
-// MARK: - Private
-
-extension LessonsViewModel {
-    
-    private func setupBinding() {
-        
+                
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] lessons in
                 
-                self?.isLoading = lessons.isEmpty
                 self?.lessons = lessons
             }
             .store(in: &cancellables)
@@ -96,23 +64,10 @@ extension LessonsViewModel {
         sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageTitle")
         subtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageSubtitle")
     }
-}
-
-// MARK: - LessonCardDelegate
-
-extension LessonsViewModel: LessonCardDelegate {
     
-    func lessonCardTapped(lesson: LessonDomainModel) {
-        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
-        trackLessonTappedAnalytics(for: lesson)
-    }
-}
-
-// MARK: - Analytics
-
-extension LessonsViewModel {
+    // MARK: - Analytics
     
-    var analyticsScreenName: String {
+    private var analyticsScreenName: String {
         return "Lessons"
     }
     
@@ -124,7 +79,7 @@ extension LessonsViewModel {
         return ""
     }
     
-    func pageViewed() {
+    private func trackPageViewed() {
         
         let trackScreen = TrackScreenModel(
             screenName: analyticsScreenName,
@@ -166,5 +121,37 @@ extension LessonsViewModel {
         )
         
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
+    }
+}
+
+// MARK: - Inputs
+
+extension LessonsViewModel {
+    
+    func cardViewModel(for lesson: LessonDomainModel) -> LessonCardViewModel {
+        
+        return LessonCardViewModel(
+            lesson: lesson,
+            dataDownloader: dataDownloader,
+            translationsRepository: translationsRepository,
+            getBannerImageUseCase: getBannerImageUseCase,
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+        )
+    }
+    
+    func refreshData() {
+        
+        dataDownloader.downloadInitialData()
+    }
+    
+    func pageViewed() {
+        
+        trackPageViewed()
+    }
+    
+    func lessonCardTapped(lesson: LessonDomainModel) {
+        flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
+        trackLessonTappedAnalytics(for: lesson)
     }
 }

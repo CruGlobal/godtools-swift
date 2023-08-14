@@ -23,16 +23,16 @@ struct LessonsView: View {
     var body: some View {
         
         GeometryReader { geometry in
-            
-            let width: CGFloat = geometry.size.width
-            
+                        
             PullToRefreshList(rootViewType: Self.self) {
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 0) {
                     
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
+                    
+                    FixedVerticalSpacer(height: 5)
                     
                     Text(viewModel.subtitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 14))
@@ -42,12 +42,16 @@ struct LessonsView: View {
                 
                 VStack(spacing: 0) {
                     
-                    ForEach(viewModel.lessons) { lesson in
+                    ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
                         
-                        LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingTrailingPadding)
-                            .contentShape(Rectangle())
-                            .padding([.top, .bottom], 8)
-                            .padding([.leading, .trailing], leadingTrailingPadding)
+                        let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
+                        
+                        LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
+                            
+                            viewModel.lessonCardTapped(lesson: lesson)
+                        })
+                        .padding([.top, .bottom], 8)
+                        .padding([.leading, .trailing], leadingTrailingPadding)
                     }
                 }
                 .padding(.bottom, 27)
