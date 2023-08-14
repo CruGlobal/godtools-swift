@@ -23,6 +23,7 @@ class AccountViewModel: ObservableObject {
     
     private var globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
+    private var getActivityCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -51,13 +52,13 @@ class AccountViewModel: ObservableObject {
         self.getUserActivityUseCase = getUserActivityUseCase
         self.analytics = analytics
         
-        navTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.navTitle.rawValue)
-        activityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activityButtonTitle.rawValue)
-        myActivitySectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activitySectionTitle.rawValue)
-        badgesSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.badgesSectionTitle.rawValue)
-        globalActivityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
+        navTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.navTitle.rawValue)
+        activityButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.activityButtonTitle.rawValue)
+        myActivitySectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.activitySectionTitle.rawValue)
+        badgesSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.badgesSectionTitle.rawValue)
+        globalActivityButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
         
-        let localizedGlobalActivityTitle: String = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
+        let localizedGlobalActivityTitle: String = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
         let todaysDate: Date = Date()
         let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
                 
@@ -89,7 +90,12 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserActivityUseCase.getUserActivityPublisher()
+        refreshUserActivity()
+    }
+    
+    private func refreshUserActivity() {
+        
+        getActivityCancellable = getUserActivityUseCase.getUserActivityPublisher()
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
@@ -97,8 +103,6 @@ class AccountViewModel: ObservableObject {
                 
                 self.updateUserActivityValues(userActivity: userActivity)
             }
-            .store(in: &cancellables)
-
     }
     
     private func updateUserActivityValues(userActivity: UserActivityDomainModel) {
@@ -127,6 +131,11 @@ extension AccountViewModel {
     
     @objc func backTapped() {
         flowDelegate?.navigate(step: .backTappedFromActivity)
+    }
+    
+    func pullToRefresh() {
+        
+        refreshUserActivity()
     }
     
     func activityViewed() {

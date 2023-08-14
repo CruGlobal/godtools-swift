@@ -23,19 +23,26 @@ struct AllFavoriteToolsView: View {
             let width = geo.size.width
             let leadingTrailingPadding = DashboardView.getMargin(for: width)
             
-            PullToRefreshList(rootViewType: Self.self) {
-                Group {
-                    Text(viewModel.sectionTitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 22))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .padding(.leading, leadingTrailingPadding)
-                        .padding(.top, 30)
-                        .padding(.bottom, 15)
+            PullToRefreshScrollView(showsIndicators: true) {
+                
+                LazyVStack(alignment: .leading, spacing: 0) {
                     
-                    ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
+                    Group {
+                        Text(viewModel.sectionTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 22))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.leading, leadingTrailingPadding)
+                            .padding(.top, 30)
+                            .padding(.bottom, 15)
+                        
+                        ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
+                    }
                 }
-            } refreshHandler: {}
-                .animation(.default, value: viewModel.tools)
+                
+            } refreshHandler: {
+                
+            }
+            .animation(.default, value: viewModel.tools)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {

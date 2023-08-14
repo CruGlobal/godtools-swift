@@ -34,11 +34,15 @@ struct AllToolsContentView: View {
             } else {
                 
                 GeometryReader { geo in
+                    
                     let width = geo.size.width
                     
-                    PullToRefreshList(rootViewType: Self.self) {
+                    PullToRefreshScrollView(showsIndicators: true) {
                         
-                        AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            
+                            AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
+                        }
                         
                     } refreshHandler: {
                         viewModel.refreshTools()
