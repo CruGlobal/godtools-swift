@@ -21,7 +21,7 @@ class LessonCardViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
         
     @Published var title: String = ""
-    @Published var translationAvailableText: String = ""
+    @Published var languageAvailability: String = ""
     @Published var bannerImage: Image?
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0
@@ -34,41 +34,13 @@ class LessonCardViewModel: ObservableObject {
         self.getBannerImageUseCase = getBannerImageUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-                        
+        
+        self.title = lesson.title
+        self.languageAvailability = lesson.languageAvailability
+        
         getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
             .receive(on: DispatchQueue.main)
             .assign(to: \.bannerImage, on: self)
             .store(in: &cancellables)
-        
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] primaryLanguage in
-                
-                self?.reloadTitle(for: primaryLanguage)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func reloadTitle(for primaryLanguage: LanguageDomainModel?) {
-             
-        let titleValue: String
-        
-        if let primaryLanguage = primaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: lesson.id, languageId: primaryLanguage.id) {
-            
-            titleValue = primaryTranslation.translatedName
-        }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: lesson.id, languageCode: LanguageCodes.english) {
-            
-            titleValue = englishTranslation.translatedName
-        }
-        else {
-            
-            titleValue = lesson.description
-        }
-        
-        title = titleValue
-        
-        let languageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: lesson, language: primaryLanguage)
-        translationAvailableText = languageAvailability.availabilityString
     }
 }

@@ -13,9 +13,9 @@ struct LessonDomainModel {
     let analyticsToolName: String
     let bannerImageId: String
     let dataModelId: String
-    let description: String
     let languageIds: [String]
-    let name: String
+    let languageAvailability: String
+    let title: String
 }
 
 extension LessonDomainModel: Equatable {
