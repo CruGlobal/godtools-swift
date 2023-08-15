@@ -1,5 +1,5 @@
 //
-//  FavoritesContentView.swift
+//  FavoritesView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/21/22.
@@ -8,13 +8,13 @@
 
 import SwiftUI
 
-struct FavoritesContentView: View {
+struct FavoritesView: View {
         
     private let leadingTrailingPadding: CGFloat
     
-    @ObservedObject private var viewModel: FavoritesContentViewModel
+    @ObservedObject private var viewModel: FavoritesViewModel
     
-    init(viewModel: FavoritesContentViewModel, leadingTrailingPadding: CGFloat) {
+    init(viewModel: FavoritesViewModel, leadingTrailingPadding: CGFloat) {
         
         self.viewModel = viewModel
         self.leadingTrailingPadding = leadingTrailingPadding
@@ -75,12 +75,13 @@ struct FavoritesContentView: View {
     }
 }
 
-struct FavoritesContentView_Previews: PreviewProvider {
+struct FavoritesView_Previews: PreviewProvider {
+    
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = FavoritesContentViewModel(
+        let viewModel = FavoritesViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
@@ -98,6 +99,6 @@ struct FavoritesContentView_Previews: PreviewProvider {
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
         )
         
-        FavoritesContentView(viewModel: viewModel, leadingTrailingPadding: 20)
+        FavoritesView(viewModel: viewModel, leadingTrailingPadding: 20)
     }
 }

@@ -48,7 +48,7 @@ struct DashboardView: View {
             LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: padding)
                 .tag(DashboardTabTypeDomainModel.lessons)
             
-            FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
+            FavoritesView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
                 .tag(DashboardTabTypeDomainModel.favorites)
             
             AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: padding)

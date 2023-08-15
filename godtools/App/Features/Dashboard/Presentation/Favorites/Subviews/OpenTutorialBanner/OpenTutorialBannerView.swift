@@ -20,11 +20,14 @@ struct OpenTutorialBannerView: View {
     var body: some View {
         
         BannerView {
+            
             VStack {
+                
                 Text(viewModel.showTutorialText)
                     .modifier(BannerTextStyle())
                 
-                HStack {
+                HStack(alignment: .center) {
+                    
                     Text(viewModel.openTutorialButtonText)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
@@ -33,6 +36,10 @@ struct OpenTutorialBannerView: View {
                     }
                     
                     Image(ImageCatalog.openTutorialArrow.name)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 9, height: 17)
+                        .clipped()
                 }
             }
             
@@ -48,7 +55,6 @@ struct OpenTutorialBannerView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = OpenTutorialBannerViewModel(
-            flowDelegate: MockFlowDelegate(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),

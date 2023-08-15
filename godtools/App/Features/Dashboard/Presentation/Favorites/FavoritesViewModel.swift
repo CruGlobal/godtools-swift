@@ -1,5 +1,5 @@
 //
-//  FavoritesContentViewModel.swift
+//  FavoritesViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/21/22.
@@ -9,11 +9,11 @@
 import SwiftUI
 import Combine
 
-protocol FavoritesContentViewModelDelegate: AnyObject {
+protocol FavoritesViewModelDelegate: AnyObject {
     func favoriteToolsViewGoToToolsTapped()
 }
 
-class FavoritesContentViewModel: ObservableObject {
+class FavoritesViewModel: ObservableObject {
             
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
@@ -33,7 +33,7 @@ class FavoritesContentViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
-    private weak var delegate: FavoritesContentViewModelDelegate?
+    private weak var delegate: FavoritesViewModelDelegate?
         
     private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
         return FeaturedLessonCardsViewModel(
@@ -100,7 +100,7 @@ class FavoritesContentViewModel: ObservableObject {
 
 // MARK: - Inputs
 
-extension FavoritesContentViewModel {
+extension FavoritesViewModel {
     
     func lessonTapped(lesson: LessonDomainModel) {
         
@@ -111,8 +111,9 @@ extension FavoritesContentViewModel {
 
 // MARK: - Public
 
-extension FavoritesContentViewModel {
-    func setDelegate(delegate: FavoritesContentViewModelDelegate) {
+extension FavoritesViewModel {
+    
+    func setDelegate(delegate: FavoritesViewModelDelegate) {
         self.delegate = delegate
     }
     
@@ -123,7 +124,6 @@ extension FavoritesContentViewModel {
     func getTutorialBannerViewModel() -> OpenTutorialBannerViewModel {
         
         return OpenTutorialBannerViewModel(
-            flowDelegate: flowDelegate,
             localizationServices: localizationServices,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
@@ -135,7 +135,7 @@ extension FavoritesContentViewModel {
 
 // MARK: - Private
 
-extension FavoritesContentViewModel {
+extension FavoritesViewModel {
     
     private func setupTitle(with language: LanguageDomainModel?) {
 
@@ -145,7 +145,7 @@ extension FavoritesContentViewModel {
 
 // MARK: - OpenTutorialBannerViewModelDelegate
 
-extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
+extension FavoritesViewModel: OpenTutorialBannerViewModelDelegate {
     func closeBanner() {
         disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
     }
@@ -159,7 +159,7 @@ extension FavoritesContentViewModel: OpenTutorialBannerViewModelDelegate {
 
 // MARK: - FavoriteToolsViewModelDelegate
 
-extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
+extension FavoritesViewModel: FavoriteToolsViewModelDelegate {
     
     func viewAllFavoriteToolsButtonTapped() {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavoritedTools)
@@ -194,7 +194,7 @@ extension FavoritesContentViewModel: FavoriteToolsViewModelDelegate {
 
 // MARK: - Analytics
 
-extension FavoritesContentViewModel {
+extension FavoritesViewModel {
     var analyticsScreenName: String {
         return "Favorites"
     }

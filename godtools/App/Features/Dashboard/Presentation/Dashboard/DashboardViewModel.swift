@@ -77,8 +77,8 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
-    lazy var favoritesViewModel: FavoritesContentViewModel = {
-        let favoritesViewModel = FavoritesContentViewModel(
+    lazy var favoritesViewModel: FavoritesViewModel = {
+        let favoritesViewModel = FavoritesViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,
@@ -203,9 +203,9 @@ extension DashboardViewModel {
     }
 }
 
-// MARK: - FavoritesContentViewModelDelegate
+// MARK: - FavoritesViewModelDelegate
 
-extension DashboardViewModel: FavoritesContentViewModelDelegate {
+extension DashboardViewModel: FavoritesViewModelDelegate {
     
     func favoriteToolsViewGoToToolsTapped() {
         flowDelegate?.navigate(step: .allToolsTappedFromFavoritedTools)
