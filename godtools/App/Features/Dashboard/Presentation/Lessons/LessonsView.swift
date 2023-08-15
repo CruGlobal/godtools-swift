@@ -26,23 +26,14 @@ struct LessonsView: View {
                         
             PullToRefreshScrollView(showsIndicators: true) {
                 
-                LazyVStack(alignment: .leading, spacing: 0) {
-                 
-                    VStack(alignment: .leading, spacing: 0) {
-                        
-                        Text(viewModel.sectionTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 22))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                        
-                        FixedVerticalSpacer(height: 5)
-                        
-                        Text(viewModel.subtitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 14))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                    }
-                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
+                VStack(alignment: .leading, spacing: 0) {
+                                        
+                    LessonsHeaderView(
+                        viewModel: viewModel
+                    )
+                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 0, trailing: 0))
                     
-                    VStack(spacing: 0) {
+                    LazyVStack(alignment: .leading, spacing: 0) {
                         
                         ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
                             
@@ -56,13 +47,13 @@ struct LessonsView: View {
                             .padding([.leading, .trailing], leadingTrailingPadding)
                         }
                     }
-                    .padding(.bottom, 27)
+                    .padding([.top], 7)
+                    .padding([.bottom], 27)
                 }
                 
             } refreshHandler: {
                 viewModel.refreshData()
             }
-            .animation(.default, value: viewModel.lessons)
         }
         .onAppear {
             viewModel.pageViewed()
@@ -80,12 +71,10 @@ struct LessonsView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
         LessonsView(viewModel: viewModel, leadingTrailingPadding: 20)

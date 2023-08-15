@@ -13,7 +13,7 @@ import Combine
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .lessons
+    private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
@@ -484,6 +484,7 @@ extension AppFlow {
             flowDelegate: self,
             initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

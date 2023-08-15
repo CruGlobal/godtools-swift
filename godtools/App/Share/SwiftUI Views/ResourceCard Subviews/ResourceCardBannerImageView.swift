@@ -31,7 +31,7 @@ struct ResourceCardBannerImageView: View {
     var body: some View {
         let bannerImageAspectRatio = isSquareLayout ? Sizes.Square.bannerImageAspectRatio : Sizes.Standard.bannerImageAspectRatio
         
-        OptionalImage(image: bannerImage, width: cardWidth, height: cardWidth / bannerImageAspectRatio)
+        OptionalImage(image: bannerImage, imageSize: .fixed(width: cardWidth, height: cardWidth / bannerImageAspectRatio), contentMode: .fill, placeholderColor: .white)
             .cornerRadius(cornerRadius, corners: [.topLeft, .topRight])
             .animation(.default)
     }

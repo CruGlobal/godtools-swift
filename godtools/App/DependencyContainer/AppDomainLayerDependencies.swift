@@ -99,7 +99,8 @@ class AppDomainLayerDependencies {
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         return GetFeaturedLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
         )
     }
     
@@ -136,13 +137,17 @@ class AppDomainLayerDependencies {
     }
     
     func getLessonUseCase() -> GetLessonUseCase {
-        return GetLessonUseCase()
+        return GetLessonUseCase(
+            translationsRepository: dataLayer.getTranslationsRepository(),
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase()
+        )
     }
     
     func getLessonsUseCase() -> GetLessonsUseCase {
         return GetLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
         )
     }
     

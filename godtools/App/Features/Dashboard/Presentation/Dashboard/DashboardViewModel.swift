@@ -14,10 +14,10 @@ class DashboardViewModel: ObservableObject {
     
     private let initialDataDownloader: InitialDataDownloader
     private let translationsRepository: TranslationsRepository
+    private let attachmentsRepository: AttachmentsRepository
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let analytics: AnalyticsContainer
-    
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
@@ -35,7 +35,8 @@ class DashboardViewModel: ObservableObject {
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     
-    private weak var flowDelegate: FlowDelegate?
+    private var chooseLanguageButton: UIBarButtonItem?
+    
     private var unwrappedFlowDelegate: FlowDelegate {
         guard let flowDelegate = self.flowDelegate else {
             assertionFailure("FlowDelegate should not be nil.")
@@ -44,7 +45,8 @@ class DashboardViewModel: ObservableObject {
         return flowDelegate
     }
     
-    private var chooseLanguageButton: UIBarButtonItem?
+    private weak var flowDelegate: FlowDelegate?
+    
     let shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(shouldShowButton: Bool, barButtonItem: UIBarButtonItem?), Never>((false, nil))
     
     @Published var allToolsTabTitle: String
@@ -81,7 +83,7 @@ class DashboardViewModel: ObservableObject {
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,
             analytics: analytics,
-            translationsRepository: translationsRepository,
+            attachmentsRepository: attachmentsRepository,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
             getBannerImageUseCase: getBannerImageUseCase,
@@ -105,21 +107,19 @@ class DashboardViewModel: ObservableObject {
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,
             analytics: analytics,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase:
-                getLanguageAvailabilityUseCase,
             getLessonsUseCase: getLessonsUseCase,
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            translationsRepository: translationsRepository
+            attachmentsRepository: attachmentsRepository
         )
     }()
     
-    required init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    required init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, attachmentsRepository: AttachmentsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
         self.translationsRepository = translationsRepository
+        self.attachmentsRepository = attachmentsRepository
         self.localizationServices = localizationServices
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.analytics = analytics
@@ -141,9 +141,9 @@ class DashboardViewModel: ObservableObject {
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         
-        allToolsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.tools")
-        favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
-        lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
+        allToolsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.tools")
+        favoritesTabTitle = localizationServices.stringForSystemElseEnglish(key: "my_tools")
+        lessonsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.lessons")
         selectedTab = startingTab
         
         tabChanged()

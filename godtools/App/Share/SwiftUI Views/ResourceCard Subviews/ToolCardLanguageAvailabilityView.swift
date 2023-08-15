@@ -1,5 +1,5 @@
 //
-//  ResourceCardLanguageView.swift
+//  ToolCardLanguageAvailabilityView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/11/22.
@@ -8,11 +8,12 @@
 
 import SwiftUI
 
-struct ResourceCardLanguageView: View {
-    let languageName: String
+struct ToolCardLanguageAvailabilityView: View {
+    
+    let languageAvailability: String
     
     var body: some View {
-        Text(languageName)
+        Text(languageAvailability)
             .font(FontLibrary.sfProTextRegular.font(size: 12))
             .foregroundColor(ColorPalette.gtLightGrey.color)
             .truncationMode(.middle)
@@ -21,8 +22,10 @@ struct ResourceCardLanguageView: View {
 }
 
 struct ResourceCardLanguageView_Previews: PreviewProvider {
+   
     static var previews: some View {
-        ResourceCardLanguageView(languageName: "Arabic (Bahrain) ✓")
+        
+        ToolCardLanguageAvailabilityView(languageAvailability: "Arabic (Bahrain) ✓")
             .previewLayout(.sizeThatFits)
     }
 }

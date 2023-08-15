@@ -23,8 +23,8 @@ class GetToolUseCase {
     
     func getTool(resource: ResourceModel) -> ToolDomainModel {
         
-        let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
-        let currentToolTranslation = getCurrentToolTranslation(for: resource, language: primaryLanguage)
+        let primaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
+        let currentToolTranslation: (language: LanguageDomainModel, translation: TranslationModel?) = getCurrentToolTranslation(for: resource, language: primaryLanguage)
         
         return ToolDomainModel(
             abbreviation: resource.abbreviation,
@@ -38,22 +38,24 @@ class GetToolUseCase {
         )
     }
     
-    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel, translation: TranslationModel?)  {
+    private func getCurrentToolTranslation(for resource: ResourceModel, language: LanguageDomainModel?) -> (language: LanguageDomainModel, translation: TranslationModel?) {
                 
         if let language = language, let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) {
             
-            return (language, translation)
+            return (language: language, translation: translation)
             
-        } else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
+        }
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
             
             let englishLanguageDomainModel = getLanguageUseCase.getLanguage(language: englishLanguageModel)
-            return (englishLanguageDomainModel, englishTranslation)
             
-        } else {
+            return (language: englishLanguageDomainModel, translation: englishTranslation)
+        }
+        else {
             
             let englishLanguage = LanguageDomainModel(analyticsContentLanguage: LanguageCodes.english, dataModelId: "", direction: .leftToRight, localeIdentifier: LanguageCodes.english, translatedName: "English")
             
-            return (englishLanguage, nil)
+            return (language: englishLanguage, translation: nil)
         }
     }
 }

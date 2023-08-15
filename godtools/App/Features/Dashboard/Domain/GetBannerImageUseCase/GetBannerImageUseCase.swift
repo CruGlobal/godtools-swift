@@ -14,6 +14,8 @@ class GetBannerImageUseCase {
     
     private let attachmentsRepository: AttachmentsRepository
     
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     init(attachmentsRepository: AttachmentsRepository) {
         
         self.attachmentsRepository = attachmentsRepository
@@ -21,6 +23,9 @@ class GetBannerImageUseCase {
     
     func getBannerImagePublisher(for attachmentId: String) -> AnyPublisher<Image?, Never> {
         
-        return attachmentsRepository.getAttachmentImage(id: attachmentId)
+        let cachedImage: Image? = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId)
+        
+        return attachmentsRepository.getAttachmentImagePublisher(id: attachmentId).prepend(cachedImage)
+            .eraseToAnyPublisher()
     }
 }
