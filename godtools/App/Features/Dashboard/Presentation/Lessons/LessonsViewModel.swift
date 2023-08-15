@@ -14,12 +14,10 @@ class LessonsViewModel: ObservableObject {
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let translationsRepository: TranslationsRepository
+    private let attachmentsRepository: AttachmentsRepository
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -29,19 +27,17 @@ class LessonsViewModel: ObservableObject {
     @Published var subtitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         self.analytics = analytics
         
-        self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getLessonsUseCase = getLessonsUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.translationsRepository = translationsRepository
+        self.attachmentsRepository = attachmentsRepository
                 
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)
@@ -132,11 +128,7 @@ extension LessonsViewModel {
         
         return LessonCardViewModel(
             lesson: lesson,
-            dataDownloader: dataDownloader,
-            translationsRepository: translationsRepository,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+            attachmentsRepository: attachmentsRepository
         )
     }
     

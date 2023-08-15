@@ -54,6 +54,7 @@ struct DashboardTabBarView_Previews: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             analytics: appDiContainer.dataLayer.getAnalytics(),

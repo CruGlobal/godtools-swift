@@ -70,45 +70,11 @@ struct LessonCardView: View {
         }
         .frame(width: cardWidth)
         .cornerRadius(cornerRadius)
-        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 1, y: 1)
-        
-        
-        /*
-        
-        ZStack {
-            
-            RoundedCardBackgroundView(cornerRadius: cornerRadius, fillColor: .white)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                
-                ResourceCardBannerImageView(bannerImage: viewModel.bannerImage, isSquareLayout: false, cardWidth: cardWidth, cornerRadius: cornerRadius)
-                                
-                VStack(alignment: .leading, spacing: 0) {
-                    
-                    Text(viewModel.title)
-                        .font(FontLibrary.sfProTextBold.font(size: 17))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .lineSpacing(2)
-                        .lineLimit(3)
-                        .padding(.trailing, 41)
-                    
-                    FixedVerticalSpacer(height: 9)
-                    
-                    HStack {
-                        Spacer()
-                        ToolCardLanguageAvailabilityView(languageAvailability: viewModel.translationAvailableText)
-                    }
-                }
-                .padding([.top, .bottom], 15)
-                .padding([.leading, .trailing], 15)
-                .frame(width: cardWidth, alignment: .topLeading)
-            }
-            
-        }
-        .contentShape(Rectangle()) // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this.
+        .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+        .contentShape(Rectangle()) // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this
         .onTapGesture {
             cardTappedClosure?()
-        }*/
+        }
     }
 }
 
@@ -129,11 +95,7 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let viewModel = LessonCardViewModel(
             lesson: lesson,
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
         LessonCardView(viewModel: viewModel, cardWidth: 345, cardTappedClosure: nil)

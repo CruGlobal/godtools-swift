@@ -12,13 +12,9 @@ import Combine
 class LessonCardViewModel: ObservableObject {
         
     private let lesson: LessonDomainModel
-    private let dataDownloader: InitialDataDownloader
-    private let translationsRepository: TranslationsRepository
-    private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let attachmentsRepository: AttachmentsRepository
     
-    private var cancellables = Set<AnyCancellable>()
+    private var getBannerImageCancellable: AnyCancellable?
         
     @Published var title: String = ""
     @Published var languageAvailability: String = ""
@@ -26,21 +22,33 @@ class LessonCardViewModel: ObservableObject {
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0
     
-    init(lesson: LessonDomainModel, dataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(lesson: LessonDomainModel, attachmentsRepository: AttachmentsRepository) {
         
         self.lesson = lesson
-        self.dataDownloader = dataDownloader
-        self.translationsRepository = translationsRepository
-        self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        
+        self.attachmentsRepository = attachmentsRepository
         self.title = lesson.title
         self.languageAvailability = lesson.languageAvailability
         
-        getBannerImageUseCase.getBannerImagePublisher(for: lesson.bannerImageId)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.bannerImage, on: self)
-            .store(in: &cancellables)
+        downloadBannerImage()
+    }
+    
+    private func downloadBannerImage() {
+        
+        getBannerImageCancellable = nil
+        
+        let attachmentId: String = lesson.bannerImageId
+        
+        if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
+            
+            bannerImage = cachedImage
+        }
+        else {
+            
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (image: Image?) in
+                    self?.bannerImage = image
+                }
+        }
     }
 }

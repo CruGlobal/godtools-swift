@@ -27,9 +27,31 @@ class AttachmentsRepository {
         self.bundle = bundle
     }
     
+    func getAttachmentDataFromCache(id: String) -> Data? {
+        
+        guard let attachmentModel = cache.getAttachmentModel(id: id) else {
+            return nil
+        }
+        
+        guard let attachment = getAttachmentFromCache(attachment: attachmentModel) else {
+            return nil
+        }
+        
+        return attachment.data
+    }
+    
+    func getAttachmentImageFromCache(id: String) -> Image? {
+        
+        guard let data = getAttachmentDataFromCache(id: id), let uiImage = UIImage(data: data) else {
+            return nil
+        }
+        
+        return Image(uiImage: uiImage)
+    }
+    
     func getAttachmentImagePublisher(id: String) -> AnyPublisher<Image?, Never> {
         
-        return getAttachmentModel(id: id)
+        return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
               
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -58,7 +80,7 @@ class AttachmentsRepository {
     
     func getAttachmentDataPublisher(id: String) -> AnyPublisher<Data?, Never> {
 
-        return getAttachmentModel(id: id)
+        return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -79,7 +101,7 @@ class AttachmentsRepository {
     
     func getAttachmentUrlPublisher(id: String) -> AnyPublisher<URL?, Never> {
          
-        return getAttachmentModel(id: id)
+        return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
     
                 return self.getAttachmentFromCacheElseRemote(attachment: attachment)
@@ -104,9 +126,13 @@ class AttachmentsRepository {
 
 extension AttachmentsRepository {
     
-    private func getAttachmentModel(id: String) -> AnyPublisher<AttachmentModel, Error> {
+    private func getAttachmentModel(id: String) -> AttachmentModel? {
+        return cache.getAttachmentModel(id: id)
+    }
+    
+    private func getAttachmentModelPublisher(id: String) -> AnyPublisher<AttachmentModel, Error> {
         
-        guard let attachmentModel = cache.getAttachmentModel(id: id) else {
+        guard let attachmentModel = getAttachmentModel(id: id) else {
             
             let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Attachment does not exist in realm database.")
             return Fail(error: error)
@@ -119,7 +145,7 @@ extension AttachmentsRepository {
     
     private func getAttachmentFromCacheElseRemote(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
         
-        return getAttachmentFromCache(attachment: attachment)
+        return getAttachmentFromCachePublisher(attachment: attachment)
             .catch { (error: Error) in
                 return self.downloadAndCacheAttachment(attachment: attachment)
                     .eraseToAnyPublisher()
@@ -127,7 +153,7 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getAttachmentFromCache(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+    private func getAttachmentFromCache(attachment: AttachmentModel) -> AttachmentDataModel? {
         
         let location = FileCacheLocation(relativeUrlString: attachment.sha256)
         
@@ -149,13 +175,23 @@ extension AttachmentsRepository {
         
         guard let imageData = imageData else {
             
+            return nil
+        }
+        
+        return AttachmentDataModel(attachmentModel: attachment, data: imageData, fileCacheLocation: location)
+    }
+    
+    private func getAttachmentFromCachePublisher(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+                
+        guard let attachmentData = getAttachmentFromCache(attachment: attachment) else {
+            
             let error: Error = NSError.errorWithDescription(description: "Failed to get imageData from attachments file cache.")
             
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
 
-        return Just(AttachmentDataModel(attachmentModel: attachment, data: imageData, fileCacheLocation: location))
+        return Just(attachmentData)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

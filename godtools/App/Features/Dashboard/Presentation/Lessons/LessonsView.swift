@@ -71,12 +71,10 @@ struct LessonsView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
         LessonsView(viewModel: viewModel, leadingTrailingPadding: 20)

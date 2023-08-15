@@ -12,28 +12,22 @@ import Combine
 
 class FeaturedLessonCardsViewModel: ObservableObject {
         
-    private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
-    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let translationsRepository: TranslationsRepository
+    private let attachmentsRepository: AttachmentsRepository
     
     private var cancellables = Set<AnyCancellable>()
             
     @Published var sectionTitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
         
-    init(dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
+    init(localizationServices: LocalizationServices, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
-        self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
-        self.getBannerImageUseCase = getBannerImageUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.translationsRepository = translationsRepository
+        self.attachmentsRepository = attachmentsRepository
                                 
         getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
             .receive(on: DispatchQueue.main)
@@ -66,11 +60,7 @@ extension FeaturedLessonCardsViewModel {
         
         return LessonCardViewModel(
             lesson: lesson,
-            dataDownloader: dataDownloader,
-            translationsRepository: translationsRepository,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+            attachmentsRepository: attachmentsRepository
         )
     }
 }

@@ -55,13 +55,10 @@ struct FeaturedLessonCardsView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = FeaturedLessonCardsViewModel(
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
         FeaturedLessonCardsView(viewModel: viewModel, width: 350, leadingPadding: 20, lessonTappedClosure: nil)
