@@ -13,7 +13,7 @@ import Combine
 
 class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
-    private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .lessons
+    private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
     private let dataDownloader: InitialDataDownloader
     private let followUpsService: FollowUpsService
