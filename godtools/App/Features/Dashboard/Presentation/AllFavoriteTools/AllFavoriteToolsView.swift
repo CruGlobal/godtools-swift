@@ -19,24 +19,23 @@ struct AllFavoriteToolsView: View {
     
     var body: some View {
         
-        GeometryReader { geo in
-            let width = geo.size.width
+        GeometryReader { geometry in
+            
+            let width = geometry.size.width
             let leadingTrailingPadding = DashboardView.getMargin(for: width)
             
             PullToRefreshScrollView(showsIndicators: true) {
                 
-                LazyVStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     
-                    Group {
-                        Text(viewModel.sectionTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 22))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.leading, leadingTrailingPadding)
-                            .padding(.top, 30)
-                            .padding(.bottom, 15)
-                        
-                        ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
-                    }
+                    Text(viewModel.sectionTitle)
+                        .font(FontLibrary.sfProTextRegular.font(size: 22))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .padding(.leading, leadingTrailingPadding)
+                        .padding(.top, 30)
+                        .padding(.bottom, 15)
+                    
+                    ToolCardsView(viewModel: viewModel, cardType: .standardWithNavButtons, width: width, leadingPadding: leadingTrailingPadding)
                 }
                 
             } refreshHandler: {

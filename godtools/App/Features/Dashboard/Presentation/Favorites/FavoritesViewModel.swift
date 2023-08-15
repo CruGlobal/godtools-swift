@@ -35,14 +35,16 @@ class FavoritesViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private weak var delegate: FavoritesViewModelDelegate?
         
-    private(set) lazy var featuredLessonCardsViewModel: FeaturedLessonCardsViewModel = {
-        return FeaturedLessonCardsViewModel(
+    private(set) lazy var featuredLessonViewModel: FeaturedLessonViewModel = {
+        
+        return FeaturedLessonViewModel(
             localizationServices: localizationServices,
             getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }()
+    
     private(set) lazy var favoriteToolsViewModel: FavoriteToolsViewModel = {
         return FavoriteToolsViewModel(
             dataDownloader: dataDownloader,

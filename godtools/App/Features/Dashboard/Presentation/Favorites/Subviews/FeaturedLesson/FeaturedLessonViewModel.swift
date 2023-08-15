@@ -1,5 +1,5 @@
 //
-//  FeaturedLessonCardsViewModel.swift
+//  FeaturedLessonViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 6/28/22.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class FeaturedLessonCardsViewModel: ObservableObject {
+class FeaturedLessonViewModel: ObservableObject {
         
     private let localizationServices: LocalizationServices
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
@@ -20,7 +20,7 @@ class FeaturedLessonCardsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
             
     @Published var sectionTitle: String = ""
-    @Published var lessons: [LessonDomainModel] = []
+    @Published var featuredLessons: [LessonDomainModel] = []
         
     init(localizationServices: LocalizationServices, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
@@ -33,7 +33,7 @@ class FeaturedLessonCardsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] featuredLessons in
                 
-                self?.lessons = featuredLessons
+                self?.featuredLessons = featuredLessons
             }
             .store(in: &cancellables)
         
@@ -54,7 +54,7 @@ class FeaturedLessonCardsViewModel: ObservableObject {
 
 // MARK: - Inputs
 
-extension FeaturedLessonCardsViewModel {
+extension FeaturedLessonViewModel {
     
     func cardViewModel(for lesson: LessonDomainModel) -> LessonCardViewModel {
         

@@ -1,5 +1,5 @@
 //
-//  FeaturedLessonCardsView.swift
+//  FeaturedLessonView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/13/22.
@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-struct FeaturedLessonCardsView: View {
+struct FeaturedLessonView: View {
         
     private let width: CGFloat
     private let leadingPadding: CGFloat
     private let lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?
     
-    @ObservedObject private var viewModel: FeaturedLessonCardsViewModel
+    @ObservedObject private var viewModel: FeaturedLessonViewModel
     
-    init(viewModel: FeaturedLessonCardsViewModel, width: CGFloat, leadingPadding: CGFloat, lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?) {
+    init(viewModel: FeaturedLessonViewModel, width: CGFloat, leadingPadding: CGFloat, lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?) {
         
         self.viewModel = viewModel
         self.width = width
@@ -26,41 +26,47 @@ struct FeaturedLessonCardsView: View {
     
     var body: some View {
         
-        Group {
+        VStack(alignment: .leading, spacing: 0) {
             
             Text(viewModel.sectionTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, leadingPadding)
             
-            ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
+            VStack(alignment: .leading, spacing: 0) {
                 
-                LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding, cardTappedClosure: {
+                ForEach(viewModel.featuredLessons) { (lesson: LessonDomainModel) in
                     
-                    lessonTappedClosure?(lesson)
-                })
-                .contentShape(Rectangle())
-                .padding([.top, .bottom], 8)
-                .padding([.leading, .trailing], leadingPadding)
-                
+                    LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding, cardTappedClosure: {
+                        
+                        lessonTappedClosure?(lesson)
+                    })
+                    .padding([.top, .bottom], 8)
+                    .padding([.leading, .trailing], leadingPadding)
+                }
             }
         }
     }
 }
 
-struct FeaturedLessonCardsView_Previews: PreviewProvider {
+struct FeaturedLessonView_Previews: PreviewProvider {
     
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = FeaturedLessonCardsViewModel(
+        let viewModel = FeaturedLessonViewModel(
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
-        FeaturedLessonCardsView(viewModel: viewModel, width: 350, leadingPadding: 20, lessonTappedClosure: nil)
+        FeaturedLessonView(
+            viewModel: viewModel,
+            width: 350,
+            leadingPadding: 20,
+            lessonTappedClosure: nil
+        )
     }
 }

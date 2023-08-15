@@ -782,14 +782,12 @@ extension AppFlow {
         
         let hostingView = UIHostingController<AllFavoriteToolsView>(rootView: view)
         
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromAllFavoriteTools))
+        _ = hostingView.addDefaultNavBackItem(
+            target: viewModel,
+            action: #selector(viewModel.backTappedFromAllFavoriteTools)
+        )
         
         return hostingView
-    }
-    
-    @objc private func backTappedFromAllFavoriteTools() {
-        
-        navigate(step: .backTappedFromAllFavoriteTools)
     }
 }
 

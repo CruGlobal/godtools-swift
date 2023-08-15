@@ -22,6 +22,51 @@ struct FavoritesView: View {
     
     var body: some View {
         
+        GeometryReader { geometry in
+                  
+            VStack(alignment: .leading, spacing: 0) {
+                
+                if !viewModel.hideTutorialBanner {
+                    OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
+                }
+                
+                PullToRefreshScrollView(showsIndicators: true) {
+                    
+                    VStack(alignment: .leading, spacing: 0) {
+                        
+                        Text(viewModel.pageTitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 30))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .padding(.top, 24)
+                            .padding(.bottom, 15)
+                            .padding(.leading, leadingTrailingPadding)
+                        
+                        FeaturedLessonView(
+                            viewModel: viewModel.featuredLessonViewModel,
+                            width: geometry.size.width,
+                            leadingPadding: leadingTrailingPadding,
+                            lessonTappedClosure: { (lesson: LessonDomainModel) in
+                            
+                            viewModel.lessonTapped(lesson: lesson)
+                        })
+                        .padding(.bottom, 10)
+                        
+                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: geometry.size.width, leadingPadding: leadingTrailingPadding)
+                            .padding(.bottom, 23)
+                    }
+
+                } refreshHandler: {
+                    viewModel.refreshData()
+                }
+            }
+        }
+        .onAppear {
+            viewModel.pageViewed()
+        }
+        
+        
+        
+        /*
         VStack(spacing: 0) {
             
             if viewModel.hideTutorialBanner == false {
@@ -72,6 +117,12 @@ struct FavoritesView: View {
         .onAppear {
             viewModel.pageViewed()
         }
+        */
+        
+        
+        
+        
+        
     }
 }
 

@@ -46,6 +46,16 @@ class AllFavoriteToolsViewModel: BaseFavoriteToolsViewModel {
     }
 }
 
+// MARK: - Inputs
+
+extension AllFavoriteToolsViewModel {
+    
+    @objc func backTappedFromAllFavoriteTools() {
+        
+        flowDelegate?.navigate(step: .backTappedFromAllFavoriteTools)
+    }
+}
+
 // MARK: - Private
 
 extension AllFavoriteToolsViewModel {
