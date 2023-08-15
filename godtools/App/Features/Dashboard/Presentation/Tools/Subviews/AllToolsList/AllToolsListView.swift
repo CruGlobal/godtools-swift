@@ -1,5 +1,5 @@
 //
-//  AllToolsList.swift
+//  AllToolsListView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/19/22.
@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-struct AllToolsList: View {
+struct AllToolsListView: View {
     
     private let width: CGFloat
     private let leadingTrailingPadding: CGFloat
        
-    @ObservedObject private var viewModel: AllToolsContentViewModel
+    @ObservedObject private var viewModel: AllToolsViewModel
     
-    init(viewModel: AllToolsContentViewModel, width: CGFloat, leadingTrailingPadding: CGFloat) {
+    init(viewModel: AllToolsViewModel, width: CGFloat, leadingTrailingPadding: CGFloat) {
         
         self.viewModel = viewModel
         self.width = width
@@ -45,7 +45,7 @@ struct AllToolsList_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = AllToolsContentViewModel(
+        let viewModel = AllToolsViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
@@ -64,7 +64,7 @@ struct AllToolsList_Previews: PreviewProvider {
         
         GeometryReader { geo in
             VStack {
-                AllToolsList(viewModel: viewModel, width: geo.size.width, leadingTrailingPadding: 20)
+                AllToolsListView(viewModel: viewModel, width: geo.size.width, leadingTrailingPadding: 20)
             }
         }
     }

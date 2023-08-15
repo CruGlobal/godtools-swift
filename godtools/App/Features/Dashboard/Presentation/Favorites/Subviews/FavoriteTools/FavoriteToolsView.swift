@@ -23,11 +23,13 @@ struct FavoriteToolsView: View {
     }
     
     var body: some View {
+        
         VStack(alignment: .leading, spacing: 15) {
             
             FavoriteToolsHeaderView(viewModel: viewModel, leadingPadding: leadingPadding)
             
             switch viewModel.viewState {
+            
             case .loading:
                 
                 EmptyView()

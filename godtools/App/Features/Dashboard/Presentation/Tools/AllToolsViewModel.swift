@@ -1,5 +1,5 @@
 //
-//  AllToolsContentViewModel.swift
+//  AllToolsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/12/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class AllToolsContentViewModel: ObservableObject {
+class AllToolsViewModel: ObservableObject {
             
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
@@ -87,7 +87,7 @@ class AllToolsContentViewModel: ObservableObject {
 
 // MARK: - Public
 
-extension AllToolsContentViewModel {
+extension AllToolsViewModel {
     
     func getFavoritingToolBannerViewModel() -> FavoritingToolBannerViewModel {
         
@@ -101,7 +101,7 @@ extension AllToolsContentViewModel {
 
 // MARK: - Private
 
-extension AllToolsContentViewModel {
+extension AllToolsViewModel {
     
     private func handleToolCardTapped(resource: ResourceModel, isSpotlight: Bool) {
         trackToolTappedAnalytics(for: resource, isSpotlight: isSpotlight)
@@ -115,7 +115,7 @@ extension AllToolsContentViewModel {
 
 // MARK: - FavoritingToolBannerViewModelDelegate
 
-extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
+extension AllToolsViewModel: FavoritingToolBannerViewModelDelegate {
     
     func closeBanner() {
         hideFavoritingToolBanner = true
@@ -125,7 +125,7 @@ extension AllToolsContentViewModel: FavoritingToolBannerViewModelDelegate {
 
 // MARK: - ToolCategoriesViewModelDelegate
 
-extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
+extension AllToolsViewModel: ToolCategoriesViewModelDelegate {
     
     func filterToolsWithCategory(_ categoryId: String?) {
         toolCardsViewModel.filterTools(with: categoryId)
@@ -134,7 +134,7 @@ extension AllToolsContentViewModel: ToolCategoriesViewModelDelegate {
 
 // MARK: - ToolCardsViewModelDelegate
 
-extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
+extension AllToolsViewModel: ToolCardsViewModelDelegate {
     
     func toolCardTapped(_ tool: ToolDomainModel) {
         handleToolCardTapped(resource: tool.resource, isSpotlight: false)
@@ -154,7 +154,7 @@ extension AllToolsContentViewModel: ToolCardsViewModelDelegate {
 
 // MARK: - ToolSpotlightViewModelDelegate
 
-extension AllToolsContentViewModel: ToolSpotlightViewModelDelegate {
+extension AllToolsViewModel: ToolSpotlightViewModelDelegate {
     func spotlightToolCardTapped(resource: ResourceModel) {
         handleToolCardTapped(resource: resource, isSpotlight: true)
     }
@@ -166,7 +166,7 @@ extension AllToolsContentViewModel: ToolSpotlightViewModelDelegate {
 
 // MARK: - Analytics
 
-extension AllToolsContentViewModel {
+extension AllToolsViewModel {
     
     var analyticsScreenName: String {
         return "All Tools"

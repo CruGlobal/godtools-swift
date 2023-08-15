@@ -58,8 +58,8 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
-    lazy var allToolsViewModel: AllToolsContentViewModel = {
-        AllToolsContentViewModel(
+    lazy var allToolsViewModel: AllToolsViewModel = {
+        AllToolsViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,

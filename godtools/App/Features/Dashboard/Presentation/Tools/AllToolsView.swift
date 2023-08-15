@@ -1,5 +1,5 @@
 //
-//  AllToolsContentView.swift
+//  AllToolsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 4/6/22.
@@ -8,13 +8,13 @@
 
 import SwiftUI
 
-struct AllToolsContentView: View {
+struct AllToolsView: View {
         
     private let leadingTrailingPadding: CGFloat
         
-    @ObservedObject private var viewModel: AllToolsContentViewModel
+    @ObservedObject private var viewModel: AllToolsViewModel
     
-    init(viewModel: AllToolsContentViewModel, leadingTrailingPadding: CGFloat) {
+    init(viewModel: AllToolsViewModel, leadingTrailingPadding: CGFloat) {
         
         self.viewModel = viewModel
         self.leadingTrailingPadding = leadingTrailingPadding
@@ -41,7 +41,7 @@ struct AllToolsContentView: View {
                         
                         LazyVStack(alignment: .leading, spacing: 0) {
                             
-                            AllToolsList(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
+                            AllToolsListView(viewModel: viewModel, width: width, leadingTrailingPadding: leadingTrailingPadding)
                         }
                         
                     } refreshHandler: {
@@ -66,7 +66,7 @@ struct AllToolsContentView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = AllToolsContentViewModel(
+        let viewModel = AllToolsViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
@@ -83,6 +83,6 @@ struct AllToolsContentView_Previews: PreviewProvider {
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
         )
         
-        AllToolsContentView(viewModel: viewModel, leadingTrailingPadding: 20)
+        AllToolsView(viewModel: viewModel, leadingTrailingPadding: 20)
     }
 }
