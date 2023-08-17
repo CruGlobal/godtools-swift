@@ -21,7 +21,6 @@ class DashboardViewModel: ObservableObject {
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
-    private let getBannerImageUseCase: GetBannerImageUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
@@ -58,27 +57,27 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
-    lazy var allToolsViewModel: AllToolsViewModel = {
-        AllToolsViewModel(
+    lazy var toolsViewModel: ToolsViewModel = {
+        ToolsViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,
             favoritingToolMessageCache: favoritingToolMessageCache,
-            analytics: analytics,
             getAllToolsUseCase: getAllToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
             getSpotlightToolsUseCase: getSpotlightToolsUseCase,
             getToolCategoriesUseCase: getToolCategoriesUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
+            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase,
+            attachmentsRepository: attachmentsRepository,
+            analytics: analytics
         )
     }()
     
     lazy var favoritesViewModel: FavoritesViewModel = {
-        let favoritesViewModel = FavoritesViewModel(
+        return FavoritesViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: initialDataDownloader,
             localizationServices: localizationServices,
@@ -86,7 +85,6 @@ class DashboardViewModel: ObservableObject {
             attachmentsRepository: attachmentsRepository,
             disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
             getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
             getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
@@ -95,10 +93,6 @@ class DashboardViewModel: ObservableObject {
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
         )
-        
-        favoritesViewModel.setDelegate(delegate: self)
-        
-        return favoritesViewModel
     }()
     
     lazy var lessonsViewModel: LessonsViewModel = {
@@ -114,7 +108,7 @@ class DashboardViewModel: ObservableObject {
         )
     }()
     
-    required init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, attachmentsRepository: AttachmentsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, attachmentsRepository: AttachmentsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
         
         self.flowDelegate = flowDelegate
         self.initialDataDownloader = initialDataDownloader
@@ -127,7 +121,6 @@ class DashboardViewModel: ObservableObject {
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
-        self.getBannerImageUseCase = getBannerImageUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getLessonsUseCase = getLessonsUseCase
@@ -148,11 +141,6 @@ class DashboardViewModel: ObservableObject {
         
         tabChanged()
     }
-}
-
-// MARK: - Private
-
-extension DashboardViewModel {
     
     private func tabChanged() {
         
@@ -180,6 +168,7 @@ extension DashboardViewModel {
     }
     
     private func createLanguageBarButtonItem() -> UIBarButtonItem {
+        
         let languageBarButtonItem = UIBarButtonItem()
         languageBarButtonItem.image = ImageCatalog.navLanguage.uiImage
         languageBarButtonItem.tintColor = .white
@@ -200,14 +189,5 @@ extension DashboardViewModel {
             
     @objc func languageBarButtonItemTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
-    }
-}
-
-// MARK: - FavoritesViewModelDelegate
-
-extension DashboardViewModel: FavoritesViewModelDelegate {
-    
-    func favoriteToolsViewGoToToolsTapped() {
-        flowDelegate?.navigate(step: .allToolsTappedFromFavoritedTools)
     }
 }

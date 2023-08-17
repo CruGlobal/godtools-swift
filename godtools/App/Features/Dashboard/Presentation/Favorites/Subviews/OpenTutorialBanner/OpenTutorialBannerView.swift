@@ -10,11 +10,16 @@ import SwiftUI
 
 struct OpenTutorialBannerView: View {
         
-    @ObservedObject private var viewModel: OpenTutorialBannerViewModel
+    private let closeTappedClosure: (() -> Void)?
+    private let openTutorialTappedClosure: (() -> Void)?
     
-    init(viewModel: OpenTutorialBannerViewModel) {
+    @ObservedObject private var viewModel: FavoritesViewModel
+    
+    init(viewModel: FavoritesViewModel, closeTappedClosure: (() -> Void)?, openTutorialTappedClosure: (() -> Void)?) {
         
         self.viewModel = viewModel
+        self.closeTappedClosure = closeTappedClosure
+        self.openTutorialTappedClosure = openTutorialTappedClosure
     }
     
     var body: some View {
@@ -23,16 +28,16 @@ struct OpenTutorialBannerView: View {
             
             VStack {
                 
-                Text(viewModel.showTutorialText)
+                Text(viewModel.openTutorialBannerMessage)
                     .modifier(BannerTextStyle())
                 
                 HStack(alignment: .center) {
                     
-                    Text(viewModel.openTutorialButtonText)
+                    Text(viewModel.openTutorialBannerButtonTitle)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
                         .onTapGesture {
-                            viewModel.openTutorialButtonTapped()
+                            openTutorialTappedClosure?()
                     }
                     
                     Image(ImageCatalog.openTutorialArrow.name)
@@ -44,25 +49,7 @@ struct OpenTutorialBannerView: View {
             }
             
         } closeButtonTapHandler: {
-            viewModel.closeTapped()
+            closeTappedClosure?()
         }
-    }
-}
-
-struct OpenTutorialBannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let viewModel = OpenTutorialBannerViewModel(
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            delegate: nil
-        )
-        
-        OpenTutorialBannerView(viewModel: viewModel)
-            .previewLayout(.sizeThatFits)
     }
 }

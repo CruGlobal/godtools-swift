@@ -10,17 +10,19 @@ import SwiftUI
 
 struct FeaturedLessonView: View {
         
-    private let width: CGFloat
-    private let leadingPadding: CGFloat
+    private let geometry: GeometryProxy
+    private let contentHorizontalInsets: CGFloat
+    private let lessonCardSpacing: CGFloat
     private let lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?
     
-    @ObservedObject private var viewModel: FeaturedLessonViewModel
+    @ObservedObject private var viewModel: FavoritesViewModel
     
-    init(viewModel: FeaturedLessonViewModel, width: CGFloat, leadingPadding: CGFloat, lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?) {
+    init(viewModel: FavoritesViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing, lessonTappedClosure: ((_ lesson: LessonDomainModel) -> Void)?) {
         
         self.viewModel = viewModel
-        self.width = width
-        self.leadingPadding = leadingPadding
+        self.geometry = geometry
+        self.contentHorizontalInsets = contentHorizontalInsets
+        self.lessonCardSpacing = lessonCardSpacing
         self.lessonTappedClosure = lessonTappedClosure
     }
     
@@ -28,45 +30,43 @@ struct FeaturedLessonView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.sectionTitle)
+            Text(viewModel.featuredLessonsTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.leading, leadingPadding)
+                .padding(.leading, contentHorizontalInsets)
             
-            VStack(alignment: .leading, spacing: 0) {
+            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
                 
                 ForEach(viewModel.featuredLessons) { (lesson: LessonDomainModel) in
                     
-                    LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: width - 2 * leadingPadding, cardTappedClosure: {
+                    LessonCardView(
+                        viewModel: viewModel.getFeaturedLessonViewModel(lesson: lesson),
+                        geometry: geometry,
+                        cardTappedClosure: {
                         
                         lessonTappedClosure?(lesson)
                     })
-                    .padding([.top, .bottom], 8)
-                    .padding([.leading, .trailing], leadingPadding)
                 }
             }
+            .padding([.top], lessonCardSpacing)
         }
     }
 }
 
-struct FeaturedLessonView_Previews: PreviewProvider {
+// MARK: - Preview
+
+struct FeaturedLessonView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let viewModel = FeaturedLessonViewModel(
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
-        )
-        
-        FeaturedLessonView(
-            viewModel: viewModel,
-            width: 350,
-            leadingPadding: 20,
-            lessonTappedClosure: nil
-        )
+        GeometryReader { geometry in
+            
+            FeaturedLessonView(
+                viewModel: FavoritesView_Preview.getFavoritesViewModel(),
+                geometry: geometry,
+                contentHorizontalInsets: 20,
+                lessonTappedClosure: nil
+            )
+        }
     }
 }

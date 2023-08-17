@@ -31,14 +31,14 @@ class GetAllFavoritedToolsUseCase {
         return Publishers.CombineLatest(
             favoritedResourcesRepository.getFavoritedResourcesChanged(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            )
-            .flatMap { _, primaryLanguage -> AnyPublisher<[ToolDomainModel], Never> in
+        )
+            .flatMap({ (favoritedResourcesChanged: Void, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let favoritedTools = self.getFavoritedTools(with: primaryLanguage)
+                let favoritedTools: [ToolDomainModel] = self.getFavoritedTools(with: primaryLanguage)
                 
                 return Just(favoritedTools)
                     .eraseToAnyPublisher()
-            }
+            })
             .eraseToAnyPublisher()
     }
     

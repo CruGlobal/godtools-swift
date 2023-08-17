@@ -10,14 +10,16 @@ import SwiftUI
 
 struct LessonsView: View {
         
+    private let contentHorizontalInsets: CGFloat
+    private let lessonCardSpacing: CGFloat
+    
     @ObservedObject private var viewModel: LessonsViewModel
     
-    let leadingTrailingPadding: CGFloat
-    
-    init(viewModel: LessonsViewModel, leadingTrailingPadding: CGFloat) {
+    init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
         self.viewModel = viewModel
-        self.leadingTrailingPadding = leadingTrailingPadding
+        self.contentHorizontalInsets = contentHorizontalInsets
+        self.lessonCardSpacing = lessonCardSpacing
     }
     
     var body: some View {
@@ -27,29 +29,29 @@ struct LessonsView: View {
             PullToRefreshScrollView(showsIndicators: true) {
                 
                 VStack(alignment: .leading, spacing: 0) {
-                                        
+                                            
                     LessonsHeaderView(
                         viewModel: viewModel
                     )
-                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 0, trailing: 0))
+                    .padding([.top], 24)
+                    .padding([.leading, .trailing], contentHorizontalInsets)
                     
-                    LazyVStack(alignment: .leading, spacing: 0) {
+                    LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
                         
                         ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
-                            
-                            let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
-                            
-                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
+                                                        
+                            LessonCardView(
+                                viewModel: viewModel.getLessonViewModel(lesson: lesson),
+                                geometry: geometry,
+                                cardTappedClosure: {
                                 
                                 viewModel.lessonCardTapped(lesson: lesson)
                             })
-                            .padding([.top, .bottom], 8)
-                            .padding([.leading, .trailing], leadingTrailingPadding)
                         }
                     }
-                    .padding([.top], 7)
-                    .padding([.bottom], 27)
+                    .padding([.top], lessonCardSpacing)
                 }
+                .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
                 
             } refreshHandler: {
                 viewModel.refreshData()
@@ -61,8 +63,11 @@ struct LessonsView: View {
     }
 }
 
-struct LessonsView_Previews: PreviewProvider {
-    static var previews: some View {
+// MARK: - Preview
+
+struct LessonsView_Preview: PreviewProvider {
+    
+    static func getLessonsViewModel() -> LessonsViewModel {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
@@ -77,6 +82,14 @@ struct LessonsView_Previews: PreviewProvider {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
-        LessonsView(viewModel: viewModel, leadingTrailingPadding: 20)
+        return viewModel
+    }
+    
+    static var previews: some View {
+        
+        LessonsView(
+            viewModel: LessonsView_Preview.getLessonsViewModel(),
+            contentHorizontalInsets: 20
+        )
     }
 }

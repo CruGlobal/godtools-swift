@@ -25,7 +25,7 @@ class ToolDetailsViewModel: ObservableObject {
     private let analytics: AnalyticsContainer
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let getToolVersionsUseCase: GetToolVersionsUseCase
-    private let getBannerImageUseCase: GetBannerImageUseCase
+    private let attachmentsRepository: AttachmentsRepository
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
@@ -59,7 +59,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -76,7 +76,7 @@ class ToolDetailsViewModel: ObservableObject {
         self.analytics = analytics
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.getToolVersionsUseCase = getToolVersionsUseCase
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.attachmentsRepository = attachmentsRepository
         
         self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
         
@@ -176,7 +176,7 @@ class ToolDetailsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.mediaType, on: self)
         
-        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: resource.id)
+        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: resource.id)
             .receive(on: DispatchQueue.main)
             .assign(to: \.isFavorited, on: self)
     }
@@ -281,10 +281,10 @@ extension ToolDetailsViewModel {
     func toggleFavorited() {
         
         if isFavorited {
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
+            removeToolFromFavoritesUseCase.removeToolFromFavorites(id: resource.id)
         }
         else {
-            addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
+            addToolToFavoritesUseCase.addToolToFavorites(id: resource.id)
         }
     }
     
@@ -323,7 +323,7 @@ extension ToolDetailsViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            getBannerImageUseCase: getBannerImageUseCase,
+            attachmentsRepository: attachmentsRepository,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }

@@ -21,15 +21,15 @@ class ToggleToolFavoritedUseCase {
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
     }
     
-    func toggleToolFavorited(tool: ResourceModel) {
+    func toggleToolFavorited(tool: ToolDomainModel) {
         
-        if getToolIsFavoritedUseCase.getToolIsFavorited(toolId: tool.id) {
+        if getToolIsFavoritedUseCase.getToolIsFavorited(id: tool.dataModelId) {
             
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: tool.id)
+            removeToolFromFavoritesUseCase.removeToolFromFavorites(id: tool.dataModelId)
             
         } else {
             
-            addToolToFavoritesUseCase.addToolToFavorites(resourceId: tool.id)
+            addToolToFavoritesUseCase.addToolToFavorites(id: tool.dataModelId)
         }
     }
 }

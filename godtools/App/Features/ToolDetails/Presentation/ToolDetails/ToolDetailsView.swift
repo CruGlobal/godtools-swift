@@ -134,7 +134,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
             analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
         return ToolDetailsView(viewModel: viewModel)

@@ -50,16 +50,15 @@ enum FlowStep {
     
     // favoritedTools
     case lessonTappedFromFeaturedLessons(lesson: LessonDomainModel)
-    case viewAllFavoriteToolsTappedFromFavoritedTools
+    case viewAllFavoriteToolsTappedFromFavorites
     case backTappedFromAllFavoriteTools
     case toolTappedFromFavoritedTools(resource: ResourceModel)
     case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
     case unfavoriteToolTappedFromFavoritedTools(resource: ResourceModel, removeHandler: CallbackHandler)
-    case allToolsTappedFromFavoritedTools
+    case goToToolsTappedFromFavorites
     
-    // allTools
-    case toolTappedFromAllTools(resource: ResourceModel)
-    case aboutToolTappedFromAllTools(resource: ResourceModel)
+    // tools
+    case toolTappedFromTools(resource: ResourceModel)
     
     // toolDetails
     case backTappedFromToolDetails

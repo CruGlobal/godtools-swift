@@ -10,14 +10,14 @@ import SwiftUI
 
 struct FavoritesView: View {
         
-    private let leadingTrailingPadding: CGFloat
+    private let contentHorizontalInsets: CGFloat
     
     @ObservedObject private var viewModel: FavoritesViewModel
     
-    init(viewModel: FavoritesViewModel, leadingTrailingPadding: CGFloat) {
+    init(viewModel: FavoritesViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets) {
         
         self.viewModel = viewModel
-        self.leadingTrailingPadding = leadingTrailingPadding
+        self.contentHorizontalInsets = contentHorizontalInsets
     }
     
     var body: some View {
@@ -26,109 +26,68 @@ struct FavoritesView: View {
                   
             VStack(alignment: .leading, spacing: 0) {
                 
-                if !viewModel.hideTutorialBanner {
-                    OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
+                if viewModel.showsOpenTutorialBanner {
+                    
+                    OpenTutorialBannerView(
+                        viewModel: viewModel,
+                        closeTappedClosure: {
+                            
+                            viewModel.closeOpenTutorialBannerTapped()
+                        },
+                        openTutorialTappedClosure: {
+                            
+                            viewModel.openTutorialBannerTapped()
+                        }
+                    )
                 }
                 
                 PullToRefreshScrollView(showsIndicators: true) {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         
-                        Text(viewModel.pageTitle)
+                        Text(viewModel.welcomeTitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 30))
                             .foregroundColor(ColorPalette.gtGrey.color)
-                            .padding(.top, 24)
-                            .padding(.bottom, 15)
-                            .padding(.leading, leadingTrailingPadding)
+                            .padding([.top], 24)
+                            .padding([.leading], contentHorizontalInsets)
                         
                         FeaturedLessonView(
-                            viewModel: viewModel.featuredLessonViewModel,
-                            width: geometry.size.width,
-                            leadingPadding: leadingTrailingPadding,
+                            viewModel: viewModel,
+                            geometry: geometry,
+                            contentHorizontalInsets: contentHorizontalInsets,
                             lessonTappedClosure: { (lesson: LessonDomainModel) in
                             
-                            viewModel.lessonTapped(lesson: lesson)
+                            viewModel.featuredLessonTapped(lesson: lesson)
                         })
-                        .padding(.bottom, 10)
+                        .padding([.top], 30)
                         
-                        FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: geometry.size.width, leadingPadding: leadingTrailingPadding)
-                            .padding(.bottom, 23)
+                        YourFavoriteToolsView(
+                            viewModel: viewModel,
+                            geometry: geometry,
+                            contentHorizontalInsets: contentHorizontalInsets
+                        )
+                        .padding([.top], 45)
                     }
+                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
 
                 } refreshHandler: {
-                    viewModel.refreshData()
+                    
+                    viewModel.pullToRefresh()
                 }
             }
         }
         .onAppear {
+            
             viewModel.pageViewed()
         }
-        
-        
-        
-        /*
-        VStack(spacing: 0) {
-            
-            if viewModel.hideTutorialBanner == false {
-                
-                OpenTutorialBannerView(viewModel: viewModel.getTutorialBannerViewModel())
-            }
-            
-            if viewModel.isLoading {
-                
-                Spacer()
-                ActivityIndicator(style: .medium, isAnimating: .constant(true))
-                Spacer()
-                
-            } else {
-                
-                GeometryReader { geo in
-                    
-                    let width = geo.size.width
-                    
-                    PullToRefreshScrollView(showsIndicators: true) {
-                        
-                        LazyVStack(alignment: .leading, spacing: 0) {
-                            
-                            Text(viewModel.pageTitle)
-                                .font(FontLibrary.sfProTextRegular.font(size: 30))
-                                .foregroundColor(ColorPalette.gtGrey.color)
-                                .padding(.top, 24)
-                                .padding(.bottom, 15)
-                                .padding(.leading, leadingTrailingPadding)
-                            
-                            FeaturedLessonCardsView(viewModel: viewModel.featuredLessonCardsViewModel, width: width, leadingPadding: leadingTrailingPadding, lessonTappedClosure: { (lesson: LessonDomainModel) in
-                                
-                                viewModel.lessonTapped(lesson: lesson)
-                            })
-                            .padding(.bottom, 10)
-                            
-                            FavoriteToolsView(viewModel: viewModel.favoriteToolsViewModel, width: width, leadingPadding: leadingTrailingPadding)
-                                .padding(.bottom, 23)
-                        }
-                        
-                    } refreshHandler: {
-                        
-                        viewModel.refreshData()
-                    }
-                }
-            }
-        }
-        .onAppear {
-            viewModel.pageViewed()
-        }
-        */
-        
-        
-        
-        
-        
     }
 }
 
-struct FavoritesView_Previews: PreviewProvider {
+// MARK: - Preview
+
+struct FavoritesView_Preview: PreviewProvider {
     
-    static var previews: some View {
+    static func getFavoritesViewModel() -> FavoritesViewModel {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
@@ -140,7 +99,6 @@ struct FavoritesView_Previews: PreviewProvider {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
@@ -150,6 +108,14 @@ struct FavoritesView_Previews: PreviewProvider {
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
         )
         
-        FavoritesView(viewModel: viewModel, leadingTrailingPadding: 20)
+        return viewModel
+    }
+    
+    static var previews: some View {
+        
+        FavoritesView(
+            viewModel: FavoritesView_Preview.getFavoritesViewModel(),
+            contentHorizontalInsets: 20
+        )
     }
 }

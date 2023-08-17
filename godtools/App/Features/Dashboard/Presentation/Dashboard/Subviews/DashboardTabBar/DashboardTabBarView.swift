@@ -20,15 +20,16 @@ struct DashboardTabBarView: View {
     var body: some View {
         
         ZStack {
+            
             HStack {
                                 
-                DashboardTabItem(tabType: .lessons, title: viewModel.lessonsTabTitle, imageName: ImageCatalog.toolsMenuLessons.name, selectedTab: $viewModel.selectedTab)
+                DashboardTabItemView(tabType: .lessons, title: viewModel.lessonsTabTitle, imageName: ImageCatalog.toolsMenuLessons.name, selectedTab: $viewModel.selectedTab)
                     .frame(maxWidth: .infinity)
                 
-                DashboardTabItem(tabType: .favorites, title: viewModel.favoritesTabTitle, imageName: ImageCatalog.toolsMenuFavorites.name, selectedTab: $viewModel.selectedTab)
+                DashboardTabItemView(tabType: .favorites, title: viewModel.favoritesTabTitle, imageName: ImageCatalog.toolsMenuFavorites.name, selectedTab: $viewModel.selectedTab)
                     .frame(maxWidth: .infinity)
                                 
-                DashboardTabItem(tabType: .allTools, title: viewModel.allToolsTabTitle, imageName: ImageCatalog.toolsMenuAllTools.name, selectedTab: $viewModel.selectedTab)
+                DashboardTabItemView(tabType: .tools, title: viewModel.allToolsTabTitle, imageName: ImageCatalog.toolsMenuAllTools.name, selectedTab: $viewModel.selectedTab)
                     .frame(maxWidth: .infinity)
                 
             }
@@ -46,36 +47,9 @@ struct DashboardTabBarView: View {
 }
 
 struct DashboardTabBarView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
-        let viewModel = DashboardViewModel(
-            startingTab: .favorites,
-            flowDelegate: MockFlowDelegate(),
-            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
-            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getShouldShowLanguageSettingsBarButtonUseCase: appDiContainer.domainLayer.getShouldShowLanguageSettingsBarButtonUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
-        )
-        
-        DashboardTabBarView(viewModel: viewModel)
+        DashboardTabBarView(viewModel: DashboardView_Previews.getDashboardViewModel())
     }
 }

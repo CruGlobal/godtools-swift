@@ -124,7 +124,7 @@ class LessonsViewModel: ObservableObject {
 
 extension LessonsViewModel {
     
-    func cardViewModel(for lesson: LessonDomainModel) -> LessonCardViewModel {
+    func getLessonViewModel(lesson: LessonDomainModel) -> LessonCardViewModel {
         
         return LessonCardViewModel(
             lesson: lesson,
@@ -143,7 +143,9 @@ extension LessonsViewModel {
     }
     
     func lessonCardTapped(lesson: LessonDomainModel) {
+        
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
+        
         trackLessonTappedAnalytics(for: lesson)
     }
 }

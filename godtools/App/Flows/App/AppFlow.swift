@@ -135,12 +135,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
-            
-        case .toolTappedFromAllTools(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
-            
-        case .aboutToolTappedFromAllTools(let resource):
-            
+                        
+        case .toolTappedFromTools(let resource):
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
                                     
         case .openToolTappedFromToolDetails(let resource):
@@ -152,7 +148,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromFeaturedLessons(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
-        case .viewAllFavoriteToolsTappedFromFavoritedTools:
+        case .viewAllFavoriteToolsTappedFromFavorites:
             
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
@@ -166,8 +162,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
             
-        case .allToolsTappedFromFavoritedTools:
-            navigateToDashboard(startingTab: .allTools)
+        case .goToToolsTappedFromFavorites:
+            navigateToDashboard(startingTab: .tools)
             
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
@@ -196,14 +192,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 toolName = resource.name
             }
             
-            let title: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_title")
-            let message: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: toolName)
-            let acceptedTitle: String = localizationServices.stringForMainBundle(key: "yes")
+            let title: String = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_title")
+            let message: String = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: toolName)
+            let acceptedTitle: String = localizationServices.stringForSystemElseEnglish(key: "yes")
             
             let viewModel = AlertMessageViewModel(
                 title: title,
                 message: message,
-                cancelTitle: localizationServices.stringForMainBundle(key: "no"),
+                cancelTitle: localizationServices.stringForSystemElseEnglish(key: "no"),
                 acceptTitle: acceptedTitle,
                 acceptHandler: handler
             )
@@ -330,7 +326,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 navigateToDashboard(startingTab: .lessons)
                 
             case .chooseTool:
-                navigateToDashboard(startingTab: .allTools)
+                navigateToDashboard(startingTab: .tools)
                 
             default:
                 navigateToDashboard()
@@ -491,7 +487,6 @@ extension AppFlow {
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
@@ -693,7 +688,7 @@ extension AppFlow {
             navigateToDashboard(startingTab: .favorites)
             
         case .allToolsList:
-            navigateToDashboard(startingTab: .allTools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
+            navigateToDashboard(startingTab: .tools, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
             
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
@@ -765,22 +760,22 @@ extension AppFlow {
     
     func getAllFavoriteTools() -> UIViewController {
         
-        let viewModel = AllFavoriteToolsViewModel(
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+        let viewModel = AllYourFavoriteToolsViewModel(
+            flowDelegate: self,
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
-            flowDelegate: self,
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             analytics: appDiContainer.dataLayer.getAnalytics()
         )
         
-        let view = AllFavoriteToolsView(viewModel: viewModel)
+        let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<AllFavoriteToolsView>(rootView: view)
+        let hostingView = UIHostingController<AllYourFavoriteToolsView>(rootView: view)
         
         _ = hostingView.addDefaultNavBackItem(
             target: viewModel,
@@ -813,7 +808,7 @@ extension AppFlow {
             analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
             
         )
         

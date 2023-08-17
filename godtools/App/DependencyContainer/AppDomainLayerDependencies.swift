@@ -79,10 +79,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getBannerImageUseCase() -> GetBannerImageUseCase {
-        return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
-    }
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),

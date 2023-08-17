@@ -8,8 +8,15 @@
 
 import Foundation
 
-enum DashboardTabTypeDomainModel {
+enum DashboardTabTypeDomainModel: String {
+    
     case lessons
     case favorites
-    case allTools
+    case tools
+}
+
+extension DashboardTabTypeDomainModel: Identifiable {
+    var id: String {
+        return rawValue
+    }
 }

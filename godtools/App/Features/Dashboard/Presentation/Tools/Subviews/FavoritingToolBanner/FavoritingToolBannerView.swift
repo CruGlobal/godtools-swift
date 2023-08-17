@@ -10,9 +10,9 @@ import SwiftUI
 
 struct FavoritingToolBannerView: View {
         
-    @ObservedObject private var viewModel: FavoritingToolBannerViewModel
+    @ObservedObject private var viewModel: ToolsViewModel
     
-    init(viewModel: FavoritingToolBannerViewModel) {
+    init(viewModel: ToolsViewModel) {
         
         self.viewModel = viewModel
     }
@@ -21,24 +21,24 @@ struct FavoritingToolBannerView: View {
         
         BannerView {
             
-            Text(viewModel.message)
+            Text(viewModel.favoritingToolBannerMessage)
                 .modifier(BannerTextStyle())
             
         } closeButtonTapHandler: {
             
-            viewModel.closeTapped()
+            viewModel.closeFavoritingToolBannerTapped()
         }
     }
 }
 
-struct FavoritingToolBannerView_Previews: PreviewProvider {
+// MARK: - Preview
+
+struct FavoritingToolBannerView_Preview: PreviewProvider {
+    
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let viewModel = FavoritingToolBannerViewModel(localizationServices: appDiContainer.dataLayer.getLocalizationServices(), delegate: nil)
-        
-        FavoritingToolBannerView(viewModel: viewModel)
-            .frame(width: 375)
-            .previewLayout(.sizeThatFits)
+        FavoritingToolBannerView(
+            viewModel: AllToolsView_Preview.getToolsViewModel()
+        )
     }
 }

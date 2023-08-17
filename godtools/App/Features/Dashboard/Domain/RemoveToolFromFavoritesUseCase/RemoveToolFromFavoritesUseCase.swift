@@ -17,8 +17,8 @@ class RemoveToolFromFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func removeToolFromFavorites(resourceId: String) {
+    func removeToolFromFavorites(id: String) {
         
-        _ = favoritedResourcesRepository.deleteFavoritedResource(resourceId: resourceId)
+        _ = favoritedResourcesRepository.deleteFavoritedResource(resourceId: id)
     }
 }

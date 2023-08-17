@@ -17,8 +17,8 @@ class AddToolToFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func addToolToFavorites(resourceId: String) {
+    func addToolToFavorites(id: String) {
         
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: resourceId)
+        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: id)
     }
 }
