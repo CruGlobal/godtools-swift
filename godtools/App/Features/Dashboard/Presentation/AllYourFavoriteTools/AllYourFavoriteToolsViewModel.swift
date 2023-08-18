@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class AllYourFavoriteToolsViewModel: ObservableObject {
         
@@ -52,7 +53,10 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (favoritedTools: [ToolDomainModel]) in
                 
-                self?.favoritedTools = favoritedTools
+                withAnimation {
+                    self?.favoritedTools = favoritedTools
+                }
+                
             }
             .store(in: &cancellables)
         

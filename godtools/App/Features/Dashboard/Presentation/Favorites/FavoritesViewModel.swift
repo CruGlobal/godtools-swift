@@ -6,6 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 import Combine
 
@@ -106,7 +107,10 @@ class FavoritesViewModel: ObservableObject {
                     }
                 }
                 
-                self?.yourFavoriteTools = maxYourFavoritesToDisplay
+                withAnimation {
+                    self?.yourFavoriteTools = maxYourFavoritesToDisplay
+                }
+                
                 self?.isLoadingYourFavoritedTools = false
             }
             .store(in: &cancellables)
