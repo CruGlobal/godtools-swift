@@ -111,7 +111,7 @@ class MenuFlow: Flow {
 
         case .shareGodToolsTappedFromMenu:
 
-            let textToShare: String = appDiContainer.dataLayer.getLocalizationServices().stringForMainBundle(key: "share_god_tools_share_sheet_text")
+            let textToShare: String = appDiContainer.dataLayer.getLocalizationServices().stringForSystemElseEnglish(key: "share_god_tools_share_sheet_text")
             let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
 
             navigationController.present(view, animated: true, completion: nil)
@@ -212,8 +212,8 @@ class MenuFlow: Flow {
             
             navigationController.dismissPresented(animated: true) {
                 
-                let title: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.title")
-                let message: String = localizationServices.stringForMainBundle(key: "accountDeletedAlert.message")
+                let title: String = localizationServices.stringForSystemElseEnglish(key: "accountDeletedAlert.title")
+                let message: String = localizationServices.stringForSystemElseEnglish(key: "accountDeletedAlert.message")
                 
                 self.presentAlert(title: title, message: message)
             }
@@ -252,7 +252,7 @@ class MenuFlow: Flow {
         
         _ = hostingView.addBarButtonItem(
             to: .right,
-            title: localizationServices.stringForMainBundle(key: "done"),
+            title: localizationServices.stringForSystemElseEnglish(key: "done"),
             style: .done,
             color: nil,
             target: viewModel,
@@ -369,17 +369,17 @@ class MenuFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
-            title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.title"),
+            title: localizationServices.stringForSystemElseEnglish(key: "confirmDeleteAccount.title"),
             message: "",
             preferredStyle: .actionSheet
         )
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "confirmDeleteAccount.confirmButton.title"), style: .destructive, handler: { (action: UIAlertAction) in
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForSystemElseEnglish(key: "confirmDeleteAccount.confirmButton.title"), style: .destructive, handler: { (action: UIAlertAction) in
                         
             self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
         }))
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForMainBundle(key: "cancel"), style: .cancel, handler: { (action: UIAlertAction) in
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForSystemElseEnglish(key: "cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             
         }))
         

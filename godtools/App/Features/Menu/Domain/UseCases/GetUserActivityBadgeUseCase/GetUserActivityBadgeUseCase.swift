@@ -78,7 +78,7 @@ class GetUserActivityBadgeUseCase {
 
         }
         
-        let formatString = localizationServices.stringForMainBundle(key: stringLocalizationKey, fileType: .stringsdict)
+        let formatString = localizationServices.stringForSystemElseEnglish(key: stringLocalizationKey, fileType: .stringsdict)
         
         let badgeText: String = String.localizedStringWithFormat(formatString, progressTarget)
         

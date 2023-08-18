@@ -91,7 +91,7 @@ class GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForMainBundle(key: "account.joinedOn"), formattedCreatedAtDateString)
+        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForSystemElseEnglish(key: "account.joinedOn"), formattedCreatedAtDateString)
         
         return joinedOnString
     }

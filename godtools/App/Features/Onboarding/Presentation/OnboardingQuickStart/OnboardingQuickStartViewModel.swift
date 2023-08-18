@@ -26,9 +26,9 @@ class OnboardingQuickStartViewModel: ObservableObject {
     
     init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase, trackActionAnalytics: TrackActionAnalytics) {
         
-        title = localizationServices.stringForMainBundle(key: "onboardingQuickStart.title")
-        skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
-        endTutorialButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.getStartedButton.title")
+        title = localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.title")
+        skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
+        endTutorialButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.getStartedButton.title")
         
         self.flowDelegate = flowDelegate
         

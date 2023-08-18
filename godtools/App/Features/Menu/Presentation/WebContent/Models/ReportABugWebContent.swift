@@ -17,6 +17,6 @@ struct ReportABugWebContent: WebContentType {
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "menu.reportABug")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.reportABug")
     }
 }

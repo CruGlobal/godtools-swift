@@ -18,6 +18,6 @@ class MobileContentErrorViewModel {
         
         self.title = title
         self.message = message
-        self.acceptTitle = localizationServices.stringForMainBundle(key: "OK")
+        self.acceptTitle = localizationServices.stringForSystemElseEnglish(key: "OK")
     }
 }

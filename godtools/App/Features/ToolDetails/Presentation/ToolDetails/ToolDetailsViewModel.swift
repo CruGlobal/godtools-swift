@@ -78,7 +78,7 @@ class ToolDetailsViewModel: ObservableObject {
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
+        self.versionsMessage = localizationServices.stringForSystemElseEnglish(key: "toolDetails.versions.message")
         
         reloadToolDetails(resource: resource)
     }

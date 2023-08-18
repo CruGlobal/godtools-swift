@@ -17,6 +17,6 @@ struct CopyrightInfoWebContent: WebContentType {
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "copyright_info")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "copyright_info")
     }
 }
