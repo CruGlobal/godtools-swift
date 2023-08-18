@@ -43,25 +43,4 @@ class LocalizationServices {
         
         return stringsRepositories[fileType]?.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: key) ?? key
     }
-    
-    @available(*, deprecated) // TODO: Eventually want to remove this method and use above methods. ~Levi
-    func stringForBundle(bundle: Bundle, key: String, fileType: LocalizableStringsFileType = .strings) -> String {
-        
-        return stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle(bundle: bundle, fileType: fileType), key: key)
-    }
-    
-    @available(*, deprecated) // TODO: Eventually want to remove this method and use above methods. ~Levi
-    private func stringForLocalizableStringsBundle(stringsBundle: LocalizableStringsBundle, key: String) -> String {
-        
-        if let stringForBundle = stringsBundle.stringForKey(key: key) {
-            
-            return stringForBundle
-        }
-        else if let englishString = stringsRepositories[stringsBundle.fileType]?.stringForEnglish(key: key) {
-            
-            return englishString
-        }
-        
-        return key
-    }
 }

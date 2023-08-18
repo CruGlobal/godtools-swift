@@ -54,26 +54,26 @@ class GetToolVersionsUseCase {
         
         let name: String
         let description: String
-        let languageBundle: Bundle
+        let languageBundle: LocalizableStringsBundle?
         
         // TODO: Another place that needs to be completed in GT-1625. ~Levi
         if let primaryLanguage = primaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVersion.id, languageId: primaryLanguage.id) {
             
             name = primaryTranslation.translatedName
             description = primaryTranslation.translatedTagline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVersion.id, languageCode: "en") {
             
             name = englishTranslation.translatedName
             description = englishTranslation.translatedTagline
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)
         }
         else {
             
             name = resourceVersion.name
             description = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)
         }
         
         let primaryLanguageTranslatedName: String?
@@ -103,6 +103,8 @@ class GetToolVersionsUseCase {
             parallelLanguageTranslatedName = nil
             supportsParallelLanguage = false
         }
+        
+        let localizedNumberOfLanguagesString: String = languageBundle?.stringForKey(key: "total_languages") ?? "%d languages"
                 
         return ToolVersionDomainModel(
             bannerImageId: resourceVersion.attrBanner,
@@ -110,7 +112,7 @@ class GetToolVersionsUseCase {
             name: name,
             description: description,
             numberOfLanguages: toolLanguages.count,
-            numberOfLanguagesString: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), toolLanguages.count),
+            numberOfLanguagesString: String.localizedStringWithFormat(localizedNumberOfLanguagesString, toolLanguages.count),
             primaryLanguage: primaryLanguageTranslatedName,
             primaryLanguageIsSupported: supportsPrimaryLanguage,
             parallelLanguage: parallelLanguageTranslatedName,

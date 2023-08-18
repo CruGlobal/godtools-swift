@@ -105,7 +105,9 @@ class ToolDetailsViewModel: ObservableObject {
         
         let nameValue: String
         let aboutDetailsValue: String
-        let languageBundle: Bundle
+        let languageBundleFileType: LocalizableStringsFileType = .strings
+        let languageBundle: LocalizableStringsBundle?
+        let englishBundle: LocalizableStringsBundle? = localizationServices.bundleLoader.getEnglishBundle(fileType: languageBundleFileType)
         
         if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
@@ -114,7 +116,7 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
             conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
             outlineContent = primaryTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: languageBundleFileType) ?? englishBundle
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
@@ -123,26 +125,26 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
             conversationStartersContent = englishTranslation.toolDetailsConversationStarters
             outlineContent = englishTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = englishBundle
         }
         else {
             
             nameValue = resource.name
             aboutDetailsValue = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = englishBundle
         }
                 
         name = nameValue
-        totalViews = String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews)
-        openToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool")
-        learnToShareToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.learnToShareToolButton.title")
-        addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
-        removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
+        totalViews = String.localizedStringWithFormat(languageBundle?.stringForKey(key: "total_views") ?? "", resource.totalViews)
+        openToolButtonTitle = languageBundle?.stringForKey(key: "toolinfo_opentool") ?? ""
+        learnToShareToolButtonTitle = languageBundle?.stringForKey(key: "toolDetails.learnToShareToolButton.title") ?? ""
+        addToFavoritesButtonTitle = languageBundle?.stringForKey(key: "add_to_favorites") ?? ""
+        removeFromFavoritesButtonTitle = languageBundle?.stringForKey(key: "remove_from_favorites") ?? ""
         aboutDetails = aboutDetailsValue
-        conversationStartersTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.conversationStarters.title")
-        outlineTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.outline.title")
-        bibleReferencesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.bibleReferences.title")
-        availableLanguagesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolSettings.languagesAvailable.title")
+        conversationStartersTitle = languageBundle?.stringForKey(key: "toolDetails.conversationStarters.title") ?? ""
+        outlineTitle = languageBundle?.stringForKey(key: "toolDetails.outline.title") ?? ""
+        bibleReferencesTitle = languageBundle?.stringForKey(key: "toolDetails.bibleReferences.title") ?? ""
+        availableLanguagesTitle = languageBundle?.stringForKey(key: "toolSettings.languagesAvailable.title") ?? ""
                         
         availableLanguagesList = getToolLanguagesUseCase.getToolLanguages(resource: resource).map({$0.translatedName}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
@@ -156,9 +158,9 @@ class ToolDetailsViewModel: ObservableObject {
         segments = segmentTypes.map({
             switch $0 {
             case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
+                return languageBundle?.stringForKey(key: "toolDetails.about.title") ?? ""
             case .versions:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
+                return languageBundle?.stringForKey(key: "toolDetails.versions.title") ?? ""
             }
         })
         
