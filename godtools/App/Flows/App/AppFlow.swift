@@ -88,7 +88,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             else if appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable {
                 
-                navigate(step: .showOnboardingTutorial(animated: false))
+                navigate(step: .showOnboardingTutorial(animated: true))
             }
             else {
                 
