@@ -21,10 +21,10 @@ class DeleteAccountViewModel: ObservableObject {
         
         self.flowDelegate = flowDelegate
         
-        title = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.title.rawValue)
-        subtitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.subtitle.rawValue)
-        confirmButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue)
-        cancelButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
+        title = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.title.rawValue)
+        subtitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.subtitle.rawValue)
+        confirmButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue)
+        cancelButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
     }
 }
 

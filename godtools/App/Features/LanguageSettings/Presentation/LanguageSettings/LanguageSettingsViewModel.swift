@@ -36,18 +36,18 @@ class LanguageSettingsViewModel {
         self.localizationServices = localizationServices
         self.analytics = analytics
         
-        primaryLanguageTitle = localizationServices.stringForMainBundle(key: "primary_language")
-        parallelLanguageTitle = localizationServices.stringForMainBundle(key: "parallel_language")
-        shareGodToolsInNativeLanguage = localizationServices.stringForMainBundle(key: "share_god_tools_native_language")
-        languageAvailability = localizationServices.stringForMainBundle(key: "not_every_tool_is_available")
+        primaryLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "primary_language")
+        parallelLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "parallel_language")
+        shareGodToolsInNativeLanguage = localizationServices.stringForSystemElseEnglish(key: "share_god_tools_native_language")
+        languageAvailability = localizationServices.stringForSystemElseEnglish(key: "not_every_tool_is_available")
                 
-        navTitle.accept(value: localizationServices.stringForMainBundle(key: "language_settings"))
+        navTitle.accept(value: localizationServices.stringForSystemElseEnglish(key: "language_settings"))
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (language: LanguageDomainModel?) in
                 
-                let title: String = language?.translatedName ?? self?.localizationServices.stringForMainBundle(key: "select_primary_language") ?? ""
+                let title: String = language?.translatedName ?? self?.localizationServices.stringForSystemElseEnglish(key: "select_primary_language") ?? ""
 
                 self?.primaryLanguageButtonTitle.accept(value: title)
             }
@@ -57,7 +57,7 @@ class LanguageSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
                 
-                let title: String = language?.translatedName ?? self?.localizationServices.stringForMainBundle(key: "select_parallel_language") ?? ""
+                let title: String = language?.translatedName ?? self?.localizationServices.stringForSystemElseEnglish(key: "select_parallel_language") ?? ""
                 
                 self?.parallelLanguageButtonTitle.accept(value: title)
             })

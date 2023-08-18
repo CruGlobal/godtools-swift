@@ -56,14 +56,14 @@ class ChooseLanguageViewModel {
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         
-        deleteLanguageButtonTitle = localizationServices.stringForMainBundle(key: "clear")
-        closeKeyboardTitle = localizationServices.stringForMainBundle(key: "dismiss")
+        deleteLanguageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "clear")
+        closeKeyboardTitle = localizationServices.stringForSystemElseEnglish(key: "dismiss")
                         
         switch chooseLanguageType {
         case .primary:
-            navTitle.accept(value: localizationServices.stringForMainBundle(key: "primary_language"))
+            navTitle.accept(value: localizationServices.stringForSystemElseEnglish(key: "primary_language"))
         case .parallel:
-            navTitle.accept(value: localizationServices.stringForMainBundle(key: "parallel_language"))
+            navTitle.accept(value: localizationServices.stringForSystemElseEnglish(key: "parallel_language"))
         }
         
         Publishers.CombineLatest3(getSettingsLanguagesUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(), getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())

@@ -17,6 +17,6 @@ struct AskAQuestionWebContent: WebContentType {
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "menu.askAQuestion")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.askAQuestion")
     }
 }

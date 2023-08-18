@@ -33,7 +33,7 @@ class ChooseParallelLanguageListViewModel {
         self.userDidSetSettingsParallelLanguageUseCase = userDidSetSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
         
-        selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
+        selectButtonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.selectButton.title")
         numberOfLanguages = ObservableValue(value: 0)
         
         Publishers.CombineLatest(getSettingsLanguagesUseCase.getLanguagesList(), getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher())

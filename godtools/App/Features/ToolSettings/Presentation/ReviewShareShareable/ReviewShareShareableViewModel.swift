@@ -31,7 +31,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         self.shareableImageDomainModel = shareableImageDomainModel
         self.imageToShare = shareableImageDomainModel.image
         self.imagePreview = Image(uiImage: imageToShare)
-        self.shareImageButtonTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareImagePreview.shareImageButton.title")
+        self.shareImageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.shareImagePreview.shareImageButton.title")
     }
     
     private func trackShareImageTappedAnalytics() {

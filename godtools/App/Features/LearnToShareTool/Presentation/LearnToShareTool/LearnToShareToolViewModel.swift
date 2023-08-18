@@ -51,7 +51,7 @@ class LearnToShareToolViewModel: ObservableObject {
         
         let localizedKey: String = isOnLastPage ? "start_training" : "tutorial.continueButton.title.continue"
                 
-        self.continueTitle = localizationServices.stringForMainBundle(key: localizedKey)
+        self.continueTitle = localizationServices.stringForSystemElseEnglish(key: localizedKey)
         
         hidesBackButtonSubject.send(page == 0)
     }

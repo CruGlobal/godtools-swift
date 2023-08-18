@@ -111,9 +111,9 @@ class TractFlow: ToolNavigationFlow, Flow {
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,
-                    message: localizationServices.stringForMainBundle(key: "exit_tract_remote_share_session.message"),
-                    cancelTitle: localizationServices.stringForMainBundle(key: "no").uppercased(),
-                    acceptTitle: localizationServices.stringForMainBundle(key: "yes").uppercased(),
+                    message: localizationServices.stringForSystemElseEnglish(key: "exit_tract_remote_share_session.message"),
+                    cancelTitle: localizationServices.stringForSystemElseEnglish(key: "no").uppercased(),
+                    acceptTitle: localizationServices.stringForSystemElseEnglish(key: "yes").uppercased(),
                     acceptHandler: acceptHandler
                 )
                 

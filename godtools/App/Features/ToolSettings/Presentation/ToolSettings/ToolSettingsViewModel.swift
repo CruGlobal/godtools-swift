@@ -49,19 +49,19 @@ class ToolSettingsViewModel: ObservableObject {
         self.primaryLanguageSubject = primaryLanguageSubject
         self.parallelLanguageSubject = parallelLanguageSubject
         
-        title = localizationServices.stringForMainBundle(key: "toolSettings.title")
-        shareLinkTitle = localizationServices.stringForMainBundle(key: "toolSettings.option.shareLink.title")
-        screenShareTitle = localizationServices.stringForMainBundle(key: "toolSettings.option.screenShare.title")
+        title = localizationServices.stringForSystemElseEnglish(key: "toolSettings.title")
+        shareLinkTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.shareLink.title")
+        screenShareTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.screenShare.title")
         
         trainingTipsEnabledSubject.send(trainingTipsEnabled)
         
         trainingTipsCancellable = trainingTipsEnabledSubject.sink { [weak self] (trainingTipsEnabled: Bool) in
-            self?.trainingTipsTitle = trainingTipsEnabled ? localizationServices.stringForMainBundle(key: "toolSettings.option.trainingTips.hide.title") : localizationServices.stringForMainBundle(key: "toolSettings.option.trainingTips.show.title")
+            self?.trainingTipsTitle = trainingTipsEnabled ? localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.trainingTips.hide.title") : localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.trainingTips.show.title")
             self?.trainingTipsIcon = trainingTipsEnabled ? Image(ImageCatalog.toolSettingsOptionHideTips.name) : Image(ImageCatalog.toolSettingsOptionTrainingTips.name)
         }
-        chooseLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.title")
-        chooseLanguageToggleMessage = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.toggleMessage")
-        shareablesTitle = localizationServices.stringForMainBundle(key: "toolSettings.shareables.title")
+        chooseLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.title")
+        chooseLanguageToggleMessage = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.toggleMessage")
+        shareablesTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.shareables.title")
         
         currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
 
@@ -79,7 +79,7 @@ class ToolSettingsViewModel: ObservableObject {
                 self?.parallelLanguageTitle = language.translatedName
             }
             else {
-                self?.parallelLanguageTitle = localizationServices.stringForMainBundle(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
+                self?.parallelLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
             }
         })
         

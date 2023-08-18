@@ -18,7 +18,7 @@ extension Flow {
             title: title,
             message: message,
             cancelTitle: nil,
-            acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+            acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
             acceptHandler: nil
         )
         

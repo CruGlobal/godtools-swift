@@ -29,18 +29,18 @@ class GetTutorialUseCase {
     func getTutorialValue() -> TutorialDomainModel {
         
         let tutorialItems: [TutorialItemDomainModel]
-        let defaultContinueButtonTitle: String = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
+        let defaultContinueButtonTitle: String = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.continue")
         let lastPageContinueButtonTitle: String
         
         if getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode == LanguageCodes.english {
             
             tutorialItems = getEnglishTutorialItems()
-            lastPageContinueButtonTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.closeTutorial")
+            lastPageContinueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.closeTutorial")
         }
         else {
             
             tutorialItems = getNonEnglishTutorialItems()
-            lastPageContinueButtonTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
+            lastPageContinueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.startUsingGodTools")
         }
         
         return TutorialDomainModel(
@@ -55,35 +55,35 @@ class GetTutorialUseCase {
         let tutorialItems: [TutorialItemDomainModel] = [
             
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.lesson.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.lesson.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.lesson.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.lesson.message"),
                 imageName: nil,
                 animationName: "tutorial_lessons",
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.tool.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.tool.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.tool.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.tool.message"),
                 imageName: ImageCatalog.tutorialTool.rawValue,
                 animationName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.toolTip.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.toolTip.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.toolTip.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.toolTip.message"),
                 imageName: nil,
                 animationName: "tutorial_tooltip",
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.screenShare.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.screenShare.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.screenShare.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.screenShare.message"),
                 imageName: nil,
                 animationName: "tutorial_screenshare",
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.findTutorial.title"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.findTutorial.title"),
                 message: "",
                 imageName: ImageCatalog.tutorialInMenuEnglish.name,
                 animationName: nil,
@@ -99,28 +99,28 @@ class GetTutorialUseCase {
         let tutorialItems: [TutorialItemDomainModel] = [
             
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.0.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.0.message"),
                 imageName: nil,
                 animationName: nil,
                 youTubeVideoId: "ELRAmQxLqHE"
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.1.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.1.message"),
                 imageName: ImageCatalog.tutorialToolNonEnglish.name,
                 animationName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.title"),
-                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.2.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.2.message"),
                 imageName: ImageCatalog.tutorialPeople.rawValue,
                 animationName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.3.title"),
+                title: localizationServices.stringForSystemElseEnglish(key: "tutorial.tutorialItem.3.title"),
                 message: "",
                 imageName: ImageCatalog.tutorialInMenuNonEnglish.name,
                 animationName: nil,

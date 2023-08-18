@@ -40,9 +40,9 @@ class ShareToolScreenTutorialViewModel {
         self.analyticsContainer = analyticsContainer
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
         self.customViewBuilder = ShareToolScreenCustomTutorialViewBuilder()
-        self.skipTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
-        self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
-        self.shareLinkTitle = localizationServices.stringForMainBundle(key: "share_link")
+        self.skipTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
+        self.continueTitle = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.continue")
+        self.shareLinkTitle = localizationServices.stringForSystemElseEnglish(key: "share_link")
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
     }

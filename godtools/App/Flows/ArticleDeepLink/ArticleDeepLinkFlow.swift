@@ -63,7 +63,7 @@ class ArticleDeepLinkFlow: Flow {
                     title: alertMessage.title,
                     message: alertMessage.message,
                     cancelTitle: nil,
-                    acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+                    acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
                     acceptHandler: nil
                 )
                 

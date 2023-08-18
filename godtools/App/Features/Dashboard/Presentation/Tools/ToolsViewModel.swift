@@ -228,6 +228,10 @@ extension ToolsViewModel {
     
     func categoryTapped(index: Int) {
         
+        guard selectedCategoryIndex != index else {
+            return
+        }
+        
         selectedCategoryIndex = index
     }
     

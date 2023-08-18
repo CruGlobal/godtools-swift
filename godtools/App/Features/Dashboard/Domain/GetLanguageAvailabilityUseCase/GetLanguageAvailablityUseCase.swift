@@ -31,7 +31,7 @@ class GetLanguageAvailabilityUseCase {
         } else {
             
             let notAvailableString = String.localizedStringWithFormat(
-                localizationServices.stringForMainBundle(key: "lessonCard.languageNotAvailable"),
+                localizationServices.stringForSystemElseEnglish(key: "lessonCard.languageNotAvailable"),
                 translatedLanguageName
             )
             let stringWithX = notAvailableString + " ✕"

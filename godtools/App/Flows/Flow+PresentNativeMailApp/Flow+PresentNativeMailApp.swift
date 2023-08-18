@@ -18,10 +18,10 @@ extension Flow {
             let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
             
             let viewModel = AlertMessageViewModel(
-                title: localizationServices.stringForMainBundle(key: "alert.mailAppUnavailable.title"),
-                message: localizationServices.stringForMainBundle(key: "alert.mailAppUnavailable.message"),
+                title: localizationServices.stringForSystemElseEnglish(key: "alert.mailAppUnavailable.title"),
+                message: localizationServices.stringForSystemElseEnglish(key: "alert.mailAppUnavailable.message"),
                 cancelTitle: nil,
-                acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+                acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
                 acceptHandler: nil
             )
             

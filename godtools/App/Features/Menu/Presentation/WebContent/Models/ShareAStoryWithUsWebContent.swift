@@ -17,6 +17,6 @@ struct ShareAStoryWithUsWebContent: WebContentType {
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "share_a_story_with_us")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "share_a_story_with_us")
     }
 }

@@ -34,22 +34,22 @@ class GetGlobalActivityThisWeekUseCase {
                 
                 let usersAnalytics = GlobalActivityThisWeekDomainModel(
                     count: self.getFormattedCount(count: dataModel.users),
-                    label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.users.title")
+                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.users.title")
                 )
                 
                 let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
                     count: self.getFormattedCount(count: dataModel.gospelPresentations),
-                    label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.gospelPresentation.title")
+                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.gospelPresentation.title")
                 )
                 
                 let launchesAnalytics = GlobalActivityThisWeekDomainModel(
                     count: self.getFormattedCount(count: dataModel.launches),
-                    label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.launches.title")
+                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.launches.title")
                 )
                 
                 let countriesAnalytics = GlobalActivityThisWeekDomainModel(
                     count: self.getFormattedCount(count: dataModel.countries),
-                    label: self.localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.countries.title")
+                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.countries.title")
                 )
                 
                 let activityThisWeek: [GlobalActivityThisWeekDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]
