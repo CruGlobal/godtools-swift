@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ToolCategoryButtonView: View {
         
-    private static let defaultSize: CGSize = CGSize(width: 130, height: 64)
+    private static let defaultSize: CGSize = CGSize(width: 160, height: 74)
     
     @ObservedObject private var viewModel: ToolCategoryButtonViewModel
     
