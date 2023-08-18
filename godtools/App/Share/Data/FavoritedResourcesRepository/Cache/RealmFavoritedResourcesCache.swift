@@ -31,15 +31,9 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: id)
-            .map { (object: RealmFavoritedResource?) in
-                
-                guard let object = object else {
-                    return nil
-                }
-                
-                return FavoritedResourceDataModel(realmFavoritedResource: object)
-            }
+        let favoritedResource: FavoritedResourceDataModel? = getFavoritedResource(resourceId: id)
+        
+        return Just(favoritedResource)
             .eraseToAnyPublisher()
     }
     
