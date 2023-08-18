@@ -23,18 +23,28 @@ class StoreInitialFavoritedToolsUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.launchCountRepository = launchCountRepository
         
-        Publishers.Zip(resourcesRepository.getResourcesChanged(), launchCountRepository.getLaunchCountPublisher())
-            .sink { (resourcesChanged: Void, launchCount: Int) in
-                
-                guard favoritedResourcesRepository.numberOfFavoritedResources == 0 && launchCount == 1 else {
-                    return
-                }
-                
-                _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "2")
-                _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "1")
-                _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "4")
-                _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: "8")
+        Publishers.Zip(
+            resourcesRepository.getResourcesChanged(),
+            launchCountRepository.getLaunchCountPublisher()
+        )
+        .flatMap({ (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> in
+            
+            guard favoritedResourcesRepository.getNumberOfFavoritedResources() == 0 && launchCount == 1 else {
+                return Just([]).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
             }
-            .store(in: &cancellables)
+            
+            let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"]
+            
+            return self.favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
+                .eraseToAnyPublisher()
+            
+        })
+        .sink { _ in
+            
+        } receiveValue: { _ in
+            
+        }
+        .store(in: &cancellables)
     }
 }

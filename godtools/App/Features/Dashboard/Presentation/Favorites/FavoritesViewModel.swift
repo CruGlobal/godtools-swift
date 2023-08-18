@@ -9,10 +9,6 @@
 import SwiftUI
 import Combine
 
-protocol FavoritesViewModelDelegate: AnyObject {
-    func favoriteToolsViewGoToToolsTapped()
-}
-
 class FavoritesViewModel: ObservableObject {
             
     private let dataDownloader: InitialDataDownloader
@@ -27,13 +23,11 @@ class FavoritesViewModel: ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let maxNumberOfYourFavoriteToolsToDisplay: Int = 5
     
     private var cancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
-    private weak var delegate: FavoritesViewModelDelegate?
         
     @Published var openTutorialBannerMessage: String = ""
     @Published var openTutorialBannerButtonTitle: String = ""
@@ -49,7 +43,7 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -64,7 +58,6 @@ class FavoritesViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
                           
         openTutorialBannerMessage = localizationServices.stringForSystemElseEnglish(key: "openTutorial.showTutorialLabel.text")
         openTutorialBannerButtonTitle = localizationServices.stringForSystemElseEnglish(key: "openTutorial.openTutorialButton.title")
@@ -100,11 +93,20 @@ class FavoritesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher().prefix(maxNumberOfYourFavoriteToolsToDisplay)
+        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (yourFavoriteTools: [ToolDomainModel]) in
                 
-                self?.yourFavoriteTools = yourFavoriteTools
+                let maxNumberOfYourFavoriteToolsToDisplay: Int = self?.maxNumberOfYourFavoriteToolsToDisplay ?? 0
+                var maxYourFavoritesToDisplay: [ToolDomainModel] = Array()
+                
+                for index in 0 ..< maxNumberOfYourFavoriteToolsToDisplay {
+                    if index < yourFavoriteTools.count {
+                        maxYourFavoritesToDisplay.append(yourFavoriteTools[index])
+                    }
+                }
+                
+                self?.yourFavoriteTools = maxYourFavoritesToDisplay
                 self?.isLoadingYourFavoritedTools = false
             }
             .store(in: &cancellables)
@@ -305,11 +307,7 @@ extension FavoritesViewModel {
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
         
-        let removedHandler = CallbackHandler { [weak self] in
-            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(id: tool.id)
-        }
-        
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: tool.resource, removeHandler: removedHandler))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(tool: tool))
     }
     
     func toolTapped(tool: ToolDomainModel) {

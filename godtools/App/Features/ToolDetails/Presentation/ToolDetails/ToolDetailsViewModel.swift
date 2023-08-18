@@ -12,12 +12,13 @@ import Combine
 
 class ToolDetailsViewModel: ObservableObject {
     
+    private static var toggleToolFavoriteCancellable: AnyCancellable?
+    
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
-    private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
@@ -59,16 +60,15 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
-        self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
@@ -280,12 +280,10 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        if isFavorited {
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(id: resource.id)
-        }
-        else {
-            addToolToFavoritesUseCase.addToolToFavorites(id: resource.id)
-        }
+        ToolDetailsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: resource.id)
+            .sink { _ in
+                
+            }
     }
     
     func segmentTapped(index: Int) {

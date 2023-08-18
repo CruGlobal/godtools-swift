@@ -168,43 +168,24 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
             
-        case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
+        case .unfavoriteToolTappedFromFavoritedTools(let tool):
             
+            // TODO: This needed? ~Levi
+            /*
             let handler = CallbackHandler { [weak self] in
                 removeHandler.handle()
                 self?.navigationController.dismiss(animated: true, completion: nil)
-            }
+            }*/
             
-            let translationsRepository: TranslationsRepository = appDiContainer.dataLayer.getTranslationsRepository()
-            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
-            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
-            let settingsPrimaryLanguage: LanguageDomainModel? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
-            
-            let toolName: String
-            
-            if let settingsPrimaryLanguage = settingsPrimaryLanguage, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: settingsPrimaryLanguage.dataModelId) {
-                toolName = primaryTranslation.translatedName
-            }
-            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
-                toolName = englishTranslation.translatedName
-            }
-            else {
-                toolName = resource.name
-            }
-            
-            let title: String = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_title")
-            let message: String = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: toolName)
-            let acceptedTitle: String = localizationServices.stringForSystemElseEnglish(key: "yes")
-            
-            let viewModel = AlertMessageViewModel(
-                title: title,
-                message: message,
-                cancelTitle: localizationServices.stringForSystemElseEnglish(key: "no"),
-                acceptTitle: acceptedTitle,
-                acceptHandler: handler
+            let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
+                tool: tool,
+                translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
             )
             
-            let view = AlertMessageView(viewModel: viewModel)
+            let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
             
             navigationController.present(view.controller, animated: true, completion: nil)
             
@@ -765,7 +746,6 @@ extension AppFlow {
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
@@ -798,9 +778,8 @@ extension AppFlow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
-            addToolToFavoritesUseCase: appDiContainer.domainLayer.getAddToolToFavoritesUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),

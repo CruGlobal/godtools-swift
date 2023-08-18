@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class RemoveToolFromFavoritesUseCase {
     
@@ -17,8 +18,14 @@ class RemoveToolFromFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func removeToolFromFavorites(id: String) {
+    func removeToolFromFavoritesPublisher(id: String) -> AnyPublisher<Void, Never> {
         
-        _ = favoritedResourcesRepository.deleteFavoritedResource(resourceId: id)
+        return favoritedResourcesRepository.deleteFavoritedResourcePublisher(id: id)
+            .catch({ (error: Error) -> AnyPublisher<Void, Never> in
+              
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

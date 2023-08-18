@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmFavoritedResource: Object, FavoritedResourceModelType {
+class RealmFavoritedResource: Object {
     
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var resourceId: String = ""
@@ -18,9 +18,9 @@ class RealmFavoritedResource: Object, FavoritedResourceModelType {
         return "resourceId"
     }
     
-    func mapFrom(model: FavoritedResourceModel) {
+    func mapFrom(dataModel: FavoritedResourceDataModel) {
             
-        createdAt = model.createdAt
-        resourceId = model.resourceId
+        createdAt = dataModel.createdAt
+        resourceId = dataModel.id
     }
 }

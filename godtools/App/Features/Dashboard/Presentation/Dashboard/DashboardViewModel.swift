@@ -90,8 +90,7 @@ class DashboardViewModel: ObservableObject {
             getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
             getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase
         )
     }()
     

@@ -14,7 +14,6 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let localizationServices: LocalizationServices
@@ -28,13 +27,12 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var favoritedTools: [ToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate?, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
@@ -171,11 +169,7 @@ extension AllYourFavoriteToolsViewModel {
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
         
-        let removedHandler = CallbackHandler { [weak self] in
-            self?.removeToolFromFavoritesUseCase.removeToolFromFavorites(id: tool.id)
-        }
-        
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: tool.resource, removeHandler: removedHandler))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(tool: tool))
     }
     
     func toolTapped(tool: ToolDomainModel) {

@@ -7,29 +7,37 @@
 //
 
 import Foundation
+import Combine
 
 class ToggleToolFavoritedUseCase {
     
-    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     
-    init(getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase) {
         
-        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.favoritedResourcesRepository = favoritedResourcesRepository
         self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
     }
     
-    func toggleToolFavorited(tool: ToolDomainModel) {
-        
-        if getToolIsFavoritedUseCase.getToolIsFavorited(id: tool.dataModelId) {
-            
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(id: tool.dataModelId)
-            
-        } else {
-            
-            addToolToFavoritesUseCase.addToolToFavorites(id: tool.dataModelId)
-        }
+    func toggleToolFavoritedPublisher(id: String) -> AnyPublisher<Void, Never> {
+                        
+        return favoritedResourcesRepository.getResourceIsFavoritedPublisher(id: id)
+            .flatMap({ (isFavorited: Bool) -> AnyPublisher<Void, Never> in
+                
+                if isFavorited {
+                    
+                    return self.removeToolFromFavoritesUseCase.removeToolFromFavoritesPublisher(id: id)
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    
+                    return self.addToolToFavoritesUseCase.addToolToFavoritesPublisher(id: id)
+                        .eraseToAnyPublisher()
+                }
+            })
+            .eraseToAnyPublisher()
     }
 }

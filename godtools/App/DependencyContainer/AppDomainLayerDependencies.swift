@@ -251,7 +251,7 @@ class AppDomainLayerDependencies {
     
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
         )

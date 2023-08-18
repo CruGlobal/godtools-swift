@@ -111,7 +111,7 @@ class AppDataLayerDependencies {
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
-            cache: FavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
+            cache: RealmFavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
         )
     }
     

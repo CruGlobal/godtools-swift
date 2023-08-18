@@ -8,11 +8,12 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Deprecrating, instead use Combine subjects. ~Levi
 class CallbackHandler {
     
     let handle: (() -> Void)
     
-    required init(handle: @escaping (() -> Void)) {
+    init(handle: @escaping (() -> Void)) {
         self.handle = handle
     }
 }

@@ -11,7 +11,9 @@ import SwiftUI
 import Combine
 
 class ToolsViewModel: ObservableObject {
-            
+    
+    private static var toggleToolFavoriteCancellable: AnyCancellable?
+    
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let favoritingToolMessageCache: FavoritingToolMessageCache
@@ -170,6 +172,14 @@ class ToolsViewModel: ObservableObject {
         
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
+    
+    private func toggleToolIsFavorited(tool: ToolDomainModel) {
+        
+        ToolsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: tool.dataModelId)
+            .sink { _ in
+                
+            }
+    }
 }
 
 // MARK: - Inputs
@@ -223,7 +233,7 @@ extension ToolsViewModel {
     
     func spotlightToolFavorited(spotlightTool: ToolDomainModel) {
      
-        toggleToolFavoritedUseCase.toggleToolFavorited(tool: spotlightTool)
+        toggleToolIsFavorited(tool: spotlightTool)
     }
     
     func spotlightToolTapped(spotlightTool: ToolDomainModel) {
@@ -235,7 +245,7 @@ extension ToolsViewModel {
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
 
-        toggleToolFavoritedUseCase.toggleToolFavorited(tool: tool)
+        toggleToolIsFavorited(tool: tool)
     }
     
     func toolTapped(tool: ToolDomainModel) {
