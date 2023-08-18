@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class LessonsViewModel: ObservableObject {
         
@@ -26,6 +27,7 @@ class LessonsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
+    @Published var isLoadingLessons: Bool = true
         
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
@@ -44,6 +46,7 @@ class LessonsViewModel: ObservableObject {
             .sink { [weak self] lessons in
                 
                 self?.lessons = lessons
+                self?.isLoadingLessons = false
             }
             .store(in: &cancellables)
         

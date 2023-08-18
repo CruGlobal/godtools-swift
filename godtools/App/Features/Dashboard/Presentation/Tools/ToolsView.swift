@@ -25,6 +25,12 @@ struct ToolsView: View {
         
         GeometryReader { geometry in
               
+            if viewModel.isLoadingAllTools {
+                CenteredCircularProgressView(
+                    progressColor: ColorPalette.gtGrey.color
+                )
+            }
+            
             VStack(alignment: .leading, spacing: 0) {
                 
                 if viewModel.showsFavoritingToolBanner {
@@ -84,6 +90,8 @@ struct ToolsView: View {
                     
                     viewModel.pullToRefresh()
                 }
+                .opacity(viewModel.isLoadingAllTools ? 0 : 1)
+                .animation(.easeOut, value: !viewModel.isLoadingAllTools)
             }
         }
         .onAppear {

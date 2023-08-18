@@ -88,7 +88,7 @@ struct ToolCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    image: viewModel.bannerImage,
+                    imageData: viewModel.bannerImageData,
                     imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color

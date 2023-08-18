@@ -37,13 +37,14 @@ class FavoritesViewModel: ObservableObject {
         
     @Published var openTutorialBannerMessage: String = ""
     @Published var openTutorialBannerButtonTitle: String = ""
-    @Published var showsOpenTutorialBanner: Bool = true
+    @Published var showsOpenTutorialBanner: Bool = false
     @Published var welcomeTitle: String = ""
     @Published var featuredLessonsTitle: String = ""
     @Published var featuredLessons: [LessonDomainModel] = Array()
     @Published var yourFavoriteToolsTitle: String = ""
     @Published var viewAllFavoriteToolsButtonTitle: String = ""
     @Published var yourFavoriteTools: [ToolDomainModel] = Array()
+    @Published var isLoadingYourFavoritedTools: Bool = true
     @Published var noFavoriteToolsTitle: String = ""
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
@@ -71,7 +72,6 @@ class FavoritesViewModel: ObservableObject {
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
-                
                 self?.showsOpenTutorialBanner = isEnabled
             }
             .store(in: &cancellables)
@@ -105,6 +105,7 @@ class FavoritesViewModel: ObservableObject {
             .sink { [weak self] (yourFavoriteTools: [ToolDomainModel]) in
                 
                 self?.yourFavoriteTools = yourFavoriteTools
+                self?.isLoadingYourFavoritedTools = false
             }
             .store(in: &cancellables)
     }
@@ -200,6 +201,15 @@ class FavoritesViewModel: ObservableObject {
         
         analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
+    
+    private func disableOpenTutorialBanner() {
+        
+        withAnimation {
+            showsOpenTutorialBanner = false
+        }
+        
+        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+    }
 }
 
 // MARK: - Inputs
@@ -220,7 +230,7 @@ extension FavoritesViewModel {
     
     func closeOpenTutorialBannerTapped() {
         
-        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+        disableOpenTutorialBanner()
         
         let trackAction = TrackActionModel(
             screenName: "home",
@@ -238,7 +248,7 @@ extension FavoritesViewModel {
     
     func openTutorialBannerTapped() {
         
-        disableOptInOnboardingBannerUseCase.disableOptInOnboardingBanner()
+        disableOpenTutorialBanner()
         
         flowDelegate?.navigate(step: .openTutorialTappedFromTools)
     }

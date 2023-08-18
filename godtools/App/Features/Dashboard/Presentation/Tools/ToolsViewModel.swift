@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 class ToolsViewModel: ObservableObject {
@@ -31,7 +32,7 @@ class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
  
     @Published var favoritingToolBannerMessage: String
-    @Published var showsFavoritingToolBanner: Bool
+    @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
     @Published var toolSpotlightSubtitle: String = ""
     @Published var spotlightTools: [ToolDomainModel] = Array()
@@ -43,6 +44,7 @@ class ToolsViewModel: ObservableObject {
         }
     }
     @Published var allTools: [ToolDomainModel] = Array()
+    @Published var isLoadingAllTools: Bool = true
         
     init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
         
@@ -101,6 +103,7 @@ class ToolsViewModel: ObservableObject {
             .sink { [weak self] (allTools: [ToolDomainModel]) in
                 
                 self?.allTools = allTools
+                self?.isLoadingAllTools = false
             }
             .store(in: &cancellables)
     }
@@ -185,7 +188,10 @@ extension ToolsViewModel {
     
     func closeFavoritingToolBannerTapped() {
         
-        showsFavoritingToolBanner = false
+        withAnimation {
+            showsFavoritingToolBanner = false
+        }
+        
         favoritingToolMessageCache.disableFavoritingToolMessage()
     }
     

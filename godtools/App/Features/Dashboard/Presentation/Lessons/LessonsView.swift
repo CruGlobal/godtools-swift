@@ -25,7 +25,13 @@ struct LessonsView: View {
     var body: some View {
         
         GeometryReader { geometry in
-                        
+                    
+            if viewModel.isLoadingLessons {
+                CenteredCircularProgressView(
+                    progressColor: ColorPalette.gtGrey.color
+                )
+            }
+            
             PullToRefreshScrollView(showsIndicators: true) {
                 
                 VStack(alignment: .leading, spacing: 0) {
@@ -56,6 +62,8 @@ struct LessonsView: View {
             } refreshHandler: {
                 viewModel.refreshData()
             }
+            .opacity(viewModel.isLoadingLessons ? 0 : 1)
+            .animation(.easeOut, value: !viewModel.isLoadingLessons)
         }
         .onAppear {
             viewModel.pageViewed()

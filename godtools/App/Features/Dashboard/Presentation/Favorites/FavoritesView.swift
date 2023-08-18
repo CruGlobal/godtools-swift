@@ -24,6 +24,12 @@ struct FavoritesView: View {
         
         GeometryReader { geometry in
                   
+            if viewModel.isLoadingYourFavoritedTools {
+                CenteredCircularProgressView(
+                    progressColor: ColorPalette.gtGrey.color
+                )
+            }
+            
             VStack(alignment: .leading, spacing: 0) {
                 
                 if viewModel.showsOpenTutorialBanner {
@@ -74,6 +80,8 @@ struct FavoritesView: View {
                     
                     viewModel.pullToRefresh()
                 }
+                .opacity(viewModel.isLoadingYourFavoritedTools ? 0 : 1)
+                .animation(.easeOut, value: !viewModel.isLoadingYourFavoritedTools)
             }
         }
         .onAppear {
