@@ -64,6 +64,7 @@ struct AllYourFavoriteToolsView: View {
                         }
                     }
                     .padding([.top], toolCardSpacing)
+                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
                 }
                 
             } refreshHandler: {
