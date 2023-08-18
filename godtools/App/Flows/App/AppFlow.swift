@@ -161,7 +161,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool), animated: true)
+            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: nil), animated: true)
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
@@ -178,8 +178,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .toolTappedFromAllYourFavoritedTools(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
         
-        case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool), animated: true)
+        case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
+            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject), animated: true)
             
         case .backTappedFromToolDetails:
             navigationController.popViewController(animated: true)
@@ -765,12 +765,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getConfirmRemoveToolFromFavoritesAlertView(tool: ToolDomainModel) -> UIViewController {
+    private func getConfirmRemoveToolFromFavoritesAlertView(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
         
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
             tool: tool,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
+            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
         
         let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)

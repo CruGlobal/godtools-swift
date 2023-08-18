@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 enum FlowStep {
     
@@ -62,7 +63,7 @@ enum FlowStep {
     case toolDetailsTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
     case openToolTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
     case toolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
-    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
+    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
     
     // tools
     case toolTappedFromTools(resource: ResourceModel)

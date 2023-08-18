@@ -19,6 +19,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     private let localizationServices: LocalizationServices
     private let attachmentsRepository: AttachmentsRepository
     private let analytics: AnalyticsContainer
+    private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -52,8 +53,16 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             .sink { [weak self] (favoritedTools: [ToolDomainModel]) in
                 
                 self?.favoritedTools = favoritedTools
+            }
+            .store(in: &cancellables)
+        
+        didConfirmToolRemovalSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (void: Void) in
                 
-                if favoritedTools.isEmpty {
+                let toolCount: Int = self?.favoritedTools.count ?? 0
+                
+                if toolCount <= 1 {
                     self?.closePage()
                 }
             }
@@ -169,7 +178,7 @@ extension AllYourFavoriteToolsViewModel {
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
         
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
     }
     
     func toolTapped(tool: ToolDomainModel) {
