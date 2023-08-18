@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 enum FlowStep {
     
@@ -48,18 +49,24 @@ enum FlowStep {
     case sendFeedbackTappedFromLessonEvaluation
     case backgroundTappedFromLessonEvaluation
     
-    // favoritedTools
-    case lessonTappedFromFeaturedLessons(lesson: LessonDomainModel)
-    case viewAllFavoriteToolsTappedFromFavoritedTools
-    case backTappedFromAllFavoriteTools
-    case toolTappedFromFavoritedTools(resource: ResourceModel)
-    case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
-    case unfavoriteToolTappedFromFavoritedTools(resource: ResourceModel, removeHandler: CallbackHandler)
-    case allToolsTappedFromFavoritedTools
+    // favorites
+    case lessonTappedFromFavorites(lesson: LessonDomainModel)
+    case viewAllFavoriteToolsTappedFromFavorites
+    case toolDetailsTappedFromFavorites(tool: ToolDomainModel)
+    case openToolTappedFromFavorites(tool: ToolDomainModel)
+    case toolTappedFromFavorites(tool: ToolDomainModel)
+    case unfavoriteToolTappedFromFavorites(tool: ToolDomainModel)
+    case goToToolsTappedFromFavorites
     
-    // allTools
-    case toolTappedFromAllTools(resource: ResourceModel)
-    case aboutToolTappedFromAllTools(resource: ResourceModel)
+    // allYourFavoritedTools
+    case backTappedFromAllYourFavoriteTools
+    case toolDetailsTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
+    case openToolTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
+    case toolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
+    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
+    
+    // tools
+    case toolTappedFromTools(resource: ResourceModel)
     
     // toolDetails
     case backTappedFromToolDetails

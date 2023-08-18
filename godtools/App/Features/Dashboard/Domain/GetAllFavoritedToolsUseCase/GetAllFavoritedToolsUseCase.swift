@@ -29,16 +29,16 @@ class GetAllFavoritedToolsUseCase {
     func getAllFavoritedToolsPublisher() -> AnyPublisher<[ToolDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            favoritedResourcesRepository.getFavoritedResourcesChanged(),
+            favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            )
-            .flatMap { _, primaryLanguage -> AnyPublisher<[ToolDomainModel], Never> in
-                
-                let favoritedTools = self.getFavoritedTools(with: primaryLanguage)
+        )
+            .flatMap({ (favoritedResourcesChanged: Void, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolDomainModel], Never> in
+                                
+                let favoritedTools: [ToolDomainModel] = self.getFavoritedTools(with: primaryLanguage)
                 
                 return Just(favoritedTools)
                     .eraseToAnyPublisher()
-            }
+            })
             .eraseToAnyPublisher()
     }
     
@@ -51,8 +51,8 @@ class GetAllFavoritedToolsUseCase {
     
     private func getFavoritedTools(with primaryLanguage: LanguageDomainModel?) -> [ToolDomainModel] {
         
-        let favoritedResourceModels: [FavoritedResourceModel] = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
-        let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.resourceId }
+        let favoritedResourceModels: [FavoritedResourceDataModel] = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+        let favoritedResourceIds: [String] = favoritedResourceModels.map { $0.id }
                 
         let favoritedResources = favoritedResourceIds
             .compactMap { id in

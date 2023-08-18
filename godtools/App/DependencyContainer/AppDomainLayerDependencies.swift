@@ -79,10 +79,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getBannerImageUseCase() -> GetBannerImageUseCase {
-        return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
-    }
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -255,7 +251,7 @@ class AppDomainLayerDependencies {
     
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
         )

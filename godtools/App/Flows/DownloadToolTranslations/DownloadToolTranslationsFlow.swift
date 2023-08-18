@@ -86,24 +86,27 @@ class DownloadToolTranslationsFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let resource: ResourceModel? = determineToolTranslationsToDownload.getResource()
         
+        let downloadMessageLocalizedKey: String
         let downloadMessage: String
         
         let resourceType: ResourceType? = resource?.resourceTypeEnum
         
         if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
             
-            let isFavoritedResource: Bool = favoritedResourcesRepository.getResourceIsFavorited(resourceId: resourceId)
+            let isFavoritedResource: Bool = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
             
-            downloadMessage = isFavoritedResource ? localizationServices.stringForMainBundle(key: "loading_favorited_tool") : localizationServices.stringForMainBundle(key: "loading_unfavorited_tool")
+            downloadMessageLocalizedKey = isFavoritedResource ? "loading_favorited_tool" : "loading_unfavorited_tool"
         }
         else if resourceType == .lesson {
             
-            downloadMessage = localizationServices.stringForMainBundle(key: "loading_favorited_tool")
+            downloadMessageLocalizedKey = "loading_favorited_tool"
         }
         else {
             
-            downloadMessage = localizationServices.stringForMainBundle(key: "loading_favorited_tool")
+            downloadMessageLocalizedKey = "loading_favorited_tool"
         }
+        
+        downloadMessage = localizationServices.stringForSystemElseEnglish(key: downloadMessageLocalizedKey)
         
         let viewModel = DownloadToolViewModel(
             flowDelegate: self,

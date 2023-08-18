@@ -10,19 +10,20 @@ import SwiftUI
 
 struct LessonCardView: View {
         
+    private let geometry: GeometryProxy
     private let backgroundColor: Color = Color.white
     private let cornerRadius: CGFloat = 6
     private let cardWidth: CGFloat
     private let bannerImageAspectRatio: CGSize = CGSize(width: 335, height: 87)
-    private let contentHorizontalPadding: CGFloat = 15
     private let cardTappedClosure: (() -> Void)?
         
     @ObservedObject private var viewModel: LessonCardViewModel
     
-    init(viewModel: LessonCardViewModel, cardWidth: CGFloat, cardTappedClosure: (() -> Void)?) {
+    init(viewModel: LessonCardViewModel, geometry: GeometryProxy, cardTappedClosure: (() -> Void)?) {
         
         self.viewModel = viewModel
-        self.cardWidth = cardWidth
+        self.geometry = geometry
+        self.cardWidth = geometry.size.width - (DashboardView.contentHorizontalInsets * 2)
         self.cardTappedClosure = cardTappedClosure
     }
     
@@ -35,7 +36,7 @@ struct LessonCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    image: viewModel.bannerImage,
+                    imageData: viewModel.bannerImageData,
                     imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color
@@ -61,22 +62,20 @@ struct LessonCardView: View {
                         )
                     }
                 }
-                .padding([.top, .bottom], 15)
-                .padding([.leading, .trailing], contentHorizontalPadding)
-                .frame(width: cardWidth, alignment: .topLeading)
-                
+                .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
             }
-            .frame(width: cardWidth)
         }
         .frame(width: cardWidth)
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
-        .contentShape(Rectangle()) // onTapGesture's tappable area doesn't always line up with the card's actual position-- possibly due to added padding (?).  This is especially noticeable on iOS14.  Adding .contentShape fixed this
+        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
             cardTappedClosure?()
         }
     }
 }
+
+// MARK: - Preview
 
 struct LessonCardView_Previews: PreviewProvider {
     
@@ -98,6 +97,9 @@ struct LessonCardView_Previews: PreviewProvider {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
-        LessonCardView(viewModel: viewModel, cardWidth: 345, cardTappedClosure: nil)
+        GeometryReader { geometry in
+            
+            LessonCardView(viewModel: viewModel, geometry: geometry, cardTappedClosure: nil)
+        }
     }
 }

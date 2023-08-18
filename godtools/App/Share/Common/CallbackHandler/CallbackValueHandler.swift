@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Deprecrating, instead use Combine subjects. ~Levi
 class CallbackValueHandler<T> {
     
     let handle: ((_ value: T) -> Void)

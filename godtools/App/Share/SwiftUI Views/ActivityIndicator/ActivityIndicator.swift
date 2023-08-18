@@ -9,6 +9,7 @@
 import SwiftUI
 
 // TODO: - GT-1533: In iOS 14+, we can use SwiftUI's `ProgressView` to get a built-in spinner and delete this one.
+@available(*, deprecated)
 struct ActivityIndicator: UIViewRepresentable {
         
     let style: UIActivityIndicatorView.Style

@@ -18,7 +18,7 @@ class LessonCardViewModel: ObservableObject {
         
     @Published var title: String = ""
     @Published var languageAvailability: String = ""
-    @Published var bannerImage: Image?
+    @Published var bannerImageData: OptionalImageData?
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0
     
@@ -40,14 +40,14 @@ class LessonCardViewModel: ObservableObject {
         
         if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
             
-            bannerImage = cachedImage
+            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
         }
         else {
             
             getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (image: Image?) in
-                    self?.bannerImage = image
+                    self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
                 }
         }
     }

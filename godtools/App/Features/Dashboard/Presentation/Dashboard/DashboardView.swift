@@ -9,8 +9,12 @@
 import SwiftUI
 
 struct DashboardView: View {
+        
+    static let contentHorizontalInsets: CGFloat = 16
+    static let toolCardVerticalSpacing: CGFloat = 15
+    static let scrollViewBottomSpacingToTabBar: CGFloat = 30
     
-    private static let marginMultiplier: CGFloat = 15/375
+    private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
     
     @ObservedObject private var viewModel: DashboardViewModel
     
@@ -20,52 +24,50 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        GeometryReader { geo in
+        
+        GeometryReader { geometry in
             
-            let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
-            
-            VStack(spacing: 0) {
-
-                tabView(padding: leadingTrailingPadding)
-
-                DashboardTabBarView(viewModel: viewModel)
+            VStack(alignment: .center, spacing: 0) {
+                
+                TabView(selection: $viewModel.selectedTab) {
+                    
+                    Group {
+                        
+                        ForEach(tabs) { (tab: DashboardTabTypeDomainModel) in
+                                                        
+                            switch tab {
+                                
+                            case .lessons:
+                                LessonsView(viewModel: viewModel.lessonsViewModel)
+                                    .tag(tab)
+                                
+                            case .favorites:
+                                FavoritesView(viewModel: viewModel.favoritesViewModel)
+                                    .tag(tab)
+                                
+                            case .tools:
+                                ToolsView(viewModel: viewModel.toolsViewModel)
+                                    .tag(tab)
+                            }
+                        }
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut, value: viewModel.selectedTab)
+                
+                
+                DashboardTabBarView(
+                    viewModel: viewModel
+                )
             }
         }
     }
-    
-    @ViewBuilder private func tabView(padding: CGFloat) -> some View {
-        
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-        }
-        .tabViewStyle(.page(indexDisplayMode: .never))
-        .animation(.easeOut, value: viewModel.selectedTab)
-    }
-    
-    @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {
-        
-        Group {
-            LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.lessons)
-            
-            FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.favorites)
-            
-            AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.allTools)
-        }
-    }
 }
-
-// MARK: - Inputs
     
 extension DashboardView {
     
-    static func getMargin(for width: CGFloat) -> CGFloat {
-        return marginMultiplier * width
-    }
-    
     func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
+        
         viewModel.selectedTab = tab
     }
 }
@@ -73,7 +75,9 @@ extension DashboardView {
 // MARK: - Preview
 
 struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
+    
+    static func getDashboardViewModel() -> DashboardViewModel {
+        
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = DashboardViewModel(
@@ -88,7 +92,6 @@ struct DashboardView_Previews: PreviewProvider {
             disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
@@ -103,6 +106,14 @@ struct DashboardView_Previews: PreviewProvider {
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
         )
         
-        DashboardView(viewModel: viewModel)
+        return viewModel
+    }
+    
+    static var previews: some View {
+    
+        
+        
+        DashboardView(viewModel: DashboardView_Previews.getDashboardViewModel())
     }
 }
+

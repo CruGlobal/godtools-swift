@@ -12,9 +12,10 @@ import Combine
 
 class ToolDetailsVersionsCardViewModel: ObservableObject {
     
-    private let getBannerImageUseCase: GetBannerImageUseCase
+    private let toolVersion: ToolVersionDomainModel
+    private let attachmentsRepository: AttachmentsRepository
     
-    private var cancellables = Set<AnyCancellable>()
+    private var getBannerImageCancellable: AnyCancellable?
     
     @Published var bannerImage: Image?
     
@@ -27,9 +28,10 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     let parallelLanguageName: String?
     let parallelLanguageIsSupported: Bool
     
-    init(toolVersion: ToolVersionDomainModel, getBannerImageUseCase: GetBannerImageUseCase, isSelected: Bool) {
+    init(toolVersion: ToolVersionDomainModel, attachmentsRepository: AttachmentsRepository, isSelected: Bool) {
         
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.toolVersion = toolVersion
+        self.attachmentsRepository = attachmentsRepository
         self.isSelected = isSelected
         
         name = toolVersion.name
@@ -40,9 +42,26 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         parallelLanguageName = toolVersion.parallelLanguage
         parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
         
-        getBannerImageUseCase.getBannerImagePublisher(for: toolVersion.bannerImageId)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.bannerImage, on: self)
-            .store(in: &cancellables)
+        downloadBannerImage()
+    }
+    
+    private func downloadBannerImage() {
+        
+        getBannerImageCancellable = nil
+        
+        let attachmentId: String = toolVersion.bannerImageId
+        
+        if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
+            
+            bannerImage = cachedImage
+        }
+        else {
+            
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (image: Image?) in
+                    self?.bannerImage = image
+                }
+        }
     }
 }

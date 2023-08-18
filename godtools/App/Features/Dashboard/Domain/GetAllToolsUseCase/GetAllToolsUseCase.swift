@@ -27,19 +27,20 @@ class GetAllToolsUseCase {
             category,
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
         )
-            .flatMap { (_, categoryId, _) -> AnyPublisher<[ToolDomainModel], Never> in
+        .flatMap({ (resourcesChanged: Void, categoryId: String?, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolDomainModel], Never> in
                 
-                let tools = self.getAllTools(sorted: true, with: categoryId)
+            let tools = self.getAllTools(sorted: true, categoryId: categoryId)
                 
-                return Just(tools)
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+            return Just(tools)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
-    private func getAllTools(sorted: Bool, with category: String? = nil) -> [ToolDomainModel] {
+    private func getAllTools(sorted: Bool, categoryId: String? = nil) -> [ToolDomainModel] {
         
-        return resourcesRepository.getAllTools(sorted: sorted, with: category)
-            .map { getToolUseCase.getTool(resource: $0) }
+        return resourcesRepository.getAllTools(sorted: sorted, category: categoryId).map {
+            getToolUseCase.getTool(resource: $0)
+        }
     }
 }

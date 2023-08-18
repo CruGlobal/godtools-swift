@@ -30,7 +30,7 @@ enum OptionalImageSize {
         switch self {
         
         case .aspectRatio(let width, let aspectRatio):
-            let height: CGFloat = floor((width / aspectRatio.width) * aspectRatio.height)
+            let height: CGFloat = (width / aspectRatio.width) * aspectRatio.height
             return height
             
         case .fixed( _, let height):

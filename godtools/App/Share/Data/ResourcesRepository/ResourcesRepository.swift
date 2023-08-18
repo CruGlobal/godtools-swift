@@ -40,8 +40,8 @@ class ResourcesRepository {
         return cache.getAllLessons()
     }
     
-    func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
-        return cache.getAllTools(sorted: sorted, with: category)
+    func getAllTools(sorted: Bool, category: String? = nil) -> [ResourceModel] {
+        return cache.getAllTools(sorted: sorted, category: category)
     }
     
     func getFeaturedLessons() -> [ResourceModel] {

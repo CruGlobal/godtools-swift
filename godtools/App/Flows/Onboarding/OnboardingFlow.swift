@@ -16,6 +16,8 @@ class OnboardingFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
         
+    private let navigationControllerTransitioningDelegate: FadeAnimationTransitioningDelegate = FadeAnimationTransitioningDelegate()
+    
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -31,6 +33,7 @@ class OnboardingFlow: Flow {
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
         navigationController.modalPresentationStyle = .fullScreen
+        navigationController.transitioningDelegate = navigationControllerTransitioningDelegate
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
