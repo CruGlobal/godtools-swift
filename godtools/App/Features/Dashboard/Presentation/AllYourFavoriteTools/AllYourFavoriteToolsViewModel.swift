@@ -124,7 +124,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     }
     
     private func closePage() {
-        flowDelegate?.navigate(step: .backTappedFromAllFavoriteTools)
+        flowDelegate?.navigate(step: .backTappedFromAllYourFavoriteTools)
     }
 }
 
@@ -157,25 +157,25 @@ extension AllYourFavoriteToolsViewModel {
         
         trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func openToolTapped(tool: ToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .openToolTappedFromAllYourFavoriteTools(tool: tool))
     }
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
         
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(tool: tool))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool))
     }
     
     func toolTapped(tool: ToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .toolTappedFromAllYourFavoritedTools(tool: tool))
     }
 }

@@ -145,49 +145,44 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
-        case .lessonTappedFromFeaturedLessons(let resource):
+        case .lessonTappedFromFavorites(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavorites:
-            
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
-        case .backTappedFromAllFavoriteTools:
-            navigationController.popViewController(animated: true)
+        case .toolDetailsTappedFromFavorites(let tool):
+            navigationController.pushViewController(getToolDetails(resource: tool.resource), animated: true)
+        
+        case .openToolTappedFromFavorites(let tool):
+            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
             
-        case .toolTappedFromFavoritedTools(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+        case .toolTappedFromFavorites(let tool):
+            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
             
-        case .aboutToolTappedFromFavoritedTools(let resource):
-            
-            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
+        case .unfavoriteToolTappedFromFavorites(let tool):
+            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool), animated: true)
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
             
-        case .backTappedFromToolDetails:
+        case .backTappedFromAllYourFavoriteTools:
             navigationController.popViewController(animated: true)
             
-        case .unfavoriteToolTappedFromFavoritedTools(let tool):
+        case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
+            navigationController.pushViewController(getToolDetails(resource: tool.resource), animated: true)
+        
+        case .openToolTappedFromAllYourFavoriteTools(let tool):
+            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
             
-            // TODO: This needed? ~Levi
-            /*
-            let handler = CallbackHandler { [weak self] in
-                removeHandler.handle()
-                self?.navigationController.dismiss(animated: true, completion: nil)
-            }*/
+        case .toolTappedFromAllYourFavoritedTools(let tool):
+            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
+        
+        case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool):
+            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool), animated: true)
             
-            let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
-                tool: tool,
-                translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
-            )
-            
-            let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
-            
-            navigationController.present(view.controller, animated: true, completion: nil)
+        case .backTappedFromToolDetails:
+            navigationController.popViewController(animated: true)
             
         case .articleFlowCompleted( _):
             
@@ -763,6 +758,24 @@ extension AppFlow {
         )
         
         return hostingView
+    }
+}
+
+// MARK: - Confirm Remove Tool From Favorites
+
+extension AppFlow {
+    
+    private func getConfirmRemoveToolFromFavoritesAlertView(tool: ToolDomainModel) -> UIViewController {
+        
+        let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
+            tool: tool,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase()
+        )
+        
+        let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
+        
+        return view.controller
     }
 }
 

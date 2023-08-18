@@ -270,7 +270,7 @@ extension FavoritesViewModel {
     
     func featuredLessonTapped(lesson: LessonDomainModel) {
                 
-        flowDelegate?.navigate(step: .lessonTappedFromFeaturedLessons(lesson: lesson))
+        flowDelegate?.navigate(step: .lessonTappedFromFavorites(lesson: lesson))
         trackFeaturedLessonTappedAnalytics(for: lesson)
     }
     
@@ -295,25 +295,25 @@ extension FavoritesViewModel {
         
         trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .toolDetailsTappedFromFavorites(tool: tool))
     }
     
     func openToolTapped(tool: ToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .openToolTappedFromFavorites(tool: tool))
     }
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
         
-        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(tool: tool))
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavorites(tool: tool))
     }
     
     func toolTapped(tool: ToolDomainModel) {
         
         trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
         
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .toolTappedFromFavorites(tool: tool))
     }
 }

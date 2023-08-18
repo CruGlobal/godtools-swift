@@ -48,14 +48,21 @@ enum FlowStep {
     case sendFeedbackTappedFromLessonEvaluation
     case backgroundTappedFromLessonEvaluation
     
-    // favoritedTools
-    case lessonTappedFromFeaturedLessons(lesson: LessonDomainModel)
+    // favorites
+    case lessonTappedFromFavorites(lesson: LessonDomainModel)
     case viewAllFavoriteToolsTappedFromFavorites
-    case backTappedFromAllFavoriteTools
-    case toolTappedFromFavoritedTools(resource: ResourceModel)
-    case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
-    case unfavoriteToolTappedFromFavoritedTools(tool: ToolDomainModel)
+    case toolDetailsTappedFromFavorites(tool: ToolDomainModel)
+    case openToolTappedFromFavorites(tool: ToolDomainModel)
+    case toolTappedFromFavorites(tool: ToolDomainModel)
+    case unfavoriteToolTappedFromFavorites(tool: ToolDomainModel)
     case goToToolsTappedFromFavorites
+    
+    // allYourFavoritedTools
+    case backTappedFromAllYourFavoriteTools
+    case toolDetailsTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
+    case openToolTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
+    case toolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
+    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
     
     // tools
     case toolTappedFromTools(resource: ResourceModel)
