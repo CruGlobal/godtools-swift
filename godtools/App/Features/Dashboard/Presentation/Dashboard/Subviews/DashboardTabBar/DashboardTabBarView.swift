@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct DashboardTabBarView: View {
-    
+        
     @ObservedObject private var viewModel: DashboardViewModel
-    
+        
     init(viewModel: DashboardViewModel) {
         
         self.viewModel = viewModel
@@ -19,37 +19,41 @@ struct DashboardTabBarView: View {
     
     var body: some View {
         
-        ZStack {
+        ZStack(alignment: .center) {
             
-            HStack {
-                                
-                DashboardTabItemView(tabType: .lessons, title: viewModel.lessonsTabTitle, imageName: ImageCatalog.toolsMenuLessons.name, selectedTab: $viewModel.selectedTab)
-                    .frame(maxWidth: .infinity)
+            HStack(alignment: .center, spacing: 0) {
                 
-                DashboardTabItemView(tabType: .favorites, title: viewModel.favoritesTabTitle, imageName: ImageCatalog.toolsMenuFavorites.name, selectedTab: $viewModel.selectedTab)
+                ForEach(viewModel.tabs) { (tab: DashboardTabTypeDomainModel) in
+                    
+                    DashboardTabBarItemView(
+                        viewModel: viewModel.getTabBarItemViewModel(tab: tab),
+                        selectedTab: $viewModel.selectedTab,
+                        tappedClosure: {
+                            
+                            viewModel.tabTapped(tab: tab)
+                        }
+                    )
                     .frame(maxWidth: .infinity)
-                                
-                DashboardTabItemView(tabType: .tools, title: viewModel.allToolsTabTitle, imageName: ImageCatalog.toolsMenuAllTools.name, selectedTab: $viewModel.selectedTab)
-                    .frame(maxWidth: .infinity)
-                
+                }
             }
-            .padding(.top, 16)
-            .padding(.bottom, 8)
-            .padding([.leading, .trailing], 8)
-            .frame(maxWidth: .infinity)
-            .background(
-                Color.white
-                    .edgesIgnoringSafeArea(.bottom)
-                    .shadow(color: .black.opacity(0.35), radius: 4, y: 0)
-            )
         }
+        .padding([.top], 16)
+        .padding([.bottom], 8)
+        .padding([.leading, .trailing], 8)
+        .background(
+            Color.white
+                .edgesIgnoringSafeArea(.bottom)
+                .shadow(color: .black.opacity(0.25), radius: 3, y: -2.5)
+        )
     }
 }
 
 struct DashboardTabBarView_Previews: PreviewProvider {
-    
+        
     static var previews: some View {
         
-        DashboardTabBarView(viewModel: DashboardView_Previews.getDashboardViewModel())
+        DashboardTabBarView(
+            viewModel: DashboardView_Previews.getDashboardViewModel()
+        )
     }
 }
