@@ -37,15 +37,15 @@ struct DashboardView: View {
                                 
                             case .lessons:
                                 LessonsView(viewModel: viewModel.getLessonsViewModel())
-                                    .tag(DashboardTabTypeDomainModel.lessons)
+                                    .tag(tab)
                                 
                             case .favorites:
                                 FavoritesView(viewModel: viewModel.getFavoritesViewModel())
-                                    .tag(DashboardTabTypeDomainModel.favorites)
+                                    .tag(tab)
                                 
                             case .tools:
                                 ToolsView(viewModel: viewModel.getToolsViewModel())
-                                    .tag(DashboardTabTypeDomainModel.tools)
+                                    .tag(tab)
                             }
                         }
                     }
