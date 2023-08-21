@@ -14,7 +14,7 @@ struct DashboardTabBarItemView: View {
     private let selectedColor = ColorPalette.gtBlue.color
     private let tappedClosure: (() -> Void)?
         
-    @State private var viewModel: DashboardTabBarItemViewModel
+    private var viewModel: DashboardTabBarItemViewModel
     
     @Binding private var selectedTab: DashboardTabTypeDomainModel
     

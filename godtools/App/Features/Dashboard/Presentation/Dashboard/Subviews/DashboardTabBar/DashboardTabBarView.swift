@@ -10,14 +10,11 @@ import SwiftUI
 
 struct DashboardTabBarView: View {
         
-    @State private var viewModel: DashboardViewModel
-    
-    @Binding private var selectedTab: DashboardTabTypeDomainModel
-    
-    init(viewModel: DashboardViewModel, selectedTab: Binding<DashboardTabTypeDomainModel>) {
+    @ObservedObject private var viewModel: DashboardViewModel
+        
+    init(viewModel: DashboardViewModel) {
         
         self.viewModel = viewModel
-        self._selectedTab = selectedTab
     }
     
     var body: some View {
@@ -30,7 +27,7 @@ struct DashboardTabBarView: View {
                     
                     DashboardTabBarItemView(
                         viewModel: viewModel.getTabBarItemViewModel(tab: tab),
-                        selectedTab: $selectedTab,
+                        selectedTab: $viewModel.selectedTab,
                         tappedClosure: {
                             
                             viewModel.tabTapped(tab: tab)
@@ -52,14 +49,11 @@ struct DashboardTabBarView: View {
 }
 
 struct DashboardTabBarView_Previews: PreviewProvider {
-    
-    @State private static var selectedTab: DashboardTabTypeDomainModel = .lessons
-    
+        
     static var previews: some View {
         
         DashboardTabBarView(
-            viewModel: DashboardView_Previews.getDashboardViewModel(),
-            selectedTab: $selectedTab
+            viewModel: DashboardView_Previews.getDashboardViewModel()
         )
     }
 }

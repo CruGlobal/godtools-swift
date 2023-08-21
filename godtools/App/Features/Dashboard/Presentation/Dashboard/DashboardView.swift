@@ -54,8 +54,7 @@ struct DashboardView: View {
                 .animation(.easeOut, value: viewModel.selectedTab)
                 
                 DashboardTabBarView(
-                    viewModel: viewModel,
-                    selectedTab: $viewModel.selectedTab
+                    viewModel: viewModel
                 )
             }
         }
