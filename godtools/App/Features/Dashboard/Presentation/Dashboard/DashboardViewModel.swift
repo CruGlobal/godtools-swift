@@ -42,9 +42,7 @@ class DashboardViewModel: ObservableObject {
     }
     
     private func tabChanged() {
-        
-        print("\n DashboardViewModel tabChanged(): \(selectedTab)")
-        
+                
         showsLanguagesSettingsButton.send(selectedTab != .lessons)
     }
 }
