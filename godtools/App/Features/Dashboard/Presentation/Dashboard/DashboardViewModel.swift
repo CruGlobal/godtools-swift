@@ -18,9 +18,6 @@ class DashboardViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
         
     @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
-    @Published var toolsTabTitle: String
-    @Published var favoritesTabTitle: String
-    @Published var lessonsTabTitle: String
     @Published var selectedTab: DashboardTabTypeDomainModel {
         didSet {
             tabChanged()
@@ -34,11 +31,7 @@ class DashboardViewModel: ObservableObject {
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.localizationServices = localizationServices
         self.showsLanguagesSettingsButton = showsLanguagesSettingsButton
-        
-        toolsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.tools")
-        favoritesTabTitle = localizationServices.stringForSystemElseEnglish(key: "my_tools")
-        lessonsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.lessons")
-        
+                
         tabChanged()
     }
     
