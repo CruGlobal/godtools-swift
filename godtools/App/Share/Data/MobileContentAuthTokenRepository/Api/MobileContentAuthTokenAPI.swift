@@ -24,9 +24,9 @@ class MobileContentAuthTokenAPI {
     
     private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
         
-        var attributes: [String: Any] = [
-            "create_user": createUser
-        ]
+        var attributes: [String: Any] = Dictionary()
+        
+        attributes["create_user"] = createUser
         
         switch providerToken {
         case .appleAuth(let authCode, let givenName, let familyName):
@@ -38,6 +38,7 @@ class MobileContentAuthTokenAPI {
         case .appleRefresh(let refreshToken):
             
             attributes["apple_refresh_token"] = refreshToken
+            attributes["create_user"] = nil // Will not provide create_user flag on apple refresh.
                         
         case .facebook(let accessToken):
             
