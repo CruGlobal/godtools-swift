@@ -27,6 +27,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
+    private var dashboardLanguageSettingsButton: UIBarButtonItem?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var uiApplicationLifeCycleObserversAdded: Bool = false
@@ -449,65 +450,55 @@ extension AppFlow {
         return nil
     }
     
-    private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIHostingController<DashboardView> {
+    private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
         
-        let dashboardViewModel = DashboardViewModel(
+        let dashboardShowsLanguageSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
+        
+        let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
-            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(
+                appDiContainer: appDiContainer,
+                flowDelegate: self
+            ),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
-            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getShouldShowLanguageSettingsBarButtonUseCase: appDiContainer.domainLayer.getShouldShowLanguageSettingsBarButtonUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
+            showsLanguagesSettingsButton: dashboardShowsLanguageSettingsButton
         )
         
-        let dashboardView = DashboardView(viewModel: dashboardViewModel)
-        let dashboardHostingController = UIHostingController(rootView: dashboardView)
+        let languageSettingsButton = UIBarButtonItem()
+        languageSettingsButton.image = ImageCatalog.navLanguage.uiImage
+        languageSettingsButton.tintColor = .white
+        languageSettingsButton.target = viewModel
+        languageSettingsButton.action = #selector(viewModel.languageSettingsTapped)
         
-        _ = dashboardHostingController.addBarButtonItem(
+        dashboardLanguageSettingsButton = languageSettingsButton
+        
+        let view = DashboardView(viewModel: viewModel)
+        
+        let hostingController: UIHostingController<DashboardView> = UIHostingController(rootView: view)
+        
+        _ = hostingController.addBarButtonItem(
             to: .left,
             image: ImageCatalog.navMenu.uiImage,
             color: .white,
-            target: dashboardViewModel,
-            action: #selector(dashboardViewModel.menuTapped)
+            target: viewModel,
+            action: #selector(viewModel.menuTapped)
         )
-
-        dashboardViewModel.shouldShowLanguageSettingsBarButtonItemPublisher
+        
+        dashboardShowsLanguageSettingsButton
             .receive(on: DispatchQueue.main)
-            .sink { shouldShowBarButtonItem, barButtonItem in
+            .sink { (showsLanguageSettingsButton: Bool) in
                 
-                guard let barButtonItem = barButtonItem else {
-                    return
+                if showsLanguageSettingsButton {
+                    hostingController.addBarButtonItem(item: languageSettingsButton, barPosition: .right)
                 }
-                
-                if shouldShowBarButtonItem {
-                    
-                    dashboardHostingController.addBarButtonItem(item: barButtonItem, barPosition: .right)
-                    
-                } else {
-                    
-                    dashboardHostingController.removeBarButtonItem(item: barButtonItem)
+                else {
+                    hostingController.removeBarButtonItem(item: languageSettingsButton)
                 }
             }
             .store(in: &cancellables)
-        
-        return dashboardHostingController
+    
+        return hostingController
     }
     
     private func configureNavBarForDashboard() {

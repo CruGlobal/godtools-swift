@@ -38,15 +38,15 @@ struct DashboardView: View {
                             switch tab {
                                 
                             case .lessons:
-                                LessonsView(viewModel: viewModel.lessonsViewModel)
+                                LessonsView(viewModel: viewModel.getLessonsViewModel())
                                     .tag(tab)
                                 
                             case .favorites:
-                                FavoritesView(viewModel: viewModel.favoritesViewModel)
+                                FavoritesView(viewModel: viewModel.getFavoritesViewModel())
                                     .tag(tab)
                                 
                             case .tools:
-                                ToolsView(viewModel: viewModel.toolsViewModel)
+                                ToolsView(viewModel: viewModel.getToolsViewModel())
                                     .tag(tab)
                             }
                         }
@@ -74,6 +74,8 @@ extension DashboardView {
 
 // MARK: - Preview
 
+import Combine
+
 struct DashboardView_Previews: PreviewProvider {
     
     static func getDashboardViewModel() -> DashboardViewModel {
@@ -83,27 +85,9 @@ struct DashboardView_Previews: PreviewProvider {
         let viewModel = DashboardViewModel(
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
-            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
-            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getShouldShowLanguageSettingsBarButtonUseCase: appDiContainer.domainLayer.getShouldShowLanguageSettingsBarButtonUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
+            showsLanguagesSettingsButton: CurrentValueSubject<Bool, Never>(false)
         )
         
         return viewModel

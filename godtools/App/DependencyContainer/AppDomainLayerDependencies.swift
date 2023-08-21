@@ -92,6 +92,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
+        return DisableOptInOnboardingBannerUseCase(
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         return GetFeaturedLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
@@ -151,6 +157,19 @@ class AppDomainLayerDependencies {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
+        )
+    }
+    
+    func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
+        return GetOptInOnboardingBannerEnabledUseCase(
+            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
+        return GetOptInOnboardingTutorialAvailableUseCase(
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }
     

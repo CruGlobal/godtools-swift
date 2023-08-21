@@ -240,6 +240,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
+        return OptInOnboardingBannerEnabledRepository(
+            cache: OptInOnboardingBannerEnabledCache()
+        )
+    }
+    
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
