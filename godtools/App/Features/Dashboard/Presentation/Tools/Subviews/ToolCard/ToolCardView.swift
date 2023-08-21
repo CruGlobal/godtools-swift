@@ -113,7 +113,7 @@ struct ToolCardView: View {
                             )
                         }
                     }
-                    
+ 
                     ToolCardCategoryView(
                         category: viewModel.category
                     )
@@ -121,6 +121,8 @@ struct ToolCardView: View {
                     
                     if showsNavButtons {
 
+                        Spacer()
+                        
                         HStack(alignment: .center, spacing: navButtonSpacing) {
                             
                             if layout == .landscape {
@@ -156,7 +158,6 @@ struct ToolCardView: View {
             
         }//end ZStack
         .frame(width: cardWidth)
-        .fixedSize(horizontal: false, vertical: true) // This allows the ZStack height to wrap the inner content.  Without this ZStack would take the proposed height from the parent.
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
         .padding([.bottom], 10) // This padding is needed so the shadow isn't clipped.
