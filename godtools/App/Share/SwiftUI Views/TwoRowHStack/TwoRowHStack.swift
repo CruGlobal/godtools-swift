@@ -34,8 +34,19 @@ struct TwoRowHStack<Content: View>: View {
                 
                 VStack(alignment: .center, spacing: spacing) {
                     
-                    content(topItemIndex)
-                    content(bottomItemIndex)
+                    if topItemIndex < itemCount {
+                        content(topItemIndex)
+                    }
+                    else {
+                        Spacer()
+                    }
+                    
+                    if bottomItemIndex < itemCount {
+                        content(bottomItemIndex)
+                    }
+                    else {
+                        Spacer()
+                    }
                 }
             }
         }

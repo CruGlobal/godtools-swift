@@ -40,7 +40,9 @@ struct ToolCategoriesView: View {
                         selectedIndex: $viewModel.selectedCategoryIndex,
                         tappedClosure: {
                             
-                            viewModel.categoryTapped(index: index)
+                            if index >= 0 && index <  viewModel.categories.count {
+                                viewModel.categoryTapped(index: index)
+                            }
                         }
                     )
                 }
