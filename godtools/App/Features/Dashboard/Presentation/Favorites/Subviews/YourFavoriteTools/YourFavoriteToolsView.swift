@@ -37,7 +37,8 @@ struct YourFavoriteToolsView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
-                    LazyHStack(alignment: .top, spacing: toolCardSpacing) {
+                    // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
+                    HStack(alignment: .top, spacing: toolCardSpacing) {
                         
                         ForEach(viewModel.yourFavoriteTools) { (tool: ToolDomainModel) in
                             
@@ -65,8 +66,8 @@ struct YourFavoriteToolsView: View {
                         }
                     }
                     .padding([.leading, .trailing], contentHorizontalInsets)
-                    .padding([.top, .bottom], 10) // NOTE: This is needed to prevent vertical clipping on ToolCardView shadows.  Not ideal, but a current solution.
                 }
+                .padding([.top], 10)
             }
             else {
                 

@@ -102,7 +102,6 @@ struct ToolCardView: View {
                             .font(FontLibrary.sfProTextBold.font(size: 17))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)
-                            .fixedSize(horizontal: false, vertical: true) // This is necessary for multiline text to push HStack height.
                             .padding([.top], 11)
                         
                         if layout == .landscape {
@@ -157,8 +156,10 @@ struct ToolCardView: View {
             
         }//end ZStack
         .frame(width: cardWidth)
+        .fixedSize(horizontal: false, vertical: true) // This allows the ZStack height to wrap the inner content.  Without this ZStack would take the proposed height from the parent.
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+        .padding([.bottom], 10) // This padding is needed so the shadow isn't clipped.
         .environment(\.layoutDirection, viewModel.layoutDirection)
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
