@@ -13,9 +13,7 @@ struct DashboardView: View {
     static let contentHorizontalInsets: CGFloat = 16
     static let toolCardVerticalSpacing: CGFloat = 15
     static let scrollViewBottomSpacingToTabBar: CGFloat = 30
-    
-    private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
-    
+        
     @ObservedObject private var viewModel: DashboardViewModel
     
     init(viewModel: DashboardViewModel) {
@@ -33,21 +31,21 @@ struct DashboardView: View {
                     
                     Group {
                         
-                        ForEach(tabs) { (tab: DashboardTabTypeDomainModel) in
+                        ForEach(viewModel.tabs) { (tab: DashboardTabTypeDomainModel) in
                                                         
                             switch tab {
                                 
                             case .lessons:
                                 LessonsView(viewModel: viewModel.getLessonsViewModel())
-                                    .tag(tab)
+                                    .tag(DashboardTabTypeDomainModel.lessons)
                                 
                             case .favorites:
                                 FavoritesView(viewModel: viewModel.getFavoritesViewModel())
-                                    .tag(tab)
+                                    .tag(DashboardTabTypeDomainModel.favorites)
                                 
                             case .tools:
                                 ToolsView(viewModel: viewModel.getToolsViewModel())
-                                    .tag(tab)
+                                    .tag(DashboardTabTypeDomainModel.tools)
                             }
                         }
                     }
@@ -55,9 +53,9 @@ struct DashboardView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.selectedTab)
                 
-                
                 DashboardTabBarView(
-                    viewModel: viewModel
+                    viewModel: viewModel,
+                    selectedTab: $viewModel.selectedTab
                 )
             }
         }
@@ -68,7 +66,7 @@ extension DashboardView {
     
     func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
         
-        viewModel.selectedTab = tab
+        viewModel.tabTapped(tab: tab)
     }
 }
 
@@ -95,8 +93,6 @@ struct DashboardView_Previews: PreviewProvider {
     
     static var previews: some View {
     
-        
-        
         DashboardView(viewModel: DashboardView_Previews.getDashboardViewModel())
     }
 }

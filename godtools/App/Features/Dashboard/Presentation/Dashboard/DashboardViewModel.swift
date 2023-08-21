@@ -17,7 +17,8 @@ class DashboardViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
         
-    @Published var allToolsTabTitle: String
+    @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
+    @Published var toolsTabTitle: String
     @Published var favoritesTabTitle: String
     @Published var lessonsTabTitle: String
     @Published var selectedTab: DashboardTabTypeDomainModel {
@@ -34,7 +35,7 @@ class DashboardViewModel: ObservableObject {
         self.localizationServices = localizationServices
         self.showsLanguagesSettingsButton = showsLanguagesSettingsButton
         
-        allToolsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.tools")
+        toolsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.tools")
         favoritesTabTitle = localizationServices.stringForSystemElseEnglish(key: "my_tools")
         lessonsTabTitle = localizationServices.stringForSystemElseEnglish(key: "tool_menu_item.lessons")
         
@@ -69,5 +70,37 @@ extension DashboardViewModel {
     
     func getToolsViewModel() -> ToolsViewModel {
         return dashboardPresentationLayerDependencies.toolsViewModel
+    }
+    
+    func tabTapped(tab: DashboardTabTypeDomainModel) {
+        
+        selectedTab = tab
+    }
+    
+    func getTabBarItemViewModel(tab: DashboardTabTypeDomainModel) -> DashboardTabBarItemViewModel {
+        
+        let imageName: String
+        let titleLocalizedKey: String
+        
+        switch tab {
+            
+        case .lessons:
+            imageName = ImageCatalog.toolsMenuLessons.name
+            titleLocalizedKey = "tool_menu_item.lessons"
+            
+        case .favorites:
+            imageName = ImageCatalog.toolsMenuFavorites.name
+            titleLocalizedKey = "my_tools"
+            
+        case .tools:
+            imageName = ImageCatalog.toolsMenuAllTools.name
+            titleLocalizedKey = "tool_menu_item.tools"
+        }
+        
+        return DashboardTabBarItemViewModel(
+            tab: tab,
+            title: localizationServices.stringForSystemElseEnglish(key: titleLocalizedKey),
+            imageName: imageName
+        )
     }
 }
