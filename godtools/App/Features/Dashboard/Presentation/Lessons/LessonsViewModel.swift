@@ -8,18 +8,17 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class LessonsViewModel: ObservableObject {
         
     private let dataDownloader: InitialDataDownloader
     private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
-    private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getLessonsUseCase: GetLessonsUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let translationsRepository: TranslationsRepository
+    private let attachmentsRepository: AttachmentsRepository
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -28,26 +27,26 @@ class LessonsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var lessons: [LessonDomainModel] = []
+    @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getBannerImageUseCase: GetBannerImageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         self.analytics = analytics
         
-        self.getBannerImageUseCase = getBannerImageUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getLessonsUseCase = getLessonsUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.translationsRepository = translationsRepository
+        self.attachmentsRepository = attachmentsRepository
                 
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] lessons in
                 
                 self?.lessons = lessons
+                self?.isLoadingLessons = false
             }
             .store(in: &cancellables)
         
@@ -116,7 +115,7 @@ class LessonsViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                AnalyticsConstants.Keys.tool: lesson.abbreviation
+                AnalyticsConstants.Keys.tool: lesson.analyticsToolName
             ]
         )
         
@@ -128,15 +127,11 @@ class LessonsViewModel: ObservableObject {
 
 extension LessonsViewModel {
     
-    func cardViewModel(for lesson: LessonDomainModel) -> LessonCardViewModel {
+    func getLessonViewModel(lesson: LessonDomainModel) -> LessonCardViewModel {
         
         return LessonCardViewModel(
             lesson: lesson,
-            dataDownloader: dataDownloader,
-            translationsRepository: translationsRepository,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase
+            attachmentsRepository: attachmentsRepository
         )
     }
     
@@ -151,7 +146,9 @@ extension LessonsViewModel {
     }
     
     func lessonCardTapped(lesson: LessonDomainModel) {
+        
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lesson: lesson))
+        
         trackLessonTappedAnalytics(for: lesson)
     }
 }

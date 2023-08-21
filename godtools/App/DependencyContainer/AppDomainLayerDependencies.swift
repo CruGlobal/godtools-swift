@@ -79,10 +79,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getBannerImageUseCase() -> GetBannerImageUseCase {
-        return GetBannerImageUseCase(attachmentsRepository: dataLayer.getAttachmentsRepository())
-    }
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -99,7 +95,8 @@ class AppDomainLayerDependencies {
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         return GetFeaturedLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
         )
     }
     
@@ -136,13 +133,17 @@ class AppDomainLayerDependencies {
     }
     
     func getLessonUseCase() -> GetLessonUseCase {
-        return GetLessonUseCase()
+        return GetLessonUseCase(
+            translationsRepository: dataLayer.getTranslationsRepository(),
+            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase()
+        )
     }
     
     func getLessonsUseCase() -> GetLessonsUseCase {
         return GetLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
+            resourcesRepository: dataLayer.getResourcesRepository(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
         )
     }
     
@@ -250,7 +251,7 @@ class AppDomainLayerDependencies {
     
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase(),
+            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
         )

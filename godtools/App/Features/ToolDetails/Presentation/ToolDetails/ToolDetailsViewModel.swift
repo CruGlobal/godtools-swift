@@ -12,12 +12,13 @@ import Combine
 
 class ToolDetailsViewModel: ObservableObject {
     
+    private static var toggleToolFavoriteCancellable: AnyCancellable?
+    
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
-    private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
@@ -25,7 +26,7 @@ class ToolDetailsViewModel: ObservableObject {
     private let analytics: AnalyticsContainer
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let getToolVersionsUseCase: GetToolVersionsUseCase
-    private let getBannerImageUseCase: GetBannerImageUseCase
+    private let attachmentsRepository: AttachmentsRepository
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
@@ -59,16 +60,15 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
-        self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
@@ -76,9 +76,9 @@ class ToolDetailsViewModel: ObservableObject {
         self.analytics = analytics
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.getToolVersionsUseCase = getToolVersionsUseCase
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.attachmentsRepository = attachmentsRepository
         
-        self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
+        self.versionsMessage = localizationServices.stringForSystemElseEnglish(key: "toolDetails.versions.message")
         
         reloadToolDetails(resource: resource)
     }
@@ -105,7 +105,9 @@ class ToolDetailsViewModel: ObservableObject {
         
         let nameValue: String
         let aboutDetailsValue: String
-        let languageBundle: Bundle
+        let languageBundleFileType: LocalizableStringsFileType = .strings
+        let languageBundle: LocalizableStringsBundle?
+        let englishBundle: LocalizableStringsBundle? = localizationServices.bundleLoader.getEnglishBundle(fileType: languageBundleFileType)
         
         if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
             
@@ -114,7 +116,7 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
             conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
             outlineContent = primaryTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier, fileType: languageBundleFileType) ?? englishBundle
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
             
@@ -123,26 +125,26 @@ class ToolDetailsViewModel: ObservableObject {
             bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
             conversationStartersContent = englishTranslation.toolDetailsConversationStarters
             outlineContent = englishTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = englishBundle
         }
         else {
             
             nameValue = resource.name
             aboutDetailsValue = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.getEnglishBundle(fileType: .strings)?.bundle ?? Bundle.main
+            languageBundle = englishBundle
         }
                 
         name = nameValue
-        totalViews = String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews)
-        openToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool")
-        learnToShareToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.learnToShareToolButton.title")
-        addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
-        removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
+        totalViews = String.localizedStringWithFormat(languageBundle?.stringForKey(key: "total_views") ?? "", resource.totalViews)
+        openToolButtonTitle = languageBundle?.stringForKey(key: "toolinfo_opentool") ?? ""
+        learnToShareToolButtonTitle = languageBundle?.stringForKey(key: "toolDetails.learnToShareToolButton.title") ?? ""
+        addToFavoritesButtonTitle = languageBundle?.stringForKey(key: "add_to_favorites") ?? ""
+        removeFromFavoritesButtonTitle = languageBundle?.stringForKey(key: "remove_from_favorites") ?? ""
         aboutDetails = aboutDetailsValue
-        conversationStartersTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.conversationStarters.title")
-        outlineTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.outline.title")
-        bibleReferencesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.bibleReferences.title")
-        availableLanguagesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolSettings.languagesAvailable.title")
+        conversationStartersTitle = languageBundle?.stringForKey(key: "toolDetails.conversationStarters.title") ?? ""
+        outlineTitle = languageBundle?.stringForKey(key: "toolDetails.outline.title") ?? ""
+        bibleReferencesTitle = languageBundle?.stringForKey(key: "toolDetails.bibleReferences.title") ?? ""
+        availableLanguagesTitle = languageBundle?.stringForKey(key: "toolSettings.languagesAvailable.title") ?? ""
                         
         availableLanguagesList = getToolLanguagesUseCase.getToolLanguages(resource: resource).map({$0.translatedName}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
@@ -156,9 +158,9 @@ class ToolDetailsViewModel: ObservableObject {
         segments = segmentTypes.map({
             switch $0 {
             case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
+                return languageBundle?.stringForKey(key: "toolDetails.about.title") ?? ""
             case .versions:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
+                return languageBundle?.stringForKey(key: "toolDetails.versions.title") ?? ""
             }
         })
         
@@ -176,7 +178,7 @@ class ToolDetailsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: \.mediaType, on: self)
         
-        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: resource.id)
+        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: resource.id)
             .receive(on: DispatchQueue.main)
             .assign(to: \.isFavorited, on: self)
     }
@@ -280,12 +282,10 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        if isFavorited {
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
-        }
-        else {
-            addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
-        }
+        ToolDetailsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: resource.id)
+            .sink { _ in
+                
+            }
     }
     
     func segmentTapped(index: Int) {
@@ -323,7 +323,7 @@ extension ToolDetailsViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            getBannerImageUseCase: getBannerImageUseCase,
+            attachmentsRepository: attachmentsRepository,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }

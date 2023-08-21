@@ -10,9 +10,15 @@ import SwiftUI
 
 struct RoundedCorner: Shape {
 
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
+    let radius: CGFloat
+    let corners: UIRectCorner
 
+    init(radius: CGFloat = .infinity, corners: UIRectCorner = .allCorners) {
+        
+        self.radius = radius
+        self.corners = corners
+    }
+    
     func path(in rect: CGRect) -> Path {
         
         // NOTE: Found a strange bug specifically to SwiftUI iOS 14 where using UIBezierPath on clipShape will cause a nested ScrollView's content to be clipped / cut off. ~Levi

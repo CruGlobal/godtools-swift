@@ -10,59 +10,60 @@ import SwiftUI
 
 struct LessonsView: View {
         
+    private let contentHorizontalInsets: CGFloat
+    private let lessonCardSpacing: CGFloat
+    
     @ObservedObject private var viewModel: LessonsViewModel
     
-    let leadingTrailingPadding: CGFloat
-    
-    init(viewModel: LessonsViewModel, leadingTrailingPadding: CGFloat) {
+    init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
         self.viewModel = viewModel
-        self.leadingTrailingPadding = leadingTrailingPadding
+        self.contentHorizontalInsets = contentHorizontalInsets
+        self.lessonCardSpacing = lessonCardSpacing
     }
     
     var body: some View {
         
         GeometryReader { geometry in
-                        
+                    
+            if viewModel.isLoadingLessons {
+                CenteredCircularProgressView(
+                    progressColor: ColorPalette.gtGrey.color
+                )
+            }
+            
             PullToRefreshScrollView(showsIndicators: true) {
                 
-                LazyVStack(alignment: .leading, spacing: 0) {
-                 
-                    VStack(alignment: .leading, spacing: 0) {
-                        
-                        Text(viewModel.sectionTitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 22))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                        
-                        FixedVerticalSpacer(height: 5)
-                        
-                        Text(viewModel.subtitle)
-                            .font(FontLibrary.sfProTextRegular.font(size: 14))
-                            .foregroundColor(ColorPalette.gtGrey.color)
-                    }
-                    .padding(EdgeInsets(top: 24, leading: leadingTrailingPadding, bottom: 7, trailing: leadingTrailingPadding))
+                VStack(alignment: .leading, spacing: 0) {
+                                            
+                    LessonsHeaderView(
+                        viewModel: viewModel
+                    )
+                    .padding([.top], 24)
+                    .padding([.leading, .trailing], contentHorizontalInsets)
                     
-                    VStack(spacing: 0) {
+                    LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
                         
                         ForEach(viewModel.lessons) { (lesson: LessonDomainModel) in
-                            
-                            let cardWidth: CGFloat = geometry.size.width - (2 * leadingTrailingPadding)
-                            
-                            LessonCardView(viewModel: viewModel.cardViewModel(for: lesson), cardWidth: cardWidth, cardTappedClosure: {
+                                                        
+                            LessonCardView(
+                                viewModel: viewModel.getLessonViewModel(lesson: lesson),
+                                geometry: geometry,
+                                cardTappedClosure: {
                                 
                                 viewModel.lessonCardTapped(lesson: lesson)
                             })
-                            .padding([.top, .bottom], 8)
-                            .padding([.leading, .trailing], leadingTrailingPadding)
                         }
                     }
-                    .padding(.bottom, 27)
+                    .padding([.top], lessonCardSpacing)
                 }
+                .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
                 
             } refreshHandler: {
                 viewModel.refreshData()
             }
-            .animation(.default, value: viewModel.lessons)
+            .opacity(viewModel.isLoadingLessons ? 0 : 1)
+            .animation(.easeOut, value: !viewModel.isLoadingLessons)
         }
         .onAppear {
             viewModel.pageViewed()
@@ -70,8 +71,11 @@ struct LessonsView: View {
     }
 }
 
-struct LessonsView_Previews: PreviewProvider {
-    static var previews: some View {
+// MARK: - Preview
+
+struct LessonsView_Preview: PreviewProvider {
+    
+    static func getLessonsViewModel() -> LessonsViewModel {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
@@ -80,14 +84,20 @@ struct LessonsView_Previews: PreviewProvider {
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         
-        LessonsView(viewModel: viewModel, leadingTrailingPadding: 20)
+        return viewModel
+    }
+    
+    static var previews: some View {
+        
+        LessonsView(
+            viewModel: LessonsView_Preview.getLessonsViewModel(),
+            contentHorizontalInsets: 20
+        )
     }
 }

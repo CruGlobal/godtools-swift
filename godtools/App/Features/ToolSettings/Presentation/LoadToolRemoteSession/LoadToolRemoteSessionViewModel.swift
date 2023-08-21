@@ -36,7 +36,7 @@ class LoadToolRemoteSessionViewModel: LoadingViewModelType {
             }
         }
         
-        message.accept(value: localizationServices.stringForMainBundle(key: "load_tool_remote_session.message"))
+        message.accept(value: localizationServices.stringForSystemElseEnglish(key: "load_tool_remote_session.message"))
     }
 }
 

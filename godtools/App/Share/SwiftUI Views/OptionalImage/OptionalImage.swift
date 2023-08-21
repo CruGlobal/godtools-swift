@@ -10,45 +10,52 @@ import SwiftUI
 
 struct OptionalImage: View {
     
-    let image: Image?
-    let width: CGFloat
-    let height: CGFloat
-    let placeholderColor: Color
+    private let imageData: OptionalImageData?
+    private let imageSize: OptionalImageSize
+    private let contentMode: ContentMode
+    private let placeholderColor: Color
     
-    init(image: Image?, width: CGFloat, height: CGFloat, placeholderColor: Color = .white) {
+    init(imageData: OptionalImageData?, imageSize: OptionalImageSize, contentMode: ContentMode, placeholderColor: Color) {
         
-        self.image = image
-        self.width = width
-        self.height = height
+        self.imageData = imageData
+        self.imageSize = imageSize
+        self.contentMode = contentMode
         self.placeholderColor = placeholderColor
     }
     
     var body: some View {
       
-        if let image = image {
+        ZStack(alignment: .topLeading) {
             
-            image
-                .resizable()
-                .scaledToFill()
-                .frame(width: width, height: height)
-                .clipped()
-            
-        }
-        else {
-           
             Rectangle()
                 .fill(placeholderColor)
-                .frame(width: width, height: height)
+                .frame(width: imageSize.width, height: imageSize.height)
+            
+            if let image = imageData?.image {
+                
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+                    .frame(width: imageSize.width, height: imageSize.height)
+                    .clipped()
+                    .id(imageData?.imageIdForAnimationChange)
+                    .transition(.opacity.animation(.easeOut))
+                
+            }
         }
+        .frame(width: imageSize.width, height: imageSize.height)
     }
 }
 
 struct OptionalImage_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ZStack {
-            Rectangle()
-                .fill(.pink)
-            OptionalImage(image: nil, width: 300, height: 150, placeholderColor: .blue)
-        }
+        
+        OptionalImage(
+            imageData: nil,
+            imageSize: .fixed(width: 300, height: 150),
+            contentMode: .fill,
+            placeholderColor: .blue
+        )
     }
 }

@@ -42,11 +42,11 @@ class SetupParallelLanguageViewModel {
             loop: true
         )
         
-        promptText = localizationServices.stringForMainBundle(key: "parellelLanguage.prompt")
-        yesButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.yesButton.title")
-        noButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.noButton.title")
-        selectButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectButton.title")
-        getStartedButtonText = localizationServices.stringForMainBundle(key: "parallelLanguage.getStartedButton.title")
+        promptText = localizationServices.stringForSystemElseEnglish(key: "parellelLanguage.prompt")
+        yesButtonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.yesButton.title")
+        noButtonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.noButton.title")
+        selectButtonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.selectButton.title")
+        getStartedButtonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.getStartedButton.title")
         selectLanguageButtonText = ObservableValue(value: "")
         yesNoButtonsHidden = ObservableValue(value: false)
         getStartedButtonHidden = ObservableValue(value: true)
@@ -69,7 +69,7 @@ class SetupParallelLanguageViewModel {
                 }
                 else {
                     
-                    buttonText = localizationServices.stringForMainBundle(key: "parallelLanguage.selectLanguageButton.title")
+                    buttonText = localizationServices.stringForSystemElseEnglish(key: "parallelLanguage.selectLanguageButton.title")
                     yesNoButtonHidden = false
                     getStartedButtonHidden = true
                 }

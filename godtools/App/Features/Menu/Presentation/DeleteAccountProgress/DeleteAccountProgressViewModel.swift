@@ -27,7 +27,7 @@ class DeleteAccountProgressViewModel: ObservableObject {
         self.deleteAccountUseCase = deleteAccountUseCase
         self.localizationServices = localizationServices
         
-        title = localizationServices.stringForMainBundle(key: "deleteAccountProgress.title")
+        title = localizationServices.stringForSystemElseEnglish(key: "deleteAccountProgress.title")
         
         deleteAccount()
     }

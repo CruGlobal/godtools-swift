@@ -71,7 +71,7 @@ class GetLanguageUseCase {
         let strippedCode: String = language.code.components(separatedBy: "-x-")[0]
 
         let localizedKey: String = "language_name_" + language.code
-        let localizedName: String = localizationServices.stringForBundle(bundle: Bundle.main, key: localizedKey)
+        let localizedName: String = localizationServices.stringForSystemElseEnglish(key: localizedKey)
         
         var translatedLanguageName: String
         

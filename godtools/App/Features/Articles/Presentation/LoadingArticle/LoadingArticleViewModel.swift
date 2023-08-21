@@ -23,7 +23,7 @@ class LoadingArticleViewModel: LoadingViewModelType {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository
-        self.message = ObservableValue(value: localizationServices.stringForMainBundle(key: "Download in progress"))
+        self.message = ObservableValue(value: localizationServices.stringForSystemElseEnglish(key: "Download in progress"))
         
         downloadArticle(
             aemUri: aemUri,
@@ -48,14 +48,14 @@ class LoadingArticleViewModel: LoadingViewModelType {
                 }
                 else {
                     
-                    let errorTitle: String = localizationServices.stringForMainBundle(key: "error")
+                    let errorTitle: String = localizationServices.stringForSystemElseEnglish(key: "error")
                     let errorMessage: String
                     
                     if let downloadError = result.downloaderResult.downloadError {
                         errorMessage = DownloadArticlesErrorViewModel(localizationServices: localizationServices, error: downloadError).message
                     }
                     else {
-                        errorMessage = localizationServices.stringForMainBundle(key: "download_error")
+                        errorMessage = localizationServices.stringForSystemElseEnglish(key: "download_error")
                     }
                     
                     let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)

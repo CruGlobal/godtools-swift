@@ -25,12 +25,12 @@ extension Flow {
         
         if responseError.isUrlErrorNotConnectedToInternetCode {
 
-            title = localizationServices.stringForMainBundle(key: "no_internet_title")
-            message = localizationServices.stringForMainBundle(key: "no_internet")
+            title = localizationServices.stringForSystemElseEnglish(key: "no_internet_title")
+            message = localizationServices.stringForSystemElseEnglish(key: "no_internet")
         }
         else {
             
-            title = localizationServices.stringForMainBundle(key: "error")
+            title = localizationServices.stringForSystemElseEnglish(key: "error")
             message = responseError.localizedDescription
         }
         
@@ -38,7 +38,7 @@ extension Flow {
             title: title,
             message: message,
             cancelTitle: nil,
-            acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+            acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
             acceptHandler: nil
         )
         

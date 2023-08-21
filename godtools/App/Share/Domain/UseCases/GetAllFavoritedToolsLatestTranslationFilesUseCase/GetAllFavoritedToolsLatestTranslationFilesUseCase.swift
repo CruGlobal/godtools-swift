@@ -32,9 +32,10 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
         
         Publishers.CombineLatest4(
             resourcesRepository.getResourcesChanged(),
-            favoritedResourcesRepository.getFavoritedResourcesChanged(),
+            favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(),
-            getSettingsParallelLanguageUseCase.getParallelLanguagePublisher())
+            getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+        )
             .sink { [weak self] (resourcesChanged: Void, _, primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
                 
                 let favoritedTools = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
@@ -48,7 +49,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
             .store(in: &cancellables)
     }
     
-    private func downloadLatestTranslationsForAllFavoritedTools(favoritedTools: [FavoritedResourceModel], primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) {
+    private func downloadLatestTranslationsForAllFavoritedTools(favoritedTools: [FavoritedResourceDataModel], primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) {
               
         downloadLatestTranslationsCancellable?.cancel()
         
@@ -64,11 +65,11 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
        
         var translations: [TranslationModel] = Array()
         
-        for tool in favoritedTools {
+        for favoritedTool in favoritedTools {
             
             for language in languages {
                 
-                guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.resourceId, languageId: language.dataModelId) else {
+                guard let translation = translationsRepository.getLatestTranslation(resourceId: favoritedTool.id, languageId: language.dataModelId) else {
                     continue
                 }
                 

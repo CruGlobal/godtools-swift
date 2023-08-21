@@ -17,6 +17,6 @@ struct TermsOfUseWebContent: WebContentType {
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "terms_of_use")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "terms_of_use")
     }
 }

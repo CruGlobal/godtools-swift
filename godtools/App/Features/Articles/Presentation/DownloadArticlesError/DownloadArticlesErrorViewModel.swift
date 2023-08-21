@@ -14,9 +14,9 @@ class DownloadArticlesErrorViewModel {
     
     required init(localizationServices: LocalizationServices, error: ArticleAemDownloaderError) {
             
-        let notConnectedToNetworkMessage: String = localizationServices.stringForMainBundle(key: "no_internet")
+        let notConnectedToNetworkMessage: String = localizationServices.stringForSystemElseEnglish(key: "no_internet")
         let cancelledError: String = "The request was cancelled"
-        let unknownError: String = localizationServices.stringForMainBundle(key: "download_error")
+        let unknownError: String = localizationServices.stringForSystemElseEnglish(key: "download_error")
                 
         switch error {
         

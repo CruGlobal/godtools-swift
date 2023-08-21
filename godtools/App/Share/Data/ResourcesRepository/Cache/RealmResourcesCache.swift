@@ -36,7 +36,7 @@ class RealmResourcesCache {
         }
     }
     
-    func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
+    func getAllTools(sorted: Bool, category: String? = nil) -> [ResourceModel] {
         let metaTools = getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
         let defaultVariants = getResources(ids: defaultVariantIds)

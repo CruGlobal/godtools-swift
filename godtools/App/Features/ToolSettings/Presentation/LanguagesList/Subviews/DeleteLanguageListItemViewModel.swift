@@ -14,7 +14,7 @@ class DeleteLanguageListItemViewModel: BaseLanguagesListItemViewModel {
         
         super.init()
         
-        self.name = localizationServices.stringForMainBundle(key: "toolSettings.languagesList.deleteLanguage.title")
+        self.name = localizationServices.stringForSystemElseEnglish(key: "toolSettings.languagesList.deleteLanguage.title")
         self.isSelected = false
     }
 }

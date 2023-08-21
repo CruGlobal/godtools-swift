@@ -55,12 +55,12 @@ class SocialSignInViewModel: ObservableObject {
         
         switch authenticationType {
         case .createAccount:
-            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
-            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
+            titleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
+            subtitleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
         
         case .login:
-            titleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
-            subtitleText = localizationServices.stringForMainBundle(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
+            titleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
+            subtitleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
         }
     }
     

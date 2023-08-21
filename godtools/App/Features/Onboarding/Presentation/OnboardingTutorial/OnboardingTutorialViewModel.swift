@@ -43,7 +43,7 @@ class OnboardingTutorialViewModel: ObservableObject {
         self.analyticsContainer = analyticsContainer
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         
-        skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
+        skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
         
         onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
         
@@ -70,11 +70,11 @@ class OnboardingTutorialViewModel: ObservableObject {
         
         case 0:
             hidesSkipButton.send(true)
-            continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title")
+            continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.beginButton.title")
        
         default:
             hidesSkipButton.send(false)
-            continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title")
+            continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.nextButton.title")
         }
         
         
@@ -94,16 +94,16 @@ class OnboardingTutorialViewModel: ObservableObject {
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {
         
         return OnboardingTutorialReadyForEveryConversationViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title"),
-            watchVideoButtonTitle: localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
+            title: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.0.title"),
+            watchVideoButtonTitle: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.0.videoLink.title")
         )
     }
     
     func getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.message"),
+            title: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.2.title"),
+            message: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.2.message"),
             animationFilename: "onboarding_prepare_for_moments"
         )
     }
@@ -111,8 +111,8 @@ class OnboardingTutorialViewModel: ObservableObject {
     func getOnboardingTutorialTalkAboutGodWithAnyoneViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.message"),
+            title: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.1.title"),
+            message: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.1.message"),
             animationFilename: "onboarding_talk_about_god"
         )
     }
@@ -120,8 +120,8 @@ class OnboardingTutorialViewModel: ObservableObject {
     func getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.message"),
+            title: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.3.title"),
+            message: localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.3.message"),
             animationFilename: "onboarding_help_someone_discover_jesus"
         )
     }

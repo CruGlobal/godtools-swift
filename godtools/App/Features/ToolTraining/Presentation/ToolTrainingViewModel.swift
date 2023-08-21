@@ -92,10 +92,10 @@ class ToolTrainingViewModel: NSObject {
         
         let continueTitle: String
         if page < (numberOfTipPages.value - 1) {
-            continueTitle = localizationServices.stringForMainBundle(key: "card_status2")
+            continueTitle = localizationServices.stringForSystemElseEnglish(key: "card_status2")
         }
         else {
-            continueTitle = localizationServices.stringForMainBundle(key: "close")
+            continueTitle = localizationServices.stringForSystemElseEnglish(key: "close")
         }
         continueButtonTitle.accept(value: continueTitle)
 
@@ -138,7 +138,7 @@ class ToolTrainingViewModel: NSObject {
             localizedTipTitle = ""
         }
         
-        let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
+        let tipTitle: String = localizationServices.stringForSystemElseEnglish(key: localizedTipTitle)
         
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))

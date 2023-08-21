@@ -40,7 +40,7 @@ class ShareToolViewModel {
         shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
         
         shareMessage = String.localizedStringWithFormat(
-            localizationServices.stringForMainBundle(key: "tract_share_message"),
+            localizationServices.stringForSystemElseEnglish(key: "tract_share_message"),
             shareUrlString
         )
     }

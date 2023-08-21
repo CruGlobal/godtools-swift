@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class AddToolToFavoritesUseCase {
     
@@ -17,8 +18,19 @@ class AddToolToFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func addToolToFavorites(resourceId: String) {
-        
-        _ = favoritedResourcesRepository.storeFavoritedResource(resourceId: resourceId)
+    func addToolToFavoritesPublisher(id: String) -> AnyPublisher<Void, Never> {
+             
+        return favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: [id])
+            .flatMap({ (favoritedResources: [FavoritedResourceDataModel]) -> AnyPublisher<Void, Never> in
+                
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            })
+            .catch({ (error: Error) -> AnyPublisher<Void, Never> in
+                
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

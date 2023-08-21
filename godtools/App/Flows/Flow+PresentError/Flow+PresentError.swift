@@ -14,7 +14,7 @@ extension Flow {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
-        let title: String = localizationServices.stringForMainBundle(key: "error")
+        let title: String = localizationServices.stringForSystemElseEnglish(key: "error")
         let message: String = error.localizedDescription
         
         presentAlert(title: title, message: message)

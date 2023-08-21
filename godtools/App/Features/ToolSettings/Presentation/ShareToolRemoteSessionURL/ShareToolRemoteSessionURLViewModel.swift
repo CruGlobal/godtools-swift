@@ -23,7 +23,7 @@ class ShareToolRemoteSessionURLViewModel {
         self.analytics = analytics
         
         shareMessage = String.localizedStringWithFormat(
-            localizationServices.stringForMainBundle(key: "share_tool_remote_link_message"),
+            localizationServices.stringForSystemElseEnglish(key: "share_tool_remote_link_message"),
             toolRemoteShareUrl
         )
     }

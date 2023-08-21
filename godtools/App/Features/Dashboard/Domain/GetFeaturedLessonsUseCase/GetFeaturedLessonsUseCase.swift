@@ -13,28 +13,36 @@ class GetFeaturedLessonsUseCase {
     
     private let getLessonUseCase: GetLessonUseCase
     private let resourcesRepository: ResourcesRepository
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     
-    init(getLessonUseCase: GetLessonUseCase, resourcesRepository: ResourcesRepository) {
+    init(getLessonUseCase: GetLessonUseCase, resourcesRepository: ResourcesRepository, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+        
         self.getLessonUseCase = getLessonUseCase
         self.resourcesRepository = resourcesRepository
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
     }
     
     func getFeaturedLessonsPublisher() -> AnyPublisher<[LessonDomainModel], Never> {
         
-        return resourcesRepository.getResourcesChanged()
-            .flatMap { _ -> AnyPublisher<[LessonDomainModel], Never> in
+        return Publishers.CombineLatest(
+            resourcesRepository.getResourcesChanged(),
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        )
+        .flatMap({ (resourcesChanged: Void, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[LessonDomainModel], Never> in
                 
-                let featuredLessons = self.getFeaturedLessons()
+            let featuredLessons: [LessonDomainModel] = self.getFeaturedLessons(primaryLanguage: primaryLanguage)
                 
-                return Just(featuredLessons)
+            return Just(featuredLessons)
                     .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
-    private func getFeaturedLessons() -> [LessonDomainModel] {
-        
-        return resourcesRepository.getFeaturedLessons()
-            .map { getLessonUseCase.getLesson(resource: $0) }
+    private func getFeaturedLessons(primaryLanguage: LanguageDomainModel?) -> [LessonDomainModel] {
+                
+        return resourcesRepository.getFeaturedLessons().map { (resource: ResourceModel) in
+            
+            getLessonUseCase.getLesson(resource: resource, primaryLanguage: primaryLanguage)
+        }
     }
 }

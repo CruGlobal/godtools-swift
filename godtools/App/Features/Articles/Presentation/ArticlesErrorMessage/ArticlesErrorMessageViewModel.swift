@@ -16,8 +16,8 @@ class ArticlesErrorMessageViewModel {
     
     required init(localizationServices: LocalizationServices, message: String) {
         
-        title = localizationServices.stringForMainBundle(key: "download_error")
+        title = localizationServices.stringForSystemElseEnglish(key: "download_error")
         self.message = message
-        downloadArticlesButtonTitle = localizationServices.stringForMainBundle(key: "articles.downloadArticlesButton.title.retryDownload")
+        downloadArticlesButtonTitle = localizationServices.stringForSystemElseEnglish(key: "articles.downloadArticlesButton.title.retryDownload")
     }
 }

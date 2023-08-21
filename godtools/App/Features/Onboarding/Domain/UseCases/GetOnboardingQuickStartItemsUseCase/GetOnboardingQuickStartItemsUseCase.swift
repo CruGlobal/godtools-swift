@@ -21,20 +21,20 @@ class GetOnboardingQuickStartItemsUseCase {
         
         return [
             OnboardingQuickStartItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.0.title"),
-                actionTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.0.button.title"),
+                title: localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.0.title"),
+                actionTitle: localizationServices.stringForSystemElseEnglish(key:  "onboardingQuickStart.0.button.title"),
                 actionFlowStep: .readArticlesTappedFromOnboardingQuickStart,
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartArticles
             ),
             OnboardingQuickStartItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.1.title"),
-                actionTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.1.button.title"),
+                title: localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.1.title"),
+                actionTitle: localizationServices.stringForSystemElseEnglish(key:  "onboardingQuickStart.1.button.title"),
                 actionFlowStep: .tryLessonsTappedFromOnboardingQuickStart,
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartLessons
             ),
             OnboardingQuickStartItemDomainModel(
-                title: localizationServices.stringForMainBundle(key: "onboardingQuickStart.2.title"),
-                actionTitle: localizationServices.stringForMainBundle(key:  "onboardingQuickStart.2.button.title"),
+                title: localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.2.title"),
+                actionTitle: localizationServices.stringForSystemElseEnglish(key:  "onboardingQuickStart.2.button.title"),
                 actionFlowStep: .chooseToolTappedFromOnboardingQuickStart,
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartTools
             ),
