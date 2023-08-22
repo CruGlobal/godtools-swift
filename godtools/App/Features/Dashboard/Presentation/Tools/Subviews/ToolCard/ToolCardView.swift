@@ -22,6 +22,7 @@ struct ToolCardView: View {
     private let navButtonHeight: CGFloat = 30
     private let navButtonSpacing: CGFloat = 8
     private let contentHorizontalInsets: CGFloat = 15
+    private let showsCategory: Bool
     private let favoriteTappedClosure: (() -> Void)?
     private let toolDetailsTappedClosure: (() -> Void)?
     private let openToolTappedClosure: (() -> Void)?
@@ -29,7 +30,7 @@ struct ToolCardView: View {
     
     @ObservedObject private var viewModel: ToolCardViewModel
     
-    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
+    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
         
         var navButtons: [ToolCardNavButtonType] = Array()
         
@@ -47,6 +48,7 @@ struct ToolCardView: View {
         self.geometry = geometry
         self.layout = layout
         self.navButtons = navButtons
+        self.showsCategory = showsCategory
         self.favoriteTappedClosure = favoriteTappedClosure
         self.toolDetailsTappedClosure = toolDetailsTappedClosure
         self.openToolTappedClosure = openToolTappedClosure
@@ -113,12 +115,15 @@ struct ToolCardView: View {
                             )
                         }
                     }
- 
-                    ToolCardCategoryView(
-                        category: viewModel.category
-                    )
-                    .padding([.top], 2)
                     
+                    if showsCategory {
+                        
+                        ToolCardCategoryView(
+                            category: viewModel.category
+                        )
+                        .padding([.top], 2)
+                    }
+ 
                     if showsNavButtons {
 
                         Spacer()
@@ -201,6 +206,7 @@ struct ToolCardView_Previews: PreviewProvider {
                 viewModel: viewModel,
                 geometry: geometry,
                 layout: .landscape,
+                showsCategory: true,
                 favoriteTappedClosure: nil,
                 toolDetailsTappedClosure: nil,
                 openToolTappedClosure: nil,
