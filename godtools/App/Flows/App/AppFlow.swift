@@ -19,6 +19,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let followUpsService: FollowUpsService
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
+    private let onboardingTutorialIsAvailable: Bool
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -53,6 +54,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
+        self.onboardingTutorialIsAvailable = appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable
         
         super.init()
         
@@ -68,6 +70,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addDeepLinkingObservers()
         
         appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
+        
+        // NOTE: This fixes a bug with the Dashboard TabView that occurs when launching the app from a terminated state.
+        // The bug occurs when the Dashboard TabView starts on any index other than 0 and then tab index 0 is tapped.  Tab index 0 will correctly highlight, but tab navigation doesn't occur.
+        // This happens in the device in iOS 16.3.1.
+        // I think this bug has something to do with attaching SwiftUI views to UIKit during UIApplicationDelegate life cycle.
+        if !onboardingTutorialIsAvailable {
+            navigateToDashboard()
+        }
     }
     
     deinit {
@@ -87,7 +97,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 appLaunchedFromDeepLink = nil
                 navigate(step: .deepLink(deepLinkType: deepLink))
             }
-            else if appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable {
+            else if onboardingTutorialIsAvailable {
                 
                 navigate(step: .showOnboardingTutorial(animated: true))
             }
