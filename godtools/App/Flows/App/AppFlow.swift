@@ -1063,9 +1063,7 @@ extension AppFlow {
             resignedActiveDate = Date()
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
-            
-            appDiContainer.dataLayer.getLaunchCountRepository().incrementLaunchCount()
-            
+                        
             AppBackgroundState.shared.start(
                 getAllFavoritedToolsLatestTranslationFilesUseCase: appDiContainer.domainLayer.getAllFavoritedToolsLatestTranslationFilesUseCase(),
                 storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
