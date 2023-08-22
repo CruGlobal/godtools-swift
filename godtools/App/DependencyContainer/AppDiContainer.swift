@@ -37,10 +37,6 @@ class AppDiContainer {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
     
-    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
-        return DisableOptInOnboardingBannerUseCase(optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository())
-    }
-    
     func getExitLinkAnalytics() -> ExitLinkAnalytics {
         return ExitLinkAnalytics(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
     }
@@ -110,23 +106,6 @@ class AppDiContainer {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
-    }
-    
-    func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
-        return OptInOnboardingBannerEnabledRepository(
-            cache: OptInOnboardingBannerEnabledCache()
-        )
-    }
-    
-    func getOpInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
-        return GetOptInOnboardingBannerEnabledUseCase(
-            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
-            optInOnboardingBannerEnabledRepository: getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase(getDeviceLanguageUseCase: domainLayer.getDeviceLanguageUseCase())
     }
     
     func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {

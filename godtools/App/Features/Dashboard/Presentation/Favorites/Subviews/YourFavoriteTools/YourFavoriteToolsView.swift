@@ -46,6 +46,7 @@ struct YourFavoriteToolsView: View {
                                 viewModel: viewModel.getYourFavoriteToolViewModel(tool: tool),
                                 geometry: geometry,
                                 layout: .thumbnail,
+                                showsCategory: true,
                                 favoriteTappedClosure: {
                                     
                                     viewModel.toolFavoriteTapped(tool: tool)

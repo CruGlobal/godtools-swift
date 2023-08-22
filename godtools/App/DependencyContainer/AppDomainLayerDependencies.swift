@@ -92,6 +92,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
+        return DisableOptInOnboardingBannerUseCase(
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         return GetFeaturedLessonsUseCase(
             getLessonUseCase: getLessonUseCase(),
@@ -154,6 +160,19 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
+        return GetOptInOnboardingBannerEnabledUseCase(
+            getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
+            optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
+        )
+    }
+    
+    func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
+        return GetOptInOnboardingTutorialAvailableUseCase(
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
+        )
+    }
+    
     func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
         return GetOnboardingQuickLinksEnabledUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
@@ -168,7 +187,7 @@ class AppDomainLayerDependencies {
     
     func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
         return GetOnboardingTutorialAvailabilityUseCase(
-            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
             onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
@@ -211,7 +230,7 @@ class AppDomainLayerDependencies {
     
     func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
         return GetSetupParallelLanguageAvailabilityUseCase(
-            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
             setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
     }
@@ -245,7 +264,7 @@ class AppDomainLayerDependencies {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            launchCountRepository: dataLayer.getLaunchCountRepository()
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository()
         )
     }
     
