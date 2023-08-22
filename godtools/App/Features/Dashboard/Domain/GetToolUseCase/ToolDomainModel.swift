@@ -18,7 +18,8 @@ struct ToolDomainModel {
     let languageIds: [String]
     let name: String
     
-    // TODO: - remove this once we're done refactoring to pass ToolDomainModels around instead of ResourceModels
+    // TODO: - Remove this once we're done refactoring to pass ToolDomainModels around instead of ResourceModels. See GT-2100. ~Levi
+    @available(*, deprecated)
     let resource: ResourceModel
 }
 
