@@ -187,7 +187,7 @@ class AppDomainLayerDependencies {
     
     func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
         return GetOnboardingTutorialAvailabilityUseCase(
-            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
             onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
@@ -230,7 +230,7 @@ class AppDomainLayerDependencies {
     
     func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
         return GetSetupParallelLanguageAvailabilityUseCase(
-            launchCountRepository: dataLayer.getLaunchCountRepository(),
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
             setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
     }
@@ -264,7 +264,7 @@ class AppDomainLayerDependencies {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            launchCountRepository: dataLayer.getLaunchCountRepository()
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository()
         )
     }
     

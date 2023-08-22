@@ -189,12 +189,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getLaunchCountRepository() -> LaunchCountRepository {
-        return LaunchCountRepository(
-            cache: LaunchCountCache()
-        )
-    }
-    
     func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
         return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
@@ -292,6 +286,10 @@ class AppDataLayerDependencies {
     
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
+    }
+    
+    func getSharedLaunchCountRepository() -> LaunchCountRepository {
+        return LaunchCountRepository.shared
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
