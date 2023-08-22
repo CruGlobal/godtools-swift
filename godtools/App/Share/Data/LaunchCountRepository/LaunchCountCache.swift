@@ -42,7 +42,7 @@ private extension UserDefaults {
         get {
             
             if object(forKey: UserDefaults.launchCountCacheKey) as? Int == nil {
-                return 0
+                return 1
             }
             
             return integer(forKey: UserDefaults.launchCountCacheKey)
