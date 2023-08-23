@@ -54,6 +54,7 @@ struct ToolsView: View {
                         
                         ToolCategoriesView(
                             viewModel: viewModel,
+                            geometry: geometry,
                             contentHorizontalInsets: contentHorizontalInsets
                         )
             

@@ -1,5 +1,5 @@
 //
-//  ToolCategoryButtonViewModel.swift
+//  ToolFilterButtonViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/19/22.
@@ -8,8 +8,9 @@
 
 import Foundation
 
-class ToolCategoryButtonViewModel: ObservableObject {
-        
+class ToolFilterButtonViewModel: ObservableObject {
+    
+    // TODO: - remove category, pass in filter selection
     let category: ToolCategoryDomainModel
     
     @Published var title: String = ""

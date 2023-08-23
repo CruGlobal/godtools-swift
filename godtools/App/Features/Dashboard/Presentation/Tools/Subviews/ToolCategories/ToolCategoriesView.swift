@@ -10,13 +10,16 @@ import SwiftUI
 
 struct ToolCategoriesView: View {
     
+    private let buttonSpacing: CGFloat = 11
     private let contentHorizontalInsets: CGFloat
     
+    private let geometry: GeometryProxy
     @ObservedObject private var viewModel: ToolsViewModel
     
-    init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat) {
+    init(viewModel: ToolsViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat) {
         
         self.viewModel = viewModel
+        self.geometry = geometry
         self.contentHorizontalInsets = contentHorizontalInsets
     }
         
@@ -30,25 +33,29 @@ struct ToolCategoriesView: View {
                 .padding(.leading, contentHorizontalInsets)
                 .padding(.top, 28)
             
-            ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: buttonSpacing) {
+                let buttonWidth = (geometry.size.width - (contentHorizontalInsets*2) - buttonSpacing) / 2
+                ToolFilterButtonView(
+                    viewModel: viewModel.getCategoryButtonViewModel(index: 0),
+                    width: buttonWidth,
+                    tappedClosure: {
+                        
+                        viewModel.categoryTapped(index: 0)
+                    }
+                )
                 
-                TwoRowHStack(itemCount: viewModel.categories.count, spacing: 15) { (index: Int) in
-                    
-                    ToolCategoryButtonView(
-                        viewModel: viewModel.getCategoryButtonViewModel(index: index),
-                        indexPosition: index,
-                        selectedIndex: $viewModel.selectedCategoryIndex,
-                        tappedClosure: {
-                            
-                            if index >= 0 && index <  viewModel.categories.count {
-                                viewModel.categoryTapped(index: index)
-                            }
-                        }
-                    )
-                }
-                .padding([.leading, .trailing], contentHorizontalInsets)
-                .padding([.top, .bottom], 10) // NOTE: This is needed to prevent clipping category button shadows.
+                ToolFilterButtonView(
+                    viewModel: viewModel.getCategoryButtonViewModel(index: 1),
+                    width: buttonWidth,
+                    tappedClosure: {
+                        
+                        viewModel.categoryTapped(index: 1)
+                    }
+                )
+                
             }
+            .padding([.leading, .trailing], contentHorizontalInsets)
+            .padding([.top, .bottom], 10) // NOTE: This is needed to prevent clipping category button shadows.
         }
     }
 }
@@ -59,9 +66,12 @@ struct ToolCategoriesView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        ToolCategoriesView(
-            viewModel: AllToolsView_Preview.getToolsViewModel(),
-            contentHorizontalInsets: 15
-        )
+        GeometryReader { geo in
+            
+            ToolCategoriesView(
+                viewModel: AllToolsView_Preview.getToolsViewModel(), geometry: geo,
+                contentHorizontalInsets: 15
+            )
+        }
     }
 }

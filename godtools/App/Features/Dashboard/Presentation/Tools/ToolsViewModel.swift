@@ -217,11 +217,11 @@ extension ToolsViewModel {
         )
     }
     
-    func getCategoryButtonViewModel(index: Int) -> ToolCategoryButtonViewModel {
+    func getCategoryButtonViewModel(index: Int) -> ToolFilterButtonViewModel {
         
         let category: ToolCategoryDomainModel = categories[index]
         
-        return ToolCategoryButtonViewModel(
+        return ToolFilterButtonViewModel(
             category: category
         )
     }
