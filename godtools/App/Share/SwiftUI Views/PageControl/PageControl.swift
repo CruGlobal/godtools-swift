@@ -60,6 +60,7 @@ struct PageControl: View {
                 .fill(.clear)
                 .frame(width: 1, height: 10)
         }
+        .flipsForRightToLeftLayoutDirection(true)
     }
     
     private func scrollToPreviousPage() {

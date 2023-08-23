@@ -58,6 +58,7 @@ struct DashboardView: View {
                 )
             }
         }
+        .flipsForRightToLeftLayoutDirection(true)
     }
 }
     
