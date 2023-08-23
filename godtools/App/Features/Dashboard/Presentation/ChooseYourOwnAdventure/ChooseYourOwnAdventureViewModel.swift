@@ -99,6 +99,6 @@ extension ChooseYourOwnAdventureViewModel {
     func navLanguageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
-        setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil)
+        setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
     }
 }

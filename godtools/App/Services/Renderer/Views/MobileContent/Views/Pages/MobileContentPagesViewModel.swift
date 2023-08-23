@@ -107,7 +107,7 @@ class MobileContentPagesViewModel: NSObject {
         
         trainingTipsEnabled = enabled
         
-        setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil)
+        setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil, pagePositions: nil)
     }
     
     // MARK: - Renderer / Page Renderer
@@ -140,10 +140,10 @@ class MobileContentPagesViewModel: NSObject {
         
         self.renderer.send(renderer)
                 
-        setPageRenderer(pageRenderer: pageRenderer, navigationEvent: navigationEvent)
+        setPageRenderer(pageRenderer: pageRenderer, navigationEvent: navigationEvent, pagePositions: nil)
     }
     
-    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigationEvent: MobileContentPagesNavigationEvent?) {
+    func setPageRenderer(pageRenderer: MobileContentPageRenderer, navigationEvent: MobileContentPagesNavigationEvent?, pagePositions: MobileContentViewPositionState?) {
             
         countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
@@ -180,7 +180,7 @@ class MobileContentPagesViewModel: NSObject {
                     reloadCollectionViewDataNeeded: true,
                     insertPages: nil
                 ),
-                pagePositions: nil
+                pagePositions: pagePositions
             )
         }
                 
