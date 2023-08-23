@@ -11,8 +11,7 @@ import UIKit
 class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private let viewModel: MobileContentCardCollectionPageViewModel
-    private let cardPageNavigationView: PageNavigationCollectionView
-    private let cardCollectionLayout: HorizontallyCenteredCollectionViewLayout = HorizontallyCenteredCollectionViewLayout()
+    private let cardPageNavigationView: PageNavigationCollectionView = PageNavigationCollectionView()
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
@@ -23,7 +22,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
-        self.cardPageNavigationView = PageNavigationCollectionView(layout: cardCollectionLayout)
         
         super.init(viewModel: viewModel, nibName: nil)
                 
@@ -48,6 +46,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         cardPageNavigationView.pageBackgroundColor = .clear
         cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
         
+        /*
         cardCollectionLayout.setCellSize(
             cellSize: .aspectRatioOfContainerWidth(
                 aspectRatio: CGSize(width: 182, height: 268),
@@ -55,7 +54,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
                 widthMultiplier: 0.78
             ),
             cellSpacing: 24
-        )
+        )*/
 
         // previousCardButton
         addSubview(previousCardButton)
