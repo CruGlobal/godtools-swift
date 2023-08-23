@@ -190,7 +190,7 @@ extension ToolViewModel {
     func navLanguageChanged(page: Int, pagePositions: ToolPagePositions) {
         
         if let pageRenderer = getPageRenderer(language: navBarViewModel.value.language) {
-            setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil)
+            setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
         }
         
         sendRemoteShareNavigationEvent(
@@ -262,6 +262,7 @@ extension ToolViewModel {
         }
         
         let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
+        let pagePositions: MobileContentViewPositionState? = ToolPagePositions(cardPosition: cardPosition)
         
         let navigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
@@ -271,15 +272,13 @@ extension ToolViewModel {
                 reloadCollectionViewDataNeeded: navBarLanguageChanged,
                 insertPages: nil
             ),
-            pagePositions: ToolPagePositions(
-                cardPosition: cardPosition
-            )
+            pagePositions: pagePositions
         )
                         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
             navBarViewModel.value.selectedLanguage.accept(value: remoteShareLanguageIndex)
-            super.setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigationEvent: nil)
+            super.setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigationEvent: nil, pagePositions: pagePositions)
         }
         else {
             
