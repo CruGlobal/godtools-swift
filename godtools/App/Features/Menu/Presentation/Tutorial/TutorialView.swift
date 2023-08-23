@@ -49,12 +49,12 @@ struct TutorialView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.currentPage)
-                                                
+                
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
                     
                     viewModel.continueTapped()
                 }
-                            
+                
                 PageControl(
                     numberOfPages: viewModel.numberOfPages,
                     attributes: pageControlAttributes,
@@ -64,5 +64,6 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
+        .flipsForRightToLeftLayoutDirection(true)
     }
 }
