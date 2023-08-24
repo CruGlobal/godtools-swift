@@ -16,9 +16,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
     private let previousAndNextButtonInsets: CGFloat = 20
-    
-    private var cards: [MobileContentCardCollectionPageCardView] = Array()
-    
+        
     init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
@@ -73,11 +71,12 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func renderChild(childView: MobileContentView) {
         super.renderChild(childView: childView)
-        
-        if let card = childView as? MobileContentCardCollectionPageCardView {
-            cards.append(card)
-            cardPageNavigationView.reloadData()
-        }
+        cardPageNavigationView.reloadData()
+    }
+    
+    override func finishedRenderingChildren() {
+        super.finishedRenderingChildren()
+        cardPageNavigationView.reloadData()
     }
     
     override func viewDidAppear() {
@@ -146,7 +145,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
 extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return cards.count
+        return viewModel.numberOfCards
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,11 +153,14 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
         let cell: MobileContentCardCollectionPageItemView = cardPageNavigationView.getReusablePageCell(
             cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier,
             indexPath: indexPath) as! MobileContentCardCollectionPageItemView
-                
-        let cardView: MobileContentCardCollectionPageCardView = cards[indexPath.row]
         
-        cell.configure(cardView: cardView)
-                
+        if let cardView = viewModel.cardWillAppear(card: indexPath.row) as? MobileContentCardCollectionPageCardView {
+            cell.configure(cardView: cardView)
+        }
+        else {
+            assertionFailure("Failed to render MobileContentCardCollectionPageCardView.")
+        }
+                        
         return cell
     }
     
