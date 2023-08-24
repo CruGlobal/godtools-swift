@@ -11,7 +11,7 @@ import UIKit
 class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private let viewModel: MobileContentCardCollectionPageViewModel
-    private let cardPageNavigationView: PageNavigationCollectionView = PageNavigationCollectionView()
+    private let cardPageNavigationView: PageNavigationCollectionView
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
@@ -22,6 +22,10 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
+        
+        cardPageNavigationView = PageNavigationCollectionView(
+            layoutType: .centeredRevealingPreviousAndNextPage(spacingBetweenPages: 25, pageWidthAmountToRevealForPreviousAndNextPage: 20)
+        )
         
         super.init(viewModel: viewModel, nibName: nil)
                 
@@ -46,16 +50,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         cardPageNavigationView.pageBackgroundColor = .clear
         cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
         
-        /*
-        cardCollectionLayout.setCellSize(
-            cellSize: .aspectRatioOfContainerWidth(
-                aspectRatio: CGSize(width: 182, height: 268),
-                containerWidth: frame.size.width,
-                widthMultiplier: 0.78
-            ),
-            cellSpacing: 24
-        )*/
-
         // previousCardButton
         addSubview(previousCardButton)
         previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
@@ -105,7 +99,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     private func updatePreviousAndNextButtonVisibility(page: Int) {
         
         let isFirstPage: Bool = page == 0
-        let isLastPage: Bool = page >= cardPageNavigationView.numberOfPages - 1
+        let isLastPage: Bool = page >= cardPageNavigationView.getNumberOfPages() - 1
         
         let hidesPreviousCardButton: Bool
         let hidesNextCardButton: Bool
@@ -129,7 +123,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func getPositionState() -> MobileContentViewPositionState {
         
-        let page: Int = cardPageNavigationView.currentPage
+        let page: Int = cardPageNavigationView.getCurrentPage()
         let currentCardId: String = viewModel.getCardId(card: page)
                 
         return MobileContentCardCollectionPagePositionState(currentCardId: currentCardId)
