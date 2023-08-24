@@ -23,6 +23,7 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     private var layoutInitialized: Bool = false
     private var panGuestureAdded: Bool = false
     private var beginningPanPoint: CGPoint?
+    private var beginningContentOffset: CGPoint?
     private var lastPanningPoint: CGPoint = .zero
         
     private(set) var panDirection: PageNavigationCollectionViewCenteredLayout.PanDirection = .none
@@ -80,37 +81,36 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
         guard let pageNavigationCollectionView = pageNavigationCollectionView else {
             return .zero
         }
-                
-        let shouldPageToNextPage: Bool = velocity.x > 0 || (velocity.x == 0 && panDirection == .left)
-        
+                        
         let currentPage: Int = pageNavigationCollectionView.getPageBasedOnContentOffset(contentOffset: proposedContentOffset)
         
         let targetPage: Int
         
-        
-        if let beginningPanPoint = self.beginningPanPoint {
+        if let beginningPanPoint = self.beginningPanPoint, let beginningContentOffset = self.beginningContentOffset {
+            
+            let beginningPage: Int = pageNavigationCollectionView.getPageBasedOnContentOffset(contentOffset: beginningContentOffset)
             
             switch panDirection {
             
             case .left:
                 
                 if lastPanningPoint.x < beginningPanPoint.x {
-                    targetPage = currentPage + 1
+                    targetPage = beginningPage + 1
                 }
                 else {
-                    targetPage = currentPage
+                    targetPage = beginningPage
                 }
             
             case .none:
-                targetPage = currentPage
+                targetPage = beginningPage
             
             case .right:
                 
                 if lastPanningPoint.x > beginningPanPoint.x {
-                    targetPage = currentPage - 1
+                    targetPage = beginningPage - 1
                 }
                 else {
-                    targetPage = currentPage
+                    targetPage = beginningPage
                 }
             }
         }
@@ -146,6 +146,7 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
             isPanning = true
             lastPanningPoint = panningPoint
             beginningPanPoint = panningPoint
+            beginningContentOffset = pageNavigationCollectionView?.getContentOffset()
         
         case .changed:
             
@@ -162,16 +163,19 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
             isPanning = false
             lastPanningPoint = .zero
             beginningPanPoint = nil
+            beginningContentOffset = nil
         
         case .cancelled:
             isPanning = false
             lastPanningPoint = .zero
             beginningPanPoint = nil
+            beginningContentOffset = nil
         
         case .failed:
             isPanning = false
             lastPanningPoint = .zero
             beginningPanPoint = nil
+            beginningContentOffset = nil
         
         @unknown default:
             break
