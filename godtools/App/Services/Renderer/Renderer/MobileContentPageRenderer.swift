@@ -20,7 +20,7 @@ class MobileContentPageRenderer {
     let language: LanguageDomainModel
     let translation: TranslationModel
     let manifestResourcesCache: MobileContentRendererManifestResourcesCache
-    let pageViewFactories: MobileContentRendererPageViewFactories
+    let viewRenderer: MobileContentViewRenderer
     let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
     init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
@@ -32,7 +32,7 @@ class MobileContentPageRenderer {
         self.language = languageTranslationManifest.language
         self.translation = languageTranslationManifest.translation
         self.manifestResourcesCache = manifestResourcesCache
-        self.pageViewFactories = pageViewFactories
+        self.viewRenderer = MobileContentViewRenderer(pageViewFactories: pageViewFactories)
         self.navigation = navigation
     }
     
@@ -76,7 +76,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, primaryLanguage: LanguageDomainModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, primaryLanguage: LanguageDomainModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
@@ -89,7 +89,7 @@ class MobileContentPageRenderer {
             resource: resource,
             language: language,
             translation: translation,
-            pageViewFactories: pageViewFactories,
+            viewRenderer: viewRenderer,
             navigation: navigation,
             primaryRendererLanguage: primaryLanguage,
             rendererState: sharedState,
@@ -113,51 +113,16 @@ class MobileContentPageRenderer {
             resource: resource,
             language: language,
             translation: translation,
-            pageViewFactories: pageViewFactories,
+            viewRenderer: viewRenderer,
             primaryLanguage: primaryLanguage,
             sharedState: sharedState,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
-        guard let renderableView = recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, renderedPageContext: renderedPageContext) else {
+        guard let renderableView = viewRenderer.recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, renderedPageContext: renderedPageContext) else {
             return .failure(NSError.errorWithDescription(description: "Failed to render page."))
         }
                 
         return .success(renderableView)
-    }
-    
-    func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
-                   
-        let mobileContentView: MobileContentView? = pageViewFactories.viewForRenderableModel(
-            renderableModel: renderableModel,
-            renderableModelParent: renderableModelParent,
-            renderedPageContext: renderedPageContext
-        )
-                
-        let childModels: [AnyObject]
-        
-        if let renderableModel = renderableModel as? MobileContentRenderableModel {
-            childModels = renderableModel.getRenderableChildModels()
-        }
-        else {
-            childModels = Array()
-        }
-                        
-        for childModel in childModels {
-            
-            let childMobileContentView: MobileContentView? = recurseAndRender(
-                renderableModel: childModel,
-                renderableModelParent: renderableModel,
-                renderedPageContext: renderedPageContext
-            )
-            
-            if let childMobileContentView = childMobileContentView, let mobileContentView = mobileContentView {
-                mobileContentView.renderChild(childView: childMobileContentView)
-            }
-        }
-        
-        mobileContentView?.finishedRenderingChildren()
-        
-        return mobileContentView
     }
 }
