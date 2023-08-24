@@ -28,40 +28,47 @@ struct ToolFilterButtonView: View {
     
     var body: some View {
         
-        ZStack(alignment: .center) {
+        Button {
             
-            backgroundColor
+            tappedClosure?()
+            
+        } label: {
+            
+            ZStack(alignment: .center) {
+                                
+                Rectangle()
+                    .fill(.clear)
+                    .frame(height: ToolFilterButtonView.height)
+                    .cornerRadius(cornerRadius)
+                    .ignoresSafeArea()
                 
-            HStack(alignment: .top) {
-                Text(viewModel.title)
-                    .multilineTextAlignment(.leading)
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .font(FontLibrary.sfProTextBold.font(size: 14))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                HStack(alignment: .top) {
+                    Text(viewModel.title)
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .font(FontLibrary.sfProTextBold.font(size: 14))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    
+                    ImageCatalog.toolFilterArrow.image
+                        .padding(.top, 3)
+                }
+                .padding(.leading, 20)
+                .padding(.trailing, 10)
+                .padding(.top, 10)
                 
-                ImageCatalog.toolFilterArrow.image
-                    .padding(.top, 3)
             }
-            .padding(.leading, 20)
-            .padding(.trailing, 10)
-            .padding(.top, 10)
-            
         }
         .frame(width: width, height: ToolFilterButtonView.height)
+        .background(backgroundColor)
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 3, y: 3)
         .overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
                 .strokeBorder(Color.clear, lineWidth: 2)
         )
-        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
-        .onTapGesture {
-            
-            tappedClosure?()
-        }
-        
+        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.  
     }
 }
 
