@@ -79,5 +79,6 @@ struct OnboardingTutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
+        .flipsForRightToLeftLayoutDirection(true)
     }
 }
