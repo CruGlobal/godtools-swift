@@ -51,13 +51,14 @@ struct ToolsView: View {
                             contentHorizontalInsets: contentHorizontalInsets
                         )
                         .padding([.top], 24)
-                        
-                        filterSection(width: geometry.size.width)
-            
+                                    
                         SeparatorView()
                             .padding([.top], 15)
-                            .padding([.bottom], 25)
+                            .padding([.bottom], 11)
                             .padding([.leading, .trailing], contentHorizontalInsets)
+                        
+                        filterSection(width: geometry.size.width)
+                            .padding([.bottom], 18)
                         
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
                             
@@ -106,7 +107,6 @@ struct ToolsView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding(.leading, contentHorizontalInsets)
-                .padding(.top, 28)
             
             let buttonSpacing: CGFloat = 11
             
@@ -132,7 +132,7 @@ struct ToolsView: View {
                 
             }
             .padding([.leading, .trailing], contentHorizontalInsets)
-            .padding([.top, .bottom], 10) // NOTE: This is needed to prevent clipping category button shadows.
+            .padding(.bottom, 10) // NOTE: This is needed to prevent clipping filter button shadows.
         }
     }
 }
