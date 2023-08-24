@@ -22,7 +22,13 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         self.viewModel = viewModel
         
         cardPageNavigationView = PageNavigationCollectionView(
-            layoutType: .centeredRevealingPreviousAndNextPage(spacingBetweenPages: 25, pageWidthAmountToRevealForPreviousAndNextPage: 20)
+            layoutType: .centeredRevealingPreviousAndNextPage(
+                pageLayoutAttributes: PageNavigationCollectionViewCenterLayoutPageAttributes(
+                    spacingBetweenPages: 25,
+                    pageWidthAmountToRevealForPreviousAndNextPage: 20,
+                    cardAspectRatio: CGSize(width: 182, height: 268)
+                )
+            )
         )
         
         super.init(viewModel: viewModel, nibName: nil)

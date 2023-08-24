@@ -10,6 +10,6 @@ import Foundation
 
 enum PageNavigationCollectionViewLayoutType {
     
-    case centeredRevealingPreviousAndNextPage(spacingBetweenPages: CGFloat, pageWidthAmountToRevealForPreviousAndNextPage: CGFloat)
+    case centeredRevealingPreviousAndNextPage(pageLayoutAttributes: PageNavigationCollectionViewCenterLayoutPageAttributes)
     case fullScreen
 }

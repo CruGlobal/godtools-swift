@@ -47,7 +47,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         super.init(frame: UIScreen.main.bounds)
         
         switch layoutType {
-        case .centeredRevealingPreviousAndNextPage( _, _):
+        case .centeredRevealingPreviousAndNextPage( _):
             self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
             
         case .fullScreen:
@@ -90,7 +90,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.semanticContentAttribute = .forceLeftToRight
         
         switch layoutType {
-        case .centeredRevealingPreviousAndNextPage( _, _):
+        case .centeredRevealingPreviousAndNextPage( _):
             collectionView.isPagingEnabled = false
         case .fullScreen:
             collectionView.isPagingEnabled = true
@@ -161,7 +161,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         switch layoutType {
         
-        case .centeredRevealingPreviousAndNextPage(_, _):
+        case .centeredRevealingPreviousAndNextPage( _):
             return
             
         case .fullScreen:
@@ -212,21 +212,24 @@ class PageNavigationCollectionView: UIView, NibBased {
     func getVisiblePageCells() -> [UICollectionViewCell] {
         return collectionView.visibleCells
     }
-    
-    func getPageWidth() -> CGFloat {
+
+    func getPageSize() -> CGSize {
         
         let pageWidth: CGFloat
+        let pageHeight: CGFloat
         
         switch layoutType {
         
-        case .centeredRevealingPreviousAndNextPage(let spacingBetweenPages, let pageWidthAmountToRevealForPreviousAndNextPage):
-            pageWidth = bounds.size.width - ((spacingBetweenPages + pageWidthAmountToRevealForPreviousAndNextPage) * 2)
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            pageWidth = bounds.size.width - ((pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage) * 2)
+            pageHeight = floor((pageWidth / pageLayoutAttributes.cardAspectRatio.width) * pageLayoutAttributes.cardAspectRatio.height)
             
         case .fullScreen:
             pageWidth = bounds.size.width
+            pageHeight = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
         }
         
-        return pageWidth
+        return CGSize(width: pageWidth, height: pageHeight)
     }
     
     func getPageSpacing() -> CGFloat {
@@ -235,8 +238,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         switch layoutType {
         
-        case .centeredRevealingPreviousAndNextPage(let spacingBetweenPages, _):
-            pageSpacing = spacingBetweenPages
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            pageSpacing = pageLayoutAttributes.spacingBetweenPages
             
         case .fullScreen:
             pageSpacing = 0
@@ -251,8 +254,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         switch layoutType {
         
-        case .centeredRevealingPreviousAndNextPage( _, let pageWidthAmountToRevealForPreviousAndNextPage):
-            revealAmount = pageWidthAmountToRevealForPreviousAndNextPage
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            revealAmount = pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage
             
         case .fullScreen:
             revealAmount = 0
@@ -279,7 +282,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         let contentOffsetX: CGFloat = abs(contentOffset.x)
         
-        let pageInterval: CGFloat = getPageWidth() + getPageSpacing()
+        let pageInterval: CGFloat = getPageSize().width + getPageSpacing()
             
         let pageFloatValue: CGFloat = contentOffsetX / pageInterval
         let minPage: CGFloat = floor(pageFloatValue)
@@ -303,10 +306,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         switch layoutType {
         
-        case .centeredRevealingPreviousAndNextPage(let spacingBetweenPages, let pageWidthAmountToRevealForPreviousAndNextPage):
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
     
-            let pageWidth: CGFloat = bounds.size.width - ((spacingBetweenPages + pageWidthAmountToRevealForPreviousAndNextPage) * 2)
-            pageInterval = pageWidth + spacingBetweenPages
+            let pageWidth: CGFloat = bounds.size.width - ((pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage) * 2)
+            pageInterval = pageWidth + pageLayoutAttributes.spacingBetweenPages
             
         case .fullScreen:
             pageInterval = bounds.size.width
@@ -323,9 +326,9 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         switch layoutType {
             
-        case .centeredRevealingPreviousAndNextPage(let spacingBetweenPages, let pageWidthAmountToRevealForPreviousAndNextPage):
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
             
-            horizontalInset = spacingBetweenPages + pageWidthAmountToRevealForPreviousAndNextPage
+            horizontalInset = pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage
             
         case .fullScreen:
             horizontalInset = 0
@@ -560,6 +563,27 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
         return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print("\n did select item at: \(indexPath.row)")
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage( _):
+           
+            let currentPage: Int = getCurrentPage()
+            
+            print("   current page: \(currentPage)")
+            
+            if indexPath.row != currentPage {
+                scrollToPage(page: indexPath.row, animated: true)
+            }
+            
+        case .fullScreen:
+            break
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return delegate?.pageNavigationNumberOfPages(pageNavigation: self) ?? 0
     }
@@ -608,11 +632,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let pageWidth: CGFloat = getPageWidth()
-        let pageHeight: CGFloat = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
-        
-        return CGSize(width: pageWidth, height: pageHeight)
+        return getPageSize()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -122,7 +122,7 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
         let targetPageFloat: CGFloat = CGFloat(targetPage)
                 
         let targetContentOffset = CGPoint(
-            x: (pageNavigationCollectionView.getPageWidth() * targetPageFloat) + (pageNavigationCollectionView.getPageSpacing() * targetPageFloat),
+            x: (pageNavigationCollectionView.getPageSize().width * targetPageFloat) + (pageNavigationCollectionView.getPageSpacing() * targetPageFloat),
             y: 0
         )
                 
