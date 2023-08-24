@@ -120,7 +120,7 @@
 "toolSettings.shareables.title" = "Related graphics";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
-"allTools.categories.title" = "Categories";
+"allTools.filter.title" = "Filter";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";

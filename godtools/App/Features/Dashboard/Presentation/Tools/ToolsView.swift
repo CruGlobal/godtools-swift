@@ -52,11 +52,7 @@ struct ToolsView: View {
                         )
                         .padding([.top], 24)
                         
-                        ToolCategoriesView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets
-                        )
+                        filterSection(width: geometry.size.width)
             
                         SeparatorView()
                             .padding([.top], 15)
@@ -99,6 +95,44 @@ struct ToolsView: View {
         .onAppear {
             
             viewModel.pageViewed()
+        }
+    }
+    
+    @ViewBuilder func filterSection(width: CGFloat) -> some View {
+        
+        VStack(alignment: .leading, spacing: 8) {
+            
+            Text(viewModel.filterTitle)
+                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .foregroundColor(ColorPalette.gtGrey.color)
+                .padding(.leading, contentHorizontalInsets)
+                .padding(.top, 28)
+            
+            let buttonSpacing: CGFloat = 11
+            
+            HStack(spacing: buttonSpacing) {
+                let buttonWidth = (width - (contentHorizontalInsets*2) - buttonSpacing) / 2
+                ToolFilterButtonView(
+                    viewModel: viewModel.getCategoryButtonViewModel(index: 0),
+                    width: buttonWidth,
+                    tappedClosure: {
+                        
+                        viewModel.categoryTapped(index: 0)
+                    }
+                )
+                
+                ToolFilterButtonView(
+                    viewModel: viewModel.getCategoryButtonViewModel(index: 1),
+                    width: buttonWidth,
+                    tappedClosure: {
+                        
+                        viewModel.categoryTapped(index: 1)
+                    }
+                )
+                
+            }
+            .padding([.leading, .trailing], contentHorizontalInsets)
+            .padding([.top, .bottom], 10) // NOTE: This is needed to prevent clipping category button shadows.
         }
     }
 }

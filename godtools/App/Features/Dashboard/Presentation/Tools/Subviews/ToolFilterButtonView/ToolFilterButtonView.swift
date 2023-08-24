@@ -51,7 +51,7 @@ struct ToolFilterButtonView: View {
         }
         .frame(width: width, height: ToolFilterButtonView.height)
         .cornerRadius(cornerRadius)
-        .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+        .shadow(color: Color.black.opacity(0.25), radius: 3, y: 3)
         .overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
                 .strokeBorder(Color.clear, lineWidth: 2)

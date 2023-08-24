@@ -38,7 +38,7 @@ class ToolsViewModel: ObservableObject {
     @Published var toolSpotlightTitle: String = ""
     @Published var toolSpotlightSubtitle: String = ""
     @Published var spotlightTools: [ToolDomainModel] = Array()
-    @Published var categoriesTitle: String = ""
+    @Published var filterTitle: String = ""
     @Published var categories: [ToolCategoryDomainModel] = Array()
     @Published var selectedCategoryIndex: Int = 0 {
         didSet {
@@ -76,7 +76,7 @@ class ToolsViewModel: ObservableObject {
                 
                 self?.toolSpotlightTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.spotlight.title")
                 self?.toolSpotlightSubtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.spotlight.description")
-                self?.categoriesTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.categories.title")
+                self?.filterTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.filter.title")
             }
             .store(in: &cancellables)
         
