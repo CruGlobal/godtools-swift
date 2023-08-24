@@ -31,16 +31,22 @@ struct ToolFilterButtonView: View {
         ZStack(alignment: .center) {
             
             backgroundColor
-            
-            Text(viewModel.title)
-                .multilineTextAlignment(.leading)
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .font(FontLibrary.sfProTextBold.font(size: 14))
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .padding([.top, .bottom], 8)
-                .padding([.leading, .trailing], 20)
+                
+            HStack(alignment: .top) {
+                Text(viewModel.title)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .font(FontLibrary.sfProTextBold.font(size: 14))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                
+                ImageCatalog.toolFilterArrow.image
+                    .padding(.top, 3)
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 10)
+            .padding(.top, 10)
             
         }
         .frame(width: width, height: ToolFilterButtonView.height)
