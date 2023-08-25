@@ -11,11 +11,15 @@ import SwiftUI
 
 extension Flow {
     
-    func presentVideoModal(viewModel: FullScreenVideoViewModel) {
+    func presentVideoModal(viewModel: FullScreenVideoViewModel, screenAccessibility: AccessibilityStrings.Screen) {
         
         let videoBackgroundColor: Color = .black
         
-        let view = FullScreenVideoView(viewModel: viewModel, backgroundColor: videoBackgroundColor)
+        let view = FullScreenVideoView(
+            viewModel: viewModel,
+            backgroundColor: videoBackgroundColor,
+            screenAccessibility: screenAccessibility
+        )
         
         let hostingView = UIHostingController(rootView: view)
         

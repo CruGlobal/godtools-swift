@@ -10,16 +10,19 @@ import SwiftUI
 
 struct FullScreenVideoView: View {
     
+    private let screenAccessibility: AccessibilityStrings.Screen
+    
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
     @ObservedObject private var viewModel: FullScreenVideoViewModel
     
     let backgroundColor: Color
     
-    init(viewModel: FullScreenVideoViewModel, backgroundColor: Color) {
+    init(viewModel: FullScreenVideoViewModel, backgroundColor: Color, screenAccessibility: AccessibilityStrings.Screen) {
         
         self.viewModel = viewModel
         self.backgroundColor = backgroundColor
+        self.screenAccessibility = screenAccessibility
     }
     
     var body: some View {
@@ -49,6 +52,7 @@ struct FullScreenVideoView: View {
         .onDisappear {
             videoPlayerState = .paused
         }
+        .accessibilityIdentifier(screenAccessibility.id)
         .statusBarHidden(true)
         .background(backgroundColor)
     }

@@ -45,7 +45,12 @@ class OnboardingFlow: Flow {
             isTranslucent: true
         )
         
-        navigationController.setViewControllers([getOnboardingTutorialView()], animated: false)
+        navigationController.setViewControllers([getInitialView()], animated: false)
+    }
+    
+    func getInitialView() -> UIViewController {
+        
+        return getOnboardingTutorialView()
     }
     
     func navigate(step: FlowStep) {
@@ -53,7 +58,7 @@ class OnboardingFlow: Flow {
         switch step {
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
-            presentVideoPlayerView(youtubeVideoId: youtubeVideoId)
+            presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)
         
         case .closeVideoPlayerTappedFromOnboardingTutorial:
             dismissVideoModal(animated: true, completion: nil)
@@ -87,7 +92,7 @@ class OnboardingFlow: Flow {
         }
     }
     
-    private func presentVideoPlayerView(youtubeVideoId: String) {
+    private func presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: String) {
         
         let viewModel = FullScreenVideoViewModel(
             flowDelegate: self,
@@ -97,7 +102,7 @@ class OnboardingFlow: Flow {
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel)
+        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo)
     }
     
     private func navigateToQuickStartOrTools() {
