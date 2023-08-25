@@ -27,5 +27,6 @@ class AccessibilityStrings {
         }
         
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
+        case closeOnboardingTutorialVideo = "Close Onboarding Tutorial Video Button"
     }
 }

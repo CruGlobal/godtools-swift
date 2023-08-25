@@ -11,8 +11,8 @@ import SwiftUI
 
 extension Flow {
     
-    func presentVideoModal(viewModel: FullScreenVideoViewModel, screenAccessibility: AccessibilityStrings.Screen) {
-        
+    func presentVideoModal(viewModel: FullScreenVideoViewModel, screenAccessibility: AccessibilityStrings.Screen, closeVideoButtonAccessibility: AccessibilityStrings.Button) {
+                
         let videoBackgroundColor: Color = .black
         
         let view = FullScreenVideoView(
@@ -23,13 +23,15 @@ extension Flow {
         
         let hostingView = UIHostingController(rootView: view)
         
-        _ = hostingView.addBarButtonItem(
+        let barButtonItem: UIBarButtonItem = hostingView.addBarButtonItem(
             to: .right,
             image: ImageCatalog.navClose.uiImage,
             color: .white,
             target: viewModel,
             action: #selector(viewModel.closeTapped)
         )
+        
+        barButtonItem.accessibilityIdentifier = closeVideoButtonAccessibility.id
         
         hostingView.view.backgroundColor = UIColor(videoBackgroundColor)
         

@@ -15,9 +15,7 @@ class OnboardingFlow: Flow {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
-        
-    private let navigationControllerTransitioningDelegate: FadeAnimationTransitioningDelegate = FadeAnimationTransitioningDelegate()
-    
+            
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -33,7 +31,6 @@ class OnboardingFlow: Flow {
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.transitioningDelegate = navigationControllerTransitioningDelegate
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
@@ -102,7 +99,7 @@ class OnboardingFlow: Flow {
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo)
+        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
     }
     
     private func navigateToQuickStartOrTools() {

@@ -31,7 +31,7 @@ class OnboardingFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    func testOnboardingWillLaunchToTutorial() {
+    func testOnboardingFlow() {
         
         let app = XCUIApplication()
         
@@ -39,23 +39,24 @@ class OnboardingFlowTests: XCTestCase {
                 
         app.launch()
                 
-        let tutorialScreen = app.queryScreen(screenAccessibility: .onboardingTutorial)
-                
-        XCTAssertTrue(tutorialScreen?.exists ?? false)
+        checkInitialScreenIsOnboardingTutorial(app: app)
+        
+        navigateToWatchOnboardingVideoTutorial(app: app)
+        
+        navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: app)
     }
     
-    func testOnboardingWillPresentWatchOnboardingTutorialVideo() {
+    private func checkInitialScreenIsOnboardingTutorial(app: XCUIApplication) {
         
-        let app = XCUIApplication()
+        let initialScreenIsTutorialScreen = app.queryScreen(screenAccessibility: .onboardingTutorial)
+                
+        XCTAssertTrue(initialScreenIsTutorialScreen?.exists ?? false)
+    }
+    
+    private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
         
-        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = onboardingDeepLinkUrl
-                
-        app.launch()
-                
-        let tutorialScreen = app.queryScreen(screenAccessibility: .onboardingTutorial)
         let watchVideoButton = app.queryButton(buttonAccessibility: .watchOnboardingTutorialVideo)
-                        
-        XCTAssertTrue(tutorialScreen?.exists ?? false)
+        
         XCTAssertTrue(watchVideoButton.exists)
         
         watchVideoButton.tap()
@@ -63,5 +64,16 @@ class OnboardingFlowTests: XCTestCase {
         let watchOnboardingVideoTutorialScreen = app.queryScreen(screenAccessibility: .watchOnboardingTutorialVideo)
         
         XCTAssertTrue(watchOnboardingVideoTutorialScreen?.exists ?? false)
+    }
+    
+    private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
+        
+        let closeVideoButton = app.queryButton(buttonAccessibility: .closeOnboardingTutorialVideo)
+        
+        XCTAssertTrue(closeVideoButton.exists)
+        
+        closeVideoButton.tap()
+        
+        checkInitialScreenIsOnboardingTutorial(app: app)
     }
 }
