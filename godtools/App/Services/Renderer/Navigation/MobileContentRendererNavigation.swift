@@ -56,6 +56,9 @@ class MobileContentRendererNavigation {
                
                 delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: .lessonsList)
             
+            case .onboarding:
+                break
+                
             case .tool(let toolDeepLink):
                 
                 parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
