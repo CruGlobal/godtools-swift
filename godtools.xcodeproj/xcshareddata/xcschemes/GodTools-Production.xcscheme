@@ -63,6 +63,16 @@
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F12296B20852BE3008842CC"
+               BuildableName = "godtoolsUITests.xctest"
+               BlueprintName = "godtoolsUITests"
+               ReferencedContainer = "container:godtools.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
