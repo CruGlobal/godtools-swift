@@ -13,11 +13,14 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
     private let analytics: AnalyticsContainer
+    
+    let numberOfCards: Int
         
     init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, analytics: AnalyticsContainer) {
         
         self.cardCollectionPage = cardCollectionPage
         self.analytics = analytics
+        self.numberOfCards = cardCollectionPage.cards.count
         
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
@@ -91,6 +94,17 @@ extension MobileContentCardCollectionPageViewModel {
         )
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+    }
+    
+    func cardWillAppear(card: Int) -> MobileContentView? {
+        
+        let view: MobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
+            renderableModel: cardCollectionPage.cards[card],
+            renderableModelParent: nil,
+            renderedPageContext: renderedPageContext
+        )
+                
+        return view
     }
     
     func cardDidAppear(card: Int) {

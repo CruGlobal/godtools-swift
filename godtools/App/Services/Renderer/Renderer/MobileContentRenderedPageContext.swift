@@ -20,7 +20,7 @@ class MobileContentRenderedPageContext {
     let resource: ResourceModel
     let language: LanguageDomainModel
     let translation: TranslationModel
-    let pageViewFactories: MobileContentRendererPageViewFactories
+    let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
     let primaryRendererLanguage: LanguageDomainModel
     let rendererState: State
@@ -29,7 +29,7 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
         
         self.pageModel = pageModel
         self.page = page
@@ -41,7 +41,7 @@ class MobileContentRenderedPageContext {
         self.resource = resource
         self.language = language
         self.translation = translation
-        self.pageViewFactories = pageViewFactories
+        self.viewRenderer = viewRenderer
         self.navigation = navigation
         self.primaryRendererLanguage = primaryRendererLanguage
         self.rendererState = rendererState

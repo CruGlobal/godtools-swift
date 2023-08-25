@@ -21,7 +21,7 @@ class ToolPageHeaderViewModel: MobileContentViewModel {
         
         super.init(baseModel: headerModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        for factory in renderedPageContext.pageViewFactories.factories {
+        for factory in renderedPageContext.viewRenderer.pageViewFactories.factories {
             if let mobileContentPageViewFactory = factory as? MobileContentPageViewFactory {
                 self.mobileContentPageViewFactory = mobileContentPageViewFactory
             }
