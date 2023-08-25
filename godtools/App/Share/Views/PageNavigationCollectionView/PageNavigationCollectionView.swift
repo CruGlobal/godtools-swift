@@ -281,13 +281,13 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         let pageForLanguageDirection: Int
         
-        if semanticContentAttribute == .forceLeftToRight {
+        if collectionView.semanticContentAttribute == .forceRightToLeft {
             
-            pageForLanguageDirection = page
+            pageForLanguageDirection = numberOfPages - 1 - page
         }
         else {
             
-            pageForLanguageDirection = numberOfPages - 1 - page
+            pageForLanguageDirection = page
         }
         
         return pageForLanguageDirection
