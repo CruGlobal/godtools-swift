@@ -87,7 +87,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
-        collectionView.semanticContentAttribute = .forceLeftToRight
         
         switch layoutType {
         case .centeredRevealingPreviousAndNextPage( _):
@@ -272,6 +271,28 @@ class PageNavigationCollectionView: UIView, NibBased {
         return getPageBasedOnContentOffset(contentOffset: collectionView.contentOffset)
     }
     
+    func convertPageForLanguageDirection(page: Int) -> Int {
+        
+        let numberOfPages: Int = getNumberOfPages()
+        
+        guard numberOfPages > 0 else {
+            return 0
+        }
+        
+        let pageForLanguageDirection: Int
+        
+        if semanticContentAttribute == .forceLeftToRight {
+            
+            pageForLanguageDirection = page
+        }
+        else {
+            
+            pageForLanguageDirection = numberOfPages - 1 - page
+        }
+        
+        return pageForLanguageDirection
+    }
+    
     func getPageBasedOnContentOffset(contentOffset: CGPoint) -> Int {
                 
         let numberOfPages: Int = getNumberOfPages()
@@ -297,7 +318,9 @@ class PageNavigationCollectionView: UIView, NibBased {
             page = Int(maxPage)
         }
         
-        return page
+        let pageForLanguageDirection: Int = convertPageForLanguageDirection(page: page)
+        
+        return pageForLanguageDirection
     }
     
     func getPageContentOffset(page: Int) -> CGPoint {
@@ -544,7 +567,7 @@ extension PageNavigationCollectionView {
         guard item >= 0 && item < getNumberOfPages() else {
             return false
         }
-        
+                
         collectionView.scrollToItem(
             at: IndexPath(item: item, section: 0),
             at: .centeredHorizontally,
@@ -564,17 +587,13 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print("\n did select item at: \(indexPath.row)")
-        
+                
         switch layoutType {
         
         case .centeredRevealingPreviousAndNextPage( _):
            
             let currentPage: Int = getCurrentPage()
-            
-            print("   current page: \(currentPage)")
-            
+                        
             if indexPath.row != currentPage {
                 scrollToPage(page: indexPath.row, animated: true)
             }
@@ -601,6 +620,8 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
                 
         let page: Int = indexPath.row
+        
+        logMessage(message: "cell for item: \(page)")
         
         pageDidAppear(pageCell: cell, page: page)
                 
