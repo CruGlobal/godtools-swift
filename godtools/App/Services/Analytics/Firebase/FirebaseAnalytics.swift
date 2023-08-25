@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseAnalytics
 import GoogleAnalytics
+import FirebaseCore
 
 class FirebaseAnalytics {
     
@@ -31,6 +32,10 @@ class FirebaseAnalytics {
         }
         
         isConfigured = true
+        
+        if !loggingEnabled {
+            FirebaseCore.FirebaseConfiguration.shared.setLoggerLevel(.min)
+        }
         
         // gai
         if let gai = GAI.sharedInstance() {
