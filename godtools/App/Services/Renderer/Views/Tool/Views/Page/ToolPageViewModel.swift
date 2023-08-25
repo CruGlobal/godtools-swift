@@ -78,7 +78,7 @@ extension ToolPageViewModel {
             return nil
         }
         
-        for viewFactory in renderedPageContext.pageViewFactories.factories {
+        for viewFactory in renderedPageContext.viewRenderer.pageViewFactories.factories {
             if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
                 return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
             }

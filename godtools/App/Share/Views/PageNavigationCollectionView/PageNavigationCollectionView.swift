@@ -27,9 +27,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         let isNavigationFromDataReload: Bool
     }
     
-    private let layout: UICollectionViewLayout
+    private let layoutType: PageNavigationCollectionViewLayoutType
     private let loggingEnabled: Bool = false
     
+    private var layout: UICollectionViewLayout = UICollectionViewLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
@@ -39,16 +40,30 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     weak var delegate: PageNavigationCollectionViewDelegate?
     
-    required init(layout: UICollectionViewLayout = UICollectionViewFlowLayout()) {
+    init(layout: UICollectionViewLayout = UICollectionViewFlowLayout(), layoutType: PageNavigationCollectionViewLayoutType = .fullScreen) {
         
-        self.layout = layout
+        self.layoutType = layoutType
+        
         super.init(frame: UIScreen.main.bounds)
+        
+        switch layoutType {
+        case .centeredRevealingPreviousAndNextPage( _):
+            self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
+            
+        case .fullScreen:
+            self.layout = layout
+        }
+        
         initialize()
     }
     
     required init?(coder: NSCoder) {
+        
         self.layout = UICollectionViewFlowLayout()
+        self.layoutType =  .fullScreen
+        
         super.init(coder: coder)
+        
         initialize()
     }
     
@@ -68,12 +83,17 @@ class PageNavigationCollectionView: UIView, NibBased {
             flowLayout.scrollDirection = .horizontal
         }
         collectionView.collectionViewLayout = layout
-        collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
-        collectionView.semanticContentAttribute = .forceLeftToRight
+        
+        switch layoutType {
+        case .centeredRevealingPreviousAndNextPage( _):
+            collectionView.isPagingEnabled = false
+        case .fullScreen:
+            collectionView.isPagingEnabled = true
+        }
         
         if #available(iOS 16, *) {
             collectionView.selfSizingInvalidation = .disabled
@@ -118,54 +138,18 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     var currentPageCell: UICollectionViewCell? {
         
-        let currentPage: Int = self.currentPage
+        let currentPage: Int = getCurrentPage()
         
         return collectionView.cellForItem(at: IndexPath(item: currentPage, section: 0))
     }
     
-    var currentPage: Int {
-        
-        guard !collectionView.visibleCells.isEmpty else {
-            return 0
-        }
-        
-        let contentOffsetX: CGFloat = abs(collectionView.contentOffset.x)
-        let pageWidth: CGFloat = bounds.size.width
-        
-        var closestToZeroIndexPath: IndexPath?
-        var closestToZeroOffsetX: CGFloat = pageWidth
-        
-        for cellIndexPath in collectionView.indexPathsForVisibleItems {
-            
-            if let layoutAttributes = collectionView.layoutAttributesForItem(at: cellIndexPath) {
-                
-                let cellOffsetX: CGFloat = abs(contentOffsetX - layoutAttributes.frame.origin.x)
-                
-                if cellOffsetX < closestToZeroOffsetX {
-                    closestToZeroOffsetX = cellOffsetX
-                    closestToZeroIndexPath = cellIndexPath
-                }
-            }
-        }
-        
-        if let indexPath = closestToZeroIndexPath {
-            return indexPath.row
-        }
-        
-        return 0
-    }
-    
     var isOnFirstPage: Bool {
-        return currentPage == 0
+        return getCurrentPage() == 0
     }
     
     var isOnLastPage: Bool {
-        let numberOfPages: Int = self.numberOfPages
-        return currentPage >= numberOfPages - 1 && numberOfPages > 0
-    }
-    
-    var numberOfPages: Int {
-        return collectionView.numberOfItems(inSection: 0)
+        let numberOfPages: Int = getNumberOfPages()
+        return getCurrentPage() >= numberOfPages - 1 && numberOfPages > 0
     }
     
     func setPagingEnabled(pagingEnabled: Bool) {
@@ -173,6 +157,16 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func setContentInset(contentInset: UIEdgeInsets) {
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage( _):
+            return
+            
+        case .fullScreen:
+            break
+        }
+        
         collectionView.contentInset = contentInset
         collectionView.reloadData()
     }
@@ -217,6 +211,154 @@ class PageNavigationCollectionView: UIView, NibBased {
     func getVisiblePageCells() -> [UICollectionViewCell] {
         return collectionView.visibleCells
     }
+
+    func getPageSize() -> CGSize {
+        
+        let pageWidth: CGFloat
+        let pageHeight: CGFloat
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            pageWidth = bounds.size.width - ((pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage) * 2)
+            pageHeight = floor((pageWidth / pageLayoutAttributes.cardAspectRatio.width) * pageLayoutAttributes.cardAspectRatio.height)
+            
+        case .fullScreen:
+            pageWidth = bounds.size.width
+            pageHeight = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        }
+        
+        return CGSize(width: pageWidth, height: pageHeight)
+    }
+    
+    func getPageSpacing() -> CGFloat {
+        
+        let pageSpacing: CGFloat
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            pageSpacing = pageLayoutAttributes.spacingBetweenPages
+            
+        case .fullScreen:
+            pageSpacing = 0
+        }
+        
+        return pageSpacing
+    }
+    
+    func getPreviousAndNextPageRevealAmount() -> CGFloat {
+        
+        let revealAmount: CGFloat
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            revealAmount = pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage
+            
+        case .fullScreen:
+            revealAmount = 0
+        }
+        
+        return revealAmount
+    }
+    
+    func getNumberOfPages() -> Int {
+        return collectionView.numberOfItems(inSection: 0)
+    }
+
+    func getCurrentPage() -> Int {
+        return getPageBasedOnContentOffset(contentOffset: collectionView.contentOffset)
+    }
+    
+    func convertPageForLanguageDirection(page: Int) -> Int {
+        
+        let numberOfPages: Int = getNumberOfPages()
+        
+        guard numberOfPages > 0 else {
+            return 0
+        }
+        
+        let pageForLanguageDirection: Int
+        
+        if collectionView.semanticContentAttribute == .forceRightToLeft {
+            
+            pageForLanguageDirection = numberOfPages - 1 - page
+        }
+        else {
+            
+            pageForLanguageDirection = page
+        }
+        
+        return pageForLanguageDirection
+    }
+    
+    func getPageBasedOnContentOffset(contentOffset: CGPoint) -> Int {
+                
+        let numberOfPages: Int = getNumberOfPages()
+        
+        guard numberOfPages > 0 else {
+            return 0
+        }
+        
+        let contentOffsetX: CGFloat = abs(contentOffset.x)
+        
+        let pageInterval: CGFloat = getPageSize().width + getPageSpacing()
+            
+        let pageFloatValue: CGFloat = contentOffsetX / pageInterval
+        let minPage: CGFloat = floor(pageFloatValue)
+        let maxPage: CGFloat = ceil(pageFloatValue)
+                
+        let page: Int
+        
+        if (pageFloatValue - minPage) < (maxPage - pageFloatValue) {
+            page = Int(minPage)
+        }
+        else {
+            page = Int(maxPage)
+        }
+        
+        let pageForLanguageDirection: Int = convertPageForLanguageDirection(page: page)
+        
+        return pageForLanguageDirection
+    }
+    
+    func getPageContentOffset(page: Int) -> CGPoint {
+        
+        let pageInterval: CGFloat
+        
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+    
+            let pageWidth: CGFloat = bounds.size.width - ((pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage) * 2)
+            pageInterval = pageWidth + pageLayoutAttributes.spacingBetweenPages
+            
+        case .fullScreen:
+            pageInterval = bounds.size.width
+        }
+        
+        let offsetX: CGFloat = pageInterval * CGFloat(page)
+        
+        return CGPoint(x: offsetX, y: 0)
+    }
+    
+    func getHorizontalInset() -> CGFloat {
+        
+        let horizontalInset: CGFloat
+        
+        switch layoutType {
+            
+        case .centeredRevealingPreviousAndNextPage(let pageLayoutAttributes):
+            
+            horizontalInset = pageLayoutAttributes.spacingBetweenPages + pageLayoutAttributes.pageWidthAmountToRevealForPreviousAndNextPage
+            
+        case .fullScreen:
+            horizontalInset = 0
+        }
+        
+        return horizontalInset
+    }
     
     private func logMessage(message: String) {
         
@@ -255,7 +397,7 @@ extension PageNavigationCollectionView {
     
     private func didScrollToPage(pageCell: UICollectionViewCell, page: Int) {
         
-        logMessage(message: "did scroll to page: \(currentPage)")
+        logMessage(message: "did scroll to page: \(getCurrentPage())")
         
         delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
@@ -280,7 +422,7 @@ extension PageNavigationCollectionView {
             return
         }
         
-        guard numberOfPages > 0 else {
+        guard getNumberOfPages() > 0 else {
             return
         }
         
@@ -288,7 +430,7 @@ extension PageNavigationCollectionView {
                 
         let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
         
-        let currentPage: Int = self.currentPage
+        let currentPage: Int = getCurrentPage()
         var pageNumberForDeletedPages: Int = currentPage
         
         for indexPath in indexPaths {
@@ -313,13 +455,13 @@ extension PageNavigationCollectionView {
     
     func scrollToPreviousPage(animated: Bool) {
         if !isOnFirstPage {
-            scrollToPage(page: currentPage - 1, animated: animated)
+            scrollToPage(page: getCurrentPage() - 1, animated: animated)
         }
     }
     
     func scrollToNextPage(animated: Bool) {
         if !isOnLastPage {
-            scrollToPage(page: currentPage + 1, animated: animated)
+            scrollToPage(page: getCurrentPage() + 1, animated: animated)
         }
     }
     
@@ -328,7 +470,7 @@ extension PageNavigationCollectionView {
     }
     
     func scrollToLastPage(animated: Bool) {
-        scrollToPage(page: numberOfPages - 1, animated: animated)
+        scrollToPage(page: getNumberOfPages() - 1, animated: animated)
     }
     
     func scrollToPage(page: Int, animated: Bool) {
@@ -382,7 +524,7 @@ extension PageNavigationCollectionView {
     
     private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel) {
                 
-        let currentPage: Int = self.currentPage
+        let currentPage: Int = getCurrentPage()
         
         if currentPage == pageNavigation.page, let pageCell = getCellAtIndex(index: pageNavigation.page) {
                         
@@ -422,10 +564,10 @@ extension PageNavigationCollectionView {
     
     private func internalScrollToItemOnCollectionView(item: Int, animated: Bool) -> Bool {
         
-        guard item >= 0 && item < numberOfPages else {
+        guard item >= 0 && item < getNumberOfPages() else {
             return false
         }
-        
+                
         collectionView.scrollToItem(
             at: IndexPath(item: item, section: 0),
             at: .centeredHorizontally,
@@ -442,6 +584,23 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+                
+        switch layoutType {
+        
+        case .centeredRevealingPreviousAndNextPage( _):
+           
+            let currentPage: Int = getCurrentPage()
+                        
+            if indexPath.row != currentPage {
+                scrollToPage(page: indexPath.row, animated: true)
+            }
+            
+        case .fullScreen:
+            break
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -461,6 +620,8 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
                 
         let page: Int = indexPath.row
+        
+        logMessage(message: "cell for item: \(page)")
         
         pageDidAppear(pageCell: cell, page: page)
                 
@@ -492,30 +653,35 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let pageWidth: CGFloat = bounds.size.width
-        let pageHeight: CGFloat = bounds.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom
-        
-        return CGSize(width: pageWidth, height: pageHeight)
+        return getPageSize()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return getPageSpacing()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        let horizontalInset: CGFloat = getHorizontalInset()
+        
+        let edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
+        
+        return edgeInsets
     }
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension PageNavigationCollectionView: UIScrollViewDelegate {
-    
+     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+                        
+        let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 
-        let currentPage: Int = self.currentPage
-        
         delegate?.pageNavigationDidScroll?(pageNavigation: self, page: currentPage)
         
         if internalCurrentChangedPage != currentPage {
@@ -552,7 +718,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     private func didEndPageScrolling() {
         
-        let currentPage: Int = self.currentPage
+        let currentPage: Int = getCurrentPage()
         
         logMessage(message: "did end page scrolling for page: \(currentPage)")
                 
