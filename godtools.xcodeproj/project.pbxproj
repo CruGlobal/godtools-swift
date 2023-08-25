@@ -664,6 +664,7 @@
 		45BDA64C2954FF08007E259B /* WebArchiveOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6422954FF08007E259B /* WebArchiveOperationError.swift */; };
 		45BDA64D2954FF08007E259B /* WebArchiveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6432954FF08007E259B /* WebArchiveOperation.swift */; };
 		45BDA64E2954FF08007E259B /* WebArchiveQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6442954FF08007E259B /* WebArchiveQueue.swift */; };
+		45BEDB712A98DBD9009C7664 /* DisableGoogleTagManagerLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BEDB702A98DBD9009C7664 /* DisableGoogleTagManagerLogging.swift */; };
 		45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */; };
 		45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EB927050A29003596A4 /* TransparentModalView.swift */; };
 		45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */; };
@@ -1753,6 +1754,7 @@
 		45BDA6422954FF08007E259B /* WebArchiveOperationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationError.swift; sourceTree = "<group>"; };
 		45BDA6432954FF08007E259B /* WebArchiveOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveOperation.swift; sourceTree = "<group>"; };
 		45BDA6442954FF08007E259B /* WebArchiveQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveQueue.swift; sourceTree = "<group>"; };
+		45BEDB702A98DBD9009C7664 /* DisableGoogleTagManagerLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableGoogleTagManagerLogging.swift; sourceTree = "<group>"; };
 		45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesInitialPageRenderingType.swift; sourceTree = "<group>"; };
 		45BF6EB927050A29003596A4 /* TransparentModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalView.swift; sourceTree = "<group>"; };
 		45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentModalView.xib; sourceTree = "<group>"; };
@@ -5283,6 +5285,7 @@
 		45AD203625938AC200A096A0 /* Google */ = {
 			isa = PBXGroup;
 			children = (
+				45BEDB702A98DBD9009C7664 /* DisableGoogleTagManagerLogging.swift */,
 				45AD203725938AC300A096A0 /* GoogleAdwordsAnalytics.swift */,
 			);
 			path = Google;
@@ -8902,6 +8905,7 @@
 				455F04792A000D6100536CB9 /* LastAuthenticatedProviderCache.swift in Sources */,
 				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
 				45E347802A49BFEB0014CCD1 /* GTWhiteButton.swift in Sources */,
+				45BEDB712A98DBD9009C7664 /* DisableGoogleTagManagerLogging.swift in Sources */,
 				45D63E74288F698C009B4610 /* LanguageModelType.swift in Sources */,
 				45E347792A49BFD00014CCD1 /* CloseButton.swift in Sources */,
 				45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */,
