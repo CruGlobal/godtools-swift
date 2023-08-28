@@ -19,7 +19,7 @@ class MobileContentResourcesApi {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
         self.session = ignoreCacheSession.session
-        self.baseUrl = config.mobileContentApiBaseUrl
+        self.baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {

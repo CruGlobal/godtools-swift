@@ -18,7 +18,7 @@ class MobileContentAttachmentsApi {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
         session = ignoreCacheSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     func getAttachmentFile(url: URL) -> AnyPublisher<UrlRequestResponse, Error> {

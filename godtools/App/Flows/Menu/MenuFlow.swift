@@ -142,7 +142,7 @@ class MenuFlow: Flow {
             
         case .leaveAReviewTappedFromMenu(let baseAnalyticsAttributes):
             
-            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().appleAppId
+            let appleAppId: String = appDiContainer.dataLayer.getAppConfig().getAppleAppId()
             
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
                 let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
