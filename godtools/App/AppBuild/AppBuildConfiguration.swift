@@ -14,5 +14,4 @@ enum AppBuildConfiguration {
     case staging
     case production
     case release
-    case swiftUIPreview
 }

@@ -16,7 +16,7 @@ import FirebaseDynamicLinks
 class AppDelegate: UIResponder, UIApplicationDelegate {
             
     private lazy var appBuild: AppBuild = {
-       AppBuild(infoPlist: infoPlist)
+        AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
     
     private lazy var appConfig: AppConfig = {
