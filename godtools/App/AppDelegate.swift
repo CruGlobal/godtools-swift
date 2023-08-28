@@ -35,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
     
+    private lazy var inAppMessaging: FirebaseInAppMessaging?  = {
+        return appDiContainer.dataLayer.getFirebaseInAppMessaing()
+    }()
+    
     private lazy var appDiContainer: AppDiContainer = {
         AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
     }()
@@ -69,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.getAppsFlyerConfiguration(), deepLinkDelegate: self)
         
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         
@@ -80,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
-            configuration: appConfig.facebookConfig
+            configuration: appConfig.getFacebookConfiguration()
         )
                 
         // window

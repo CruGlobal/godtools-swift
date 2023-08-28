@@ -12,7 +12,7 @@ import Foundation
 
 class TractRemoteShareURLBuilder {
     
-    required init() {
+    init() {
         
     }
     

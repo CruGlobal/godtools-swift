@@ -119,10 +119,14 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getFirebaseInAppMessaing() -> FirebaseInAppMessaging {
+        return FirebaseInAppMessaging.shared
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(
-            baseUrl: getAppConfig().mobileContentApiBaseUrl,
+            baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
             ignoreCacheSession: sharedIgnoreCacheSession
         )
         
@@ -139,7 +143,7 @@ class AppDataLayerDependencies {
     func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
         return GlobalAnalyticsRepository(
             api:  MobileContentGlobalAnalyticsApi(
-                baseUrl: getAppConfig().mobileContentApiBaseUrl,
+                baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
@@ -149,7 +153,7 @@ class AppDataLayerDependencies {
     func getGoogleAuthentication() -> GoogleAuthentication {
         
         return GoogleAuthentication(
-            configuration: sharedAppConfig.googleAuthenticationConfiguration
+            configuration: sharedAppConfig.getGoogleAuthenticationConfiguration()
         )
     }
     
@@ -298,6 +302,34 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        return TractRemoteSharePublisher(
+            config: getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: getAppBuild().isDebug),
+            loggingEnabled: getAppBuild().isDebug
+        )
+    }
+    
+    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        return TractRemoteShareSubscriber(
+            config: getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: getAppBuild().isDebug),
+            loggingEnabled: getAppBuild().isDebug
+        )
+    }
+    
+    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
+        return TractRemoteShareURLBuilder()
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
@@ -306,6 +338,12 @@ class AppDataLayerDependencies {
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+        )
+    }
+    
+    func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
+        return TutorialVideoAnalytics(
+            trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
     }
     
