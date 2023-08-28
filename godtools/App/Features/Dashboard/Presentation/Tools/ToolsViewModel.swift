@@ -32,6 +32,11 @@ class ToolsViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    
+    private lazy var filtersViewModel: ToolFiltersViewModel = {
+        
+        return ToolFiltersViewModel()
+    }()
  
     @Published var favoritingToolBannerMessage: String
     @Published var showsFavoritingToolBanner: Bool = false
@@ -217,22 +222,20 @@ extension ToolsViewModel {
         )
     }
     
-    func getCategoryButtonViewModel(index: Int) -> ToolFilterButtonViewModel {
+    func getFilterButtonTitle(filterType: ToolFilterType) -> String {
         
-        let category: ToolCategoryDomainModel = categories[index]
-        
-        return ToolFilterButtonViewModel(
-            category: category
-        )
+        switch filterType {
+        case .category:
+            return filtersViewModel.categoryButtonTitle
+            
+        case .language:
+            return filtersViewModel.languageButtonTitle
+        }
     }
     
-    func categoryTapped(index: Int) {
+    func toolFilterTapped(filterType: ToolFilterType) {
         
-        guard selectedCategoryIndex != index else {
-            return
-        }
-        
-        selectedCategoryIndex = index
+        flowDelegate?.navigate(step: .toolFilterTappedFromTools(toolFilterType: filterType))
     }
     
     func spotlightToolFavorited(spotlightTool: ToolDomainModel) {

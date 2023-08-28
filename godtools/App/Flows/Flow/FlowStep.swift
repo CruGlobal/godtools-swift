@@ -66,6 +66,7 @@ enum FlowStep {
     case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
     
     // tools
+    case toolFilterTappedFromTools(toolFilterType: ToolFilterType)
     case toolTappedFromTools(resource: ResourceModel)
     
     // toolDetails

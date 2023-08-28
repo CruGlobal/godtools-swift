@@ -12,16 +12,15 @@ struct ToolFilterButtonView: View {
         
     private static let height: CGFloat = 37
     
-    @ObservedObject private var viewModel: ToolFilterButtonViewModel
-    
+    private let buttonTitle: String
     private let width: CGFloat
     private let backgroundColor: Color = Color.white
     private let cornerRadius: CGFloat = ToolFilterButtonView.height / 2
     private let tappedClosure: (() -> Void)?
         
-    init(viewModel: ToolFilterButtonViewModel, width: CGFloat, tappedClosure: (() -> Void)?) {
+    init(title: String, width: CGFloat, tappedClosure: (() -> Void)?) {
         
-        self.viewModel = viewModel
+        self.buttonTitle = title
         self.width = width
         self.tappedClosure = tappedClosure
     }
@@ -43,7 +42,7 @@ struct ToolFilterButtonView: View {
                     .ignoresSafeArea()
                 
                 HStack(alignment: .top) {
-                    Text(viewModel.title)
+                    Text(buttonTitle)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .font(FontLibrary.sfProTextBold.font(size: 14))
@@ -78,12 +77,8 @@ struct ToolFilterButtonView_Previews: PreviewProvider {
         
     static var previews: some View {
         
-        let viewModel = ToolFilterButtonViewModel(
-            category: ToolCategoryDomainModel(type: .category(id: "1"), translatedName: "Conversation Starter")
-        )
-        
         ToolFilterButtonView(
-            viewModel: viewModel,
+            title: "Button Title",
             width: 40,
             tappedClosure: nil
         )
