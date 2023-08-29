@@ -146,6 +146,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
+            
+        case .toolFilterTappedFromTools(let toolFilterType):
+            navigationController.pushViewController(getToolFilterSelection(), animated: true)
                         
         case .toolTappedFromTools(let resource):
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
@@ -778,6 +781,20 @@ extension AppFlow {
         let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
         
         return view.controller
+    }
+}
+
+// MARK: - Tool Filter Selection
+
+extension AppFlow {
+    
+    private func getToolFilterSelection() -> UIViewController {
+        
+        let view = ToolFilterSelectionView()
+        
+        let hostingView = UIHostingController(rootView: view)
+        
+        return hostingView
     }
 }
 
