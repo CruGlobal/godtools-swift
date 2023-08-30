@@ -18,44 +18,45 @@ struct SearchBar: View {
     var body: some View {
         HStack {
          
-                    TextField("", text: $searchText)
-                        .padding(7)
-                        .padding(.horizontal, 27)
-                        .background(Color.white)
-                        .cornerRadius(6)
-                        .overlay(
-                            HStack {
+            TextField("", text: $searchText)
+                .padding(7)
+                .padding(.horizontal, 27)
+                .background(Color.white)
+                .cornerRadius(6)
+                .overlay(
+                    HStack {
+                        
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 10)
+                        
+                        if isEditing {
+                            Button(action: {
+                                self.searchText = ""
                                 
-                                Image(systemName: "magnifyingglass")
+                            }) {
+                                Image(systemName: "multiply.circle.fill")
                                     .foregroundColor(.gray)
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 10)
-                                
-                                if isEditing {
-                                            Button(action: {
-                                                self.searchText = ""
-                                            }) {
-                                                Image(systemName: "multiply.circle.fill")
-                                                    .foregroundColor(.gray)
-                                                    .padding(.trailing, 10)
-                                            }
-                                        }
+                                    .padding(.trailing, 10)
                             }
-                        )
-                        .onTapGesture {
-                            self.isEditing = true
-                        }
-         
-                    if isEditing {
-                        Button(action: {
-                            self.isEditing = false
-                            self.searchText = ""
-         
-                        }) {
-                            Text("Cancel")
                         }
                     }
+                )
+                .onTapGesture {
+                    self.isEditing = true
                 }
+ 
+            if isEditing {
+                Button(action: {
+                    self.isEditing = false
+                    self.searchText = ""
+ 
+                }) {
+                    Text("Cancel")
+                }
+            }
+        }
     }
 }
 

@@ -33,10 +33,7 @@ class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    private lazy var filtersViewModel: ToolFiltersViewModel = {
-        
-        return ToolFiltersViewModel()
-    }()
+    private var toolFilterSelection: ToolFilterSelection = ToolFilterSelection()
  
     @Published var favoritingToolBannerMessage: String
     @Published var showsFavoritingToolBanner: Bool = false
@@ -44,6 +41,8 @@ class ToolsViewModel: ObservableObject {
     @Published var toolSpotlightSubtitle: String = ""
     @Published var spotlightTools: [ToolDomainModel] = Array()
     @Published var filterTitle: String = ""
+    @Published var categoryFilterButtonTitle: String = ""
+    @Published var languageFilterButtonTitle: String = ""
     @Published var categories: [ToolCategoryDomainModel] = Array()
     @Published var selectedCategoryIndex: Int = 0 {
         didSet {
@@ -222,20 +221,9 @@ extension ToolsViewModel {
         )
     }
     
-    func getFilterButtonTitle(filterType: ToolFilterType) -> String {
-        
-        switch filterType {
-        case .category:
-            return filtersViewModel.categoryButtonTitle
-            
-        case .language:
-            return filtersViewModel.languageButtonTitle
-        }
-    }
-    
     func toolFilterTapped(filterType: ToolFilterType) {
         
-        flowDelegate?.navigate(step: .toolFilterTappedFromTools(toolFilterType: filterType))
+        flowDelegate?.navigate(step: .toolFilterTappedFromTools(toolFilterType: filterType, currentToolFilterSelection: toolFilterSelection))
     }
     
     func spotlightToolFavorited(spotlightTool: ToolDomainModel) {

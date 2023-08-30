@@ -147,8 +147,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
             
-        case .toolFilterTappedFromTools(let toolFilterType):
-            navigationController.pushViewController(getToolFilterSelection(), animated: true)
+        case .toolFilterTappedFromTools(let toolFilterType, let currentToolFilterSelection):
+            navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, currentToolFilterSelection: currentToolFilterSelection), animated: true)
                         
         case .toolTappedFromTools(let resource):
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
@@ -788,9 +788,11 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolFilterSelection() -> UIViewController {
+    private func getToolFilterSelection(toolFilterType: ToolFilterType, currentToolFilterSelection: ToolFilterSelection) -> UIViewController {
         
-        let view = ToolFilterSelectionView()
+        let viewModel = ToolFilterSelectionViewModel(toolFilterSelection: currentToolFilterSelection)
+        
+        let view = ToolFilterSelectionView(viewModel: viewModel)
         
         let hostingView = UIHostingController(rootView: view)
         
