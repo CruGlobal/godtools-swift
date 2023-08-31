@@ -121,6 +121,10 @@
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
 "allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Any category";
+"allTools.filter.anyLanguage" = "Any language";
+"allTools.filter.navBar.language" = "Filter by language";
+"allTools.filter.navBar.category" = "Filter by category";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";
