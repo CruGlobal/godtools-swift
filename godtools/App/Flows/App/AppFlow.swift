@@ -149,6 +149,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolFilterTappedFromTools(let toolFilterType, let currentToolFilterSelection):
             navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, currentToolFilterSelection: currentToolFilterSelection), animated: true)
+            
+        case .backTappedFromToolFilter:
+            navigationController.popViewController(animated: true)
                         
         case .toolTappedFromTools(let resource):
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
@@ -790,13 +793,38 @@ extension AppFlow {
     
     private func getToolFilterSelection(toolFilterType: ToolFilterType, currentToolFilterSelection: ToolFilterSelection) -> UIViewController {
         
-        let viewModel = ToolFilterSelectionViewModel(toolFilterSelection: currentToolFilterSelection)
+        let viewModel: ToolFilterSelectionViewModel
+        
+        switch toolFilterType {
+        case .category:
+            
+            viewModel = ToolFilterCategorySelectionViewModel(
+                toolFilterSelection: currentToolFilterSelection,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            )
+            
+        case .language:
+            
+            viewModel = ToolFilterLanguageSelectionViewModel(
+                toolFilterSelection: currentToolFilterSelection,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            )
+        }
         
         let view = ToolFilterSelectionView(viewModel: viewModel)
         
         let hostingView = UIHostingController(rootView: view)
         
+        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolFilterSelection))
+        
         return hostingView
+    }
+    
+    @objc private func backTappedFromToolFilterSelection() {
+        
+        navigate(step: .backTappedFromToolFilter)
     }
 }
 

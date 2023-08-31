@@ -7,16 +7,27 @@
 //
 
 import Foundation
+import Combine
 
 class ToolFilterSelectionViewModel: ObservableObject {
     
     var selectedCategory: ToolCategoryDomainModel? = nil
     var selectedLanguage: LanguageDomainModel? = nil
     
-    init(toolFilterSelection: ToolFilterSelection) {
+    let localizationServices: LocalizationServices
+    let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    
+    var cancellables: Set<AnyCancellable> = Set()
+    
+    @Published var navTitle: String = ""
+    
+    init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         
         self.selectedCategory = toolFilterSelection.selectedCategory
         self.selectedLanguage = toolFilterSelection.selectedLanguage
+        
+        self.localizationServices = localizationServices
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
     }
     
 }
