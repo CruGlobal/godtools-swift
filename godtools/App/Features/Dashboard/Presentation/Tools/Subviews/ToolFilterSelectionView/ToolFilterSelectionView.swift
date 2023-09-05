@@ -28,7 +28,7 @@ struct ToolFilterSelectionView: View {
                 Rectangle()
                     .fill(ToolFilterSelectionView.ultraLightGrey)
 
-                SearchBar(searchText: $searchText)
+                SearchBar(searchText: $searchText, localizationServices: viewModel.localizationServices)
                     .padding(10)
             }
             .fixedSize(horizontal: false, vertical: true)
