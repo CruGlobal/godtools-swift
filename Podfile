@@ -27,3 +27,8 @@ target 'godtoolsTests' do
     
   shared_pods
 end
+
+target 'godtoolsUITests' do
+    
+  shared_pods
+end

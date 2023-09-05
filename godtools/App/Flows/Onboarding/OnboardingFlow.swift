@@ -15,9 +15,7 @@ class OnboardingFlow: Flow {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
-        
-    private let navigationControllerTransitioningDelegate: FadeAnimationTransitioningDelegate = FadeAnimationTransitioningDelegate()
-    
+            
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
@@ -33,7 +31,6 @@ class OnboardingFlow: Flow {
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
         navigationController.modalPresentationStyle = .fullScreen
-        navigationController.transitioningDelegate = navigationControllerTransitioningDelegate
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
@@ -45,7 +42,12 @@ class OnboardingFlow: Flow {
             isTranslucent: true
         )
         
-        navigationController.setViewControllers([getOnboardingTutorialView()], animated: false)
+        navigationController.setViewControllers([getInitialView()], animated: false)
+    }
+    
+    func getInitialView() -> UIViewController {
+        
+        return getOnboardingTutorialView()
     }
     
     func navigate(step: FlowStep) {
@@ -53,7 +55,7 @@ class OnboardingFlow: Flow {
         switch step {
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
-            presentVideoPlayerView(youtubeVideoId: youtubeVideoId)
+            presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)
         
         case .closeVideoPlayerTappedFromOnboardingTutorial:
             dismissVideoModal(animated: true, completion: nil)
@@ -87,7 +89,7 @@ class OnboardingFlow: Flow {
         }
     }
     
-    private func presentVideoPlayerView(youtubeVideoId: String) {
+    private func presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: String) {
         
         let viewModel = FullScreenVideoViewModel(
             flowDelegate: self,
@@ -97,7 +99,7 @@ class OnboardingFlow: Flow {
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel)
+        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
     }
     
     private func navigateToQuickStartOrTools() {

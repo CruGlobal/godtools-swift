@@ -68,6 +68,12 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
             ),
             DeepLinkingParserManifestAppsFlyer(
                 parserClass: LegacyAppsFlyerDeepLinkValueParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "godtools",
+                host: "org.cru.godtools",
+                path: "onboarding",
+                parserClass: OnboardingPathDeepLinkParser.self
             )
         ]
     }
