@@ -20,7 +20,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
     private let onboardingTutorialIsAvailable: Bool
-    private let inAppMessaging: FirebaseInAppMessaging?
+    private let inAppMessaging: FirebaseInAppMessaging
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -71,7 +71,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
-        inAppMessaging?.setDelegate(delegate: self)
+        inAppMessaging.setDelegate(delegate: self)
                 
         // NOTE: This fixes a bug with the Dashboard TabView that occurs when launching the app from a terminated state.
         // The bug occurs when the Dashboard TabView starts on any index other than 0 and then tab index 0 is tapped.  Tab index 0 will correctly highlight, but tab navigation doesn't occur.
@@ -86,6 +86,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         print("x deinit: \(type(of: self))")
         removeUIApplicationLifeCycleObservers()
         removeDeepLinkingObservers()
+    }
+    
+    func getInitialView() -> UIViewController {
+        return rootController
     }
     
     func navigate(step: FlowStep) {

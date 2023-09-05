@@ -35,10 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
     
-    private lazy var inAppMessaging: FirebaseInAppMessaging?  = {
-        return appDiContainer.dataLayer.getFirebaseInAppMessaing()
-    }()
-    
     private lazy var appDiContainer: AppDiContainer = {
         AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
     }()
@@ -86,11 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             launchOptions: launchOptions,
             configuration: appConfig.getFacebookConfiguration()
         )
-                
+               
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow.rootController
+        window.rootViewController = appFlow.getInitialView()
         window.makeKeyAndVisible()
         self.window = window
         
