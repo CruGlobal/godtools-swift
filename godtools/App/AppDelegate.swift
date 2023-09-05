@@ -96,6 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
+        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+                
+        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty,
+           let url = URL(string: uiTestsDeepLinkString) {
+            
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        }
+        
         return true
     }
     
