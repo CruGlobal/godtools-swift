@@ -7780,6 +7780,14 @@
 			path = UserAuthentication;
 			sourceTree = "<group>";
 		};
+		D40D77B32AA7B5A2008D3642 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				D496B9052A9E702200CBEA19 /* SearchBar.swift */,
+			);
+			path = SearchBar;
+			sourceTree = "<group>";
+		};
 		D41B38C028906AF600BD5899 /* GetDeviceLanguageUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -7828,6 +7836,7 @@
 				45E347842A49C0120014CCD1 /* ProgressBarView */,
 				45C0FADF2A8A7CFB009A7E71 /* PullToRefreshScrollView */,
 				45E3478B2A49C04B0014CCD1 /* RoundedCorner */,
+				D40D77B32AA7B5A2008D3642 /* SearchBar */,
 				45325F18285CF8B40078D932 /* SegmentControl */,
 				45E3478F2A49C04B0014CCD1 /* SeparatorView */,
 				45325F20285CF8B40078D932 /* TextWithLinks */,
@@ -7983,7 +7992,6 @@
 			isa = PBXGroup;
 			children = (
 				D496B9122AA1161A00CBEA19 /* ViewModel */,
-				D496B9052A9E702200CBEA19 /* SearchBar.swift */,
 				D496B9032A9D205000CBEA19 /* ToolFilterSelectionView.swift */,
 				D496B9012A9D1BF000CBEA19 /* ToolFilterType.swift */,
 				D496B9072A9FC22A00CBEA19 /* Subviews */,

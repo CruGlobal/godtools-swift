@@ -20,6 +20,8 @@ class ToolFilterSelectionViewModel: ObservableObject {
     var cancellables: Set<AnyCancellable> = Set()
     
     @Published var navTitle: String = ""
+    @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
+    @Published var idSelected: String?
     
     init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         
@@ -28,16 +30,13 @@ class ToolFilterSelectionViewModel: ObservableObject {
         
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-    }
-    
-}
-
-// MARK: - Inputs
-
-extension ToolFilterSelectionViewModel {
-    
-    func getToolFilterSelectionRowViewModel() -> ToolFilterSelectionRowViewModel {
         
-        return ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "7 Tools available")
+        rowViewModels = [
+            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "1 Tools available", filterValueId: "1"),
+            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "2 Tools available", filterValueId: "2"),
+            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "3 Tools available", filterValueId: "3"),
+            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "4 Tools available", filterValueId: "4"),
+            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "5 Tools available", filterValueId: "5")
+        ]
     }
 }

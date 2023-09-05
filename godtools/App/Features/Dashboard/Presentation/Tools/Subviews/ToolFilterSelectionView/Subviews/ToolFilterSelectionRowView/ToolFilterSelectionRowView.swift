@@ -13,9 +13,11 @@ struct ToolFilterSelectionRowView: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     @ObservedObject private var viewModel: ToolFilterSelectionRowViewModel
+    private let isSelected: Bool
     
-    init(viewModel: ToolFilterSelectionRowViewModel) {
+    init(viewModel: ToolFilterSelectionRowViewModel, isSelected: Bool) {
         self.viewModel = viewModel
+        self.isSelected = isSelected
     }
     
     var body: some View {
@@ -24,8 +26,10 @@ struct ToolFilterSelectionRowView: View {
             
             HStack(spacing: 9.5) {
                 
+                let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                
                 Text(viewModel.title)
-                    .font(FontLibrary.sfProTextRegular.font(size: 15))
+                    .font(titleFont.font(size: 15))
                     .foregroundColor(ColorPalette.gtGrey.color)
                 
                 if let subtitle = viewModel.subtitle {

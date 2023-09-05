@@ -33,13 +33,11 @@ struct ToolFilterSelectionView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             
-            List {
-                ForEach(0..<5) { _ in
+            List(selection: $viewModel.idSelected) {
+                ForEach(viewModel.rowViewModels) { rowViewModel in
                     
-                    ToolFilterSelectionRowView(viewModel: viewModel.getToolFilterSelectionRowViewModel())
-                        .onTapGesture {
-                            print("tap")
-                        }
+                    ToolFilterSelectionRowView(viewModel: rowViewModel, isSelected: viewModel.idSelected == rowViewModel.id)
+                        .listRowBackground(Color.clear)
                 }
             }
             .listStyle(.inset)
