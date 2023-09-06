@@ -35,4 +35,33 @@ class InfoPlist {
     var configuration: String? {
         return info["Configuration"] as? String
     }
+    
+    func getAppBuildConfiguration() -> AppBuildConfiguration? {
+        
+        guard let configuration = self.configuration, !configuration.isEmpty else {
+            return nil
+        }
+        
+        // Defined in godtools project > Info > Configurations Section.
+        // Info plist must also contain Key: Configuration and Value: $(CONFIGURATION)
+        // ~Levi
+        
+        switch configuration.lowercased() {
+        
+        case "analyticslogging":
+            return .analyticsLogging
+        
+        case "staging":
+            return .staging
+        
+        case "production":
+            return .production
+        
+        case "release":
+            return .release
+            
+        default:
+            return .release
+        }
+    }
 }

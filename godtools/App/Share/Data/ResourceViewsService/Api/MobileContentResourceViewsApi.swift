@@ -18,7 +18,7 @@ class MobileContentResourceViewsApi {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
         session = ignoreCacheSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     private func newResourceViewRequest(resourceView: ResourceViewModelType) -> URLRequest {

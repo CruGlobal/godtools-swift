@@ -10,20 +10,11 @@ import Foundation
 
 class AppBuild {
 
-    // Defined in godtools project > Info > Configurations Section.
-    enum Configuration: String {
-        
-        case analyticsLogging = "analyticslogging"
-        case staging = "staging"
-        case production = "production"
-        case release = "release"
-    }
-    
-    let configuration: AppBuild.Configuration
+    let configuration: AppBuildConfiguration
     let environment: AppEnvironment
     let isDebug: Bool
 
-    init(infoPlist: InfoPlist) {
+    init(buildConfiguration: AppBuildConfiguration?) {
 
         // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
        
@@ -39,7 +30,7 @@ class AppBuild {
         if !isDebug {
             configuration = .release
         }
-        else if let infoPlistConfiguration = infoPlist.configuration, let buildConfiguration = AppBuild.Configuration(rawValue: infoPlistConfiguration.lowercased()) {
+        else if let buildConfiguration = buildConfiguration {
             configuration =  buildConfiguration
         }
         else if isDebug {

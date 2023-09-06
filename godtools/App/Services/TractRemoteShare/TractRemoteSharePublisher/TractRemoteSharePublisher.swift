@@ -27,9 +27,10 @@ class TractRemoteSharePublisher: NSObject {
     
     let didCreateNewSubscriberChannelIdForPublish: SignalValue<TractRemoteShareChannel> = SignalValue()
     
-    required init(config: AppConfig, webSocket: WebSocketType, webSocketChannelPublisher: WebSocketChannelPublisherType, loggingEnabled: Bool) {
+    init(config: AppConfig, webSocket: WebSocketType, webSocketChannelPublisher: WebSocketChannelPublisherType, loggingEnabled: Bool) {
         
-        self.remoteUrl = URL(string: config.tractRemoteShareConnectionUrl)!
+        // TODO: Shouldn't force unwrap url here. ~Levi
+        self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher
         self.loggingEnabled = loggingEnabled
