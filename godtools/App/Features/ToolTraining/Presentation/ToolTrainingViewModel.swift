@@ -201,7 +201,7 @@ extension ToolTrainingViewModel {
             return nil
         }
         
-        return pageRenderer.recurseAndRender(
+        return pageRenderer.viewRenderer.recurseAndRender(
             renderableModel: tipModel.pages[page],
             renderableModelParent: nil,
             renderedPageContext: renderedPageContext

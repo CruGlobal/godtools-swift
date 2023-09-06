@@ -63,6 +63,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
                 }
                 .frame(width: geometry.size.width, height: 50, alignment: .center)
             }
+            .accessibilityIdentifier(AccessibilityStrings.Button.watchOnboardingTutorialVideo.id)
             .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
             
             Spacer()

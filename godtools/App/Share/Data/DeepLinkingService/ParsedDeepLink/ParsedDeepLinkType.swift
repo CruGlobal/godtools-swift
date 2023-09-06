@@ -15,5 +15,6 @@ enum ParsedDeepLinkType: Equatable {
     case dashboard
     case favoritedToolsList
     case lessonsList
+    case onboarding
     case tool(toolDeepLink: ToolDeepLink)
 }

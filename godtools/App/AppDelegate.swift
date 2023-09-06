@@ -55,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             
+        DisableGoogleTagManagerLogging.disable()
+        
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
         if appBuild.configuration == .analyticsLogging {
@@ -89,6 +91,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         
         application.registerForRemoteNotifications()
+        
+        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+                
+        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty,
+           let url = URL(string: uiTestsDeepLinkString) {
+            
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        }
         
         return true
     }

@@ -675,6 +675,9 @@ extension AppFlow {
             
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
+            
+        case .onboarding:
+            navigateToOnboarding(animated: true)
         }
     }
 }
