@@ -22,6 +22,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var idSelected: String?
+    @Published var searchText = ""
     
     init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         

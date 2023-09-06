@@ -1034,6 +1034,7 @@
 		D409F2BA292C017C00D9D2FE /* RealmUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */; };
 		D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */; };
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
+		D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AE287F149900BD5899 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AD287F149900BD5899 /* LessonsViewModel.swift */; };
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */; };
@@ -2164,6 +2165,7 @@
 		D409F2B9292C017C00D9D2FE /* RealmUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserDetails.swift; sourceTree = "<group>"; };
 		D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDetailsDomainModel.swift; sourceTree = "<group>"; };
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
+		D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolStringKeys.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AD287F149900BD5899 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -7788,6 +7790,17 @@
 			path = SearchBar;
 			sourceTree = "<group>";
 		};
+		D40D77B62AA90112008D3642 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				45920D4E2A8D3D1800E336A8 /* ToolsView.swift */,
+				45920D4D2A8D3D1800E336A8 /* ToolsViewModel.swift */,
+				D496B90D2A9FD39500CBEA19 /* ToolFilterSelection.swift */,
+				45DD84C42A8BD53E0066A020 /* Subviews */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		D41B38C028906AF600BD5899 /* GetDeviceLanguageUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -7971,10 +7984,8 @@
 		D473469629072A8700579463 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				45920D4E2A8D3D1800E336A8 /* ToolsView.swift */,
-				45920D4D2A8D3D1800E336A8 /* ToolsViewModel.swift */,
-				D496B90D2A9FD39500CBEA19 /* ToolFilterSelection.swift */,
-				45DD84C42A8BD53E0066A020 /* Subviews */,
+				D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */,
+				D40D77B62AA90112008D3642 /* Presentation */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -8958,6 +8969,7 @@
 				453AC11428F4A10400291791 /* FollowUpsService.swift in Sources */,
 				45FB161427DBDDB60009DF8E /* MenuFlow.swift in Sources */,
 				45325F25285CF8B40078D932 /* AnimatedSwiftUIView.swift in Sources */,
+				D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */,
 				455583E9269F2DA500C3FF14 /* MobileContentButtonViewModel.swift in Sources */,
 				45B5389B2A8AB6D90033B34E /* OptionalImageSize.swift in Sources */,
 				45E347882A49C0120014CCD1 /* LanguageSupportedText.swift in Sources */,

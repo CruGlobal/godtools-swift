@@ -1,5 +1,5 @@
 //
-//  ToolFilterLanguageSelectionViewModel.swift
+//  ToolFilterCategorySelectionViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/31/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
+class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
         
     override init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         
@@ -20,7 +20,7 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
                 
                 let primaryLocaleId: String? = primaryLanguage?.localeIdentifier
 
-                self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.filter.navBar.language")
+                self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             }
             .store(in: &cancellables)
     }

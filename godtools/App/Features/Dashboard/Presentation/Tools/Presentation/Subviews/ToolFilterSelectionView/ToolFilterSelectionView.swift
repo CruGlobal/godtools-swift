@@ -13,7 +13,6 @@ struct ToolFilterSelectionView: View {
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
     @ObservedObject private var viewModel: ToolFilterSelectionViewModel
-    @State private var searchText = ""
     
     init(viewModel: ToolFilterSelectionViewModel) {
         
@@ -28,7 +27,7 @@ struct ToolFilterSelectionView: View {
                 Rectangle()
                     .fill(ToolFilterSelectionView.ultraLightGrey)
 
-                SearchBar(searchText: $searchText, localizationServices: viewModel.localizationServices)
+                SearchBar(searchText: $viewModel.searchText, localizationServices: viewModel.localizationServices)
                     .padding(10)
             }
             .fixedSize(horizontal: false, vertical: true)

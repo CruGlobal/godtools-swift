@@ -70,9 +70,9 @@ class ToolsViewModel: ObservableObject {
                 
                 let primaryLocaleId: String? = primaryLanguage?.localeIdentifier
                 
-                self?.toolSpotlightTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.spotlight.title")
-                self?.toolSpotlightSubtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.spotlight.description")
-                self?.filterTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: "allTools.filter.title")
+                self?.toolSpotlightTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.Spotlight.title.rawValue)
+                self?.toolSpotlightSubtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.Spotlight.subtitle.rawValue)
+                self?.filterTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
                 
             }
             .store(in: &cancellables)
@@ -122,7 +122,7 @@ class ToolsViewModel: ObservableObject {
             
         } else {
             
-            categoryFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "allTools.filter.anyCategory")
+            categoryFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
         }
         
         if let selectedLanguage = filterSelection.selectedLanguage {
@@ -131,7 +131,7 @@ class ToolsViewModel: ObservableObject {
             
         } else {
             
-            languageFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "allTools.filter.anyLanguage")
+            languageFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
         }
         
     }
