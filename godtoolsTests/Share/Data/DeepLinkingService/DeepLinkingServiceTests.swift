@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import XCTest
 @testable import godtools
 
@@ -21,6 +20,7 @@ class DeepLinkingServiceTests: XCTestCase {
         case godtoolsCustomUrlSchemeTractPowerOverFearEnglish = "godtools://org.cru.godtools/tool/tract/poweroverfear/en"
         case godtoolsCustomUrlSchemeLessonLessonConvoEnglish = "godtools://org.cru.godtools/tool/lesson/lessonconvo/en"
         case godtoolsCustomUrlSchemeArticleESEnglish = "godtools://org.cru.godtools/tool/article/es/en"
+        case godtoolsCustomUrlSchemeOnboarding = "godtools://org.cru.godtools/onboarding"
         
         case godtoolsAppDeepLinkDashboard = "https://godtoolsapp.com/deeplink/dashboard"
         case godtoolsAppDeepLinkDashboardLessons = "https://godtoolsapp.com/deeplink/dashboard/lessons"
@@ -354,5 +354,14 @@ class DeepLinkingServiceTests: XCTestCase {
         let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodLessonLessonConvoEnglish.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
+    }
+    
+    // MARK: -
+    
+    func testOnboardingDeepLinkFromGodToolsCustomUrlScheme() {
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.godtoolsCustomUrlSchemeOnboarding.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == .onboarding)
     }
 }

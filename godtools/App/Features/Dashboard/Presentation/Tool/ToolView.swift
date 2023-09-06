@@ -52,7 +52,7 @@ class ToolView: MobileContentPagesView {
                 return
             }
             if didSubscribeForRemoteSharePublishing {
-                let page: Int = toolView.pageNavigationView.currentPage
+                let page: Int = toolView.pageNavigationView.getCurrentPage()
                 let pagePositions: MobileContentViewPositionState? = toolView.getPagePositions(page: page)
                 guard let toolPagePositions = pagePositions as? ToolPagePositions else {
                     return
@@ -97,14 +97,14 @@ extension ToolView: ToolNavBarViewDelegate {
     
     func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageDomainModel) {
         
-        let page: Int = pageNavigationView.currentPage
+        let page: Int = pageNavigationView.getCurrentPage()
         
         viewModel.navToolSettingsTapped(page: page, selectedLanguage: selectedLanguage)
     }
     
     func navBarLanguageChanged(navBar: ToolNavBarView) {
 
-        let page: Int = pageNavigationView.currentPage
+        let page: Int = pageNavigationView.getCurrentPage()
         let pagePositions: MobileContentViewPositionState? = getCurrentPagePositions()
         
         guard let toolPagePositions = pagePositions as? ToolPagePositions else {

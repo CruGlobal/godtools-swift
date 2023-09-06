@@ -12,18 +12,24 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     private let viewModel: MobileContentCardCollectionPageViewModel
     private let cardPageNavigationView: PageNavigationCollectionView
-    private let cardCollectionLayout: HorizontallyCenteredCollectionViewLayout = HorizontallyCenteredCollectionViewLayout()
     private let previousCardButton: UIButton = UIButton(type: .custom)
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
     private let previousAndNextButtonInsets: CGFloat = 20
-    
-    private var cards: [MobileContentCardCollectionPageCardView] = Array()
-    
+        
     init(viewModel: MobileContentCardCollectionPageViewModel) {
         
         self.viewModel = viewModel
-        self.cardPageNavigationView = PageNavigationCollectionView(layout: cardCollectionLayout)
+        
+        cardPageNavigationView = PageNavigationCollectionView(
+            layoutType: .centeredRevealingPreviousAndNextPage(
+                pageLayoutAttributes: PageNavigationCollectionViewCenterLayoutPageAttributes(
+                    spacingBetweenPages: 25,
+                    pageWidthAmountToRevealForPreviousAndNextPage: 20,
+                    cardAspectRatio: CGSize(width: 182, height: 268)
+                )
+            )
+        )
         
         super.init(viewModel: viewModel, nibName: nil)
                 
@@ -48,15 +54,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         cardPageNavigationView.pageBackgroundColor = .clear
         cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
         
-        cardCollectionLayout.setCellSize(
-            cellSize: .aspectRatioOfContainerWidth(
-                aspectRatio: CGSize(width: 182, height: 268),
-                containerWidth: frame.size.width,
-                widthMultiplier: 0.78
-            ),
-            cellSpacing: 24
-        )
-
         // previousCardButton
         addSubview(previousCardButton)
         previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
@@ -80,11 +77,12 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func renderChild(childView: MobileContentView) {
         super.renderChild(childView: childView)
-        
-        if let card = childView as? MobileContentCardCollectionPageCardView {
-            cards.append(card)
-            cardPageNavigationView.reloadData()
-        }
+        cardPageNavigationView.reloadData()
+    }
+    
+    override func finishedRenderingChildren() {
+        super.finishedRenderingChildren()
+        cardPageNavigationView.reloadData()
     }
     
     override func viewDidAppear() {
@@ -106,7 +104,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     private func updatePreviousAndNextButtonVisibility(page: Int) {
         
         let isFirstPage: Bool = page == 0
-        let isLastPage: Bool = page >= cardPageNavigationView.numberOfPages - 1
+        let isLastPage: Bool = page >= cardPageNavigationView.getNumberOfPages() - 1
         
         let hidesPreviousCardButton: Bool
         let hidesNextCardButton: Bool
@@ -130,7 +128,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func getPositionState() -> MobileContentViewPositionState {
         
-        let page: Int = cardPageNavigationView.currentPage
+        let page: Int = cardPageNavigationView.getCurrentPage()
         let currentCardId: String = viewModel.getCardId(card: page)
                 
         return MobileContentCardCollectionPagePositionState(currentCardId: currentCardId)
@@ -153,7 +151,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
 extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
-        return cards.count
+        return viewModel.numberOfCards
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -161,11 +159,14 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
         let cell: MobileContentCardCollectionPageItemView = cardPageNavigationView.getReusablePageCell(
             cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier,
             indexPath: indexPath) as! MobileContentCardCollectionPageItemView
-                
-        let cardView: MobileContentCardCollectionPageCardView = cards[indexPath.row]
         
-        cell.configure(cardView: cardView)
-                
+        if let cardView = viewModel.cardWillAppear(card: indexPath.row) as? MobileContentCardCollectionPageCardView {
+            cell.configure(cardView: cardView)
+        }
+        else {
+            assertionFailure("Failed to render MobileContentCardCollectionPageCardView.")
+        }
+                        
         return cell
     }
     
