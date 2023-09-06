@@ -8,16 +8,12 @@
 
 import Foundation
 
-class ToolFilterSelectionRowViewModel: ObservableObject, Identifiable {
+class ToolFilterSelectionRowViewModel: ObservableObject {
     
     let title: String
     let subtitle: String?
     let toolsAvailableText: String
     let filterValueId: String
-    
-    var id: String {
-        return filterValueId
-    }
     
     init(title: String, subtitle: String?, toolsAvailableText: String, filterValueId: String) {
         
@@ -25,5 +21,14 @@ class ToolFilterSelectionRowViewModel: ObservableObject, Identifiable {
         self.subtitle = subtitle
         self.toolsAvailableText = toolsAvailableText
         self.filterValueId = filterValueId
+    }
+}
+
+// MARK: - Identifiable
+
+extension ToolFilterSelectionRowViewModel: Identifiable {
+    
+    var id: String {
+        return filterValueId
     }
 }

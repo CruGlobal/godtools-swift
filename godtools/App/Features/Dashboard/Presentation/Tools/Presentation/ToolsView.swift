@@ -111,7 +111,7 @@ struct ToolsView: View {
             let buttonSpacing: CGFloat = 11
             
             HStack(spacing: buttonSpacing) {
-                let buttonWidth = (width - (contentHorizontalInsets*2) - buttonSpacing) / 2
+                let buttonWidth = (width - (contentHorizontalInsets * 2) - buttonSpacing) / 2
                 ToolFilterButtonView(
                     title: viewModel.categoryFilterButtonTitle,
                     width: buttonWidth,

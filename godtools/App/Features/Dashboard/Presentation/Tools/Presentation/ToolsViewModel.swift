@@ -32,7 +32,7 @@ class ToolsViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
-    
+
     @Published var favoritingToolBannerMessage: String
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""

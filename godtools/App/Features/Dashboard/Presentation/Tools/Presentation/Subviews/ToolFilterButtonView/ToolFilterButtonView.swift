@@ -11,11 +11,11 @@ import SwiftUI
 struct ToolFilterButtonView: View {
         
     private static let height: CGFloat = 37
+    private static let cornerRadius: CGFloat = height / 2
     
     private let buttonTitle: String
     private let width: CGFloat
     private let backgroundColor: Color = Color.white
-    private let cornerRadius: CGFloat = ToolFilterButtonView.height / 2
     private let tappedClosure: (() -> Void)?
         
     init(title: String, width: CGFloat, tappedClosure: (() -> Void)?) {
@@ -38,7 +38,7 @@ struct ToolFilterButtonView: View {
                 Rectangle()
                     .fill(.clear)
                     .frame(height: ToolFilterButtonView.height)
-                    .cornerRadius(cornerRadius)
+                    .cornerRadius(ToolFilterButtonView.cornerRadius)
                     .ignoresSafeArea()
                 
                 HStack(alignment: .top) {
@@ -61,10 +61,10 @@ struct ToolFilterButtonView: View {
         }
         .frame(width: width, height: ToolFilterButtonView.height)
         .background(backgroundColor)
-        .cornerRadius(cornerRadius)
+        .cornerRadius(ToolFilterButtonView.cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 3, y: 3)
         .overlay(
-            RoundedRectangle(cornerRadius: cornerRadius)
+            RoundedRectangle(cornerRadius: ToolFilterButtonView.cornerRadius)
                 .strokeBorder(Color.clear, lineWidth: 2)
         )
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.  
