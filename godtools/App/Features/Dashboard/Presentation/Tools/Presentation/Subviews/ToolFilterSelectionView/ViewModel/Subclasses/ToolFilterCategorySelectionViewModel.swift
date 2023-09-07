@@ -41,8 +41,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     
     private func createRowViewModels(from categories: [ToolCategoryDomainModel]) {
         
-        let localeId = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
-        let anyCategoryTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
+        let anyCategoryTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: getLanguageLocaleId(), key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
         
         let anyCategoryViewModel = ToolFilterSelectionRowViewModel(
             title: anyCategoryTitle,
@@ -72,6 +71,16 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             languageId: selectedLanguage?.id
         ).count
         
-        return "\(toolsAvailableCount) tools available"
+        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+            localeIdentifier: getLanguageLocaleId(),
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
+            fileType: .stringsdict
+        )
+        
+        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
+    }
+    
+    private func getLanguageLocaleId() -> String? {
+        return getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
     }
 }
