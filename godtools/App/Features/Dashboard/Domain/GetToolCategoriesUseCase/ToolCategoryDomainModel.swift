@@ -10,19 +10,6 @@ import Foundation
 
 struct ToolCategoryDomainModel {
     
-    let type: ToolCategoryType
+    let id: String
     let translatedName: String
-}
-
-extension ToolCategoryDomainModel {
-    
-    var id: String? {
-        
-        switch type {
-        case .allTools:
-            return nil
-        case .category(let id):
-            return id
-        }
-    }
 }

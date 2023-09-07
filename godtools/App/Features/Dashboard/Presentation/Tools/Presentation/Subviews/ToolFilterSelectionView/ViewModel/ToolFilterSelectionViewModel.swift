@@ -16,6 +16,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    let getAllToolsUseCase: GetAllToolsUseCase
     
     var cancellables: Set<AnyCancellable> = Set()
     
@@ -24,20 +25,13 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var idSelected: String?
     @Published var searchText = ""
     
-    init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getAllToolsUseCase: GetAllToolsUseCase) {
         
         self.selectedCategory = toolFilterSelection.selectedCategory
         self.selectedLanguage = toolFilterSelection.selectedLanguage
         
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        
-        rowViewModels = [
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "1 Tools available", filterValueId: "1"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "2 Tools available", filterValueId: "2"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "3 Tools available", filterValueId: "3"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "4 Tools available", filterValueId: "4"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "5 Tools available", filterValueId: "5")
-        ]
-    }
+        self.getAllToolsUseCase = getAllToolsUseCase
+    }    
 }

@@ -45,18 +45,14 @@ class GetToolCategoriesUseCase {
     
     private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?) -> [ToolCategoryDomainModel] {
         
-        let allToolsCategoryTranslation: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: language?.localeIdentifier, key: "find_tools")
-        
-        let allToolsCategory = ToolCategoryDomainModel(type: .allTools, translatedName: allToolsCategoryTranslation)
-        
         let categories: [ToolCategoryDomainModel] = ids.map { categoryId in
             
             let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: language?.localeIdentifier, key: "tool_category_\(categoryId)")
             
-            return ToolCategoryDomainModel(type: .category(id: categoryId), translatedName: translatedName)
+            return ToolCategoryDomainModel(id: categoryId, translatedName: translatedName)
         }
         
-        return [allToolsCategory] + categories
+        return categories
     }
 }
 

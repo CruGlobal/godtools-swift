@@ -37,9 +37,9 @@ class GetAllToolsUseCase {
         .eraseToAnyPublisher()
     }
     
-    private func getAllTools(sorted: Bool, categoryId: String? = nil) -> [ToolDomainModel] {
+    func getAllTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
         
-        return resourcesRepository.getAllTools(sorted: sorted, category: categoryId).map {
+        return resourcesRepository.getAllTools(sorted: sorted, category: categoryId, languageId: languageId).map {
             getToolUseCase.getTool(resource: $0)
         }
     }
