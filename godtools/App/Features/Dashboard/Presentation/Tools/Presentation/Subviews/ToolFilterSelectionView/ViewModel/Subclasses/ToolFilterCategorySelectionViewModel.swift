@@ -38,6 +38,12 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
                 self?.createRowViewModels(from: categories)
             }
             .store(in: &cancellables)
+        
+        if let currentCategorySelected = toolFilterSelectionPublisher.value.selectedCategory {
+            filterValueSelected = .category(categoryModel: currentCategorySelected)
+        } else {
+            filterValueSelected = .any
+        }
     }
     
     override func rowTapped(with filterValue: ToolFilterValue) {
