@@ -1059,6 +1059,7 @@
 		D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */; };
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */; };
+		D40D77B82AAA6AC1008D3642 /* ToolFilterValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B72AAA6AC1008D3642 /* ToolFilterValue.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AE287F149900BD5899 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AD287F149900BD5899 /* LessonsViewModel.swift */; };
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */; };
@@ -2200,6 +2201,7 @@
 		D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDetailsDomainModel.swift; sourceTree = "<group>"; };
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolStringKeys.swift; sourceTree = "<group>"; };
+		D40D77B72AAA6AC1008D3642 /* ToolFilterValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterValue.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AD287F149900BD5899 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -8141,6 +8143,7 @@
 			children = (
 				D496B9092A9FC26500CBEA19 /* ToolFilterSelectionRowView.swift */,
 				D496B90B2A9FC2D300CBEA19 /* ToolFilterSelectionRowViewModel.swift */,
+				D40D77B72AAA6AC1008D3642 /* ToolFilterValue.swift */,
 			);
 			path = ToolFilterSelectionRowView;
 			sourceTree = "<group>";
@@ -9578,6 +9581,7 @@
 				45AE974327C97A9400C2CB33 /* TractPage+MobileContentRenderableModel.swift in Sources */,
 				45E41B7A2A83D14600F886A2 /* LocalizableStringsBundle.swift in Sources */,
 				45325F24285CF8B40078D932 /* Segment.swift in Sources */,
+				D40D77B82AAA6AC1008D3642 /* ToolFilterValue.swift in Sources */,
 				458CFE9029D4E0B9007B423C /* ArticleWebViewModel.swift in Sources */,
 				45F71627290A12D70019B715 /* TermsOfUseWebContent.swift in Sources */,
 				4573133B28C1821100481640 /* ToolDetailsTitleHeaderView.swift in Sources */,

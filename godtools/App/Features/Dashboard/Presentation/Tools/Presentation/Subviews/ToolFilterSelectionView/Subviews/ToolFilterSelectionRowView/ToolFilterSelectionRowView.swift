@@ -22,28 +22,32 @@ struct ToolFilterSelectionRowView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 10) {
-            
-            HStack(spacing: 9.5) {
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
                 
-                let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
-                
-                Text(viewModel.title)
-                    .font(titleFont.font(size: 15))
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                
-                if let subtitle = viewModel.subtitle {
+                HStack(spacing: 9.5) {
                     
-                    Text(subtitle)
-                        .font(FontLibrary.sfProTextRegular.font(size: 15))
-                        .foregroundColor(ToolFilterSelectionRowView.lightGrey)
+                    let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
+                    
+                    Text(viewModel.title)
+                        .font(titleFont.font(size: 15))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                    
+                    if let subtitle = viewModel.subtitle {
+                        
+                        Text(subtitle)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(ToolFilterSelectionRowView.lightGrey)
+                    }
                 }
+                
+                Text(viewModel.toolsAvailableText)
+                    .font(FontLibrary.sfProTextRegular.font(size: 12))
+                    .foregroundColor(ToolFilterSelectionRowView.lightGrey)
             }
+            .padding(.vertical, 7)
             
-            Text(viewModel.toolsAvailableText)
-                .font(FontLibrary.sfProTextRegular.font(size: 12))
-                .foregroundColor(ToolFilterSelectionRowView.lightGrey)
+            Spacer()
         }
-        .padding(.vertical, 7)
     }
 }

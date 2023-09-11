@@ -239,7 +239,7 @@ extension ToolsViewModel {
     
     func toolFilterTapped(filterType: ToolFilterType) {
         
-        flowDelegate?.navigate(step: .toolFilterTappedFromTools(toolFilterType: filterType, currentToolFilterSelection: toolFilterSelectionPublisher.value))
+        flowDelegate?.navigate(step: .toolFilterTappedFromTools(toolFilterType: filterType, toolFilterSelectionPublisher: toolFilterSelectionPublisher))
     }
     
     func spotlightToolFavorited(spotlightTool: ToolDomainModel) {

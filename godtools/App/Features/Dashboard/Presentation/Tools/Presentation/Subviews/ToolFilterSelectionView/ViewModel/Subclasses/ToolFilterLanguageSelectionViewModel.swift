@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import Combine
 
 class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
         
-    override init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getAllToolsUseCase: GetAllToolsUseCase) {
+    override init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getAllToolsUseCase: GetAllToolsUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
-        super.init(toolFilterSelection: toolFilterSelection, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getAllToolsUseCase: getAllToolsUseCase)
+        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getAllToolsUseCase: getAllToolsUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)

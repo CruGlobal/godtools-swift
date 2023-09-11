@@ -10,17 +10,12 @@ import Foundation
 
 class ToolFilterSelectionRowViewModel: ObservableObject {
     
-    enum FilterValue {
-        case any
-        case some(filterValueId: String)
-    }
-    
     let title: String
     let subtitle: String?
     let toolsAvailableText: String
-    let filterValue: FilterValue
+    let filterValue: ToolFilterValue
     
-    init(title: String, subtitle: String?, toolsAvailableText: String, filterValue: FilterValue) {
+    init(title: String, subtitle: String?, toolsAvailableText: String, filterValue: ToolFilterValue) {
         
         self.title = title
         self.subtitle = subtitle
@@ -39,8 +34,11 @@ extension ToolFilterSelectionRowViewModel: Identifiable {
         case .any:
             return "any_filter"
             
-        case .some(let filterValueId):
-            return filterValueId
+        case .category(let categoryModel):
+            return categoryModel.id
+            
+        case .language(let languageModel):
+            return languageModel.id
         }
     }
 }

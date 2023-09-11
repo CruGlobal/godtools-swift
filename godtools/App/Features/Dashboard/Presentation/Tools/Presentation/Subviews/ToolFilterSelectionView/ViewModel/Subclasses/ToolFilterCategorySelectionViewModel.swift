@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     
@@ -14,11 +15,11 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     
     private var categories: [ToolCategoryDomainModel] = [ToolCategoryDomainModel]()
         
-    init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getAllToolsUseCase: GetAllToolsUseCase) {
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getAllToolsUseCase: GetAllToolsUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
-        super.init(toolFilterSelection: toolFilterSelection, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getAllToolsUseCase: getAllToolsUseCase)
+        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getAllToolsUseCase: getAllToolsUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -39,6 +40,36 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             .store(in: &cancellables)
     }
     
+    override func rowTapped(with filterValue: ToolFilterValue) {
+        
+        filterValueSelected = filterValue
+        let selectedCategory: ToolCategoryDomainModel?
+        
+        switch filterValue {
+        case .category(let categoryModel):
+            selectedCategory = categoryModel
+            
+        case .any:
+            selectedCategory = nil
+            
+        default:
+            return
+        }
+        
+        let currentLanguage = toolFilterSelectionPublisher.value.selectedLanguage
+        let toolFilterSelection = ToolFilterSelection(
+            selectedCategory: selectedCategory,
+            selectedLanguage: currentLanguage
+            )
+        
+        toolFilterSelectionPublisher.send(toolFilterSelection)
+    }
+}
+
+// MARK: - Private
+
+extension ToolFilterCategorySelectionViewModel {
+    
     private func createRowViewModels(from categories: [ToolCategoryDomainModel]) {
         
         let anyCategoryTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: getLanguageLocaleId(), key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
@@ -56,7 +87,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
                 title: category.translatedName,
                 subtitle: nil,
                 toolsAvailableText: getToolsAvailableString(for: category.id),
-                filterValue: .some(filterValueId: category.id)
+                filterValue: .category(categoryModel: category)
             )
         }
         
@@ -68,7 +99,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
         let toolsAvailableCount = getAllToolsUseCase.getAllTools(
             sorted: false,
             categoryId: categoryId,
-            languageId: selectedLanguage?.id
+            languageId: toolFilterSelectionPublisher.value.selectedLanguage?.id
         ).count
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
