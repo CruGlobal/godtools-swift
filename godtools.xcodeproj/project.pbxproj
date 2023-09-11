@@ -1059,6 +1059,7 @@
 		D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */; };
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */; };
+		D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AE287F149900BD5899 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AD287F149900BD5899 /* LessonsViewModel.swift */; };
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */; };
@@ -2200,6 +2201,7 @@
 		D409F2C1292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDetailsDomainModel.swift; sourceTree = "<group>"; };
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolStringKeys.swift; sourceTree = "<group>"; };
+		D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsFilterSectionView.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AD287F149900BD5899 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -6812,10 +6814,10 @@
 		45DD84C42A8BD53E0066A020 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				D40D77BB2AAF9899008D3642 /* ToolsFilterSelectionView */,
 				45DD84CA2A8BD65F0066A020 /* FavoritingToolBanner */,
 				45920D362A8D1C9600E336A8 /* ToolCard */,
 				D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */,
-				45E5851B2A8E5C7F005B20A6 /* ToolFilterButtonView */,
 				45920D322A8D17FD00E336A8 /* ToolSpotlight */,
 			);
 			path = Subviews;
@@ -7917,6 +7919,23 @@
 				45DD84C42A8BD53E0066A020 /* Subviews */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		D40D77BB2AAF9899008D3642 /* ToolsFilterSelectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */,
+				D40D77BC2AAF98C5008D3642 /* Subviews */,
+			);
+			path = ToolsFilterSelectionView;
+			sourceTree = "<group>";
+		};
+		D40D77BC2AAF98C5008D3642 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				45E5851B2A8E5C7F005B20A6 /* ToolFilterButtonView */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		D41B38C028906AF600BD5899 /* GetDeviceLanguageUseCase */ = {
@@ -9107,6 +9126,7 @@
 				45C152282A43D1BD00F2A1E8 /* LanguagesListViewModel.swift in Sources */,
 				4556CEAE29F2E07900643BBC /* ArticleDebugView.swift in Sources */,
 				D496B90E2A9FD39500CBEA19 /* ToolFilterSelection.swift in Sources */,
+				D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */,
 				453F84C22A029FC00005101E /* ArticleAemCacheObject.swift in Sources */,
 				45F7167A290A13530019B715 /* EmailSignUpModel.swift in Sources */,
 				45C1553229FAF4B200946477 /* AuthenticationPolicy.swift in Sources */,

@@ -57,7 +57,7 @@ struct ToolsView: View {
                             .padding([.bottom], 11)
                             .padding([.leading, .trailing], contentHorizontalInsets)
                         
-                        filterSection(width: geometry.size.width)
+                        ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
                             .padding([.bottom], 18)
                         
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
@@ -96,43 +96,6 @@ struct ToolsView: View {
         .onAppear {
             
             viewModel.pageViewed()
-        }
-    }
-    
-    @ViewBuilder func filterSection(width: CGFloat) -> some View {
-        
-        VStack(alignment: .leading, spacing: 8) {
-            
-            Text(viewModel.filterTitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 22))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .padding(.leading, contentHorizontalInsets)
-            
-            let buttonSpacing: CGFloat = 11
-            
-            HStack(spacing: buttonSpacing) {
-                let buttonWidth = (width - (contentHorizontalInsets * 2) - buttonSpacing) / 2
-                ToolFilterButtonView(
-                    title: viewModel.categoryFilterButtonTitle,
-                    width: buttonWidth,
-                    tappedClosure: {
-                        
-                        viewModel.toolFilterTapped(filterType: .category)
-                    }
-                )
-                
-                ToolFilterButtonView(
-                    title: viewModel.languageFilterButtonTitle,
-                    width: buttonWidth,
-                    tappedClosure: {
-                        
-                        viewModel.toolFilterTapped(filterType: .language)
-                    }
-                )
-                
-            }
-            .padding([.leading, .trailing], contentHorizontalInsets)
-            .padding(.bottom, 10) // NOTE: This is needed to prevent clipping filter button shadows.
         }
     }
 }
