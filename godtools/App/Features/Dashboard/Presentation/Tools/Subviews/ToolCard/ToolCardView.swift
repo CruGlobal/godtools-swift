@@ -98,13 +98,12 @@ struct ToolCardView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    HStack(alignment: .top, spacing: 0) {
+                    HStack(alignment: .center, spacing: 0) {
                         
                         Text(viewModel.title)
                             .font(FontLibrary.sfProTextBold.font(size: 17))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)
-                            .padding([.top], 11)
                         
                         if layout == .landscape {
                             
@@ -122,6 +121,14 @@ struct ToolCardView: View {
                             category: viewModel.category
                         )
                         .padding([.top], 2)
+                    }
+                    
+                    if layout == .thumbnail {
+                        
+                        ToolCardLanguageAvailabilityView(
+                            languageAvailability: viewModel.parallelLanguageAvailability
+                        )
+                        .padding([.top], 5)
                     }
  
                     if showsNavButtons {
