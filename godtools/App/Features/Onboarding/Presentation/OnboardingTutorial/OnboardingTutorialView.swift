@@ -80,6 +80,5 @@ struct OnboardingTutorialView: View {
             .frame(maxWidth: .infinity)
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
