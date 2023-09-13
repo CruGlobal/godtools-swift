@@ -10,6 +10,8 @@ import SwiftUI
 
 struct OnboardingTutorialView: View {
         
+    private let layoutDirection: LayoutDirection = .rightToLeft
+    
     @ObservedObject private var viewModel: OnboardingTutorialViewModel
     
     init(viewModel: OnboardingTutorialViewModel) {
@@ -22,7 +24,45 @@ struct OnboardingTutorialView: View {
         GeometryReader { geometry in
             
             VStack(alignment: .center, spacing: 0) {
-                                
+                   
+                PagedView(layoutDirection: layoutDirection, numberOfPages: viewModel.pages.count, currentPage: $viewModel.currentPage) { (page: Int) in
+                    
+                    switch viewModel.pages[page] {
+                        
+                    case .readyForEveryConversation:
+                       
+                        OnboardingTutorialReadyForEveryConversationView(
+                            viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
+                            geometry: geometry,
+                            watchVideoTappedClosure: {
+                                viewModel.watchReadyForEveryConversationVideoTapped()
+                            }
+                        )
+                        
+                    case .talkAboutGodWithAnyone:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
+                            geometry: geometry
+                        )
+                        
+                    case .prepareForTheMomentsThatMatter:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
+                            geometry: geometry
+                        )
+                        
+                    case .helpSomeoneDiscoverJesus:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
+                            geometry: geometry
+                        )
+                    }
+                }
+                
+                /*
                 TabView(selection: $viewModel.currentPage) {
 
                     Group {
@@ -67,14 +107,15 @@ struct OnboardingTutorialView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeOut, value: viewModel.currentPage)
-                     
+                     */
+                
                 OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
                     viewModel.continueTapped()
                 }
                 
                 FixedVerticalSpacer(height: 30)
                 
-                PageControl(numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
+                PageControl(layoutDirection: layoutDirection, numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
             }
             .frame(maxWidth: .infinity)

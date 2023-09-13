@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LearnToShareToolView: View {
     
+    private let layoutDirection: LayoutDirection = .leftToRight
     private let pageControlAttributes: PageControlAttributesType = GTPageControlAttributes()
     private let continueButtonPadding: CGFloat = 50
     
@@ -49,6 +50,7 @@ struct LearnToShareToolView: View {
                 }
                             
                 PageControl(
+                    layoutDirection: layoutDirection,
                     numberOfPages: viewModel.numberOfLearnToShareToolItems,
                     attributes: pageControlAttributes,
                     currentPage: $viewModel.currentPage
