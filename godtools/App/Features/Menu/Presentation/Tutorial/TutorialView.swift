@@ -64,6 +64,5 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
