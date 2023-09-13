@@ -6814,10 +6814,9 @@
 		45DD84C42A8BD53E0066A020 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				D40D77BB2AAF9899008D3642 /* ToolsFilterSelectionView */,
 				45DD84CA2A8BD65F0066A020 /* FavoritingToolBanner */,
 				45920D362A8D1C9600E336A8 /* ToolCard */,
-				D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */,
+				D40D77BB2AAF9899008D3642 /* ToolsFilterSelectionView */,
 				45920D322A8D17FD00E336A8 /* ToolSpotlight */,
 			);
 			path = Subviews;
@@ -7910,17 +7909,6 @@
 			path = SearchBar;
 			sourceTree = "<group>";
 		};
-		D40D77B62AA90112008D3642 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				45920D4E2A8D3D1800E336A8 /* ToolsView.swift */,
-				45920D4D2A8D3D1800E336A8 /* ToolsViewModel.swift */,
-				D496B90D2A9FD39500CBEA19 /* ToolFilterSelection.swift */,
-				45DD84C42A8BD53E0066A020 /* Subviews */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
 		D40D77BB2AAF9899008D3642 /* ToolsFilterSelectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -7936,6 +7924,14 @@
 				45E5851B2A8E5C7F005B20A6 /* ToolFilterButtonView */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D40D77BD2AB23183008D3642 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D496B90D2A9FD39500CBEA19 /* ToolFilterSelection.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D41B38C028906AF600BD5899 /* GetDeviceLanguageUseCase */ = {
@@ -8092,6 +8088,7 @@
 				45C152822A4488D100F2A1E8 /* Lesson */,
 				D473469429072A7600579463 /* Lessons */,
 				45C1528D2A44896C00F2A1E8 /* Tool */,
+				D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */,
 				D473469629072A8700579463 /* Tools */,
 			);
 			path = Presentation;
@@ -8122,7 +8119,10 @@
 			isa = PBXGroup;
 			children = (
 				D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */,
-				D40D77B62AA90112008D3642 /* Presentation */,
+				45920D4E2A8D3D1800E336A8 /* ToolsView.swift */,
+				45920D4D2A8D3D1800E336A8 /* ToolsViewModel.swift */,
+				D40D77BD2AB23183008D3642 /* Models */,
+				45DD84C42A8BD53E0066A020 /* Subviews */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -8139,9 +8139,9 @@
 		D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */ = {
 			isa = PBXGroup;
 			children = (
-				D496B9122AA1161A00CBEA19 /* ViewModel */,
 				D496B9032A9D205000CBEA19 /* ToolFilterSelectionView.swift */,
 				D496B9012A9D1BF000CBEA19 /* ToolFilterType.swift */,
+				D496B9122AA1161A00CBEA19 /* ViewModel */,
 				D496B9072A9FC22A00CBEA19 /* Subviews */,
 			);
 			path = ToolFilterSelectionView;
