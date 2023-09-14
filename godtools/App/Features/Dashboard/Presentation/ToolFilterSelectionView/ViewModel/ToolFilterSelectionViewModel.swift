@@ -13,6 +13,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     
     var selectedCategory: ToolCategoryDomainModel? = nil
     var selectedLanguage: LanguageDomainModel? = nil
+    var searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
@@ -22,7 +23,6 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var idSelected: String?
-    @Published var searchText = ""
     
     init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
         
@@ -39,5 +39,15 @@ class ToolFilterSelectionViewModel: ObservableObject {
             ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "4 Tools available", filterValueId: "4"),
             ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "5 Tools available", filterValueId: "5")
         ]
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolFilterSelectionViewModel {
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(searchTextPublisher: searchTextPublisher, localizationServices: localizationServices)
     }
 }

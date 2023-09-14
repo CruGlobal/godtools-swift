@@ -1060,6 +1060,7 @@
 		D409F2C6292EA26700D9D2FE /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */; };
 		D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */; };
 		D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */; };
+		D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */; };
 		D41B38A7287DFF1F00BD5899 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38A6287DFF1F00BD5899 /* LessonsView.swift */; };
 		D41B38AE287F149900BD5899 /* LessonsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38AD287F149900BD5899 /* LessonsViewModel.swift */; };
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */; };
@@ -2202,6 +2203,7 @@
 		D409F2C5292EA26700D9D2FE /* UserAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolStringKeys.swift; sourceTree = "<group>"; };
 		D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsFilterSectionView.swift; sourceTree = "<group>"; };
+		D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		D41B38A6287DFF1F00BD5899 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		D41B38AD287F149900BD5899 /* LessonsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsViewModel.swift; sourceTree = "<group>"; };
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageUseCase.swift; sourceTree = "<group>"; };
@@ -7905,6 +7907,7 @@
 			isa = PBXGroup;
 			children = (
 				D496B9052A9E702200CBEA19 /* SearchBar.swift */,
+				D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */,
 			);
 			path = SearchBar;
 			sourceTree = "<group>";
@@ -9330,6 +9333,7 @@
 				D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */,
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
+				D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */,
 				45C152412A43D1BD00F2A1E8 /* ReviewShareShareableViewModel.swift in Sources */,
 				4570B7042889B1760024C931 /* DownloadToolView.swift in Sources */,
 				45052141295F3B9D0018ABD0 /* RealmUserCountersCache.swift in Sources */,
