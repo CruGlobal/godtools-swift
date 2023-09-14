@@ -16,7 +16,7 @@ struct PageControlButton: View {
     
     @Binding private var currentPage: Int
     
-    init(layoutDirection: LayoutDirection, page: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
+    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.swiftUI, page: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
         
         self.layoutDirection = layoutDirection
         self.page = page

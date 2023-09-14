@@ -19,7 +19,7 @@ struct PagedView<Content: View>: View {
     
     @Binding private var currentPage: Int
     
-    init(layoutDirection: LayoutDirection, numberOfPages: Int, currentPage: Binding<Int>, @ViewBuilder content: @escaping (_ page: Int) -> Content) {
+    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.swiftUI, numberOfPages: Int, currentPage: Binding<Int>, @ViewBuilder content: @escaping (_ page: Int) -> Content) {
         
         self.layoutDirection = layoutDirection
         self.numberOfPages = numberOfPages
