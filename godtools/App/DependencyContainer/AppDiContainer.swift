@@ -14,8 +14,6 @@ class AppDiContainer {
     private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
-
-    let firebaseInAppMessaging: FirebaseInAppMessagingType
     
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
@@ -29,8 +27,6 @@ class AppDiContainer {
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
                                                         
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
-                                                                                            
-        firebaseInAppMessaging = FirebaseInAppMessaging()
     }
     
     func getCardJumpService() -> CardJumpService {
@@ -119,38 +115,6 @@ class AppDiContainer {
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
-    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
-        let config: AppConfig = dataLayer.getAppConfig()
-        let webSocket: WebSocketType = StarscreamWebSocket()
-        return TractRemoteSharePublisher(
-            config: config,
-            webSocket: webSocket,
-            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
-            loggingEnabled: appBuild.isDebug
-        )
-    }
-    
-    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
-        let config: AppConfig = dataLayer.getAppConfig()
-        let webSocket: WebSocketType = StarscreamWebSocket()
-        return TractRemoteShareSubscriber(
-            config: config,
-            webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: appBuild.isDebug),
-            loggingEnabled: appBuild.isDebug
-        )
-    }
-    
-    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
-        return TractRemoteShareURLBuilder()
-    }
-    
-    func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
-        return TutorialVideoAnalytics(
-            trackActionAnalytics: dataLayer.getAnalytics().trackActionAnalytics
         )
     }
 }

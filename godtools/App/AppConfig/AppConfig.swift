@@ -9,19 +9,35 @@
 import Foundation
 import SocialAuthentication
 
-class AppConfig {
+class AppConfig: AppConfigInterface {
         
     private let appBuild: AppBuild
-    
-    let appleAppId: String = "542773210"
-    let facebookConfig: FacebookConfiguration
-    let googleAuthenticationConfiguration: GoogleAuthenticationConfiguration
-    
+        
     init(appBuild: AppBuild) {
         
         self.appBuild = appBuild
+    }
+    
+    func getAppleAppId() -> String {
+        return "542773210"
+    }
+    
+    func getAppsFlyerConfiguration() -> AppsFlyerConfiguration {
         
-        facebookConfig = FacebookConfiguration(
+        return AppsFlyerConfiguration(
+            appleAppId: getAppleAppId(),
+            appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
+            shouldUseUninstallSandbox: appBuild.isDebug
+        )
+    }
+    
+    func getAppsFlyerDevKey() -> String {
+        return "QdbVaVHi9bHRchUTWtoaij"
+    }
+    
+    func getFacebookConfiguration() -> FacebookConfiguration {
+        
+        return FacebookConfiguration(
             appId: "2236701616451487",
             clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
             displayName: "GodTools",
@@ -30,8 +46,30 @@ class AppConfig {
             isAdvertiserIDCollectionEnabled: false,
             isSKAdNetworkReportEnabled: false
         )
+    }
+    
+    func getFirebaseGoogleServiceFileName() -> String {
         
-        googleAuthenticationConfiguration = AppConfig.getGoogleAuthenticationConfiguration(environment: appBuild.environment)
+        switch appBuild.environment {
+        
+        case .staging:
+            return "GoogleService-Info-Debug"
+        case .production:
+            return "GoogleService-Info"
+        }
+    }
+    
+    func getGoogleAdwordsConversionId() -> String {
+        return "uYJUCLG6tmoQ4cGaoAM"
+    }
+    
+    func getGoogleAdwordsLabel() -> String {
+        return "872849633"
+    }
+    
+    func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration {
+        
+        return AppConfig.getGoogleAuthenticationConfiguration(environment: appBuild.environment)
     }
     
     private static func getGoogleAuthenticationConfiguration(environment: AppEnvironment) -> GoogleAuthenticationConfiguration {
@@ -53,16 +91,7 @@ class AppConfig {
         return GoogleAuthenticationConfiguration(clientId: clientId, serverClientId: serverClientId, hostedDomain: nil, openIDRealm: nil)
     }
     
-    var appsFlyerConfiguration: AppsFlyerConfiguration {
-            
-            return AppsFlyerConfiguration(
-                appleAppId: appleAppId,
-                appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
-                shouldUseUninstallSandbox: appBuild.isDebug
-            )
-        }
-    
-    var mobileContentApiBaseUrl: String {
+    func getMobileContentApiBaseUrl() -> String {
         
         switch appBuild.environment {
         
@@ -73,31 +102,8 @@ class AppConfig {
         }
     }
     
-    var tractRemoteShareConnectionUrl: String {
+    func getTractRemoteShareConnectionUrl() -> String {
         
-        return mobileContentApiBaseUrl + "/" + "cable"
-    }
-    
-    var appsFlyerDevKey: String {
-        return "QdbVaVHi9bHRchUTWtoaij"
-    }
-    
-    var googleAdwordsLabel: String {
-        return "872849633"
-    }
-    
-    var googleAdwordsConversionId: String {
-        return "uYJUCLG6tmoQ4cGaoAM"
-    }
-    
-    var firebaseGoogleServiceFileName: String {
-        
-        switch appBuild.environment {
-        
-        case .staging:
-            return "GoogleService-Info-Debug"
-        case .production:
-            return "GoogleService-Info"
-        }
+        return getMobileContentApiBaseUrl() + "/" + "cable"
     }
 }

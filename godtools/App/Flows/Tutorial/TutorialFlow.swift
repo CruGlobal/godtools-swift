@@ -72,7 +72,7 @@ extension TutorialFlow {
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analytics: appDiContainer.dataLayer.getAnalytics(),
-            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
+            tutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
         )
         
         let view = TutorialView(viewModel: viewModel)

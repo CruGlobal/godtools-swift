@@ -27,7 +27,8 @@ class TractRemoteShareSubscriber: NSObject {
     
     required init(config: AppConfig, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
         
-        self.remoteUrl = URL(string: config.tractRemoteShareConnectionUrl)!
+        // TODO: Shouldn't force unwrap here. ~Levi
+        self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
         self.webSocket = webSocket
         self.webSocketChannelSubscriber = webSocketChannelSubscriber
         self.loggingEnabled = loggingEnabled

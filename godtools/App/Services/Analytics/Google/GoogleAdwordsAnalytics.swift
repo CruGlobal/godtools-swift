@@ -20,8 +20,8 @@ class GoogleAdwordsAnalytics {
     func recordAdwordsConversion() {
         
         ACTConversionReporter.report(
-            withConversionID: config.googleAdwordsConversionId,
-            label: config.googleAdwordsLabel,
+            withConversionID: config.getGoogleAdwordsConversionId(),
+            label: config.getGoogleAdwordsLabel(),
             value: "1.00",
             isRepeatable: false
         )

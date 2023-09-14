@@ -134,7 +134,7 @@ class ToolSettingsFlow: Flow {
                 
             case .success(let channel):
                 
-                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.getTractRemoteShareURLBuilder()
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.dataLayer.getTractRemoteShareURLBuilder()
                 
                 let resource: ResourceModel = toolData.renderer.value.resource
                 let primaryLanguage: LanguageDomainModel = settingsPrimaryLanguage.value
@@ -271,7 +271,7 @@ class ToolSettingsFlow: Flow {
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
-            tutorialVideoAnalytics: appDiContainer.getTutorialVideoAnalytics()
+            tutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
         )
 
         let view = ShareToolScreenTutorialView(viewModel: viewModel)

@@ -19,7 +19,7 @@ class MobileContentTranslationsApi {
     required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
         session = ignoreCacheSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     // MARK: - Files
