@@ -63,14 +63,11 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      # TODO: Currently disabling UITests.  Need to see if we can reduce the execution time.  Created task here GT-2113. ~Levi
       #- name: Run UITests
       #  run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-UITests -destination 'platform=iOS Simulator,name=iPhone 14'
 
       - name: Run Tests
-        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-Production -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
-        # TODO: See if Fastlane can be used to store .xcresult at -resultBundlePath for Code Coverage Upload Action GT-2043.
-        #run: bundle exec fastlane cru_shared_lane_run_tests xcargs:"-resultBundlePath='/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result'"
+        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
@@ -79,7 +76,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
           xcode: true
-          xcode_archive_path: /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result.xcresult
+          xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
