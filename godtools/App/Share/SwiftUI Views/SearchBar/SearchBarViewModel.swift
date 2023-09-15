@@ -11,7 +11,7 @@ import Combine
 
 class SearchBarViewModel: ObservableObject {
     
-    var searchTextPublisher: CurrentValueSubject<String, Never>
+    let searchTextPublisher: CurrentValueSubject<String, Never>
     @Published var cancelText: String
 
     init(searchTextPublisher: CurrentValueSubject<String, Never>, localizationServices: LocalizationServices) {

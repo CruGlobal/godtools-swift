@@ -13,7 +13,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     
     var selectedCategory: ToolCategoryDomainModel? = nil
     var selectedLanguage: LanguageDomainModel? = nil
-    var searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
