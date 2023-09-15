@@ -63,10 +63,10 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      #- name: Run UITests
-      #  run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-UITests -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: Run UITests
+        run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests
 
-      - name: Run Tests
+      - name: Run Tests and Generate Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
