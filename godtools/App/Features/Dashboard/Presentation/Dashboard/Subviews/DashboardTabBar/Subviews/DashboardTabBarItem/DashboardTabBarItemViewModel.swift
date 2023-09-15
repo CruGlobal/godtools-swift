@@ -10,13 +10,13 @@ import Foundation
 
 class DashboardTabBarItemViewModel {
     
-    let tab: DashboardTabTypeDomainModel
+    let tabIndex: Int
     let title: String
     let imageName: String
     
-    init(tab: DashboardTabTypeDomainModel, title: String, imageName: String) {
+    init(tabIndex: Int, title: String, imageName: String) {
         
-        self.tab = tab
+        self.tabIndex = tabIndex
         self.title = title
         self.imageName = imageName
     }

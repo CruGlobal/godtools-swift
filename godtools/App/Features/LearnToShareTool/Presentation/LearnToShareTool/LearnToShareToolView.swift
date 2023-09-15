@@ -26,22 +26,13 @@ struct LearnToShareToolView: View {
             
             VStack(spacing: 0) {
                 
-                TabView(selection: $viewModel.currentPage) {
+                PagedView(numberOfPages: viewModel.numberOfLearnToShareToolItems, currentPage: $viewModel.currentPage) { page in
                     
-                    Group {
-                        
-                        ForEach(0 ..< viewModel.numberOfLearnToShareToolItems, id: \.self) { index in
-                            
-                            LearnToShareToolItemView(
-                                viewModel: viewModel.getLearnToShareToolItemViewModel(index: index),
-                                geometry: geometry
-                            )
-                            .tag(index)
-                        }
-                    }
+                    LearnToShareToolItemView(
+                        viewModel: viewModel.getLearnToShareToolItemViewModel(index: page),
+                        geometry: geometry
+                    )
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
                 
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonPadding * 2), height: 50) {
                     
@@ -56,6 +47,5 @@ struct LearnToShareToolView: View {
                 .padding(EdgeInsets(top: 20, leading: 0, bottom: 10, trailing: 0))
             }
         }
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
