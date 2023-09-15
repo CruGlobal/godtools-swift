@@ -56,6 +56,7 @@
 		450F94DA27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F94D627A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift */; };
 		450F94DB27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F94D727A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift */; };
 		450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F94DE27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift */; };
+		45131A012AB48B480085AF0D /* PagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A002AB48B480085AF0D /* PagedView.swift */; };
 		4515D4042A2E73AB0001545D /* AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D3FA2A2E73AB0001545D /* AuthenticationProviderInterface.swift */; };
 		4515D4052A2E73AB0001545D /* AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D3FC2A2E73AB0001545D /* AuthenticationProviderProfile.swift */; };
 		4515D4072A2E73AB0001545D /* AuthenticationProviderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515D3FE2A2E73AB0001545D /* AuthenticationProviderResponse.swift */; };
@@ -1186,6 +1187,7 @@
 		450F94D627A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardViewModel.swift; sourceTree = "<group>"; };
 		450F94D727A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardView.swift; sourceTree = "<group>"; };
 		450F94DE27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemView.swift; sourceTree = "<group>"; };
+		45131A002AB48B480085AF0D /* PagedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedView.swift; sourceTree = "<group>"; };
 		4515D3FA2A2E73AB0001545D /* AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderInterface.swift; sourceTree = "<group>"; };
 		4515D3FC2A2E73AB0001545D /* AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderProfile.swift; sourceTree = "<group>"; };
 		4515D3FE2A2E73AB0001545D /* AuthenticationProviderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderResponse.swift; sourceTree = "<group>"; };
@@ -2704,6 +2706,14 @@
 				45BDA6392954FF08007E259B /* WebArchiveQueue */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		451319FF2AB48B480085AF0D /* PagedView */ = {
+			isa = PBXGroup;
+			children = (
+				45131A002AB48B480085AF0D /* PagedView.swift */,
+			);
+			path = PagedView;
 			sourceTree = "<group>";
 		};
 		451550EC2791E3DE00526CF2 /* DownloadTool */ = {
@@ -7971,6 +7981,7 @@
 				451CEDCA282C31AB006E5105 /* LazyHList */,
 				45E347862A49C0120014CCD1 /* OptionalImage */,
 				45C2AF332A813371004958AB /* PageControl */,
+				451319FF2AB48B480085AF0D /* PagedView */,
 				45E347842A49C0120014CCD1 /* ProgressBarView */,
 				45C0FADF2A8A7CFB009A7E71 /* PullToRefreshScrollView */,
 				45E3478B2A49C04B0014CCD1 /* RoundedCorner */,
@@ -9434,6 +9445,7 @@
 				45C152E22A448A6200F2A1E8 /* RemoveToolFromFavoritesUseCase.swift in Sources */,
 				4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */,
 				45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */,
+				45131A012AB48B480085AF0D /* PagedView.swift in Sources */,
 				45AD1BE425938A4F00A096A0 /* CustomViewBuilderType.swift in Sources */,
 				45C152A32A44896C00F2A1E8 /* ToolLanguageSegmentViewModel.swift in Sources */,
 				4573133F28C1821100481640 /* ToolDetailsVersionsCardView.swift in Sources */,
