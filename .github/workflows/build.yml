@@ -68,9 +68,9 @@ jobs:
       #  run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-UITests -destination 'platform=iOS Simulator,name=iPhone 14'
 
       - name: Run Tests
-        run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-Production -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
+        #run: bundle exec xcodebuild build test -workspace godtools.xcworkspace -scheme GodTools-Production -destination 'platform=iOS Simulator,name=iPhone 14' -resultBundlePath /Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result
         # TODO: See if Fastlane can be used to store .xcresult at -resultBundlePath for Code Coverage Upload Action GT-2043.
-        #run: bundle exec fastlane cru_shared_lane_run_tests xcargs:"-resultBundlePath='/Users/runner/Library/Developer/Xcode/godtools/ResultBundle/godtools_result'"
+        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v3
@@ -134,3 +134,10 @@ jobs:
         with:
           name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"
+
+      - name: Archive Library Directory
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: runner-library-directory
+          path: "/Users/runner/Library/"
