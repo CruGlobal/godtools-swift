@@ -135,9 +135,9 @@ jobs:
           name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"
 
-      - name: Archive Library Directory
+      - name: Archive /Users/runner/work/godtools-swift/
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: runner-library-directory
-          path: "/Users/runner/Library/"
+          path: "/Users/runner/work/godtools-swift/"
