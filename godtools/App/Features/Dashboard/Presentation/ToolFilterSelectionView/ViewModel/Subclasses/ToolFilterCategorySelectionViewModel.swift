@@ -39,6 +39,15 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
+        searchTextPublisher
+            .sink { [weak self] searchText in
+                guard let self = self else { return }
+                
+                let filteredCategories = self.categories.filter { searchText.isEmpty ? true : $0.translatedName.contains(searchText) }
+                self.createRowViewModels(from: filteredCategories)
+            }
+            .store(in: &cancellables)
+        
         if let currentCategorySelected = toolFilterSelectionPublisher.value.selectedCategory {
             filterValueSelected = .category(categoryModel: currentCategorySelected)
         } else {
