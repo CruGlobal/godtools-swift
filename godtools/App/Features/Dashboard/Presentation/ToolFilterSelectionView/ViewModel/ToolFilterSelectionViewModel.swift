@@ -10,18 +10,17 @@ import Foundation
 import Combine
 
 class ToolFilterSelectionViewModel: ObservableObject {
-    
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     let getAllToolsUseCase: GetAllToolsUseCase
     let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
-    
+    let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+
     var cancellables: Set<AnyCancellable> = Set()
     
     @Published var navTitle: String = ""
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var filterValueSelected: ToolFilterValue?
-    @Published var searchText = ""
     
     init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getAllToolsUseCase: GetAllToolsUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
@@ -33,5 +32,15 @@ class ToolFilterSelectionViewModel: ObservableObject {
     
     func rowTapped(with filterValue: ToolFilterValue) {
         // overriden in subclasses
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolFilterSelectionViewModel {
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(searchTextPublisher: searchTextPublisher, localizationServices: localizationServices)
     }
 }
