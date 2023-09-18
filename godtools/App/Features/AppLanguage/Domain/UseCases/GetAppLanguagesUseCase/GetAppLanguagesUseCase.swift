@@ -11,7 +11,7 @@ import Combine
 
 class GetAppLanguagesUseCase {
     
-    private static let appLanguagesByLanguageCode: [LanguageCode] = [.chinese, .english, .french, .latvian, .russian, .spanish, .vietnamese]
+    private static let appLanguages: [LanguageCode] = [.chinese, .english, .french, .latvian, .russian, .spanish, .vietnamese]
     
     private let languagesRepository: LanguagesRepository
     private let getLanguageUseCase: GetLanguageUseCase
@@ -27,7 +27,7 @@ class GetAppLanguagesUseCase {
         return languagesRepository.getLanguagesChanged()
             .map { (void: Void) in
                 
-                let languages: [LanguageDomainModel] = GetAppLanguagesUseCase.appLanguagesByLanguageCode.compactMap({
+                let languages: [LanguageDomainModel] = GetAppLanguagesUseCase.appLanguages.compactMap({
                     self.getLanguageUseCase.getLanguage(languageCode: $0.value)
                 })
                 
