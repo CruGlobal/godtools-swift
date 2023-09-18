@@ -78,6 +78,9 @@ class MobileContentAuthTokenAPI {
             .map { (response: JsonApiResponseData<MobileContentAuthTokenDecodable>) in
                 return response.data
             }
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
 }

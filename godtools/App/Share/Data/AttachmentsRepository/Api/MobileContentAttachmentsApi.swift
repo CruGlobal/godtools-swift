@@ -26,6 +26,9 @@ class MobileContentAttachmentsApi {
         let urlRequest: URLRequest = URLRequest(url: url)
         
         return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
 }

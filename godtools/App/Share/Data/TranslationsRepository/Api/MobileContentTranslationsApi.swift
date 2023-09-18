@@ -41,6 +41,9 @@ class MobileContentTranslationsApi {
         let urlRequest: URLRequest = getTranslationFileRequest(fileName: fileName)
         
         return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
     
@@ -63,6 +66,9 @@ class MobileContentTranslationsApi {
         let urlRequest: URLRequest = getTranslationZipFileRequest(translationId: translationId)
         
         return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
 }

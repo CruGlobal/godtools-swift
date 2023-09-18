@@ -39,6 +39,9 @@ class MobileContentResourcesApi {
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest()
         
         return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
 }

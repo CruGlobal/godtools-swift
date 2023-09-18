@@ -95,6 +95,9 @@ class MobileContentApiAuthSession {
             .map {
                 $0.data
             }
+            .mapError {
+                return $0.error
+            }
             .eraseToAnyPublisher()
     }
     
