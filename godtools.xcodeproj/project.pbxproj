@@ -1024,6 +1024,8 @@
 		45FB161827DBDDB60009DF8E /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB160627DBDDB60009DF8E /* AppFlow.swift */; };
 		45FB1CC1295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB1CBF295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift */; };
 		45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB1CC0295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift */; };
+		45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A0C2AB498AD0085AF0D /* AccessibilityStrings.swift */; };
+		45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A062AB498AD0085AF0D /* LaunchEnvironmentKey.swift */; };
 		45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC123827A833BF00F4EC4F /* NavBarSelectorView.swift */; };
 		45FE598E298A98B70030C080 /* FullScreenVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE598D298A98B70030C080 /* FullScreenVideoViewModel.swift */; };
 		45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE598F298A9D760030C080 /* VideoViewConfiguration.swift */; };
@@ -8956,6 +8958,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
+				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
+				45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */,
 				45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
