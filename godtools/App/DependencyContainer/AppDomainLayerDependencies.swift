@@ -59,6 +59,20 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAppLanguagesUseCase() -> GetAppLanguagesUseCase {
+        return GetAppLanguagesUseCase(
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getAppLanguageUseCase() -> GetAppLanguageUseCase {
+        return GetAppLanguageUseCase(
+            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
+            getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
