@@ -20,7 +20,7 @@ class GetOptInOnboardingTutorialAvailableUseCase {
         
     func getOptInOnboardingTutorialIsAvailable() -> Bool {
         
-        return getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode == LanguageCodes.english
+        return getDeviceLanguageUseCase.getDeviceLanguageValue().localeLanguageCode == LanguageCode.english.value
     }
     
     func getOptInOnboardingTutorialIsAvailable() -> AnyPublisher<Bool, Never> {

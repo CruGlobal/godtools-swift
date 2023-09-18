@@ -45,7 +45,7 @@ class GetToolUseCase {
             return (language: language, translation: translation)
             
         }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: LanguageCodes.english), let englishLanguageModel = englishTranslation.language {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: LanguageCode.english.value), let englishLanguageModel = englishTranslation.language {
             
             let englishLanguageDomainModel = getLanguageUseCase.getLanguage(language: englishLanguageModel)
             
@@ -53,7 +53,7 @@ class GetToolUseCase {
         }
         else {
             
-            let englishLanguage = LanguageDomainModel(analyticsContentLanguage: LanguageCodes.english, dataModelId: "", direction: .leftToRight, localeIdentifier: LanguageCodes.english, translatedName: "English")
+            let englishLanguage = LanguageDomainModel(analyticsContentLanguage: LanguageCode.english.value, dataModelId: "", direction: .leftToRight, localeIdentifier: LanguageCode.english.value, translatedName: "English")
             
             return (language: englishLanguage, translation: nil)
         }
