@@ -12,7 +12,6 @@ import Combine
 class ToolFilterSelectionViewModel: ObservableObject {
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    let getAllToolsUseCase: GetAllToolsUseCase
     let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
     let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
 
@@ -22,11 +21,38 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var filterValueSelected: ToolFilterValue?
     
-    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getAllToolsUseCase: GetAllToolsUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    var selectedCategory: ToolCategoryDomainModel? {
+        get {
+            return toolFilterSelectionPublisher.value.selectedCategory
+            
+        } set {
+            
+            let updatedToolFilterSelection = ToolFilterSelection(
+                selectedCategory: newValue,
+                selectedLanguage: selectedLanguage
+            )
+            toolFilterSelectionPublisher.send(updatedToolFilterSelection)
+        }
+    }
+    
+    var selectedLanguage: LanguageDomainModel? {
+        get {
+            return toolFilterSelectionPublisher.value.selectedLanguage
+            
+        } set {
+            
+            let updatedToolFilterSelection = ToolFilterSelection(
+                selectedCategory: selectedCategory,
+                selectedLanguage: newValue
+            )
+            toolFilterSelectionPublisher.send(updatedToolFilterSelection)
+        }
+    }
+    
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getAllToolsUseCase = getAllToolsUseCase
         self.toolFilterSelectionPublisher = toolFilterSelectionPublisher
     }
     

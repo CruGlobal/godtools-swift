@@ -10,19 +10,21 @@ import Combine
 
 class GetToolCategoriesUseCase {
     
+    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    init( getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+        self.getAllToolsUseCase = getAllToolsUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
     }
     
-    func getToolCategoriesPublisher() -> AnyPublisher<[ToolCategoryDomainModel], Never> {
+    func getToolCategoriesPublisher(filteredByLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolCategoryDomainModel], Never> {
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChanged(),
@@ -31,11 +33,10 @@ class GetToolCategoriesUseCase {
             .flatMap({ _, primaryLanguage -> AnyPublisher<[ToolCategoryDomainModel], Never> in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllTools(sorted: false)
-                    .sortedByPrimaryLanguageAvailable(primaryLanguage: primaryLanguage, resourcesRepository: self.resourcesRepository, translationsRepository: self.translationsRepository)
+                    .getAllTools(sorted: false, languageId: filteredByLanguage?.id)
                     .getUniqueCategoryIds()
                 
-                let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage)
+                let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage, filteredByLanguage: filteredByLanguage)
                 
                 return Just(categories)
                     .eraseToAnyPublisher()
@@ -43,16 +44,49 @@ class GetToolCategoriesUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?) -> [ToolCategoryDomainModel] {
+    private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?, filteredByLanguage: LanguageDomainModel?) -> [ToolCategoryDomainModel] {
         
-        let categories: [ToolCategoryDomainModel] = ids.map { categoryId in
+        let categories: [ToolCategoryDomainModel] = ids.compactMap { categoryId in
             
-            let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: language?.localeIdentifier, key: "tool_category_\(categoryId)")
+            let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguage: filteredByLanguage)
             
-            return ToolCategoryDomainModel(id: categoryId, translatedName: translatedName)
+            guard toolsAvailableCount > 0 else {
+                return nil
+            }
+            
+            let localeId = language?.localeIdentifier
+            let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "tool_category_\(categoryId)")
+            
+            let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: localeId)
+            
+            return ToolCategoryDomainModel(
+                id: categoryId,
+                translatedName: translatedName,
+                toolsAvailableText: toolsAvailableText
+            )
         }
         
         return categories
+    }
+    
+    private func getToolsAvailableCount(for categoryId: String, filteredByLanguage: LanguageDomainModel?) -> Int {
+        
+        return getAllToolsUseCase.getAllTools(
+            sorted: false,
+            categoryId: categoryId,
+            languageId: filteredByLanguage?.id
+        ).count
+    }
+    
+    private func getToolsAvailableText(toolsAvailableCount: Int, localeId: String?) -> String {
+        
+        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+            localeIdentifier: localeId,
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
+            fileType: .stringsdict
+        )
+        
+        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
     }
 }
 

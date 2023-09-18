@@ -805,7 +805,6 @@ extension AppFlow {
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-                getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
                 toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
             
@@ -814,7 +813,6 @@ extension AppFlow {
             viewModel = ToolFilterLanguageSelectionViewModel(
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
                 toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
         }

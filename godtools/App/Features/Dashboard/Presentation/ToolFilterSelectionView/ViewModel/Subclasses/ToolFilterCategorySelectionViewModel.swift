@@ -15,11 +15,11 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     
     private var categories: [ToolCategoryDomainModel] = [ToolCategoryDomainModel]()
         
-    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getAllToolsUseCase: GetAllToolsUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
-        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, getAllToolsUseCase: getAllToolsUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
+        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -31,7 +31,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        getToolCategoriesUseCase.getToolCategoriesPublisher()
+        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguage: selectedLanguage)
             .sink { [weak self] categories in
                 
                 self?.categories = categories
@@ -58,7 +58,6 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     override func rowTapped(with filterValue: ToolFilterValue) {
         
         filterValueSelected = filterValue
-        let selectedCategory: ToolCategoryDomainModel?
         
         switch filterValue {
         case .category(let categoryModel):
@@ -70,14 +69,6 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
         default:
             return
         }
-        
-        let currentLanguage = toolFilterSelectionPublisher.value.selectedLanguage
-        let toolFilterSelection = ToolFilterSelection(
-            selectedCategory: selectedCategory,
-            selectedLanguage: currentLanguage
-            )
-        
-        toolFilterSelectionPublisher.send(toolFilterSelection)
     }
 }
 
@@ -92,7 +83,7 @@ extension ToolFilterCategorySelectionViewModel {
         let anyCategoryViewModel = ToolFilterSelectionRowViewModel(
             title: anyCategoryTitle,
             subtitle: nil,
-            toolsAvailableText: getToolsAvailableString(for: nil),
+            toolsAvailableText: "some",
             filterValue: .any
         )
         
@@ -101,29 +92,12 @@ extension ToolFilterCategorySelectionViewModel {
             return ToolFilterSelectionRowViewModel(
                 title: category.translatedName,
                 subtitle: nil,
-                toolsAvailableText: getToolsAvailableString(for: category.id),
+                toolsAvailableText: category.toolsAvailableText,
                 filterValue: .category(categoryModel: category)
             )
         }
         
         rowViewModels = [anyCategoryViewModel] + categoryViewModels
-    }
-    
-    private func getToolsAvailableString(for categoryId: String?) -> String {
-        
-        let toolsAvailableCount = getAllToolsUseCase.getAllTools(
-            sorted: false,
-            categoryId: categoryId,
-            languageId: toolFilterSelectionPublisher.value.selectedLanguage?.id
-        ).count
-        
-        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
-            localeIdentifier: getLanguageLocaleId(),
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
-            fileType: .stringsdict
-        )
-        
-        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
     }
     
     private func getLanguageLocaleId() -> String? {
