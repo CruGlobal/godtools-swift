@@ -10,9 +10,11 @@ import Foundation
 
 enum LanguageCode: String {
     
+    case chinese = "zh"
     case english = "en"
     case french = "fr"
     case latvian = "lv"
+    case russian = "ru"
     case spanish = "es"
     case vietnamese = "vi"
     
