@@ -46,9 +46,6 @@ class MobileContentLanguagesApi {
             .map { (languagesResponse: JsonApiResponseData<[LanguageModel]>) in
                 return languagesResponse.data
             }
-            .mapError {
-                return $0.error
-            }
             .eraseToAnyPublisher()
     }
 }

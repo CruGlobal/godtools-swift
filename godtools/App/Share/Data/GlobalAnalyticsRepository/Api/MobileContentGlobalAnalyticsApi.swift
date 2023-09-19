@@ -46,9 +46,6 @@ class MobileContentGlobalAnalyticsApi {
             .map { (response: JsonApiResponseData<MobileContentGlobalAnalyticsDecodable>) in
                 return response.data
             }
-            .mapError {
-                return $0.error
-            }
             .eraseToAnyPublisher()
     }
 }
