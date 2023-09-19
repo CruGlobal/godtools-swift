@@ -12,21 +12,19 @@ struct DashboardTabBarItemView: View {
     
     private let unSelectedColor = Color(red: 170 / 255, green: 170 / 255, blue: 170 / 255)
     private let selectedColor = ColorPalette.gtBlue.color
-    private let tappedClosure: (() -> Void)?
         
     private var viewModel: DashboardTabBarItemViewModel
     
-    @Binding private var selectedTab: DashboardTabTypeDomainModel
+    @Binding private var currentTab: Int
     
-    init(viewModel: DashboardTabBarItemViewModel, selectedTab: Binding<DashboardTabTypeDomainModel>, tappedClosure: (() -> Void)?) {
+    init(viewModel: DashboardTabBarItemViewModel, currentTab: Binding<Int>) {
         
         self.viewModel = viewModel
-        self._selectedTab = selectedTab
-        self.tappedClosure = tappedClosure
+        self._currentTab = currentTab
     }
     
     private var isSelected: Bool {
-        return selectedTab == viewModel.tab
+        return currentTab == viewModel.tabIndex
     }
      
     var body: some View {
@@ -44,21 +42,20 @@ struct DashboardTabBarItemView: View {
             }
         }
         .onTapGesture {
-            tappedClosure?()
+            currentTab = viewModel.tabIndex
         }
     }
 }
 
 struct DashboardTabBarItemView_Preview: PreviewProvider {
     
-    @State private static var selectedTab: DashboardTabTypeDomainModel = .lessons
+    @State private static var currentTab: Int = 0
     
     static var previews: some View {
         
         DashboardTabBarItemView(
-            viewModel: DashboardTabBarItemViewModel(tab: .lessons, title: "Lessons", imageName: ""),
-            selectedTab: $selectedTab,
-            tappedClosure: nil
+            viewModel: DashboardTabBarItemViewModel(tabIndex: 0, title: "Lessons", imageName: ""),
+            currentTab: $currentTab
         )
     }
 }
