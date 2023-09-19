@@ -9,7 +9,6 @@
 import Foundation
 
 enum ToolFilterValue {
-    case any
     case category(categoryModel: ToolCategoryDomainModel)
     case language(languageModel: LanguageDomainModel)
 }
@@ -19,11 +18,6 @@ extension ToolFilterValue: Equatable {
     static func == (lhs: ToolFilterValue, rhs: ToolFilterValue) -> Bool {
         
         switch lhs {
-            
-        case .any:
-            if case .any = rhs {
-                return true
-            }
             
         case .category(let lhsCategoryModel):
             

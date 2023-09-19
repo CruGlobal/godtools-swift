@@ -57,7 +57,16 @@ class ToolFilterSelectionViewModel: ObservableObject {
     }
     
     func rowTapped(with filterValue: ToolFilterValue) {
-        // overriden in subclasses
+        
+        filterValueSelected = filterValue
+        
+        switch filterValue {
+        case .category(let categoryModel):
+            selectedCategory = categoryModel
+            
+        case .language(let languageModel):
+            selectedLanguage = languageModel
+        }
     }
 }
 

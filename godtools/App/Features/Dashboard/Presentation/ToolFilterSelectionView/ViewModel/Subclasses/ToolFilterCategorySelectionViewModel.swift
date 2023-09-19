@@ -48,26 +48,8 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        if let currentCategorySelected = toolFilterSelectionPublisher.value.selectedCategory {
+        if let currentCategorySelected = selectedCategory {
             filterValueSelected = .category(categoryModel: currentCategorySelected)
-        } else {
-            filterValueSelected = .any
-        }
-    }
-    
-    override func rowTapped(with filterValue: ToolFilterValue) {
-        
-        filterValueSelected = filterValue
-        
-        switch filterValue {
-        case .category(let categoryModel):
-            selectedCategory = categoryModel
-            
-        case .any:
-            selectedCategory = nil
-            
-        default:
-            return
         }
     }
 }
@@ -78,16 +60,7 @@ extension ToolFilterCategorySelectionViewModel {
     
     private func createRowViewModels(from categories: [ToolCategoryDomainModel]) {
         
-        let anyCategoryTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: getLanguageLocaleId(), key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
-        
-        let anyCategoryViewModel = ToolFilterSelectionRowViewModel(
-            title: anyCategoryTitle,
-            subtitle: nil,
-            toolsAvailableText: "some",
-            filterValue: .any
-        )
-        
-        let categoryViewModels = categories.map { category in
+        rowViewModels = categories.map { category in
             
             return ToolFilterSelectionRowViewModel(
                 title: category.translatedName,
@@ -95,9 +68,7 @@ extension ToolFilterCategorySelectionViewModel {
                 toolsAvailableText: category.toolsAvailableText,
                 filterValue: .category(categoryModel: category)
             )
-        }
-        
-        rowViewModels = [anyCategoryViewModel] + categoryViewModels
+        }        
     }
     
     private func getLanguageLocaleId() -> String? {

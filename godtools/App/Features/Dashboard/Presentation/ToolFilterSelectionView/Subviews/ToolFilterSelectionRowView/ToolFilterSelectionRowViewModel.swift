@@ -31,11 +31,9 @@ extension ToolFilterSelectionRowViewModel: Identifiable {
     var id: String {
         
         switch filterValue {
-        case .any:
-            return "any_filter"
             
         case .category(let categoryModel):
-            return categoryModel.id
+            return categoryModel.id ?? "any_category"
             
         case .language(let languageModel):
             return languageModel.id
