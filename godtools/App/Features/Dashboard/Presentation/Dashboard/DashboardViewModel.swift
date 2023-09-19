@@ -14,11 +14,12 @@ class DashboardViewModel: ObservableObject {
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let localizationServices: LocalizationServices
     private let showsLanguagesSettingsButton: CurrentValueSubject<Bool, Never>
+    private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
         
     private weak var flowDelegate: FlowDelegate?
         
-    @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
-    @Published var selectedTab: DashboardTabTypeDomainModel {
+    @Published var numberOfTabs: Int = 0
+    @Published var currentTab: Int {
         didSet {
             tabChanged()
         }
@@ -26,18 +27,24 @@ class DashboardViewModel: ObservableObject {
     
     init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, localizationServices: LocalizationServices, showsLanguagesSettingsButton: CurrentValueSubject<Bool, Never>) {
         
-        self.selectedTab = startingTab
+        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.localizationServices = localizationServices
         self.showsLanguagesSettingsButton = showsLanguagesSettingsButton
+        
+        numberOfTabs = tabs.count
                 
         tabChanged()
     }
     
     private func tabChanged() {
                 
-        showsLanguagesSettingsButton.send(selectedTab != .lessons)
+        showsLanguagesSettingsButton.send(tabs[currentTab] != .lessons)
+    }
+    
+    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel {
+        return tabs[tabIndex]
     }
 }
 
@@ -65,17 +72,26 @@ extension DashboardViewModel {
         return dashboardPresentationLayerDependencies.toolsViewModel
     }
     
-    func tabTapped(tab: DashboardTabTypeDomainModel) {
+    func tabTapped(tabIndex: Int) {
         
-        selectedTab = tab
+        currentTab = tabIndex
     }
     
-    func getTabBarItemViewModel(tab: DashboardTabTypeDomainModel) -> DashboardTabBarItemViewModel {
+    func tabTapped(tab: DashboardTabTypeDomainModel) {
+        
+        guard let index = tabs.firstIndex(of: tab) else {
+            return
+        }
+        
+        tabTapped(tabIndex: index)
+    }
+    
+    func getTabBarItemViewModel(tabIndex: Int) -> DashboardTabBarItemViewModel {
         
         let imageName: String
         let titleLocalizedKey: String
         
-        switch tab {
+        switch tabs[tabIndex] {
             
         case .lessons:
             imageName = ImageCatalog.toolsMenuLessons.name
@@ -91,7 +107,7 @@ extension DashboardViewModel {
         }
         
         return DashboardTabBarItemViewModel(
-            tab: tab,
+            tabIndex: tabIndex,
             title: localizationServices.stringForSystemElseEnglish(key: titleLocalizedKey),
             imageName: imageName
         )

@@ -10,13 +10,15 @@ import SwiftUI
 
 struct PageControlButton: View {
     
-    let page: Int
-    let attributes: PageControlAttributesType
+    private let layoutDirection: LayoutDirection
+    private let page: Int
+    private let attributes: PageControlAttributesType
     
-    @Binding var currentPage: Int
+    @Binding private var currentPage: Int
     
-    init(page: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
+    init(layoutDirection: LayoutDirection, page: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
         
+        self.layoutDirection = layoutDirection
         self.page = page
         self.attributes = attributes
         self._currentPage = currentPage
@@ -56,6 +58,6 @@ struct PageControlButton_Previews: PreviewProvider {
         
         let attributes = PageControlAttributes(deselectedColor: .gray, selectedColor: .blue, circleSize: 10, circleSpacing: 20)
         
-        PageControlButton(page: 0, attributes: attributes, currentPage: $currentPage)
+        PageControlButton(layoutDirection: .leftToRight, page: 0, attributes: attributes, currentPage: $currentPage)
     }
 }
