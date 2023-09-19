@@ -22,9 +22,9 @@ class GetAccountCreationIsSupportedUseCase {
     
     func getIsSupportedPublisher() -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
         
-        let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguage()
+        let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguageValue()
         
-        let supportedLanguageCodes: [String] = [LanguageCodes.english]
+        let supportedLanguageCodes: [String] = [LanguageCode.english.value]
         
         let deviceSystemLanguageIsInSupportedLanguageCodes: Bool = supportedLanguageCodes.contains(deviceLanguage.localeLanguageCode)
                 

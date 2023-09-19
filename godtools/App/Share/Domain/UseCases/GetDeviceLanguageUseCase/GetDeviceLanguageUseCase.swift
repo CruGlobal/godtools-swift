@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetDeviceLanguageUseCase {
        
@@ -17,7 +18,13 @@ class GetDeviceLanguageUseCase {
         self.getLanguageUseCase = getLanguageUseCase
     }
     
-    func getDeviceLanguage() -> DeviceLanguageDomainModel {
+    func getDeviceLanguagePublisher() -> AnyPublisher<DeviceLanguageDomainModel, Never> {
+        
+        return Just(getDeviceLanguageValue())
+            .eraseToAnyPublisher()
+    }
+    
+    func getDeviceLanguageValue() -> DeviceLanguageDomainModel {
                 
         let deviceLocale: Locale = getDeviceLocale()
         

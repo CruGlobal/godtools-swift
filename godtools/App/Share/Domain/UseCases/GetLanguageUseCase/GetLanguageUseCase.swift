@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetLanguageUseCase {
     
@@ -17,6 +18,20 @@ class GetLanguageUseCase {
         
         self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
+    }
+    
+    func getLanguagePublisher(languageCode: String) -> AnyPublisher<LanguageDomainModel?, Never> {
+        
+        return languagesRepository.getLanguagesChanged()
+            .map { (void: Void) in
+                
+                guard let languageModel = self.languagesRepository.getLanguage(code: languageCode) else {
+                    return nil
+                }
+                
+                return self.getLanguage(language: languageModel)
+            }
+            .eraseToAnyPublisher()
     }
     
     func getLanguage(id: String) -> LanguageDomainModel? {

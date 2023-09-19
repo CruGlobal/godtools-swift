@@ -308,7 +308,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToDashboard()
                 
-                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguageValue().localeLanguageCode
                 
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",

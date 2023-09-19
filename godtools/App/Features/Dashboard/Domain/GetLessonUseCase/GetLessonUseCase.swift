@@ -28,7 +28,7 @@ class GetLessonUseCase {
             
             title = primaryTranslation.translatedName
         }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodes.english) {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCode.english.value) {
             
             title = englishTranslation.translatedName
         }
