@@ -70,7 +70,7 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, Error> {
+    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
         let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
         
@@ -78,8 +78,8 @@ class MobileContentAuthTokenAPI {
             .map { (response: JsonApiResponseData<MobileContentAuthTokenDecodable>) in
                 return response.data
             }
-            .mapError {
-                return $0.error
+            .mapError { (error: Error) in
+                return error.decodeRequestOperationErrorToMobileContentApiError()
             }
             .eraseToAnyPublisher()
     }

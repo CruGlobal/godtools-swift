@@ -26,3 +26,15 @@ struct MobileContentApiErrorCodable: Codable {
         detail = try container.decode(String.self, forKey: .detail)
     }
 }
+
+extension MobileContentApiErrorCodable {
+    
+    func getCodeEnum() -> MobileContentApiErrorCodableCode {
+        
+        guard !code.isEmpty, let codeEnum = MobileContentApiErrorCodableCode(rawValue: code) else {
+            return .unknown
+        }
+        
+        return codeEnum
+    }
+}
