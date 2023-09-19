@@ -92,14 +92,14 @@ class MenuFlow: Flow {
         case .userCompletedSignInFromCreateAccount(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentError(error: error)
+                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
         case .userCompletedSignInFromLogin(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentError(error: error)
+                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
@@ -300,6 +300,28 @@ class MenuFlow: Flow {
         modal.view.backgroundColor = viewBackgroundUIColor
                 
         return modal
+    }
+    
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
+        
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let message: String
+        
+        switch authError {
+        case .accountAlreadyExists:
+            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountAlreadyExists.message")
+            
+        case .accountNotFound:
+            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountNotFound.message")
+            
+        case .other(let error):
+            message = error.localizedDescription
+        }
+        
+        return AlertMessage(
+            title: "",
+            message: message
+        )
     }
     
     private func getAccountView() -> UIViewController {
