@@ -1,5 +1,5 @@
 //
-//  MobileContentApiErrors.swift
+//  MobileContentApiErrorCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/18/23.
@@ -8,18 +8,21 @@
 
 import Foundation
 
-struct MobileContentApiErrors: Codable {
+struct MobileContentApiErrorCodable: Codable {
     
-    let errors: [MobileContentApiError]
+    let code: String
+    let detail: String
     
     enum RootKeys: String, CodingKey {
-        case errors = "errors"
+        case code = "code"
+        case detail = "detail"
     }
     
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
         
-        errors = try container.decode([MobileContentApiError].self, forKey: .errors)
+        code = try container.decode(String.self, forKey: .code)
+        detail = try container.decode(String.self, forKey: .detail)
     }
 }
