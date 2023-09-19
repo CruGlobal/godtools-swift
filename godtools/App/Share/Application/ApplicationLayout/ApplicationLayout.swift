@@ -23,6 +23,6 @@ class ApplicationLayout {
         ApplicationLayout.direction = direction
         
         // Globablly set all UIKit UIView's to flip direction for language.  This appears to apply to UINavigationController navigation push and pop as well. ~Levi
-        UIView.appearance().semanticContentAttribute = direction.uiKit
+        UIView.appearance().semanticContentAttribute = direction.semanticContentAttribute
     }
 }

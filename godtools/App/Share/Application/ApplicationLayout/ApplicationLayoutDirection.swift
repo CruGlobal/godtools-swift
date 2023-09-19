@@ -15,7 +15,7 @@ enum ApplicationLayoutDirection {
     case leftToRight
     case rightToLeft
     
-    var swiftUI: LayoutDirection {
+    var layoutDirection: LayoutDirection {
         switch self {
         case .leftToRight:
             return .leftToRight
@@ -24,7 +24,7 @@ enum ApplicationLayoutDirection {
         }
     }
     
-    var uiKit: UISemanticContentAttribute {
+    var semanticContentAttribute: UISemanticContentAttribute {
         switch self {
         case .leftToRight:
             return .forceLeftToRight
