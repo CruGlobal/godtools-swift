@@ -10,6 +10,11 @@ import Foundation
 
 extension Flow {
     
+    func presentAlertMessage(alertMessage: AlertMessageType) {
+        
+        presentAlert(title: alertMessage.title, message: alertMessage.message)
+    }
+    
     func presentAlert(title: String, message: String) {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
