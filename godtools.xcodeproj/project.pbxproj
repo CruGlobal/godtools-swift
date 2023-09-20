@@ -116,6 +116,7 @@
 		452E62CE2ABA564D00EA4C83 /* LocalizableStringsBundleLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E62C12ABA564D00EA4C83 /* LocalizableStringsBundleLoaderTests.swift */; };
 		452E62CF2ABA564D00EA4C83 /* LocalizableStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E62C22ABA564D00EA4C83 /* LocalizableStringsRepositoryTests.swift */; };
 		452E62D02ABA564D00EA4C83 /* LocalizationServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E62C32ABA564D00EA4C83 /* LocalizationServicesTests.swift */; };
+		452E62DB2ABA57DD00EA4C83 /* GetAppLanguageUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E62DA2ABA57DD00EA4C83 /* GetAppLanguageUseCaseTests.swift */; };
 		452F4B082A97E117003071D1 /* PageNavigationCollectionViewCenterLayoutPageAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452F4B072A97E117003071D1 /* PageNavigationCollectionViewCenterLayoutPageAttributes.swift */; };
 		45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F19285CF8B40078D932 /* SegmentControl.swift */; };
 		45325F24285CF8B40078D932 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1A285CF8B40078D932 /* Segment.swift */; };
@@ -381,6 +382,15 @@
 		4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
 		4578783527C41C50004552D5 /* BackgroundImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578783327C41C50004552D5 /* BackgroundImageModel.swift */; };
 		4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579DA7D283571D3007DE30E /* ToolSettingsLanguageListType.swift */; };
+		457A03242ABA5C6300C0C504 /* DeviceSystemLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03232ABA5C6300C0C504 /* DeviceSystemLanguage.swift */; };
+		457A03292ABA639F00C0C504 /* GetDeviceLanguageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03282ABA639F00C0C504 /* GetDeviceLanguageInterface.swift */; };
+		457A032B2ABA641100C0C504 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A032A2ABA641100C0C504 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift */; };
+		457A032D2ABA75B500C0C504 /* AppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A032C2ABA75B500C0C504 /* AppLanguageDomainModel.swift */; };
+		457A032F2ABA797600C0C504 /* TestsDeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A032E2ABA797600C0C504 /* TestsDeviceLanguage.swift */; };
+		457A03322ABA7C5800C0C504 /* GetAppLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03312ABA7C5800C0C504 /* GetAppLanguagesRepositoryInterface.swift */; };
+		457A03352ABA7D0000C0C504 /* AppLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03342ABA7D0000C0C504 /* AppLanguagesRepository.swift */; };
+		457A03372ABA7D1400C0C504 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03362ABA7D1400C0C504 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift */; };
+		457A03392ABA7DCF00C0C504 /* TestsAppLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A03382ABA7DCF00C0C504 /* TestsAppLanguagesRepository.swift */; };
 		457C36E82A96607F001288D8 /* PageNavigationCollectionViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457C36E72A96607F001288D8 /* PageNavigationCollectionViewLayoutType.swift */; };
 		457C36EA2A968A9E001288D8 /* PageNavigationCollectionViewCenteredLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457C36E92A968A9E001288D8 /* PageNavigationCollectionViewCenteredLayout.swift */; };
 		457C4C742ABA315D00CFAC1D /* PagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457C4C732ABA315D00CFAC1D /* PagedView.swift */; };
@@ -978,6 +988,10 @@
 		45F3D39929A50B1300446F69 /* onboarding_talk_about_god.json in Resources */ = {isa = PBXBuildFile; fileRef = 45F3D39629A50B1300446F69 /* onboarding_talk_about_god.json */; };
 		45F3D39A29A50B1300446F69 /* onboarding_help_someone_discover_jesus.json in Resources */ = {isa = PBXBuildFile; fileRef = 45F3D39729A50B1300446F69 /* onboarding_help_someone_discover_jesus.json */; };
 		45F3D39D29A514D200446F69 /* OnboardingTutorialPageAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3D39C29A514D200446F69 /* OnboardingTutorialPageAnalyticsProperties.swift */; };
+		45F410FD2ABA8ADC0051F6B6 /* UserAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F410FC2ABA8ADC0051F6B6 /* UserAppLanguageRepository.swift */; };
+		45F411012ABA8B280051F6B6 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F411002ABA8B280051F6B6 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift */; };
+		45F411032ABA8B510051F6B6 /* TestsUserAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F411022ABA8B510051F6B6 /* TestsUserAppLanguageRepository.swift */; };
+		45F411062ABA8BC50051F6B6 /* GetUserAppLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F411052ABA8BC50051F6B6 /* GetUserAppLanguageRepositoryInterface.swift */; };
 		45F71620290A12D70019B715 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715BF290A12D70019B715 /* TutorialViewModel.swift */; };
 		45F71622290A12D70019B715 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C1290A12D70019B715 /* TutorialView.swift */; };
 		45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715C3290A12D70019B715 /* WebContentViewModel.swift */; };
@@ -1264,6 +1278,7 @@
 		452E62C22ABA564D00EA4C83 /* LocalizableStringsRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		452E62C32ABA564D00EA4C83 /* LocalizationServicesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationServicesTests.swift; sourceTree = "<group>"; };
 		452E62C82ABA564D00EA4C83 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
+		452E62DA2ABA57DD00EA4C83 /* GetAppLanguageUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguageUseCaseTests.swift; sourceTree = "<group>"; };
 		452F4B072A97E117003071D1 /* PageNavigationCollectionViewCenterLayoutPageAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewCenterLayoutPageAttributes.swift; sourceTree = "<group>"; };
 		45325F19285CF8B40078D932 /* SegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
 		45325F1A285CF8B40078D932 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
@@ -1530,6 +1545,15 @@
 		4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignment.swift; sourceTree = "<group>"; };
 		4578783327C41C50004552D5 /* BackgroundImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageModel.swift; sourceTree = "<group>"; };
 		4579DA7D283571D3007DE30E /* ToolSettingsLanguageListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageListType.swift; sourceTree = "<group>"; };
+		457A03232ABA5C6300C0C504 /* DeviceSystemLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSystemLanguage.swift; sourceTree = "<group>"; };
+		457A03282ABA639F00C0C504 /* GetDeviceLanguageInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageInterface.swift; sourceTree = "<group>"; };
+		457A032A2ABA641100C0C504 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceSystemLanguage+GetDeviceLanguageInterface.swift"; sourceTree = "<group>"; };
+		457A032C2ABA75B500C0C504 /* AppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageDomainModel.swift; sourceTree = "<group>"; };
+		457A032E2ABA797600C0C504 /* TestsDeviceLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsDeviceLanguage.swift; sourceTree = "<group>"; };
+		457A03312ABA7C5800C0C504 /* GetAppLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
+		457A03342ABA7D0000C0C504 /* AppLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguagesRepository.swift; sourceTree = "<group>"; };
+		457A03362ABA7D1400C0C504 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift"; sourceTree = "<group>"; };
+		457A03382ABA7DCF00C0C504 /* TestsAppLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsAppLanguagesRepository.swift; sourceTree = "<group>"; };
 		457C36E72A96607F001288D8 /* PageNavigationCollectionViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewLayoutType.swift; sourceTree = "<group>"; };
 		457C36E92A968A9E001288D8 /* PageNavigationCollectionViewCenteredLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewCenteredLayout.swift; sourceTree = "<group>"; };
 		457C4C732ABA315D00CFAC1D /* PagedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedView.swift; sourceTree = "<group>"; };
@@ -2027,6 +2051,7 @@
 		45E585142A8E4497005B20A6 /* AllYourFavoriteToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllYourFavoriteToolsView.swift; sourceTree = "<group>"; };
 		45E5851D2A8E5C7F005B20A6 /* ToolFilterButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolFilterButtonView.swift; sourceTree = "<group>"; };
 		45E585252A8E77F3005B20A6 /* TwoRowHStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoRowHStack.swift; sourceTree = "<group>"; };
+		45E66C352ABA82DA0014FE03 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
@@ -2071,6 +2096,10 @@
 		45F3D39629A50B1300446F69 /* onboarding_talk_about_god.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_talk_about_god.json; sourceTree = "<group>"; };
 		45F3D39729A50B1300446F69 /* onboarding_help_someone_discover_jesus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding_help_someone_discover_jesus.json; sourceTree = "<group>"; };
 		45F3D39C29A514D200446F69 /* OnboardingTutorialPageAnalyticsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialPageAnalyticsProperties.swift; sourceTree = "<group>"; };
+		45F410FC2ABA8ADC0051F6B6 /* UserAppLanguageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAppLanguageRepository.swift; sourceTree = "<group>"; };
+		45F411002ABA8B280051F6B6 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift"; sourceTree = "<group>"; };
+		45F411022ABA8B510051F6B6 /* TestsUserAppLanguageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsUserAppLanguageRepository.swift; sourceTree = "<group>"; };
+		45F411052ABA8BC50051F6B6 /* GetUserAppLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserAppLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
 		45F715BF290A12D70019B715 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		45F715C1290A12D70019B715 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		45F715C3290A12D70019B715 /* WebContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContentViewModel.swift; sourceTree = "<group>"; };
@@ -2465,6 +2494,7 @@
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45E66C352ABA82DA0014FE03 /* Quick.framework */,
 				4F2500611F0C1E8D00364FBC /* AdSupport.framework */,
 				D61FF360D11F854476B6E206 /* Pods_godtools.framework */,
 				D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */,
@@ -2700,6 +2730,7 @@
 		4511D244286CB9D200276174 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				457A03332ABA7CF900C0C504 /* AppLanguagesRepository */,
 				459E86B228ED1A9B00E197A5 /* AppsFlyer */,
 				45BDA5D32954FE3E007E259B /* ArticlesRepository */,
 				45D63E79288F75B0009B4610 /* AttachmentsRepository */,
@@ -2730,6 +2761,7 @@
 				4520407B2959E512004D843E /* SetupParallelLanguageViewedRepository */,
 				450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */,
 				45B36523288504D40012BE53 /* TranslationsRepository */,
+				45F410FB2ABA8ACE0051F6B6 /* UserAppLanguageRepository */,
 				D409F2C4292EA25300D9D2FE /* UserAuthentication */,
 				45052131295F3B9C0018ABD0 /* UserCountersRepository */,
 				D409F2AF2928115600D9D2FE /* UserDetailsRepository */,
@@ -2744,6 +2776,7 @@
 				45131A0B2AB498AD0085AF0D /* Accessibility */,
 				45131A122AB499440085AF0D /* ApplicationLayout */,
 				45131A032AB498AD0085AF0D /* ColorPalette */,
+				457A03222ABA5C5800C0C504 /* DeviceSystemLanguage */,
 				45131A072AB498AD0085AF0D /* FontLibrary */,
 				45131A092AB498AD0085AF0D /* ImageCatalog */,
 				45131A052AB498AD0085AF0D /* LaunchEnvironment */,
@@ -3040,6 +3073,7 @@
 		452E62B02ABA564D00EA4C83 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				452E62D52ABA57B600EA4C83 /* Features */,
 				452E62B12ABA564D00EA4C83 /* Share */,
 			);
 			path = App;
@@ -3171,6 +3205,49 @@
 				452E62C82ABA564D00EA4C83 /* MobileContentBackgroundImageRendererTests.swift */,
 			);
 			path = BackgroundImage;
+			sourceTree = "<group>";
+		};
+		452E62D52ABA57B600EA4C83 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				452E62D62ABA57B600EA4C83 /* AppLanguage */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		452E62D62ABA57B600EA4C83 /* AppLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				452E62D72ABA57B600EA4C83 /* Domain */,
+			);
+			path = AppLanguage;
+			sourceTree = "<group>";
+		};
+		452E62D72ABA57B600EA4C83 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				452E62D82ABA57B600EA4C83 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		452E62D82ABA57B600EA4C83 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				452E62D92ABA57B600EA4C83 /* GetAppLanguageUseCase */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		452E62D92ABA57B600EA4C83 /* GetAppLanguageUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				452E62DA2ABA57DD00EA4C83 /* GetAppLanguageUseCaseTests.swift */,
+				457A03382ABA7DCF00C0C504 /* TestsAppLanguagesRepository.swift */,
+				457A032E2ABA797600C0C504 /* TestsDeviceLanguage.swift */,
+				45F411022ABA8B510051F6B6 /* TestsUserAppLanguageRepository.swift */,
+			);
+			path = GetAppLanguageUseCase;
 			sourceTree = "<group>";
 		};
 		45325F18285CF8B40078D932 /* SegmentControl */ = {
@@ -4542,6 +4619,40 @@
 				4578783327C41C50004552D5 /* BackgroundImageModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		457A03222ABA5C5800C0C504 /* DeviceSystemLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				457A03232ABA5C6300C0C504 /* DeviceSystemLanguage.swift */,
+				457A032A2ABA641100C0C504 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift */,
+			);
+			path = DeviceSystemLanguage;
+			sourceTree = "<group>";
+		};
+		457A03272ABA639300C0C504 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				457A03282ABA639F00C0C504 /* GetDeviceLanguageInterface.swift */,
+			);
+			path = DependencyInversion;
+			sourceTree = "<group>";
+		};
+		457A03302ABA7C4D00C0C504 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				457A03312ABA7C5800C0C504 /* GetAppLanguagesRepositoryInterface.swift */,
+			);
+			path = DependencyInversion;
+			sourceTree = "<group>";
+		};
+		457A03332ABA7CF900C0C504 /* AppLanguagesRepository */ = {
+			isa = PBXGroup;
+			children = (
+				457A03342ABA7D0000C0C504 /* AppLanguagesRepository.swift */,
+				457A03362ABA7D1400C0C504 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift */,
+			);
+			path = AppLanguagesRepository;
 			sourceTree = "<group>";
 		};
 		457C4C722ABA315D00CFAC1D /* PagedView */ = {
@@ -7449,6 +7560,8 @@
 			isa = PBXGroup;
 			children = (
 				45EE10412AB887C800D0AC33 /* GetAppLanguageUseCase.swift */,
+				457A032C2ABA75B500C0C504 /* AppLanguageDomainModel.swift */,
+				45F411042ABA8BC50051F6B6 /* DependencyInversion */,
 			);
 			path = GetAppLanguageUseCase;
 			sourceTree = "<group>";
@@ -7457,6 +7570,7 @@
 			isa = PBXGroup;
 			children = (
 				45EE10462AB88B6900D0AC33 /* GetAppLanguagesUseCase.swift */,
+				457A03302ABA7C4D00C0C504 /* DependencyInversion */,
 			);
 			path = GetAppLanguagesUseCase;
 			sourceTree = "<group>";
@@ -7485,6 +7599,23 @@
 				45F3D39C29A514D200446F69 /* OnboardingTutorialPageAnalyticsProperties.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		45F410FB2ABA8ACE0051F6B6 /* UserAppLanguageRepository */ = {
+			isa = PBXGroup;
+			children = (
+				45F410FC2ABA8ADC0051F6B6 /* UserAppLanguageRepository.swift */,
+				45F411002ABA8B280051F6B6 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift */,
+			);
+			path = UserAppLanguageRepository;
+			sourceTree = "<group>";
+		};
+		45F411042ABA8BC50051F6B6 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				45F411052ABA8BC50051F6B6 /* GetUserAppLanguageRepositoryInterface.swift */,
+			);
+			path = DependencyInversion;
 			sourceTree = "<group>";
 		};
 		45F715BC290A12D70019B715 /* Presentation */ = {
@@ -8079,6 +8210,7 @@
 			children = (
 				D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */,
 				D41B38C128906B3200BD5899 /* DeviceLanguageDomainModel.swift */,
+				457A03272ABA639300C0C504 /* DependencyInversion */,
 			);
 			path = GetDeviceLanguageUseCase;
 			sourceTree = "<group>";
@@ -8581,6 +8713,7 @@
 				684328ED1EB7CF66005E9131 /* Sources */,
 				684328EE1EB7CF66005E9131 /* Frameworks */,
 				684328EF1EB7CF66005E9131 /* Resources */,
+				9B629F5388F3F6C1A6EF0AC5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8963,6 +9096,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9B629F5388F3F6C1A6EF0AC5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -9303,6 +9456,7 @@
 				4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */,
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
 				45EB9B7629F16CF200CA74A8 /* UIView+Constraints.swift in Sources */,
+				45F411012ABA8B280051F6B6 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift in Sources */,
 				45A450922832F31400A3DB0E /* ToolSettingsToolType.swift in Sources */,
 				455F04792A000D6100536CB9 /* LastAuthenticatedProviderCache.swift in Sources */,
 				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
@@ -9415,6 +9569,7 @@
 				45558340269F2C7B00C3FF14 /* ToolPageHeaderViewModel.swift in Sources */,
 				45D752142A2E33DF005E747F /* MobileContentAuthProviderToken.swift in Sources */,
 				45C152482A43D21D00F2A1E8 /* ToolSettingsTopBarView.swift in Sources */,
+				45F411062ABA8BC50051F6B6 /* GetUserAppLanguageRepositoryInterface.swift in Sources */,
 				4533999E283D725300AE02E4 /* ToolSettingsFlowToolData.swift in Sources */,
 				45C1527B2A44888100F2A1E8 /* ChooseScaleSliderView.swift in Sources */,
 				4573134028C1821200481640 /* ToolDetailsPrimaryButtonsView.swift in Sources */,
@@ -9430,6 +9585,7 @@
 				452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
+				457A03352ABA7D0000C0C504 /* AppLanguagesRepository.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				450E3D092958916A000FF6D0 /* LessonEvaluationDataModel.swift in Sources */,
 				45558498269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift in Sources */,
@@ -9460,6 +9616,7 @@
 				45F71625290A12D70019B715 /* CopyrightInfoWebContent.swift in Sources */,
 				45AD1BD325938A4F00A096A0 /* LoadingView.swift in Sources */,
 				45FF773E28B66D370027DDE4 /* ToolShortcutItem.swift in Sources */,
+				45F410FD2ABA8ADC0051F6B6 /* UserAppLanguageRepository.swift in Sources */,
 				45860A7C292422010089C836 /* GlobalActivityThisWeekDomainModel.swift in Sources */,
 				4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45D63E70288F698C009B4610 /* LanguagesRepository.swift in Sources */,
@@ -9535,6 +9692,7 @@
 				45F7167D290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift in Sources */,
 				45C2594428CAC3E8005D2387 /* ChooseLanguageCell.swift in Sources */,
 				45C152D02A448A6200F2A1E8 /* GetToolUseCase.swift in Sources */,
+				457A032B2ABA641100C0C504 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift in Sources */,
 				45BDA64A2954FF08007E259B /* WebArchiveOperationResult.swift in Sources */,
 				45C152A12A44896C00F2A1E8 /* ToolBackButtonImageType.swift in Sources */,
 				45A880032A8FA868002B4DBE /* CenteredCircularProgressView.swift in Sources */,
@@ -9613,6 +9771,7 @@
 				45558401269F2DA500C3FF14 /* MobileContentBackgroundImageViewModel.swift in Sources */,
 				45D95CCE271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift in Sources */,
 				45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */,
+				457A03372ABA7D1400C0C504 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift in Sources */,
 				D496B90C2A9FC2D300CBEA19 /* ToolFilterSelectionRowViewModel.swift in Sources */,
 				4581D97F297AD21E00D056D6 /* JsonApiResponseData.swift in Sources */,
 				45920D592A8D4F2800E336A8 /* ToolCardLayout.swift in Sources */,
@@ -9664,6 +9823,7 @@
 				4579DA7E283571D3007DE30E /* ToolSettingsLanguageListType.swift in Sources */,
 				D409F2B7292C014700D9D2FE /* RealmUserDetailsCache.swift in Sources */,
 				4534208D289C45ED003442E3 /* DeleteResourcesFilesResult.swift in Sources */,
+				457A03322ABA7C5800C0C504 /* GetAppLanguagesRepositoryInterface.swift in Sources */,
 				45FB160B27DBDDB60009DF8E /* OnboardingFlow.swift in Sources */,
 				45E3476E2A49BE230014CCD1 /* Flow+PresentAlert.swift in Sources */,
 				45E585162A8E4497005B20A6 /* AllYourFavoriteToolsView.swift in Sources */,
@@ -9700,6 +9860,7 @@
 				45C2595F28CAC50D005D2387 /* GetSettingsLanguagesUseCase.swift in Sources */,
 				453F84C72A029FC00005101E /* ArticleAemJcrContentParser.swift in Sources */,
 				D455F3F62979CE5D009D5F93 /* RemoteUserCountersSync.swift in Sources */,
+				457A03292ABA639F00C0C504 /* GetDeviceLanguageInterface.swift in Sources */,
 				455583EC269F2DA500C3FF14 /* MobileContentSpacerView.swift in Sources */,
 				45D7CAEE2A9BA47200913E12 /* FirebaseInAppMessaging.swift in Sources */,
 				45BDA5C22954F605007E259B /* ResourceViewModel.swift in Sources */,
@@ -9838,6 +9999,7 @@
 				45EB4E732989C94C00231C67 /* FullScreenVideoView.swift in Sources */,
 				45C2595C28CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift in Sources */,
 				45E3477A2A49BFD00014CCD1 /* AccordionView.swift in Sources */,
+				457A03242ABA5C6300C0C504 /* DeviceSystemLanguage.swift in Sources */,
 				45AE975427C97A9500C2CB33 /* ContentPage+MobileContentRenderableModel.swift in Sources */,
 				4555840E269F2DA500C3FF14 /* MobileContentTextView.swift in Sources */,
 				45860A72292414570089C836 /* AccountGlobalActivity.swift in Sources */,
@@ -9893,6 +10055,7 @@
 				45E347932A49C04B0014CCD1 /* RoundedCorner.swift in Sources */,
 				45EB4E762989C9D600231C67 /* Flow+VideoModal.swift in Sources */,
 				45EB9B8429F16CF200CA74A8 /* Image+OptionalUIImage.swift in Sources */,
+				457A032D2ABA75B500C0C504 /* AppLanguageDomainModel.swift in Sources */,
 				45AE973D27C97A9400C2CB33 /* MultiplatformCard.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				453F84C02A029FC00005101E /* ArticleAemCacheArchivedObject.swift in Sources */,
@@ -9981,14 +10144,18 @@
 				45D7781829A570D000F23D99 /* IncomingDeepLinkType.swift in Sources */,
 				45D7781D29A570E400F23D99 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45D7782429A570FC00F23D99 /* DeepLinkParserType.swift in Sources */,
+				452E62DB2ABA57DD00EA4C83 /* GetAppLanguageUseCaseTests.swift in Sources */,
+				457A03392ABA7DCF00C0C504 /* TestsAppLanguagesRepository.swift in Sources */,
 				45D7783129A572E500F23D99 /* JsonServices.swift in Sources */,
 				452E62CB2ABA564D00EA4C83 /* RealmDatabaseTests.swift in Sources */,
+				457A032F2ABA797600C0C504 /* TestsDeviceLanguage.swift in Sources */,
 				452E62CA2ABA564D00EA4C83 /* LocaleTests.swift in Sources */,
 				450EE2A129A66CE400524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45D7781B29A570DD00F23D99 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
 				45D7782A29A570FC00F23D99 /* DeepLinkAppsFlyerParserType.swift in Sources */,
 				455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */,
 				450EE29A29A668E400524F64 /* DashboardPathDeepLinkParser.swift in Sources */,
+				45F411032ABA8B510051F6B6 /* TestsUserAppLanguageRepository.swift in Sources */,
 				45D7782029A570FC00F23D99 /* DeepLinkUrlParserType.swift in Sources */,
 				45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */,
 				452E62CE2ABA564D00EA4C83 /* LocalizableStringsBundleLoaderTests.swift in Sources */,
