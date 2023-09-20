@@ -57,6 +57,7 @@ enum ImageCatalog: String {
     case school = "school"
     case send = "send"
     case share = "share"
+    case toolFilterArrow = "filter_arrow"
     case toolSettingsLanguageDropDownArrow = "tool_settings_language_dropdown_arrow"
     case toolSettingsOptionHideTips = "tool_settings_option_hide_tips"
     case toolSettingsOptionScreenShare = "tool_settings_option_screen_share"
