@@ -1,14 +1,14 @@
 PODS:
   - GodToolsShared (0.9.1)
   - GoogleConversionTracking (3.4.0)
-  - Nimble (12.2.0)
-  - Quick (7.2.0)
+  - Nimble (12.3.0)
+  - Quick (7.3.0)
 
 DEPENDENCIES:
   - GodToolsShared (= 0.9.1)
   - GoogleConversionTracking (~> 3.4.0)
-  - Nimble
-  - Quick
+  - Nimble (~> 12.3.0)
+  - Quick (~> 7.3.0)
 
 SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
@@ -21,9 +21,9 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   GodToolsShared: e34c8947e3adebae85eb97bd47927de556985a1d
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
-  Nimble: d67da24eb9da4227b2dbbf4eb49cc29073c9066b
-  Quick: 73ac215f23a6a0eaa59f4ee142802b3f4dba86bb
+  Nimble: f8a8219d16f176429b951e8f7e72df5c23ceddc0
+  Quick: d32871931c05547cb4e0bc9009d66a18b50d8558
 
-PODFILE CHECKSUM: 9ab5b395c3fa1f0ba00abf4bd2ab3b05f9e5477a
+PODFILE CHECKSUM: 610baffe33963ced4e262e9723b5f88d3c6b05ad
 
 COCOAPODS: 1.12.1
