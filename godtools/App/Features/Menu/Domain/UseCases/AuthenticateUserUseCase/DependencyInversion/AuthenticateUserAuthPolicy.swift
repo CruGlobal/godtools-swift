@@ -1,14 +1,15 @@
 //
-//  AuthenticationPolicy.swift
+//  AuthenticateUserAuthPolicy.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/27/23.
+//  Created by Levi Eggert on 9/18/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-enum AuthenticationPolicy {
+enum AuthenticateUserAuthPolicy {
     
     case renewAccessTokenElseAskUserToAuthenticate(fromViewController: UIViewController)
     case renewAccessToken
