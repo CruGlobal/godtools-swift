@@ -35,7 +35,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
         }
     }
     
-    var selectedLanguage: LanguageDomainModel? {
+    var selectedLanguage: LanguageFilterDomainModel? {
         get {
             return toolFilterSelectionPublisher.value.selectedLanguage
             

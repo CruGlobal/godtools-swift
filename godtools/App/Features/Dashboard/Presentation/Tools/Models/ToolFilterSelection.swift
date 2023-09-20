@@ -11,5 +11,5 @@ import Foundation
 struct ToolFilterSelection {
     
     var selectedCategory: ToolCategoryDomainModel? = nil
-    var selectedLanguage: LanguageDomainModel? = nil
+    var selectedLanguage: LanguageFilterDomainModel? = nil
 }

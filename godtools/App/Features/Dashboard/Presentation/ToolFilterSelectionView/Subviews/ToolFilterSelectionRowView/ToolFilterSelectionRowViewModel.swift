@@ -36,7 +36,7 @@ extension ToolFilterSelectionRowViewModel: Identifiable {
             return categoryModel.id ?? "any_category"
             
         case .language(let languageModel):
-            return languageModel.id
+            return languageModel.id ?? "any_language"
         }
     }
 }

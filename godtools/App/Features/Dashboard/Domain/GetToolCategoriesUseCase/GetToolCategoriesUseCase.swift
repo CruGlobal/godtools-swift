@@ -22,7 +22,7 @@ class GetToolCategoriesUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getToolCategoriesPublisher(filteredByLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolCategoryDomainModel], Never> {
+    func getToolCategoriesPublisher(filteredByLanguageId: String?) -> AnyPublisher<[ToolCategoryDomainModel], Never> {
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChanged(),
@@ -31,10 +31,10 @@ class GetToolCategoriesUseCase {
             .flatMap({ _, primaryLanguage -> AnyPublisher<[ToolCategoryDomainModel], Never> in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllTools(sorted: false, languageId: filteredByLanguage?.id)
+                    .getAllTools(sorted: false, languageId: filteredByLanguageId)
                     .getUniqueCategoryIds()
                 
-                let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage, filteredByLanguage: filteredByLanguage)
+                let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage, filteredByLanguageId: filteredByLanguageId)
                 
                 return Just(categories)
                     .eraseToAnyPublisher()
@@ -42,15 +42,15 @@ class GetToolCategoriesUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?, filteredByLanguage: LanguageDomainModel?) -> [ToolCategoryDomainModel] {
+    private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?, filteredByLanguageId: String?) -> [ToolCategoryDomainModel] {
 
         let translationLocaleId: String? = language?.localeIdentifier
         
-        let anyCategory = createAnyCategoryDomainModel(translationLocaleId: translationLocaleId, filteredByLanguage: filteredByLanguage)
+        let anyCategory = createAnyCategoryDomainModel(translationLocaleId: translationLocaleId, filteredByLanguageId: filteredByLanguageId)
         
         let categories: [ToolCategoryDomainModel] = ids.compactMap { categoryId in
             
-            let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguage: filteredByLanguage)
+            let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguageId: filteredByLanguageId)
             
             guard toolsAvailableCount > 0 else {
                 return nil
@@ -70,11 +70,11 @@ class GetToolCategoriesUseCase {
         return [anyCategory] + categories
     }
     
-    private func createAnyCategoryDomainModel(translationLocaleId: String?, filteredByLanguage: LanguageDomainModel?) -> ToolCategoryDomainModel {
+    private func createAnyCategoryDomainModel(translationLocaleId: String?, filteredByLanguageId: String?) -> ToolCategoryDomainModel {
         
         let anyCategoryTranslation: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: translationLocaleId, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
     
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByLanguage: filteredByLanguage)
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByLanguageId: filteredByLanguageId)
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
         return ToolCategoryDomainModel(
@@ -84,12 +84,12 @@ class GetToolCategoriesUseCase {
         )
     }
     
-    private func getToolsAvailableCount(for categoryId: String?, filteredByLanguage: LanguageDomainModel?) -> Int {
+    private func getToolsAvailableCount(for categoryId: String?, filteredByLanguageId: String?) -> Int {
         
         return getAllToolsUseCase.getAllTools(
             sorted: false,
             categoryId: categoryId,
-            languageId: filteredByLanguage?.id
+            languageId: filteredByLanguageId
         ).count
     }
     

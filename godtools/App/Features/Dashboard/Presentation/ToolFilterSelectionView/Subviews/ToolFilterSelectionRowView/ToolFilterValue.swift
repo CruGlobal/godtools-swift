@@ -10,7 +10,7 @@ import Foundation
 
 enum ToolFilterValue {
     case category(categoryModel: ToolCategoryDomainModel)
-    case language(languageModel: LanguageDomainModel)
+    case language(languageModel: LanguageFilterDomainModel)
 }
 
 extension ToolFilterValue: Equatable {

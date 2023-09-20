@@ -11,13 +11,13 @@ import Combine
 
 class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
     
-    private let getAllToolLanguagesUseCase: GetAllToolLanguagesUseCase
+    private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
     
-    private var languages: [LanguageDomainModel] = [LanguageDomainModel]()
+    private var languages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
-    init(getAllToolLanguagesUseCase: GetAllToolLanguagesUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
-        self.getAllToolLanguagesUseCase = getAllToolLanguagesUseCase
+        self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
         
         super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
@@ -31,7 +31,7 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        getAllToolLanguagesUseCase.getAllToolLanguagesPublisher(filteredByCategory: selectedCategory)
+        getToolFilterLanguagesUseCase.getToolFilterLanguagesPublisher(filteredByCategory: selectedCategory)
             .sink { [weak self] languages in
                 
                 self?.languages = languages
@@ -58,14 +58,14 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
 
 extension ToolFilterLanguageSelectionViewModel {
     
-    private func createRowViewModels(from languages: [LanguageDomainModel]) {
+    private func createRowViewModels(from languages: [LanguageFilterDomainModel]) {
         
         rowViewModels = languages.map { language in
             
             return ToolFilterSelectionRowViewModel(
                 title: language.translatedName,
                 subtitle: nil,
-                toolsAvailableText: "some",
+                toolsAvailableText: language.toolsAvailableText,
                 filterValue: .language(languageModel: language)
             )
         }

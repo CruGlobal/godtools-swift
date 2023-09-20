@@ -811,7 +811,7 @@ extension AppFlow {
         case .language:
             
             viewModel = ToolFilterLanguageSelectionViewModel(
-                getAllToolLanguagesUseCase: appDiContainer.domainLayer.getAllToolLanguagesUseCase(),
+                getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
                 getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 toolFilterSelectionPublisher: toolFilterSelectionPublisher

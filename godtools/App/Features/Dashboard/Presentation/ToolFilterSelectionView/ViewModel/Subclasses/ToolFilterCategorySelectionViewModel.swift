@@ -31,7 +31,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguage: selectedLanguage)
+        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage?.id)
             .sink { [weak self] categories in
                 
                 self?.categories = categories
