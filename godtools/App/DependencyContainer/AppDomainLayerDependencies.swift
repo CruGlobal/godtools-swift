@@ -51,6 +51,15 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getAllToolLanguagesUseCase() -> GetAllToolLanguagesUseCase {
+        return GetAllToolLanguagesUseCase(
+            getAllToolsUseCase: getAllToolsUseCase(),
+            getLanguageUseCase: getLanguageUseCase(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            resourcesRepository: dataLayer.getResourcesRepository()
+        )
+    }
+    
     func getAllToolsUseCase() -> GetAllToolsUseCase {
         return GetAllToolsUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
@@ -281,8 +290,7 @@ class AppDomainLayerDependencies {
             getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository()
+            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     
