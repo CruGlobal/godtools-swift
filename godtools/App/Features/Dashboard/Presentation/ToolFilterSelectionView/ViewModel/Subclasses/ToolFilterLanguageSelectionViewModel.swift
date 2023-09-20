@@ -38,6 +38,19 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
                 self?.createRowViewModels(from: languages)
             }
             .store(in: &cancellables)
+        
+        searchTextPublisher
+            .sink { [weak self] searchText in
+                guard let self = self else { return }
+                
+                let filteredLanguages = self.languages.filter { searchText.isEmpty ? true : $0.translatedName.contains(searchText) }
+                self.createRowViewModels(from: filteredLanguages)
+            }
+            .store(in: &cancellables)
+        
+        if let currentLanguageSelected = selectedLanguage {
+            filterValueSelected = .language(languageModel: currentLanguageSelected)
+        }
     }
 }
 
