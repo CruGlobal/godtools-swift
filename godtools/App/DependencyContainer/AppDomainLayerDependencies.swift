@@ -242,13 +242,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
-        return GetSetupParallelLanguageAvailabilityUseCase(
-            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
-            setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
-        )
-    }
-    
     func getShareableImageUseCase() -> GetShareableImageUseCase {
         return GetShareableImageUseCase()
     }
