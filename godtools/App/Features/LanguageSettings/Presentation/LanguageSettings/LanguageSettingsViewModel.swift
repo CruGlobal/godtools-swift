@@ -20,6 +20,8 @@ class LanguageSettingsViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
+    let navTitle: String
+    
     init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
@@ -27,6 +29,8 @@ class LanguageSettingsViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
+        
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "language_settings")
     }
     
     private var analyticsScreenName: String {

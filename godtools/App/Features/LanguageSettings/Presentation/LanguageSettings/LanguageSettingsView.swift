@@ -24,7 +24,8 @@ struct LanguageSettingsView: View {
                 
             }
         }
-        .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(viewModel.navTitle)
         .onAppear {
             viewModel.pageViewed()
         }
