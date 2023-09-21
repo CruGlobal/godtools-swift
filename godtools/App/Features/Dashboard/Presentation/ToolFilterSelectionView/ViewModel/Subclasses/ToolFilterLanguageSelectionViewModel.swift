@@ -63,8 +63,8 @@ extension ToolFilterLanguageSelectionViewModel {
         rowViewModels = languages.map { language in
             
             return ToolFilterSelectionRowViewModel(
-                title: language.translatedName,
-                subtitle: nil,
+                title: language.languageName,
+                subtitle: language.translatedName,
                 toolsAvailableText: language.toolsAvailableText,
                 filterValue: .language(languageModel: language)
             )

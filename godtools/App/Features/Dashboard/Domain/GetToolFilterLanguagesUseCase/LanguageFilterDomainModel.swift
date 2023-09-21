@@ -10,14 +10,8 @@ import Foundation
 
 struct LanguageFilterDomainModel {
     
-    let language: LanguageDomainModel?
+    let id: String?
+    let languageName: String
     let translatedName: String
     let toolsAvailableText: String
-}
-
-extension LanguageFilterDomainModel {
-    
-    var id: String? {
-        return language?.id
-    }
 }
