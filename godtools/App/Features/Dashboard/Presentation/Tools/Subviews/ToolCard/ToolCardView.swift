@@ -110,7 +110,7 @@ struct ToolCardView: View {
                             Spacer()
                             
                             ToolCardLanguageAvailabilityView(
-                                languageAvailability: viewModel.parallelLanguageAvailability
+                                languageAvailability: viewModel.languageAvailability
                             )
                         }
                     }
@@ -126,7 +126,7 @@ struct ToolCardView: View {
                     if layout == .thumbnail {
                         
                         ToolCardLanguageAvailabilityView(
-                            languageAvailability: viewModel.parallelLanguageAvailability
+                            languageAvailability: viewModel.languageAvailability
                         )
                         .padding([.top], 5)
                     }
@@ -198,7 +198,6 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )

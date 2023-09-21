@@ -231,7 +231,6 @@ extension ToolsViewModel {
             tool: tool,
             localizationServices: localizationServices,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )
