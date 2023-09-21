@@ -65,6 +65,7 @@ struct ToolsFilterSectionView: View {
             }
             .padding([.leading, .trailing], contentHorizontalInsets)
             .padding(.bottom, 10) // NOTE: This is needed to prevent clipping filter button shadows.
+            .environment(\.layoutDirection, uiDirection)
         }
     }
 }
