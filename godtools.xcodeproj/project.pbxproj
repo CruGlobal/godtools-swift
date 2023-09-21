@@ -509,8 +509,8 @@
 		459BD090289AD4310075901B /* GetToolTranslationsFilesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD089289AD4310075901B /* GetToolTranslationsFilesUseCase.swift */; };
 		459C526F289418EB00DA9E95 /* TranslationManifestFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C526E289418EB00DA9E95 /* TranslationManifestFileDataModel.swift */; };
 		459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */; };
-		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A032A30BC2600070934 /* MenuItemView.swift */; };
 		459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A042A30BC2600070934 /* MenuSectionView.swift */; };
 		459E86B528ED1A9B00E197A5 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B328ED1A9B00E197A5 /* AppsFlyer.swift */; };
@@ -688,15 +688,15 @@
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
 		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
-		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45BCD7692ABB326D0097B4A5 /* TestsUserAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7652ABB326D0097B4A5 /* TestsUserAppLanguageRepository.swift */; };
 		45BCD76A2ABB326D0097B4A5 /* TestsDeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7662ABB326D0097B4A5 /* TestsDeviceLanguage.swift */; };
@@ -8892,17 +8892,17 @@
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
-				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
-				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
-				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
-				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
-				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */,
-				457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */,
-				45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */,
-				45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */,
+				45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */,
+				45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */,
+				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
+				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */,
+				45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */,
+				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */,
+				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */,
+				457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */,
+				45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */,
+				45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -8963,7 +8963,7 @@
 				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
 				D4B522D929D761B700D85213 /* Localizable.stringsdict in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
-				45B6482925E593110098BAF1 /* (null) in Resources */,
+				45B6482925E593110098BAF1 /* BuildFile in Resources */,
 				458CFE9329D4E0B9007B423C /* ArticlesErrorMessageView.xib in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
@@ -9002,7 +9002,7 @@
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
 				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
 				D4E243DF29F30DAD00EA4BB7 /* Roboto-Medium.ttf in Resources */,
-				45B6480A25E581660098BAF1 /* (null) in Resources */,
+				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
 				45F7162E290A12D70019B715 /* WebContentView.xib in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
 				457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */,
@@ -9157,6 +9157,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E94B456EE9B88B31DF33872D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -9215,7 +9235,7 @@
 				450E3D082958916A000FF6D0 /* LessonEvaluationRealmCache.swift in Sources */,
 				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */,
 				455CB5832A439C5100E95834 /* LearnToShareToolItemDomainModel.swift in Sources */,
-				459C56D225FF954F00F15967 /* (null) in Sources */,
+				459C56D225FF954F00F15967 /* BuildFile in Sources */,
 				457101FB2AB9D76500D1BFFC /* AuthenticateUserAuthPlatform+AuthenticationProviderType.swift in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */,
@@ -9239,7 +9259,7 @@
 				453F84CE2A029FC00005101E /* ArticleAemData.swift in Sources */,
 				459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45C152A82A44896C00F2A1E8 /* ChooseYourOwnAdventureNavBarModel.swift in Sources */,
-				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
+				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
 				4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */,
 				45FF773D28B66D370027DDE4 /* ShortcutItemType.swift in Sources */,
 				45F71629290A12D70019B715 /* WebContentType.swift in Sources */,
@@ -9289,7 +9309,7 @@
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */,
 				D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */,
-				45B6480B25E581660098BAF1 /* (null) in Sources */,
+				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */,
 				45DD84A12A8BB72F0066A020 /* OpenTutorialBannerView.swift in Sources */,
@@ -9365,7 +9385,7 @@
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
 				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,
-				45B6482025E58EE70098BAF1 /* (null) in Sources */,
+				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
 				45AD205C25938AC300A096A0 /* AppsFlyerAnalytics.swift in Sources */,
 				D41B38AE287F149900BD5899 /* LessonsViewModel.swift in Sources */,
@@ -9467,7 +9487,7 @@
 				4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */,
 				45E347692A49BE230014CCD1 /* Flow.swift in Sources */,
 				45C8835D2A93EDDF00F33E6D /* DashboardTabBarItemView.swift in Sources */,
-				45B6480925E581660098BAF1 /* (null) in Sources */,
+				45B6480925E581660098BAF1 /* BuildFile in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
@@ -9630,7 +9650,7 @@
 				D473469829072BA000579463 /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
 				452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */,
-				459C56D325FF954F00F15967 /* (null) in Sources */,
+				459C56D325FF954F00F15967 /* BuildFile in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				450E3D092958916A000FF6D0 /* LessonEvaluationDataModel.swift in Sources */,
@@ -9679,7 +9699,7 @@
 				45AD1AA325938A4E00A096A0 /* TutorialItemType.swift in Sources */,
 				45EB9B7329F16CF200CA74A8 /* UIButton+ImageColor.swift in Sources */,
 				D473468F28FF423600579463 /* DashboardTabTypeDomainModel.swift in Sources */,
-				45B6482A25E593110098BAF1 /* (null) in Sources */,
+				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */,
 				45C152412A43D1BD00F2A1E8 /* ReviewShareShareableViewModel.swift in Sources */,
@@ -9734,7 +9754,7 @@
 				452E44CA2AB8F0F000A0B1B6 /* AuthErrorDomainModel.swift in Sources */,
 				45558329269F2C7B00C3FF14 /* ToolPageCardView.swift in Sources */,
 				4555833E269F2C7B00C3FF14 /* ToolPageModalView.swift in Sources */,
-				45B6480C25E581660098BAF1 /* (null) in Sources */,
+				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
 				45723DF72ABA24CE00C697E6 /* MobileContentApiErrorCodableCode.swift in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				45D63E84288F75B0009B4610 /* AttachmentsRepository.swift in Sources */,
@@ -9833,7 +9853,7 @@
 				452259A22ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift in Sources */,
 				452F4B082A97E117003071D1 /* PageNavigationCollectionViewCenterLayoutPageAttributes.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
-				45B6482825E593110098BAF1 /* (null) in Sources */,
+				45B6482825E593110098BAF1 /* BuildFile in Sources */,
 				450D7B0A28E34ACA006C3FDF /* RealmLanguagesCacheSyncResult.swift in Sources */,
 				453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */,
 				45C152DA2A448A6200F2A1E8 /* ToolCategoryType.swift in Sources */,
@@ -11449,7 +11469,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -11457,7 +11477,7 @@
 				minimumVersion = 10.11.0;
 			};
 		};
-		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+		45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git";
 			requirement = {
@@ -11465,7 +11485,7 @@
 				minimumVersion = 6.4.0;
 			};
 		};
-		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
+		45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleanalytics/google-tag-manager-ios-sdk.git";
 			requirement = {
@@ -11473,7 +11493,7 @@
 				minimumVersion = 7.4.0;
 			};
 		};
-		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
+		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
@@ -11481,7 +11501,7 @@
 				minimumVersion = 1.5.1;
 			};
 		};
-		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {
+		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
 			requirement = {
@@ -11489,7 +11509,7 @@
 				minimumVersion = 4.0.4;
 			};
 		};
-		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */ = {
+		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/cezheng/Fuzi.git";
 			requirement = {
@@ -11497,7 +11517,7 @@
 				minimumVersion = 3.1.3;
 			};
 		};
-		45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */ = {
+		45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
@@ -11505,7 +11525,7 @@
 				minimumVersion = 0.3.1;
 			};
 		};
-		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -11513,7 +11533,7 @@
 				minimumVersion = 4.1.3;
 			};
 		};
-		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
 			requirement = {
@@ -11521,7 +11541,7 @@
 				minimumVersion = 2.5.0;
 			};
 		};
-		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+		45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
@@ -11529,7 +11549,7 @@
 				minimumVersion = 10.19.0;
 			};
 		};
-		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
+		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
 			requirement = {
@@ -11542,147 +11562,147 @@
 /* Begin XCSwiftPackageProductDependency section */
 		457771B129A00C5C00EA8115 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAnalytics;
 		};
 		457771B329A00C5C00EA8115 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseCrashlytics;
 		};
 		457771B529A00C5C00EA8115 /* FirebaseDynamicLinks */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseDynamicLinks;
 		};
 		457771B729A00C5C00EA8115 /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = "FirebaseInAppMessaging-Beta";
 		};
 		45A416012A9943D50030E2C7 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
 			productName = Realm;
 		};
 		45A416032A9943D50030E2C7 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
 			productName = RealmSwift;
 		};
 		45A416052A9943D50030E2C7 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 		45A416072A9943D50030E2C7 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */;
+			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */;
 			productName = RequestOperation;
 		};
 		45A416092A9943D50030E2C7 /* GoogleTagManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
+			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */;
 			productName = GoogleTagManager;
 		};
 		45A4160B2A9943D50030E2C7 /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */;
 			productName = YouTubeiOSPlayerHelper;
 		};
 		45A4160D2A9943D50030E2C7 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
 			productName = ZipArchive;
 		};
 		45A4160F2A9943D50030E2C7 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAnalytics;
 		};
 		45A416112A9943D50030E2C7 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseCrashlytics;
 		};
 		45A416132A9943D50030E2C7 /* FirebaseDynamicLinks */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseDynamicLinks;
 		};
 		45A416152A9943D50030E2C7 /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = "FirebaseInAppMessaging-Beta";
 		};
 		45A416172A9943D50030E2C7 /* SocialAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */;
+			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */;
 			productName = SocialAuthentication;
 		};
 		45A416192A9943D50030E2C7 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */;
+			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */;
 			productName = Starscream;
 		};
 		45A4161B2A9943D50030E2C7 /* Fuzi */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */;
+			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */;
 			productName = Fuzi;
 		};
 		45B248572734676F00B7AD5E /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			package = 45B248562734676F00B7AD5E /* XCRemoteSwiftPackageReference "AppsFlyerFramework.git" */;
 			productName = AppsFlyerLib;
 		};
 		45CDFB4C281730FA00AC4F2E /* GoogleTagManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
+			package = 45CDFB4B281730FA00AC4F2E /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk.git" */;
 			productName = GoogleTagManager;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */;
+			package = 45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios.git" */;
 			productName = RequestOperation;
 		};
 		45D40C672A5315B400E8E4AE /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */;
+			package = 45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream.git" */;
 			productName = Starscream;
 		};
 		45D40C6A2A5315D500E8E4AE /* Fuzi */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */;
+			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi.git" */;
 			productName = Fuzi;
 		};
 		45D48C8529F81324004E92B1 /* SocialAuthentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */;
+			package = 45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios.git" */;
 			productName = SocialAuthentication;
 		};
 		45E39EDB27457E0C006A59E4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 		45E7D4C32977430A008C7503 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
 			productName = ZipArchive;
 		};
 		45EDBCEF27359CD70099495B /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
 			productName = Realm;
 		};
 		45EDBCF127359CD70099495B /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 45EDBCEE27359CD70099495B /* XCRemoteSwiftPackageReference "realm-cocoa.git" */;
 			productName = RealmSwift;
 		};
 		D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			package = D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper.git" */;
 			productName = YouTubeiOSPlayerHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
