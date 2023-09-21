@@ -23,16 +23,6 @@ struct ToolsFilterSectionView: View {
     }
     
     var body: some View {
-        let language = Locale.current.languageCode
-        let direction = Locale.characterDirection(forLanguage: language ?? "en")
-        let uiDirection = switch direction {
-        case .leftToRight:
-            SwiftUI.LayoutDirection.leftToRight
-        case .rightToLeft:
-            SwiftUI.LayoutDirection.rightToLeft
-        @unknown default:
-            SwiftUI.LayoutDirection.leftToRight
-        }
         VStack(alignment: .leading, spacing: 8) {
             
             Text(viewModel.filterTitle)
@@ -65,7 +55,7 @@ struct ToolsFilterSectionView: View {
             }
             .padding([.leading, .trailing], contentHorizontalInsets)
             .padding(.bottom, 10) // NOTE: This is needed to prevent clipping filter button shadows.
-            .environment(\.layoutDirection, uiDirection)
+            .changeUIDirectionFromLanguage()
         }
     }
 }
