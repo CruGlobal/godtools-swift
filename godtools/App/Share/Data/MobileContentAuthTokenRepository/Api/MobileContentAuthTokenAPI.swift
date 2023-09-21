@@ -19,7 +19,7 @@ class MobileContentAuthTokenAPI {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
         
         self.session = ignoreCacheSession.session
-        self.baseURL = config.mobileContentApiBaseUrl
+        self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
     private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {

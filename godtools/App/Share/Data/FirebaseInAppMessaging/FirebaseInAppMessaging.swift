@@ -14,17 +14,17 @@ protocol FirebaseInAppMessagingDelegate: AnyObject {
     func firebaseInAppMessageActionTappedWithUrl(url: URL)
 }
 
-class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
+class FirebaseInAppMessaging: NSObject {
+    
+    static let shared: FirebaseInAppMessaging = FirebaseInAppMessaging()
     
     private let sharedInAppMessaging: InAppMessaging = InAppMessaging.inAppMessaging()
     
     private weak var delegate: FirebaseInAppMessagingDelegate?
     
-    override init() {
+    private override init() {
         
         super.init()
-        
-        sharedInAppMessaging.delegate = self
     }
     
     func setDelegate(delegate: FirebaseInAppMessagingDelegate?) {
@@ -33,6 +33,7 @@ class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
             assertionFailure("\nWARNING: Attempting to set delegate that has already been set on \(String(describing: self.delegate)).  Is this intended?\n")
         }
         
+        sharedInAppMessaging.delegate = self
         self.delegate = delegate
     }
     
@@ -42,9 +43,9 @@ class FirebaseInAppMessaging: NSObject, FirebaseInAppMessagingType {
     }
 }
 
-// MARK: - FIRInAppMessagingDisplayDelegate
+// MARK: - InAppMessagingDisplayDelegate
 
-extension FirebaseInAppMessaging {
+extension FirebaseInAppMessaging: InAppMessagingDisplayDelegate {
     
     func messageClicked(_ inAppMessage: InAppMessagingDisplayMessage, with action: InAppMessagingAction) {
         

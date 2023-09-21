@@ -11,14 +11,15 @@ import SwiftUI
 struct PageControl: View {
     
     private let backgroundColor: Color = Color.white
+    private let layoutDirection: LayoutDirection
+    private let numberOfPages: Int
+    private let attributes: PageControlAttributesType
     
-    let numberOfPages: Int
-    let attributes: PageControlAttributesType
+    @Binding private var currentPage: Int
     
-    @Binding var currentPage: Int
-    
-    init(numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
+    init(layoutDirection: LayoutDirection = .leftToRight, numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
         
+        self.layoutDirection = layoutDirection
         self.numberOfPages = numberOfPages
         self.attributes = attributes
         self._currentPage = currentPage
@@ -41,8 +42,29 @@ struct PageControl: View {
                         scrollToPreviousPage()
                     }
                 
-                ForEach((0 ..< numberOfPages), id: \.self) { index in
-                    PageControlButton(page: index, attributes: attributes, currentPage: $currentPage)
+                if layoutDirection == .rightToLeft {
+                    
+                    ForEach((0 ..< numberOfPages).reversed(), id: \.self) { index in
+                                            
+                        PageControlButton(
+                            layoutDirection: layoutDirection,
+                            page: index,
+                            attributes: attributes,
+                            currentPage: $currentPage
+                        )
+                    }
+                }
+                else {
+                    
+                    ForEach(0 ..< numberOfPages, id: \.self) { index in
+                        
+                        PageControlButton(
+                            layoutDirection: layoutDirection,
+                            page: index,
+                            attributes: attributes,
+                            currentPage: $currentPage
+                        )
+                    }
                 }
                 
                 Rectangle()
@@ -60,7 +82,7 @@ struct PageControl: View {
                 .fill(.clear)
                 .frame(width: 1, height: 10)
         }
-        .flipsForRightToLeftLayoutDirection(true)
+        .environment(\.layoutDirection, .leftToRight)
     }
     
     private func scrollToPreviousPage() {
@@ -90,6 +112,6 @@ struct PageControl_Previews: PreviewProvider {
         
         let attributes = PageControlAttributes(deselectedColor: .gray, selectedColor: .blue, circleSize: 10, circleSpacing: 20)
         
-        PageControl(numberOfPages: 3, attributes: attributes, currentPage: $currentPage)
+        PageControl(layoutDirection: .leftToRight, numberOfPages: 3, attributes: attributes, currentPage: $currentPage)
     }
 }

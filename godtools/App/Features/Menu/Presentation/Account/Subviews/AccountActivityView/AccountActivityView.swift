@@ -102,3 +102,17 @@ struct AccountActivityView: View {
         }
     }
 }
+
+struct AccountActivityView_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        
+        GeometryReader { geometry in
+            
+            AccountActivityView(
+                viewModel: AccountView_Preview.getAccountViewModel(),
+                sectionFrameWidth: geometry.size.width
+            )
+        }
+    }
+}

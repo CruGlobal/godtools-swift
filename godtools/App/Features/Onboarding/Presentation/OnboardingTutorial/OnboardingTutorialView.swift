@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct OnboardingTutorialView: View {
-        
+            
     @ObservedObject private var viewModel: OnboardingTutorialViewModel
     
     init(viewModel: OnboardingTutorialViewModel) {
@@ -22,52 +22,44 @@ struct OnboardingTutorialView: View {
         GeometryReader { geometry in
             
             VStack(alignment: .center, spacing: 0) {
-                                
-                TabView(selection: $viewModel.currentPage) {
-
-                    Group {
+                   
+                PagedView(numberOfPages: viewModel.pages.count, currentPage: $viewModel.currentPage) { (page: Int) in
+                    
+                    switch viewModel.pages[page] {
                         
-                        ForEach((0 ..< viewModel.pages.count), id: \.self) { index in
-                            
-                            switch viewModel.pages[index] {
-                                
-                            case .readyForEveryConversation:
-                               
-                                OnboardingTutorialReadyForEveryConversationView(
-                                    viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
-                                    geometry: geometry,
-                                    watchVideoTappedClosure: {
-                                        viewModel.watchReadyForEveryConversationVideoTapped()
-                                    }
-                                )
-                                
-                            case .talkAboutGodWithAnyone:
-                                
-                                OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
-                                    geometry: geometry
-                                )
-                                
-                            case .prepareForTheMomentsThatMatter:
-                                
-                                OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
-                                    geometry: geometry
-                                )
-                                
-                            case .helpSomeoneDiscoverJesus:
-                                
-                                OnboardingTutorialMediaView(
-                                    viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
-                                    geometry: geometry
-                                )
+                    case .readyForEveryConversation:
+                       
+                        OnboardingTutorialReadyForEveryConversationView(
+                            viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
+                            geometry: geometry,
+                            watchVideoTappedClosure: {
+                                viewModel.watchReadyForEveryConversationVideoTapped()
                             }
-                        }
+                        )
+                        
+                    case .talkAboutGodWithAnyone:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
+                            geometry: geometry
+                        )
+                        
+                    case .prepareForTheMomentsThatMatter:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
+                            geometry: geometry
+                        )
+                        
+                    case .helpSomeoneDiscoverJesus:
+                        
+                        OnboardingTutorialMediaView(
+                            viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
+                            geometry: geometry
+                        )
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
-                     
+                
                 OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
                     viewModel.continueTapped()
                 }
@@ -80,6 +72,5 @@ struct OnboardingTutorialView: View {
             .frame(maxWidth: .infinity)
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
