@@ -2,14 +2,14 @@
 //  LanguageSettingsViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/13/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/21/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class LanguageSettingsViewModel {
+class LanguageSettingsViewModel: ObservableObject {
 
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
@@ -20,14 +20,6 @@ class LanguageSettingsViewModel {
         
     private weak var flowDelegate: FlowDelegate?
     
-    let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let primaryLanguageTitle: String
-    let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
-    let parallelLanguageTitle: String
-    let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
-    let shareGodToolsInNativeLanguage: String
-    let languageAvailability: String
-    
     init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
@@ -35,33 +27,6 @@ class LanguageSettingsViewModel {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.localizationServices = localizationServices
         self.analytics = analytics
-        
-        primaryLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "primary_language")
-        parallelLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "parallel_language")
-        shareGodToolsInNativeLanguage = localizationServices.stringForSystemElseEnglish(key: "share_god_tools_native_language")
-        languageAvailability = localizationServices.stringForSystemElseEnglish(key: "not_every_tool_is_available")
-                
-        navTitle.accept(value: localizationServices.stringForSystemElseEnglish(key: "language_settings"))
-        
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (language: LanguageDomainModel?) in
-                
-                let title: String = language?.translatedName ?? self?.localizationServices.stringForSystemElseEnglish(key: "select_primary_language") ?? ""
-
-                self?.primaryLanguageButtonTitle.accept(value: title)
-            }
-            .store(in: &cancellables)
-        
-        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
-                
-                let title: String = language?.translatedName ?? self?.localizationServices.stringForSystemElseEnglish(key: "select_parallel_language") ?? ""
-                
-                self?.parallelLanguageButtonTitle.accept(value: title)
-            })
-            .store(in: &cancellables)
     }
     
     private var analyticsScreenName: String {
@@ -97,13 +62,5 @@ extension LanguageSettingsViewModel {
         )
         
         analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-    }
-    
-    func choosePrimaryLanguageTapped() {
-        flowDelegate?.navigate(step: .choosePrimaryLanguageTappedFromLanguageSettings)
-    }
-    
-    func chooseParallelLanguageTapped() {
-        flowDelegate?.navigate(step: .chooseParallelLanguageTappedFromLanguageSettings)
     }
 }
