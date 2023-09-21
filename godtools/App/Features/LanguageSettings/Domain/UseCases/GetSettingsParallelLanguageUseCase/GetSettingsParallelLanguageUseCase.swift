@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated) // TODO: This will need to be removed once we finish refactor for tracking analytics property cru_contentlanguagesecondary in GT-2135. ~Levi
 class GetSettingsParallelLanguageUseCase {
     
     private let languagesRepository: LanguagesRepository

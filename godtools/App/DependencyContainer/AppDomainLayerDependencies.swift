@@ -34,7 +34,6 @@ class AppDomainLayerDependencies {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
@@ -218,13 +217,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getSettingsLanguagesUseCase() -> GetSettingsLanguagesUseCase {
-        return GetSettingsLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
     func getSettingsPrimaryLanguageUseCase() -> GetSettingsPrimaryLanguageUseCase {
         return GetSettingsPrimaryLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -351,24 +343,6 @@ class AppDomainLayerDependencies {
         return GetTutorialUseCase(
             localizationServices: dataLayer.getLocalizationServices(),
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
-    func getUserDidDeleteSettingsParallelLanguageUseCase() -> UserDidDeleteSettingsParallelLanguageUseCase {
-        return UserDidDeleteSettingsParallelLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
-        )
-    }
-    
-    func getUserDidSetSettingsParallelLanguageUseCase() -> UserDidSetSettingsParallelLanguageUseCase {
-        return UserDidSetSettingsParallelLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
-        )
-    }
-    
-    func getUserDidSetSettingsPrimaryLanguageUseCase() -> UserDidSetSettingsPrimaryLanguageUseCase {
-        return UserDidSetSettingsPrimaryLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
         )
     }
     

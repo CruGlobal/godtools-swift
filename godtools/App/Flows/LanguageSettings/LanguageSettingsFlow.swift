@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class LanguageSettingsFlow: Flow {
         
@@ -21,7 +22,7 @@ class LanguageSettingsFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
-        sharedNavigationController.pushViewController(getLanguageSettings(), animated: true)
+        sharedNavigationController.pushViewController(getLanguageSettingsView(), animated: true)
     }
     
     func navigate(step: FlowStep) {
@@ -31,42 +32,15 @@ class LanguageSettingsFlow: Flow {
         case .backTappedFromLanguageSettings:
             flowDelegate?.navigate(step: .languageSettingsFlowCompleted(state: .userClosedLanguageSettings))
             
-        case .choosePrimaryLanguageTappedFromLanguageSettings:
-            
-            navigateToChooseLanguageView(chooseLanguageType: .primary)
-                        
-        case .chooseParallelLanguageTappedFromLanguageSettings:
-            
-            navigateToChooseLanguageView(chooseLanguageType: .parallel)
-            
-        case .backTappedFromChooseLanguage:
-            
-            navigationController.popViewController(animated: true)
-            
-        case .languageTappedFromChooseLanguage:
-            
-            navigationController.popViewController(animated: true)
-            
-        case .deleteLanguageTappedFromChooseLanguage:
-            
-            navigationController.popViewController(animated: true)
-            
         default:
             break
         }
-    }
-    
-    private func navigateToChooseLanguageView(chooseLanguageType: ChooseLanguageViewModel.ChooseLanguageType) {
-        
-        let view = getChooseLanguage(chooseLanguageType: chooseLanguageType)
-                    
-        navigationController.pushViewController(view, animated: true)
     }
 }
 
 extension LanguageSettingsFlow {
     
-    func getLanguageSettings() -> UIViewController {
+    func getLanguageSettingsView() -> UIViewController {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
@@ -78,36 +52,13 @@ extension LanguageSettingsFlow {
         
         let view = LanguageSettingsView(viewModel: viewModel)
         
-        _ = view.addDefaultNavBackItem(
+        let hostingView: UIHostingController<LanguageSettingsView> = UIHostingController(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(
             target: viewModel,
             action: #selector(viewModel.backTapped)
         )
         
-        return view
-    }
-    
-    func getChooseLanguage(chooseLanguageType: ChooseLanguageViewModel.ChooseLanguageType) -> UIViewController {
-        
-        let viewModel = ChooseLanguageViewModel(
-            flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            userDidSetSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsPrimaryLanguageUseCase(),
-            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
-            userDidDeleteSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidDeleteSettingsParallelLanguageUseCase(),
-            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            chooseLanguageType: chooseLanguageType
-        )
-        
-        let view = ChooseLanguageView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
-        )
-        
-        return view
+        return hostingView
     }
 }
