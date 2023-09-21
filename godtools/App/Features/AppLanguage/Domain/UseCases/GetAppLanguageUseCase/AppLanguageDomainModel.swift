@@ -10,5 +10,14 @@ import Foundation
 
 struct AppLanguageDomainModel {
     
+    let direction: LanguageDirectionDomainModel
     let languageCode: String
+    
+    func copy(direction: LanguageDirectionDomainModel) -> AppLanguageDomainModel {
+        
+        return AppLanguageDomainModel(
+            direction: direction,
+            languageCode: self.languageCode
+        )
+    }
 }

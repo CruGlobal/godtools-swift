@@ -14,12 +14,14 @@ class GetAppLanguageUseCase {
     private let userAppLanguageRepository: GetUserAppLanguageRepositoryInterface
     private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     private let getAppLanguagesUseCase: GetAppLanguagesUseCase
+    private let getLanguageUseCase: GetLanguageUseCase
     
-    init(userAppLanguageRepository: GetUserAppLanguageRepositoryInterface, getDeviceLanguageUseCase: GetDeviceLanguageUseCase, getAppLanguagesUseCase: GetAppLanguagesUseCase) {
+    init(userAppLanguageRepository: GetUserAppLanguageRepositoryInterface, getDeviceLanguageUseCase: GetDeviceLanguageUseCase, getAppLanguagesUseCase: GetAppLanguagesUseCase, getLanguageUseCase: GetLanguageUseCase) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
         self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
         self.getAppLanguagesUseCase = getAppLanguagesUseCase
+        self.getLanguageUseCase = getLanguageUseCase
     }
     
     func getAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
@@ -39,6 +41,20 @@ class GetAppLanguageUseCase {
             return self.getDeviceLanguageElseEnglishPublisher(appLanguages: appLanguages)
                 .eraseToAnyPublisher()
         })
+        .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> in
+            
+            let direction: LanguageDirectionDomainModel
+            
+            if let language = self.getLanguageUseCase.getLanguage(languageCode: appLanguage.languageCode) {
+                direction = language.direction
+            }
+            else {
+                direction = .leftToRight
+            }
+            
+            return Just(appLanguage.copy(direction: direction))
+                .eraseToAnyPublisher()
+        })
         .eraseToAnyPublisher()
     }
     
@@ -53,7 +69,10 @@ class GetAppLanguageUseCase {
                         .eraseToAnyPublisher()
                 }
                     
-                let englishAppLanguage = AppLanguageDomainModel(languageCode: LanguageCode.english.value)
+                let englishAppLanguage = AppLanguageDomainModel(
+                    direction: .leftToRight,
+                    languageCode: LanguageCode.english.value
+                )
 
                 return Just(englishAppLanguage)
                     .eraseToAnyPublisher()

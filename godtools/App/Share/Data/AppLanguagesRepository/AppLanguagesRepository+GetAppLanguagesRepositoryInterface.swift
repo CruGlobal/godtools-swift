@@ -13,10 +13,10 @@ extension AppLanguagesRepository: GetAppLanguagesRepositoryInterface {
     
     func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDomainModel], Never> {
         
-        let appLanguagesCodes: [LanguageCode] = [.chinese, .english, .french, .latvian, .russian, .spanish, .vietnamese]
+        let appLanguagesCodes: [LanguageCode] = [.arabic, .chinese, .english, .french, .latvian, .russian, .spanish, .vietnamese]
         
         let appLanguages: [AppLanguageDomainModel] = appLanguagesCodes.map({
-            return AppLanguageDomainModel(languageCode: $0.value)
+            return AppLanguageDomainModel(direction: .leftToRight, languageCode: $0.value)
         })
         
         return Just(appLanguages)

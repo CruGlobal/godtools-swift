@@ -68,7 +68,8 @@ class AppDomainLayerDependencies {
         return GetAppLanguageUseCase(
             userAppLanguageRepository: dataLayer.getUserAppLanguageRepository(),
             getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
-            getAppLanguagesUseCase: getAppLanguagesUseCase()
+            getAppLanguagesUseCase: getAppLanguagesUseCase(),
+            getLanguageUseCase: getLanguageUseCase()
         )
     }
     

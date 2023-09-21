@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 import AppsFlyerLib
 import SocialAuthentication
 import FacebookCore
@@ -14,7 +15,9 @@ import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-            
+           
+    private var getAppLanguageCancellable: AnyCancellable?
+    
     private lazy var appBuild: AppBuild = {
         AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
@@ -54,7 +57,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
+                    
+        let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
+        
+        // TODO: This is temporary for now, but need to re-visit this in GT-2140 and ensure this is set first before we load any UI. ~Levi
+        getAppLanguageCancellable = getAppLanguageUseCase.getAppLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (appLanguage: AppLanguageDomainModel) in
+                
+                switch appLanguage.direction {
+                
+                case .leftToRight:
+                    ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+                    
+                case .rightToLeft:
+                    ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+                }
+            }
+        
         DisableGoogleTagManagerLogging.disable()
         
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
