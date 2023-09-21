@@ -286,12 +286,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSetupParallelLanguageViewedRepository() -> SetupParallelLanguageViewedRepository {
-        return SetupParallelLanguageViewedRepository(
-            cache: SetupParallelLanguageViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }

@@ -22,8 +22,6 @@ enum FlowStep {
     case menuTappedFromTools
     case languageSettingsTappedFromTools
     case openTutorialTappedFromTools
-    case userViewedFavoritedToolsListFromTools
-    case userViewedAllToolsListFromTools
     
     // onboarding
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
@@ -84,15 +82,6 @@ enum FlowStep {
     case homeTappedFromTool(isScreenSharing: Bool)
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case tractFlowCompleted(state: TractFlowCompletedState)
-        
-    // setup parallel language
-    case languageSelectorTappedFromSetupParallelLanguage
-    case yesTappedFromSetupParallelLanguage
-    case noThanksTappedFromSetupParallelLanguage
-    case getStartedTappedFromSetupParallelLanguage
-    case languageSelectedFromParallelLanguageList
-    case backgroundTappedFromSetupParallelLanguage
-    case backgroundTappedFromParallelLanguageList
         
     // tutorial
     case closeTappedFromTutorial
