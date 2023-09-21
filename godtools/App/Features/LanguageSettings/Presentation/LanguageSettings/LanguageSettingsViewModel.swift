@@ -11,26 +11,25 @@ import Combine
 
 class LanguageSettingsViewModel: ObservableObject {
 
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
+    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
         
     private weak var flowDelegate: FlowDelegate?
     
-    let navTitle: String
+    @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.localizationServices = localizationServices
-        self.analytics = analytics
+        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "language_settings")
+        getInterfaceStringUseCase.getStringPublisher(id: "language_settings")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.navTitle, on: self)
+            .store(in: &cancellables)
     }
     
     private var analyticsScreenName: String {
@@ -57,14 +56,12 @@ extension LanguageSettingsViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        trackScreenViewAnalyticsUseCase.trackScreen(
+            screenName: "Language Settings",
+            siteSection: "menu",
+            siteSubSection: "",
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }
