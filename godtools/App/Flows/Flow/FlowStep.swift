@@ -129,8 +129,8 @@ enum FlowStep {
     // social sign-in
     case closeTappedFromLogin
     case closeTappedFromCreateAccount
-    case userCompletedSignInFromLogin(error: Error?)
-    case userCompletedSignInFromCreateAccount(error: Error?)
+    case userCompletedSignInFromLogin(error: AuthErrorDomainModel?)
+    case userCompletedSignInFromCreateAccount(error: AuthErrorDomainModel?)
         
     // delete account
     case closeTappedFromDeleteAccount

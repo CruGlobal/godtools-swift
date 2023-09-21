@@ -432,3 +432,6 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+"authError.userAccountAlreadyExists.message" = "User account already exists.";
+"authError.userAccountNotFound.message" = "User account not found.";

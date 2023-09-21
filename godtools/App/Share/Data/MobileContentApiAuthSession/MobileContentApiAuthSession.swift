@@ -79,9 +79,12 @@ class MobileContentApiAuthSession {
     private func fetchRemoteAuthToken(createUser: Bool = false) -> AnyPublisher<String, Error> {
                 
         return userAuthentication.renewTokenPublisher()
-            .flatMap { (authTokenDataModel: MobileContentAuthTokenDataModel) in
+            .mapError { (apiError: MobileContentApiError) in
+                return apiError.getError()
+            }
+            .flatMap { (authTokenDataModel: MobileContentAuthTokenDataModel) -> AnyPublisher<String, Error> in
                 
-                return Just(authTokenDataModel.token)
+                return Just(authTokenDataModel.token).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

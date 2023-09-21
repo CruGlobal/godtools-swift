@@ -64,17 +64,17 @@ class SocialSignInViewModel: ObservableObject {
         }
     }
     
-    private func authenticateUser(provider: AuthenticationProviderType) {
-        
+    private func authenticateUser(authPlatform: AuthenticateUserAuthPlatform) {
+                
         authenticateUserUseCase.authenticatePublisher(
-            provider: provider,
-            policy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController),
-            createUser: authenticationType == .createAccount
+            authType: authenticationType == .createAccount ? .createAccount : .signIn,
+            authPlatform: authPlatform,
+            authPolicy: .renewAccessTokenElseAskUserToAuthenticate(fromViewController: presentAuthViewController)
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] subscriberCompletion in
             
-            let authenticationError: Error?
+            let authenticationError: AuthErrorDomainModel?
             
             switch subscriberCompletion {
             case .finished:
@@ -91,7 +91,7 @@ class SocialSignInViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    private func handleAuthenticationCompleted(error: Error?) {
+    private func handleAuthenticationCompleted(error: AuthErrorDomainModel?) {
                 
         switch authenticationType {
         
@@ -120,14 +120,14 @@ extension SocialSignInViewModel {
     }
     
     func signInWithGoogleTapped() {
-        authenticateUser(provider: .google)
+        authenticateUser(authPlatform: .google)
     }
     
     func signInWithFacebookTapped() {
-        authenticateUser(provider: .facebook)
+        authenticateUser(authPlatform: .facebook)
     }
     
     func signInWithAppleTapped() {
-        authenticateUser(provider: .apple)
+        authenticateUser(authPlatform: .apple)
     }
 }
