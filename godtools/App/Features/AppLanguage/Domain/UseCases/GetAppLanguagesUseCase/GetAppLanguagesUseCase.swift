@@ -10,29 +10,17 @@ import Foundation
 import Combine
 
 class GetAppLanguagesUseCase {
+            
+    private let getAppLanguagesRepository: GetAppLanguagesRepositoryInterface
     
-    private static let appLanguages: [LanguageCode] = [.chinese, .english, .french, .latvian, .russian, .spanish, .vietnamese]
-    
-    private let languagesRepository: LanguagesRepository
-    private let getLanguageUseCase: GetLanguageUseCase
-    
-    init(languagesRepository: LanguagesRepository, getLanguageUseCase: GetLanguageUseCase) {
+    init(getAppLanguagesRepository: GetAppLanguagesRepositoryInterface) {
         
-        self.languagesRepository = languagesRepository
-        self.getLanguageUseCase = getLanguageUseCase
+        self.getAppLanguagesRepository = getAppLanguagesRepository
     }
     
-    func getAppLanguagesPublisher() -> AnyPublisher<[LanguageDomainModel], Never> {
-                
-        return languagesRepository.getLanguagesChanged()
-            .map { (void: Void) in
-                
-                let languages: [LanguageDomainModel] = GetAppLanguagesUseCase.appLanguages.compactMap({
-                    self.getLanguageUseCase.getLanguage(languageCode: $0.value)
-                })
-                
-                return languages
-            }
+    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDomainModel], Never> {
+        
+        return getAppLanguagesRepository.getAppLanguagesPublisher()
             .eraseToAnyPublisher()
     }
 }

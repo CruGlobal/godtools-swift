@@ -50,6 +50,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getAppLanguagesRepository() -> AppLanguagesRepository {
+        return AppLanguagesRepository()
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(
@@ -345,6 +349,10 @@ class AppDataLayerDependencies {
         return TutorialVideoAnalytics(
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
+    }
+    
+    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+        return UserAppLanguageRepository()
     }
     
     func getUserAuthentication() -> UserAuthentication {

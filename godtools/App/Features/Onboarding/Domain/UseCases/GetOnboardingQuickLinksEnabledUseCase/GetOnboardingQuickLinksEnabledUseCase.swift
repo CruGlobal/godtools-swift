@@ -27,7 +27,7 @@ class GetOnboardingQuickLinksEnabledUseCase {
             LanguageCode.vietnamese.value
         ]
         
-        let languageCode = getDeviceLanguageUseCase.getDeviceLanguageValue().localeLanguageCode
+        let languageCode: String = getDeviceLanguageUseCase.getDeviceLanguageValue().languageCode
         
         return supportedLanguageCodes.contains(languageCode)
     }

@@ -10,12 +10,12 @@ import Foundation
 import Combine
 
 class GetDeviceLanguageUseCase {
-       
-    private let getLanguageUseCase: GetLanguageUseCase
-    
-    init(getLanguageUseCase: GetLanguageUseCase) {
+
+    private let getDeviceLanguage: GetDeviceLanguageInterface
+
+    init(getDeviceLanguage: GetDeviceLanguageInterface) {
         
-        self.getLanguageUseCase = getLanguageUseCase
+        self.getDeviceLanguage = getDeviceLanguage
     }
     
     func getDeviceLanguagePublisher() -> AnyPublisher<DeviceLanguageDomainModel, Never> {
@@ -26,27 +26,6 @@ class GetDeviceLanguageUseCase {
     
     func getDeviceLanguageValue() -> DeviceLanguageDomainModel {
                 
-        let deviceLocale: Locale = getDeviceLocale()
-        
-        return getDeviceLanguage(for: deviceLocale)
-    }
-    
-    private func getDeviceLanguage(for locale: Locale) -> DeviceLanguageDomainModel {
-        
-        return DeviceLanguageDomainModel(
-            language: getLanguageUseCase.getLanguage(locale: locale),
-            locale: locale,
-            localeIdentifier: locale.identifier,
-            localeLanguageCode: (locale.languageCode ?? locale.identifier).lowercased()
-        )
-    }
-    
-    private func getDeviceLocale() -> Locale {
-        
-        if let localeIdentifier = Bundle.main.preferredLocalizations.first {
-            return Locale(identifier: localeIdentifier)
-        }
-        
-        return Locale.current
+        return getDeviceLanguage.getDeviceLanguage()
     }
 }
