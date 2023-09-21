@@ -44,6 +44,7 @@ extension LanguageSettingsFlow {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
+            getAppLanguageUseCase: appDiContainer.domainLayer.getAppLanguageUseCase(),
             getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )

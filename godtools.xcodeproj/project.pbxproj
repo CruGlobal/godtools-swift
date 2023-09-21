@@ -23,6 +23,8 @@
 		45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */; };
 		45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */; };
 		45052148295F3B9D0018ABD0 /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */; };
+		4508E9C52ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */; };
+		4508E9C82ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450D7B0128E32965006C3FDF /* RealmDownloadedTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */; };
 		450D7B0228E32965006C3FDF /* TrackDownloadedTranslationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D7AFD28E32965006C3FDF /* TrackDownloadedTranslationsCache.swift */; };
@@ -1193,6 +1195,8 @@
 		4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPI.swift; sourceTree = "<group>"; };
 		4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCounterDecodable.swift; sourceTree = "<group>"; };
 		4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
+		4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
+		4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDownloadedTranslation.swift; sourceTree = "<group>"; };
 		450D7AFD28E32965006C3FDF /* TrackDownloadedTranslationsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDownloadedTranslationsCache.swift; sourceTree = "<group>"; };
@@ -2583,6 +2587,31 @@
 				4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4508E9C02ABCCE60007E502D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C32ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguage */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4508E9C32ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */,
+				4508E9C62ABCCF4E007E502D /* Subviews */,
+			);
+			path = LanguageSettingsAppInterfaceLanguage;
+			sourceTree = "<group>";
+		};
+		4508E9C62ABCCF4E007E502D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */ = {
@@ -6665,6 +6694,7 @@
 			children = (
 				45C2593028CAC3E8005D2387 /* LanguageSettingsView.swift */,
 				45C2592F28CAC3E8005D2387 /* LanguageSettingsViewModel.swift */,
+				4508E9C02ABCCE60007E502D /* Subviews */,
 			);
 			path = LanguageSettings;
 			sourceTree = "<group>";
@@ -9558,6 +9588,7 @@
 				45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */,
 				45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */,
 				45B538992A8AAA960033B34E /* LessonsHeaderView.swift in Sources */,
+				4508E9C52ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */,
 				45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */,
 				45558341269F2C7B00C3FF14 /* ToolPageHeaderView.swift in Sources */,
 				450D7B0528E32965006C3FDF /* DownloadedTranslationDataModelType.swift in Sources */,
@@ -9829,6 +9860,7 @@
 				45BDA5D22954F6A0007E259B /* MobileContentResourceViewsApi.swift in Sources */,
 				4573133D28C1821100481640 /* ToolDetailsAboutView.swift in Sources */,
 				45E347992A49C0EC0014CCD1 /* AnimatableValue.swift in Sources */,
+				4508E9C82ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift in Sources */,
 				45C1521F2A43D1BD00F2A1E8 /* ShareToolView.swift in Sources */,
 				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,
 				45AC77D829DCA3DA00A2224B /* MobileContentPageRendererPagesViewDataCache.swift in Sources */,
