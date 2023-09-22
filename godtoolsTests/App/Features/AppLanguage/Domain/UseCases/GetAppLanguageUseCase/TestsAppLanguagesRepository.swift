@@ -22,7 +22,7 @@ class TestsAppLanguagesRepository: GetAppLanguagesRepositoryInterface {
     func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDomainModel], Never> {
                 
         let appLanguages: [AppLanguageDomainModel] = appLanguagesCodes.map({
-            return AppLanguageDomainModel(languageCode: $0.value)
+            return AppLanguageDomainModel(direction: .leftToRight, languageCode: $0.value)
         })
         
         return Just(appLanguages)

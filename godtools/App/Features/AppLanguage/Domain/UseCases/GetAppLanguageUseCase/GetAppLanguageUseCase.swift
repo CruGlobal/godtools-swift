@@ -14,14 +14,12 @@ class GetAppLanguageUseCase {
     private let userAppLanguageRepository: GetUserAppLanguageRepositoryInterface
     private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
     private let getAppLanguagesUseCase: GetAppLanguagesUseCase
-    private let getLanguageUseCase: GetLanguageUseCase
     
-    init(userAppLanguageRepository: GetUserAppLanguageRepositoryInterface, getDeviceLanguageUseCase: GetDeviceLanguageUseCase, getAppLanguagesUseCase: GetAppLanguagesUseCase, getLanguageUseCase: GetLanguageUseCase) {
+    init(userAppLanguageRepository: GetUserAppLanguageRepositoryInterface, getDeviceLanguageUseCase: GetDeviceLanguageUseCase, getAppLanguagesUseCase: GetAppLanguagesUseCase) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
         self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
         self.getAppLanguagesUseCase = getAppLanguagesUseCase
-        self.getLanguageUseCase = getLanguageUseCase
     }
     
     func getAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
@@ -39,20 +37,6 @@ class GetAppLanguageUseCase {
             }
             
             return self.getDeviceLanguageElseEnglishPublisher(appLanguages: appLanguages)
-                .eraseToAnyPublisher()
-        })
-        .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> in
-            
-            let direction: LanguageDirectionDomainModel
-            
-            if let language = self.getLanguageUseCase.getLanguage(languageCode: appLanguage.languageCode) {
-                direction = language.direction
-            }
-            else {
-                direction = .leftToRight
-            }
-            
-            return Just(appLanguage.copy(direction: direction))
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
