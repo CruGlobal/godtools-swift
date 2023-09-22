@@ -51,16 +51,14 @@ struct ToolsView: View {
                             contentHorizontalInsets: contentHorizontalInsets
                         )
                         .padding([.top], 24)
-                        
-                        ToolCategoriesView(
-                            viewModel: viewModel,
-                            contentHorizontalInsets: contentHorizontalInsets
-                        )
-            
+                                    
                         SeparatorView()
                             .padding([.top], 15)
-                            .padding([.bottom], 25)
+                            .padding([.bottom], 11)
                             .padding([.leading, .trailing], contentHorizontalInsets)
+                        
+                        ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
+                            .padding([.bottom], 18)
                         
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
                             
@@ -120,7 +118,6 @@ struct AllToolsView_Preview: PreviewProvider {
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),

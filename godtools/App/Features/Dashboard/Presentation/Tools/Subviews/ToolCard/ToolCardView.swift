@@ -110,7 +110,7 @@ struct ToolCardView: View {
                             Spacer()
                             
                             ToolCardLanguageAvailabilityView(
-                                languageAvailability: viewModel.parallelLanguageAvailability
+                                languageAvailability: viewModel.languageAvailability
                             )
                         }
                     }
@@ -126,7 +126,7 @@ struct ToolCardView: View {
                     if layout == .thumbnail {
                         
                         ToolCardLanguageAvailabilityView(
-                            languageAvailability: viewModel.parallelLanguageAvailability
+                            languageAvailability: viewModel.languageAvailability
                         )
                         .padding([.top], 5)
                     }
@@ -190,7 +190,7 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(locale: Locale(identifier: LanguageCodes.english))
+        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(languageCode: LanguageCode.english.value)
         
         let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
         
@@ -198,7 +198,6 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )

@@ -32,7 +32,7 @@ class GetTutorialUseCase {
         let defaultContinueButtonTitle: String = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.continue")
         let lastPageContinueButtonTitle: String
         
-        if getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode == LanguageCodes.english {
+        if getDeviceLanguageUseCase.getDeviceLanguageValue().languageCode == LanguageCode.english.value {
             
             tutorialItems = getEnglishTutorialItems()
             lastPageContinueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "tutorial.continueButton.title.closeTutorial")

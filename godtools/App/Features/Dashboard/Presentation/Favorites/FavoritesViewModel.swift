@@ -225,8 +225,6 @@ extension FavoritesViewModel {
     func pageViewed() {
         
         trackPageView()
-        
-        flowDelegate?.navigate(step: .userViewedFavoritedToolsListFromTools)
     }
     
     func pullToRefresh() {
@@ -284,7 +282,6 @@ extension FavoritesViewModel {
             tool: tool,
             localizationServices: localizationServices,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

@@ -152,6 +152,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
+            
+        case .toolFilterTappedFromTools(let toolFilterType, let currentToolFilterSelection):
+            navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, currentToolFilterSelection: currentToolFilterSelection), animated: true)
+            
+        case .backTappedFromToolFilter:
+            navigationController.popViewController(animated: true)
                         
         case .toolTappedFromTools(let resource):
             navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
@@ -302,7 +308,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToDashboard()
                 
-                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguageValue().languageCode
                 
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
@@ -348,12 +354,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
             
-        case .userViewedFavoritedToolsListFromTools:
-            presentSetupParallelLanguage()
-            
-        case .userViewedAllToolsListFromTools:
-            presentSetupParallelLanguage()
-            
         case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
                         
             let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -383,27 +383,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .backgroundTappedFromLessonEvaluation:
             dismissLessonEvaluation()
-                    
-        case .languageSelectorTappedFromSetupParallelLanguage:
-            presentParallelLanguage()
-        
-        case .yesTappedFromSetupParallelLanguage:
-            presentParallelLanguage()
-        
-        case .noThanksTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .getStartedTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .languageSelectedFromParallelLanguageList:
-            dismissParallelLanguage()
-        
-        case .backgroundTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .backgroundTappedFromParallelLanguageList:
-            dismissParallelLanguage()
                         
         default:
             break
@@ -787,6 +766,47 @@ extension AppFlow {
     }
 }
 
+// MARK: - Tool Filter Selection
+
+extension AppFlow {
+    
+    private func getToolFilterSelection(toolFilterType: ToolFilterType, currentToolFilterSelection: ToolFilterSelection) -> UIViewController {
+        
+        let viewModel: ToolFilterSelectionViewModel
+        
+        switch toolFilterType {
+        case .category:
+            
+            viewModel = ToolFilterCategorySelectionViewModel(
+                toolFilterSelection: currentToolFilterSelection,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            )
+            
+        case .language:
+            
+            viewModel = ToolFilterLanguageSelectionViewModel(
+                toolFilterSelection: currentToolFilterSelection,
+                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+            )
+        }
+        
+        let view = ToolFilterSelectionView(viewModel: viewModel)
+        
+        let hostingView = UIHostingController(rootView: view)
+        
+        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolFilterSelection))
+        
+        return hostingView
+    }
+    
+    @objc private func backTappedFromToolFilterSelection() {
+        
+        navigate(step: .backTappedFromToolFilter)
+    }
+}
+
 // MARK: - Tool Detail
 
 extension AppFlow {
@@ -893,68 +913,6 @@ extension AppFlow {
     
     private func dismissLessonEvaluation() {
         navigationController.dismiss(animated: true, completion: nil)
-    }
-}
-
-// MARK: - Setup Parallel Language
-
-extension AppFlow {
-    
-    private func presentSetupParallelLanguage() {
-                    
-        let setupParallelLanguageAvailabilityUseCase = appDiContainer.domainLayer.getSetupParallelLanguageAvailabilityUseCase()
-        
-        let setupParallelLanguageIsAvailable: Bool = setupParallelLanguageAvailabilityUseCase.getSetupParallelLanguageIsAvailable().isAvailable
-        
-        guard setupParallelLanguageIsAvailable else {
-            return
-        }
-                
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            
-            guard let weakSelf = self, weakSelf.navigationController.presentedViewController == nil else {
-                return
-            }
-            
-            let appDiContainer: AppDiContainer = weakSelf.appDiContainer
-            
-            let viewModel = SetupParallelLanguageViewModel(
-                flowDelegate: weakSelf,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                setupParallelLanguageViewedRepository: appDiContainer.dataLayer.getSetupParallelLanguageViewedRepository(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
-            )
-            let view = SetupParallelLanguageView(viewModel: viewModel)
-            
-            let modalView = TransparentModalView(flowDelegate: weakSelf, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
-            
-            weakSelf.navigationController.present(modalView, animated: true, completion: nil)
-        }
-    }
-    
-    private func presentParallelLanguage() {
-        
-        let viewModel = ChooseParallelLanguageListViewModel(
-            flowDelegate: self,
-            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
-        )
-        
-        let view = ChooseParallelLanguageListView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
-        
-        navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
-    }
-    
-    private func dismissSetupParallelLanguage() {
-        navigationController.dismiss(animated: true, completion: nil)
-    }
-    
-    private func dismissParallelLanguage() {
-        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -1078,14 +1036,31 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            if appLaunchedFromTerminatedState {
-                navigationStarted = true
-                navigate(step: .appLaunchedFromTerminatedState)
-            }
-            else if appLaunchedFromBackgroundState {
-                appIsInBackground = false
-                navigate(step: .appLaunchedFromBackgroundState)
-            }
+            let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
+            
+            getAppLanguageUseCase.getAppLanguagePublisher()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                    
+                    switch appLanguage.direction {
+                    
+                    case .leftToRight:
+                        ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+                        
+                    case .rightToLeft:
+                        ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+                    }
+                    
+                    if appLaunchedFromTerminatedState {
+                        self?.navigationStarted = true
+                        self?.navigate(step: .appLaunchedFromTerminatedState)
+                    }
+                    else if appLaunchedFromBackgroundState {
+                        self?.appIsInBackground = false
+                        self?.navigate(step: .appLaunchedFromBackgroundState)
+                    }
+                }
+                .store(in: &cancellables)
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true
