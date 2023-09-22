@@ -209,9 +209,9 @@ extension ToolsViewModel {
         
         return ToolCardViewModel(
             tool: tool,
+            alternateLanguage: toolFilterSelectionPublisher.value.selectedLanguage.language,
             localizationServices: localizationServices,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

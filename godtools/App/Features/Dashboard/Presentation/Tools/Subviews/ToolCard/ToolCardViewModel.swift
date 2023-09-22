@@ -14,7 +14,6 @@ class ToolCardViewModel: ObservableObject {
         
     private let localizationServices: LocalizationServices
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
             
@@ -27,17 +26,16 @@ class ToolCardViewModel: ObservableObject {
     @Published var isFavorited = false
     @Published var title: String = ""
     @Published var category: String = ""
-    @Published var parallelLanguageAvailability: String = ""
+    @Published var alternateLanguageAvailability: String = ""
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
     @Published var layoutDirection: LayoutDirection = .leftToRight
             
-    init(tool: ToolDomainModel, localizationServices: LocalizationServices, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolDomainModel, alternateLanguage: LanguageDomainModel? = nil, localizationServices: LocalizationServices, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.localizationServices = localizationServices
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.attachmentsRepository = attachmentsRepository
                 
@@ -50,20 +48,13 @@ class ToolCardViewModel: ObservableObject {
         openButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "open")
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
         
-        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
-                
-                self?.reloadParallelLanguageAvailability(parallelLanguage: parallelLanguage)
-            }
-            .store(in: &cancellables)
-        
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
             .assign(to: \.isFavorited, on: self)
             .store(in: &cancellables)
         
         downloadBannerImage()
+        setAlternateLanguageAvailabilityText(alternateLanguage: alternateLanguage)
     }
     
     private func downloadBannerImage() {
@@ -86,16 +77,16 @@ class ToolCardViewModel: ObservableObject {
         }
     }
     
-    private func reloadParallelLanguageAvailability(parallelLanguage: LanguageDomainModel?) {
+    private func setAlternateLanguageAvailabilityText(alternateLanguage: LanguageDomainModel?) {
         
-        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: alternateLanguage)
         
         if getLanguageAvailability.isAvailable {
             
-            parallelLanguageAvailability = getLanguageAvailability.availabilityString
+            alternateLanguageAvailability = getLanguageAvailability.availabilityString
             
         } else {
-            parallelLanguageAvailability = ""
+            alternateLanguageAvailability = ""
         }
     }
 }

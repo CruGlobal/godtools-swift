@@ -64,16 +64,14 @@ class GetToolFilterLanguagesUseCase {
                 
                 let languageName = getNameOfLanguage(languageModel)
                 let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
-                let translatedName = languageDomainModel.translatedName
                 
                 let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
                 
                 return LanguageFilterDomainModel(
-                    id: languageDomainModel.id,
                     languageName: languageName,
-                    translatedName: translatedName,
                     toolsAvailableText: toolsAvailableText,
-                    searchableText: translatedName
+                    searchableText: languageDomainModel.translatedName,
+                    language: languageDomainModel
                 )
             }
         
@@ -87,7 +85,12 @@ class GetToolFilterLanguagesUseCase {
         let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByCategoryId: filteredByCategoryId)
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
-        return LanguageFilterDomainModel(id: nil, languageName: anyLanguageTranslation, translatedName: nil, toolsAvailableText: toolsAvailableText, searchableText: anyLanguageTranslation)
+        return LanguageFilterDomainModel(
+            languageName: anyLanguageTranslation,
+            toolsAvailableText: toolsAvailableText,
+            searchableText: anyLanguageTranslation,
+            language: nil
+        )
     }
     
     private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
