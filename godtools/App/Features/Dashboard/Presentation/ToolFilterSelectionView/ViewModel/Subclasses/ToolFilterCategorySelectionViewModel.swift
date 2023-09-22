@@ -31,7 +31,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage?.id)
+        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
             .sink { [weak self] categories in
                 
                 self?.categories = categories
@@ -48,9 +48,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             }
             .store(in: &cancellables)
         
-        if let currentCategorySelected = selectedCategory {
-            filterValueSelected = .category(categoryModel: currentCategorySelected)
-        }
+        filterValueSelected = .category(categoryModel: selectedCategory)
     }
 }
 

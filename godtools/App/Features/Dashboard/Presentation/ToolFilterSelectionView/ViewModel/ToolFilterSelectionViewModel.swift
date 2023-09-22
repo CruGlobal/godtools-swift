@@ -21,7 +21,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var filterValueSelected: ToolFilterValue?
     
-    var selectedCategory: ToolCategoryDomainModel? {
+    var selectedCategory: ToolCategoryDomainModel {
         get {
             return toolFilterSelectionPublisher.value.selectedCategory
             
@@ -35,7 +35,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
         }
     }
     
-    var selectedLanguage: LanguageFilterDomainModel? {
+    var selectedLanguage: LanguageFilterDomainModel {
         get {
             return toolFilterSelectionPublisher.value.selectedLanguage
             

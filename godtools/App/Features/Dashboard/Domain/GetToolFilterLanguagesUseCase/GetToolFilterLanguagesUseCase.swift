@@ -13,14 +13,16 @@ class GetToolFilterLanguagesUseCase {
     
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getLanguageUseCase: GetLanguageUseCase
+    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
         
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getLanguageUseCase = getLanguageUseCase
+        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
@@ -32,20 +34,29 @@ class GetToolFilterLanguagesUseCase {
             .getAllTools(sorted: false, category: filteredByCategory?.id)
             .getUniqueLanguageIds()
         
-        let languages = createLanguageFilterDomainModels(from: Array(languageIds), withTranslation: nil, filteredByCategory: filteredByCategory)
+        let languages = createLanguageFilterDomainModels(from: Array(languageIds), withTranslation: nil, filteredByCategoryId: filteredByCategory?.id)
         
         return Just(languages)
             .eraseToAnyPublisher()
     }
     
-    private func createLanguageFilterDomainModels(from languageIds: [String], withTranslation translationLanguage: LanguageDomainModel?, filteredByCategory: ToolCategoryDomainModel?) -> [LanguageFilterDomainModel] {
+    func getAnyLanguageFilterDomainModel() -> LanguageFilterDomainModel {
+        
+        let translationLocaleId = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
+        
+        return createAnyLanguageDomainModel(translationLocaleId: translationLocaleId, filteredByCategoryId: nil)
+    }
+    
+    private func createLanguageFilterDomainModels(from languageIds: [String], withTranslation translationLanguage: LanguageDomainModel?, filteredByCategoryId: String?) -> [LanguageFilterDomainModel] {
         
         let translationLocaleId: String? = translationLanguage?.localeIdentifier
         
-        return languagesRepository.getLanguages(ids: languageIds)
+        let anyLanguage = createAnyLanguageDomainModel(translationLocaleId: translationLocaleId, filteredByCategoryId: filteredByCategoryId)
+        
+        let languages: [LanguageFilterDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
-                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategory: filteredByCategory)
+                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
                 
                 guard toolsAvailableCount > 0 else {
                     return nil
@@ -53,23 +64,37 @@ class GetToolFilterLanguagesUseCase {
                 
                 let languageName = getNameOfLanguage(languageModel)
                 let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
+                let translatedName = languageDomainModel.translatedName
                 
                 let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
                 
                 return LanguageFilterDomainModel(
                     id: languageDomainModel.id,
                     languageName: languageName,
-                    translatedName: languageDomainModel.translatedName,
-                    toolsAvailableText: toolsAvailableText
+                    translatedName: translatedName,
+                    toolsAvailableText: toolsAvailableText,
+                    searchableText: translatedName
                 )
             }
+        
+        return [anyLanguage] + languages
     }
     
-    private func getToolsAvailableCount(for languageId: String?, filteredByCategory: ToolCategoryDomainModel?) -> Int {
+    private func createAnyLanguageDomainModel(translationLocaleId: String?, filteredByCategoryId: String?) -> LanguageFilterDomainModel {
+        
+        let anyLanguageTranslation: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: translationLocaleId, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
+        
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
+        
+        return LanguageFilterDomainModel(id: nil, languageName: anyLanguageTranslation, translatedName: nil, toolsAvailableText: toolsAvailableText, searchableText: anyLanguageTranslation)
+    }
+    
+    private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
         
         return getAllToolsUseCase.getAllTools(
             sorted: false,
-            categoryId: filteredByCategory?.id,
+            categoryId: filteredByCategoryId,
             languageId: languageId
         ).count
     }

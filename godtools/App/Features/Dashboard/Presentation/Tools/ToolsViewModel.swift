@@ -27,7 +27,7 @@ class ToolsViewModel: ObservableObject {
     private let attachmentsRepository: AttachmentsRepository
     private let analytics: AnalyticsContainer
     private let categoryFilterValuePublisher: CurrentValueSubject<String?, Never> = CurrentValueSubject(nil)
-    private let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never> = CurrentValueSubject(ToolFilterSelection(selectedCategory: nil, selectedLanguage: nil))
+    private let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -45,7 +45,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -63,6 +63,11 @@ class ToolsViewModel: ObservableObject {
         
         favoritingToolBannerMessage = localizationServices.stringForSystemElseEnglish(key: "tool_offline_favorite_message")
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
+        
+        
+        let anyCategorySelection = getToolCategoriesUseCase.getAnyCategoryDomainModel()
+        let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
+        toolFilterSelectionPublisher = CurrentValueSubject(ToolFilterSelection(selectedCategory: anyCategorySelection, selectedLanguage: anyLanguageSelection))
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -104,36 +109,12 @@ class ToolsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func didUpdateFilterSelection(filterSelection: ToolFilterSelection) {
-        
-        toolFilterSelectionPublisher.send(filterSelection)
-    }
-    
-    private func updateFilterButtonText(with primaryLanguage: LanguageDomainModel? = nil) {
-        
-        let language = primaryLanguage ?? getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()
-        let localeId: String? = language?.localeIdentifier
+    private func updateFilterButtonText() {
         
         let filterSelection = toolFilterSelectionPublisher.value
         
-        if let selectedCategory = filterSelection.selectedCategory {
-            
-            categoryFilterButtonTitle = selectedCategory.translatedName
-            
-        } else {
-            
-            categoryFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
-        }
-        
-        if let selectedLanguage = filterSelection.selectedLanguage {
-            
-            languageFilterButtonTitle = selectedLanguage.translatedName
-            
-        } else {
-            
-            languageFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
-        }
-        
+        categoryFilterButtonTitle = filterSelection.selectedCategory.translatedName
+        languageFilterButtonTitle = filterSelection.selectedLanguage.searchableText
     }
     
     private var analyticsScreenName: String {

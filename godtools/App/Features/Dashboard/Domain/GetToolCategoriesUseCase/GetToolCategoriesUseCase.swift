@@ -42,6 +42,13 @@ class GetToolCategoriesUseCase {
             .eraseToAnyPublisher()
     }
     
+    func getAnyCategoryDomainModel() -> ToolCategoryDomainModel {
+        
+        let translationLocaleId = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
+        
+        return createAnyCategoryDomainModel(translationLocaleId: translationLocaleId, filteredByLanguageId: nil)
+    }
+    
     private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?, filteredByLanguageId: String?) -> [ToolCategoryDomainModel] {
 
         let translationLocaleId: String? = language?.localeIdentifier

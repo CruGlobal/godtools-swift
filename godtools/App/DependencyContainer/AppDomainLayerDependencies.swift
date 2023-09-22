@@ -295,6 +295,7 @@ class AppDomainLayerDependencies {
         return GetToolFilterLanguagesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
             getLanguageUseCase: getLanguageUseCase(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             languagesRepository: dataLayer.getLanguagesRepository(),
             localizationServices: dataLayer.getLocalizationServices(),
             resourcesRepository: dataLayer.getResourcesRepository()

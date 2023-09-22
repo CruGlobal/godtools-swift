@@ -12,6 +12,7 @@ struct LanguageFilterDomainModel {
     
     let id: String?
     let languageName: String
-    let translatedName: String
+    let translatedName: String?
     let toolsAvailableText: String
+    let searchableText: String
 }
