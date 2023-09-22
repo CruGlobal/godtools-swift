@@ -15,12 +15,14 @@ struct AppInterfaceLanguageButtonView: View {
     private let width: CGFloat
     private let height: CGFloat
     private let cornerRadius: CGFloat = 6
+    private let tappedClosure: (() -> Void)?
     
-    init(title: String, width: CGFloat, height: CGFloat) {
+    init(title: String, width: CGFloat, height: CGFloat, tappedClosure: (() -> Void)?) {
         
         self.title = title
         self.width = width
         self.height = height
+        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
@@ -28,7 +30,7 @@ struct AppInterfaceLanguageButtonView: View {
         ZStack(alignment: .center) {
             
             Button(action: {
-
+                tappedClosure?()
             }) {
                 
                 ZStack(alignment: .center) {

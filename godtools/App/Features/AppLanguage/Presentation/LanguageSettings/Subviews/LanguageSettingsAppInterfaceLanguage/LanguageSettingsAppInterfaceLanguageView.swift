@@ -40,7 +40,11 @@ struct LanguageSettingsAppInterfaceLanguageView: View {
         AppInterfaceLanguageButtonView(
             title: viewModel.appInterfaceLanguageButtonTitle,
             width: geometry.size.width,
-            height: 50
+            height: 50,
+            tappedClosure: {
+                
+                viewModel.chooseAppLanguageTapped()
+            }
         )
     }
 }
