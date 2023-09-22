@@ -11,26 +11,38 @@ import Combine
 
 class LanguageSettingsViewModel: ObservableObject {
 
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
+    private let getAppLanguageUseCase: GetAppLanguageUseCase
+    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
         
     private weak var flowDelegate: FlowDelegate?
     
-    let navTitle: String
+    @Published var navTitle: String = ""
+    @Published var appInterfaceLanguageTitle: String = "App "
+    @Published var numberOfLanguagesAvailable: String = "Number of languages available need to implement."
+    @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
+    @Published var appInterfaceLanguageButtonTitle: String = "English"
     
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, getAppLanguageUseCase: GetAppLanguageUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.localizationServices = localizationServices
-        self.analytics = analytics
+        self.getAppLanguageUseCase = getAppLanguageUseCase
+        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "language_settings")
+        getAppLanguageUseCase.getAppLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                self?.appInterfaceLanguageButtonTitle = "App LanguageCode: \(appLanguage.languageCode)"
+            }
+            .store(in: &cancellables)
+        
+        getInterfaceStringUseCase.getStringPublisher(id: "language_settings")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.navTitle, on: self)
+            .store(in: &cancellables)
     }
     
     private var analyticsScreenName: String {
@@ -57,14 +69,12 @@ extension LanguageSettingsViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+        trackScreenViewAnalyticsUseCase.trackScreen(
+            screenName: "Language Settings",
+            siteSection: "menu",
+            siteSubSection: "",
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

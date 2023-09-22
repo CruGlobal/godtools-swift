@@ -53,7 +53,10 @@ class GetAppLanguageUseCase {
                         .eraseToAnyPublisher()
                 }
                     
-                let englishAppLanguage = AppLanguageDomainModel(languageCode: LanguageCode.english.value)
+                let englishAppLanguage = AppLanguageDomainModel(
+                    direction: .leftToRight,
+                    languageCode: LanguageCode.english.value
+                )
 
                 return Just(englishAppLanguage)
                     .eraseToAnyPublisher()

@@ -10,6 +10,7 @@ import Foundation
 
 enum LanguageCode: String {
     
+    case arabic = "ar"
     case chinese = "zh"
     case english = "en"
     case french = "fr"

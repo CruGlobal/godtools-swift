@@ -75,7 +75,7 @@ class GetAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian.") {
                 
                 let getAppLanguageUseCase = GetAppLanguageUseCase(
-                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(languageCode: LanguageCode.russian.value)),
+                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(direction: .leftToRight, languageCode: LanguageCode.russian.value)),
                     getDeviceLanguageUseCase: GetDeviceLanguageUseCase(getDeviceLanguage: TestsDeviceLanguage(deviceLanguageCode: .french)),
                     getAppLanguagesUseCase: GetAppLanguagesUseCase(getAppLanguagesRepository: TestsAppLanguagesRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]))
                 )
@@ -102,7 +102,7 @@ class GetAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian and Russian is not an available app language.") {
                 
                 let getAppLanguageUseCase = GetAppLanguageUseCase(
-                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(languageCode: LanguageCode.russian.value)),
+                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(direction: .leftToRight, languageCode: LanguageCode.russian.value)),
                     getDeviceLanguageUseCase: GetDeviceLanguageUseCase(getDeviceLanguage: TestsDeviceLanguage(deviceLanguageCode: .french)),
                     getAppLanguagesUseCase: GetAppLanguagesUseCase(getAppLanguagesRepository: TestsAppLanguagesRepository(appLanguagesCodes: [.english, .french, .spanish]))
                 )
@@ -129,7 +129,7 @@ class GetAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian and Russian and French are not available app languages.") {
                 
                 let getAppLanguageUseCase = GetAppLanguageUseCase(
-                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(languageCode: LanguageCode.russian.value)),
+                    userAppLanguageRepository: TestsUserAppLanguageRepository(userAppLanguage: AppLanguageDomainModel(direction: .leftToRight, languageCode: LanguageCode.russian.value)),
                     getDeviceLanguageUseCase: GetDeviceLanguageUseCase(getDeviceLanguage: TestsDeviceLanguage(deviceLanguageCode: .french)),
                     getAppLanguagesUseCase: GetAppLanguagesUseCase(getAppLanguagesRepository: TestsAppLanguagesRepository(appLanguagesCodes: [.english, .spanish]))
                 )

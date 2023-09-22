@@ -23,6 +23,8 @@
 		45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */; };
 		45052146295F3B9D0018ABD0 /* UserCounterDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */; };
 		45052148295F3B9D0018ABD0 /* UserCountersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */; };
+		4508E9C52ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */; };
+		4508E9C82ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450D7B0128E32965006C3FDF /* RealmDownloadedTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */; };
 		450D7B0228E32965006C3FDF /* TrackDownloadedTranslationsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450D7AFD28E32965006C3FDF /* TrackDownloadedTranslationsCache.swift */; };
@@ -85,6 +87,17 @@
 		451FB9372896B3DE00423865 /* LanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9342896B3DE00423865 /* LanguageDomainModel.swift */; };
 		451FB9382896B3DE00423865 /* GetLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9352896B3DE00423865 /* GetLanguageUseCase.swift */; };
 		451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */; };
+		4522599F2ABCB0D40070F7F3 /* TrackScreenViewAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4522599E2ABCB0D40070F7F3 /* TrackScreenViewAnalyticsUseCase.swift */; };
+		452259A22ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259A12ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift */; };
+		452259A42ABCB2470070F7F3 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259A32ABCB2470070F7F3 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift */; };
+		452259A72ABCB7F10070F7F3 /* GetInterfaceStringUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259A62ABCB7F10070F7F3 /* GetInterfaceStringUseCase.swift */; };
+		452259AA2ABCB9B40070F7F3 /* GetInterfaceStringRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259A92ABCB9B40070F7F3 /* GetInterfaceStringRepositoryInterface.swift */; };
+		452259AC2ABCBAE90070F7F3 /* LocalizationServices+GetInterfaceStringRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259AB2ABCBAE90070F7F3 /* LocalizationServices+GetInterfaceStringRepositoryInterface.swift */; };
+		452259AE2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259AD2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift */; };
+		452259B12ABCC4F10070F7F3 /* TrackActionAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259B02ABCC4F10070F7F3 /* TrackActionAnalyticsUseCase.swift */; };
+		452259B42ABCC5290070F7F3 /* TrackActionAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259B32ABCC5290070F7F3 /* TrackActionAnalyticsInterface.swift */; };
+		452259B62ABCC6500070F7F3 /* TrackActionAnalyticsPropertiesDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259B52ABCC6500070F7F3 /* TrackActionAnalyticsPropertiesDomainModel.swift */; };
+		452259B82ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259B72ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift */; };
 		45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */; };
 		45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */; };
 		45227BB02A1D030D0021C131 /* DeleteAccountProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */; };
@@ -128,6 +141,7 @@
 		45368A1A2ABB2D850028A570 /* LocalizableStringsBundleLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A0D2ABB2D840028A570 /* LocalizableStringsBundleLoaderTests.swift */; };
 		45368A1B2ABB2D850028A570 /* LocalizableStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A0E2ABB2D840028A570 /* LocalizableStringsRepositoryTests.swift */; };
 		45368A1C2ABB2D850028A570 /* LocalizationServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A0F2ABB2D840028A570 /* LocalizationServicesTests.swift */; };
+		4538D6372ABD27FF00F3B8C4 /* AppLanguageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538D6362ABD27FF00F3B8C4 /* AppLanguageDataModel.swift */; };
 		453A9EF12A044FFF007BB892 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EF02A044FFF007BB892 /* MenuView.swift */; };
 		453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A9EF22A045006007BB892 /* MenuViewModel.swift */; };
 		453AC11228F4A10400291791 /* FailedFollowUpsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AC10928F4A10400291791 /* FailedFollowUpsCache.swift */; };
@@ -186,6 +200,7 @@
 		4554205B28B17AEA00368CFE /* AttachmentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
 		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
+		455482BC2ABD2AFC008EA8D2 /* GetAppLanguageUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7672ABB326D0097B4A5 /* GetAppLanguageUseCaseTests.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
 		455582E3269F2C1000C3FF14 /* TrainingTipViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D8269F2C1000C3FF14 /* TrainingTipViewType.swift */; };
@@ -679,7 +694,6 @@
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45BCD7692ABB326D0097B4A5 /* TestsUserAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7652ABB326D0097B4A5 /* TestsUserAppLanguageRepository.swift */; };
 		45BCD76A2ABB326D0097B4A5 /* TestsDeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7662ABB326D0097B4A5 /* TestsDeviceLanguage.swift */; };
-		45BCD76B2ABB326D0097B4A5 /* GetAppLanguageUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7672ABB326D0097B4A5 /* GetAppLanguageUseCaseTests.swift */; };
 		45BCD76C2ABB326D0097B4A5 /* TestsAppLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD7682ABB326D0097B4A5 /* TestsAppLanguagesRepository.swift */; };
 		45BCD7702ABB328C0097B4A5 /* DeviceSystemLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD76E2ABB328C0097B4A5 /* DeviceSystemLanguage.swift */; };
 		45BCD7712ABB328C0097B4A5 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD76F2ABB328C0097B4A5 /* DeviceSystemLanguage+GetDeviceLanguageInterface.swift */; };
@@ -884,6 +898,7 @@
 		45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45D7783129A572E500F23D99 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20E9259391B000A096A0 /* JsonServices.swift */; };
 		45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20EA259391B000A096A0 /* JsonServicesType.swift */; };
+		45D7A8572ABDCA0100480BEA /* FlipForAppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */; };
 		45D7CAEB2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7CAEA2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift */; };
 		45D7CAEE2A9BA47200913E12 /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7CAED2A9BA47200913E12 /* FirebaseInAppMessaging.swift */; };
 		45D95CCE271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D95CCD271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift */; };
@@ -1182,6 +1197,8 @@
 		4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPI.swift; sourceTree = "<group>"; };
 		4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCounterDecodable.swift; sourceTree = "<group>"; };
 		4505213F295F3B9C0018ABD0 /* UserCountersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersRepository.swift; sourceTree = "<group>"; };
+		4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
+		4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450D7AFC28E32965006C3FDF /* RealmDownloadedTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDownloadedTranslation.swift; sourceTree = "<group>"; };
 		450D7AFD28E32965006C3FDF /* TrackDownloadedTranslationsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDownloadedTranslationsCache.swift; sourceTree = "<group>"; };
@@ -1233,9 +1250,22 @@
 		451CEDCB282C31AB006E5105 /* LazyHList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyHList.swift; sourceTree = "<group>"; };
 		451CEDCC282C31AB006E5105 /* LazyHListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyHListCoordinator.swift; sourceTree = "<group>"; };
 		451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlow.swift; sourceTree = "<group>"; };
+		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451FB9342896B3DE00423865 /* LanguageDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDomainModel.swift; sourceTree = "<group>"; };
 		451FB9352896B3DE00423865 /* GetLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLanguageUseCase.swift; sourceTree = "<group>"; };
 		451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDirectionDomainModel.swift; sourceTree = "<group>"; };
+		4522599E2ABCB0D40070F7F3 /* TrackScreenViewAnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsUseCase.swift; sourceTree = "<group>"; };
+		452259A12ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsInterface.swift; sourceTree = "<group>"; };
+		452259A32ABCB2470070F7F3 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsPropertiesDomainModel.swift; sourceTree = "<group>"; };
+		452259A62ABCB7F10070F7F3 /* GetInterfaceStringUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInterfaceStringUseCase.swift; sourceTree = "<group>"; };
+		452259A92ABCB9B40070F7F3 /* GetInterfaceStringRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInterfaceStringRepositoryInterface.swift; sourceTree = "<group>"; };
+		452259AB2ABCBAE90070F7F3 /* LocalizationServices+GetInterfaceStringRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizationServices+GetInterfaceStringRepositoryInterface.swift"; sourceTree = "<group>"; };
+		452259AD2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift"; sourceTree = "<group>"; };
+		452259B02ABCC4F10070F7F3 /* TrackActionAnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsUseCase.swift; sourceTree = "<group>"; };
+		452259B32ABCC5290070F7F3 /* TrackActionAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsInterface.swift; sourceTree = "<group>"; };
+		452259B52ABCC6500070F7F3 /* TrackActionAnalyticsPropertiesDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsPropertiesDomainModel.swift; sourceTree = "<group>"; };
+		452259B72ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsContainer+TrackActionAnalyticsInterface.swift"; sourceTree = "<group>"; };
 		45227BAA2A1D00FA0021C131 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
 		45227BAD2A1D02CC0021C131 /* DeleteAccountProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressView.swift; sourceTree = "<group>"; };
 		45227BAF2A1D030D0021C131 /* DeleteAccountProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressViewModel.swift; sourceTree = "<group>"; };
@@ -1280,6 +1310,7 @@
 		45368A0E2ABB2D840028A570 /* LocalizableStringsRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		45368A0F2ABB2D840028A570 /* LocalizationServicesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationServicesTests.swift; sourceTree = "<group>"; };
 		45368A142ABB2D840028A570 /* MobileContentBackgroundImageRendererTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererTests.swift; sourceTree = "<group>"; };
+		4538D6362ABD27FF00F3B8C4 /* AppLanguageDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageDataModel.swift; sourceTree = "<group>"; };
 		453A9EF02A044FFF007BB892 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		453A9EF22A045006007BB892 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		453AC10928F4A10400291791 /* FailedFollowUpsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailedFollowUpsCache.swift; sourceTree = "<group>"; };
@@ -1981,6 +2012,7 @@
 		45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentResourcesApi.swift; sourceTree = "<group>"; };
 		45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesRepository.swift; sourceTree = "<group>"; };
 		45D752132A2E33DF005E747F /* MobileContentAuthProviderToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthProviderToken.swift; sourceTree = "<group>"; };
+		45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipForAppLanguage.swift; sourceTree = "<group>"; };
 		45D7CAEA2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDatabaseConfiguration.swift; sourceTree = "<group>"; };
 		45D7CAED2A9BA47200913E12 /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererEventAnalyticsTracking.swift; sourceTree = "<group>"; };
@@ -2473,6 +2505,8 @@
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				451F7A822ABD2F1400006EF2 /* Nimble.framework */,
+				451F7A802ABD2F1100006EF2 /* Quick.framework */,
 				4F2500611F0C1E8D00364FBC /* AdSupport.framework */,
 				D61FF360D11F854476B6E206 /* Pods_godtools.framework */,
 				D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */,
@@ -2561,6 +2595,31 @@
 				4505213D295F3B9C0018ABD0 /* UserCounterDecodable.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4508E9C02ABCCE60007E502D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C32ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguage */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4508E9C32ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguage */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C42ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift */,
+				4508E9C62ABCCF4E007E502D /* Subviews */,
+			);
+			path = LanguageSettingsAppInterfaceLanguage;
+			sourceTree = "<group>";
+		};
+		4508E9C62ABCCF4E007E502D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4508E9C72ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */ = {
@@ -2930,6 +2989,59 @@
 				451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */,
 			);
 			path = GetLanguageUseCase;
+			sourceTree = "<group>";
+		};
+		4522599D2ABCB0CA0070F7F3 /* TrackScreenViewAnalyticsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				4522599E2ABCB0D40070F7F3 /* TrackScreenViewAnalyticsUseCase.swift */,
+				452259A02ABCB1DA0070F7F3 /* DependencyInversion */,
+			);
+			path = TrackScreenViewAnalyticsUseCase;
+			sourceTree = "<group>";
+		};
+		452259A02ABCB1DA0070F7F3 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				452259A12ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift */,
+				452259A32ABCB2470070F7F3 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift */,
+			);
+			path = DependencyInversion;
+			sourceTree = "<group>";
+		};
+		452259A52ABCB7E30070F7F3 /* GetInterfaceStringUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				452259A62ABCB7F10070F7F3 /* GetInterfaceStringUseCase.swift */,
+				452259A82ABCB9A30070F7F3 /* DependencyInversion */,
+			);
+			path = GetInterfaceStringUseCase;
+			sourceTree = "<group>";
+		};
+		452259A82ABCB9A30070F7F3 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				452259A92ABCB9B40070F7F3 /* GetInterfaceStringRepositoryInterface.swift */,
+			);
+			path = DependencyInversion;
+			sourceTree = "<group>";
+		};
+		452259AF2ABCC4E80070F7F3 /* TrackActionAnalyticsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				452259B02ABCC4F10070F7F3 /* TrackActionAnalyticsUseCase.swift */,
+				452259B22ABCC5160070F7F3 /* DependencyInversion */,
+			);
+			path = TrackActionAnalyticsUseCase;
+			sourceTree = "<group>";
+		};
+		452259B22ABCC5160070F7F3 /* DependencyInversion */ = {
+			isa = PBXGroup;
+			children = (
+				452259B32ABCC5290070F7F3 /* TrackActionAnalyticsInterface.swift */,
+				452259B52ABCC6500070F7F3 /* TrackActionAnalyticsPropertiesDomainModel.swift */,
+			);
+			path = DependencyInversion;
 			sourceTree = "<group>";
 		};
 		45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */ = {
@@ -5607,6 +5719,8 @@
 			children = (
 				45AD204225938AC300A096A0 /* AnalyticsConstants.swift */,
 				45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */,
+				452259B72ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift */,
+				452259AD2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift */,
 				45AD203825938AC300A096A0 /* AnalyticsTracking */,
 				45AD204925938AC300A096A0 /* AppsFlyer */,
 				45AD204325938AC300A096A0 /* Firebase */,
@@ -5928,6 +6042,7 @@
 			children = (
 				45BCD77E2ABB33990097B4A5 /* AppLanguagesRepository.swift */,
 				45BCD77F2ABB33990097B4A5 /* AppLanguagesRepository+GetAppLanguagesRepositoryInterface.swift */,
+				4538D6362ABD27FF00F3B8C4 /* AppLanguageDataModel.swift */,
 			);
 			path = AppLanguagesRepository;
 			sourceTree = "<group>";
@@ -6588,6 +6703,7 @@
 			children = (
 				45C2593028CAC3E8005D2387 /* LanguageSettingsView.swift */,
 				45C2592F28CAC3E8005D2387 /* LanguageSettingsViewModel.swift */,
+				4508E9C02ABCCE60007E502D /* Subviews */,
 			);
 			path = LanguageSettings;
 			sourceTree = "<group>";
@@ -7199,6 +7315,7 @@
 			isa = PBXGroup;
 			children = (
 				45E41B772A83D14600F886A2 /* LocalizationServices.swift */,
+				452259AB2ABCBAE90070F7F3 /* LocalizationServices+GetInterfaceStringRepositoryInterface.swift */,
 				45E41B7D2A83D48600F886A2 /* LocalizableStringsRepository.swift */,
 				45E41B742A83D14600F886A2 /* Bundle */,
 				45E41B712A83D14600F886A2 /* BundleLoader */,
@@ -7472,6 +7589,7 @@
 			children = (
 				45EE10452AB88B5D00D0AC33 /* GetAppLanguagesUseCase */,
 				45EE10402AB887BD00D0AC33 /* GetAppLanguageUseCase */,
+				452259A52ABCB7E30070F7F3 /* GetInterfaceStringUseCase */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -7726,6 +7844,8 @@
 				45567D1728B599FB003A0EC2 /* GetShortcutItemsUseCase */,
 				459BD081289AD4310075901B /* GetToolTranslationsFilesUseCase */,
 				D4F1DE8E2967539200A2F674 /* IncrementUserCounterUseCase */,
+				452259AF2ABCC4E80070F7F3 /* TrackActionAnalyticsUseCase */,
+				4522599D2ABCB0CA0070F7F3 /* TrackScreenViewAnalyticsUseCase */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -8503,6 +8623,7 @@
 			isa = PBXGroup;
 			children = (
 				D45922D52867998200904B87 /* BannerTextStyle.swift */,
+				45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */,
 			);
 			path = "SwiftUI Modifiers";
 			sourceTree = "<group>";
@@ -8617,6 +8738,7 @@
 				684328ED1EB7CF66005E9131 /* Sources */,
 				684328EE1EB7CF66005E9131 /* Frameworks */,
 				684328EF1EB7CF66005E9131 /* Resources */,
+				04CBED95B4846CD682566602 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -8877,6 +8999,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		04CBED95B4846CD682566602 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		17231C6B7DDAC7A166F9C69F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -9032,6 +9174,7 @@
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
 				4561AC9C279C4CD4003718C0 /* MobileContentCardCollectionPageViewModel.swift in Sources */,
 				450D7B0428E32965006C3FDF /* DownloadedTranslationDataModel.swift in Sources */,
+				452259B62ABCC6500070F7F3 /* TrackActionAnalyticsPropertiesDomainModel.swift in Sources */,
 				45B4FC7C2A827D730037DB36 /* TutorialItemDomainModel.swift in Sources */,
 				45C1522C2A43D1BD00F2A1E8 /* BaseLanguagesListItemViewModel.swift in Sources */,
 				455583CF269F2DA500C3FF14 /* MobileContentFormView.swift in Sources */,
@@ -9170,8 +9313,10 @@
 				4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */,
 				45EB9B7529F16CF200CA74A8 /* UIView+Animations.swift in Sources */,
 				45C152402A43D1BD00F2A1E8 /* LoadToolRemoteSessionViewModel.swift in Sources */,
+				452259A42ABCB2470070F7F3 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift in Sources */,
 				45B36527288504D40012BE53 /* TranslationsRepository.swift in Sources */,
 				45920D522A8D483600E336A8 /* ToolCardViewModel.swift in Sources */,
+				4538D6372ABD27FF00F3B8C4 /* AppLanguageDataModel.swift in Sources */,
 				45C1523D2A43D1BD00F2A1E8 /* ShareToolRemoteSessionURLViewModel.swift in Sources */,
 				45C152422A43D1BD00F2A1E8 /* ReviewShareShareableView.swift in Sources */,
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
@@ -9186,6 +9331,7 @@
 				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45E39EC327457856006A59E4 /* TutorialAssetContent.swift in Sources */,
+				4522599F2ABCB0D40070F7F3 /* TrackScreenViewAnalyticsUseCase.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
 				459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */,
 				45D63E71288F698C009B4610 /* LanguagesJsonFileCache.swift in Sources */,
@@ -9226,6 +9372,7 @@
 				D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */,
 				45C152E02A448A6200F2A1E8 /* GetLessonUseCase.swift in Sources */,
 				450F94DB27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift in Sources */,
+				452259B82ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift in Sources */,
 				45C2593D28CAC3E8005D2387 /* LanguageSettingsViewModel.swift in Sources */,
 				4515D4052A2E73AB0001545D /* AuthenticationProviderProfile.swift in Sources */,
 				45BCD7812ABB33990097B4A5 /* UserAppLanguageRepository+GetUserAppLanguageRepositoryInterface.swift in Sources */,
@@ -9343,6 +9490,7 @@
 				45D63E74288F698C009B4610 /* LanguageModelType.swift in Sources */,
 				45E347792A49BFD00014CCD1 /* CloseButton.swift in Sources */,
 				45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */,
+				452259B12ABCC4F10070F7F3 /* TrackActionAnalyticsUseCase.swift in Sources */,
 				45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */,
 				45C2AF472A817621004958AB /* PageControlAttributes.swift in Sources */,
 				453F84D32A029FC00005101E /* ArticleAemDownloader.swift in Sources */,
@@ -9387,6 +9535,7 @@
 				4554205B28B17AEA00368CFE /* AttachmentDataModel.swift in Sources */,
 				4570B7032889B1760024C931 /* DownloadToolViewModelType.swift in Sources */,
 				453F84D42A029FC00005101E /* ArticleAemDownloadOperationCachePolicy.swift in Sources */,
+				452259AE2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift in Sources */,
 				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */,
@@ -9467,9 +9616,11 @@
 				45B212B629229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift in Sources */,
 				45AE974E27C97A9500C2CB33 /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45920D342A8D17FE00E336A8 /* ToolSpotlightView.swift in Sources */,
+				452259AC2ABCBAE90070F7F3 /* LocalizationServices+GetInterfaceStringRepositoryInterface.swift in Sources */,
 				45D9608D289B877D001A5A3E /* GetAllFavoritedToolsLatestTranslationFilesUseCase.swift in Sources */,
 				45828BC8279CCB5300F6B5F3 /* MobileContentCardView.swift in Sources */,
 				45B538992A8AAA960033B34E /* LessonsHeaderView.swift in Sources */,
+				4508E9C52ABCCF34007E502D /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */,
 				45D63EA6288F77D4009B4610 /* MobileContentResourcesApi.swift in Sources */,
 				45558341269F2C7B00C3FF14 /* ToolPageHeaderView.swift in Sources */,
 				450D7B0528E32965006C3FDF /* DownloadedTranslationDataModelType.swift in Sources */,
@@ -9518,6 +9669,7 @@
 				45C2AF3B2A813371004958AB /* PageControlButton.swift in Sources */,
 				453C1BD62899A50C007332E2 /* RealmFavoritedResourcesCache.swift in Sources */,
 				45C152E32A448A6200F2A1E8 /* ToggleToolFavoritedUseCase.swift in Sources */,
+				452259A72ABCB7F10070F7F3 /* GetInterfaceStringUseCase.swift in Sources */,
 				45DD84CE2A8BD65F0066A020 /* FavoritingToolBannerView.swift in Sources */,
 				45C152DC2A448A6200F2A1E8 /* GetSpotlightToolsUseCase.swift in Sources */,
 				45F305832A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift in Sources */,
@@ -9655,6 +9807,7 @@
 				D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */,
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				45E347592A49BD990014CCD1 /* AppRootController.swift in Sources */,
+				452259A22ABCB1EA0070F7F3 /* TrackScreenViewAnalyticsInterface.swift in Sources */,
 				452F4B082A97E117003071D1 /* PageNavigationCollectionViewCenterLayoutPageAttributes.swift in Sources */,
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				45B6482825E593110098BAF1 /* (null) in Sources */,
@@ -9739,6 +9892,7 @@
 				45BDA5D22954F6A0007E259B /* MobileContentResourceViewsApi.swift in Sources */,
 				4573133D28C1821100481640 /* ToolDetailsAboutView.swift in Sources */,
 				45E347992A49C0EC0014CCD1 /* AnimatableValue.swift in Sources */,
+				4508E9C82ABCCF57007E502D /* AppInterfaceLanguageButtonView.swift in Sources */,
 				45C1521F2A43D1BD00F2A1E8 /* ShareToolView.swift in Sources */,
 				4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */,
 				45AC77D829DCA3DA00A2224B /* MobileContentPageRendererPagesViewDataCache.swift in Sources */,
@@ -9786,6 +9940,7 @@
 				458CFE9029D4E0B9007B423C /* ArticleWebViewModel.swift in Sources */,
 				45F71627290A12D70019B715 /* TermsOfUseWebContent.swift in Sources */,
 				4573133B28C1821100481640 /* ToolDetailsTitleHeaderView.swift in Sources */,
+				452259B42ABCC5290070F7F3 /* TrackActionAnalyticsInterface.swift in Sources */,
 				45558320269F2C7B00C3FF14 /* ToolPageView.swift in Sources */,
 				45D63EA0288F77D4009B4610 /* ResourceModelDefaultVariantData.swift in Sources */,
 				45131A142AB4995F0085AF0D /* ApplicationLayout.swift in Sources */,
@@ -9837,6 +9992,7 @@
 				45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */,
 				45C2AF4F2A818F15004958AB /* TutorialDomainModel.swift in Sources */,
 				45131A0F2AB498AD0085AF0D /* FontLibrary.swift in Sources */,
+				452259AA2ABCB9B40070F7F3 /* GetInterfaceStringRepositoryInterface.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
@@ -9985,6 +10141,7 @@
 				45C152D42A448A6200F2A1E8 /* GetLanguageAvailablityUseCase.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentRendererAnalyticsSystem.swift in Sources */,
 				45558326269F2C7B00C3FF14 /* ToolPageFormView.swift in Sources */,
+				45D7A8572ABDCA0100480BEA /* FlipForAppLanguage.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
 				45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */,
 			);
@@ -10030,12 +10187,12 @@
 				45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45368A1C2ABB2D850028A570 /* LocalizationServicesTests.swift in Sources */,
+				455482BC2ABD2AFC008EA8D2 /* GetAppLanguageUseCaseTests.swift in Sources */,
 				450EE2A229A66CE400524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
 				45BCD76C2ABB326D0097B4A5 /* TestsAppLanguagesRepository.swift in Sources */,
 				45D7782C29A570FC00F23D99 /* AppsFlyerDeepLinkValueParser.swift in Sources */,
 				45D7781729A570CB00F23D99 /* DeepLinkingService.swift in Sources */,
 				450EE2AC29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
-				45BCD76B2ABB326D0097B4A5 /* GetAppLanguageUseCaseTests.swift in Sources */,
 				45BCD7692ABB326D0097B4A5 /* TestsUserAppLanguageRepository.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 			);
@@ -10954,6 +11111,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -10965,6 +11123,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Production";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

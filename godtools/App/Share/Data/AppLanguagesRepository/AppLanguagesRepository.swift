@@ -7,7 +7,23 @@
 //
 
 import Foundation
+import Combine
 
 class AppLanguagesRepository {
     
+    init() {
+        
+    }
+    
+    func getAllLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
+        
+        let appLanguages: [AppLanguageDataModel] = [
+            AppLanguageDataModel(direction: .rightToLeft, languageCode: "ar"),
+            AppLanguageDataModel(direction: .leftToRight, languageCode: "en"),
+            AppLanguageDataModel(direction: .leftToRight, languageCode: "es")
+        ]
+        
+        return Just(appLanguages)
+            .eraseToAnyPublisher()
+    }
 }

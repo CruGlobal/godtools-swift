@@ -132,6 +132,13 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getInterfaceStringUseCase() -> GetInterfaceStringUseCase {
+        return GetInterfaceStringUseCase(
+            interfaceStringRepository: dataLayer.getLocalizationServices(),
+            getAppLanguageUseCase: getAppLanguageUseCase()
+        )
+    }
+    
     func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
         return GetLanguageAvailabilityUseCase(
             localizationServices: dataLayer.getLocalizationServices()
@@ -328,6 +335,18 @@ class AppDomainLayerDependencies {
             translationsRepository: dataLayer.getTranslationsRepository(),
             languagesRepository: dataLayer.getLanguagesRepository(),
             getLanguageUseCase: getLanguageUseCase()
+        )
+    }
+    
+    func getTrackActionAnalyticsUseCase() -> TrackActionAnalyticsUseCase {
+        return TrackActionAnalyticsUseCase(
+            trackActionAnalytics: dataLayer.getAnalytics()
+        )
+    }
+    
+    func getTrackScreenViewAnalyticsUseCase() -> TrackScreenViewAnalyticsUseCase {
+        return TrackScreenViewAnalyticsUseCase(
+            trackScreenViewAnalytics: dataLayer.getAnalytics()
         )
     }
     

@@ -1036,14 +1036,31 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            if appLaunchedFromTerminatedState {
-                navigationStarted = true
-                navigate(step: .appLaunchedFromTerminatedState)
-            }
-            else if appLaunchedFromBackgroundState {
-                appIsInBackground = false
-                navigate(step: .appLaunchedFromBackgroundState)
-            }
+            let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
+            
+            getAppLanguageUseCase.getAppLanguagePublisher()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                    
+                    switch appLanguage.direction {
+                    
+                    case .leftToRight:
+                        ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+                        
+                    case .rightToLeft:
+                        ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+                    }
+                    
+                    if appLaunchedFromTerminatedState {
+                        self?.navigationStarted = true
+                        self?.navigate(step: .appLaunchedFromTerminatedState)
+                    }
+                    else if appLaunchedFromBackgroundState {
+                        self?.appIsInBackground = false
+                        self?.navigate(step: .appLaunchedFromBackgroundState)
+                    }
+                }
+                .store(in: &cancellables)
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true

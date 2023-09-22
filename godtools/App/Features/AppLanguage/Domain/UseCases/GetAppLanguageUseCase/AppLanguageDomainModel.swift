@@ -10,5 +10,6 @@ import Foundation
 
 struct AppLanguageDomainModel {
     
+    let direction: LanguageDirectionDomainModel
     let languageCode: String
 }

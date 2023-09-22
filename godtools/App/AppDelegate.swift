@@ -14,7 +14,7 @@ import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-            
+               
     private lazy var appBuild: AppBuild = {
         AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
+                    
         DisableGoogleTagManagerLogging.disable()
         
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
