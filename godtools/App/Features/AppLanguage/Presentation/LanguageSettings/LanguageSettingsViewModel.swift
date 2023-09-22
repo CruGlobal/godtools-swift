@@ -11,6 +11,8 @@ import Combine
 
 class LanguageSettingsViewModel: ObservableObject {
 
+    private static var currentLanguage: AppLanguageDomainModel? // TODO: Remove once appLanguage is being persisted. ~Levi
+    
     private let getAppLanguageUseCase: GetAppLanguageUseCase
     private let getInterfaceStringUseCase: GetInterfaceStringUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -42,6 +44,10 @@ class LanguageSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 self?.currentAppLanguage = appLanguage
+                
+                if let tempPersistedLanguage = LanguageSettingsViewModel.currentLanguage {
+                    self?.currentAppLanguage = tempPersistedLanguage
+                }
             }
             .store(in: &cancellables)
         
@@ -49,6 +55,7 @@ class LanguageSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 self?.currentAppLanguage = appLanguage
+                LanguageSettingsViewModel.currentLanguage = appLanguage // TODO: Remove once appLanguage is being persisted. ~Levi
             }
             .store(in: &cancellables)
         
