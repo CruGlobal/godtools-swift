@@ -81,13 +81,11 @@ class ArticleDeepLinkFlow: Flow {
        
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
+            flowType: .deeplink,
             aemCacheObject: aemCacheObject,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            flowType: .deeplink
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
     
         let view = ArticleWebView(viewModel: viewModel)

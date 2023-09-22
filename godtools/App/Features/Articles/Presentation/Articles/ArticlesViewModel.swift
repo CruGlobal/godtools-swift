@@ -19,9 +19,7 @@ class ArticlesViewModel: NSObject {
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
     private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
@@ -34,7 +32,7 @@ class ArticlesViewModel: NSObject {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -43,9 +41,7 @@ class ArticlesViewModel: NSObject {
         self.manifest = manifest
         self.articleManifestAemRepository = articleManifestAemRepository
         self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.continueArticleDownloadReceipt = currentArticleDownloadReceipt
         
         super.init()
@@ -221,15 +217,13 @@ extension ArticlesViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func articleTapped(index: Int) {

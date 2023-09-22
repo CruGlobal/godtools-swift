@@ -12,15 +12,14 @@ import Combine
 class MenuViewModel: ObservableObject {
     
     private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let logOutUserUseCase: LogOutUserUseCase
     private let getAppVersionUseCase: GetAppVersionUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -52,19 +51,18 @@ class MenuViewModel: ObservableObject {
     @Published var appVersion: String = ""
     @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.localizationServices = localizationServices
-        self.analytics = analytics
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.logOutUserUseCase = logOutUserUseCase
         self.getAppVersionUseCase = getAppVersionUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "settings")
         getStartedSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.getStarted.rawValue)
@@ -114,15 +112,15 @@ class MenuViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func getMenuAnalyticsScreenName () -> String {
+    private func getMenuAnalyticsScreenName() -> String {
         return "Menu"
     }
     
-    private func getShareAppAnalyticsScreenName () -> String {
+    private func getShareAppAnalyticsScreenName() -> String {
         return "Share App"
     }
     
-    private func getShareStoryAnalyticsScreenName () -> String {
+    private func getShareStoryAnalyticsScreenName() -> String {
         return "Share Story"
     }
     
@@ -133,18 +131,6 @@ class MenuViewModel: ObservableObject {
     private var analyticsSiteSubSection: String {
         return ""
     }
-    
-    private func getBaseAnalyticsAttributes() -> BaseAnalyticsAttributesModel {
-        
-        return BaseAnalyticsAttributesModel(
-            screenName: getMenuAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
-            data: nil
-        )
-    }
 }
 
 // MARK: - Inputs
@@ -153,15 +139,13 @@ extension MenuViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getMenuAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     @objc func doneTapped() {
@@ -219,50 +203,50 @@ extension MenuViewModel {
     
     func leaveAReviewTapped() {
         
-        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu(baseAnalyticsAttributes: getBaseAnalyticsAttributes()))
+        flowDelegate?.navigate(step: .leaveAReviewTappedFromMenu(
+            screenName: getMenuAnalyticsScreenName(),
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
+        ))
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getShareStoryAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func shareGodToolsTapped() {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: getShareAppAnalyticsScreenName(),
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [AnalyticsConstants.Keys.shareAction: 1]
         )
         
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
-        
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getShareAppAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func termsOfUseTapped() {

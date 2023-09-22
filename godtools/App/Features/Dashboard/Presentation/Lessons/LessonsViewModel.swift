@@ -13,14 +13,13 @@ import SwiftUI
 class LessonsViewModel: ObservableObject {
         
     private let dataDownloader: InitialDataDownloader
-    private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
     private let getLessonsUseCase: GetLessonsUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -29,16 +28,14 @@ class LessonsViewModel: ObservableObject {
     @Published var lessons: [LessonDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getLessonsUseCase: GetLessonsUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, getLessonsUseCase: GetLessonsUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
-        self.localizationServices = localizationServices
-        self.analytics = analytics
-        
         self.getLessonsUseCase = getLessonsUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
                 
         getLessonsUseCase.getLessonsPublisher()
@@ -50,18 +47,15 @@ class LessonsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        getInterfaceStringUseCase.getStringPublisher(id: "lessons.pageTitle")
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] primaryLanguage in
-                self?.setupTitle(with: primaryLanguage)
-            }
+            .assign(to: \.sectionTitle, on: self)
             .store(in: &cancellables)
-    }
-    
-    private func setupTitle(with language: LanguageDomainModel?) {
         
-        sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageTitle")
-        subtitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: language?.localeIdentifier, key: "lessons.pageSubtitle")
+        getInterfaceStringUseCase.getStringPublisher(id: "lessons.pageSubtitle")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.subtitle, on: self)
+            .store(in: &cancellables)
     }
     
     // MARK: - Analytics
@@ -80,46 +74,41 @@ class LessonsViewModel: ObservableObject {
     
     private func trackPageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-        
-        analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data:  nil)
-        
-        analytics.firebaseAnalytics.trackAction(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: "",
+            actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
-            actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
+            url: nil,
             data: nil
         )
     }
     
     private func trackLessonTappedAnalytics(for lesson: LessonDomainModel) {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
                 AnalyticsConstants.Keys.tool: lesson.analyticsToolName
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }
 

@@ -8,21 +8,26 @@
 
 import UIKit
 
-class ShareToolView {
+class ShareToolView: NSObject {
     
     private let viewModel: ShareToolViewModel
     
-    let controller: UIActivityViewController
-    
-    init(viewModel: ShareToolViewModel) {
+    init(viewModel: ShareToolViewModel, onViewReady: ((_ controller: UIActivityViewController) -> Void)?) {
         
         self.viewModel = viewModel
         
-        controller = UIActivityViewController(
-            activityItems: [viewModel.shareMessage],
-            applicationActivities: nil
-        )
+        super.init()
         
         viewModel.pageViewed()
+        
+        viewModel.shareMessage.addObserver(self) { (shareMessage: String) in
+            
+            let controller = UIActivityViewController(
+                activityItems: [shareMessage],
+                applicationActivities: nil
+            )
+            
+            onViewReady?(controller)
+        }
     }
 }

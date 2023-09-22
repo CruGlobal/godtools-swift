@@ -80,20 +80,20 @@ class ToolSettingsFlow: Flow {
                 resource: resource,
                 language: language,
                 pageNumber: toolData.pageNumber,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
+                getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
-            let view = ShareToolView(viewModel: viewModel)
-            
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
+            let view = ShareToolView(viewModel: viewModel, onViewReady: { [weak self] (shareActivityView: UIActivityViewController) in
+                
+                self?.navigationController.present(
+                    shareActivityView,
+                    animated: true,
+                    completion: nil
+                )
+            })
                     
         case .screenShareTappedFromToolSettings:
             

@@ -100,7 +100,7 @@ enum FlowStep {
     case backTappedFromReportABug
     case askAQuestionTappedFromMenu
     case backTappedFromAskAQuestion
-    case leaveAReviewTappedFromMenu(baseAnalyticsAttributes: BaseAnalyticsAttributesModel)
+    case leaveAReviewTappedFromMenu(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
     case shareGodToolsTappedFromMenu

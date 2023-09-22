@@ -12,5 +12,14 @@ extension AnalyticsContainer: TrackActionAnalyticsInterface {
     
     func trackAction(properties: TrackActionAnalyticsPropertiesDomainModel) {
         
+        firebaseAnalytics.trackAction(
+            screenName: properties.screenName,
+            siteSection: properties.siteSection,
+            siteSubSection: properties.siteSubSection,
+            contentLanguage: properties.contentLanguage,
+            secondaryContentLanguage: properties.contentLanguageSecondary,
+            actionName: properties.actionName,
+            data: properties.data
+        )
     }
 }

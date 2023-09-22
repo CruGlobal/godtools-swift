@@ -17,7 +17,21 @@ class TrackActionAnalyticsUseCase {
         self.trackActionAnalytics = trackActionAnalytics
     }
     
-    func trackAction() {
+    func trackAction(screenName: String, actionName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?, url: String?, data: [String: Any]?) {
         
+        let properties = TrackActionAnalyticsPropertiesDomainModel(
+            screenName: screenName,
+            actionName: actionName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            contentLanguage: contentLanguage,
+            contentLanguageSecondary: contentLanguageSecondary,
+            url: url,
+            data: data
+        )
+        
+        trackActionAnalytics.trackAction(
+            properties: properties
+        )
     }
 }

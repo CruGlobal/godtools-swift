@@ -126,10 +126,8 @@ class MobileContentRendererNavigation {
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
             setCompletedTrainingTipUseCase: appDiContainer.domainLayer.getSetCompletedTrainingTipUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getTrainingTipCompletedUseCase: appDiContainer.domainLayer.getTrainingTipCompletedUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()

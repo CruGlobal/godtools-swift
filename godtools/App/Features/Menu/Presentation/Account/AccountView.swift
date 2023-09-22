@@ -50,13 +50,11 @@ struct AccountView_Preview: PreviewProvider {
         
         return AccountViewModel(
             flowDelegate: MockFlowDelegate(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
     }
     
