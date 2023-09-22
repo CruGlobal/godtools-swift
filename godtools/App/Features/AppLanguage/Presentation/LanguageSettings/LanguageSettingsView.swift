@@ -31,6 +31,7 @@ struct LanguageSettingsView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
+        .modifier(FlipForAppLanguage())
         .onAppear {
             viewModel.pageViewed()
         }

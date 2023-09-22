@@ -13,3 +13,10 @@ struct AppLanguageDomainModel {
     let direction: LanguageDirectionDomainModel
     let languageCode: String
 }
+
+extension AppLanguageDomainModel: Identifiable {
+    
+    var id: String {
+        return languageCode
+    }
+}

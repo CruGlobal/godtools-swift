@@ -8,9 +8,12 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 class LanguageSettingsFlow: Flow {
         
+    private var chooseAppLanguageFlow: ChooseAppLanguageFlow?
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -32,9 +35,42 @@ class LanguageSettingsFlow: Flow {
         case .backTappedFromLanguageSettings:
             flowDelegate?.navigate(step: .languageSettingsFlowCompleted(state: .userClosedLanguageSettings))
             
+        case .chooseAppLanguageTappedFromLanguageSettings(let didChooseAppLanguageSubject):
+            navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: didChooseAppLanguageSubject)
+            
+        case .chooseAppLanguageFlowCompleted(let state):
+            navigateBackFromChooseAppLanguageFlow()
+            
         default:
             break
         }
+    }
+    
+    private func navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>) {
+        
+        guard chooseAppLanguageFlow == nil else {
+            return
+        }
+        
+        let chooseAppLanguageFlow = ChooseAppLanguageFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            didChooseAppLanguageSubject: didChooseAppLanguageSubject
+        )
+        
+        self.chooseAppLanguageFlow = chooseAppLanguageFlow
+    }
+    
+    private func navigateBackFromChooseAppLanguageFlow() {
+        
+        guard chooseAppLanguageFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        chooseAppLanguageFlow = nil
     }
 }
 
