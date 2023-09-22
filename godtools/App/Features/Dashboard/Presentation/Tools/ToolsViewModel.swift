@@ -90,8 +90,7 @@ class ToolsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // TODO: - update to use the filterSelection publisher instead of just category
-        getAllToolsUseCase.getToolsForCategoryPublisher(category: categoryFilterValuePublisher)
+        getAllToolsUseCase.getToolsForFilterSelectionPublisher(filterSelection: toolFilterSelectionPublisher)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (allTools: [ToolDomainModel]) in
                 
