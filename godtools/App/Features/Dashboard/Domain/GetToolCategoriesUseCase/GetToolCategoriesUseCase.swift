@@ -95,6 +95,7 @@ class GetToolCategoriesUseCase {
         
         return getAllToolsUseCase.getAllTools(
             sorted: false,
+            optimizeForBatchRequests: true,
             categoryId: categoryId,
             languageId: filteredByLanguageId
         ).count

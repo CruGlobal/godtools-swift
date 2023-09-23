@@ -97,9 +97,11 @@ class GetToolFilterLanguagesUseCase {
         
         return getAllToolsUseCase.getAllTools(
             sorted: false,
+            optimizeForBatchRequests: true,
             categoryId: filteredByCategoryId,
             languageId: languageId
-        ).count
+        )
+        .count
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, localeId: String?) -> String {

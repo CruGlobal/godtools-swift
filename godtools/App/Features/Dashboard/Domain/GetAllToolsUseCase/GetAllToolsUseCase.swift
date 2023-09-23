@@ -14,6 +14,8 @@ class GetAllToolsUseCase {
     private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
+    private var allToolsInMem: [ToolDomainModel]?
+    
     init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.getToolUseCase = getToolUseCase
@@ -37,7 +39,41 @@ class GetAllToolsUseCase {
         .eraseToAnyPublisher()
     }
     
-    func getAllTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
+    func getAllTools(sorted: Bool, optimizeForBatchRequests: Bool = false, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
+        
+        if optimizeForBatchRequests {
+            
+            return getFilteredInMemTools(sorted: sorted, categoryId: categoryId, languageId: languageId)
+            
+        } else {
+            
+            return getTools(sorted: sorted, categoryId: categoryId, languageId: languageId)
+        }
+    }
+    
+    private func getFilteredInMemTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
+        
+        guard let allToolsInMem = allToolsInMem else {
+            
+            allToolsInMem = getTools(sorted: sorted)
+            return getFilteredInMemTools(sorted: sorted)
+        }
+
+        return allToolsInMem.filter { tool in
+            
+            if let category = categoryId, tool.category != category {
+                return false
+            }
+            
+            if let languageId = languageId, tool.languageIds.contains(languageId) == false {
+                return false
+            }
+            
+            return true
+        }
+    }
+    
+    private func getTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
         
         return resourcesRepository.getAllTools(sorted: sorted, category: categoryId, languageId: languageId).map {
             getToolUseCase.getTool(resource: $0)
