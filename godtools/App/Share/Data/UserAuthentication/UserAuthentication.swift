@@ -46,10 +46,11 @@ class UserAuthentication {
         return authenticationProviders[lastAuthenticatedProvider]
     }
     
-    private func getAuthenticationProvider(provider: AuthenticationProviderType) -> AnyPublisher<AuthenticationProviderInterface, Error> {
+    private func getAuthenticationProviderPublisher(provider: AuthenticationProviderType) -> AnyPublisher<AuthenticationProviderInterface, Error> {
         
         guard let provider = authenticationProviders[provider] else {
-            return Fail(error: NSError.errorWithDescription(description: "Missing authentication provider: \(provider)"))
+            let error: Error = NSError.errorWithDescription(description: "Missing authentication provider: \(provider)")
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
         
@@ -65,30 +66,45 @@ class UserAuthentication {
         return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
-    func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         guard let lastAuthenticatedProvider = getLastAuthenticatedProviderType() else {
-            return Fail(error: NSError.errorWithDescription(description: "Last authenticated provider does not exist."))
+            let error: Error = NSError.errorWithDescription(description: "Last authenticated provider does not exist.")
+            return Fail(error: .other(error: error))
                 .eraseToAnyPublisher()
         }
         
-        return getAuthenticationProvider(provider: lastAuthenticatedProvider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+        return getAuthenticationProviderPublisher(provider: lastAuthenticatedProvider)
+            .mapError { (error: Error) in
+                return .other(error: error)
+            }
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, MobileContentApiError> in
                 
                 if lastAuthenticatedProvider == .apple {
                     
                     return self.renewAppleTokenPublisher(with: provider)
+                        .mapError { (error: Error) in
+                            return .other(error: error)
+                        }
+                        .eraseToAnyPublisher()
                     
                 } else {
                     
                     return provider.renewTokenPublisher()
+                        .mapError { (error: Error) in
+                            return .other(error: error)
+                        }
                         .eraseToAnyPublisher()
                 }
                 
             })
-            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
                 
-                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: false)
+                return self.authenticateWithMobileContentApiPublisher(
+                    authProviderResponse: authProviderResponse,
+                    createUser: false
+                )
+                .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
@@ -104,12 +120,19 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    func signInPublisher(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    func signInPublisher(provider: AuthenticationProviderType, createUser: Bool, fromViewController: UIViewController) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
     
-        return getAuthenticationProvider(provider: provider)
-            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+        return getAuthenticationProviderPublisher(provider: provider)
+            .mapError { (error: Error) in
+                return .other(error: error)
+            }
+            .flatMap({ (provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, MobileContentApiError> in
                 
                 return provider.authenticatePublisher(presentingViewController: fromViewController)
+                    .mapError { (error: Error) in
+                        return .other(error: error)
+                    }
+                    .eraseToAnyPublisher()
             })
             .map { (response: AuthenticationProviderResponse) in
                 
@@ -117,9 +140,9 @@ class UserAuthentication {
                 
                 return response
             }
-            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+            .flatMap { (authProviderResponse: AuthenticationProviderResponse) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
                 
-                return self.authenticateWithMobileContentApi(authProviderResponse: authProviderResponse, createUser: createUser)
+                return self.authenticateWithMobileContentApiPublisher(authProviderResponse: authProviderResponse, createUser: createUser)
             }
             .eraseToAnyPublisher()
     }
@@ -136,15 +159,15 @@ class UserAuthentication {
             .eraseToAnyPublisher()
     }
     
-    private func authenticateWithMobileContentApi(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> {
+    private func authenticateWithMobileContentApiPublisher(authProviderResponse: AuthenticationProviderResponse, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         return getMobileContentAuthProviderToken(from: authProviderResponse).publisher
-            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, Error> in
+            .mapError { (error: Error) in
+                return .other(error: error)
+            }
+            .flatMap({ (providerToken: MobileContentAuthProviderToken) -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> in
                 
                 return self.mobileContentAuthTokenRepository.fetchRemoteAuthTokenPublisher(providerToken: providerToken, createUser: createUser)
-                    .mapError { urlResponseError in
-                        return urlResponseError as Error
-                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

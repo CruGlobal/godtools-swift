@@ -10,10 +10,13 @@ import SwiftUI
 
 struct DashboardTabBarView: View {
         
+    private let layoutDirection: LayoutDirection
+    
     @ObservedObject private var viewModel: DashboardViewModel
+            
+    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.layoutDirection, viewModel: DashboardViewModel) {
         
-    init(viewModel: DashboardViewModel) {
-        
+        self.layoutDirection = layoutDirection
         self.viewModel = viewModel
     }
     
@@ -23,17 +26,27 @@ struct DashboardTabBarView: View {
             
             HStack(alignment: .center, spacing: 0) {
                 
-                ForEach(viewModel.tabs) { (tab: DashboardTabTypeDomainModel) in
+                if layoutDirection == .rightToLeft {
                     
-                    DashboardTabBarItemView(
-                        viewModel: viewModel.getTabBarItemViewModel(tab: tab),
-                        selectedTab: $viewModel.selectedTab,
-                        tappedClosure: {
-                            
-                            viewModel.tabTapped(tab: tab)
-                        }
-                    )
-                    .frame(maxWidth: .infinity)
+                    ForEach((0 ..< viewModel.numberOfTabs).reversed(), id: \.self) { (index: Int) in
+                                            
+                        DashboardTabBarItemView(
+                            viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
+                            currentTab: $viewModel.currentTab
+                        )
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                else {
+                    
+                    ForEach(0 ..< viewModel.numberOfTabs, id: \.self) { (index: Int) in
+                        
+                        DashboardTabBarItemView(
+                            viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
+                            currentTab: $viewModel.currentTab
+                        )
+                        .frame(maxWidth: .infinity)
+                    }
                 }
             }
         }
@@ -45,6 +58,7 @@ struct DashboardTabBarView: View {
                 .edgesIgnoringSafeArea(.bottom)
                 .shadow(color: .black.opacity(0.25), radius: 3, y: -2.5)
         )
+        .environment(\.layoutDirection, .leftToRight)
     }
 }
 

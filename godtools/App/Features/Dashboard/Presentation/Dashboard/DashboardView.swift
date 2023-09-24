@@ -27,38 +27,26 @@ struct DashboardView: View {
             
             VStack(alignment: .center, spacing: 0) {
                 
-                TabView(selection: $viewModel.selectedTab) {
+                PagedView(numberOfPages: viewModel.numberOfTabs, currentPage: $viewModel.currentTab) { (index: Int) in
                     
-                    Group {
+                    switch viewModel.getTab(tabIndex: index) {
                         
-                        ForEach(viewModel.tabs) { (tab: DashboardTabTypeDomainModel) in
-                                                        
-                            switch tab {
-                                
-                            case .lessons:
-                                LessonsView(viewModel: viewModel.getLessonsViewModel())
-                                    .tag(tab)
-                                
-                            case .favorites:
-                                FavoritesView(viewModel: viewModel.getFavoritesViewModel())
-                                    .tag(tab)
-                                
-                            case .tools:
-                                ToolsView(viewModel: viewModel.getToolsViewModel())
-                                    .tag(tab)
-                            }
-                        }
+                    case .lessons:
+                        LessonsView(viewModel: viewModel.getLessonsViewModel())
+                        
+                    case .favorites:
+                        FavoritesView(viewModel: viewModel.getFavoritesViewModel())
+                        
+                    case .tools:
+                        ToolsView(viewModel: viewModel.getToolsViewModel())
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.selectedTab)
                 
                 DashboardTabBarView(
                     viewModel: viewModel
                 )
             }
         }
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
     
@@ -96,4 +84,3 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView(viewModel: DashboardView_Previews.getDashboardViewModel())
     }
 }
-

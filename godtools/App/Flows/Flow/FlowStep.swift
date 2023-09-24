@@ -22,8 +22,6 @@ enum FlowStep {
     case menuTappedFromTools
     case languageSettingsTappedFromTools
     case openTutorialTappedFromTools
-    case userViewedFavoritedToolsListFromTools
-    case userViewedAllToolsListFromTools
     
     // onboarding
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
@@ -85,15 +83,6 @@ enum FlowStep {
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case tractFlowCompleted(state: TractFlowCompletedState)
         
-    // setup parallel language
-    case languageSelectorTappedFromSetupParallelLanguage
-    case yesTappedFromSetupParallelLanguage
-    case noThanksTappedFromSetupParallelLanguage
-    case getStartedTappedFromSetupParallelLanguage
-    case languageSelectedFromParallelLanguageList
-    case backgroundTappedFromSetupParallelLanguage
-    case backgroundTappedFromParallelLanguageList
-        
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
@@ -129,8 +118,8 @@ enum FlowStep {
     // social sign-in
     case closeTappedFromLogin
     case closeTappedFromCreateAccount
-    case userCompletedSignInFromLogin(error: Error?)
-    case userCompletedSignInFromCreateAccount(error: Error?)
+    case userCompletedSignInFromLogin(error: AuthErrorDomainModel?)
+    case userCompletedSignInFromCreateAccount(error: AuthErrorDomainModel?)
         
     // delete account
     case closeTappedFromDeleteAccount
@@ -144,12 +133,13 @@ enum FlowStep {
     
     // language settings
     case backTappedFromLanguageSettings
-    case choosePrimaryLanguageTappedFromLanguageSettings
-    case chooseParallelLanguageTappedFromLanguageSettings
-    case backTappedFromChooseLanguage
-    case languageTappedFromChooseLanguage
-    case deleteLanguageTappedFromChooseLanguage
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
+    case chooseAppLanguageTappedFromLanguageSettings(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>)
+    
+    // choose app language
+    case backTappedFromAppLanguages
+    case appLanguageTappedFromAppLanguages(appLanguage: AppLanguageDomainModel)
+    case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
     
     // article
     case backTappedFromArticleCategories

@@ -20,6 +20,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
     private let onboardingTutorialIsAvailable: Bool
+    private let inAppMessaging: FirebaseInAppMessaging
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -55,6 +56,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
         self.onboardingTutorialIsAvailable = appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable
+        self.inAppMessaging = appDiContainer.dataLayer.getFirebaseInAppMessaing()
         
         super.init()
         
@@ -69,8 +71,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
-        appDiContainer.firebaseInAppMessaging.setDelegate(delegate: self)
-        
+        inAppMessaging.setDelegate(delegate: self)
+                
         // NOTE: This fixes a bug with the Dashboard TabView that occurs when launching the app from a terminated state.
         // The bug occurs when the Dashboard TabView starts on any index other than 0 and then tab index 0 is tapped.  Tab index 0 will correctly highlight, but tab navigation doesn't occur.
         // This happens in the device in iOS 16.3.1.
@@ -84,6 +86,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         print("x deinit: \(type(of: self))")
         removeUIApplicationLifeCycleObservers()
         removeDeepLinkingObservers()
+    }
+    
+    func getInitialView() -> UIViewController {
+        return rootController
     }
     
     func navigate(step: FlowStep) {
@@ -302,7 +308,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToDashboard()
                 
-                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().localeLanguageCode
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguageValue().languageCode
                 
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
@@ -348,12 +354,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
             
-        case .userViewedFavoritedToolsListFromTools:
-            presentSetupParallelLanguage()
-            
-        case .userViewedAllToolsListFromTools:
-            presentSetupParallelLanguage()
-            
         case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
                         
             let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -383,27 +383,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .backgroundTappedFromLessonEvaluation:
             dismissLessonEvaluation()
-                    
-        case .languageSelectorTappedFromSetupParallelLanguage:
-            presentParallelLanguage()
-        
-        case .yesTappedFromSetupParallelLanguage:
-            presentParallelLanguage()
-        
-        case .noThanksTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .getStartedTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .languageSelectedFromParallelLanguageList:
-            dismissParallelLanguage()
-        
-        case .backgroundTappedFromSetupParallelLanguage:
-            dismissSetupParallelLanguage()
-        
-        case .backgroundTappedFromParallelLanguageList:
-            dismissParallelLanguage()
                         
         default:
             break
@@ -423,18 +402,15 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        if let lastAuthProvider = appDiContainer.dataLayer.getUserAuthentication().getLastAuthenticatedProviderType() {
-            
-            let authenticateUserUseCase: AuthenticateUserUseCase = appDiContainer.domainLayer.getAuthenticateUserUseCase()
-            
-            authenticateUserUseCase.authenticatePublisher(provider: lastAuthProvider, policy: .renewAccessToken)
-                .sink { finished in
+        let userAuthentication: AuthenticateUserInterface = appDiContainer.dataLayer.getUserAuthentication()
+        
+        userAuthentication.renewAuthenticationPublisher()
+            .sink { finished in
 
-                } receiveValue: { success in
+            } receiveValue: { authUser in
 
-                }
-                .store(in: &cancellables)
-        }
+            }
+            .store(in: &cancellables)
     }
     
     private func countAppSessionLaunch() {
@@ -942,68 +918,6 @@ extension AppFlow {
     }
 }
 
-// MARK: - Setup Parallel Language
-
-extension AppFlow {
-    
-    private func presentSetupParallelLanguage() {
-                    
-        let setupParallelLanguageAvailabilityUseCase = appDiContainer.domainLayer.getSetupParallelLanguageAvailabilityUseCase()
-        
-        let setupParallelLanguageIsAvailable: Bool = setupParallelLanguageAvailabilityUseCase.getSetupParallelLanguageIsAvailable().isAvailable
-        
-        guard setupParallelLanguageIsAvailable else {
-            return
-        }
-                
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            
-            guard let weakSelf = self, weakSelf.navigationController.presentedViewController == nil else {
-                return
-            }
-            
-            let appDiContainer: AppDiContainer = weakSelf.appDiContainer
-            
-            let viewModel = SetupParallelLanguageViewModel(
-                flowDelegate: weakSelf,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                setupParallelLanguageViewedRepository: appDiContainer.dataLayer.getSetupParallelLanguageViewedRepository(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
-            )
-            let view = SetupParallelLanguageView(viewModel: viewModel)
-            
-            let modalView = TransparentModalView(flowDelegate: weakSelf, modalView: view, closeModalFlowStep: .backgroundTappedFromSetupParallelLanguage)
-            
-            weakSelf.navigationController.present(modalView, animated: true, completion: nil)
-        }
-    }
-    
-    private func presentParallelLanguage() {
-        
-        let viewModel = ChooseParallelLanguageListViewModel(
-            flowDelegate: self,
-            getSettingsLanguagesUseCase: appDiContainer.domainLayer.getSettingsLanguagesUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            userDidSetSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getUserDidSetSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
-        )
-        
-        let view = ChooseParallelLanguageListView(viewModel: viewModel)
-        
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view,  closeModalFlowStep: .backgroundTappedFromParallelLanguageList)
-        
-        navigationController.presentedViewController?.present(modalView, animated: true, completion: nil)
-    }
-    
-    private func dismissSetupParallelLanguage() {
-        navigationController.dismiss(animated: true, completion: nil)
-    }
-    
-    private func dismissParallelLanguage() {
-        navigationController.presentedViewController?.dismiss(animated: true, completion: nil)
-    }
-}
-
 // MARK: - Menu
 
 extension AppFlow {
@@ -1124,14 +1038,31 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            if appLaunchedFromTerminatedState {
-                navigationStarted = true
-                navigate(step: .appLaunchedFromTerminatedState)
-            }
-            else if appLaunchedFromBackgroundState {
-                appIsInBackground = false
-                navigate(step: .appLaunchedFromBackgroundState)
-            }
+            let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
+            
+            getAppLanguageUseCase.getAppLanguagePublisher()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                    
+                    switch appLanguage.direction {
+                    
+                    case .leftToRight:
+                        ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+                        
+                    case .rightToLeft:
+                        ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+                    }
+                    
+                    if appLaunchedFromTerminatedState {
+                        self?.navigationStarted = true
+                        self?.navigate(step: .appLaunchedFromTerminatedState)
+                    }
+                    else if appLaunchedFromBackgroundState {
+                        self?.appIsInBackground = false
+                        self?.navigate(step: .appLaunchedFromBackgroundState)
+                    }
+                }
+                .store(in: &cancellables)
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true

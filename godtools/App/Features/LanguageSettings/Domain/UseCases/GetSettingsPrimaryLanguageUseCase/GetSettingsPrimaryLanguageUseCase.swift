@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated) // TODO: This will need to be removed once we finish refactor for tracking analytics property cru_contentlanguage in GT-2135. ~Levi
 class GetSettingsPrimaryLanguageUseCase {
     
     private let languagesRepository: LanguagesRepository
@@ -44,11 +45,11 @@ class GetSettingsPrimaryLanguageUseCase {
 
             language = self.getLanguageUseCase.getLanguage(id: primaryLanguageId)
         }
-        else if let deviceLanguage = self.getLanguageUseCase.getLanguage(locale: self.getDeviceLanguageUseCase.getDeviceLanguage().locale) {
+        else if let deviceLanguage = self.getLanguageUseCase.getLanguage(languageCode: self.getDeviceLanguageUseCase.getDeviceLanguageValue().languageCode) {
             
             language = deviceLanguage
         }
-        else if let englishLanguage = self.getLanguageUseCase.getLanguage(locale: Locale(identifier: LanguageCodes.english)) {
+        else if let englishLanguage = self.getLanguageUseCase.getLanguage(languageCode: LanguageCode.english.value) {
             
             language = englishLanguage
         }

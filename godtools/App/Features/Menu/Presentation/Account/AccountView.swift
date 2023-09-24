@@ -41,3 +41,29 @@ struct AccountView: View {
         .edgesIgnoringSafeArea(.bottom)
     }
 }
+
+struct AccountView_Preview: PreviewProvider {
+    
+    static func getAccountViewModel() -> AccountViewModel {
+        
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        return AccountViewModel(
+            flowDelegate: MockFlowDelegate(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
+            getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
+            getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
+            analytics: appDiContainer.dataLayer.getAnalytics()
+        )
+    }
+    
+    static var previews: some View {
+        
+        AccountView(
+            viewModel: AccountView_Preview.getAccountViewModel()
+        )
+    }
+}

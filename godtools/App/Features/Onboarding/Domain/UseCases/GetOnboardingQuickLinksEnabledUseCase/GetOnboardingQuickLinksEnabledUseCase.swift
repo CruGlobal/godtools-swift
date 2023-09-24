@@ -20,14 +20,14 @@ class GetOnboardingQuickLinksEnabledUseCase {
     func getQuickLinksEnabled() -> Bool {
         
         let supportedLanguageCodes: [String] = [
-            LanguageCodes.english,
-            LanguageCodes.french,
-            LanguageCodes.latvian,
-            LanguageCodes.spanish,
-            LanguageCodes.vietnamese
+            LanguageCode.english.value,
+            LanguageCode.french.value,
+            LanguageCode.latvian.value,
+            LanguageCode.spanish.value,
+            LanguageCode.vietnamese.value
         ]
         
-        let languageCode = getDeviceLanguageUseCase.getDeviceLanguage().localeLanguageCode
+        let languageCode: String = getDeviceLanguageUseCase.getDeviceLanguageValue().languageCode
         
         return supportedLanguageCodes.contains(languageCode)
     }

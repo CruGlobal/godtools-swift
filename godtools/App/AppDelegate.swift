@@ -14,9 +14,9 @@ import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-            
+               
     private lazy var appBuild: AppBuild = {
-       AppBuild(infoPlist: infoPlist)
+        AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
     
     private lazy var appConfig: AppConfig = {
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
+                    
         DisableGoogleTagManagerLogging.disable()
         
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.getAppsFlyerConfiguration(), deepLinkDelegate: self)
         
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         
@@ -80,13 +80,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
-            configuration: appConfig.facebookConfig
+            configuration: appConfig.getFacebookConfiguration()
         )
-                
+               
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow.rootController
+        window.rootViewController = appFlow.getInitialView()
         window.makeKeyAndVisible()
         self.window = window
         

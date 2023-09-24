@@ -26,7 +26,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var isFavorited = false
     @Published var title: String = ""
     @Published var category: String = ""
-    @Published var alternateLanguageAvailability: String = ""
+    @Published var languageAvailability: String = ""
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
     @Published var layoutDirection: LayoutDirection = .leftToRight
@@ -54,7 +54,7 @@ class ToolCardViewModel: ObservableObject {
             .store(in: &cancellables)
         
         downloadBannerImage()
-        setAlternateLanguageAvailabilityText(alternateLanguage: alternateLanguage)
+        setLanguageAvailabilityText(language: alternateLanguage)
     }
     
     private func downloadBannerImage() {
@@ -77,16 +77,16 @@ class ToolCardViewModel: ObservableObject {
         }
     }
     
-    private func setAlternateLanguageAvailabilityText(alternateLanguage: LanguageDomainModel?) {
+    private func setLanguageAvailabilityText(language: LanguageDomainModel?) {
         
-        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: alternateLanguage)
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: language)
         
         if getLanguageAvailability.isAvailable {
             
-            alternateLanguageAvailability = getLanguageAvailability.availabilityString
+            languageAvailability = getLanguageAvailability.availabilityString
             
         } else {
-            alternateLanguageAvailability = ""
+            languageAvailability = ""
         }
     }
 }

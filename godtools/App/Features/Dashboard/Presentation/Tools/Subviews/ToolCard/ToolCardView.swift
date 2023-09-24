@@ -98,20 +98,19 @@ struct ToolCardView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    HStack(alignment: .top, spacing: 0) {
+                    HStack(alignment: .center, spacing: 0) {
                         
                         Text(viewModel.title)
                             .font(FontLibrary.sfProTextBold.font(size: 17))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)
-                            .padding([.top], 11)
                         
                         if layout == .landscape {
                             
                             Spacer()
                             
                             ToolCardLanguageAvailabilityView(
-                                languageAvailability: viewModel.alternateLanguageAvailability
+                                languageAvailability: viewModel.languageAvailability
                             )
                         }
                     }
@@ -122,6 +121,14 @@ struct ToolCardView: View {
                             category: viewModel.category
                         )
                         .padding([.top], 2)
+                    }
+                    
+                    if layout == .thumbnail {
+                        
+                        ToolCardLanguageAvailabilityView(
+                            languageAvailability: viewModel.languageAvailability
+                        )
+                        .padding([.top], 5)
                     }
  
                     if showsNavButtons {
@@ -183,8 +190,9 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(locale: Locale(identifier: LanguageCodes.english))
-        let tool = ToolDomainModel(abbreviation: "abbr", bannerImageId: "1", category: "Tool Category", currentTranslationLanguage: language!, dataModelId: "1", languageIds: [], name: "Tool Name", resource: resource)
+        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(languageCode: LanguageCode.english.value)
+        
+        let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
         
         return ToolCardViewModel(
             tool: tool,

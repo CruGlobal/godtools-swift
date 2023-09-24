@@ -23,7 +23,7 @@ class MobileContentLanguagesApi {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
             
         session = ignoreCacheSession.session
-        baseUrl = config.mobileContentApiBaseUrl
+        baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     private func getLanguagesRequest() -> URLRequest {

@@ -19,7 +19,7 @@ class UserCountersAPI {
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.baseURL = config.mobileContentApiBaseUrl
+        self.baseURL = config.getMobileContentApiBaseUrl()
         self.ignoreCacheSession = ignoreCacheSession.session
         self.authSession = mobileContentApiAuthSession
     }

@@ -29,26 +29,16 @@ struct TutorialView: View {
                 
                 FixedVerticalSpacer(height: 50)
                 
-                TabView(selection: $viewModel.currentPage) {
+                PagedView(numberOfPages: viewModel.numberOfPages, currentPage: $viewModel.currentPage) { page in
                     
-                    Group {
-                        
-                        ForEach(0 ..< viewModel.numberOfPages, id: \.self) { index in
-                            
-                            TutorialItemView(
-                                viewModel: viewModel.tutorialPageWillAppear(tutorialItemIndex: index),
-                                geometry: geometry,
-                                videoPlayingClosure: {
-                                    viewModel.tutorialVideoPlayTapped(tutorialItemIndex: index)
-                                }
-                            )
-                            .tag(index)
-                            
+                    TutorialItemView(
+                        viewModel: viewModel.tutorialPageWillAppear(tutorialItemIndex: page),
+                        geometry: geometry,
+                        videoPlayingClosure: {
+                            viewModel.tutorialVideoPlayTapped(tutorialItemIndex: page)
                         }
-                    }
+                    )
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
                 
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
                     
@@ -64,6 +54,5 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .flipsForRightToLeftLayoutDirection(true)
     }
 }
