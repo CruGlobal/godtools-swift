@@ -12,14 +12,14 @@ import GodToolsToolParser
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     let numberOfCards: Int
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.cardCollectionPage = cardCollectionPage
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.numberOfCards = cardCollectionPage.cards.count
         
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
@@ -85,15 +85,13 @@ extension MobileContentCardCollectionPageViewModel {
     
     func pageDidAppear() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getPageAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func cardWillAppear(card: Int) -> MobileContentView? {
@@ -109,14 +107,12 @@ extension MobileContentCardCollectionPageViewModel {
     
     func cardDidAppear(card: Int) {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getCardAnalyticsScreenName(card: card),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
-        )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+            contentLanguageSecondary: nil
+        )        
     }
 }

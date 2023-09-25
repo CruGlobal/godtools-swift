@@ -150,16 +150,7 @@ class MenuFlow: Flow {
                 return
             }
             
-            let trackExitLinkAnalytics = ExitLinkModel(
-                screenName: screenName,
-                siteSection: siteSection,
-                siteSubSection: siteSubSection,
-                contentLanguage: contentLanguage,
-                secondaryContentLanguage: contentLanguageSecondary,
-                url: writeReviewURL
-            )
-            
-            navigateToURL(url: writeReviewURL, trackExitLinkAnalytics: trackExitLinkAnalytics)
+            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())

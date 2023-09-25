@@ -72,7 +72,7 @@ enum FlowStep {
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
-    case urlLinkTappedFromToolDetail(url: URL, trackExitLinkAnalytics: ExitLinkModel)
+    case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)

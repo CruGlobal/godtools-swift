@@ -10,17 +10,13 @@ import Foundation
 
 class ShareToolRemoteSessionURLViewModel {
         
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     let shareMessage: String
     
-    init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
               
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         shareMessage = String.localizedStringWithFormat(
             localizationServices.stringForSystemElseEnglish(key: "share_tool_remote_link_message"),
@@ -35,19 +31,17 @@ extension ShareToolRemoteSessionURLViewModel {
     
     func pageViewed() {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

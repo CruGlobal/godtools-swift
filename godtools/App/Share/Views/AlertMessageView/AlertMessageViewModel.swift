@@ -16,7 +16,7 @@ class AlertMessageViewModel: AlertMessageViewModelType {
     let acceptTitle: String
     let acceptHandler: CallbackHandler?
     
-    required init(title: String?, message: String?, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
+    init(title: String?, message: String?, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
         
         self.title = title
         self.message = message

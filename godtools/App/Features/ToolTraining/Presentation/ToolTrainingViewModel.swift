@@ -179,16 +179,7 @@ extension ToolTrainingViewModel {
     
     func buttonWithUrlTapped(url: URL) {
         
-        let trackExitLinkAnalytics = ExitLinkModel(
-            screenName: getExitAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil,
-            url: url
-        )
-        
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics)
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: getExitAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {

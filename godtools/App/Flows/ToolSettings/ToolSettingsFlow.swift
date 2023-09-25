@@ -159,9 +159,7 @@ class ToolSettingsFlow: Flow {
                 let viewModel = ShareToolRemoteSessionURLViewModel(
                     toolRemoteShareUrl: remoteShareUrl,
                     localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                    getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                    getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                    analytics: appDiContainer.dataLayer.getAnalytics()
+                    trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
                 )
                 let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
                 
@@ -216,9 +214,7 @@ class ToolSettingsFlow: Flow {
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
                 shareableImageDomainModel: shareableImageDomainModel,
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices()
             )

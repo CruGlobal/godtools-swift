@@ -294,8 +294,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 chooseYourOwnAdventureFlow = nil
             }
             
-        case .urlLinkTappedFromToolDetail(let url, let trackExitLinkAnalytics):
-            navigateToURL(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics)
+        case .urlLinkTappedFromToolDetail(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
+            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)

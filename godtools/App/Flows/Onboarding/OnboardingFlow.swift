@@ -177,8 +177,7 @@ extension OnboardingFlow {
         let viewModel = OnboardingQuickStartViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             getOnboardingQuickStartItemsUseCase: appDiContainer.domainLayer.getOnboardingQuickStartItemsUseCase(),
             trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
         )

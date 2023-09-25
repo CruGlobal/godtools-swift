@@ -290,17 +290,8 @@ extension ToolDetailsViewModel {
     }
     
     func urlTapped(url: URL) {
-                
-        let trackExitLinkAnalytics = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: nil,
-            url: url
-        )
-        
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics))
+           
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: nil, contentLanguageSecondary: nil))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
