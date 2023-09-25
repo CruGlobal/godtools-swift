@@ -13,6 +13,7 @@ struct ToolCategoryDomainModel {
     let type: ToolCategoryType
     let translatedName: String
     let toolsAvailableText: String
+    let searchableText: String
 }
 
 extension ToolCategoryDomainModel {

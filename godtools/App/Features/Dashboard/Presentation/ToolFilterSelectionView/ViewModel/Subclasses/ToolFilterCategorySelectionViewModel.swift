@@ -35,16 +35,14 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
             .sink { [weak self] categories in
                 
                 self?.categories = categories
-                self?.createRowViewModels(from: categories)
+                self?.createRowViewModels()
             }
             .store(in: &cancellables)
         
         searchTextPublisher
-            .sink { [weak self] searchText in
-                guard let self = self else { return }
+            .sink { [weak self] _ in
                 
-                let filteredCategories = self.categories.filter { searchText.isEmpty ? true : $0.translatedName.contains(searchText) }
-                self.createRowViewModels(from: filteredCategories)
+                self?.createRowViewModels()
             }
             .store(in: &cancellables)
         
@@ -56,7 +54,19 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
 
 extension ToolFilterCategorySelectionViewModel {
     
-    private func createRowViewModels(from categories: [ToolCategoryDomainModel]) {
+    private func createRowViewModels() {
+        
+        let categories: [ToolCategoryDomainModel]
+        let searchText = searchTextPublisher.value
+        
+        if searchText.isEmpty == false {
+            
+            categories = self.categories.filter { $0.searchableText.contains(searchText) }
+            
+        } else {
+            
+            categories = self.categories
+        }
         
         rowViewModels = categories.map { category in
             
@@ -67,9 +77,5 @@ extension ToolFilterCategorySelectionViewModel {
                 filterValue: .category(categoryModel: category)
             )
         }        
-    }
-    
-    private func getLanguageLocaleId() -> String? {
-        return getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
     }
 }

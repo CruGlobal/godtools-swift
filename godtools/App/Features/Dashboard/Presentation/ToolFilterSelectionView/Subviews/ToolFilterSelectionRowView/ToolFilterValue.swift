@@ -36,6 +36,4 @@ extension ToolFilterValue: Equatable {
         
         return false
     }
-    
-    
 }

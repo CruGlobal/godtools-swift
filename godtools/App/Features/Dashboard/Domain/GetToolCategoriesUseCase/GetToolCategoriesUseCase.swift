@@ -70,7 +70,8 @@ class GetToolCategoriesUseCase {
             return ToolCategoryDomainModel(
                 type: .category(id: categoryId),
                 translatedName: translatedName,
-                toolsAvailableText: toolsAvailableText
+                toolsAvailableText: toolsAvailableText,
+                searchableText: translatedName
             )
         }
         
@@ -87,7 +88,8 @@ class GetToolCategoriesUseCase {
         return ToolCategoryDomainModel(
             type: .anyCategory,
             translatedName: anyCategoryTranslation,
-            toolsAvailableText: toolsAvailableText
+            toolsAvailableText: toolsAvailableText,
+            searchableText: anyCategoryTranslation
         )
     }
     
