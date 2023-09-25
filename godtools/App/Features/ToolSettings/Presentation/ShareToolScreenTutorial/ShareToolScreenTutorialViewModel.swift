@@ -9,7 +9,6 @@
 import Foundation
 
 class ShareToolScreenTutorialViewModel {
-    //TODO: re-implement this tutorial using TutorialPagerViewModel
     
     private let localizationServices: LocalizationServices
     private let tutorialItemsProvider: ShareToolScreenTutorialItemProvider
@@ -51,7 +50,7 @@ class ShareToolScreenTutorialViewModel {
         return "shareToolScreen"
     }
     
-    func getTutorialItemViewModel(index: Int) -> TutorialCellViewModelType {
+    func getTutorialItemViewModel(index: Int) -> TutorialCellViewModel {
                 
         return TutorialCellViewModel(
             item: tutorialItems.value[index],

@@ -23,10 +23,11 @@ class ToolDetailsViewModel: ObservableObject {
     private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolLanguagesUseCase: GetToolLanguagesUseCase
     private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let getToolVersionsUseCase: GetToolVersionsUseCase
     private let attachmentsRepository: AttachmentsRepository
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
@@ -60,7 +61,7 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -73,10 +74,11 @@ class ToolDetailsViewModel: ObservableObject {
         self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolLanguagesUseCase = getToolLanguagesUseCase
         self.localizationServices = localizationServices
-        self.analytics = analytics
         self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.getToolVersionsUseCase = getToolVersionsUseCase
         self.attachmentsRepository = attachmentsRepository
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         self.versionsMessage = localizationServices.stringForSystemElseEnglish(key: "toolDetails.versions.message")
         
@@ -219,21 +221,19 @@ class ToolDetailsViewModel: ObservableObject {
     
     private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }
 
@@ -243,26 +243,24 @@ extension ToolDetailsViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func openToolTapped() {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
@@ -270,8 +268,6 @@ extension ToolDetailsViewModel {
             ]
         )
         
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
-
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
@@ -294,17 +290,8 @@ extension ToolDetailsViewModel {
     }
     
     func urlTapped(url: URL) {
-                
-        let trackExitLinkAnalytics = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: nil,
-            url: url
-        )
-        
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, trackExitLinkAnalytics: trackExitLinkAnalytics))
+           
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: nil, contentLanguageSecondary: nil))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {

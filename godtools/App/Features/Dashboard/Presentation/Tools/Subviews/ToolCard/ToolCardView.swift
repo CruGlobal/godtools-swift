@@ -196,9 +196,9 @@ struct ToolCardView_Previews: PreviewProvider {
         
         return ToolCardViewModel(
             tool: tool,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
     }

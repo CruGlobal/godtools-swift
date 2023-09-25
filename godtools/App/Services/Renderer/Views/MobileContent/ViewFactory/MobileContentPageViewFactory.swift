@@ -14,13 +14,13 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let fontService: FontService
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    init(mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, analytics: AnalyticsContainer) {
+    init(mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -114,7 +114,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                analytics: analytics
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
             let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
@@ -127,7 +127,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 cardCollectionPage: cardCollectionPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                analytics: analytics
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
             let view = MobileContentCardCollectionPageView(viewModel: viewModel)

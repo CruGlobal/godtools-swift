@@ -33,10 +33,6 @@ class AppDiContainer {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
     
-    func getExitLinkAnalytics() -> ExitLinkAnalytics {
-        return ExitLinkAnalytics(firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics)
-    }
-    
     func getFirebaseConfiguration() -> FirebaseConfiguration {
         return FirebaseConfiguration(config: dataLayer.getAppConfig())
     }

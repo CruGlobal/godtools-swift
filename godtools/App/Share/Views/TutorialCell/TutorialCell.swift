@@ -14,7 +14,7 @@ class TutorialCell: UICollectionViewCell {
     static let nibName: String = "TutorialCell"
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
     
-    private var viewModel: TutorialCellViewModelType?
+    private var viewModel: TutorialCellViewModel?
     private var mainImage: UIImage?
     private var mainImageView: UIImageView?
     private var customView: UIView?
@@ -64,7 +64,7 @@ class TutorialCell: UICollectionViewCell {
         resetAssetContent()
     }
     
-    func configure(viewModel: TutorialCellViewModelType) {
+    func configure(viewModel: TutorialCellViewModel) {
         
         self.viewModel = viewModel
         

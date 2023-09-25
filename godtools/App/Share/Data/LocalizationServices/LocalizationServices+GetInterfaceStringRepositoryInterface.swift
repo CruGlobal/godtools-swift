@@ -11,11 +11,10 @@ import Combine
 
 extension LocalizationServices: GetInterfaceStringRepositoryInterface {
     
-    func getStringForLanguagePublisher(languageCode: String, stringId: String) -> AnyPublisher<String, Never> {
+    func getStringForLanguage(languageCode: String, stringId: String) -> String {
         
         let interfaceString: String = stringForLocaleElseEnglish(localeIdentifier: languageCode, key: stringId)
         
-        return Just(interfaceString)
-            .eraseToAnyPublisher()
+        return interfaceString
     }
 }

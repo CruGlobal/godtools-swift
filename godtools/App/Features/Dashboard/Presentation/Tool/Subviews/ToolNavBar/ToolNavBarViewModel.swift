@@ -17,7 +17,7 @@ class ToolNavBarViewModel: NSObject {
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let fontService: FontService
-    private let analytics: AnalyticsContainer
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     let languages: [LanguageDomainModel]
     let backButtonImage: UIImage
@@ -27,7 +27,7 @@ class ToolNavBarViewModel: NSObject {
     let remoteShareIsActive: ObservableValue<Bool> = ObservableValue(value: false)
     let selectedLanguage: ObservableValue<Int>
     
-    init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageDomainModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) {
+    init(backButtonImageType: ToolBackButtonImageType, resource: ResourceModel, manifest: Manifest, languages: [LanguageDomainModel], tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, selectedLanguageValue: Int?) {
         
         self.backButtonImageType = backButtonImageType
         self.resource = resource
@@ -35,7 +35,7 @@ class ToolNavBarViewModel: NSObject {
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.fontService = fontService
-        self.analytics = analytics
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.selectedLanguage = ObservableValue(value: selectedLanguageValue ?? 0)
         
         backButtonImage = backButtonImageType.getImage()
@@ -128,17 +128,15 @@ extension ToolNavBarViewModel {
             AnalyticsConstants.Keys.contentLanguageSecondary: language.localeIdentifier,
         ]
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
             contentLanguage: language.localeIdentifier,
-            secondaryContentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: data
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

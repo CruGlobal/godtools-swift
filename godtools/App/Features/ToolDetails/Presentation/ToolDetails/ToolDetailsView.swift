@@ -130,10 +130,11 @@ struct ToolDetailsView_Preview: PreviewProvider {
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         return ToolDetailsView(viewModel: viewModel)
