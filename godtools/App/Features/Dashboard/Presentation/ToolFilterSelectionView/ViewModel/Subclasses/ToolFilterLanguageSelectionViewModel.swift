@@ -35,27 +35,14 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
             .sink { [weak self] languages in
                 
                 self?.languages = languages
-                self?.createRowViewModels(from: languages)
+                self?.createRowViewModels()
             }
             .store(in: &cancellables)
         
         searchTextPublisher
             .sink { [weak self] searchText in
-                guard let self = self else { return }
                 
-                let filteredLanguages = self.languages.filter { language in
-                    
-                    if searchText.isEmpty {
-                        return true
-                        
-                    } else {
-                        
-                        let languageText = language.translatedName ?? language.languageName
-                        return languageText.contains(searchText)
-                    }
-                }
-                
-                self.createRowViewModels(from: filteredLanguages)
+                self?.createRowViewModels()
             }
             .store(in: &cancellables)
         
@@ -67,7 +54,18 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
 
 extension ToolFilterLanguageSelectionViewModel {
     
-    private func createRowViewModels(from languages: [LanguageFilterDomainModel]) {
+    private func createRowViewModels() {
+        
+        let languages: [LanguageFilterDomainModel]
+        let searchText = searchTextPublisher.value
+        
+        if searchText.isEmpty == false {
+            
+            languages = self.languages.filter { $0.searchableText.contains(searchText) }
+        } else {
+            
+            languages = self.languages
+        }
         
         rowViewModels = languages.map { language in
             
