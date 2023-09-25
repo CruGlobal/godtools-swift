@@ -13,15 +13,16 @@ extension View {
     
     func changeUIDirectionFromLanguage() -> some View {
         let language = Locale.current.languageCode
-                let direction = Locale.characterDirection(forLanguage: language ?? "en")
-                let uiDirection = switch direction {
-                case .leftToRight:
-                    SwiftUI.LayoutDirection.leftToRight
-                case .rightToLeft:
-                    SwiftUI.LayoutDirection.rightToLeft
-                @unknown default:
-                    SwiftUI.LayoutDirection.leftToRight
-                }
+        let direction = Locale.characterDirection(forLanguage: language ?? "en")
+        var uiDirection: SwiftUI.LayoutDirection = SwiftUI.LayoutDirection.leftToRight
+        switch direction {
+            case .leftToRight:
+                uiDirection = SwiftUI.LayoutDirection.leftToRight
+            case .rightToLeft:
+                uiDirection = SwiftUI.LayoutDirection.rightToLeft
+            default:
+                uiDirection = SwiftUI.LayoutDirection.leftToRight
+        }
         return self.environment(\.layoutDirection, uiDirection)
     }
 }
