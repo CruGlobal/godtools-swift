@@ -68,7 +68,7 @@ class GetToolCategoriesUseCase {
             let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
             
             return ToolCategoryDomainModel(
-                id: categoryId,
+                type: .category(id: categoryId),
                 translatedName: translatedName,
                 toolsAvailableText: toolsAvailableText
             )
@@ -85,7 +85,7 @@ class GetToolCategoriesUseCase {
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
         return ToolCategoryDomainModel(
-            id: nil,
+            type: .anyCategory,
             translatedName: anyCategoryTranslation,
             toolsAvailableText: toolsAvailableText
         )

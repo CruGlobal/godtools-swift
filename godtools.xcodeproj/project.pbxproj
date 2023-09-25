@@ -1084,6 +1084,7 @@
 		D1DD79FD26690CAB000F1351 /* TrackScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */; };
 		D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */; };
 		D402234B2ABB8B9100489147 /* LanguageFilterDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D402234A2ABB8B9100489147 /* LanguageFilterDomainModel.swift */; };
+		D402234D2AC206DB00489147 /* LanguageFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D402234C2AC206DB00489147 /* LanguageFilterType.swift */; };
 		D409F2A8291D9C2300D9D2FE /* MobileContentApiAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */; };
 		D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */; };
 		D409F2AD2928110E00D9D2FE /* UserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */; };
@@ -2264,6 +2265,7 @@
 		D1DD79FC26690CAB000F1351 /* TrackScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackScreenModel.swift; sourceTree = "<group>"; };
 		D1DD79FE26690CBA000F1351 /* TrackActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackActionModel.swift; sourceTree = "<group>"; };
 		D402234A2ABB8B9100489147 /* LanguageFilterDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFilterDomainModel.swift; sourceTree = "<group>"; };
+		D402234C2AC206DB00489147 /* LanguageFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFilterType.swift; sourceTree = "<group>"; };
 		D409F2A7291D9C2300D9D2FE /* MobileContentApiAuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiAuthSession.swift; sourceTree = "<group>"; };
 		D409F2A9292559F100D9D2FE /* MobileContentAuthTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenError.swift; sourceTree = "<group>"; };
 		D409F2AC2928110E00D9D2FE /* UserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsAPI.swift; sourceTree = "<group>"; };
@@ -8287,6 +8289,7 @@
 			children = (
 				D40D77C12ABA27E0008D3642 /* GetToolFilterLanguagesUseCase.swift */,
 				D402234A2ABB8B9100489147 /* LanguageFilterDomainModel.swift */,
+				D402234C2AC206DB00489147 /* LanguageFilterType.swift */,
 			);
 			path = GetToolFilterLanguagesUseCase;
 			sourceTree = "<group>";
@@ -9404,6 +9407,7 @@
 				459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */,
 				45D63E71288F698C009B4610 /* LanguagesJsonFileCache.swift in Sources */,
 				4561B3E8295B2FA500F5AF5B /* OnboardingTutorialViewedRepository.swift in Sources */,
+				D402234D2AC206DB00489147 /* LanguageFilterType.swift in Sources */,
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
 				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,

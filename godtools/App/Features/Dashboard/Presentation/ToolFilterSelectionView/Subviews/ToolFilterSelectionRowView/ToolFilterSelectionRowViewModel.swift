@@ -33,10 +33,24 @@ extension ToolFilterSelectionRowViewModel: Identifiable {
         switch filterValue {
             
         case .category(let categoryModel):
-            return categoryModel.id ?? "any_category"
+            
+            switch categoryModel.type {
+            case .anyCategory:
+                return "any_category"
+                
+            case .category(let categoryId):
+                return categoryId
+            }
             
         case .language(let languageModel):
-            return languageModel.id ?? "any_language"
+            
+            switch languageModel.type {
+            case .anyLanguage:
+                return "any_language"
+                
+            case .language(let languageModel):
+                return languageModel.id
+            }
         }
     }
 }
