@@ -11,12 +11,12 @@ import GodToolsToolParser
 
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
         
-    init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
@@ -50,7 +50,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                analytics: analytics
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
             let view = MobileContentContentPageView(

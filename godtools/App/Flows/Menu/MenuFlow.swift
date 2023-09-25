@@ -140,7 +140,7 @@ class MenuFlow: Flow {
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
             
-        case .leaveAReviewTappedFromMenu(let baseAnalyticsAttributes):
+        case .leaveAReviewTappedFromMenu(let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
             
             let appleAppId: String = appDiContainer.dataLayer.getAppConfig().getAppleAppId()
             
@@ -150,9 +150,7 @@ class MenuFlow: Flow {
                 return
             }
             
-            let trackExitLinkAnalytics = ExitLinkModel(baseAnalyticsAttributes: baseAnalyticsAttributes, url: writeReviewURL)
-            
-            navigateToURL(url: writeReviewURL, trackExitLinkAnalytics: trackExitLinkAnalytics)
+            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
@@ -235,15 +233,14 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             localizationServices: localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase()
+            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = MenuView(viewModel: viewModel)
@@ -328,13 +325,11 @@ class MenuFlow: Flow {
         
         let viewModel = AccountViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let view = AccountView(viewModel: viewModel)
@@ -442,11 +437,9 @@ class MenuFlow: Flow {
         
         let viewModel = WebContentViewModel(
             flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
             webContent: webContent,
-            backTappedFromWebContentStep: backTappedFromWebContentStep
+            backTappedFromWebContentStep: backTappedFromWebContentStep,
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let view = WebContentView(viewModel: viewModel)

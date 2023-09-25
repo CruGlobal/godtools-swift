@@ -12,7 +12,7 @@ class ShareArticleView {
     
     let controller: UIActivityViewController
     
-    required init(viewModel: ShareArticleViewModelType) {
+    required init(viewModel: ShareArticleViewModel) {
         
         controller = UIActivityViewController(activityItems: [viewModel.shareMessage as Any], applicationActivities: nil)
         

@@ -178,24 +178,21 @@ extension AppDelegate {
             
         case .tool:
             
-            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
-            let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             
-            let trackAction = TrackActionModel(
+            trackActionAnalyticsUseCase.trackAction(
                 screenName: "",
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
                 siteSection: "",
                 siteSubSection: "",
-                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+                contentLanguage: nil,
+                contentLanguageSecondary: nil,
                 url: nil,
                 data: [
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]
             )
-            
-            appDiContainer.dataLayer.getAnalytics().trackActionAnalytics.trackAction(trackAction: trackAction)
-            
+                        
             if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
                 successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
             }

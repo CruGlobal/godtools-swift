@@ -11,16 +11,16 @@ import GodToolsToolParser
 
 class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
         
-    init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
+    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
         
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics
         self.fontService = fontService
         self.localizationServices = localizationServices
@@ -35,7 +35,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageCardViewModel(
                 cardModel: cardModel.card,
                 renderedPageContext: renderedPageContext,
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
                 fontService: fontService,
                 localizationServices: localizationServices,
@@ -140,7 +140,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = ToolPageViewModel(
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             

@@ -80,11 +80,10 @@ class ToolSettingsFlow: Flow {
                 resource: resource,
                 language: language,
                 pageNumber: toolData.pageNumber,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
                 incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
+                getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
             let view = ShareToolView(viewModel: viewModel)
@@ -159,9 +158,7 @@ class ToolSettingsFlow: Flow {
                 let viewModel = ShareToolRemoteSessionURLViewModel(
                     toolRemoteShareUrl: remoteShareUrl,
                     localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                    getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                    getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                    analytics: appDiContainer.dataLayer.getAnalytics()
+                    trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
                 )
                 let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
                 
@@ -216,9 +213,7 @@ class ToolSettingsFlow: Flow {
                    
             let viewModel = ReviewShareShareableViewModel(
                 flowDelegate: self,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
                 shareableImageDomainModel: shareableImageDomainModel,
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices()
             )

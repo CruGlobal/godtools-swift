@@ -33,10 +33,9 @@ class ArticleFlow: Flow {
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
@@ -77,9 +76,8 @@ class ArticleFlow: Flow {
             
             let viewModel = ShareArticleViewModel(
                 articleAemData: articleAemData,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
+                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
             let view = ShareArticleView(viewModel: viewModel)
@@ -111,9 +109,7 @@ extension ArticleFlow {
             manifest: manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             currentArticleDownloadReceipt: currentArticleDownloadReceipt
         )
         
@@ -131,13 +127,11 @@ extension ArticleFlow {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
+            flowType: .tool(resource: resource),
             aemCacheObject: aemCacheObject,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            flowType: .tool(resource: resource)
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let view = ArticleWebView(viewModel: viewModel)

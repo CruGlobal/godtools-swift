@@ -92,11 +92,10 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         AllYourFavoriteToolsView(viewModel: viewModel)

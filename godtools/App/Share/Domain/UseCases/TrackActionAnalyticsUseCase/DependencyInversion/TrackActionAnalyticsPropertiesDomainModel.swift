@@ -10,4 +10,12 @@ import Foundation
 
 struct TrackActionAnalyticsPropertiesDomainModel {
     
+    let screenName: String
+    let actionName: String
+    let siteSection: String
+    let siteSubSection: String
+    let contentLanguage: String?
+    let contentLanguageSecondary: String?
+    let url: String?
+    let data: [String: Any]?
 }

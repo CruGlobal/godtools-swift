@@ -11,12 +11,11 @@ import Combine
 
 class OnboardingTutorialViewModel: ObservableObject {
     
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     private let localizationServices: LocalizationServices
-    private let analyticsContainer: AnalyticsContainer
     private let trackTutorialVideoAnalytics: TutorialVideoAnalytics
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     
     private weak var flowDelegate: FlowDelegate?
@@ -33,15 +32,14 @@ class OnboardingTutorialViewModel: ObservableObject {
     @Published var skipButtonTitle: String
     @Published var continueButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, trackTutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, localizationServices: LocalizationServices, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
         self.localizationServices = localizationServices
-        self.analyticsContainer = analyticsContainer
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
         
@@ -59,8 +57,8 @@ class OnboardingTutorialViewModel: ObservableObject {
             screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
             siteSection: "onboarding",
             siteSubsection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage ?? ""
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
     }
     
@@ -78,17 +76,15 @@ class OnboardingTutorialViewModel: ObservableObject {
         }
         
         
-        let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
+        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: pageAnalytics.screenName,
             siteSection: pageAnalytics.siteSection,
             siteSubSection: pageAnalytics.siteSubsection,
             contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.secondaryContentLanguage
+            contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
         )
-        
-        analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {
@@ -146,20 +142,18 @@ extension OnboardingTutorialViewModel {
             
             flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
             
-            let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
             
-            let trackAction = TrackActionModel(
+            trackActionAnalyticsUseCase.trackAction(
                 screenName: pageAnalytics.screenName,
                 actionName: "Onboarding Start",
                 siteSection: pageAnalytics.siteSection,
                 siteSubSection: pageAnalytics.siteSubsection,
                 contentLanguage: pageAnalytics.contentLanguage,
-                secondaryContentLanguage: pageAnalytics.secondaryContentLanguage,
+                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
                 url: nil,
                 data: [AnalyticsConstants.Keys.onboardingStart: 1]
             )
-            
-            analyticsContainer.trackActionAnalytics.trackAction(trackAction: trackAction)
         }
         else {
             
@@ -171,13 +165,13 @@ extension OnboardingTutorialViewModel {
         
         flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
-        let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
+        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
         
         trackTutorialVideoAnalytics.trackVideoPlayed(
             videoId: readyForEveryConversationYoutubeVideoId,
             screenName: pageAnalytics.screenName,
             contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.secondaryContentLanguage
+            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
         )
     }
 }

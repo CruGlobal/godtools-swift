@@ -15,13 +15,10 @@ class AnalyticsContainer {
     let firebaseAnalytics: FirebaseAnalytics
 
     // shared analytics tracking
-    let pageViewedAnalytics: PageViewedAnalytics
     let trackActionAnalytics: TrackActionAnalytics
             
     init(appsFlyerAnalytics: AppsFlyerAnalytics, firebaseAnalytics: FirebaseAnalytics) {
-        
-        pageViewedAnalytics = PageViewedAnalytics(firebaseAnalytics: firebaseAnalytics)
-        
+                
         trackActionAnalytics = TrackActionAnalytics(firebaseAnalytics: firebaseAnalytics)
 
         self.appsFlyerAnalytics = appsFlyerAnalytics

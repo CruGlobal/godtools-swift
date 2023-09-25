@@ -13,12 +13,10 @@ import Combine
 class ArticleWebViewModel: NSObject {
     
     private let aemCacheObject: ArticleAemCacheObject
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let flowType: ArticleWebViewModelFlowType
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
-    private let analytics: AnalyticsContainer
-    private let flowType: ArticleWebViewModelFlowType
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
     private var loadingCurrentWebView: WKWebView?
@@ -32,16 +30,14 @@ class ArticleWebViewModel: NSObject {
     let hidesDebugButton: ObservableValue<Bool> = ObservableValue(value: true)
     let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
     
-    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
+    init(flowDelegate: FlowDelegate, flowType: ArticleWebViewModelFlowType, aemCacheObject: ArticleAemCacheObject, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.flowType = flowType
         self.aemCacheObject = aemCacheObject
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
-        self.analytics = analytics
-        self.flowType = flowType
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         super.init()
         
@@ -167,15 +163,13 @@ extension ArticleWebViewModel {
 
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-                
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
             .sink { _ in
