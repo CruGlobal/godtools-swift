@@ -40,6 +40,8 @@ class LanguageSettingsViewModel: ObservableObject {
         self.getInterfaceStringUseCase = getInterfaceStringUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
+        navTitle = getInterfaceStringUseCase.getString(id: "language_settings")
+        
         getAppLanguageUseCase.getAppLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
@@ -57,11 +59,6 @@ class LanguageSettingsViewModel: ObservableObject {
                 self?.currentAppLanguage = appLanguage
                 LanguageSettingsViewModel.currentLanguage = appLanguage // TODO: Remove once appLanguage is being persisted. ~Levi
             }
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: "language_settings")
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.navTitle, on: self)
             .store(in: &cancellables)
     }
     

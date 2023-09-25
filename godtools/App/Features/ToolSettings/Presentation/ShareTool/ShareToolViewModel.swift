@@ -18,7 +18,7 @@ class ShareToolViewModel {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let pageNumber: Int
     
-    let shareMessage: ObservableValue<String> = ObservableValue(value: "")
+    let shareMessage: String
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -39,14 +39,7 @@ class ShareToolViewModel {
         
         shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
         
-        getInterfaceStringUseCase.getStringPublisher(id: "tract_share_message")
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (tractShareMessage: String) in
-                
-                let shareMessageValue: String = String.localizedStringWithFormat(tractShareMessage, shareUrlString)
-                self?.shareMessage.accept(value: shareMessageValue)
-            }
-            .store(in: &cancellables)
+        shareMessage = String.localizedStringWithFormat(getInterfaceStringUseCase.getString(id: "tract_share_message"), shareUrlString)
     }
     
     private var analyticsScreenName: String {

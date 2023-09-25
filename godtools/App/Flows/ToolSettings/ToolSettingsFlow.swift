@@ -86,14 +86,13 @@ class ToolSettingsFlow: Flow {
                 trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
-            let view = ShareToolView(viewModel: viewModel, onViewReady: { [weak self] (shareActivityView: UIActivityViewController) in
-                
-                self?.navigationController.present(
-                    shareActivityView,
-                    animated: true,
-                    completion: nil
-                )
-            })
+            let view = ShareToolView(viewModel: viewModel)
+            
+            navigationController.present(
+                view.controller,
+                animated: true,
+                completion: nil
+            )
                     
         case .screenShareTappedFromToolSettings:
             

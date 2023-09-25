@@ -48,46 +48,22 @@ class AccountViewModel: ObservableObject {
         self.getInterfaceStringUseCase = getInterfaceStringUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.navTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.navTitle, on: self)
-            .store(in: &cancellables)
+        navTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.navTitle.rawValue)
+        activityButtonTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
+        myActivitySectionTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
+        badgesSectionTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
+        globalActivityButtonTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
         
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.activityButtonTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.myActivitySectionTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.badgesSectionTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.globalActivityButtonTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (localizedGlobalActivityTitle: String) in
+        let localizedGlobalActivityTitle: String = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
+        let todaysDate: Date = Date()
+        let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
                 
-                let todaysDate: Date = Date()
-                let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
-                        
-                if let year = todaysYearComponents.year {
-                    self?.globalActivityTitle = "\(year) \(localizedGlobalActivityTitle)"
-                }
-                else {
-                    self?.globalActivityTitle = localizedGlobalActivityTitle
-                }
-            })
-            .store(in: &cancellables)
+        if let year = todaysYearComponents.year {
+            globalActivityTitle = "\(year) \(localizedGlobalActivityTitle)"
+        }
+        else {
+            globalActivityTitle = localizedGlobalActivityTitle
+        }
                 
         getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
             .receive(on: DispatchQueue.main)

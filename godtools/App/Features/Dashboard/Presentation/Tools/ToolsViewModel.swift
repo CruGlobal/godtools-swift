@@ -61,25 +61,10 @@ class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        getInterfaceStringUseCase.getStringPublisher(id: "tool_offline_favorite_message")
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.favoritingToolBannerMessage, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.toolSpotlightTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.toolSpotlightSubtitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.filterTitle, on: self)
-            .store(in: &cancellables)
+        favoritingToolBannerMessage = getInterfaceStringUseCase.getString(id: "tool_offline_favorite_message")
+        toolSpotlightTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
+        toolSpotlightSubtitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+        filterTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         

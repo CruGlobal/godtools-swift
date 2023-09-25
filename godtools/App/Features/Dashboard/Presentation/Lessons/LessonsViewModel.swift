@@ -37,6 +37,9 @@ class LessonsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
+        
+        sectionTitle = getInterfaceStringUseCase.getString(id: "lessons.pageTitle")
+        subtitle = getInterfaceStringUseCase.getString(id: "lessons.pageSubtitle")
                 
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)
@@ -45,16 +48,6 @@ class LessonsViewModel: ObservableObject {
                 self?.lessons = lessons
                 self?.isLoadingLessons = false
             }
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: "lessons.pageTitle")
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.sectionTitle, on: self)
-            .store(in: &cancellables)
-        
-        getInterfaceStringUseCase.getStringPublisher(id: "lessons.pageSubtitle")
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.subtitle, on: self)
             .store(in: &cancellables)
     }
     

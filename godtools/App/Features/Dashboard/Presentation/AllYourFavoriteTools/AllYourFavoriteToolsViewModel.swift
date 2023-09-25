@@ -39,10 +39,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        getInterfaceStringUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.sectionTitle, on: self)
-            .store(in: &cancellables)
+        sectionTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteTools.title")
         
         getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
             .receive(on: DispatchQueue.main)
