@@ -344,6 +344,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTrackExitLinkAnalyticsUseCase() -> TrackExitLinkAnalyticsUseCase {
+        return TrackExitLinkAnalyticsUseCase(
+            trackExitLinkAnalytics: dataLayer.getAnalytics()
+        )
+    }
+    
     func getTrackScreenViewAnalyticsUseCase() -> TrackScreenViewAnalyticsUseCase {
         return TrackScreenViewAnalyticsUseCase(
             trackScreenViewAnalytics: dataLayer.getAnalytics()

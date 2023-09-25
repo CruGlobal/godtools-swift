@@ -11,8 +11,7 @@ import Foundation
 class OnboardingQuickStartViewModel: ObservableObject {
     
     private let quickStartItems: [OnboardingQuickStartItemDomainModel]
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase
     private let trackActionAnalytics: TrackActionAnalytics
     
@@ -24,21 +23,17 @@ class OnboardingQuickStartViewModel: ObservableObject {
     
     @Published var numberOfQuickStartItems: Int = 0
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase, trackActionAnalytics: TrackActionAnalytics) {
+    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase, trackActionAnalytics: TrackActionAnalytics) {
+        
+        self.flowDelegate = flowDelegate
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.getOnboardingQuickStartItemsUseCase = getOnboardingQuickStartItemsUseCase
+        self.trackActionAnalytics = trackActionAnalytics
         
         title = localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.title")
         skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
         endTutorialButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.getStartedButton.title")
-        
-        self.flowDelegate = flowDelegate
-        
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.getOnboardingQuickStartItemsUseCase = getOnboardingQuickStartItemsUseCase
-        self.trackActionAnalytics = trackActionAnalytics
-        
         quickStartItems = getOnboardingQuickStartItemsUseCase.getOnboardingQuickStartItems()
-        
         numberOfQuickStartItems = quickStartItems.count
     }
     
@@ -60,18 +55,16 @@ extension OnboardingQuickStartViewModel {
         
         let item = quickStartItems[index]
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: item.analyticsEventActionName,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: nil
         )
-        
-        trackActionAnalytics.trackAction(trackAction: trackAction)
         
         flowDelegate?.navigate(step: item.actionFlowStep)
     }

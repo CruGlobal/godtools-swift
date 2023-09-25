@@ -12,7 +12,7 @@ import GodToolsToolParser
 class ToolPageCardViewModel: MobileContentViewModel {
     
     private let cardModel: TractPage.Card
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
@@ -25,10 +25,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -180,16 +180,14 @@ extension ToolPageCardViewModel {
     func cardDidAppear() {
         
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
-                           
-        let trackScreen =  TrackScreenModel(
+                       
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func cardDidDisappear() {

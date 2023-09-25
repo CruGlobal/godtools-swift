@@ -12,9 +12,9 @@ import Combine
 
 class ToolCardViewModel: ObservableObject {
         
-    private let localizationServices: LocalizationServices
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
     private let attachmentsRepository: AttachmentsRepository
             
     private var getBannerImageCancellable: AnyCancellable?
@@ -31,22 +31,22 @@ class ToolCardViewModel: ObservableObject {
     @Published var openButtonTitle: String = ""
     @Published var layoutDirection: LayoutDirection = .leftToRight
             
-    init(tool: ToolDomainModel, localizationServices: LocalizationServices, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolDomainModel, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
-        self.localizationServices = localizationServices
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.getInterfaceStringUseCase = getInterfaceStringUseCase
         self.attachmentsRepository = attachmentsRepository
                 
         let currentTranslationLanguage: LanguageDomainModel = tool.currentTranslationLanguage
-        let localeIdentifier: String = currentTranslationLanguage.localeIdentifier
         
         title = tool.name
-        category = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "tool_category_\(tool.category)")
-        detailsButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
-        openButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "open")
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
+        
+        category = getInterfaceStringUseCase.getString(id: "tool_category_\(tool.category)")
+        detailsButtonTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteLessons.details")
+        openButtonTitle = getInterfaceStringUseCase.getString(id: "open")
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)

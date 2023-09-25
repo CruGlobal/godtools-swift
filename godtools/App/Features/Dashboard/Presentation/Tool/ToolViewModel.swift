@@ -17,7 +17,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let localizationServices: LocalizationServices
     private let fontService: FontService
     private let resourceViewsService: ResourceViewsService
-    private let analytics: AnalyticsContainer
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
@@ -26,7 +26,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     let navBarViewModel: ObservableValue<ToolNavBarViewModel>
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, resourceViewsService: ResourceViewsService, analytics: AnalyticsContainer, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.backButtonImageType = backButtonImageType
@@ -35,11 +35,11 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.localizationServices = localizationServices
         self.fontService = fontService
         self.resourceViewsService = resourceViewsService
-        self.analytics = analytics
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
         
-        let navBarViewModelValue: ToolNavBarViewModel = ToolViewModel.navBarWillAppear(backButtonImageType: backButtonImageType, renderer: renderer, tractRemoteSharePublisher: tractRemoteSharePublisher, tractRemoteShareSubscriber: tractRemoteShareSubscriber, localizationServices: localizationServices, fontService: fontService, analytics: analytics, selectedLanguageValue: nil)
+        let navBarViewModelValue: ToolNavBarViewModel = ToolViewModel.navBarWillAppear(backButtonImageType: backButtonImageType, renderer: renderer, tractRemoteSharePublisher: tractRemoteSharePublisher, tractRemoteShareSubscriber: tractRemoteShareSubscriber, localizationServices: localizationServices, fontService: fontService, trackActionAnalyticsUseCase: trackActionAnalyticsUseCase, selectedLanguageValue: nil)
         
         self.navBarViewModel = ObservableValue(value: navBarViewModelValue)
         
@@ -76,7 +76,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         }
     }
     
-    private static func navBarWillAppear(backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, analytics: AnalyticsContainer, selectedLanguageValue: Int?) -> ToolNavBarViewModel {
+    private static func navBarWillAppear(backButtonImageType: ToolBackButtonImageType, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, localizationServices: LocalizationServices, fontService: FontService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, selectedLanguageValue: Int?) -> ToolNavBarViewModel {
         
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         let languages: [LanguageDomainModel] = renderer.pageRenderers.map({$0.language})
@@ -89,7 +89,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             tractRemoteSharePublisher: tractRemoteSharePublisher,
             tractRemoteShareSubscriber: tractRemoteShareSubscriber,
             fontService: fontService,
-            analytics: analytics,
+            trackActionAnalyticsUseCase: trackActionAnalyticsUseCase,
             selectedLanguageValue: selectedLanguageValue
         )
     }
@@ -134,7 +134,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         let selectedLanguageValue: Int = navBarViewModel.value.selectedLanguage.value
         
-        let viewModel = ToolViewModel.navBarWillAppear(backButtonImageType: backButtonImageType, renderer: renderer, tractRemoteSharePublisher: tractRemoteSharePublisher, tractRemoteShareSubscriber: tractRemoteShareSubscriber, localizationServices: localizationServices, fontService: fontService, analytics: analytics, selectedLanguageValue: selectedLanguageValue)
+        let viewModel = ToolViewModel.navBarWillAppear(backButtonImageType: backButtonImageType, renderer: renderer, tractRemoteSharePublisher: tractRemoteSharePublisher, tractRemoteShareSubscriber: tractRemoteShareSubscriber, localizationServices: localizationServices, fontService: fontService, trackActionAnalyticsUseCase: trackActionAnalyticsUseCase, selectedLanguageValue: selectedLanguageValue)
         
         navBarViewModel.accept(value: viewModel)
         
@@ -206,20 +206,18 @@ extension ToolViewModel {
     
     private func trackShareScreenOpened() {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
             contentLanguage: nil,
-            secondaryContentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.shareScreenOpenedCountKey: 1
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func subscribeToLiveShareStreamIfNeeded() {

@@ -12,10 +12,9 @@ import Combine
 class TutorialViewModel: ObservableObject {
         
     private let getTutorialUseCase: GetTutorialUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
@@ -38,13 +37,12 @@ class TutorialViewModel: ObservableObject {
     
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: false)
     
-    init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.getTutorialUseCase = getTutorialUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
         getTutorialUseCase.getTutorialPublisher()
@@ -93,33 +91,24 @@ class TutorialViewModel: ObservableObject {
         let analyticsSiteSection = analyticsSiteSection
         let analyticsSiteSubSection = analyticsSiteSubsection
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-                
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: nil
         )
-        
-        if isOnFirstPage {
-            analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
-        }
-        else if isOnLastPage {
-            analytics.appsFlyerAnalytics.trackAction(actionName: trackAction.actionName, data: trackAction.data)
-        }
         
         if isOnLastPage {
             continueTitle = tutorialDomainModel?.lastPageContinueButtonTitle ?? ""
@@ -174,8 +163,8 @@ extension TutorialViewModel {
             tutorialVideoAnalytics.trackVideoPlayed(
                 videoId: videoId,
                 screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialItemIndex),
-                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+                contentLanguage: nil,
+                secondaryContentLanguage: nil
             )
         }
     }

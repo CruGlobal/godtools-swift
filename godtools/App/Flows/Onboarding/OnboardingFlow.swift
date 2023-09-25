@@ -132,12 +132,11 @@ extension OnboardingFlow {
         
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
-            trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
+            trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = OnboardingTutorialView(viewModel: viewModel)
@@ -178,8 +177,7 @@ extension OnboardingFlow {
         let viewModel = OnboardingQuickStartViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             getOnboardingQuickStartItemsUseCase: appDiContainer.domainLayer.getOnboardingQuickStartItemsUseCase(),
             trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
         )

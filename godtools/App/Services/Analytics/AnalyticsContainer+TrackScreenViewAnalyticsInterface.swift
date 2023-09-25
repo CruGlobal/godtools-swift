@@ -12,5 +12,12 @@ extension AnalyticsContainer: TrackScreenViewAnalyticsInterface {
     
     func trackScreenView(properties: TrackScreenViewAnalyticsPropertiesDomainModel) {
         
+        firebaseAnalytics.trackScreenView(
+            screenName: properties.screenName,
+            siteSection: properties.siteSection,
+            siteSubSection: properties.siteSubSection,
+            contentLanguage: properties.contentLanguage,
+            secondaryContentLanguage: properties.contentLanguageSecondary
+        )
     }
 }
