@@ -26,7 +26,6 @@ class ToolsViewModel: ObservableObject {
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let analytics: AnalyticsContainer
-    private let categoryFilterValuePublisher: CurrentValueSubject<String?, Never> = CurrentValueSubject(nil)
     private let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()

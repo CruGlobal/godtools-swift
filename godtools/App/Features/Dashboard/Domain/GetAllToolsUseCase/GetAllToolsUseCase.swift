@@ -56,7 +56,7 @@ class GetAllToolsUseCase {
         guard let allToolsInMem = allToolsInMem else {
             
             allToolsInMem = getTools(sorted: sorted)
-            return getFilteredInMemTools(sorted: sorted)
+            return getFilteredInMemTools(sorted: sorted, categoryId: categoryId, languageId: languageId)
         }
 
         return allToolsInMem.filter { tool in
