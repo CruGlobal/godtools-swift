@@ -49,7 +49,7 @@ class GetSettingsPrimaryLanguageUseCase {
             
             language = deviceLanguage
         }
-        else if let englishLanguage = self.getLanguageUseCase.getLanguage(languageCode: LanguageCode.english.value) {
+        else if let englishLanguage = self.getLanguageUseCase.getLanguage(languageCode: LanguageCodeDomainModel.english.value) {
             
             language = englishLanguage
         }

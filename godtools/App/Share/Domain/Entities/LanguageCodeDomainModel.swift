@@ -1,5 +1,5 @@
 //
-//  LanguageCode.swift
+//  LanguageCodeDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/25/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LanguageCode: String {
+enum LanguageCodeDomainModel: String {
     
     case arabic = "ar"
     case chinese = "zh"

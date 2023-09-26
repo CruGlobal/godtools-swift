@@ -49,7 +49,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
               
         downloadLatestTranslationsCancellable?.cancel()
         
-        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCode.english.value)
+        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodeDomainModel.english.value)
         
         let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage].compactMap({
             return $0

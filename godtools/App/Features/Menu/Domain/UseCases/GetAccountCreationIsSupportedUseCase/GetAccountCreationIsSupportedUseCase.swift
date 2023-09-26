@@ -24,7 +24,7 @@ class GetAccountCreationIsSupportedUseCase {
         
         let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguageValue()
         
-        let supportedLanguageCodes: [String] = [LanguageCode.english.value]
+        let supportedLanguageCodes: [String] = [LanguageCodeDomainModel.english.value]
         
         let deviceSystemLanguageIsInSupportedLanguageCodes: Bool = supportedLanguageCodes.contains(deviceLanguage.languageCode)
                 
