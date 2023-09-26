@@ -9,8 +9,21 @@
 import Foundation
 
 class UserAppLanguageRepository {
-    
-    init() {
         
+    private let cache: RealmUserAppLanguageCache
+    
+    init(cache: RealmUserAppLanguageCache) {
+        
+        self.cache = cache
+    }
+    
+    func getUserAppLanguage() -> UserAppLanguageDataModel? {
+        
+        return cache.getUserAppLanguage()
+    }
+    
+    func storeUserAppLanguage(languageCode: String) {
+        
+        cache.storeUserAppLanguage(languageCode: languageCode)
     }
 }

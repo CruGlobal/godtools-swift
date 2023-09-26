@@ -328,7 +328,7 @@ class MenuFlow: Flow {
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         

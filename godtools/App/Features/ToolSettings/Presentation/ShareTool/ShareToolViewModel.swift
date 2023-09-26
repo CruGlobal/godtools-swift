@@ -13,7 +13,7 @@ class ShareToolViewModel {
         
     private let resource: ResourceModel
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let pageNumber: Int
@@ -22,11 +22,11 @@ class ShareToolViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
                 
         self.resource = resource
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
@@ -39,7 +39,7 @@ class ShareToolViewModel {
         
         shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
         
-        shareMessage = String.localizedStringWithFormat(getInterfaceStringUseCase.getString(id: "tract_share_message"), shareUrlString)
+        shareMessage = String.localizedStringWithFormat(getInterfaceStringInAppLanguageUseCase.getString(id: "tract_share_message"), shareUrlString)
     }
     
     private var analyticsScreenName: String {

@@ -728,7 +728,7 @@ extension AppFlow {
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -1036,11 +1036,14 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
+            // TODO: Implement application layout direction. ~Levi
+            
+            /*
             let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
             
             getAppLanguageUseCase.getAppLanguagePublisher()
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel) in
                     
                     switch appLanguage.direction {
                     
@@ -1060,7 +1063,7 @@ extension AppFlow {
                         self?.navigate(step: .appLaunchedFromBackgroundState)
                     }
                 }
-                .store(in: &cancellables)
+                .store(in: &cancellables)*/
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true

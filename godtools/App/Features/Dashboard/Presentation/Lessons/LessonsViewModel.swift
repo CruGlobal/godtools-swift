@@ -14,7 +14,7 @@ class LessonsViewModel: ObservableObject {
         
     private let dataDownloader: InitialDataDownloader
     private let getLessonsUseCase: GetLessonsUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
@@ -28,18 +28,18 @@ class LessonsViewModel: ObservableObject {
     @Published var lessons: [LessonDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, getLessonsUseCase: GetLessonsUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, getLessonsUseCase: GetLessonsUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.getLessonsUseCase = getLessonsUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        sectionTitle = getInterfaceStringUseCase.getString(id: "lessons.pageTitle")
-        subtitle = getInterfaceStringUseCase.getString(id: "lessons.pageSubtitle")
+        sectionTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "lessons.pageTitle")
+        subtitle = getInterfaceStringInAppLanguageUseCase.getString(id: "lessons.pageSubtitle")
                 
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)

@@ -50,7 +50,19 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getAppLanguagesRepository() -> AppLanguagesRepository {
+    func getAppLanguageNameRepositoryInterface() -> GetAppLanguageNameRepositoryInterface {
+        return GetAppLanguageNameRepository(
+            localeLanguageName: getLocaleLanguageName()
+        )
+    }
+    
+    func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
+        return GetAppLanguagesListRepository(
+            appLanguagesRepository: getAppLanguagesRepository()
+        )
+    }
+    
+    private func getAppLanguagesRepository() -> AppLanguagesRepository {
         return AppLanguagesRepository()
     }
     
@@ -100,6 +112,16 @@ class AppDataLayerDependencies {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
         )
+    }
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    private func getDeviceSystemLanguage() -> DeviceSystemLanguage {
+        return DeviceSystemLanguage()
     }
     
     func getEmailSignUpService() -> EmailSignUpService {
@@ -171,6 +193,12 @@ class AppDataLayerDependencies {
         )
     }
 
+    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
+        return GetInterfaceStringForLanguageRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -205,6 +233,10 @@ class AppDataLayerDependencies {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    private func getLocaleLanguageName() -> LocaleLanguageName {
+        return LocaleLanguageName()
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -346,7 +378,11 @@ class AppDataLayerDependencies {
     }
     
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
-        return UserAppLanguageRepository()
+        return UserAppLanguageRepository(
+            cache: RealmUserAppLanguageCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
     }
     
     func getUserAuthentication() -> UserAuthentication {
@@ -392,6 +428,12 @@ class AppDataLayerDependencies {
                 realmDatabase: sharedRealmDatabase,
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
+        )
+    }
+    
+    func getUserPreferredAppLanguageRepositoryInterface() -> GetUserPreferredAppLanguageRepositoryInterface {
+        return GetUserPreferredAppLanguageRepository(
+            userAppLanguageRepository: getUserAppLanguageRepository()
         )
     }
     

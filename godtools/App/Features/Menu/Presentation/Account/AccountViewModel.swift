@@ -16,7 +16,7 @@ class AccountViewModel: ObservableObject {
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel] = Array()
@@ -39,22 +39,22 @@ class AccountViewModel: ObservableObject {
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.navTitle.rawValue)
-        activityButtonTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
-        myActivitySectionTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
-        badgesSectionTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
-        globalActivityButtonTitle = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
+        navTitle = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.navTitle.rawValue)
+        activityButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
+        myActivitySectionTitle = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
+        badgesSectionTitle = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
+        globalActivityButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
         
-        let localizedGlobalActivityTitle: String = getInterfaceStringUseCase.getString(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
+        let localizedGlobalActivityTitle: String = getInterfaceStringInAppLanguageUseCase.getString(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
         let todaysDate: Date = Date()
         let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
                 

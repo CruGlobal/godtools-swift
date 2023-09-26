@@ -46,8 +46,7 @@ struct LanguageSettingsView_Preview: PreviewProvider {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: MockFlowDelegate(),
-            getAppLanguageUseCase: appDiContainer.domainLayer.getAppLanguageUseCase(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         

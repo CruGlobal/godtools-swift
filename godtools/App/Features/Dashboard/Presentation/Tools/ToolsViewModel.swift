@@ -22,7 +22,7 @@ class ToolsViewModel: ObservableObject {
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
@@ -45,7 +45,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -56,15 +56,15 @@ class ToolsViewModel: ObservableObject {
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        favoritingToolBannerMessage = getInterfaceStringUseCase.getString(id: "tool_offline_favorite_message")
-        toolSpotlightTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
-        toolSpotlightSubtitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
-        filterTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+        favoritingToolBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_offline_favorite_message")
+        toolSpotlightTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
+        toolSpotlightSubtitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+        filterTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
@@ -110,8 +110,8 @@ class ToolsViewModel: ObservableObject {
             
         } else {
             
-            // TODO: Set using GetInterfaceStringUseCase. ~Levi
-            categoryFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: LanguageCode.english.value, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
+            // TODO: Set using getInterfaceStringInAppLanguageUseCase. ~Levi
+            categoryFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: LanguageCodeDomainModel.english.value, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
         }
         
         if let selectedLanguage = filterSelection.selectedLanguage {
@@ -120,8 +120,8 @@ class ToolsViewModel: ObservableObject {
             
         } else {
             
-            // TODO: Set using GetInterfaceStringUseCase. ~Levi
-            languageFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: LanguageCode.english.value, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
+            // TODO: Set using getInterfaceStringInAppLanguageUseCase. ~Levi
+            languageFilterButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: LanguageCodeDomainModel.english.value, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
         }
         
     }
@@ -215,7 +215,7 @@ extension ToolsViewModel {
             tool: tool,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringUseCase: getInterfaceStringUseCase,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

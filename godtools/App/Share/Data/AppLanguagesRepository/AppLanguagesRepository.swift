@@ -15,7 +15,7 @@ class AppLanguagesRepository {
         
     }
     
-    func getAllLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
+    func getLanguages() -> [AppLanguageDataModel] {
         
         let appLanguages: [AppLanguageDataModel] = [
             AppLanguageDataModel(direction: .rightToLeft, languageCode: "ar"),
@@ -23,7 +23,6 @@ class AppLanguagesRepository {
             AppLanguageDataModel(direction: .leftToRight, languageCode: "es")
         ]
         
-        return Just(appLanguages)
-            .eraseToAnyPublisher()
+        return appLanguages
     }
 }

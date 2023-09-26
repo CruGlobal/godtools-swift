@@ -12,14 +12,14 @@ import Combine
 
 class ChooseAppLanguageFlow: Flow {
     
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>
+    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -37,8 +37,9 @@ class ChooseAppLanguageFlow: Flow {
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userClosedChooseAppLanguage))
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
-                        
-            ApplicationLayout.setLayoutDirection(direction: appLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
+                 
+            // TODO: Need to set the language direction based on the tapped app language. ~Levi
+            //ApplicationLayout.setLayoutDirection(direction: appLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
             
             didChooseAppLanguageSubject.send(appLanguage)
             
@@ -56,7 +57,7 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = AppLanguagesViewModel(
             flowDelegate: self,
-            getAppLanguagesUseCase: appDiContainer.domainLayer.getAppLanguagesUseCase()
+            getAppLanguagesListUseCase: appDiContainer.domainLayer.getAppLanguagesListUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)

@@ -11,23 +11,20 @@ import Combine
 
 class AppLanguagesViewModel: ObservableObject {
     
-    private let getAppLanguagesUseCase: GetAppLanguagesUseCase
+    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var appLanguages: [AppLanguageDomainModel] = Array()
+    @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesUseCase: GetAppLanguagesUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getAppLanguagesUseCase = getAppLanguagesUseCase
+        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         
-        getAppLanguagesUseCase.getAppLanguagesPublisher()
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.appLanguages, on: self)
-            .store(in: &cancellables)
+        appLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
     }
 }
 
@@ -40,7 +37,7 @@ extension AppLanguagesViewModel {
         flowDelegate?.navigate(step: .backTappedFromAppLanguages)
     }
     
-    func appLanguageTapped(appLanguage: AppLanguageDomainModel) {
+    func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
     }
