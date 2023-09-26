@@ -12,13 +12,13 @@ class GetCurrentAppLanguageUseCase {
     
     private let getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface
     private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
-    private let getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface
+    private let getDeviceAppLanguageRepositoryInterface: GetDeviceAppLanguageRepositoryInterface
     
-    init(getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface, getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface) {
+    init(getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface, getDeviceAppLanguageRepositoryInterface: GetDeviceAppLanguageRepositoryInterface) {
         
         self.getAppLanguagesListRepositoryInterface = getAppLanguagesListRepositoryInterface
         self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
-        self.getDeviceLanguageRepositoryInterface = getDeviceLanguageRepositoryInterface
+        self.getDeviceAppLanguageRepositoryInterface = getDeviceAppLanguageRepositoryInterface
     }
     
     func getAppLanguage() -> AppLanguageCodeDomainModel {
@@ -38,7 +38,7 @@ class GetCurrentAppLanguageUseCase {
 
     private func getDeviceLanguageElseEnglish(appLanguages: [AppLanguageCodeDomainModel]) -> AppLanguageCodeDomainModel {
         
-        let deviceLanguage: AppLanguageCodeDomainModel = getDeviceLanguageRepositoryInterface.getDeviceLanguage()
+        let deviceLanguage: AppLanguageCodeDomainModel = getDeviceAppLanguageRepositoryInterface.getDeviceAppLanguage()
         
         if let deviceLanguageIsAvailable = getAppLanguageIfAvailable(languageCode: deviceLanguage, availableAppLanguages: appLanguages) {
             return deviceLanguageIsAvailable

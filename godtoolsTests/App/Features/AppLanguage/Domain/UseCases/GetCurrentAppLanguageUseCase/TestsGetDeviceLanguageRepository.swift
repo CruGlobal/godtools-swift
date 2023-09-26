@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-class TestsGetDeviceLanguageRepository: GetDeviceLanguageRepositoryInterface {
+class TestsGetDeviceLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
     
     private let deviceLanguageCode: LanguageCodeDomainModel
     
@@ -18,7 +18,7 @@ class TestsGetDeviceLanguageRepository: GetDeviceLanguageRepositoryInterface {
         self.deviceLanguageCode = deviceLanguageCode
     }
     
-    func getDeviceLanguage() -> AppLanguageCodeDomainModel {
+    func getDeviceAppLanguage() -> AppLanguageCodeDomainModel {
         
         return deviceLanguageCode.value
     }

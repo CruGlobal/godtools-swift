@@ -11,11 +11,11 @@ import Combine
 
 class GetDeviceLanguageUseCase {
 
-    private let getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface
+    private let getDeviceAppLanguageRepositoryInterface: GetDeviceAppLanguageRepositoryInterface
 
-    init(getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface) {
+    init(getDeviceAppLanguageRepositoryInterface: GetDeviceAppLanguageRepositoryInterface) {
         
-        self.getDeviceLanguageRepositoryInterface = getDeviceLanguageRepositoryInterface
+        self.getDeviceAppLanguageRepositoryInterface = getDeviceAppLanguageRepositoryInterface
     }
     
     func getDeviceLanguagePublisher() -> AnyPublisher<DeviceLanguageDomainModel, Never> {
@@ -26,7 +26,7 @@ class GetDeviceLanguageUseCase {
     
     func getDeviceLanguageValue() -> DeviceLanguageDomainModel {
                 
-        let languageCode: String = getDeviceLanguageRepositoryInterface.getDeviceLanguage()
+        let languageCode: String = getDeviceAppLanguageRepositoryInterface.getDeviceAppLanguage()
         
         return DeviceLanguageDomainModel(languageCode: languageCode)
     }

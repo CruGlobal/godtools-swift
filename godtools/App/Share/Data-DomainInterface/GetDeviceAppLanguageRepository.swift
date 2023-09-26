@@ -1,5 +1,5 @@
 //
-//  GetDeviceLanguageRepository.swift
+//  GetDeviceAppLanguageRepository.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GetDeviceLanguageRepository: GetDeviceLanguageRepositoryInterface {
+class GetDeviceAppLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
     
     private let deviceSystemLanguage: DeviceSystemLanguage
     
@@ -17,7 +17,7 @@ class GetDeviceLanguageRepository: GetDeviceLanguageRepositoryInterface {
         self.deviceSystemLanguage = deviceSystemLanguage
     }
     
-    func getDeviceLanguage() -> AppLanguageCodeDomainModel {
+    func getDeviceAppLanguage() -> AppLanguageCodeDomainModel {
         
         let locale: Locale = deviceSystemLanguage.getLocale()
         

@@ -23,7 +23,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
                     getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: nil),
-                    getDeviceLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .spanish)
+                    getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .spanish)
                 )
                 
                 it("App language should default to Spanish since Spanish is an available app language.") {
@@ -39,7 +39,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
                     getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: nil),
-                    getDeviceLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .hebrew)
+                    getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .hebrew)
                 )
                 
                 it("App language should default to English since Hebrew is not an available app language.") {
@@ -55,7 +55,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
                     getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
-                    getDeviceLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
+                    getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
                 
                 it("App language should be Russian since it's the user's app language.") {
@@ -71,7 +71,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
                     getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
-                    getDeviceLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
+                    getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
                 
                 it("App language should be French since Russian is not an available app language and French is an available app language.") {
@@ -87,7 +87,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
                     getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
-                    getDeviceLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
+                    getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
 
                 it("App language should be English since Russian and French are not available app languages.") {
