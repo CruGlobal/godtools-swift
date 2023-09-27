@@ -20,7 +20,7 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
          
             context("The app language is in English.") {
                 
-                let getAppLanguagesListRepository = TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish])
+                let getAppLanguagesListRepository = TestsGetAppLanguagesListRepository(appLanguagesCodes: [.spanish, .french, .english, .russian])
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .english)
                 let getDeviceAppLanguageRepository = TestsGetDeviceLanguageRepository(deviceLanguageCode: .english)
                 let getLanguageNameInEnglishRepository = TestsGetLanguageNameInEnglishRepository()
