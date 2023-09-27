@@ -12,17 +12,20 @@ import Combine
 class AppLanguagesViewModel: ObservableObject {
     
     private let getAppLanguagesUseCase: GetAppLanguagesUseCase
+    private let localizationServices: LocalizationServices
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     @Published var appLanguages: [AppLanguageDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesUseCase: GetAppLanguagesUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesUseCase: GetAppLanguagesUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.getAppLanguagesUseCase = getAppLanguagesUseCase
+        self.localizationServices = localizationServices
         
         getAppLanguagesUseCase.getAppLanguagesPublisher()
             .receive(on: DispatchQueue.main)
@@ -43,5 +46,13 @@ extension AppLanguagesViewModel {
     func appLanguageTapped(appLanguage: AppLanguageDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
+    }
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(
+            searchTextPublisher: searchTextPublisher,
+            localizationServices: localizationServices
+        )
     }
 }
