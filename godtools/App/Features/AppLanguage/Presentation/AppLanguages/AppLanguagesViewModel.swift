@@ -11,7 +11,7 @@ import Combine
 
 class AppLanguagesViewModel: ObservableObject {
     
-    private let getAppLanguagesUseCase: GetAppLanguagesUseCase
+    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let localizationServices: LocalizationServices
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -19,18 +19,15 @@ class AppLanguagesViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
-    @Published var appLanguages: [AppLanguageDomainModel] = Array()
+    @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesUseCase: GetAppLanguagesUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
-        self.getAppLanguagesUseCase = getAppLanguagesUseCase
+        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.localizationServices = localizationServices
         
-        getAppLanguagesUseCase.getAppLanguagesPublisher()
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.appLanguages, on: self)
-            .store(in: &cancellables)
+        appLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
     }
 }
 
@@ -43,7 +40,7 @@ extension AppLanguagesViewModel {
         flowDelegate?.navigate(step: .backTappedFromAppLanguages)
     }
     
-    func appLanguageTapped(appLanguage: AppLanguageDomainModel) {
+    func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
     }

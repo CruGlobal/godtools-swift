@@ -28,7 +28,7 @@ struct AppLanguagesView: View {
 //
 //            LazyVStack(alignment: .leading, spacing: 0) {
 //
-//                ForEach(viewModel.appLanguages) { (appLanguage: AppLanguageDomainModel) in
+//                ForEach(viewModel.appLanguages) { (appLanguage: AppLanguageListItemDomainModel) in
 //                                                
 //                    AppLanguageItemView(appLanguage: appLanguage) {
 //                        viewModel.appLanguageTapped(appLanguage: appLanguage)

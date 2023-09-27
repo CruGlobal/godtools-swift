@@ -20,7 +20,7 @@ class FavoritesViewModel: ObservableObject {
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let maxNumberOfYourFavoriteToolsToDisplay: Int = 5
@@ -43,7 +43,7 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -54,19 +54,19 @@ class FavoritesViewModel: ObservableObject {
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                   
-        openTutorialBannerMessage = getInterfaceStringUseCase.getString(id: "openTutorial.showTutorialLabel.text")
-        openTutorialBannerButtonTitle = getInterfaceStringUseCase.getString(id: "openTutorial.openTutorialButton.title")
-        welcomeTitle = getInterfaceStringUseCase.getString(id: "favorites.pageTitle")
-        featuredLessonsTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteLessons.title")
-        yourFavoriteToolsTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteTools.title")
-        viewAllFavoriteToolsButtonTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteTools.viewAll")
-        noFavoriteToolsTitle = getInterfaceStringUseCase.getString(id: "favorites.noTools.title")
-        noFavoriteToolsDescription = getInterfaceStringUseCase.getString(id: "favorites.noTools.description")
-        noFavoriteToolsButtonText = getInterfaceStringUseCase.getString(id: "favorites.noTools.button")
+        openTutorialBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "openTutorial.showTutorialLabel.text")
+        openTutorialBannerButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "openTutorial.openTutorialButton.title")
+        welcomeTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.pageTitle")
+        featuredLessonsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteLessons.title")
+        yourFavoriteToolsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteTools.title")
+        viewAllFavoriteToolsButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteTools.viewAll")
+        noFavoriteToolsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.title")
+        noFavoriteToolsDescription = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.description")
+        noFavoriteToolsButtonText = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.button")
                 
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
             .receive(on: DispatchQueue.main)
@@ -262,7 +262,7 @@ extension FavoritesViewModel {
             tool: tool,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringUseCase: getInterfaceStringUseCase,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

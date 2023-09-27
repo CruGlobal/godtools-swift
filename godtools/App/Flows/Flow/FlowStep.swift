@@ -134,11 +134,11 @@ enum FlowStep {
     // language settings
     case backTappedFromLanguageSettings
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
-    case chooseAppLanguageTappedFromLanguageSettings(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>)
+    case chooseAppLanguageTappedFromLanguageSettings(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>)
     
     // choose app language
     case backTappedFromAppLanguages
-    case appLanguageTappedFromAppLanguages(appLanguage: AppLanguageDomainModel)
+    case appLanguageTappedFromAppLanguages(appLanguage: AppLanguageListItemDomainModel)
     case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
     
     // article

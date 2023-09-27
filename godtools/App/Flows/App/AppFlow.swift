@@ -308,7 +308,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                    
                 navigateToDashboard()
                 
-                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguageValue().languageCode
+                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().languageCode
                 
                 let toolDeepLink = ToolDeepLink(
                     resourceAbbreviation: "es",
@@ -728,7 +728,7 @@ extension AppFlow {
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -1038,31 +1038,22 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            let getAppLanguageUseCase: GetAppLanguageUseCase = appDiContainer.domainLayer.getAppLanguageUseCase()
+            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
+                
+            case .leftToRight:
+                ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+            case .rightToLeft:
+                ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+            }
             
-            getAppLanguageUseCase.getAppLanguagePublisher()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                    
-                    switch appLanguage.direction {
-                    
-                    case .leftToRight:
-                        ApplicationLayout.setLayoutDirection(direction: .leftToRight)
-                        
-                    case .rightToLeft:
-                        ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
-                    }
-                    
-                    if appLaunchedFromTerminatedState {
-                        self?.navigationStarted = true
-                        self?.navigate(step: .appLaunchedFromTerminatedState)
-                    }
-                    else if appLaunchedFromBackgroundState {
-                        self?.appIsInBackground = false
-                        self?.navigate(step: .appLaunchedFromBackgroundState)
-                    }
-                }
-                .store(in: &cancellables)
+            if appLaunchedFromTerminatedState {
+                navigationStarted = true
+                navigate(step: .appLaunchedFromTerminatedState)
+            }
+            else if appLaunchedFromBackgroundState {
+                appIsInBackground = false
+                navigate(step: .appLaunchedFromBackgroundState)
+            }
         }
         else if notification.name == UIApplication.didEnterBackgroundNotification {
             appIsInBackground = true

@@ -190,7 +190,7 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(languageCode: LanguageCode.english.value)
+        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(languageCode: LanguageCodeDomainModel.english.value)
         
         let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
         
@@ -198,7 +198,7 @@ struct ToolCardView_Previews: PreviewProvider {
             tool: tool,
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
     }

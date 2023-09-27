@@ -119,7 +119,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()

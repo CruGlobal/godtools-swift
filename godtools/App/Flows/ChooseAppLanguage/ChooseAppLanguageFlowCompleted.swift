@@ -10,6 +10,6 @@ import Foundation
 
 enum ChooseAppLanguageFlowCompleted {
     
-    case userChoseAppLanguage(appLanguage: AppLanguageDomainModel)
+    case userChoseAppLanguage(appLanguage: AppLanguageListItemDomainModel)
     case userClosedChooseAppLanguage
 }

@@ -63,7 +63,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
             
             return primaryTranslation
         }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCode.english.value) {
+        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             return englishTranslation
         }

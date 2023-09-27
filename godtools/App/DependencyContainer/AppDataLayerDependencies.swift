@@ -31,7 +31,7 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-    
+        
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -48,10 +48,6 @@ class AppDataLayerDependencies {
         return AppleAuthentication(
             appleUserPersistentStore: AppleUserPersistentStore()
         )
-    }
-    
-    func getAppLanguagesRepository() -> AppLanguagesRepository {
-        return AppLanguagesRepository()
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -100,6 +96,16 @@ class AppDataLayerDependencies {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
         )
+    }
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    func getDeviceSystemLanguage() -> DeviceSystemLanguage {
+        return DeviceSystemLanguage()
     }
     
     func getEmailSignUpService() -> EmailSignUpService {
@@ -170,7 +176,7 @@ class AppDataLayerDependencies {
             resourcesRepository: getResourcesRepository()
         )
     }
-
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -205,6 +211,10 @@ class AppDataLayerDependencies {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getLocaleLanguageName() -> LocaleLanguageName {
+        return LocaleLanguageName()
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -294,6 +304,10 @@ class AppDataLayerDependencies {
         return LaunchCountRepository.shared
     }
     
+    func getSharedRealmDatabase() -> RealmDatabase {
+        return sharedRealmDatabase
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
@@ -343,10 +357,6 @@ class AppDataLayerDependencies {
         return TutorialVideoAnalytics(
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
-    }
-    
-    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
-        return UserAppLanguageRepository()
     }
     
     func getUserAuthentication() -> UserAuthentication {
