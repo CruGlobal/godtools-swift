@@ -1,20 +1,20 @@
 //
-//  AppLanguageDataModel.swift
+//  AppLanguageDomainModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/21/23.
+//  Created by Levi Eggert on 9/26/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct AppLanguageDataModel {
+struct AppLanguageDomainModel {
     
     let languageCode: String
-    let languageDirection: AppLanguageDataModel.Direction
+    let languageDirection: AppLanguageDomainModel.Direction
 }
 
-extension AppLanguageDataModel {
+extension AppLanguageDomainModel {
     enum Direction {
         case leftToRight
         case rightToLeft

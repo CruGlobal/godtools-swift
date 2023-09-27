@@ -18,11 +18,18 @@ class AppLanguagesRepository {
     func getLanguages() -> [AppLanguageDataModel] {
         
         let appLanguages: [AppLanguageDataModel] = [
-            AppLanguageDataModel(direction: .rightToLeft, languageCode: "ar"),
-            AppLanguageDataModel(direction: .leftToRight, languageCode: "en"),
-            AppLanguageDataModel(direction: .leftToRight, languageCode: "es")
+            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
+            AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageCode: "es", languageDirection: .leftToRight)
         ]
         
         return appLanguages
+    }
+    
+    func getLanguage(languageCode: String) -> AppLanguageDataModel? {
+        
+        return getLanguages().filter({
+            $0.languageCode.lowercased() == languageCode.lowercased()
+        }).first
     }
 }
