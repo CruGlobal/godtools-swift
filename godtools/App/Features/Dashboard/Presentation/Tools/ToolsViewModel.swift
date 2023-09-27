@@ -21,7 +21,7 @@ class ToolsViewModel: ObservableObject {
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
@@ -43,7 +43,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -53,15 +53,15 @@ class ToolsViewModel: ObservableObject {
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        favoritingToolBannerMessage = getInterfaceStringUseCase.getString(id: "tool_offline_favorite_message")
-        toolSpotlightTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
-        toolSpotlightSubtitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
-        filterTitle = getInterfaceStringUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+        favoritingToolBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_offline_favorite_message")
+        toolSpotlightTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
+        toolSpotlightSubtitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+        filterTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
@@ -193,7 +193,7 @@ extension ToolsViewModel {
             alternateLanguage: toolFilterSelectionPublisher.value.selectedLanguage.language,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringUseCase: getInterfaceStringUseCase,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

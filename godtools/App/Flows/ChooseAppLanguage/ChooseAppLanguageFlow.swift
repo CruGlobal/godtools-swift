@@ -12,14 +12,14 @@ import Combine
 
 class ChooseAppLanguageFlow: Flow {
     
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>
+    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -37,8 +37,14 @@ class ChooseAppLanguageFlow: Flow {
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userClosedChooseAppLanguage))
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
-                        
-            ApplicationLayout.setLayoutDirection(direction: appLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
+                 
+            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
+                
+            case .leftToRight:
+                ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+            case .rightToLeft:
+                ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+            }
             
             didChooseAppLanguageSubject.send(appLanguage)
             
@@ -56,7 +62,7 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = AppLanguagesViewModel(
             flowDelegate: self,
-            getAppLanguagesUseCase: appDiContainer.domainLayer.getAppLanguagesUseCase()
+            getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)

@@ -11,14 +11,13 @@ import Combine
 
 class LanguageSettingsViewModel: ObservableObject {
 
-    private static var currentLanguage: AppLanguageDomainModel? // TODO: Remove once appLanguage is being persisted. ~Levi
+    private static var currentLanguage: AppLanguageListItemDomainModel? // TODO: Remove once appLanguage is being persisted. ~Levi
     
-    private let getAppLanguageUseCase: GetAppLanguageUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never> = PassthroughSubject()
+    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never> = PassthroughSubject()
     
-    private var currentAppLanguage: AppLanguageDomainModel? {
+    private var currentAppLanguage: AppLanguageListItemDomainModel? {
         didSet {
             didSetCurrentAppLanguage()
         }
@@ -33,29 +32,17 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
     @Published var appInterfaceLanguageButtonTitle: String = "English"
     
-    init(flowDelegate: FlowDelegate, getAppLanguageUseCase: GetAppLanguageUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getAppLanguageUseCase = getAppLanguageUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle = getInterfaceStringUseCase.getString(id: "language_settings")
-        
-        getAppLanguageUseCase.getAppLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                self?.currentAppLanguage = appLanguage
-                
-                if let tempPersistedLanguage = LanguageSettingsViewModel.currentLanguage {
-                    self?.currentAppLanguage = tempPersistedLanguage
-                }
-            }
-            .store(in: &cancellables)
+        navTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "language_settings")
         
         didChooseAppLanguageSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+            .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel) in
                 self?.currentAppLanguage = appLanguage
                 LanguageSettingsViewModel.currentLanguage = appLanguage // TODO: Remove once appLanguage is being persisted. ~Levi
             }

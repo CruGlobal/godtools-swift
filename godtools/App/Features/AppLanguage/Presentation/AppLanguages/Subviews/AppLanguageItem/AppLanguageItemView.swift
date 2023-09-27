@@ -10,10 +10,10 @@ import SwiftUI
 
 struct AppLanguageItemView: View {
     
-    private let appLanguage: AppLanguageDomainModel
+    private let appLanguage: AppLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
     
-    init(appLanguage: AppLanguageDomainModel, tappedClosure: (() -> Void)?) {
+    init(appLanguage: AppLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
         self.appLanguage = appLanguage
         self.tappedClosure = tappedClosure
