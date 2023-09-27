@@ -17,6 +17,7 @@ class AppDiContainer {
     
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
+    let feature: AppFeatureDiContainer
         
     init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
                
@@ -25,7 +26,11 @@ class AppDiContainer {
         
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-                                                        
+        
+        feature = AppFeatureDiContainer(
+            appLanguage: AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        )
+                                                                
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
     }
     

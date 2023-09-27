@@ -31,7 +31,7 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-    
+        
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -48,22 +48,6 @@ class AppDataLayerDependencies {
         return AppleAuthentication(
             appleUserPersistentStore: AppleUserPersistentStore()
         )
-    }
-    
-    func getAppLanguageNameRepositoryInterface() -> GetAppLanguageNameRepositoryInterface {
-        return GetAppLanguageNameRepository(
-            localeLanguageName: getLocaleLanguageName()
-        )
-    }
-    
-    func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
-        return GetAppLanguagesListRepository(
-            appLanguagesRepository: getAppLanguagesRepository()
-        )
-    }
-    
-    private func getAppLanguagesRepository() -> AppLanguagesRepository {
-        return AppLanguagesRepository()
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -114,13 +98,13 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getDeviceAppLanguageRepositoryInterface() -> GetDeviceAppLanguageRepositoryInterface {
-        return GetDeviceAppLanguageRepository(
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
             deviceSystemLanguage: getDeviceSystemLanguage()
         )
     }
     
-    private func getDeviceSystemLanguage() -> DeviceSystemLanguage {
+    func getDeviceSystemLanguage() -> DeviceSystemLanguage {
         return DeviceSystemLanguage()
     }
     
@@ -192,12 +176,6 @@ class AppDataLayerDependencies {
             resourcesRepository: getResourcesRepository()
         )
     }
-
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
     
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
@@ -235,7 +213,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    private func getLocaleLanguageName() -> LocaleLanguageName {
+    func getLocaleLanguageName() -> LocaleLanguageName {
         return LocaleLanguageName()
     }
     
@@ -326,6 +304,10 @@ class AppDataLayerDependencies {
         return LaunchCountRepository.shared
     }
     
+    func getSharedRealmDatabase() -> RealmDatabase {
+        return sharedRealmDatabase
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
@@ -377,14 +359,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
-        return UserAppLanguageRepository(
-            cache: RealmUserAppLanguageCache(
-                realmDatabase: sharedRealmDatabase
-            )
-        )
-    }
-    
     func getUserAuthentication() -> UserAuthentication {
         return UserAuthentication(
             authenticationProviders: [
@@ -428,12 +402,6 @@ class AppDataLayerDependencies {
                 realmDatabase: sharedRealmDatabase,
                 authTokenRepository: getMobileContentAuthTokenRepository()
             )
-        )
-    }
-    
-    func getUserPreferredAppLanguageRepositoryInterface() -> GetUserPreferredAppLanguageRepositoryInterface {
-        return GetUserPreferredAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository()
         )
     }
     

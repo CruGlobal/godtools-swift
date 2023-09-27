@@ -57,7 +57,7 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = AppLanguagesViewModel(
             flowDelegate: self,
-            getAppLanguagesListUseCase: appDiContainer.domainLayer.getAppLanguagesListUseCase()
+            getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)

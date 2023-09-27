@@ -58,27 +58,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAppLanguageNameInAppLanguageUseCase() -> GetAppLanguageNameInAppLanguageUseCase {
-        return GetAppLanguageNameInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguageNameRepositoryInterface: dataLayer.getAppLanguageNameRepositoryInterface()
-        )
-    }
-    
-    func getAppLanguageNameUseCase() -> GetAppLanguageNameUseCase {
-        return GetAppLanguageNameUseCase(
-            getAppLanguageNameRepositoryInterface: dataLayer.getAppLanguageNameRepositoryInterface()
-        )
-    }
-    
-    func getAppLanguagesListUseCase() -> GetAppLanguagesListUseCase {
-        return GetAppLanguagesListUseCase(
-            getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
-            getAppLanguageNameUseCase: getAppLanguageNameUseCase(),
-            getAppLanguageNameInAppLanguageUseCase: getAppLanguageNameInAppLanguageUseCase()
-        )
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
@@ -99,13 +78,7 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getCurrentAppLanguageUseCase() -> GetCurrentAppLanguageUseCase {
-        return GetCurrentAppLanguageUseCase(
-            getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface(),
-            getDeviceAppLanguageRepositoryInterface: dataLayer.getDeviceAppLanguageRepositoryInterface()
-        )
-    }
+    
     
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
@@ -116,7 +89,7 @@ class AppDomainLayerDependencies {
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
-            getDeviceAppLanguageRepositoryInterface: dataLayer.getDeviceAppLanguageRepositoryInterface()
+            getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
         )
     }
     
@@ -144,13 +117,6 @@ class AppDomainLayerDependencies {
     func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
         return IncrementUserCounterUseCase(
             userCountersRepository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
-    func getInterfaceStringInAppLanguageUseCase() -> GetInterfaceStringInAppLanguageUseCase {
-        return GetInterfaceStringInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: dataLayer.getInterfaceStringForLanguageRepositoryInterface()
         )
     }
     

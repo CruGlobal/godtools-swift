@@ -81,7 +81,7 @@ class ToolSettingsFlow: Flow {
                 language: language,
                 pageNumber: toolData.pageNumber,
                 incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-                getInterfaceStringInAppLanguageUseCase: appDiContainer.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
                 trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
                 trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
