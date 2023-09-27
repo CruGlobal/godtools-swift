@@ -24,13 +24,17 @@ class GetAppLanguagesListUseCase {
     func getAppLanguagesList() -> [AppLanguageListItemDomainModel] {
         
         return getAppLanguagesListRepositoryInterface.getAppLanguagesList()
-            .map({
+            .map {
                 
                 AppLanguageListItemDomainModel(
                     languageCode: $0,
                     languageNameTranslatedInOwnLanguage: self.getAppLanguageNameUseCase.getLanguageName(languageCode: $0),
                     languageNameTranslatedInCurrentAppLanguage: self.getAppLanguageNameInAppLanguageUseCase.getLanguageName(languageCode: $0)
                 )
-            })
+            }
+            .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                
+                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage.value < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage.value
+            }
     }
 }
