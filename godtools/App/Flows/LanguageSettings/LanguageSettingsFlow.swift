@@ -46,7 +46,7 @@ class LanguageSettingsFlow: Flow {
         }
     }
     
-    private func navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageDomainModel, Never>) {
+    private func navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
         
         guard chooseAppLanguageFlow == nil else {
             return
@@ -80,8 +80,7 @@ extension LanguageSettingsFlow {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
-            getAppLanguageUseCase: appDiContainer.domainLayer.getAppLanguageUseCase(),
-            getInterfaceStringUseCase: appDiContainer.domainLayer.getInterfaceStringUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         

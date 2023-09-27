@@ -58,20 +58,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAppLanguagesUseCase() -> GetAppLanguagesUseCase {
-        return GetAppLanguagesUseCase(
-            getAppLanguagesRepository: dataLayer.getAppLanguagesRepository()
-        )
-    }
-    
-    func getAppLanguageUseCase() -> GetAppLanguageUseCase {
-        return GetAppLanguageUseCase(
-            userAppLanguageRepository: dataLayer.getUserAppLanguageRepository(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
-            getAppLanguagesUseCase: getAppLanguagesUseCase()
-        )
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
@@ -92,6 +78,8 @@ class AppDomainLayerDependencies {
         )
     }
     
+    
+    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -101,7 +89,7 @@ class AppDomainLayerDependencies {
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
-            getDeviceLanguage: DeviceSystemLanguage()
+            getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
         )
     }
     
@@ -129,13 +117,6 @@ class AppDomainLayerDependencies {
     func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
         return IncrementUserCounterUseCase(
             userCountersRepository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
-    func getInterfaceStringUseCase() -> GetInterfaceStringUseCase {
-        return GetInterfaceStringUseCase(
-            interfaceStringRepository: dataLayer.getLocalizationServices(),
-            getAppLanguageUseCase: getAppLanguageUseCase()
         )
     }
     

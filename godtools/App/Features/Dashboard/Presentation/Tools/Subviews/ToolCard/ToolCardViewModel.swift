@@ -14,7 +14,7 @@ class ToolCardViewModel: ObservableObject {
         
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getInterfaceStringUseCase: GetInterfaceStringUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
             
     private var getBannerImageCancellable: AnyCancellable?
@@ -31,12 +31,12 @@ class ToolCardViewModel: ObservableObject {
     @Published var openButtonTitle: String = ""
     @Published var layoutDirection: LayoutDirection = .leftToRight
             
-    init(tool: ToolDomainModel, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringUseCase: GetInterfaceStringUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolDomainModel, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getInterfaceStringUseCase = getInterfaceStringUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
                 
         let currentTranslationLanguage: LanguageDomainModel = tool.currentTranslationLanguage
@@ -44,9 +44,9 @@ class ToolCardViewModel: ObservableObject {
         title = tool.name
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
         
-        category = getInterfaceStringUseCase.getString(id: "tool_category_\(tool.category)")
-        detailsButtonTitle = getInterfaceStringUseCase.getString(id: "favorites.favoriteLessons.details")
-        openButtonTitle = getInterfaceStringUseCase.getString(id: "open")
+        category = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_category_\(tool.category)")
+        detailsButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteLessons.details")
+        openButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "open")
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
