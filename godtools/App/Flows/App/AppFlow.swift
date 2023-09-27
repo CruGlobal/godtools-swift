@@ -1036,16 +1036,13 @@ extension AppFlow {
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             
-            // TODO: Implement set application layout direction. ~Levi
-            /*
-            switch appLanguage.direction {
-            
+            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
+                
             case .leftToRight:
                 ApplicationLayout.setLayoutDirection(direction: .leftToRight)
-                
             case .rightToLeft:
                 ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
-            }*/
+            }
             
             if appLaunchedFromTerminatedState {
                 navigationStarted = true

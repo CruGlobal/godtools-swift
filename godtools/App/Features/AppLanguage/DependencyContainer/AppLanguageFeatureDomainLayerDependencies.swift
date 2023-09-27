@@ -38,6 +38,13 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
+    func getAppUILayoutDirectionUseCase() -> GetAppUILayoutDirectionUseCase {
+        return GetAppUILayoutDirectionUseCase(
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
+            getAppLanguageRepositoryInterface: dataLayer.getAppLanguageRepositoryInterface()
+        )
+    }
+    
     func getCurrentAppLanguageUseCase() -> GetCurrentAppLanguageUseCase {
         return GetCurrentAppLanguageUseCase(
             getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),

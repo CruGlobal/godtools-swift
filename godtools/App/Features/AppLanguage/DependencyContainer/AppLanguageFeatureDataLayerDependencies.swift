@@ -39,6 +39,12 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getAppLanguageRepositoryInterface() -> GetAppLanguageRepositoryInterface {
+        return GetAppLanguageRepository(
+            appLanguagesRepository: getAppLanguagesRepository()
+        )
+    }
+    
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository()

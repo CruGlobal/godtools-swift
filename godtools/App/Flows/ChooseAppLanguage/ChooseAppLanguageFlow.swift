@@ -38,8 +38,13 @@ class ChooseAppLanguageFlow: Flow {
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
                  
-            // TODO: Need to set the language direction based on the tapped app language. ~Levi
-            //ApplicationLayout.setLayoutDirection(direction: appLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
+            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
+                
+            case .leftToRight:
+                ApplicationLayout.setLayoutDirection(direction: .leftToRight)
+            case .rightToLeft:
+                ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
+            }
             
             didChooseAppLanguageSubject.send(appLanguage)
             

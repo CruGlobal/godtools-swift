@@ -720,6 +720,8 @@
 		45B3F4642AC3B02600D61BFD /* AppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F4632AC3B02600D61BFD /* AppLanguageDomainModel.swift */; };
 		45B3F4662AC3B1B800D61BFD /* GetAppLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F4652AC3B1B800D61BFD /* GetAppLanguageRepositoryInterface.swift */; };
 		45B3F4682AC3B1F500D61BFD /* GetAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F4672AC3B1F500D61BFD /* GetAppLanguageRepository.swift */; };
+		45B3F46C2AC3B5DC00D61BFD /* GetAppUILayoutDirectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F46B2AC3B5DC00D61BFD /* GetAppUILayoutDirectionUseCase.swift */; };
+		45B3F46E2AC3B61A00D61BFD /* AppUILayoutDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F46D2AC3B61A00D61BFD /* AppUILayoutDirectionDomainModel.swift */; };
 		45B4FC7C2A827D730037DB36 /* TutorialItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B4FC7B2A827D730037DB36 /* TutorialItemDomainModel.swift */; };
 		45B538992A8AAA960033B34E /* LessonsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B538982A8AAA960033B34E /* LessonsHeaderView.swift */; };
 		45B5389B2A8AB6D90033B34E /* OptionalImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5389A2A8AB6D90033B34E /* OptionalImageSize.swift */; };
@@ -1885,6 +1887,8 @@
 		45B3F4632AC3B02600D61BFD /* AppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageDomainModel.swift; sourceTree = "<group>"; };
 		45B3F4652AC3B1B800D61BFD /* GetAppLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
 		45B3F4672AC3B1F500D61BFD /* GetAppLanguageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguageRepository.swift; sourceTree = "<group>"; };
+		45B3F46B2AC3B5DC00D61BFD /* GetAppUILayoutDirectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppUILayoutDirectionUseCase.swift; sourceTree = "<group>"; };
+		45B3F46D2AC3B61A00D61BFD /* AppUILayoutDirectionDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUILayoutDirectionDomainModel.swift; sourceTree = "<group>"; };
 		45B4FC7B2A827D730037DB36 /* TutorialItemDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemDomainModel.swift; sourceTree = "<group>"; };
 		45B538982A8AAA960033B34E /* LessonsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsHeaderView.swift; sourceTree = "<group>"; };
 		45B5389A2A8AB6D90033B34E /* OptionalImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImageSize.swift; sourceTree = "<group>"; };
@@ -2693,6 +2697,7 @@
 				45B3F4632AC3B02600D61BFD /* AppLanguageDomainModel.swift */,
 				450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */,
 				450DB5572AC353C200B2FE3A /* AppLanguageNameDomainModel.swift */,
+				45B3F46D2AC3B61A00D61BFD /* AppUILayoutDirectionDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -7744,6 +7749,7 @@
 				450DB54F2AC3508000B2FE3A /* GetAppLanguageNameInAppLanguageUseCase.swift */,
 				450DB54D2AC3507100B2FE3A /* GetAppLanguageNameUseCase.swift */,
 				450DB5612AC3552700B2FE3A /* GetAppLanguagesListUseCase.swift */,
+				45B3F46B2AC3B5DC00D61BFD /* GetAppUILayoutDirectionUseCase.swift */,
 				450DB55F2AC354C000B2FE3A /* GetCurrentAppLanguageUseCase.swift */,
 				4569C5012AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift */,
 				4585BF632AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift */,
@@ -9589,6 +9595,7 @@
 				45229C592ABF6174009F5D31 /* TrackExitLinkAnalyticsUseCase.swift in Sources */,
 				451FB9382896B3DE00423865 /* GetLanguageUseCase.swift in Sources */,
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
+				45B3F46E2AC3B61A00D61BFD /* AppUILayoutDirectionDomainModel.swift in Sources */,
 				45B212AB2922965F00C9A94D /* Realm+SafeWrite.swift in Sources */,
 				452D55372A33615900DE70BF /* MenuAccountSectionVisibility.swift in Sources */,
 				453AC11428F4A10400291791 /* FollowUpsService.swift in Sources */,
@@ -10171,6 +10178,7 @@
 				459E86E328EDA86C00E197A5 /* DeepLinkAppsFlyerParserType.swift in Sources */,
 				45FB161627DBDDB60009DF8E /* ArticleFlowCompletedState.swift in Sources */,
 				455583F5269F2DA500C3FF14 /* MobileContentImageViewModel.swift in Sources */,
+				45B3F46C2AC3B5DC00D61BFD /* GetAppUILayoutDirectionUseCase.swift in Sources */,
 				456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */,
 				459E86B628ED1A9B00E197A5 /* AppsFlyerConfiguration.swift in Sources */,
 				45131A102AB498AD0085AF0D /* ImageCatalog.swift in Sources */,
