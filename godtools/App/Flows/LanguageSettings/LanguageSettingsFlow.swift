@@ -10,14 +10,14 @@ import UIKit
 import SwiftUI
 import Combine
 
-class LanguageSettingsFlow: Flow {
+class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         
-    private var chooseAppLanguageFlow: ChooseAppLanguageFlow?
-    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
+    
+    var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
         
@@ -44,33 +44,6 @@ class LanguageSettingsFlow: Flow {
         default:
             break
         }
-    }
-    
-    private func navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
-        
-        guard chooseAppLanguageFlow == nil else {
-            return
-        }
-        
-        let chooseAppLanguageFlow = ChooseAppLanguageFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            didChooseAppLanguageSubject: didChooseAppLanguageSubject
-        )
-        
-        self.chooseAppLanguageFlow = chooseAppLanguageFlow
-    }
-    
-    private func navigateBackFromChooseAppLanguageFlow() {
-        
-        guard chooseAppLanguageFlow != nil else {
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
-        
-        chooseAppLanguageFlow = nil
     }
 }
 
