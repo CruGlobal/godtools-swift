@@ -25,6 +25,7 @@ enum ImageCatalog: String {
     case formatListBulleted = "format_list_bulleted"
     case googleIcon = "googleIcon"
     case languageAvailableCheck = "language_available_check"
+    case languageSettingsLogo = "language_settings_logo"
     case languageUnavailableX = "language_unavailable_x"
     case launchImage = "LaunchImage"
     case lessonPageLeftArrow = "lesson_page_left_arrow"
