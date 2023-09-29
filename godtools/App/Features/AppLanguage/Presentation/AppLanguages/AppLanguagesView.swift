@@ -22,20 +22,18 @@ struct AppLanguagesView: View {
         VStack(spacing: 0) {
             
             SearchBarView(viewModel: viewModel.getSearchBarViewModel())
+            
+            List {
+                ForEach(viewModel.appLanguages) { appLanguage in
+                    
+                    AppLanguageItemView(appLanguage: appLanguage) {
+                        
+                        viewModel.appLanguageTapped(appLanguage: appLanguage)
+                    }
+                }
+            }
+            .listStyle(.inset)
         }
-        
-//        GeometryReader { geometry in
-//
-//            LazyVStack(alignment: .leading, spacing: 0) {
-//
-//                ForEach(viewModel.appLanguages) { (appLanguage: AppLanguageListItemDomainModel) in
-//                                                
-//                    AppLanguageItemView(appLanguage: appLanguage) {
-//                        viewModel.appLanguageTapped(appLanguage: appLanguage)
-//                    }
-//                }
-//            }
-//        }
         .navigationBarBackButtonHidden(true)
     }
 }
