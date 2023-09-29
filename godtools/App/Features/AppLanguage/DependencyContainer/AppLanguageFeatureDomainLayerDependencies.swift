@@ -59,4 +59,10 @@ class AppLanguageFeatureDomainLayerDependencies {
             getInterfaceStringRepositoryInterface: dataLayer.getInterfaceStringForLanguageRepositoryInterface()
         )
     }
+    
+    func getSetUserPreferredAppLanguageUseCase() -> SetUserPreferredAppLanguageUseCase {
+        return SetUserPreferredAppLanguageUseCase(
+            setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
+        )
+    }
 }

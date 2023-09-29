@@ -16,4 +16,9 @@ class SetUserPreferredAppLanguageUseCase {
         
         self.setUserPreferredAppLanguageRepositoryInterface = setUserPreferredAppLanguageRepositoryInterface
     }
+    
+    func setAppLanguage(appLanguage: AppLanguageCodeDomainModel) {
+        
+        setUserPreferredAppLanguageRepositoryInterface.setAppLanguage(appLanguage: appLanguage)
+    }
 }
