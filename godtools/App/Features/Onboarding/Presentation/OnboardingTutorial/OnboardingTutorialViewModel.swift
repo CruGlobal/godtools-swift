@@ -17,6 +17,7 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
+    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never> = PassthroughSubject()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -126,6 +127,11 @@ class OnboardingTutorialViewModel: ObservableObject {
 // MARK: - Inputs
 
 extension OnboardingTutorialViewModel {
+    
+    func chooseAppLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromOnboardingTutorial(didChooseAppLanguageSubject: didChooseAppLanguageSubject))
+    }
     
     @objc func skipTapped() {
         

@@ -24,6 +24,7 @@ enum FlowStep {
     case openTutorialTappedFromTools
     
     // onboarding
+    case chooseAppLanguageTappedFromOnboardingTutorial(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>)
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
     case closeVideoPlayerTappedFromOnboardingTutorial
     case videoEndedOnOnboardingTutorial
