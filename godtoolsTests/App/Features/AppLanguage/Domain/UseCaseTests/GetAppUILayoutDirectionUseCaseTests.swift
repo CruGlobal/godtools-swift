@@ -37,9 +37,20 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 
                 it("The application UI should be in a right to left layout.") {
                     
-                    let layoutDirection: AppUILayoutDirectionDomainModel = getAppUILayoutDirectionUseCase.getLayoutDirection()
-                                        
-                    expect(layoutDirection).to(equal(.rightToLeft))
+                    waitUntil { done in
+                        
+                        var layoutDirectionRef: AppUILayoutDirectionDomainModel?
+                        
+                        _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
+                            .sink { (layoutDirection: AppUILayoutDirectionDomainModel) in
+                                
+                                layoutDirectionRef = layoutDirection
+                                
+                                done()
+                            }
+                        
+                        expect(layoutDirectionRef).to(equal(.rightToLeft))
+                    }
                 }
             }
             
@@ -62,9 +73,20 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 
                 it("The application UI should be in a left to right layout.") {
                     
-                    let layoutDirection: AppUILayoutDirectionDomainModel = getAppUILayoutDirectionUseCase.getLayoutDirection()
-                                        
-                    expect(layoutDirection).to(equal(.leftToRight))
+                    waitUntil { done in
+                        
+                        var layoutDirectionRef: AppUILayoutDirectionDomainModel?
+                        
+                        _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
+                            .sink { (layoutDirection: AppUILayoutDirectionDomainModel) in
+                                
+                                layoutDirectionRef = layoutDirection
+                                
+                                done()
+                            }
+                        
+                        expect(layoutDirectionRef).to(equal(.leftToRight))
+                    }
                 }
             }
         }

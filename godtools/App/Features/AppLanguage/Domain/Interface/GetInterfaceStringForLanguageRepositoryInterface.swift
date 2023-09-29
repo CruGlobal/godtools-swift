@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol GetInterfaceStringForLanguageRepositoryInterface {
     
-    func getInterfaceStringForLanguage(languageCode: AppLanguageCodeDomainModel, stringId: String) -> String
+    func getInterfaceStringForLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel, stringId: String) -> AnyPublisher<String, Never>
 }

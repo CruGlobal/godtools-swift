@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetInterfaceStringInAppLanguageUseCase {
     
@@ -19,10 +20,14 @@ class GetInterfaceStringInAppLanguageUseCase {
         self.getInterfaceStringRepositoryInterface = getInterfaceStringRepositoryInterface
     }
     
-    func getString(id: String) -> String {
+    func getStringPublisher(id: String) -> AnyPublisher<String, Never> {
         
-        let currentAppLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-        
-        return getInterfaceStringRepositoryInterface.getInterfaceStringForLanguage(languageCode: currentAppLanguage, stringId: id)
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> in
+                
+                return self.getInterfaceStringRepositoryInterface.getInterfaceStringForLanguagePublisher(appLanguageCode: appLanguageCode, stringId: id)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

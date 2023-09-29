@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol GetAppLanguagesListRepositoryInterface {
     
-    func getAppLanguagesList() -> [AppLanguageCodeDomainModel]
+    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never>
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppLanguageNameRepository: GetAppLanguageNameRepositoryInterface {
     
@@ -17,10 +18,13 @@ class GetAppLanguageNameRepository: GetAppLanguageNameRepositoryInterface {
         self.localeLanguageName = localeLanguageName
     }
     
-    func getLanguageName(languageCode: AppLanguageCodeDomainModel, translateInLanguageCode: AppLanguageCodeDomainModel) -> AppLanguageNameDomainModel {
+    func getLanguageNamePublisher(appLanguageCode: AppLanguageCodeDomainModel, translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> {
         
-        let languageName: String = localeLanguageName.getDisplayName(forLanguageCode: languageCode, translatedInLanguageCode: translateInLanguageCode) ?? ""
+        let languageName: String = localeLanguageName.getDisplayName(forLanguageCode: appLanguageCode, translatedInLanguageCode: translateInLanguage) ?? ""
         
-        return AppLanguageNameDomainModel(value: languageName)
+        let appLanguageName = AppLanguageNameDomainModel(value: languageName)
+        
+        return Just(appLanguageName)
+            .eraseToAnyPublisher()
     }
 }

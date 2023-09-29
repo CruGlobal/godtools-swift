@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import Combine
 
 class TestsGetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
@@ -17,11 +18,14 @@ class TestsGetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface
         
         self.appLanguagesCodes = appLanguagesCodes
     }
-    
-    func getAppLanguagesList() -> [AppLanguageCodeDomainModel] {
+
+    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
         
-        return appLanguagesCodes.map {
+        let languages: [AppLanguageCodeDomainModel] = appLanguagesCodes.map {
             $0.value
         }
+        
+        return Just(languages)
+            .eraseToAnyPublisher()
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetCurrentAppLanguageUseCase {
     
@@ -20,31 +21,40 @@ class GetCurrentAppLanguageUseCase {
         self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
         self.getDeviceAppLanguageRepositoryInterface = getDeviceAppLanguageRepositoryInterface
     }
-    
-    func getAppLanguage() -> AppLanguageCodeDomainModel {
 
-        let appLanguages: [AppLanguageCodeDomainModel] = getAppLanguagesListRepositoryInterface.getAppLanguagesList()
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
 
-        let userPreferredAppLanguage: AppLanguageCodeDomainModel? = getUserPreferredAppLanguageRepositoryInterface.getUserPreferredAppLanguage()
-        
-        if let userAppLanguageIsAvailable = getAppLanguageIfAvailable(languageCode: userPreferredAppLanguage, availableAppLanguages: appLanguages) {
-            return userAppLanguageIsAvailable
+            return Publishers.CombineLatest(
+                getAppLanguagesListRepositoryInterface.getLanguagesPublisher(),
+                getUserPreferredAppLanguageRepositoryInterface.getLanguagePublisher()
+            )
+            .flatMap({ (appLanguages: [AppLanguageCodeDomainModel], userAppLanguage: AppLanguageCodeDomainModel?) -> AnyPublisher<AppLanguageCodeDomainModel, Never> in
+
+                if let userAppLanguage = userAppLanguage,
+                   let userAppLanguageIsAvailable = self.getAppLanguageIfAvailable(languageCode: userAppLanguage, availableAppLanguages: appLanguages) {
+
+                    return Just(userAppLanguageIsAvailable)
+                        .eraseToAnyPublisher()
+                }
+
+                return self.getDeviceLanguageElseEnglishPublisher(appLanguages: appLanguages)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
         }
-        
-        let deviceLanguageElseEnglish: AppLanguageCodeDomainModel = getDeviceLanguageElseEnglish(appLanguages: appLanguages)
-        
-        return deviceLanguageElseEnglish
-    }
 
-    private func getDeviceLanguageElseEnglish(appLanguages: [AppLanguageCodeDomainModel]) -> AppLanguageCodeDomainModel {
+    private func getDeviceLanguageElseEnglishPublisher(appLanguages: [AppLanguageCodeDomainModel]) -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
         
-        let deviceLanguage: AppLanguageCodeDomainModel = getDeviceAppLanguageRepositoryInterface.getDeviceAppLanguage()
-        
-        if let deviceLanguageIsAvailable = getAppLanguageIfAvailable(languageCode: deviceLanguage, availableAppLanguages: appLanguages) {
-            return deviceLanguageIsAvailable
-        }
-        
-        return LanguageCodeDomainModel.english.value
+        return getDeviceAppLanguageRepositoryInterface.getLanguagePublisher()
+            .map { (deviceLanguage: AppLanguageCodeDomainModel) in
+                
+                if let deviceLanguageIsAvailable = self.getAppLanguageIfAvailable(languageCode: deviceLanguage, availableAppLanguages: appLanguages) {
+                    return deviceLanguageIsAvailable
+                }
+                
+                return LanguageCodeDomainModel.english.value
+            }
+            .eraseToAnyPublisher()
     }
     
     private func getAppLanguageIfAvailable(languageCode: AppLanguageCodeDomainModel?, availableAppLanguages: [AppLanguageCodeDomainModel]) -> AppLanguageCodeDomainModel? {

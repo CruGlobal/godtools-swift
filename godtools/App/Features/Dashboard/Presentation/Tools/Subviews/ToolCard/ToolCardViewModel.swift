@@ -44,9 +44,20 @@ class ToolCardViewModel: ObservableObject {
         title = tool.name
         layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
         
-        category = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_category_\(tool.category)")
-        detailsButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteLessons.details")
-        openButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "open")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_category_\(tool.category)")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.category, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.details")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.detailsButtonTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "open")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.openButtonTitle, on: self)
+            .store(in: &cancellables)
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)

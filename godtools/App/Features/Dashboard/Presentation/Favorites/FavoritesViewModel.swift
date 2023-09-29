@@ -57,17 +57,52 @@ class FavoritesViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                  
-        openTutorialBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "openTutorial.showTutorialLabel.text")
-        openTutorialBannerButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "openTutorial.openTutorialButton.title")
-        welcomeTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.pageTitle")
-        featuredLessonsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteLessons.title")
-        yourFavoriteToolsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteTools.title")
-        viewAllFavoriteToolsButtonTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteTools.viewAll")
-        noFavoriteToolsTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.title")
-        noFavoriteToolsDescription = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.description")
-        noFavoriteToolsButtonText = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.noTools.button")
-                
+                 
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.showTutorialLabel.text")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.openTutorialBannerMessage, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.openTutorialButton.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.openTutorialBannerButtonTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.pageTitle")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.welcomeTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.featuredLessonsTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.yourFavoriteToolsTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.viewAll")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.viewAllFavoriteToolsButtonTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.noFavoriteToolsTitle, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.description")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.noFavoriteToolsDescription, on: self)
+            .store(in: &cancellables)
+        
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.button")
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.noFavoriteToolsButtonText, on: self)
+            .store(in: &cancellables)
+        
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in

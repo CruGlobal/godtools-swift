@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageRepositoryInterface {
     
@@ -17,8 +18,12 @@ class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageReposito
         self.userAppLanguageRepository = userAppLanguageRepository
     }
     
-    func setAppLanguage(appLanguage: AppLanguageCodeDomainModel) {
+    func setLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
         
-        userAppLanguageRepository.storeUserAppLanguage(languageCode: appLanguage)
+        userAppLanguageRepository.storeLanguagePublisher(languageCode: appLanguageCode)
+            .map { _ in
+                return appLanguageCode
+            }
+            .eraseToAnyPublisher()
     }
 }

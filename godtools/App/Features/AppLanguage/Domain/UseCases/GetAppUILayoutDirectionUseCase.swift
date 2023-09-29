@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppUILayoutDirectionUseCase {
     
@@ -19,14 +20,30 @@ class GetAppUILayoutDirectionUseCase {
         self.getAppLanguageRepositoryInterface = getAppLanguageRepositoryInterface
     }
     
-    func getLayoutDirection() -> AppUILayoutDirectionDomainModel {
+    func getLayoutDirectionPublisher() -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> {
         
-        let currentAppLanguageCode: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-        
-        guard let appLanguage = getAppLanguageRepositoryInterface.getAppLanguage(appLanguageCode: currentAppLanguageCode) else {
-            return .leftToRight
-        }
-        
-        return appLanguage.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap({ (currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageDomainModel?, Never> in
+                
+                return self.getAppLanguageRepositoryInterface.getLanguagePublisher(appLanguageCode: currentAppLanguageCode)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (appLanguage: AppLanguageDomainModel?) -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> in
+                
+                let layoutDirection: AppUILayoutDirectionDomainModel
+                
+                if let appLanguage = appLanguage {
+                    
+                    layoutDirection = appLanguage.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
+                }
+                else {
+                    
+                    layoutDirection = .leftToRight
+                }
+                
+                return Just(layoutDirection)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

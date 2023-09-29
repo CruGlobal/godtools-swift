@@ -12,6 +12,8 @@ import Combine
 
 class ChooseAppLanguageFlow: Flow {
     
+    private static var setAppLanguageInBackgroundCancellable: AnyCancellable?
+    
     private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>
     
     private weak var flowDelegate: FlowDelegate?
@@ -37,14 +39,13 @@ class ChooseAppLanguageFlow: Flow {
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userClosedChooseAppLanguage))
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
-                 
-            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
-                
-            case .leftToRight:
-                ApplicationLayout.setLayoutDirection(direction: .leftToRight)
-            case .rightToLeft:
-                ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
-            }
+            
+            let setUserAppLanguageUseCase: SetUserPreferredAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetUserPreferredAppLanguageUseCase()
+            
+            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setUserAppLanguageUseCase.setLanguagePublisher(language: appLanguage.languageCode)
+                .sink(receiveValue: { _ in
+
+                })
             
             didChooseAppLanguageSubject.send(appLanguage)
             

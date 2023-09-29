@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppLanguagesListUseCase {
     
@@ -21,20 +22,54 @@ class GetAppLanguagesListUseCase {
         self.getAppLanguageNameInAppLanguageUseCase = getAppLanguageNameInAppLanguageUseCase
     }
     
-    func getAppLanguagesList() -> [AppLanguageListItemDomainModel] {
+    func getAppLanguagesListPublisher() -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        return getAppLanguagesListRepositoryInterface.getAppLanguagesList()
-            .map {
+        return getAppLanguagesListRepositoryInterface.getLanguagesPublisher()
+            .flatMap({ (appLanguages: [AppLanguageCodeDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
-                AppLanguageListItemDomainModel(
-                    languageCode: $0,
-                    languageNameTranslatedInOwnLanguage: self.getAppLanguageNameUseCase.getLanguageName(languageCode: $0),
-                    languageNameTranslatedInCurrentAppLanguage: self.getAppLanguageNameInAppLanguageUseCase.getLanguageName(languageCode: $0)
-                )
-            }
-            .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                return self.getLanguageListItemPublishers(appLanguages: appLanguages)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (items: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
-                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage.value < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage.value
-            }
+                let sortedItems: [AppLanguageListItemDomainModel] = items.sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                    return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage.value < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage.value
+                }
+                
+                return Just(sortedItems)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func getLanguageListItemPublishers(appLanguages: [AppLanguageCodeDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+        
+        let languageItemsPublishers = appLanguages.map {
+            self.getLanguageListItemPublisher(language: $0)
+        }
+        
+        return Publishers.MergeMany(languageItemsPublishers)
+            .collect()
+            .eraseToAnyPublisher()
+    }
+    
+    private func getLanguageListItemPublisher(language: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageListItemDomainModel, Never> {
+        
+        return Publishers.CombineLatest(
+            getAppLanguageNameUseCase.getLanguageNamePublisher(language: language),
+            getAppLanguageNameInAppLanguageUseCase.getLanguageNamePublisher(language: language)
+        )
+        .flatMap({ (languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel, languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel) -> AnyPublisher<AppLanguageListItemDomainModel, Never> in
+            
+            let listItem = AppLanguageListItemDomainModel(
+                languageCode: language,
+                languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
+                languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
+            )
+            
+            return Just(listItem)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
 }

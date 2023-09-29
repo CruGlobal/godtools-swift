@@ -15,7 +15,7 @@ class AppLanguagesRepository {
         
     }
     
-    func getLanguages() -> [AppLanguageDataModel] {
+    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
         /*
         let appLanguages: [AppLanguageDataModel] = [
@@ -38,13 +38,22 @@ class AppLanguagesRepository {
             AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft)
         ]
         
-        return appLanguages
+        return Just(appLanguages)
+            .eraseToAnyPublisher()
     }
-    
-    func getLanguage(languageCode: String) -> AppLanguageDataModel? {
+
+    func getLanguagePublisher(languageCode: String) -> AnyPublisher<AppLanguageDataModel?, Never> {
         
-        return getLanguages().filter({
-            $0.languageCode.lowercased() == languageCode.lowercased()
-        }).first
+        return getLanguagesPublisher()
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDataModel?, Never> in
+                
+                let language: AppLanguageDataModel? = languages.filter({
+                    $0.languageCode.lowercased() == languageCode.lowercased()
+                }).first
+                
+                return Just(language)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

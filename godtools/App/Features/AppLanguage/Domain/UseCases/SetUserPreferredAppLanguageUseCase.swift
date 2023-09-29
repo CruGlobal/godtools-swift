@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class SetUserPreferredAppLanguageUseCase {
     
@@ -17,8 +18,9 @@ class SetUserPreferredAppLanguageUseCase {
         self.setUserPreferredAppLanguageRepositoryInterface = setUserPreferredAppLanguageRepositoryInterface
     }
     
-    func setAppLanguage(appLanguage: AppLanguageCodeDomainModel) {
+    func setLanguagePublisher(language: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
         
-        setUserPreferredAppLanguageRepositoryInterface.setAppLanguage(appLanguage: appLanguage)
+        setUserPreferredAppLanguageRepositoryInterface.setLanguagePublisher(appLanguageCode: language)
+            .eraseToAnyPublisher()
     }
 }

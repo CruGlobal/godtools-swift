@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class UserAppLanguageRepository {
         
@@ -17,13 +18,17 @@ class UserAppLanguageRepository {
         self.cache = cache
     }
     
-    func getUserAppLanguage() -> UserAppLanguageDataModel? {
+    func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
         
-        return cache.getUserAppLanguage()
+        return cache.getUserAppLanguagePublisher()
+            .eraseToAnyPublisher()
     }
     
-    func storeUserAppLanguage(languageCode: String) {
+    func storeLanguagePublisher(languageCode: String) -> AnyPublisher<Bool, Never> {
         
         cache.storeUserAppLanguage(languageCode: languageCode)
+        
+        return Just(true)
+            .eraseToAnyPublisher()
     }
 }
