@@ -1033,6 +1033,8 @@ extension AppFlow {
                 storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
             )
             
+            ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+            
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
             

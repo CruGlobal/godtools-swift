@@ -28,4 +28,10 @@ class TestsGetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface
         return Just(languages)
             .eraseToAnyPublisher()
     }
+    
+    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return Just(Void())
+            .eraseToAnyPublisher()
+    }
 }

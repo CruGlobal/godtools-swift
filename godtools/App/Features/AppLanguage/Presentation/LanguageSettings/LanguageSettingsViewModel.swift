@@ -35,13 +35,12 @@ class LanguageSettingsViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "language_settings")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "language_settings")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.navTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$navTitle)
         
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase.observeLanguageChangedPublisher()
             .flatMap({ (currentAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> in
                 
                 return self.getAppLanguageNameInAppLanguageUseCase.getLanguageNamePublisher(language: currentAppLanguage)
@@ -51,8 +50,7 @@ class LanguageSettingsViewModel: ObservableObject {
                 appLanguageName.value
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.appInterfaceLanguageButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$appInterfaceLanguageButtonTitle)
         
         
         /*

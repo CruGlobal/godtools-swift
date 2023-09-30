@@ -48,32 +48,27 @@ class AccountViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.navTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.navTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$navTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.activityButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$activityButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.myActivitySectionTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$myActivitySectionTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.badgesSectionTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$badgesSectionTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.globalActivityButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$globalActivityButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (localizedGlobalActivityTitle: String) in
                 

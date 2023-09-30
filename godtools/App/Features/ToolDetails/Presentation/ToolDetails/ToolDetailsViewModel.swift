@@ -31,8 +31,6 @@ class ToolDetailsViewModel: ObservableObject {
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var resource: ResourceModel
-    private var mediaCancellable: AnyCancellable?
-    private var toolIsFavoritedCancellable: AnyCancellable?
     private var hidesLearnToShareCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
@@ -176,13 +174,13 @@ class ToolDetailsViewModel: ObservableObject {
             selectedToolVersion = toolVersions.filter({$0.id == resource.id}).first
         }
         
-        mediaCancellable = getToolDetailsMediaUseCase.getMedia(resource: resource)
+        getToolDetailsMediaUseCase.getMedia(resource: resource)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.mediaType, on: self)
+            .assign(to: &$mediaType)
         
-        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: resource.id)
+        getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: resource.id)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isFavorited, on: self)
+            .assign(to: &$isFavorited)
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {

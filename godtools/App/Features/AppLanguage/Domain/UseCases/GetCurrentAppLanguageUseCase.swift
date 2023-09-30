@@ -21,6 +21,20 @@ class GetCurrentAppLanguageUseCase {
         self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
         self.getDeviceAppLanguageRepositoryInterface = getDeviceAppLanguageRepositoryInterface
     }
+    
+    func observeLanguageChangedPublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
+        
+        Publishers.Merge(
+            getAppLanguagesListRepositoryInterface.observeLanguagesChangedPublisher(),
+            getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
+        )
+        .flatMap({ _ -> AnyPublisher<AppLanguageCodeDomainModel, Never> in
+            
+            return self.getLanguagePublisher()
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
+    }
 
     func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
 

@@ -47,6 +47,7 @@ struct DashboardView: View {
                 )
             }
         }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
     

@@ -29,7 +29,6 @@ class ToolCardViewModel: ObservableObject {
     @Published var languageAvailability: String = ""
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
-    @Published var layoutDirection: LayoutDirection = .leftToRight
             
     init(tool: ToolDomainModel, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
@@ -38,31 +37,24 @@ class ToolCardViewModel: ObservableObject {
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
-                
-        let currentTranslationLanguage: LanguageDomainModel = tool.currentTranslationLanguage
-        
+                        
         title = tool.name
-        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_category_\(tool.category)")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_category_\(tool.category)")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.category, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$category)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.details")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteLessons.details")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.detailsButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$detailsButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "open")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "open")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.openButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$openButtonTitle)
         
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isFavorited, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$isFavorited)
         
         downloadBannerImage()
     }

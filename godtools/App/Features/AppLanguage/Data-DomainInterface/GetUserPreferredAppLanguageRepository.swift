@@ -26,4 +26,10 @@ class GetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageReposito
             }
             .eraseToAnyPublisher()
     }
+    
+    func observeLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return userAppLanguageRepository.getLanguageChangedPublisher()
+            .eraseToAnyPublisher()
+    }
 }

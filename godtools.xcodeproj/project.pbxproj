@@ -938,7 +938,6 @@
 		45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45D7783129A572E500F23D99 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20E9259391B000A096A0 /* JsonServices.swift */; };
 		45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD20EA259391B000A096A0 /* JsonServicesType.swift */; };
-		45D7A8572ABDCA0100480BEA /* FlipForAppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */; };
 		45D7CAEB2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7CAEA2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift */; };
 		45D7CAEE2A9BA47200913E12 /* FirebaseInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D7CAED2A9BA47200913E12 /* FirebaseInAppMessaging.swift */; };
 		45D95CCE271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D95CCD271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift */; };
@@ -2081,7 +2080,6 @@
 		45D63E9B288F77D4009B4610 /* MobileContentResourcesApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentResourcesApi.swift; sourceTree = "<group>"; };
 		45D63E9C288F77D4009B4610 /* ResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesRepository.swift; sourceTree = "<group>"; };
 		45D752132A2E33DF005E747F /* MobileContentAuthProviderToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthProviderToken.swift; sourceTree = "<group>"; };
-		45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipForAppLanguage.swift; sourceTree = "<group>"; };
 		45D7CAEA2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDatabaseConfiguration.swift; sourceTree = "<group>"; };
 		45D7CAED2A9BA47200913E12 /* FirebaseInAppMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseInAppMessaging.swift; sourceTree = "<group>"; };
 		45D95CCD271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererEventAnalyticsTracking.swift; sourceTree = "<group>"; };
@@ -8790,7 +8788,6 @@
 			isa = PBXGroup;
 			children = (
 				D45922D52867998200904B87 /* BannerTextStyle.swift */,
-				45D7A8562ABDCA0100480BEA /* FlipForAppLanguage.swift */,
 			);
 			path = "SwiftUI Modifiers";
 			sourceTree = "<group>";
@@ -10332,7 +10329,6 @@
 				45C152D42A448A6200F2A1E8 /* GetLanguageAvailablityUseCase.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentRendererAnalyticsSystem.swift in Sources */,
 				45558326269F2C7B00C3FF14 /* ToolPageFormView.swift in Sources */,
-				45D7A8572ABDCA0100480BEA /* FlipForAppLanguage.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
 				45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */,
 			);

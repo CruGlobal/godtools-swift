@@ -58,50 +58,41 @@ class FavoritesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                  
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.showTutorialLabel.text")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "openTutorial.showTutorialLabel.text")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.openTutorialBannerMessage, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$openTutorialBannerMessage)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.openTutorialButton.title")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "openTutorial.openTutorialButton.title")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.openTutorialBannerButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$openTutorialBannerButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.pageTitle")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.pageTitle")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.welcomeTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$welcomeTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.title")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteLessons.title")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.featuredLessonsTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$featuredLessonsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.title")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.yourFavoriteToolsTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$yourFavoriteToolsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.viewAll")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.viewAll")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.viewAllFavoriteToolsButtonTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$viewAllFavoriteToolsButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.title")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.title")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.noFavoriteToolsTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$noFavoriteToolsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.description")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.description")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.noFavoriteToolsDescription, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$noFavoriteToolsDescription)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.button")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.button")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.noFavoriteToolsButtonText, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$noFavoriteToolsButtonText)
         
         getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
             .receive(on: DispatchQueue.main)

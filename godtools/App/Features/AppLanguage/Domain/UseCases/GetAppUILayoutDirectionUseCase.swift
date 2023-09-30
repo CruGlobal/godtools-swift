@@ -13,11 +13,24 @@ class GetAppUILayoutDirectionUseCase {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface
+    private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getAppLanguageRepositoryInterface = getAppLanguageRepositoryInterface
+        self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
+    }
+    
+    func observeLayoutDirectionPublisher() -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> {
+        
+        return getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
+            .flatMap({ _ -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> in
+                
+                return self.getLayoutDirectionPublisher()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
     
     func getLayoutDirectionPublisher() -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> {

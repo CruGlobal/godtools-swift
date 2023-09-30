@@ -24,4 +24,10 @@ class TestsGetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageRep
         return Just(userAppLanguageCode?.value)
             .eraseToAnyPublisher()
     }
+    
+    func observeLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return Just(Void())
+            .eraseToAnyPublisher()
+    }
 }

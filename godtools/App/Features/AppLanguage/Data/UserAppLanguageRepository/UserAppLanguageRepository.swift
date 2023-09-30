@@ -20,13 +20,19 @@ class UserAppLanguageRepository {
     
     func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
         
-        return cache.getUserAppLanguagePublisher()
+        return cache.getLanguagePublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+                
+        return cache.getLanguageChangedPublisher()
             .eraseToAnyPublisher()
     }
     
     func storeLanguagePublisher(languageCode: String) -> AnyPublisher<Bool, Never> {
         
-        cache.storeUserAppLanguage(languageCode: languageCode)
+        cache.storeLanguage(languageCode: languageCode)
         
         return Just(true)
             .eraseToAnyPublisher()

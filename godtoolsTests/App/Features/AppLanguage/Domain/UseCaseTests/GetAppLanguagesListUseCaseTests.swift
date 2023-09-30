@@ -37,7 +37,8 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
                             getDeviceAppLanguageRepositoryInterface: getDeviceAppLanguageRepository
                         ),
                         getAppLanguageNameRepositoryInterface: getLanguageNameInEnglishRepository
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The app languages list should be sorted by the language name translated in the app language.") {

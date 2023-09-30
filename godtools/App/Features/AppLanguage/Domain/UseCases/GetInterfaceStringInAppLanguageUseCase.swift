@@ -20,6 +20,17 @@ class GetInterfaceStringInAppLanguageUseCase {
         self.getInterfaceStringRepositoryInterface = getInterfaceStringRepositoryInterface
     }
     
+    func observeStringChangedPublisher(id: String) -> AnyPublisher<String, Never> {
+        
+        return getCurrentAppLanguageUseCase.observeLanguageChangedPublisher()
+        .flatMap({ _ -> AnyPublisher<String, Never> in
+            
+            return self.getStringPublisher(id: id)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
+    }
+    
     func getStringPublisher(id: String) -> AnyPublisher<String, Never> {
         
         return getCurrentAppLanguageUseCase.getLanguagePublisher()

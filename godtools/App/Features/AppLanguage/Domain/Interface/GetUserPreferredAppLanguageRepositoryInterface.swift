@@ -12,4 +12,5 @@ import Combine
 protocol GetUserPreferredAppLanguageRepositoryInterface {
     
     func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel?, Never>
+    func observeLanguageChangedPublisher() -> AnyPublisher<Void, Never>
 }

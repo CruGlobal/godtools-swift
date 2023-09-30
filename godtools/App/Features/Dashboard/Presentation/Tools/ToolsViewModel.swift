@@ -61,25 +61,21 @@ class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_offline_favorite_message")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_offline_favorite_message")
             .receive(on: DispatchQueue.main)
-            .assign(to: \.favoritingToolBannerMessage, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$favoritingToolBannerMessage)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.toolSpotlightTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$toolSpotlightTitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.toolSpotlightSubtitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$toolSpotlightSubtitle)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.filterTitle, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$filterTitle)
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         

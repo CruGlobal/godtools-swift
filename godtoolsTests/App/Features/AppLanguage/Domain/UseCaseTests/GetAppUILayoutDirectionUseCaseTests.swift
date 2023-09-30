@@ -32,7 +32,8 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     ),
                     getAppLanguageRepositoryInterface: GetAppLanguageRepository(
                         appLanguagesRepository: AppLanguagesRepository()
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The application UI should be in a right to left layout.") {
@@ -68,7 +69,8 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     ),
                     getAppLanguageRepositoryInterface: GetAppLanguageRepository(
                         appLanguagesRepository: AppLanguagesRepository()
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The application UI should be in a left to right layout.") {

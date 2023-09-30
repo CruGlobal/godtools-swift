@@ -41,6 +41,12 @@ class AppLanguagesRepository {
         return Just(appLanguages)
             .eraseToAnyPublisher()
     }
+    
+    func getLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return Just(Void())
+            .eraseToAnyPublisher()
+    }
 
     func getLanguagePublisher(languageCode: String) -> AnyPublisher<AppLanguageDataModel?, Never> {
         

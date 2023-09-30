@@ -14,12 +14,28 @@ class GetAppLanguagesListUseCase {
     private let getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface
     private let getAppLanguageNameUseCase: GetAppLanguageNameUseCase
     private let getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase
+    private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
     
-    init(getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface, getAppLanguageNameUseCase: GetAppLanguageNameUseCase, getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase) {
+    init(getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface, getAppLanguageNameUseCase: GetAppLanguageNameUseCase, getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface) {
         
         self.getAppLanguagesListRepositoryInterface = getAppLanguagesListRepositoryInterface
         self.getAppLanguageNameUseCase = getAppLanguageNameUseCase
         self.getAppLanguageNameInAppLanguageUseCase = getAppLanguageNameInAppLanguageUseCase
+        self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
+    }
+    
+    func observeAppLanguagesListPublisher() -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+        
+        Publishers.Merge(
+            getAppLanguagesListRepositoryInterface.observeLanguagesChangedPublisher(),
+            getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
+        )
+        .flatMap({ _ -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
+            
+            return self.getAppLanguagesListPublisher()
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
     func getAppLanguagesListPublisher() -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
