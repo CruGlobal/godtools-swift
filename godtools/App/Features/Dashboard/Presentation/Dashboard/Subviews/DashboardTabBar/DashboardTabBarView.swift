@@ -14,7 +14,7 @@ struct DashboardTabBarView: View {
     
     @ObservedObject private var viewModel: DashboardViewModel
             
-    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.layoutDirection, viewModel: DashboardViewModel) {
+    init(layoutDirection: LayoutDirection = ApplicationLayout.shared.layoutDirection, viewModel: DashboardViewModel) {
         
         self.layoutDirection = layoutDirection
         self.viewModel = viewModel

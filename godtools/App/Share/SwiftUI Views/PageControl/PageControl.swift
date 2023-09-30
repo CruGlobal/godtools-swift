@@ -17,7 +17,7 @@ struct PageControl: View {
     
     @Binding private var currentPage: Int
     
-    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.layoutDirection, numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
+    init(layoutDirection: LayoutDirection = ApplicationLayout.shared.layoutDirection, numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
         
         self.layoutDirection = layoutDirection
         self.numberOfPages = numberOfPages

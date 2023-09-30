@@ -427,9 +427,25 @@ extension AppFlow {
     }
 }
 
-// MARK: - Tools Menu
+// MARK: - Dashboard
 
 extension AppFlow {
+    
+    func reallocateDashboard() {
+        
+        guard let currentDashboardView = navigationController.viewControllers.first as? UIHostingController<DashboardView> else {
+            return
+        }
+        
+        let newDashboardView: UIViewController = getNewDashboardView(startingTab: currentDashboardView.rootView.getCurrentTab())
+        
+        var viewControllersWithNewDashboard: [UIViewController] = navigationController.viewControllers
+        
+        viewControllersWithNewDashboard.remove(at: 0)
+        viewControllersWithNewDashboard.insert(newDashboardView, at: 0)
+        
+        navigationController.setViewControllers(viewControllersWithNewDashboard, animated: false)
+    }
     
     private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
         
@@ -512,7 +528,7 @@ extension AppFlow {
         
         if let dashboard = getDashboardInNavigationStack() {
             
-            dashboard.rootView.navigateToTab(startingTab)
+            dashboard.rootView.navigateToTab(tab: startingTab)
         }
         else {
             
@@ -1033,7 +1049,7 @@ extension AppFlow {
                 storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
             )
             
-            ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+            ApplicationLayout.shared.configure(appFlow: self, appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
             
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground

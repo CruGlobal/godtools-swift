@@ -1,5 +1,5 @@
 //
-//  GetAppUILayoutDirectionUseCase.swift
+//  GetInterfaceLayoutDirectionUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetAppUILayoutDirectionUseCase {
+class GetInterfaceLayoutDirectionUseCase {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface
@@ -22,10 +22,10 @@ class GetAppUILayoutDirectionUseCase {
         self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
     }
     
-    func observeLayoutDirectionPublisher() -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> {
+    func observeLayoutDirectionPublisher() -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
         return getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
-            .flatMap({ _ -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> in
+            .flatMap({ _ -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
                 
                 return self.getLayoutDirectionPublisher()
                     .eraseToAnyPublisher()
@@ -33,7 +33,7 @@ class GetAppUILayoutDirectionUseCase {
             .eraseToAnyPublisher()
     }
     
-    func getLayoutDirectionPublisher() -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> {
+    func getLayoutDirectionPublisher() -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
         return getCurrentAppLanguageUseCase.getLanguagePublisher()
             .flatMap({ (currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageDomainModel?, Never> in
@@ -41,9 +41,9 @@ class GetAppUILayoutDirectionUseCase {
                 return self.getAppLanguageRepositoryInterface.getLanguagePublisher(appLanguageCode: currentAppLanguageCode)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ (appLanguage: AppLanguageDomainModel?) -> AnyPublisher<AppUILayoutDirectionDomainModel, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel?) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
                 
-                let layoutDirection: AppUILayoutDirectionDomainModel
+                let layoutDirection: AppInterfaceLayoutDirectionDomainModel
                 
                 if let appLanguage = appLanguage {
                     
