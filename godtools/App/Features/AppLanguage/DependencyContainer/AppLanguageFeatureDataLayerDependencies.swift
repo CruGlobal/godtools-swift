@@ -17,7 +17,7 @@ class AppLanguageFeatureDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Repositories
+    // MARK: - Data Layer Classes
     
     private func getAppLanguagesRepository() -> AppLanguagesRepository {
         return AppLanguagesRepository()
@@ -31,7 +31,7 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    // MARK: - Repository Interface
+    // MARK: - Domain Interface
     
     func getAppLanguageNameRepositoryInterface() -> GetAppLanguageNameRepositoryInterface {
         return GetAppLanguageNameRepository(
