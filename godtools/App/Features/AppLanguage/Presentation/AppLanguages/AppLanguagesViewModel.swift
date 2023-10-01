@@ -18,8 +18,10 @@ class AppLanguagesViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private var allAppLanguages: [AppLanguageListItemDomainModel] = Array()
     
     @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
+    @Published var navTitle: String = ""
     
     init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, localizationServices: LocalizationServices) {
         
@@ -27,7 +29,23 @@ class AppLanguagesViewModel: ObservableObject {
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.localizationServices = localizationServices
         
-        appLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
+        allAppLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
+        appLanguages = allAppLanguages
+        navTitle = "App Language"   // TODO - localize this
+        
+        searchTextPublisher
+            .sink { [weak self] searchText in
+                guard let self = self else { return }
+                
+                if searchText.isEmpty {
+                    self.appLanguages = self.allAppLanguages
+                    
+                } else {
+                    
+                    self.appLanguages = self.allAppLanguages.filter { $0.languageNameTranslatedInCurrentAppLanguage.value.contains(searchText) }
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 
