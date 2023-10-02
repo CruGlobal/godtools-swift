@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetDeviceAppLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
     
@@ -22,5 +23,15 @@ class GetDeviceAppLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
         let locale: Locale = deviceSystemLanguage.getLocale()
         
         return (locale.languageCode ?? locale.identifier).lowercased()
+    }
+    
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
+        
+        let locale: Locale = deviceSystemLanguage.getLocale()
+        
+        let deviceLanguage: AppLanguageCodeDomainModel = (locale.languageCode ?? locale.identifier).lowercased()
+        
+        return Just(deviceLanguage)
+            .eraseToAnyPublisher()
     }
 }

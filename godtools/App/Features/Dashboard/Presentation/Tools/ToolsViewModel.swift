@@ -61,10 +61,21 @@ class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        favoritingToolBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_offline_favorite_message")
-        toolSpotlightTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
-        toolSpotlightSubtitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
-        filterTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_offline_favorite_message")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$favoritingToolBannerMessage)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$toolSpotlightTitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$toolSpotlightSubtitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$filterTitle)
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         

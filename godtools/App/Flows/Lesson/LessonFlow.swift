@@ -14,7 +14,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -22,7 +22,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

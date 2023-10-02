@@ -7,22 +7,56 @@
 //
 
 import Foundation
+import Combine
 import UIKit
 import SwiftUI
 
-class ApplicationLayout {
-    
-    private(set) static var direction: ApplicationLayoutDirection = .leftToRight
-    
-    init() {
+class ApplicationLayout: ObservableObject {
         
+    static let shared: ApplicationLayout = ApplicationLayout()
+    
+    private let semanticContentAttributeSubject: CurrentValueSubject<UISemanticContentAttribute, Never>
+    
+    private var cancellables: Set<AnyCancellable> = Set()
+    private var isConfigured: Bool = false
+    
+    private(set) var currentDirection: ApplicationLayoutDirection = .leftToRight
+    
+    @Published var layoutDirection: LayoutDirection
+    
+    var semanticContentAttributePublisher: AnyPublisher<UISemanticContentAttribute, Never> {
+        return semanticContentAttributeSubject
+            .eraseToAnyPublisher()
     }
     
-    static func setLayoutDirection(direction: ApplicationLayoutDirection) {
+    private init() {
         
-        ApplicationLayout.direction = direction
+        layoutDirection = currentDirection.layoutDirection
+        semanticContentAttributeSubject = CurrentValueSubject(currentDirection.semanticContentAttribute)
+    }
         
-        // Globablly set all UIKit UIView's to flip direction for language.  This appears to apply to UINavigationController navigation push and pop as well. ~Levi
-        UIView.appearance().semanticContentAttribute = direction.semanticContentAttribute
+    func configure(appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer) {
+        
+        guard !isConfigured else {
+            return
+        }
+        
+        isConfigured = true
+        
+        appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase().observeLayoutDirectionPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+                
+                let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
+                
+                if newLayoutDirection != self.currentDirection {
+                    
+                    self.currentDirection = newLayoutDirection
+                    
+                    self.layoutDirection = newLayoutDirection.layoutDirection
+                    self.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
+                }
+            }
+            .store(in: &cancellables)
     }
 }

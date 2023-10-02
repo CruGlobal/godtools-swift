@@ -39,7 +39,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -50,7 +50,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.navigationController = UINavigationController()
+        self.navigationController = AppLayoutDirectionBasedNavigationController()
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
@@ -97,7 +97,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         switch step {
         
         case .appLaunchedFromTerminatedState:
-                       
+                     
             if let deepLink = appLaunchedFromDeepLink {
                 
                 appLaunchedFromDeepLink = nil
@@ -427,9 +427,25 @@ extension AppFlow {
     }
 }
 
-// MARK: - Tools Menu
+// MARK: - Dashboard
 
 extension AppFlow {
+    
+    func reallocateDashboard() {
+        
+        guard let currentDashboardView = navigationController.viewControllers.first as? UIHostingController<DashboardView> else {
+            return
+        }
+        
+        let newDashboardView: UIViewController = getNewDashboardView(startingTab: currentDashboardView.rootView.getCurrentTab())
+        
+        var viewControllersWithNewDashboard: [UIViewController] = navigationController.viewControllers
+        
+        viewControllersWithNewDashboard.remove(at: 0)
+        viewControllersWithNewDashboard.insert(newDashboardView, at: 0)
+        
+        navigationController.setViewControllers(viewControllersWithNewDashboard, animated: false)
+    }
     
     private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
         
@@ -512,7 +528,7 @@ extension AppFlow {
         
         if let dashboard = getDashboardInNavigationStack() {
             
-            dashboard.rootView.navigateToTab(startingTab)
+            dashboard.rootView.navigateToTab(tab: startingTab)
         }
         else {
             
@@ -934,21 +950,36 @@ extension AppFlow {
         let menuView: UIView = menuFlow.navigationController.view
         let appView: UIView = navigationController.view
         
-        menuView.frame = CGRect(x: screenWidth * -1, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+        let menuViewStartingX: CGFloat
+        let menuViewEndingX: CGFloat = 0
+        let appViewEndingX: CGFloat
+        
+        switch ApplicationLayout.shared.currentDirection {
+       
+        case .leftToRight:
+            menuViewStartingX = screenWidth * -1
+            appViewEndingX = screenWidth
+            
+        case .rightToLeft:
+            menuViewStartingX = screenWidth
+            appViewEndingX = screenWidth * -1
+        }
+        
+        menuView.frame = CGRect(x: menuViewStartingX, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
         
         if animated {
                                                 
             UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
                 
-                menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
-                appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+                menuView.frame = CGRect(x: menuViewEndingX, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+                appView.frame = CGRect(x: appViewEndingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
                                 
             }, completion: nil)
         }
         else {
             
-            menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
-            appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+            menuView.frame = CGRect(x: menuViewEndingX, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+            appView.frame = CGRect(x: appViewEndingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
         }
     }
     
@@ -964,15 +995,31 @@ extension AppFlow {
         let menuView: UIView = menuFlow.navigationController.view
         let appView: UIView = navigationController.view
         
-        menuView.frame = CGRect(x: 0, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
-        appView.frame = CGRect(x: screenWidth, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+        let menuViewStartingX: CGFloat = 0
+        let menuViewEndingX: CGFloat
+        let appViewStartingX: CGFloat
+        let appViewEndingX: CGFloat = 0
+        
+        switch ApplicationLayout.shared.currentDirection {
+       
+        case .leftToRight:
+            menuViewEndingX = screenWidth * -1
+            appViewStartingX = screenWidth
+            
+        case .rightToLeft:
+            menuViewEndingX = screenWidth
+            appViewStartingX = screenWidth * -1
+        }
+        
+        menuView.frame = CGRect(x: menuViewStartingX, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+        appView.frame = CGRect(x: appViewStartingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
                 
         if animated {
             
             UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
                                 
-                menuView.frame = CGRect(x: screenWidth * -1, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
-                appView.frame = CGRect(x: 0, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+                menuView.frame = CGRect(x: menuViewEndingX, y: 0, width: menuView.frame.size.width, height: menuView.frame.size.height)
+                appView.frame = CGRect(x: appViewEndingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
                 
             }, completion: { [weak self] ( finished: Bool) in
                 
@@ -982,7 +1029,7 @@ extension AppFlow {
         }
         else {
                         
-            appView.frame = CGRect(x: 0, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
+            appView.frame = CGRect(x: appViewEndingX, y: 0, width: appView.frame.size.width, height: appView.frame.size.height)
             
             menuFlow.navigationController.removeAsChildController()
             self.menuFlow = nil
@@ -1033,16 +1080,10 @@ extension AppFlow {
                 storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
             )
             
+            ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+            
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
-            
-            switch appDiContainer.feature.appLanguage.domainLayer.getAppUILayoutDirectionUseCase().getLayoutDirection() {
-                
-            case .leftToRight:
-                ApplicationLayout.setLayoutDirection(direction: .leftToRight)
-            case .rightToLeft:
-                ApplicationLayout.setLayoutDirection(direction: .rightToLeft)
-            }
             
             if appLaunchedFromTerminatedState {
                 navigationStarted = true

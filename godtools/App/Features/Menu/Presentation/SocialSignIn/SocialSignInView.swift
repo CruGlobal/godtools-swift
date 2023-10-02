@@ -74,5 +74,6 @@ struct SocialSignInView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

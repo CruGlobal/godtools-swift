@@ -17,18 +17,18 @@ class TutorialFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
+        self.navigationController = sharedNavigationController ?? AppLayoutDirectionBasedNavigationController()
              
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: false)

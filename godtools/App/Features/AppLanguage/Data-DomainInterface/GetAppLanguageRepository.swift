@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
     
@@ -17,15 +18,20 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getAppLanguage(appLanguageCode: AppLanguageCodeDomainModel) -> AppLanguageDomainModel? {
+    func getLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageDomainModel?, Never> {
         
-        guard let appLanguageDataModel = appLanguagesRepository.getLanguage(languageCode: appLanguageCode) else {
-            return nil
-        }
+        return appLanguagesRepository.getLanguagePublisher(languageCode: appLanguageCode)
+            .map { (dataModel: AppLanguageDataModel?) in
                 
-        return AppLanguageDomainModel(
-            languageCode: appLanguageCode,
-            languageDirection: appLanguageDataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
-        )
+                guard let dataModel = dataModel else {
+                    return nil
+                }
+                
+                return AppLanguageDomainModel(
+                    languageCode: dataModel.languageCode,
+                    languageDirection: dataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
+                )
+            }
+            .eraseToAnyPublisher()
     }
 }

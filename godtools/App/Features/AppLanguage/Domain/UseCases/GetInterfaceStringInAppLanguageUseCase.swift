@@ -7,22 +7,40 @@
 //
 
 import Foundation
+import Combine
 
 class GetInterfaceStringInAppLanguageUseCase {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface
+    private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getInterfaceStringRepositoryInterface = getInterfaceStringRepositoryInterface
+        self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
     }
     
-    func getString(id: String) -> String {
+    func observeStringChangedPublisher(id: String) -> AnyPublisher<String, Never> {
         
-        let currentAppLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
+        return getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
+            .flatMap({ _ -> AnyPublisher<String, Never> in
+                
+                return self.getStringPublisher(id: id)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func getStringPublisher(id: String) -> AnyPublisher<String, Never> {
         
-        return getInterfaceStringRepositoryInterface.getInterfaceStringForLanguage(languageCode: currentAppLanguage, stringId: id)
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> in
+                
+                return self.getInterfaceStringRepositoryInterface.getInterfaceStringForLanguagePublisher(appLanguageCode: appLanguageCode, stringId: id)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

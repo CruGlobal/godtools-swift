@@ -16,7 +16,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -24,11 +24,11 @@ class TractFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? UINavigationController()
+        self.navigationController = sharedNavigationController ?? AppLayoutDirectionBasedNavigationController()
           
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,

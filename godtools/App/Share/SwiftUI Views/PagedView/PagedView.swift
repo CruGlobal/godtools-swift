@@ -13,15 +13,13 @@ import SwiftUI
 
 struct PagedView<Content: View>: View {
     
-    private let layoutDirection: LayoutDirection
     private let numberOfPages: Int
     private let content: (_ page: Int) -> Content
     
     @Binding private var currentPage: Int
     
-    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.layoutDirection, numberOfPages: Int, currentPage: Binding<Int>, @ViewBuilder content: @escaping (_ page: Int) -> Content) {
+    init(numberOfPages: Int, currentPage: Binding<Int>, @ViewBuilder content: @escaping (_ page: Int) -> Content) {
         
-        self.layoutDirection = layoutDirection
         self.numberOfPages = numberOfPages
         self._currentPage = currentPage
         self.content = content
@@ -35,12 +33,12 @@ struct PagedView<Content: View>: View {
                 
                 Group {
                     
-                    if layoutDirection == .rightToLeft {
+                    if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                         
                         ForEach((0 ..< numberOfPages).reversed(), id: \.self) { index in
                             
                             content(index)
-                                .environment(\.layoutDirection, layoutDirection)
+                                .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
                                 .tag(index)
                         }
                     }
@@ -49,7 +47,7 @@ struct PagedView<Content: View>: View {
                         ForEach(0 ..< numberOfPages, id: \.self) { index in
                             
                             content(index)
-                                .environment(\.layoutDirection, layoutDirection)
+                                .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
                                 .tag(index)
                         }
                     }
@@ -68,7 +66,7 @@ struct PagedView_Previews: PreviewProvider {
     
     static var previews: some View {
                 
-        PagedView(layoutDirection: .leftToRight, numberOfPages: 5, currentPage: $currentPage) { page in
+        PagedView(numberOfPages: 5, currentPage: $currentPage) { page in
             
             ZStack(alignment: .center) {
                 

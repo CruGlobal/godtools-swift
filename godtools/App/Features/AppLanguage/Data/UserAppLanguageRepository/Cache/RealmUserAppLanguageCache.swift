@@ -21,7 +21,7 @@ class RealmUserAppLanguageCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getUserAppLanguage() -> UserAppLanguageDataModel? {
+    func getLanguage() -> UserAppLanguageDataModel? {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -32,7 +32,22 @@ class RealmUserAppLanguageCache {
         return UserAppLanguageDataModel(realmUserAppLanguage: realmUserAppLanguage)
     }
     
-    func storeUserAppLanguage(languageCode: String) {
+    func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
+        
+        return Just(getLanguage())
+            .eraseToAnyPublisher()
+    }
+    
+    func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+                
+        return realmDatabase.openRealm().objects(RealmUserAppLanguage.self).objectWillChange
+            .map { _ in
+                Void()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func storeLanguage(languageCode: String) {
         
         let realm: Realm = realmDatabase.openRealm()
         

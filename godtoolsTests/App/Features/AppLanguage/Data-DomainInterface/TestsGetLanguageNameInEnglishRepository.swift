@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import Combine
 
 class TestsGetLanguageNameInEnglishRepository: GetAppLanguageNameRepositoryInterface {
         
@@ -15,11 +16,11 @@ class TestsGetLanguageNameInEnglishRepository: GetAppLanguageNameRepositoryInter
         
     }
     
-    func getLanguageName(languageCode: AppLanguageCodeDomainModel, translateInLanguageCode: AppLanguageCodeDomainModel) -> AppLanguageNameDomainModel {
+    func getLanguageNamePublisher(appLanguageCode: AppLanguageCodeDomainModel, translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> {
         
         let languageName: String
         
-        if let languageCodeDomainModel = LanguageCodeDomainModel(rawValue: languageCode) {
+        if let languageCodeDomainModel = LanguageCodeDomainModel(rawValue: appLanguageCode) {
             
             switch languageCodeDomainModel {
             
@@ -43,6 +44,7 @@ class TestsGetLanguageNameInEnglishRepository: GetAppLanguageNameRepositoryInter
             languageName = ""
         }
         
-        return AppLanguageNameDomainModel(value: languageName)
+        return Just(AppLanguageNameDomainModel(value: languageName))
+            .eraseToAnyPublisher()
     }
 }

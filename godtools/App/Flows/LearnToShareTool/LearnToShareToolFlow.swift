@@ -17,13 +17,13 @@ class LearnToShareToolFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = UINavigationController(nibName: nil, bundle: nil)
+        self.navigationController = AppLayoutDirectionBasedNavigationController()
         
         navigationController.modalPresentationStyle = .fullScreen
         

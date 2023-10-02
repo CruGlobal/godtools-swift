@@ -37,17 +37,29 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
                             getDeviceAppLanguageRepositoryInterface: getDeviceAppLanguageRepository
                         ),
                         getAppLanguageNameRepositoryInterface: getLanguageNameInEnglishRepository
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The app languages list should be sorted by the language name translated in the app language.") {
                     
-                    let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesListUseCase.getAppLanguagesList()
-                    
-                    expect(appLanguagesList[0].languageNameTranslatedInCurrentAppLanguage.value).to(equal("English"))
-                    expect(appLanguagesList[1].languageNameTranslatedInCurrentAppLanguage.value).to(equal("French"))
-                    expect(appLanguagesList[2].languageNameTranslatedInCurrentAppLanguage.value).to(equal("Russian"))
-                    expect(appLanguagesList[3].languageNameTranslatedInCurrentAppLanguage.value).to(equal("Spanish"))
+                    waitUntil { done in
+                                                
+                        var appLanguagesListRef: [AppLanguageListItemDomainModel] = Array()
+                        
+                        _ = getAppLanguagesListUseCase.getAppLanguagesListPublisher()
+                            .sink { (appLanguages: [AppLanguageListItemDomainModel]) in
+                                
+                                appLanguagesListRef = appLanguages
+                                
+                                done()
+                            }
+                        
+                        expect(appLanguagesListRef[0].languageNameTranslatedInCurrentAppLanguage.value).to(equal("English"))
+                        expect(appLanguagesListRef[1].languageNameTranslatedInCurrentAppLanguage.value).to(equal("French"))
+                        expect(appLanguagesListRef[2].languageNameTranslatedInCurrentAppLanguage.value).to(equal("Russian"))
+                        expect(appLanguagesListRef[3].languageNameTranslatedInCurrentAppLanguage.value).to(equal("Spanish"))
+                    }
                 }
             }
         }

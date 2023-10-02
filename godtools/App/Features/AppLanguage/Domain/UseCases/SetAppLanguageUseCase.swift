@@ -1,5 +1,5 @@
 //
-//  SetUserPreferredAppLanguageUseCase.swift
+//  SetAppLanguageUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -7,13 +7,20 @@
 //
 
 import Foundation
+import Combine
 
-class SetUserPreferredAppLanguageUseCase {
+class SetAppLanguageUseCase {
     
     private let setUserPreferredAppLanguageRepositoryInterface: SetUserPreferredAppLanguageRepositoryInterface
     
     init(setUserPreferredAppLanguageRepositoryInterface: SetUserPreferredAppLanguageRepositoryInterface) {
         
         self.setUserPreferredAppLanguageRepositoryInterface = setUserPreferredAppLanguageRepositoryInterface
+    }
+    
+    func setLanguagePublisher(language: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
+        
+        setUserPreferredAppLanguageRepositoryInterface.setLanguagePublisher(appLanguageCode: language)
+            .eraseToAnyPublisher()
     }
 }

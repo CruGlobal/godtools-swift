@@ -17,7 +17,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     private weak var flowDelegate: FlowDelegate?
             
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
@@ -30,7 +30,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = UINavigationController(nibName: nil, bundle: nil)
+        self.navigationController = AppLayoutDirectionBasedNavigationController()
                 
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -56,8 +56,8 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         
         switch step {
             
-        case .chooseAppLanguageTappedFromOnboardingTutorial(let didChooseAppLanguageSubject):
-            navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: didChooseAppLanguageSubject)
+        case .chooseAppLanguageTappedFromOnboardingTutorial:
+            navigateToChooseAppLanguageFlow()
             
         case .chooseAppLanguageFlowCompleted(let state):
             navigateBackFromChooseAppLanguageFlow()

@@ -88,6 +88,30 @@ public extension UIViewController {
             navigationItem.rightBarButtonItem = item
         }
     }
+    
+    func getLeftBarButtonItems() -> [UIBarButtonItem] {
+        
+        if let leadingItems = navigationItem.leftBarButtonItems, !leadingItems.isEmpty {
+            return leadingItems
+        }
+        else if let leadingItem = navigationItem.leftBarButtonItem {
+            return [leadingItem]
+        }
+        
+        return Array()
+    }
+    
+    func getRightBarButtonItems() -> [UIBarButtonItem] {
+        
+        if let trailingItems = navigationItem.rightBarButtonItems, !trailingItems.isEmpty {
+            return trailingItems
+        }
+        else if let trailingItem = navigationItem.rightBarButtonItem {
+            return [trailingItem]
+        }
+        
+        return Array()
+    }
 }
 
 // MARK: - Removing Button Items

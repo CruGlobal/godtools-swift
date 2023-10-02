@@ -24,7 +24,7 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .arabic)
                 let getDeviceAppLanguageRepository = TestsGetDeviceLanguageRepository(deviceLanguageCode: .english)
                 
-                let getAppUILayoutDirectionUseCase = GetAppUILayoutDirectionUseCase(
+                let getAppUILayoutDirectionUseCase = GetInterfaceLayoutDirectionUseCase(
                     getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase(
                         getAppLanguagesListRepositoryInterface: getAppLanguagesListRepository,
                         getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository,
@@ -32,14 +32,26 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     ),
                     getAppLanguageRepositoryInterface: GetAppLanguageRepository(
                         appLanguagesRepository: AppLanguagesRepository()
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The application UI should be in a right to left layout.") {
                     
-                    let layoutDirection: AppUILayoutDirectionDomainModel = getAppUILayoutDirectionUseCase.getLayoutDirection()
-                                        
-                    expect(layoutDirection).to(equal(.rightToLeft))
+                    waitUntil { done in
+                        
+                        var layoutDirectionRef: AppInterfaceLayoutDirectionDomainModel?
+                        
+                        _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
+                            .sink { (layoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+                                
+                                layoutDirectionRef = layoutDirection
+                                
+                                done()
+                            }
+                        
+                        expect(layoutDirectionRef).to(equal(.rightToLeft))
+                    }
                 }
             }
             
@@ -49,7 +61,7 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .english)
                 let getDeviceAppLanguageRepository = TestsGetDeviceLanguageRepository(deviceLanguageCode: .arabic)
                 
-                let getAppUILayoutDirectionUseCase = GetAppUILayoutDirectionUseCase(
+                let getAppUILayoutDirectionUseCase = GetInterfaceLayoutDirectionUseCase(
                     getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase(
                         getAppLanguagesListRepositoryInterface: getAppLanguagesListRepository,
                         getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository,
@@ -57,14 +69,26 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     ),
                     getAppLanguageRepositoryInterface: GetAppLanguageRepository(
                         appLanguagesRepository: AppLanguagesRepository()
-                    )
+                    ),
+                    getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository
                 )
                 
                 it("The application UI should be in a left to right layout.") {
                     
-                    let layoutDirection: AppUILayoutDirectionDomainModel = getAppUILayoutDirectionUseCase.getLayoutDirection()
-                                        
-                    expect(layoutDirection).to(equal(.leftToRight))
+                    waitUntil { done in
+                        
+                        var layoutDirectionRef: AppInterfaceLayoutDirectionDomainModel?
+                        
+                        _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
+                            .sink { (layoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+                                
+                                layoutDirectionRef = layoutDirection
+                                
+                                done()
+                            }
+                        
+                        expect(layoutDirectionRef).to(equal(.leftToRight))
+                    }
                 }
             }
         }

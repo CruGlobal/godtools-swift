@@ -28,9 +28,20 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 
                 it("App language should default to Spanish since Spanish is an available app language.") {
                     
-                    let appLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-                    
-                    expect(appLanguage).to(equal(LanguageCodeDomainModel.spanish.value))
+                    waitUntil { done in
+                     
+                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        
+                        _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
+                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                appLanguageRef = appLanguage
+                                
+                                done()
+                            }
+                                                
+                        expect(appLanguageRef).to(equal(LanguageCodeDomainModel.spanish.value))
+                    }
                 }
             }
             
@@ -44,9 +55,20 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 
                 it("App language should default to English since Hebrew is not an available app language.") {
                     
-                    let appLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-                    
-                    expect(appLanguage).to(equal(LanguageCodeDomainModel.english.value))
+                    waitUntil { done in
+                        
+                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        
+                        _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
+                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                appLanguageRef = appLanguage
+                                
+                                done()
+                            }
+                                                
+                        expect(appLanguageRef).to(equal(LanguageCodeDomainModel.english.value))
+                    }
                 }
             }
             
@@ -60,9 +82,20 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 
                 it("App language should be Russian since it's the user's app language.") {
                     
-                    let appLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-                    
-                    expect(appLanguage).to(equal(LanguageCodeDomainModel.russian.value))
+                    waitUntil { done in
+                        
+                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        
+                        _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
+                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                appLanguageRef = appLanguage
+                                
+                                done()
+                            }
+                                                
+                        expect(appLanguageRef).to(equal(LanguageCodeDomainModel.russian.value))
+                    }
                 }
             }
             
@@ -76,9 +109,20 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                 
                 it("App language should be French since Russian is not an available app language and French is an available app language.") {
                     
-                    let appLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-                    
-                    expect(appLanguage).to(equal(LanguageCodeDomainModel.french.value))
+                    waitUntil { done in
+                        
+                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        
+                        _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
+                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                appLanguageRef = appLanguage
+                                
+                                done()
+                            }
+                                                
+                        expect(appLanguageRef).to(equal(LanguageCodeDomainModel.french.value))
+                    }
                 }
             }
             
@@ -92,9 +136,20 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
 
                 it("App language should be English since Russian and French are not available app languages.") {
                     
-                    let appLanguage: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-                    
-                    expect(appLanguage).to(equal(LanguageCodeDomainModel.english.value))
+                    waitUntil { done in
+                        
+                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        
+                        _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
+                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                appLanguageRef = appLanguage
+                                
+                                done()
+                            }
+                                                
+                        expect(appLanguageRef).to(equal(LanguageCodeDomainModel.english.value))
+                    }
                 }
             }
         }
