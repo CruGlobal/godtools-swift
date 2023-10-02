@@ -10,35 +10,63 @@ import Foundation
 import Combine
 
 class ToolFilterSelectionViewModel: ObservableObject {
-    
-    var selectedCategory: ToolCategoryDomainModel? = nil
-    var selectedLanguage: LanguageDomainModel? = nil
-    let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
-    
     let localizationServices: LocalizationServices
     let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    
+    let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
+    let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+
     var cancellables: Set<AnyCancellable> = Set()
     
     @Published var navTitle: String = ""
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
-    @Published var idSelected: String?
+    @Published var filterValueSelected: ToolFilterValue?
     
-    init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
-        
-        self.selectedCategory = toolFilterSelection.selectedCategory
-        self.selectedLanguage = toolFilterSelection.selectedLanguage
+    var selectedCategory: ToolCategoryDomainModel {
+        get {
+            return toolFilterSelectionPublisher.value.selectedCategory
+            
+        } set {
+            
+            let updatedToolFilterSelection = ToolFilterSelection(
+                selectedCategory: newValue,
+                selectedLanguage: selectedLanguage
+            )
+            toolFilterSelectionPublisher.send(updatedToolFilterSelection)
+        }
+    }
+    
+    var selectedLanguage: LanguageFilterDomainModel {
+        get {
+            return toolFilterSelectionPublisher.value.selectedLanguage
+            
+        } set {
+            
+            let updatedToolFilterSelection = ToolFilterSelection(
+                selectedCategory: selectedCategory,
+                selectedLanguage: newValue
+            )
+            toolFilterSelectionPublisher.send(updatedToolFilterSelection)
+        }
+    }
+    
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
         self.localizationServices = localizationServices
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.toolFilterSelectionPublisher = toolFilterSelectionPublisher
+    }
+    
+    func rowTapped(with filterValue: ToolFilterValue) {
         
-        rowViewModels = [
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "1 Tools available", filterValueId: "1"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "2 Tools available", filterValueId: "2"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "3 Tools available", filterValueId: "3"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "4 Tools available", filterValueId: "4"),
-            ToolFilterSelectionRowViewModel(title: "Hayastan", subtitle: "Armenian", toolsAvailableText: "5 Tools available", filterValueId: "5")
-        ]
+        filterValueSelected = filterValue
+        
+        switch filterValue {
+        case .category(let categoryModel):
+            selectedCategory = categoryModel
+            
+        case .language(let languageModel):
+            selectedLanguage = languageModel
+        }
     }
 }
 

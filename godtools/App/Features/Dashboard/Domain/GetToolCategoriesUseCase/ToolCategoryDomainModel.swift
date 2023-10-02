@@ -12,6 +12,8 @@ struct ToolCategoryDomainModel {
     
     let type: ToolCategoryType
     let translatedName: String
+    let toolsAvailableText: String
+    let searchableText: String
 }
 
 extension ToolCategoryDomainModel {
@@ -19,7 +21,7 @@ extension ToolCategoryDomainModel {
     var id: String? {
         
         switch type {
-        case .allTools:
+        case .anyCategory:
             return nil
         case .category(let id):
             return id

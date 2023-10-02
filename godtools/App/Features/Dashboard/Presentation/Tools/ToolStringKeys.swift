@@ -21,5 +21,6 @@ class ToolStringKeys {
         case anyLanguageFilterText = "allTools.filter.anyLanguage"
         case categoryFilterNavTitle = "allTools.filter.navBar.category"
         case languageFilterNavTitle = "allTools.filter.navBar.language"
+        case toolsAvailableText = "tools.filter.toolsAvailable"
     }
 }

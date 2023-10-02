@@ -7,12 +7,19 @@
 //
 
 import Foundation
+import Combine
 
 class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
+    
+    private let getToolCategoriesUseCase: GetToolCategoriesUseCase
+    
+    private var categories: [ToolCategoryDomainModel] = [ToolCategoryDomainModel]()
         
-    override init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
-        super.init(toolFilterSelection: toolFilterSelection, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
+        self.getToolCategoriesUseCase = getToolCategoriesUseCase
+        
+        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -23,5 +30,52 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
                 self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             }
             .store(in: &cancellables)
+        
+        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
+            .sink { [weak self] categories in
+                
+                self?.categories = categories
+                self?.createRowViewModels()
+            }
+            .store(in: &cancellables)
+        
+        searchTextPublisher
+            .sink { [weak self] _ in
+                
+                self?.createRowViewModels()
+            }
+            .store(in: &cancellables)
+        
+        filterValueSelected = .category(categoryModel: selectedCategory)
+    }
+}
+
+// MARK: - Private
+
+extension ToolFilterCategorySelectionViewModel {
+    
+    private func createRowViewModels() {
+        
+        let categories: [ToolCategoryDomainModel]
+        let searchText = searchTextPublisher.value
+        
+        if searchText.isEmpty == false {
+            
+            categories = self.categories.filter { $0.searchableText.contains(searchText) }
+            
+        } else {
+            
+            categories = self.categories
+        }
+        
+        rowViewModels = categories.map { category in
+            
+            return ToolFilterSelectionRowViewModel(
+                title: category.translatedName,
+                subtitle: nil,
+                toolsAvailableText: category.toolsAvailableText,
+                filterValue: .category(categoryModel: category)
+            )
+        }        
     }
 }

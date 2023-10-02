@@ -111,11 +111,12 @@ struct AllToolsView_Preview: PreviewProvider {
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
+            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
+            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),

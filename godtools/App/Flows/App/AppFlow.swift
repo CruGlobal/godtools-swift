@@ -153,8 +153,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
             
-        case .toolFilterTappedFromTools(let toolFilterType, let currentToolFilterSelection):
-            navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, currentToolFilterSelection: currentToolFilterSelection), animated: true)
+        case .toolFilterTappedFromTools(let toolFilterType, let toolFilterSelectionPublisher):
+            navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, toolFilterSelectionPublisher: toolFilterSelectionPublisher), animated: true)
             
         case .backTappedFromToolFilter:
             navigationController.popViewController(animated: true)
@@ -785,7 +785,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolFilterSelection(toolFilterType: ToolFilterType, currentToolFilterSelection: ToolFilterSelection) -> UIViewController {
+    private func getToolFilterSelection(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) -> UIViewController {
         
         let viewModel: ToolFilterSelectionViewModel
         
@@ -793,17 +793,19 @@ extension AppFlow {
         case .category:
             
             viewModel = ToolFilterCategorySelectionViewModel(
-                toolFilterSelection: currentToolFilterSelection,
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
+                toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
             
         case .language:
             
             viewModel = ToolFilterLanguageSelectionViewModel(
-                toolFilterSelection: currentToolFilterSelection,
+                getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
                 localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
+                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
         }
         

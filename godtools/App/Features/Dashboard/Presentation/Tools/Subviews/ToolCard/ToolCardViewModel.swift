@@ -30,7 +30,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolDomainModel, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolDomainModel, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
@@ -51,12 +51,13 @@ class ToolCardViewModel: ObservableObject {
         getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "open")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openButtonTitle)
-        
+                
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)
         
         downloadBannerImage()
+        setLanguageAvailabilityText(language: alternateLanguage)
     }
     
     private func downloadBannerImage() {
@@ -76,6 +77,19 @@ class ToolCardViewModel: ObservableObject {
                 .sink { [weak self] (image: Image?) in
                     self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
                 }
+        }
+    }
+    
+    private func setLanguageAvailabilityText(language: LanguageDomainModel?) {
+        
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: language)
+        
+        if getLanguageAvailability.isAvailable {
+            
+            languageAvailability = getLanguageAvailability.availabilityString
+            
+        } else {
+            languageAvailability = ""
         }
     }
 }

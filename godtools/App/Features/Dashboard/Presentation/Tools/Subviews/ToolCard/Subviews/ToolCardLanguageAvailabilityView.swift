@@ -11,12 +11,13 @@ import SwiftUI
 struct ToolCardLanguageAvailabilityView: View {
     
     let languageAvailability: String
+    private static let textColor = Color.getColorWithRGB(red: 88, green: 170, blue: 66, opacity: 1)
     
     var body: some View {
         
         Text(languageAvailability)
             .font(FontLibrary.sfProTextRegular.font(size: 12))
-            .foregroundColor(ColorPalette.gtLightGrey.color)
+            .foregroundColor(ToolCardLanguageAvailabilityView.textColor)
             .truncationMode(.middle)
             .lineLimit(1)
     }

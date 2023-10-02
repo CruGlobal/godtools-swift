@@ -7,12 +7,19 @@
 //
 
 import Foundation
+import Combine
 
 class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
+    
+    private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
+    
+    private var languages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
-    override init(toolFilterSelection: ToolFilterSelection, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase) {
+        self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
         
-        super.init(toolFilterSelection: toolFilterSelection, localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase)
+        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -23,5 +30,51 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
                 self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
             }
             .store(in: &cancellables)
+        
+        getToolFilterLanguagesUseCase.getToolFilterLanguagesPublisher(filteredByCategory: selectedCategory)
+            .sink { [weak self] languages in
+                
+                self?.languages = languages
+                self?.createRowViewModels()
+            }
+            .store(in: &cancellables)
+        
+        searchTextPublisher
+            .sink { [weak self] searchText in
+                
+                self?.createRowViewModels()
+            }
+            .store(in: &cancellables)
+        
+        filterValueSelected = .language(languageModel: selectedLanguage)
+    }
+}
+
+// MARK: - Private
+
+extension ToolFilterLanguageSelectionViewModel {
+    
+    private func createRowViewModels() {
+        
+        let languages: [LanguageFilterDomainModel]
+        let searchText = searchTextPublisher.value
+        
+        if searchText.isEmpty == false {
+            
+            languages = self.languages.filter { $0.searchableText.contains(searchText) }
+        } else {
+            
+            languages = self.languages
+        }
+        
+        rowViewModels = languages.map { language in
+            
+            return ToolFilterSelectionRowViewModel(
+                title: language.languageName,
+                subtitle: language.translatedName,
+                toolsAvailableText: language.toolsAvailableText,
+                filterValue: .language(languageModel: language)
+            )
+        }
     }
 }
