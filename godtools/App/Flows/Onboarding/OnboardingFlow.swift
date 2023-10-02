@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class OnboardingFlow: Flow {
+class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -18,6 +18,8 @@ class OnboardingFlow: Flow {
             
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
+    
+    var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -53,6 +55,12 @@ class OnboardingFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .chooseAppLanguageTappedFromOnboardingTutorial(let didChooseAppLanguageSubject):
+            navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: didChooseAppLanguageSubject)
+            
+        case .chooseAppLanguageFlowCompleted(let state):
+            navigateBackFromChooseAppLanguageFlow()
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
             presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)

@@ -552,6 +552,9 @@
 		459E86F028EDA86C00E197A5 /* ToolDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */; };
 		459E86F128EDA86C00E197A5 /* IncomingDeepLinkUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D928EDA86C00E197A5 /* IncomingDeepLinkUrl.swift */; };
 		459E86F228EDA86C00E197A5 /* DeepLinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86DA28EDA86C00E197A5 /* DeepLinkingService.swift */; };
+		459F86802AC516E600B4E5CA /* ChooseAppLanguageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F867F2AC516E600B4E5CA /* ChooseAppLanguageButton.swift */; };
+		459F86862AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F86852AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift */; };
+		459F86892AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F86882AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift */; };
 		45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A415EF2A99429B0030E2C7 /* OnboardingFlowTests.swift */; };
 		45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */; };
 		45A415FD2A9942ED0030E2C7 /* OnboardingPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A415FC2A9942ED0030E2C7 /* OnboardingPathDeepLinkParser.swift */; };
@@ -1748,6 +1751,9 @@
 		459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLink.swift; sourceTree = "<group>"; };
 		459E86D928EDA86C00E197A5 /* IncomingDeepLinkUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkUrl.swift; sourceTree = "<group>"; };
 		459E86DA28EDA86C00E197A5 /* DeepLinkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingService.swift; sourceTree = "<group>"; };
+		459F867F2AC516E600B4E5CA /* ChooseAppLanguageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAppLanguageButton.swift; sourceTree = "<group>"; };
+		459F86852AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAppLanguageNavigationFlow.swift; sourceTree = "<group>"; };
+		459F86882AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAppLanguageCenteredHorizontallyView.swift; sourceTree = "<group>"; };
 		45A415EF2A99429B0030E2C7 /* OnboardingFlowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlowTests.swift; sourceTree = "<group>"; };
 		45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Query.swift"; sourceTree = "<group>"; };
 		45A415FC2A9942ED0030E2C7 /* OnboardingPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPathDeepLinkParser.swift; sourceTree = "<group>"; };
@@ -4518,6 +4524,8 @@
 		4561B3F1295B32E700F5AF5B /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				459F867E2AC516DF00B4E5CA /* ChooseAppLanguageButton */,
+				459F86872AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontally */,
 				455E98AC29A42A2600D1EF35 /* OnboardingTutorialMedia */,
 				455E98A929A429AC00D1EF35 /* OnboardingTutorialPage */,
 				4592A0E829D74AE00002E70A /* OnboardingTutorialPrimaryButton */,
@@ -5373,6 +5381,30 @@
 			path = ParsedDeepLink;
 			sourceTree = "<group>";
 		};
+		459F867E2AC516DF00B4E5CA /* ChooseAppLanguageButton */ = {
+			isa = PBXGroup;
+			children = (
+				459F867F2AC516E600B4E5CA /* ChooseAppLanguageButton.swift */,
+			);
+			path = ChooseAppLanguageButton;
+			sourceTree = "<group>";
+		};
+		459F86842AC51A8200B4E5CA /* ChooseAppLanguageNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				459F86852AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift */,
+			);
+			path = ChooseAppLanguageNavigation;
+			sourceTree = "<group>";
+		};
+		459F86872AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontally */ = {
+			isa = PBXGroup;
+			children = (
+				459F86882AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift */,
+			);
+			path = ChooseAppLanguageCenteredHorizontally;
+			sourceTree = "<group>";
+		};
 		45A415EC2A99429B0030E2C7 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -5579,6 +5611,7 @@
 				45FB160227DBDDB60009DF8E /* Article */,
 				45FB15EB27DBDDB50009DF8E /* ArticleDeepLink */,
 				454ADAE22ABDDC4500037C27 /* ChooseAppLanguage */,
+				459F86842AC51A8200B4E5CA /* ChooseAppLanguageNavigation */,
 				45FB15FB27DBDDB50009DF8E /* ChooseYourOwnAdventure */,
 				459602DF28400DBB00C66387 /* DownloadToolTranslations */,
 				45E3475A2A49BE220014CCD1 /* Flow */,
@@ -9442,6 +9475,7 @@
 				45677765287DB1530044AEB2 /* TutorialFlow.swift in Sources */,
 				457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */,
 				45C152DB2A448A6200F2A1E8 /* GetAllFavoritedToolsUseCase.swift in Sources */,
+				459F86802AC516E600B4E5CA /* ChooseAppLanguageButton.swift in Sources */,
 				45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
 				45B3F44C2AC3A86100D61BFD /* AppLanguagesRepository.swift in Sources */,
 				D409F2A8291D9C2300D9D2FE /* MobileContentApiAuthSession.swift in Sources */,
@@ -9601,6 +9635,7 @@
 				4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */,
 				45E347692A49BE230014CCD1 /* Flow.swift in Sources */,
 				45C8835D2A93EDDF00F33E6D /* DashboardTabBarItemView.swift in Sources */,
+				459F86862AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift in Sources */,
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
@@ -9823,6 +9858,7 @@
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */,
+				459F86892AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift in Sources */,
 				45C152412A43D1BD00F2A1E8 /* ReviewShareShareableViewModel.swift in Sources */,
 				4570B7042889B1760024C931 /* DownloadToolView.swift in Sources */,
 				45052141295F3B9D0018ABD0 /* RealmUserCountersCache.swift in Sources */,

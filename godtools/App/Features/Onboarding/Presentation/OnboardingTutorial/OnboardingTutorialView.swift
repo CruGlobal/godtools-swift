@@ -70,6 +70,10 @@ struct OnboardingTutorialView: View {
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
             }
             .frame(maxWidth: .infinity)
+            
+            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
+                viewModel.chooseAppLanguageTapped()
+            }
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
     }
