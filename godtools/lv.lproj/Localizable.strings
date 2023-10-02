@@ -19,7 +19,7 @@
 "menu_about" = "Par lietotni";
 "menu.sendFeedback" = "Nosūtīt atsauksmes";
 "menu.reportABug" = "Ziņot par kļūdu";
-"menu.askAQuestion" = "Uzdod jautājumu";
+"menu.askAQuestion" = "Uzdot jautājumu";
 "menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
 "account.activity.sectionTitle" = "Tava aktivitāte";
@@ -69,7 +69,7 @@
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
 
-"account.globalActivity.title" = "Aktivitātes";
+"account.globalActivity.title" = "Globālā aktivitāte";
 "toolDetails.conversationStarters.title" = "Sarunas uzsākšanai";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
