@@ -58,12 +58,13 @@ class AppLanguageFeatureDomainLayerDependencies {
     func getInterfaceStringInAppLanguageUseCase() -> GetInterfaceStringInAppLanguageUseCase {
         return GetInterfaceStringInAppLanguageUseCase(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: dataLayer.getInterfaceStringForLanguageRepositoryInterface()
+            getInterfaceStringRepositoryInterface: dataLayer.getInterfaceStringForLanguageRepositoryInterface(),
+            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
         )
     }
     
-    func getSetUserPreferredAppLanguageUseCase() -> SetUserPreferredAppLanguageUseCase {
-        return SetUserPreferredAppLanguageUseCase(
+    func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
+        return SetAppLanguageUseCase(
             setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
         )
     }
