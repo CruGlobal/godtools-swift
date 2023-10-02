@@ -144,6 +144,7 @@
 		45328C0E2AC46D7F006B3B8A /* GetAppLanguagesListUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C0C2AC46D7F006B3B8A /* GetAppLanguagesListUseCaseTests.swift */; };
 		45328C0F2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C0D2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift */; };
 		45328C112AC46E5B006B3B8A /* TestsGetLanguageNameInEnglishRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C102AC46E5B006B3B8A /* TestsGetLanguageNameInEnglishRepository.swift */; };
+		453337672AC9CF5600F8F3E9 /* AppLayoutDirectionBasedNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453337662AC9CF5600F8F3E9 /* AppLayoutDirectionBasedNavigationController.swift */; };
 		4533999E283D725300AE02E4 /* ToolSettingsFlowToolData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533999D283D725300AE02E4 /* ToolSettingsFlowToolData.swift */; };
 		4533C4CE28AC2C4C00F9628B /* LaunchCountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */; };
 		4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533C4CF28AC2ED200F9628B /* LaunchCountCache.swift */; };
@@ -448,7 +449,7 @@
 		458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */; };
 		458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */; };
 		4585BF5E2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF5D2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift */; };
-		4585BF642AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF632AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift */; };
+		4585BF642AC391D200A6D720 /* SetAppLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */; };
 		4585BF662AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF652AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift */; };
 		4585E0692706560600DD6608 /* TransparentModalCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585E0682706560600DD6608 /* TransparentModalCustomView.swift */; };
 		45860A512923E73A0089C836 /* AccountUserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A502923E73A0089C836 /* AccountUserDetailsView.swift */; };
@@ -953,6 +954,9 @@
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45DF34522A28D41600BB717E /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34512A28D41500BB717E /* AppBuild.swift */; };
 		45DF34542A28D41E00BB717E /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34532A28D41E00BB717E /* AppEnvironment.swift */; };
+		45E00A202ACA0D7200A65A21 /* AppLayoutDirectionBasedHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E00A1F2ACA0D7200A65A21 /* AppLayoutDirectionBasedHostingController.swift */; };
+		45E00A222ACA0E5900A65A21 /* AppLayoutDirectionBasedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E00A212ACA0E5900A65A21 /* AppLayoutDirectionBasedBarButtonItem.swift */; };
+		45E00A242ACA0EF600A65A21 /* AppLayoutDirectionBasedBackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E00A232ACA0EF600A65A21 /* AppLayoutDirectionBasedBackBarButtonItem.swift */; };
 		45E347592A49BD990014CCD1 /* AppRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347582A49BD990014CCD1 /* AppRootController.swift */; };
 		45E347682A49BE230014CCD1 /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475B2A49BE220014CCD1 /* FlowStep.swift */; };
 		45E347692A49BE230014CCD1 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475C2A49BE220014CCD1 /* Flow.swift */; };
@@ -1340,6 +1344,7 @@
 		45328C0C2AC46D7F006B3B8A /* GetAppLanguagesListUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesListUseCaseTests.swift; sourceTree = "<group>"; };
 		45328C0D2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCurrentAppLanguageUseCaseTests.swift; sourceTree = "<group>"; };
 		45328C102AC46E5B006B3B8A /* TestsGetLanguageNameInEnglishRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsGetLanguageNameInEnglishRepository.swift; sourceTree = "<group>"; };
+		453337662AC9CF5600F8F3E9 /* AppLayoutDirectionBasedNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionBasedNavigationController.swift; sourceTree = "<group>"; };
 		4533999D283D725300AE02E4 /* ToolSettingsFlowToolData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlowToolData.swift; sourceTree = "<group>"; };
 		4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchCountRepository.swift; sourceTree = "<group>"; };
 		4533C4CF28AC2ED200F9628B /* LaunchCountCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCountCache.swift; sourceTree = "<group>"; };
@@ -1646,7 +1651,7 @@
 		458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountCreationIsSupportedUseCase.swift; sourceTree = "<group>"; };
 		458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationIsSupportedDomainModel.swift; sourceTree = "<group>"; };
 		4585BF5D2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageCodeDomainModel.swift; sourceTree = "<group>"; };
-		4585BF632AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserPreferredAppLanguageUseCase.swift; sourceTree = "<group>"; };
+		4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAppLanguageUseCase.swift; sourceTree = "<group>"; };
 		4585BF652AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserPreferredAppLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
 		4585E0682706560600DD6608 /* TransparentModalCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomView.swift; sourceTree = "<group>"; };
 		45860A502923E73A0089C836 /* AccountUserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserDetailsView.swift; sourceTree = "<group>"; };
@@ -2099,6 +2104,9 @@
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DF34512A28D41500BB717E /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45DF34532A28D41E00BB717E /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		45E00A1F2ACA0D7200A65A21 /* AppLayoutDirectionBasedHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionBasedHostingController.swift; sourceTree = "<group>"; };
+		45E00A212ACA0E5900A65A21 /* AppLayoutDirectionBasedBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionBasedBarButtonItem.swift; sourceTree = "<group>"; };
+		45E00A232ACA0EF600A65A21 /* AppLayoutDirectionBasedBackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionBasedBackBarButtonItem.swift; sourceTree = "<group>"; };
 		45E347582A49BD990014CCD1 /* AppRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootController.swift; sourceTree = "<group>"; };
 		45E3475B2A49BE220014CCD1 /* FlowStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
 		45E3475C2A49BE220014CCD1 /* Flow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
@@ -5622,6 +5630,7 @@
 		45AD18A125938A4E00A096A0 /* NavControllers */ = {
 			isa = PBXGroup;
 			children = (
+				453337662AC9CF5600F8F3E9 /* AppLayoutDirectionBasedNavigationController.swift */,
 				45AD18A225938A4E00A096A0 /* ModalNavigationController.swift */,
 			);
 			path = NavControllers;
@@ -5644,6 +5653,7 @@
 			children = (
 				45AD18C725938A4E00A096A0 /* AlertMessageView */,
 				45E39EC427457A14006A59E4 /* AnimatedView */,
+				45E00A1E2ACA0D6600A65A21 /* AppLayoutDirectionBasedHostingController */,
 				45860A92292437420089C836 /* DownloadProgressView */,
 				45AD18CF25938A4E00A096A0 /* GTSegmentControl */,
 				45AD18BE25938A4E00A096A0 /* LoadingView */,
@@ -7328,6 +7338,16 @@
 			path = AppBuild;
 			sourceTree = "<group>";
 		};
+		45E00A1E2ACA0D6600A65A21 /* AppLayoutDirectionBasedHostingController */ = {
+			isa = PBXGroup;
+			children = (
+				45E00A1F2ACA0D7200A65A21 /* AppLayoutDirectionBasedHostingController.swift */,
+				45E00A212ACA0E5900A65A21 /* AppLayoutDirectionBasedBarButtonItem.swift */,
+				45E00A232ACA0EF600A65A21 /* AppLayoutDirectionBasedBackBarButtonItem.swift */,
+			);
+			path = AppLayoutDirectionBasedHostingController;
+			sourceTree = "<group>";
+		};
 		45E3475A2A49BE220014CCD1 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -7774,7 +7794,7 @@
 				450DB55F2AC354C000B2FE3A /* GetCurrentAppLanguageUseCase.swift */,
 				45B3F46B2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift */,
 				4569C5012AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift */,
-				4585BF632AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift */,
+				4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -9505,6 +9525,7 @@
 				45AE975127C97A9500C2CB33 /* Image+MobileContentRenderableModel.swift in Sources */,
 				D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */,
 				45C1522D2A43D1BD00F2A1E8 /* ShareShareableView.swift in Sources */,
+				453337672AC9CF5600F8F3E9 /* AppLayoutDirectionBasedNavigationController.swift in Sources */,
 				4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */,
 				D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */,
 				45052142295F3B9D0018ABD0 /* RealmUserCountersSync.swift in Sources */,
@@ -9614,6 +9635,7 @@
 				45E3476F2A49BE230014CCD1 /* Flow+PresentError.swift in Sources */,
 				45C152362A43D1BD00F2A1E8 /* ToolSettingsOptionItemTitleColorStyle.swift in Sources */,
 				45229C592ABF6174009F5D31 /* TrackExitLinkAnalyticsUseCase.swift in Sources */,
+				45E00A242ACA0EF600A65A21 /* AppLayoutDirectionBasedBackBarButtonItem.swift in Sources */,
 				451FB9382896B3DE00423865 /* GetLanguageUseCase.swift in Sources */,
 				45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */,
 				45B3F46E2AC3B61A00D61BFD /* AppInterfaceLayoutDirectionDomainModel.swift in Sources */,
@@ -9730,12 +9752,14 @@
 				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
+				45E00A202ACA0D7200A65A21 /* AppLayoutDirectionBasedHostingController.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
 				45C152302A43D1BD00F2A1E8 /* ToolSettingsChooseLanguageView.swift in Sources */,
 				45EB9B7729F16CF200CA74A8 /* UIView+DrawBorder.swift in Sources */,
 				45E585262A8E77F3005B20A6 /* TwoRowHStack.swift in Sources */,
 				45D63E6F288F698C009B4610 /* RealmLanguagesCache.swift in Sources */,
 				45D63E53288F67CE009B4610 /* AppDataLayerDependencies.swift in Sources */,
+				45E00A222ACA0E5900A65A21 /* AppLayoutDirectionBasedBarButtonItem.swift in Sources */,
 				459E86F028EDA86C00E197A5 /* ToolDeepLink.swift in Sources */,
 				4555831F269F2C7B00C3FF14 /* ToolPageViewFactory.swift in Sources */,
 				45558340269F2C7B00C3FF14 /* ToolPageHeaderViewModel.swift in Sources */,
@@ -9826,7 +9850,7 @@
 				45C152DC2A448A6200F2A1E8 /* GetSpotlightToolsUseCase.swift in Sources */,
 				45F305832A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift in Sources */,
 				450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */,
-				4585BF642AC391D200A6D720 /* SetUserPreferredAppLanguageUseCase.swift in Sources */,
+				4585BF642AC391D200A6D720 /* SetAppLanguageUseCase.swift in Sources */,
 				45AD20CA25938F3900A096A0 /* CallbackHandler.swift in Sources */,
 				457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */,
 				455E98AB29A429B400D1EF35 /* OnboardingTutorialPage.swift in Sources */,

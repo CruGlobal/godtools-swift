@@ -34,6 +34,7 @@ enum ImageCatalog: String {
     case login = "login"
     case loginBackground = "loginBackground"
     case logout = "logout"
+    case navBackFlipped = "nav_item_back_flipped"
     case navBack = "nav_item_back"
     case navClose = "nav_item_close"
     case navDebug = "nav_debug"
