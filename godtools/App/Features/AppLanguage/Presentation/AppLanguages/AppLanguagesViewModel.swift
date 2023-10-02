@@ -24,7 +24,9 @@ class AppLanguagesViewModel: ObservableObject {
         self.flowDelegate = flowDelegate
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         
-        appLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
+        getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguages)
     }
 }
 

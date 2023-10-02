@@ -76,5 +76,17 @@ struct OnboardingTutorialView: View {
             }
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+}
+
+extension OnboardingTutorialView {
+    
+    func getCurrentPage() -> Int {
+        return viewModel.currentPage
+    }
+    
+    func setCurrentPage(page: Int) {
+        viewModel.currentPage = page
     }
 }

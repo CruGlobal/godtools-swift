@@ -1,5 +1,5 @@
 //
-//  AppUILayoutDirectionDomainModel.swift
+//  AppInterfaceLayoutDirectionDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AppUILayoutDirectionDomainModel {
+enum AppInterfaceLayoutDirectionDomainModel {
     
     case leftToRight
     case rightToLeft

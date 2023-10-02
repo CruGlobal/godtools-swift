@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetInterfaceStringForLanguageRepository: GetInterfaceStringForLanguageRepositoryInterface {
     
@@ -16,9 +17,12 @@ class GetInterfaceStringForLanguageRepository: GetInterfaceStringForLanguageRepo
         
         self.localizationServices = localizationServices
     }
-    
-    func getInterfaceStringForLanguage(languageCode: AppLanguageCodeDomainModel, stringId: String) -> String {
+
+    func getInterfaceStringForLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel, stringId: String) -> AnyPublisher<String, Never> {
+            
+        let interfaceString: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: stringId)
         
-        return localizationServices.stringForLocaleElseEnglish(localeIdentifier: languageCode, key: stringId)
+        return Just(interfaceString)
+            .eraseToAnyPublisher()
     }
 }

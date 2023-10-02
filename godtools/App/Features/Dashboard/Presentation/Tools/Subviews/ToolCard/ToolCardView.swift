@@ -173,7 +173,6 @@ struct ToolCardView: View {
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
         .padding([.bottom], 10) // This padding is needed so the shadow isn't clipped.
-        .environment(\.layoutDirection, viewModel.layoutDirection)
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
             
@@ -190,7 +189,6 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(languageCode: LanguageCodeDomainModel.english.value)
         
         let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
         

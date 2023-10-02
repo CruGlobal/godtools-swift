@@ -35,9 +35,20 @@ class GetAppLanguageNameInAppLanguageUseCaseTests: QuickSpec {
                 
                 it("The language name for Russian should be translated in the English language.") {
                     
-                    let languageName: AppLanguageNameDomainModel = getAppLanguageNameUseCase.getLanguageName(languageCode: LanguageCodeDomainModel.russian.value)
-                    
-                    expect(languageName.value).to(equal("Russian"))
+                    waitUntil { done in
+                        
+                        var languageNameRef: AppLanguageNameDomainModel?
+                        
+                        _ = getAppLanguageNameUseCase.getLanguageNamePublisher(language: LanguageCodeDomainModel.russian.value)
+                            .sink { (appLanguageName: AppLanguageNameDomainModel) in
+                                
+                                languageNameRef = appLanguageName
+                                
+                                done()
+                            }
+                        
+                        expect(languageNameRef?.value).to(equal("Russian"))
+                    }
                 }
             }
             
@@ -58,9 +69,20 @@ class GetAppLanguageNameInAppLanguageUseCaseTests: QuickSpec {
                 
                 it("The language name for Czech should be translated in the English language.") {
                     
-                    let languageName: AppLanguageNameDomainModel = getAppLanguageNameUseCase.getLanguageName(languageCode: LanguageCodeDomainModel.czech.value)
-                    
-                    expect(languageName.value).to(equal("Czech"))
+                    waitUntil { done in
+                        
+                        var languageNameRef: AppLanguageNameDomainModel?
+                        
+                        _ = getAppLanguageNameUseCase.getLanguageNamePublisher(language: LanguageCodeDomainModel.czech.value)
+                            .sink { (appLanguageName: AppLanguageNameDomainModel) in
+                                
+                                languageNameRef = appLanguageName
+                                
+                                done()
+                            }
+                        
+                        expect(languageNameRef?.value).to(equal("Czech"))
+                    }
                 }
             }
         }

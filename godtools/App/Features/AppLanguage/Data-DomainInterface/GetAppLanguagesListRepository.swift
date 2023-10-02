@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
@@ -17,11 +18,24 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getAppLanguagesList() -> [AppLanguageCodeDomainModel] {
+    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
         
-        return appLanguagesRepository.getLanguages()
-            .map {
-                $0.languageCode
-            }
+        return appLanguagesRepository.getLanguagesPublisher()
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageCodeDomainModel], Never> in
+                
+                let appLanguages: [AppLanguageCodeDomainModel] = languages.map {
+                    $0.languageCode
+                }
+                
+                return Just(appLanguages)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return appLanguagesRepository.getLanguagesChangedPublisher()
+            .eraseToAnyPublisher()
     }
 }

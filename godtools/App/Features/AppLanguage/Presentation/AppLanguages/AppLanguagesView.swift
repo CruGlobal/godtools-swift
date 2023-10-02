@@ -32,5 +32,6 @@ struct AppLanguagesView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

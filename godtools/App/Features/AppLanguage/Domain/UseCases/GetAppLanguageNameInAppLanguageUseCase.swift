@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class GetAppLanguageNameInAppLanguageUseCase {
     
@@ -19,10 +20,14 @@ class GetAppLanguageNameInAppLanguageUseCase {
         self.getAppLanguageNameRepositoryInterface = getAppLanguageNameRepositoryInterface
     }
     
-    func getLanguageName(languageCode: AppLanguageCodeDomainModel) -> AppLanguageNameDomainModel {
+    func getLanguageNamePublisher(language: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> {
         
-        let appLanguageLanguageCode: AppLanguageCodeDomainModel = getCurrentAppLanguageUseCase.getAppLanguage()
-        
-        return getAppLanguageNameRepositoryInterface.getLanguageName(languageCode: languageCode, translateInLanguageCode: appLanguageLanguageCode)
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap({ (currentAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> in
+                
+                return self.getAppLanguageNameRepositoryInterface.getLanguageNamePublisher(appLanguageCode: language, translateInLanguage: currentAppLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

@@ -10,18 +10,12 @@ import Foundation
 import Combine
 
 class LanguageSettingsViewModel: ObservableObject {
-
-    private static var currentLanguage: AppLanguageListItemDomainModel? // TODO: Remove once appLanguage is being persisted. ~Levi
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never> = PassthroughSubject()
     
-    private var currentAppLanguage: AppLanguageListItemDomainModel? {
-        didSet {
-            didSetCurrentAppLanguage()
-        }
-    }
     private var cancellables = Set<AnyCancellable>()
         
     private weak var flowDelegate: FlowDelegate?
@@ -30,27 +24,32 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var appInterfaceLanguageTitle: String = "App "
     @Published var numberOfLanguagesAvailable: String = "Number of languages available need to implement."
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
-    @Published var appInterfaceLanguageButtonTitle: String = "English"
+    @Published var appInterfaceLanguageButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getAppLanguageNameInAppLanguageUseCase = getAppLanguageNameInAppLanguageUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        navTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "language_settings")
-        
-        didChooseAppLanguageSubject
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "language_settings")
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel) in
-                self?.currentAppLanguage = appLanguage
-                LanguageSettingsViewModel.currentLanguage = appLanguage // TODO: Remove once appLanguage is being persisted. ~Levi
+            .assign(to: &$navTitle)
+        
+        
+        getCurrentAppLanguageUseCase.observeLanguageChangedPublisher()
+            .flatMap({ (currentAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> in
+                
+                return self.getAppLanguageNameInAppLanguageUseCase.getLanguageNamePublisher(language: currentAppLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .map { (appLanguageName: AppLanguageNameDomainModel) in
+                appLanguageName.value
             }
-            .store(in: &cancellables)
-    }
-    
-    private func didSetCurrentAppLanguage() {
-        appInterfaceLanguageButtonTitle = "Language Code: \(currentAppLanguage?.languageCode ?? "")"
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appInterfaceLanguageButtonTitle)
     }
 }
 
@@ -65,7 +64,7 @@ extension LanguageSettingsViewModel {
     
     func chooseAppLanguageTapped() {
         
-        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings(didChooseAppLanguageSubject: didChooseAppLanguageSubject))
+        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings)
     }
     
     func pageViewed() {
