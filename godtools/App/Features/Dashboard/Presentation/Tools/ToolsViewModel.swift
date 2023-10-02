@@ -31,7 +31,7 @@ class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published var favoritingToolBannerMessage: String
+    @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
     @Published var toolSpotlightSubtitle: String = ""
@@ -58,6 +58,12 @@ class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
+        showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
+        
+        let anyCategorySelection = getToolCategoriesUseCase.getAnyCategoryDomainModel()
+        let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
+        toolFilterSelectionPublisher = CurrentValueSubject(ToolFilterSelection(selectedCategory: anyCategorySelection, selectedLanguage: anyLanguageSelection))
+        
         getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_offline_favorite_message")
             .receive(on: DispatchQueue.main)
             .assign(to: &$favoritingToolBannerMessage)
@@ -73,12 +79,6 @@ class ToolsViewModel: ObservableObject {
         getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$filterTitle)
-        
-        showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
-        
-        let anyCategorySelection = getToolCategoriesUseCase.getAnyCategoryDomainModel()
-        let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
-        toolFilterSelectionPublisher = CurrentValueSubject(ToolFilterSelection(selectedCategory: anyCategorySelection, selectedLanguage: anyLanguageSelection))
         
         getSpotlightToolsUseCase.getSpotlightToolsPublisher()
             .receive(on: DispatchQueue.main)

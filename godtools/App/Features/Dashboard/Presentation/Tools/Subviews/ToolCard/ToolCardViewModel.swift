@@ -51,9 +51,7 @@ class ToolCardViewModel: ObservableObject {
         getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "open")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openButtonTitle)
-        
-        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
-        
+                
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)
