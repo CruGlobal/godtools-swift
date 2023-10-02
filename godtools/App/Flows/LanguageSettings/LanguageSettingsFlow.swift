@@ -15,11 +15,11 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -35,8 +35,8 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .backTappedFromLanguageSettings:
             flowDelegate?.navigate(step: .languageSettingsFlowCompleted(state: .userClosedLanguageSettings))
             
-        case .chooseAppLanguageTappedFromLanguageSettings(let didChooseAppLanguageSubject):
-            navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: didChooseAppLanguageSubject)
+        case .chooseAppLanguageTappedFromLanguageSettings:
+            navigateToChooseAppLanguageFlow()
             
         case .chooseAppLanguageFlowCompleted(let state):
             navigateBackFromChooseAppLanguageFlow()
@@ -61,13 +61,14 @@ extension LanguageSettingsFlow {
         
         let view = LanguageSettingsView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<LanguageSettingsView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
+        let hostingView: UIHostingController<LanguageSettingsView> = AppLayoutDirectionBasedHostingController(
+            rootView: view,
+            appLayoutBasedBackButton: AppLayoutDirectionBasedBackBarButtonItem(
+                target: viewModel,
+                action: #selector(viewModel.backTapped)
+            )
         )
-        
+
         return hostingView
     }
 }

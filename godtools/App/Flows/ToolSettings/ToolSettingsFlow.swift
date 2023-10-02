@@ -26,9 +26,9 @@ class ToolSettingsFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
             
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

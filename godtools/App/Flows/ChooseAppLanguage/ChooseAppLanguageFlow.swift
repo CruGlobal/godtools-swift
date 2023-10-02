@@ -13,20 +13,17 @@ import Combine
 class ChooseAppLanguageFlow: Flow {
     
     private static var setAppLanguageInBackgroundCancellable: AnyCancellable?
-    
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.didChooseAppLanguageSubject = didChooseAppLanguageSubject
         
         sharedNavigationController.pushViewController(getAppLanguagesView(), animated: true)
     }
@@ -40,15 +37,13 @@ class ChooseAppLanguageFlow: Flow {
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
             
-            let setUserAppLanguageUseCase: SetUserPreferredAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetUserPreferredAppLanguageUseCase()
+            let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
             
-            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setUserAppLanguageUseCase.setLanguagePublisher(language: appLanguage.languageCode)
+            ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.languageCode)
                 .sink(receiveValue: { _ in
 
                 })
-            
-            didChooseAppLanguageSubject.send(appLanguage)
-            
+                        
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userChoseAppLanguage(appLanguage: appLanguage)))
             
         default:
@@ -68,11 +63,12 @@ extension ChooseAppLanguageFlow {
         
         let view = AppLanguagesView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<AppLanguagesView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
+        let hostingView: UIHostingController<AppLanguagesView> = AppLayoutDirectionBasedHostingController(
+            rootView: view,
+            appLayoutBasedBackButton: AppLayoutDirectionBasedBackBarButtonItem(
+                target: viewModel,
+                action: #selector(viewModel.backTapped)
+            )
         )
         
         return hostingView

@@ -15,7 +15,6 @@ class LanguageSettingsViewModel: ObservableObject {
     private let getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never> = PassthroughSubject()
     
     private var cancellables = Set<AnyCancellable>()
         
@@ -51,16 +50,6 @@ class LanguageSettingsViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$appInterfaceLanguageButtonTitle)
-        
-        
-        /*
-        didChooseAppLanguageSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel) in
-                self?.currentAppLanguage = appLanguage
-                LanguageSettingsViewModel.currentLanguage = appLanguage // TODO: Remove once appLanguage is being persisted. ~Levi
-            }
-            .store(in: &cancellables)*/
     }
 }
 
@@ -75,7 +64,7 @@ extension LanguageSettingsViewModel {
     
     func chooseAppLanguageTapped() {
         
-        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings(didChooseAppLanguageSubject: didChooseAppLanguageSubject))
+        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings)
     }
     
     func pageViewed() {

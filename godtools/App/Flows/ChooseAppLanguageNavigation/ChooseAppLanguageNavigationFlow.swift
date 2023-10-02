@@ -16,7 +16,7 @@ protocol ChooseAppLanguageNavigationFlow: Flow {
 
 extension ChooseAppLanguageNavigationFlow {
     
-    func navigateToChooseAppLanguageFlow(didChooseAppLanguageSubject: PassthroughSubject<AppLanguageListItemDomainModel, Never>) {
+    func navigateToChooseAppLanguageFlow() {
         
         guard chooseAppLanguageFlow == nil else {
             return
@@ -25,8 +25,7 @@ extension ChooseAppLanguageNavigationFlow {
         let chooseAppLanguageFlow = ChooseAppLanguageFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            didChooseAppLanguageSubject: didChooseAppLanguageSubject
+            sharedNavigationController: navigationController
         )
         
         self.chooseAppLanguageFlow = chooseAppLanguageFlow
