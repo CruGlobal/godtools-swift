@@ -162,6 +162,7 @@ struct MenuView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
         .background(Color.white)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()
         }

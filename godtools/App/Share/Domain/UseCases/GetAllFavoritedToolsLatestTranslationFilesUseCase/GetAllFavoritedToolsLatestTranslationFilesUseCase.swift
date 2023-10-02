@@ -13,7 +13,6 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     
     private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -21,41 +20,38 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
     private var cancellables = Set<AnyCancellable>()
     private var downloadLatestTranslationsCancellable: AnyCancellable?
     
-    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         
-        Publishers.CombineLatest4(
+        Publishers.CombineLatest3(
             resourcesRepository.getResourcesChanged(),
             favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
-            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher(),
-            getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+            getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
         )
-            .sink { [weak self] (resourcesChanged: Void, _, primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
+            .sink { [weak self] (resourcesChanged: Void, _, primaryLanguage: LanguageDomainModel?) in
                 
                 let favoritedTools = favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
                 
                 self?.downloadLatestTranslationsForAllFavoritedTools(
                     favoritedTools: favoritedTools,
-                    primaryLanguage: primaryLanguage,
-                    parallelLanguage: parallelLanguage
+                    primaryLanguage: primaryLanguage
                 )
             }
             .store(in: &cancellables)
     }
     
-    private func downloadLatestTranslationsForAllFavoritedTools(favoritedTools: [FavoritedResourceDataModel], primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) {
+    private func downloadLatestTranslationsForAllFavoritedTools(favoritedTools: [FavoritedResourceDataModel], primaryLanguage: LanguageDomainModel?) {
               
         downloadLatestTranslationsCancellable?.cancel()
         
-        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodes.english)
+        let englishLanguage: LanguageDomainModel? = getLanguageUseCase.getLanguage(languageCode: LanguageCodeDomainModel.english.value)
         
-        let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage, parallelLanguage].compactMap({
+        let languages: [LanguageDomainModel] = [englishLanguage, primaryLanguage].compactMap({
             return $0
         })
         

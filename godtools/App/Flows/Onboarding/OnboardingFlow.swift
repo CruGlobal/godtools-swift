@@ -10,14 +10,16 @@ import UIKit
 import SwiftUI
 import Combine
 
-class OnboardingFlow: Flow {
+class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
             
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
+    
+    var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
     deinit {
         print("x deinit: \(type(of: self))")
@@ -28,7 +30,7 @@ class OnboardingFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = UINavigationController(nibName: nil, bundle: nil)
+        self.navigationController = AppLayoutDirectionBasedNavigationController()
                 
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -53,6 +55,12 @@ class OnboardingFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .chooseAppLanguageTappedFromOnboardingTutorial:
+            navigateToChooseAppLanguageFlow()
+            
+        case .chooseAppLanguageFlowCompleted(let state):
+            navigateBackFromChooseAppLanguageFlow()
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):
             presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: youtubeVideoId)
@@ -132,12 +140,11 @@ extension OnboardingFlow {
         
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
-            trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
+            trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = OnboardingTutorialView(viewModel: viewModel)
@@ -178,8 +185,7 @@ extension OnboardingFlow {
         let viewModel = OnboardingQuickStartViewModel(
             flowDelegate: self,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             getOnboardingQuickStartItemsUseCase: appDiContainer.domainLayer.getOnboardingQuickStartItemsUseCase(),
             trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
         )

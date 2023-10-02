@@ -15,11 +15,10 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let localizationServices: LocalizationServices
     private let attachmentsRepository: AttachmentsRepository
-    private let analytics: AnalyticsContainer
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -29,26 +28,21 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var favoritedTools: [ToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, attachmentsRepository: AttachmentsRepository, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate?, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.localizationServices = localizationServices
         self.attachmentsRepository = attachmentsRepository
-        self.analytics = analytics
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.title")
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (primaryLanguage: LanguageDomainModel?) in
+            .assign(to: &$sectionTitle)
                 
-                self?.sectionTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLanguage?.localeIdentifier, key: "favorites.favoriteTools.title")
-            }
-            .store(in: &cancellables)
-        
         getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (favoritedTools: [ToolDomainModel]) in
@@ -87,53 +81,47 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     
     private func trackPageView() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
        
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
         
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
                 AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
     
     private func closePage() {
@@ -158,10 +146,9 @@ extension AllYourFavoriteToolsViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
-            localizationServices: localizationServices,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

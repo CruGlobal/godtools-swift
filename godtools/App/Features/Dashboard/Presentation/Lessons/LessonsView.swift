@@ -82,11 +82,10 @@ struct LessonsView_Preview: PreviewProvider {
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
             getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
         

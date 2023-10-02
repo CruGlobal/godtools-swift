@@ -11,5 +11,5 @@ import UIKit
 protocol Flow: FlowDelegate {
     
     var appDiContainer: AppDiContainer { get }
-    var navigationController: UINavigationController { get }
+    var navigationController: AppLayoutDirectionBasedNavigationController { get }
 }

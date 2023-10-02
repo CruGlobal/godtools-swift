@@ -11,15 +11,13 @@ import SwiftUI
 struct PageControl: View {
     
     private let backgroundColor: Color = Color.white
-    private let layoutDirection: LayoutDirection
     private let numberOfPages: Int
     private let attributes: PageControlAttributesType
     
     @Binding private var currentPage: Int
     
-    init(layoutDirection: LayoutDirection = .leftToRight, numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
+    init(numberOfPages: Int, attributes: PageControlAttributesType, currentPage: Binding<Int>) {
         
-        self.layoutDirection = layoutDirection
         self.numberOfPages = numberOfPages
         self.attributes = attributes
         self._currentPage = currentPage
@@ -42,12 +40,11 @@ struct PageControl: View {
                         scrollToPreviousPage()
                     }
                 
-                if layoutDirection == .rightToLeft {
+                if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                     
                     ForEach((0 ..< numberOfPages).reversed(), id: \.self) { index in
                                             
                         PageControlButton(
-                            layoutDirection: layoutDirection,
                             page: index,
                             attributes: attributes,
                             currentPage: $currentPage
@@ -59,7 +56,6 @@ struct PageControl: View {
                     ForEach(0 ..< numberOfPages, id: \.self) { index in
                         
                         PageControlButton(
-                            layoutDirection: layoutDirection,
                             page: index,
                             attributes: attributes,
                             currentPage: $currentPage
@@ -112,6 +108,6 @@ struct PageControl_Previews: PreviewProvider {
         
         let attributes = PageControlAttributes(deselectedColor: .gray, selectedColor: .blue, circleSize: 10, circleSpacing: 20)
         
-        PageControl(layoutDirection: .leftToRight, numberOfPages: 3, attributes: attributes, currentPage: $currentPage)
+        PageControl(numberOfPages: 3, attributes: attributes, currentPage: $currentPage)
     }
 }

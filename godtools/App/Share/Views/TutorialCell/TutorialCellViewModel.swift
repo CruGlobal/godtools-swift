@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialCellViewModel: TutorialCellViewModelType {
+class TutorialCellViewModel {
         
     private let item: TutorialItemType
     private let tutorialVideoAnalytics: TutorialVideoAnalytics

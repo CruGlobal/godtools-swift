@@ -110,7 +110,7 @@ struct ToolCardView: View {
                             Spacer()
                             
                             ToolCardLanguageAvailabilityView(
-                                languageAvailability: viewModel.parallelLanguageAvailability
+                                languageAvailability: viewModel.languageAvailability
                             )
                         }
                     }
@@ -126,7 +126,7 @@ struct ToolCardView: View {
                     if layout == .thumbnail {
                         
                         ToolCardLanguageAvailabilityView(
-                            languageAvailability: viewModel.parallelLanguageAvailability
+                            languageAvailability: viewModel.languageAvailability
                         )
                         .padding([.top], 5)
                     }
@@ -173,7 +173,6 @@ struct ToolCardView: View {
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
         .padding([.bottom], 10) // This padding is needed so the shadow isn't clipped.
-        .environment(\.layoutDirection, viewModel.layoutDirection)
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
             
@@ -190,16 +189,14 @@ struct ToolCardView_Previews: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        let language = appDiContainer.domainLayer.getLanguageUseCase().getLanguage(locale: Locale(identifier: LanguageCodes.english))
         
         let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
         
         return ToolCardViewModel(
             tool: tool,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
     }

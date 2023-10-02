@@ -34,7 +34,6 @@ class AppDomainLayerDependencies {
         return GetAllFavoritedToolsLatestTranslationFilesUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository()
@@ -79,6 +78,8 @@ class AppDomainLayerDependencies {
         )
     }
     
+    
+    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -88,7 +89,7 @@ class AppDomainLayerDependencies {
     
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
-            getLanguageUseCase: getLanguageUseCase()
+            getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
         )
     }
     
@@ -204,13 +205,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getSettingsLanguagesUseCase() -> GetSettingsLanguagesUseCase {
-        return GetSettingsLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
     func getSettingsPrimaryLanguageUseCase() -> GetSettingsPrimaryLanguageUseCase {
         return GetSettingsPrimaryLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -225,13 +219,6 @@ class AppDomainLayerDependencies {
             languagesRepository: dataLayer.getLanguagesRepository(),
             languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
             getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
-    func getSetupParallelLanguageAvailabilityUseCase() -> GetSetupParallelLanguageAvailabilityUseCase {
-        return GetSetupParallelLanguageAvailabilityUseCase(
-            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
-            setupParallelLanguageViewedRepository: dataLayer.getSetupParallelLanguageViewedRepository()
         )
     }
     
@@ -278,16 +265,26 @@ class AppDomainLayerDependencies {
     
     func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
         return GetToolCategoriesUseCase(
+            getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository()
+            resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
     
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
             attachmentsRepository: dataLayer.getAttachmentsRepository()
+        )
+    }
+    
+    func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
+        return GetToolFilterLanguagesUseCase(
+            getAllToolsUseCase: getAllToolsUseCase(),
+            getLanguageUseCase: getLanguageUseCase(),
+            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
+            languagesRepository: dataLayer.getLanguagesRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
@@ -332,6 +329,24 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getTrackActionAnalyticsUseCase() -> TrackActionAnalyticsUseCase {
+        return TrackActionAnalyticsUseCase(
+            trackActionAnalytics: dataLayer.getAnalytics()
+        )
+    }
+    
+    func getTrackExitLinkAnalyticsUseCase() -> TrackExitLinkAnalyticsUseCase {
+        return TrackExitLinkAnalyticsUseCase(
+            trackExitLinkAnalytics: dataLayer.getAnalytics()
+        )
+    }
+    
+    func getTrackScreenViewAnalyticsUseCase() -> TrackScreenViewAnalyticsUseCase {
+        return TrackScreenViewAnalyticsUseCase(
+            trackScreenViewAnalytics: dataLayer.getAnalytics()
+        )
+    }
+    
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository(),
@@ -344,24 +359,6 @@ class AppDomainLayerDependencies {
         return GetTutorialUseCase(
             localizationServices: dataLayer.getLocalizationServices(),
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
-    func getUserDidDeleteSettingsParallelLanguageUseCase() -> UserDidDeleteSettingsParallelLanguageUseCase {
-        return UserDidDeleteSettingsParallelLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
-        )
-    }
-    
-    func getUserDidSetSettingsParallelLanguageUseCase() -> UserDidSetSettingsParallelLanguageUseCase {
-        return UserDidSetSettingsParallelLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
-        )
-    }
-    
-    func getUserDidSetSettingsPrimaryLanguageUseCase() -> UserDidSetSettingsPrimaryLanguageUseCase {
-        return UserDidSetSettingsPrimaryLanguageUseCase(
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository()
         )
     }
     

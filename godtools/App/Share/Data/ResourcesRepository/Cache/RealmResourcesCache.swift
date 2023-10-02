@@ -36,7 +36,7 @@ class RealmResourcesCache {
         }
     }
     
-    func getAllTools(sorted: Bool, category: String? = nil) -> [ResourceModel] {
+    func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
         let metaTools = getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
         let defaultVariants = getResources(ids: defaultVariantIds)
@@ -48,6 +48,10 @@ class RealmResourcesCache {
         var allTools = combinedResourcesAndDefaultVariants.filter { resource in
                         
             if let category = category, resource.attrCategory != category {
+                return false
+            }
+            
+            if let languageId = languageId, resource.languageIds.contains(languageId) == false {
                 return false
             }
             

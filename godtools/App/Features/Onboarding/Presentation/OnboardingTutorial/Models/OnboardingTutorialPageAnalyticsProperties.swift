@@ -13,6 +13,6 @@ struct OnboardingTutorialPageAnalyticsProperties {
     let screenName: String
     let siteSection: String
     let siteSubsection: String
-    let contentLanguage: String
-    let secondaryContentLanguage: String
+    let contentLanguage: String?
+    let contentLanguageSecondary: String?
 }

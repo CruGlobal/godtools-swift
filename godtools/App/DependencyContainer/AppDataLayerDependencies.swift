@@ -31,7 +31,7 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-    
+        
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -96,6 +96,16 @@ class AppDataLayerDependencies {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
         )
+    }
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    func getDeviceSystemLanguage() -> DeviceSystemLanguage {
+        return DeviceSystemLanguage()
     }
     
     func getEmailSignUpService() -> EmailSignUpService {
@@ -166,7 +176,7 @@ class AppDataLayerDependencies {
             resourcesRepository: getResourcesRepository()
         )
     }
-
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -201,6 +211,10 @@ class AppDataLayerDependencies {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
         )
+    }
+    
+    func getLocaleLanguageName() -> LocaleLanguageName {
+        return LocaleLanguageName()
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -282,18 +296,16 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSetupParallelLanguageViewedRepository() -> SetupParallelLanguageViewedRepository {
-        return SetupParallelLanguageViewedRepository(
-            cache: SetupParallelLanguageViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }
     
     func getSharedLaunchCountRepository() -> LaunchCountRepository {
         return LaunchCountRepository.shared
+    }
+    
+    func getSharedRealmDatabase() -> RealmDatabase {
+        return sharedRealmDatabase
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {

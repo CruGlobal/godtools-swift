@@ -94,17 +94,8 @@ extension MobileContentPageViewModel {
     }
     
     func buttonWithUrlTapped(url: URL) {
-               
-        let exitLinkAnalytics = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil,
-            url: url
-        )
-                        
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, trackExitLinkAnalytics: exitLinkAnalytics)
+                             
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

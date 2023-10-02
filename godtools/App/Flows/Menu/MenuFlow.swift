@@ -19,7 +19,7 @@ class MenuFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
@@ -28,7 +28,7 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = UINavigationController()
+        navigationController = AppLayoutDirectionBasedNavigationController()
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
@@ -92,14 +92,14 @@ class MenuFlow: Flow {
         case .userCompletedSignInFromCreateAccount(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentError(error: error)
+                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
         case .userCompletedSignInFromLogin(let error):
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentError(error: error)
+                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
@@ -140,7 +140,7 @@ class MenuFlow: Flow {
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
             
-        case .leaveAReviewTappedFromMenu(let baseAnalyticsAttributes):
+        case .leaveAReviewTappedFromMenu(let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
             
             let appleAppId: String = appDiContainer.dataLayer.getAppConfig().getAppleAppId()
             
@@ -150,9 +150,7 @@ class MenuFlow: Flow {
                 return
             }
             
-            let trackExitLinkAnalytics = ExitLinkModel(baseAnalyticsAttributes: baseAnalyticsAttributes, url: writeReviewURL)
-            
-            navigateToURL(url: writeReviewURL, trackExitLinkAnalytics: trackExitLinkAnalytics)
+            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
@@ -235,15 +233,14 @@ class MenuFlow: Flow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             localizationServices: localizationServices,
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase()
+            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = MenuView(viewModel: viewModel)
@@ -302,17 +299,37 @@ class MenuFlow: Flow {
         return modal
     }
     
+    private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
+        
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let message: String
+        
+        switch authError {
+        case .accountAlreadyExists:
+            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountAlreadyExists.message")
+            
+        case .accountNotFound:
+            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountNotFound.message")
+            
+        case .other(let error):
+            message = error.localizedDescription
+        }
+        
+        return AlertMessage(
+            title: "",
+            message: message
+        )
+    }
+    
     private func getAccountView() -> UIViewController {
         
         let viewModel = AccountViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let view = AccountView(viewModel: viewModel)
@@ -420,11 +437,9 @@ class MenuFlow: Flow {
         
         let viewModel = WebContentViewModel(
             flowDelegate: self,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
             webContent: webContent,
-            backTappedFromWebContentStep: backTappedFromWebContentStep
+            backTappedFromWebContentStep: backTappedFromWebContentStep,
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let view = WebContentView(viewModel: viewModel)

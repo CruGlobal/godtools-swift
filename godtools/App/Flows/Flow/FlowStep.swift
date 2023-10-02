@@ -22,10 +22,9 @@ enum FlowStep {
     case menuTappedFromTools
     case languageSettingsTappedFromTools
     case openTutorialTappedFromTools
-    case userViewedFavoritedToolsListFromTools
-    case userViewedAllToolsListFromTools
     
     // onboarding
+    case chooseAppLanguageTappedFromOnboardingTutorial
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
     case closeVideoPlayerTappedFromOnboardingTutorial
     case videoEndedOnOnboardingTutorial
@@ -66,13 +65,15 @@ enum FlowStep {
     case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
     
     // tools
+    case toolFilterTappedFromTools(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>)
+    case backTappedFromToolFilter
     case toolTappedFromTools(resource: ResourceModel)
     
     // toolDetails
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(resource: ResourceModel)
     case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
-    case urlLinkTappedFromToolDetail(url: URL, trackExitLinkAnalytics: ExitLinkModel)
+    case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(resource: ResourceModel)
@@ -82,15 +83,6 @@ enum FlowStep {
     case homeTappedFromTool(isScreenSharing: Bool)
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case tractFlowCompleted(state: TractFlowCompletedState)
-        
-    // setup parallel language
-    case languageSelectorTappedFromSetupParallelLanguage
-    case yesTappedFromSetupParallelLanguage
-    case noThanksTappedFromSetupParallelLanguage
-    case getStartedTappedFromSetupParallelLanguage
-    case languageSelectedFromParallelLanguageList
-    case backgroundTappedFromSetupParallelLanguage
-    case backgroundTappedFromParallelLanguageList
         
     // tutorial
     case closeTappedFromTutorial
@@ -109,7 +101,7 @@ enum FlowStep {
     case backTappedFromReportABug
     case askAQuestionTappedFromMenu
     case backTappedFromAskAQuestion
-    case leaveAReviewTappedFromMenu(baseAnalyticsAttributes: BaseAnalyticsAttributesModel)
+    case leaveAReviewTappedFromMenu(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     case shareAStoryWithUsTappedFromMenu
     case backTappedFromShareAStoryWithUs
     case shareGodToolsTappedFromMenu
@@ -127,8 +119,8 @@ enum FlowStep {
     // social sign-in
     case closeTappedFromLogin
     case closeTappedFromCreateAccount
-    case userCompletedSignInFromLogin(error: Error?)
-    case userCompletedSignInFromCreateAccount(error: Error?)
+    case userCompletedSignInFromLogin(error: AuthErrorDomainModel?)
+    case userCompletedSignInFromCreateAccount(error: AuthErrorDomainModel?)
         
     // delete account
     case closeTappedFromDeleteAccount
@@ -142,12 +134,13 @@ enum FlowStep {
     
     // language settings
     case backTappedFromLanguageSettings
-    case choosePrimaryLanguageTappedFromLanguageSettings
-    case chooseParallelLanguageTappedFromLanguageSettings
-    case backTappedFromChooseLanguage
-    case languageTappedFromChooseLanguage
-    case deleteLanguageTappedFromChooseLanguage
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
+    case chooseAppLanguageTappedFromLanguageSettings
+    
+    // choose app language
+    case backTappedFromAppLanguages
+    case appLanguageTappedFromAppLanguages(appLanguage: AppLanguageListItemDomainModel)
+    case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
     
     // article
     case backTappedFromArticleCategories

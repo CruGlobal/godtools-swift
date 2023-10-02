@@ -12,10 +12,9 @@ import Combine
 
 class ToolCardViewModel: ObservableObject {
         
-    private let localizationServices: LocalizationServices
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
             
     private var getBannerImageCancellable: AnyCancellable?
@@ -27,43 +26,38 @@ class ToolCardViewModel: ObservableObject {
     @Published var isFavorited = false
     @Published var title: String = ""
     @Published var category: String = ""
-    @Published var parallelLanguageAvailability: String = ""
+    @Published var languageAvailability: String = ""
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
-    @Published var layoutDirection: LayoutDirection = .leftToRight
             
-    init(tool: ToolDomainModel, localizationServices: LocalizationServices, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolDomainModel, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
-        self.localizationServices = localizationServices
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
-                
-        let currentTranslationLanguage: LanguageDomainModel = tool.currentTranslationLanguage
-        let localeIdentifier: String = currentTranslationLanguage.localeIdentifier
-        
+                        
         title = tool.name
-        category = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "tool_category_\(tool.category)")
-        detailsButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "favorites.favoriteLessons.details")
-        openButtonTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeIdentifier, key: "open")
-        layoutDirection = LayoutDirection.from(languageDirection: currentTranslationLanguage.direction)
         
-        getSettingsParallelLanguageUseCase.getParallelLanguagePublisher()
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_category_\(tool.category)")
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (parallelLanguage: LanguageDomainModel?) in
-                
-                self?.reloadParallelLanguageAvailability(parallelLanguage: parallelLanguage)
-            }
-            .store(in: &cancellables)
+            .assign(to: &$category)
         
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteLessons.details")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$detailsButtonTitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "open")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$openButtonTitle)
+                
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
-            .assign(to: \.isFavorited, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$isFavorited)
         
         downloadBannerImage()
+        setLanguageAvailabilityText(language: alternateLanguage)
     }
     
     private func downloadBannerImage() {
@@ -86,16 +80,16 @@ class ToolCardViewModel: ObservableObject {
         }
     }
     
-    private func reloadParallelLanguageAvailability(parallelLanguage: LanguageDomainModel?) {
+    private func setLanguageAvailabilityText(language: LanguageDomainModel?) {
         
-        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: parallelLanguage)
+        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: language)
         
         if getLanguageAvailability.isAvailable {
             
-            parallelLanguageAvailability = getLanguageAvailability.availabilityString
+            languageAvailability = getLanguageAvailability.availabilityString
             
         } else {
-            parallelLanguageAvailability = ""
+            languageAvailability = ""
         }
     }
 }

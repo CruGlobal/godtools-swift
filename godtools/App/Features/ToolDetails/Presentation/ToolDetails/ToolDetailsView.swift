@@ -45,6 +45,7 @@ struct ToolDetailsView: View {
         .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
         .background(Color(.sRGB, red: 245 / 255, green: 245 / 255, blue: 245 / 255, opacity: 1))
         .edgesIgnoringSafeArea(.bottom)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()
         }
@@ -130,10 +131,11 @@ struct ToolDetailsView_Preview: PreviewProvider {
             getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
             getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
             getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
-            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         return ToolDetailsView(viewModel: viewModel)

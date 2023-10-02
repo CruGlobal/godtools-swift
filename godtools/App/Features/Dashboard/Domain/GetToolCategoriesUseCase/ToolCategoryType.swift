@@ -9,6 +9,6 @@
 import Foundation
 
 enum ToolCategoryType {
-    case allTools
+    case anyCategory
     case category(id: String)
 }

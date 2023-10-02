@@ -15,9 +15,9 @@ class ArticleDeepLinkFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, aemUri: String) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, aemUri: String) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -81,13 +81,11 @@ class ArticleDeepLinkFlow: Flow {
        
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
+            flowType: .deeplink,
             aemCacheObject: aemCacheObject,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            flowType: .deeplink
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
     
         let view = ArticleWebView(viewModel: viewModel)

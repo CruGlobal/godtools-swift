@@ -12,23 +12,23 @@ import Combine
 class ShareToolViewModel {
         
     private let resource: ResourceModel
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
-    private let analytics: AnalyticsContainer
+    private let localizationServices: LocalizationServices
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let pageNumber: Int
     
     let shareMessage: String
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, analytics: AnalyticsContainer) {
+    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
                 
         self.resource = resource
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
-        self.analytics = analytics
+        self.localizationServices = localizationServices
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
         
         var shareUrlString: String = "https://knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
@@ -39,10 +39,9 @@ class ShareToolViewModel {
         
         shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
         
-        shareMessage = String.localizedStringWithFormat(
-            localizationServices.stringForSystemElseEnglish(key: "tract_share_message"),
-            shareUrlString
-        )
+        let localizedTractShareMessage: String = localizationServices.stringForSystemElseEnglish(key: "tract_share_message")
+        
+        shareMessage = String.localizedStringWithFormat(localizedTractShareMessage, shareUrlString)
     }
     
     private var analyticsScreenName: String {
@@ -64,30 +63,26 @@ extension ShareToolViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-        
-        let trackAction = TrackActionModel(
+            
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.shareAction: 1
             ]
         )
-                
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
             .sink { _ in

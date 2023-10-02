@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ShareToolView {
+class ShareToolView: NSObject {
     
     private let viewModel: ShareToolViewModel
     
-    let controller: UIActivityViewController
+    let controller: UIViewController
     
     init(viewModel: ShareToolViewModel) {
         
@@ -22,6 +22,8 @@ class ShareToolView {
             activityItems: [viewModel.shareMessage],
             applicationActivities: nil
         )
+        
+        super.init()
         
         viewModel.pageViewed()
     }

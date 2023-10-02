@@ -7,39 +7,19 @@
 //
 
 import Foundation
+import Combine
 
 class GetDeviceLanguageUseCase {
-       
-    private let getLanguageUseCase: GetLanguageUseCase
-    
-    init(getLanguageUseCase: GetLanguageUseCase) {
+
+    private let getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface
+
+    init(getDeviceLanguageRepositoryInterface: GetDeviceLanguageRepositoryInterface) {
         
-        self.getLanguageUseCase = getLanguageUseCase
+        self.getDeviceLanguageRepositoryInterface = getDeviceLanguageRepositoryInterface
     }
     
     func getDeviceLanguage() -> DeviceLanguageDomainModel {
-                
-        let deviceLocale: Locale = getDeviceLocale()
         
-        return getDeviceLanguage(for: deviceLocale)
-    }
-    
-    private func getDeviceLanguage(for locale: Locale) -> DeviceLanguageDomainModel {
-        
-        return DeviceLanguageDomainModel(
-            language: getLanguageUseCase.getLanguage(locale: locale),
-            locale: locale,
-            localeIdentifier: locale.identifier,
-            localeLanguageCode: (locale.languageCode ?? locale.identifier).lowercased()
-        )
-    }
-    
-    private func getDeviceLocale() -> Locale {
-        
-        if let localeIdentifier = Bundle.main.preferredLocalizations.first {
-            return Locale(identifier: localeIdentifier)
-        }
-        
-        return Locale.current
+        return getDeviceLanguageRepositoryInterface.getDeviceLanguage()
     }
 }

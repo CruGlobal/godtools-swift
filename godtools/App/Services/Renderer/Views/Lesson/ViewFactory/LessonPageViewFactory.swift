@@ -11,12 +11,12 @@ import GodToolsToolParser
 
 class LessonPageViewFactory: MobileContentPageViewFactoryType {
     
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
         
-    init(analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
     
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
@@ -27,7 +27,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = LessonPageViewModel(
                 pageModel: pageModel,
                 renderedPageContext: renderedPageContext,
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
