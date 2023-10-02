@@ -24,7 +24,7 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .arabic)
                 let getDeviceAppLanguageRepository = TestsGetDeviceLanguageRepository(deviceLanguageCode: .english)
                 
-                let getAppUILayoutDirectionUseCase = GetAppUILayoutDirectionUseCase(
+                let getAppUILayoutDirectionUseCase = GetInterfaceLayoutDirectionUseCase(
                     getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase(
                         getAppLanguagesListRepositoryInterface: getAppLanguagesListRepository,
                         getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository,
@@ -40,10 +40,10 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var layoutDirectionRef: AppUILayoutDirectionDomainModel?
+                        var layoutDirectionRef: AppInterfaceLayoutDirectionDomainModel?
                         
                         _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
-                            .sink { (layoutDirection: AppUILayoutDirectionDomainModel) in
+                            .sink { (layoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                                 
                                 layoutDirectionRef = layoutDirection
                                 
@@ -61,7 +61,7 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .english)
                 let getDeviceAppLanguageRepository = TestsGetDeviceLanguageRepository(deviceLanguageCode: .arabic)
                 
-                let getAppUILayoutDirectionUseCase = GetAppUILayoutDirectionUseCase(
+                let getAppUILayoutDirectionUseCase = GetInterfaceLayoutDirectionUseCase(
                     getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase(
                         getAppLanguagesListRepositoryInterface: getAppLanguagesListRepository,
                         getUserPreferredAppLanguageRepositoryInterface: getUserPreferredAppLanguageRepository,
@@ -77,10 +77,10 @@ class GetAppUILayoutDirectionUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var layoutDirectionRef: AppUILayoutDirectionDomainModel?
+                        var layoutDirectionRef: AppInterfaceLayoutDirectionDomainModel?
                         
                         _ = getAppUILayoutDirectionUseCase.getLayoutDirectionPublisher()
-                            .sink { (layoutDirection: AppUILayoutDirectionDomainModel) in
+                            .sink { (layoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                                 
                                 layoutDirectionRef = layoutDirection
                                 
