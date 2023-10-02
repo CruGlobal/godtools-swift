@@ -39,8 +39,10 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        sectionTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "favorites.favoriteTools.title")
-        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$sectionTitle)
+                
         getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (favoritedTools: [ToolDomainModel]) in

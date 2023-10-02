@@ -29,9 +29,17 @@ class AppLanguagesViewModel: ObservableObject {
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.localizationServices = localizationServices
         
-        allAppLanguages = getAppLanguagesListUseCase.getAppLanguagesList()
         appLanguages = allAppLanguages
         navTitle = "App Language"   // TODO - localize this
+        
+        getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguagesList: [AppLanguageListItemDomainModel]) in
+                
+                self?.allAppLanguages = appLanguagesList
+                self?.appLanguages = appLanguagesList
+            }
+            .store(in: &cancellables)
         
         searchTextPublisher
             .sink { [weak self] searchText in

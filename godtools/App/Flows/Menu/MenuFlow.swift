@@ -19,7 +19,7 @@ class MenuFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppLayoutDirectionBasedNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
@@ -28,7 +28,7 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = UINavigationController()
+        navigationController = AppLayoutDirectionBasedNavigationController()
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(

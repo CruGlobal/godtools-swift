@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import Combine
 
 class TestsGetDeviceLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
     
@@ -18,8 +19,9 @@ class TestsGetDeviceLanguageRepository: GetDeviceAppLanguageRepositoryInterface 
         self.deviceLanguageCode = deviceLanguageCode
     }
     
-    func getDeviceAppLanguage() -> AppLanguageCodeDomainModel {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
         
-        return deviceLanguageCode.value
+        return Just(deviceLanguageCode.value)
+            .eraseToAnyPublisher()
     }
 }

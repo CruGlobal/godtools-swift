@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import Combine
 
 class TestsGetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageRepositoryInterface {
     
@@ -18,8 +19,15 @@ class TestsGetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageRep
         self.userAppLanguageCode = userAppLanguageCode
     }
     
-    func getUserPreferredAppLanguage() -> AppLanguageCodeDomainModel? {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel?, Never> {
         
-        return userAppLanguageCode?.value
+        return Just(userAppLanguageCode?.value)
+            .eraseToAnyPublisher()
+    }
+    
+    func observeLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return Just(Void())
+            .eraseToAnyPublisher()
     }
 }

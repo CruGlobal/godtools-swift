@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol GetAppLanguageNameRepositoryInterface {
     
-    func getLanguageName(languageCode: AppLanguageCodeDomainModel, translateInLanguageCode: AppLanguageCodeDomainModel) -> AppLanguageNameDomainModel
+    func getLanguageNamePublisher(appLanguageCode: AppLanguageCodeDomainModel, translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never>
 }

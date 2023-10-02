@@ -31,7 +31,7 @@ class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published var favoritingToolBannerMessage: String
+    @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
     @Published var toolSpotlightSubtitle: String = ""
@@ -58,16 +58,27 @@ class ToolsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        favoritingToolBannerMessage = getInterfaceStringInAppLanguageUseCase.getString(id: "tool_offline_favorite_message")
-        toolSpotlightTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.title.rawValue)
-        toolSpotlightSubtitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.Spotlight.subtitle.rawValue)
-        filterTitle = getInterfaceStringInAppLanguageUseCase.getString(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
-        
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
         let anyCategorySelection = getToolCategoriesUseCase.getAnyCategoryDomainModel()
         let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
         toolFilterSelectionPublisher = CurrentValueSubject(ToolFilterSelection(selectedCategory: anyCategorySelection, selectedLanguage: anyLanguageSelection))
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_offline_favorite_message")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$favoritingToolBannerMessage)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$toolSpotlightTitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$toolSpotlightSubtitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$filterTitle)
         
         getSpotlightToolsUseCase.getSpotlightToolsPublisher()
             .receive(on: DispatchQueue.main)

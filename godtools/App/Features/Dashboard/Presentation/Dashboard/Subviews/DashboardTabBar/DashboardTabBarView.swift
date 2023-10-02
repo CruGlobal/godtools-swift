@@ -9,14 +9,11 @@
 import SwiftUI
 
 struct DashboardTabBarView: View {
-        
-    private let layoutDirection: LayoutDirection
-    
+            
     @ObservedObject private var viewModel: DashboardViewModel
             
-    init(layoutDirection: LayoutDirection = ApplicationLayout.direction.layoutDirection, viewModel: DashboardViewModel) {
+    init(viewModel: DashboardViewModel) {
         
-        self.layoutDirection = layoutDirection
         self.viewModel = viewModel
     }
     
@@ -26,7 +23,7 @@ struct DashboardTabBarView: View {
             
             HStack(alignment: .center, spacing: 0) {
                 
-                if layoutDirection == .rightToLeft {
+                if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                     
                     ForEach((0 ..< viewModel.numberOfTabs).reversed(), id: \.self) { (index: Int) in
                                             

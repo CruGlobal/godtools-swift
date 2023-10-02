@@ -127,6 +127,11 @@ class OnboardingTutorialViewModel: ObservableObject {
 
 extension OnboardingTutorialViewModel {
     
+    func chooseAppLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromOnboardingTutorial)
+    }
+    
     @objc func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)

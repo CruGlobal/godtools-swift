@@ -47,12 +47,17 @@ struct DashboardView: View {
                 )
             }
         }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
     
 extension DashboardView {
     
-    func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
+    func getCurrentTab() -> DashboardTabTypeDomainModel {
+        return viewModel.getTab(tabIndex: viewModel.currentTab)
+    }
+    
+    func navigateToTab(tab: DashboardTabTypeDomainModel) {
         
         viewModel.tabTapped(tab: tab)
     }

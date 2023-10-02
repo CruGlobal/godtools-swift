@@ -38,8 +38,13 @@ class LessonsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        sectionTitle = getInterfaceStringInAppLanguageUseCase.getString(id: "lessons.pageTitle")
-        subtitle = getInterfaceStringInAppLanguageUseCase.getString(id: "lessons.pageSubtitle")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "lessons.pageTitle")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$sectionTitle)
+        
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "lessons.pageSubtitle")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$subtitle)
                 
         getLessonsUseCase.getLessonsPublisher()
             .receive(on: DispatchQueue.main)
