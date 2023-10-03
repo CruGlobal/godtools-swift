@@ -12,7 +12,7 @@ import Combine
 class AppLanguagesViewModel: ObservableObject {
     
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
-    private let localizationServices: LocalizationServices
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -23,14 +23,18 @@ class AppLanguagesViewModel: ObservableObject {
     @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
-        self.localizationServices = localizationServices
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         
         appLanguages = allAppLanguages
-        navTitle = "App Language"   // TODO - localize this
+        
+        getInterfaceStringInAppLanguageUseCase
+            .observeStringChangedPublisher(id: "languageSettings.appLanguage.title")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$navTitle)
         
         getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
             .receive(on: DispatchQueue.main)
@@ -75,7 +79,7 @@ extension AppLanguagesViewModel {
         
         return SearchBarViewModel(
             searchTextPublisher: searchTextPublisher,
-            localizationServices: localizationServices
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }
 }

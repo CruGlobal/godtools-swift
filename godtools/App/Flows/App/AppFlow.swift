@@ -793,18 +793,16 @@ extension AppFlow {
         case .category:
             
             viewModel = ToolFilterCategorySelectionViewModel(
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher
+                toolFilterSelectionPublisher: toolFilterSelectionPublisher,
+                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
             )
             
         case .language:
             
             viewModel = ToolFilterLanguageSelectionViewModel(
                 getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
                 toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
         }

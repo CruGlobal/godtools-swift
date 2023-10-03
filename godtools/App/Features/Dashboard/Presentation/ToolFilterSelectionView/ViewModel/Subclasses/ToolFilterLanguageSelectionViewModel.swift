@@ -15,21 +15,16 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
     
     private var languages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
-    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
         self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
         
-        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
+        super.init(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        getInterfaceStringInAppLanguageUseCase
+            .observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (primaryLanguage: LanguageDomainModel?) in
-                
-                let primaryLocaleId: String? = primaryLanguage?.localeIdentifier
-
-                self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
-            }
-            .store(in: &cancellables)
+            .assign(to: &$navTitle)
         
         getToolFilterLanguagesUseCase.getToolFilterLanguagesPublisher(filteredByCategory: selectedCategory)
             .sink { [weak self] languages in

@@ -12,11 +12,15 @@ import Combine
 class SearchBarViewModel: ObservableObject {
     
     let searchTextPublisher: CurrentValueSubject<String, Never>
-    @Published var cancelText: String
+    @Published var cancelText: String = ""
 
-    init(searchTextPublisher: CurrentValueSubject<String, Never>, localizationServices: LocalizationServices) {
+    init(searchTextPublisher: CurrentValueSubject<String, Never>, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
         
         self.searchTextPublisher = searchTextPublisher
-        self.cancelText = localizationServices.stringForSystemElseEnglish(key: "cancel")
+        
+        getInterfaceStringInAppLanguageUseCase
+            .observeStringChangedPublisher(id: "cancel")
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$cancelText)
     }
 }
