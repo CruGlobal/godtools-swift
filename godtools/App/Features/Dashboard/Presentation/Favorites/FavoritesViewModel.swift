@@ -34,7 +34,7 @@ class FavoritesViewModel: ObservableObject {
     @Published var showsOpenTutorialBanner: Bool = false
     @Published var welcomeTitle: String = ""
     @Published var featuredLessonsTitle: String = ""
-    @Published var featuredLessons: [LessonDomainModel] = Array()
+    @Published var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published var yourFavoriteToolsTitle: String = ""
     @Published var viewAllFavoriteToolsButtonTitle: String = ""
     @Published var yourFavoriteTools: [ToolDomainModel] = Array()
@@ -101,9 +101,9 @@ class FavoritesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
+        getFeaturedLessonsUseCase.observeFeaturedLessonsPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (featuredLessons: [LessonDomainModel]) in
+            .sink { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.featuredLessons = featuredLessons
             }
@@ -165,7 +165,7 @@ class FavoritesViewModel: ObservableObject {
         )
     }
     
-    private func trackFeaturedLessonTappedAnalytics(for lesson: LessonDomainModel) {
+    private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -177,7 +177,7 @@ class FavoritesViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                AnalyticsConstants.Keys.tool: lesson.analyticsToolName
+                AnalyticsConstants.Keys.tool: featuredLesson.lesson.analyticsToolName
               ]
         )
     }
@@ -268,18 +268,18 @@ extension FavoritesViewModel {
         flowDelegate?.navigate(step: .goToToolsTappedFromFavorites)
     }
     
-    func getFeaturedLessonViewModel(lesson: LessonDomainModel) -> LessonCardViewModel  {
+    func getFeaturedLessonViewModel(featuredLesson: FeaturedLessonDomainModel) -> LessonCardViewModel  {
                 
         return LessonCardViewModel(
-            lesson: lesson,
+            lessonListItem: featuredLesson,
             attachmentsRepository: attachmentsRepository
         )
     }
     
-    func featuredLessonTapped(lesson: LessonDomainModel) {
+    func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
                 
-        flowDelegate?.navigate(step: .lessonTappedFromFavorites(lesson: lesson))
-        trackFeaturedLessonTappedAnalytics(for: lesson)
+        flowDelegate?.navigate(step: .featuredLessonTappedFromFavorites(featuredLesson: featuredLesson))
+        trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
     
     func getYourFavoriteToolViewModel(tool: ToolDomainModel) -> ToolCardViewModel {
