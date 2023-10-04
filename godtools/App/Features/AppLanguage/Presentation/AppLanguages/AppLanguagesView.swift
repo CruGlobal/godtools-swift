@@ -24,7 +24,7 @@ struct AppLanguagesView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel())
             
             List {
-                ForEach(viewModel.appLanguages) { appLanguage in
+                ForEach(viewModel.appLanguageSearchResults) { appLanguage in
                     
                     AppLanguageItemView(appLanguage: appLanguage) {
                         

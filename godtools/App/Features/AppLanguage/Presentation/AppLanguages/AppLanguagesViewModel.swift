@@ -13,6 +13,7 @@ class AppLanguagesViewModel: ObservableObject {
     
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -20,16 +21,17 @@ class AppLanguagesViewModel: ObservableObject {
     private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     private var allAppLanguages: [AppLanguageListItemDomainModel] = Array()
     
-    @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
+    @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
         
-        appLanguages = allAppLanguages
+        appLanguageSearchResults = allAppLanguages
         
         getInterfaceStringInAppLanguageUseCase
             .observeStringChangedPublisher(id: "languageSettings.appLanguage.title")
@@ -41,23 +43,29 @@ class AppLanguagesViewModel: ObservableObject {
             .sink { [weak self] (appLanguagesList: [AppLanguageListItemDomainModel]) in
                 
                 self?.allAppLanguages = appLanguagesList
-                self?.appLanguages = appLanguagesList
+                self?.setSearchResults()
             }
             .store(in: &cancellables)
         
         searchTextPublisher
             .sink { [weak self] searchText in
-                guard let self = self else { return }
                 
-                if searchText.isEmpty {
-                    self.appLanguages = self.allAppLanguages
-                    
-                } else {
-                    
-                    self.appLanguages = self.allAppLanguages.filter { $0.languageNameTranslatedInCurrentAppLanguage.value.contains(searchText) }
-                }
+                self?.setSearchResults()
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - Private
+
+extension AppLanguagesViewModel {
+    
+    private func setSearchResults() {
+        
+        appLanguageSearchResults = searchAppLanguageInAppLanguagesListUseCase.getSearchResults(
+            for: searchTextPublisher.value,
+            searchingIn: allAppLanguages
+        )
     }
 }
 
