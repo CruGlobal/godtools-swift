@@ -16,22 +16,20 @@ class GetToolFilterLanguagesUseCase {
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
-    private let resourcesRepository: ResourcesRepository
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
         
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
-        self.resourcesRepository = resourcesRepository
     }
     
     func getToolFilterLanguagesPublisher(filteredByCategory: ToolCategoryDomainModel?) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
         
-        let languageIds = self.resourcesRepository
-            .getAllTools(sorted: false, category: filteredByCategory?.id)
+        let languageIds = self.getAllToolsUseCase
+            .getAllTools(sorted: false, optimizeForBatchRequests: true, categoryId: filteredByCategory?.id)
             .getUniqueLanguageIds()
         
         let languages = createLanguageFilterDomainModels(from: Array(languageIds), withTranslation: nil, filteredByCategoryId: filteredByCategory?.id)
@@ -146,9 +144,9 @@ class GetToolFilterLanguagesUseCase {
     }
 }
 
-// MARK: - ResourceModel Array Extension
+// MARK: - ToolDomainModel Array Extension
 
-private extension Array where Element == ResourceModel {
+private extension Array where Element == ToolDomainModel {
     
     func getUniqueLanguageIds() -> Set<String> {
         
