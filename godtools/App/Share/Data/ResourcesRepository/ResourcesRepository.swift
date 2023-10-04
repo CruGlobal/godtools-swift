@@ -32,8 +32,8 @@ class ResourcesRepository {
         return cache.numberOfResources
     }
     
-    func getResourcesChanged() -> AnyPublisher<Void, Never> {
-        return cache.getResourcesChanged()
+    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getResourcesChangedPublisher()
     }
     
     func getAllLessons() -> [ResourceModel] {
@@ -42,10 +42,6 @@ class ResourcesRepository {
     
     func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
         return cache.getAllTools(sorted: sorted, category: category, languageId: languageId)
-    }
-    
-    func getFeaturedLessons() -> [ResourceModel] {
-        return cache.getFeaturedLessons()
     }
     
     func getResource(id: String) -> ResourceModel? {

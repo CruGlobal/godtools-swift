@@ -99,14 +99,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
-        return GetFeaturedLessonsUseCase(
-            getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
-        )
-    }
-    
     func getGlobalActivityThisWeekUseCase() -> GetGlobalActivityThisWeekUseCase {
         return GetGlobalActivityThisWeekUseCase(
             globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
@@ -138,22 +130,7 @@ class AppDomainLayerDependencies {
             localizationServices: dataLayer.getLocalizationServices()
         )
     }
-    
-    func getLessonUseCase() -> GetLessonUseCase {
-        return GetLessonUseCase(
-            translationsRepository: dataLayer.getTranslationsRepository(),
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase()
-        )
-    }
-    
-    func getLessonsUseCase() -> GetLessonsUseCase {
-        return GetLessonsUseCase(
-            getLessonUseCase: getLessonUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase()
-        )
-    }
-    
+        
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),

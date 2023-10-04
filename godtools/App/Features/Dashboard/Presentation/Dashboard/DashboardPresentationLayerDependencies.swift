@@ -45,7 +45,7 @@ class DashboardPresentationLayerDependencies {
         return LessonsViewModel(
             flowDelegate: unwrappedFlowDelegate,
             dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
+            getLessonsListUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsListUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
@@ -61,7 +61,7 @@ class DashboardPresentationLayerDependencies {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),

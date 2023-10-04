@@ -25,7 +25,7 @@ class RealmResourcesCache {
         return realmDatabase.openRealm().objects(RealmResource.self).count
     }
     
-    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
             .eraseToAnyPublisher()
     }
@@ -64,10 +64,6 @@ class RealmResourcesCache {
         }
         
         return allTools
-    }
-    
-    func getFeaturedLessons() -> [ResourceModel] {
-        return getAllLessons().filter { $0.attrSpotlight == true }
     }
     
     func getResource(id: String) -> ResourceModel? {

@@ -29,7 +29,7 @@ class GetAllFavoritedToolsLatestTranslationFilesUseCase {
         self.translationsRepository = translationsRepository
         
         Publishers.CombineLatest3(
-            resourcesRepository.getResourcesChanged(),
+            resourcesRepository.getResourcesChangedPublisher(),
             favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
         )
