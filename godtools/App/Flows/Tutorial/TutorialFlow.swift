@@ -76,16 +76,15 @@ extension TutorialFlow {
         
         let view = TutorialView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<TutorialView>(rootView: view)
-        
-        let backButton: UIBarButtonItem = hostingView.addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navBack.uiImage,
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.backTapped)
+        let hostingView = AppLayoutDirectionBasedHostingController<TutorialView>(
+            rootView: view,
+            appLayoutBasedBackButton: AppLayoutDirectionBasedBackBarButtonItem(
+                target: viewModel,
+                action: #selector(viewModel.backTapped)
+            ),
+            toggleBackButtonVisibilityPublisher: viewModel.hidesBackButtonPublisher
         )
-        
+                
         _ = hostingView.addBarButtonItem(
             to: .right,
             image: ImageCatalog.navClose.uiImage,
@@ -93,18 +92,6 @@ extension TutorialFlow {
             target: viewModel,
             action: #selector(viewModel.closeTapped)
         )
-        
-        viewModel.hidesBackButtonPublisher
-            .sink { (backButtonHidden: Bool) in
-                
-                if backButtonHidden {
-                    hostingView.removeBarButtonItem(item: backButton)
-                }
-                else {
-                    hostingView.addBarButtonItem(item: backButton, barPosition: .left)
-                }
-            }
-            .store(in: &cancellables)
         
         return hostingView
     }
