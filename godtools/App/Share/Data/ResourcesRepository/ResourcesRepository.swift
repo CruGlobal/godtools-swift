@@ -36,10 +36,6 @@ class ResourcesRepository {
         return cache.getResourcesChangedPublisher()
     }
     
-    func getAllLessons() -> [ResourceModel] {
-        return cache.getAllLessons()
-    }
-    
     func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
         return cache.getAllTools(sorted: sorted, category: category, languageId: languageId)
     }
@@ -137,5 +133,18 @@ class ResourcesRepository {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Lessons
+
+extension ResourcesRepository {
+    
+    func getAllLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getAllLessons(sorted: sorted)
+    }
+    
+    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getFeaturedLessons(sorted: sorted)
     }
 }

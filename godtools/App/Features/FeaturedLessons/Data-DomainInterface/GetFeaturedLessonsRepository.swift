@@ -20,11 +20,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     func getFeaturedLessonsPublisher() -> AnyPublisher<[LessonDomainModel], Never> {
         
-        let lessons: [ResourceModel] = resourcesRepository.getAllLessons()
-        
-        let featuredLessonsDataModels: [ResourceModel] = lessons.filter({
-            $0.attrSpotlight == true
-        })
+        let featuredLessonsDataModels: [ResourceModel] = resourcesRepository.getFeaturedLessons(sorted: true)
         
         let featuredLessons: [LessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceModel) in
             

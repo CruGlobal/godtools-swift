@@ -20,7 +20,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
     func getLessonsListPublisher() -> AnyPublisher<[LessonDomainModel], Never> {
         
-        let lessons: [ResourceModel] = resourcesRepository.getAllLessons()
+        let lessons: [ResourceModel] = resourcesRepository.getAllLessons(sorted: true)
         
         let lessonListItems: [LessonDomainModel] = lessons.map { (resource: ResourceModel) in
             
