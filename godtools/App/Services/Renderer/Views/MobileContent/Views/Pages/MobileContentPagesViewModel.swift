@@ -50,7 +50,7 @@ class MobileContentPagesViewModel: NSObject {
                 
         super.init()
               
-        resourcesRepository.getResourcesChanged()
+        resourcesRepository.getResourcesChangedPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateTranslationsIfNeeded()

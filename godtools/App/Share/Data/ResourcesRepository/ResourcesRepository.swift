@@ -32,20 +32,12 @@ class ResourcesRepository {
         return cache.numberOfResources
     }
     
-    func getResourcesChanged() -> AnyPublisher<Void, Never> {
-        return cache.getResourcesChanged()
-    }
-    
-    func getAllLessons() -> [ResourceModel] {
-        return cache.getAllLessons()
+    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getResourcesChangedPublisher()
     }
     
     func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
         return cache.getAllTools(sorted: sorted, category: category, languageId: languageId)
-    }
-    
-    func getFeaturedLessons() -> [ResourceModel] {
-        return cache.getFeaturedLessons()
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -141,5 +133,18 @@ class ResourcesRepository {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Lessons
+
+extension ResourcesRepository {
+    
+    func getAllLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getAllLessons(sorted: sorted)
+    }
+    
+    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getFeaturedLessons(sorted: sorted)
     }
 }

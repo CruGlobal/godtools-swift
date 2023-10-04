@@ -27,8 +27,14 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
+        let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
+        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
+        
         feature = AppFeatureDiContainer(
-            appLanguage: AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+            appLanguage: appLanguageDiContainer,
+            featuredLessons: featuredLessonsDiContainer,
+            lessons: lessonsDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

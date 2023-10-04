@@ -57,13 +57,13 @@ struct FavoritesView: View {
                             .padding([.top], 24)
                             .padding([.leading], contentHorizontalInsets)
                         
-                        FeaturedLessonView(
+                        FeaturedLessonsView(
                             viewModel: viewModel,
                             geometry: geometry,
                             contentHorizontalInsets: contentHorizontalInsets,
-                            lessonTappedClosure: { (lesson: LessonDomainModel) in
+                            lessonTappedClosure: { (featuredLesson: FeaturedLessonDomainModel) in
                             
-                            viewModel.featuredLessonTapped(lesson: lesson)
+                            viewModel.featuredLessonTapped(featuredLesson: featuredLesson)
                         })
                         .padding([.top], 30)
                         
@@ -105,7 +105,7 @@ struct FavoritesView_Preview: PreviewProvider {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
