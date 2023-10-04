@@ -27,7 +27,6 @@ class AppLanguagesRepository {
             AppLanguageDataModel(languageCode: "zh-Hans", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "zh-Hant", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "hi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
             AppLanguageDataModel(languageCode: "ru", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "vi", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "lv", languageDirection: .leftToRight)

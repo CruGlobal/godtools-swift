@@ -30,11 +30,9 @@ class AppLanguagesViewModel: ObservableObject {
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
-        
-        appLanguageSearchResults = allAppLanguages
-        
+                
         getInterfaceStringInAppLanguageUseCase
-            .observeStringChangedPublisher(id: "languageSettings.appLanguage.title")
+            .observeStringChangedPublisher(id: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
