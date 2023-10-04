@@ -169,7 +169,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToTool(resourceId: lessonListItem.lesson.id, trainingTipsEnabled: false)
             
         case .featuredLessonTappedFromFavorites(let featuredLesson):
-            navigateToTool(resourceId: featuredLesson.id, trainingTipsEnabled: false)
+            navigateToTool(resourceId: featuredLesson.lesson.id, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavorites:
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
