@@ -17,18 +17,18 @@ class TutorialFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppLayoutDirectionBasedNavigationController()
+        self.navigationController = sharedNavigationController ?? AppNavigationController()
              
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: false)
@@ -76,35 +76,27 @@ extension TutorialFlow {
         
         let view = TutorialView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<TutorialView>(rootView: view)
-        
-        let backButton: UIBarButtonItem = hostingView.addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navBack.uiImage,
-            color: nil,
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
         )
         
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
-            color: nil,
+        let closeButton = AppCloseBarItem(
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
         
-        viewModel.hidesBackButtonPublisher
-            .sink { (backButtonHidden: Bool) in
-                
-                if backButtonHidden {
-                    hostingView.removeBarButtonItem(item: backButton)
-                }
-                else {
-                    hostingView.addBarButtonItem(item: backButton, barPosition: .left)
-                }
-            }
-            .store(in: &cancellables)
+        let hostingView = AppHostingController<TutorialView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
         
         return hostingView
     }

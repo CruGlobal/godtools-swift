@@ -15,9 +15,9 @@ class ArticleDeepLinkFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, aemUri: String) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, aemUri: String) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

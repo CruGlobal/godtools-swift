@@ -1,5 +1,5 @@
 //
-//  AppLayoutDirectionBasedNavigationController.swift
+//  AppNavigationController.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/1/23.
@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class AppLayoutDirectionBasedNavigationController: UINavigationController {
+class AppNavigationController: UINavigationController {
     
     private var cancellables: Set<AnyCancellable> = Set()
     

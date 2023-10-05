@@ -17,13 +17,13 @@ class LearnToShareToolFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppLayoutDirectionBasedNavigationController()
+        self.navigationController = AppNavigationController()
         
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -66,35 +66,27 @@ class LearnToShareToolFlow: Flow {
         
         let view = LearnToShareToolView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<LearnToShareToolView>(rootView: view)
-        
-        let backButton: UIBarButtonItem = hostingView.addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navBack.uiImage,
-            color: nil,
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
         )
         
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
-            color: nil,
+        let closeButton = AppCloseBarItem(
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
         
-        viewModel.hidesBackButtonPublisher
-            .sink { (backButtonHidden: Bool) in
-                
-                if backButtonHidden {
-                    hostingView.removeBarButtonItem(item: backButton)
-                }
-                else {
-                    hostingView.addBarButtonItem(item: backButton, barPosition: .left)
-                }
-            }
-            .store(in: &cancellables)
+        let hostingView = AppHostingController<LearnToShareToolView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
         
         return hostingView
     }

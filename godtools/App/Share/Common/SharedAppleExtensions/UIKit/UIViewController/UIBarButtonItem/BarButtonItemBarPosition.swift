@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // TODO: Needs to be removed in GT-2154.  All navigation bar button item logic needs to be in Share/Views/Navigation/NavigationBar/* ~Levi
 public enum BarButtonItemBarPosition {
     
     case left

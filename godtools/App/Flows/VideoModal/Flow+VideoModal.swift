@@ -21,17 +21,20 @@ extension Flow {
             screenAccessibility: screenAccessibility
         )
         
-        let hostingView = UIHostingController(rootView: view)
-        
-        let barButtonItem: UIBarButtonItem = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
-            color: .white,
+        let closeButton = AppCloseBarItem(
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: closeVideoButtonAccessibility.id
         )
         
-        barButtonItem.accessibilityIdentifier = closeVideoButtonAccessibility.id
+        let hostingView = AppHostingController<FullScreenVideoView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
         
         hostingView.view.backgroundColor = UIColor(videoBackgroundColor)
         
