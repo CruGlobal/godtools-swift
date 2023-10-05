@@ -450,11 +450,19 @@ class MenuFlow: Flow {
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let view = WebContentView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let view = WebContentView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return view

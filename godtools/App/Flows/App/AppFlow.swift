@@ -803,13 +803,25 @@ extension AppFlow {
         
         let view = ToolFilterSelectionView(viewModel: viewModel)
         
-        let hostingView = UIHostingController(rootView: view)
+        let backButton = AppBackBarItem(
+            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
+            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            accessibilityIdentifier: nil
+        )
         
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolFilterSelection))
-        
+        let hostingView = AppHostingController<ToolFilterSelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                        
         return hostingView
     }
     
+    // TODO: Would like this to go through the ViewModel. ~Levi
     @objc private func backTappedFromToolFilterSelection() {
         
         navigate(step: .backTappedFromToolFilter)
