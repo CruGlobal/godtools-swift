@@ -14,12 +14,12 @@ class AppLanguagesViewModel: ObservableObject {
     private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
+    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var allAppLanguages: [AppLanguageListItemDomainModel] = Array()
     
     private weak var flowDelegate: FlowDelegate?
-    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
-    private var allAppLanguages: [AppLanguageListItemDomainModel] = Array()
     
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
