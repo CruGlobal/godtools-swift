@@ -11,14 +11,14 @@ import Combine
 
 class AppCloseBarItem: NavBarItem {
     
-    init(target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         super.init(
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navClose.uiImage),
                 style: nil,
-                color: nil,
+                color: color,
                 target: target,
                 action: action,
                 accessibilityIdentifier: accessibilityIdentifier

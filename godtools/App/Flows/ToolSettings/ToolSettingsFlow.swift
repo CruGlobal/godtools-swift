@@ -219,8 +219,12 @@ class ToolSettingsFlow: Flow {
             )
             
             let view = ReviewShareShareableView(viewModel: viewModel)
-                        
-            let hostingView: UIHostingController<ReviewShareShareableView> = UIHostingController(rootView: view)
+            
+            let hostingView = AppHostingController<ReviewShareShareableView>(
+                rootView: view,
+                navigationBar: nil
+            )
+            
             hostingView.view.backgroundColor = .white
             
             reviewShareShareableModal = hostingView
@@ -350,7 +354,11 @@ class ToolSettingsFlow: Flow {
         
         let view = LanguagesListView(viewModel: viewModel)
                 
-        let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: view)
+        let hostingView = AppHostingController<LanguagesListView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
         hostingView.view.backgroundColor = .white
         
         navigationController.present(hostingView, animated: true)

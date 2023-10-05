@@ -22,6 +22,7 @@ extension Flow {
         )
         
         let closeButton = AppCloseBarItem(
+            color: nil,
             target: viewModel,
             action: #selector(viewModel.closeTapped),
             accessibilityIdentifier: closeVideoButtonAccessibility.id

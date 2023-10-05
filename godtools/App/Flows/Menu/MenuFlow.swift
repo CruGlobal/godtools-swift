@@ -282,17 +282,23 @@ class MenuFlow: Flow {
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
-        
-        hostingView.view.backgroundColor = viewBackgroundUIColor
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
+        
+        let hostingView = AppHostingController<SocialSignInView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
+                
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,
@@ -372,17 +378,23 @@ class MenuFlow: Flow {
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
-        
-        hostingView.view.backgroundColor = viewBackgroundUIColor
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
+        
+        let hostingView = AppHostingController<DeleteAccountView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
+                
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,
@@ -432,8 +444,11 @@ class MenuFlow: Flow {
         
         let view = DeleteAccountProgressView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<DeleteAccountProgressView> = UIHostingController(rootView: view)
-        
+        let hostingView = AppHostingController<DeleteAccountProgressView>(
+            rootView: view,
+            navigationBar: nil
+        )
+                
         hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(

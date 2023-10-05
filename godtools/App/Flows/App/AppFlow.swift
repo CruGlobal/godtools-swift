@@ -430,10 +430,10 @@ extension AppFlow {
 
 extension AppFlow {
 
-    private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
+    private func getDashboardInNavigationStack() -> AppHostingController<DashboardView>? {
         
         for viewController in navigationController.viewControllers {
-            if let dashboardView = viewController as? UIHostingController<DashboardView> {
+            if let dashboardView = viewController as? AppHostingController<DashboardView> {
                 return dashboardView
             }
         }
