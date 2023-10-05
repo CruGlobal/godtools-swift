@@ -245,15 +245,23 @@ class MenuFlow: Flow {
         
         let view = MenuView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<MenuView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            title: localizationServices.stringForSystemElseEnglish(key: "done"),
+        let doneButton = AppInterfaceStringBarItem(
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            localizedStringKey: "done",
             style: .done,
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.doneTapped)
+            action: #selector(viewModel.doneTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [doneButton]
+            )
         )
         
         return hostingView
