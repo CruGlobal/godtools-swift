@@ -17,18 +17,18 @@ class TutorialFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppLayoutDirectionBasedNavigationController()
+        self.navigationController = sharedNavigationController ?? AppNavigationController()
              
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: false)
@@ -76,21 +76,15 @@ extension TutorialFlow {
         
         let view = TutorialView(viewModel: viewModel)
         
-        let hostingView = AppLayoutDirectionBasedHostingController<TutorialView>(
+        let closeButton = AppCloseBarItem(target: viewModel, action: #selector(viewModel.closeTapped))
+        
+        let hostingView = AppHostingController<TutorialView>(
             rootView: view,
-            appLayoutBasedBackButton: AppLayoutDirectionBasedBackBarButtonItem(
-                target: viewModel,
-                action: #selector(viewModel.backTapped)
-            ),
-            toggleBackButtonVisibilityPublisher: viewModel.hidesBackButtonPublisher
-        )
-                
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
-            color: nil,
-            target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            navigationBar: AppNavigationBar(
+                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher),
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
         )
         
         return hostingView

@@ -17,7 +17,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     private weak var flowDelegate: FlowDelegate?
             
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
@@ -30,7 +30,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppLayoutDirectionBasedNavigationController()
+        self.navigationController = AppNavigationController()
                 
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -149,33 +149,21 @@ extension OnboardingFlow {
         
         let view = OnboardingTutorialView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<OnboardingTutorialView>(rootView: view)
-        
-        var skipButton: UIBarButtonItem?
-        
-        viewModel.hidesSkipButton
-            .receive(on: DispatchQueue.main)
-            .sink { (hidden: Bool) in
-                
-                let skipButtonPosition: BarButtonItemBarPosition = .right
-                
-                if skipButton == nil, !hidden {
-                    
-                    skipButton = hostingView.addBarButtonItem(
-                        to: skipButtonPosition,
-                        title: viewModel.skipButtonTitle,
-                        style: .plain,
-                        color: ColorPalette.gtBlue.uiColor,
+        let hostingView = AppHostingController<OnboardingTutorialView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [
+                    AppSkipBarItem(
+                        getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
                         target: viewModel,
-                        action: #selector(viewModel.skipTapped)
+                        action: #selector(viewModel.skipTapped),
+                        toggleVisibilityPublisher: viewModel.hidesSkipButtonPublisher
                     )
-                }
-                else if let skipButton = skipButton {
-                    
-                    hidden ? hostingView.removeBarButtonItem(item: skipButton) : hostingView.addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
-                }
-            }
-            .store(in: &cancellables)
+                ]
+            )
+        )
         
         return hostingView
     }

@@ -39,7 +39,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -50,7 +50,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppLayoutDirectionBasedNavigationController()
+        self.navigationController = AppNavigationController()
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
@@ -735,11 +735,13 @@ extension AppFlow {
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<AllYourFavoriteToolsView>(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
-            target: viewModel,
-            action: #selector(viewModel.backTappedFromAllFavoriteTools)
+        let hostingView = AppHostingController<AllYourFavoriteToolsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return hostingView
@@ -836,16 +838,16 @@ extension AppFlow {
         
         let view = ToolDetailsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<ToolDetailsView>(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolDetails))
+        let hostingView = AppHostingController<ToolDetailsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
         
         return hostingView
-    }
-    
-    @objc private func backTappedFromToolDetails() {
-        
-        navigate(step: .backTappedFromToolDetails)
     }
 }
 
