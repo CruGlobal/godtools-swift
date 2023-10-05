@@ -14,7 +14,7 @@ class AppLayoutDirectionBasedBarItem: NavBarItem {
     let leftToRightImage: UIImage?
     let rightToLeftImage: UIImage?
     
-    init(leftToRightImage: UIImage?, rightToLeftImage: UIImage?, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(leftToRightImage: UIImage?, rightToLeftImage: UIImage?, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         self.leftToRightImage = leftToRightImage
         self.rightToLeftImage = rightToLeftImage
@@ -26,7 +26,8 @@ class AppLayoutDirectionBasedBarItem: NavBarItem {
                 style: style,
                 color: color,
                 target: target,
-                action: action
+                action: action,
+                accessibilityIdentifier: accessibilityIdentifier
             ),
             toggleVisibilityPublisher: toggleVisibilityPublisher
         )

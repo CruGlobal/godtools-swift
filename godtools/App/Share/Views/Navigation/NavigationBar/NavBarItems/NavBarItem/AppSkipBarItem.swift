@@ -11,7 +11,7 @@ import Combine
 
 class AppSkipBarItem: AppInterfaceStringBarItem {
     
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, target: AnyObject, action: Selector, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         super.init(
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
@@ -20,6 +20,7 @@ class AppSkipBarItem: AppInterfaceStringBarItem {
             color: ColorPalette.gtBlue.uiColor,
             target: target,
             action: action,
+            accessibilityIdentifier: accessibilityIdentifier,
             toggleVisibilityPublisher: toggleVisibilityPublisher
         )
     }

@@ -11,7 +11,7 @@ import Combine
 
 class AppBackBarItem: AppLayoutDirectionBasedBarItem {
     
-    init(target: AnyObject, action: Selector, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         super.init(
             leftToRightImage: ImageCatalog.navBack.uiImage,
@@ -20,6 +20,7 @@ class AppBackBarItem: AppLayoutDirectionBasedBarItem {
             color: nil,
             target: target,
             action: action,
+            accessibilityIdentifier: accessibilityIdentifier,
             toggleVisibilityPublisher: toggleVisibilityPublisher
         )
     }

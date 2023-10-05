@@ -13,7 +13,7 @@ class AppInterfaceStringBarItem: NavBarItem {
     
     let localizedStringKey: String
     
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, localizedStringKey: String, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, localizedStringKey: String, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         self.localizedStringKey = localizedStringKey
         
@@ -24,7 +24,8 @@ class AppInterfaceStringBarItem: NavBarItem {
                 style: style,
                 color: color,
                 target: target,
-                action: action
+                action: action,
+                accessibilityIdentifier: accessibilityIdentifier
             ),
             toggleVisibilityPublisher: toggleVisibilityPublisher
         )

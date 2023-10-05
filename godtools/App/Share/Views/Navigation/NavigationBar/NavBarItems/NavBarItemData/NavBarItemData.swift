@@ -15,14 +15,16 @@ class NavBarItemData {
     let color: UIColor?
     let target: AnyObject
     let action: Selector
+    let accessibilityIdentifier: String?
     
-    init(contentType: NavBarItemContentType, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector) {
+    init(contentType: NavBarItemContentType, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?) {
         
         self.contentType = contentType
         self.style = style ?? .plain
         self.color = color
         self.target = target
         self.action = action
+        self.accessibilityIdentifier = accessibilityIdentifier
     }
     
     func getNewBarButtonItem() -> UIBarButtonItem {
@@ -43,8 +45,12 @@ class NavBarItemData {
             buttonItem = UIBarButtonItem(title: value, style: style, target: target, action: action)
         }
         
-        if let color = color {
+        if let color = self.color {
             buttonItem.tintColor = color
+        }
+        
+        if let accessibilityIdentifier = self.accessibilityIdentifier {
+            buttonItem.accessibilityIdentifier = accessibilityIdentifier
         }
         
         return buttonItem

@@ -61,10 +61,16 @@ extension LanguageSettingsFlow {
         
         let view = LanguageSettingsView(viewModel: viewModel)
         
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
         let hostingView = AppHostingController<LanguageSettingsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
             )

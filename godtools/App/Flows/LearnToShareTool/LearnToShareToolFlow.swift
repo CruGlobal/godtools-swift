@@ -66,12 +66,23 @@ class LearnToShareToolFlow: Flow {
         
         let view = LearnToShareToolView(viewModel: viewModel)
         
-        let closeButton = AppCloseBarItem(target: viewModel, action: #selector(viewModel.closeTapped))
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
+        )
+        
+        let closeButton = AppCloseBarItem(
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
         
         let hostingView = AppHostingController<LearnToShareToolView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]
             )

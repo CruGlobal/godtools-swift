@@ -334,10 +334,16 @@ class MenuFlow: Flow {
         
         let view = AccountView(viewModel: viewModel)
         
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
         let hostingView = AppHostingController<AccountView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
             )

@@ -76,12 +76,23 @@ extension TutorialFlow {
         
         let view = TutorialView(viewModel: viewModel)
         
-        let closeButton = AppCloseBarItem(target: viewModel, action: #selector(viewModel.closeTapped))
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
+        )
+        
+        let closeButton = AppCloseBarItem(
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
         
         let hostingView = AppHostingController<TutorialView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]
             )

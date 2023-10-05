@@ -735,10 +735,16 @@ extension AppFlow {
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
         let hostingView = AppHostingController<AllYourFavoriteToolsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
             )
@@ -838,10 +844,16 @@ extension AppFlow {
         
         let view = ToolDetailsView(viewModel: viewModel)
         
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
         let hostingView = AppHostingController<ToolDetailsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
-                backButton: AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped)),
+                backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
             )
