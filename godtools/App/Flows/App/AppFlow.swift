@@ -29,7 +29,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
-    private var dashboardLanguageSettingsButton: UIBarButtonItem?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var uiApplicationLifeCycleObserversAdded: Bool = false
@@ -444,7 +443,7 @@ extension AppFlow {
     
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
         
-        let dashboardShowsLanguageSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
+        let hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
         
         let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
@@ -454,41 +453,34 @@ extension AppFlow {
                 flowDelegate: self
             ),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            showsLanguagesSettingsButton: dashboardShowsLanguageSettingsButton
+            hidesLanguagesSettingsButton: hidesLanguagesSettingsButton
         )
-        
-        let languageSettingsButton = UIBarButtonItem()
-        languageSettingsButton.image = ImageCatalog.navLanguage.uiImage
-        languageSettingsButton.tintColor = .white
-        languageSettingsButton.target = viewModel
-        languageSettingsButton.action = #selector(viewModel.languageSettingsTapped)
-        
-        dashboardLanguageSettingsButton = languageSettingsButton
-        
+                
         let view = DashboardView(viewModel: viewModel)
         
-        let hostingController: UIHostingController<DashboardView> = UIHostingController(rootView: view)
-        
-        _ = hostingController.addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navMenu.uiImage,
+        let menuButton = AppMenuBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.menuTapped)
+            action: #selector(viewModel.menuTapped),
+            accessibilityIdentifier: nil
         )
         
-        dashboardShowsLanguageSettingsButton
-            .receive(on: DispatchQueue.main)
-            .sink { (showsLanguageSettingsButton: Bool) in
-                
-                if showsLanguageSettingsButton {
-                    hostingController.addBarButtonItem(item: languageSettingsButton, barPosition: .right)
-                }
-                else {
-                    hostingController.removeBarButtonItem(item: languageSettingsButton)
-                }
-            }
-            .store(in: &cancellables)
+        let languageSettingsButton = AppLanguageSettingsBarItem(
+            color: .white,
+            target: viewModel,
+            action: #selector(viewModel.languageSettingsTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: hidesLanguagesSettingsButton.eraseToAnyPublisher()
+        )
+        
+        let hostingController = AppHostingController<DashboardView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [menuButton],
+                trailingItems: [languageSettingsButton]
+            )
+        )
     
         return hostingController
     }
