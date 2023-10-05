@@ -53,7 +53,10 @@ class ToolSettingsFlow: Flow {
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         
-        let hostingView = ToolSettingsHostingView(view: toolSettingsView)
+        let hostingView = ToolSettingsHostingView(
+            view: toolSettingsView,
+            navigationBar: nil
+        )
         
         let transparentModal = TransparentModalView(
             flowDelegate: self,
