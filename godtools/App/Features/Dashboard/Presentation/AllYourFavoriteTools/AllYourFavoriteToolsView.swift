@@ -73,6 +73,7 @@ struct AllYourFavoriteToolsView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         .onAppear {
             viewModel.pageViewed()
         }

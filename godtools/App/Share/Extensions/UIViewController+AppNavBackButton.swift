@@ -10,6 +10,7 @@ import UIKit
 
 extension UIViewController {
     
+    @available(*, deprecated) // TODO: Needs to be removed in GT-2154.  All navigation bar button item logic needs to be in Share/Views/Navigation/NavigationBar/* ~Levi
     func addDefaultNavBackItem(target: Any, action: Selector) -> UIBarButtonItem? {
             
         navigationItem.setHidesBackButton(true, animated: false)

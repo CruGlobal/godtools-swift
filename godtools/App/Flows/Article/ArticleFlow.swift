@@ -15,9 +15,9 @@ class ArticleFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, toolTranslations: ToolTranslationsDomainModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -153,7 +153,7 @@ extension ArticleFlow {
         
         let view = ArticleDebugView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<ArticleDebugView> = UIHostingController(rootView: view)
+        let hostingView = UIHostingController<ArticleDebugView>(rootView: view)
         
         _ = hostingView.addBarButtonItem(
             to: .right,

@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(*, deprecated) // TODO: Needs to be removed in GT-2154.  All navigation bar button item logic needs to be in Share/Views/Navigation/NavigationBar/* ~Levi
 public extension UINavigationBar {
     
     func setupNavigationBarAppearance(backgroundColor: UIColor, controlColor: UIColor?, titleFont: UIFont?, titleColor: UIColor?, isTranslucent: Bool) {

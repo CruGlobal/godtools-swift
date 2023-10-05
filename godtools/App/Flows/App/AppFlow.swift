@@ -39,7 +39,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -50,7 +50,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppLayoutDirectionBasedNavigationController()
+        self.navigationController = AppNavigationController()
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
@@ -430,23 +430,7 @@ extension AppFlow {
 // MARK: - Dashboard
 
 extension AppFlow {
-    
-    func reallocateDashboard() {
-        
-        guard let currentDashboardView = navigationController.viewControllers.first as? UIHostingController<DashboardView> else {
-            return
-        }
-        
-        let newDashboardView: UIViewController = getNewDashboardView(startingTab: currentDashboardView.rootView.getCurrentTab())
-        
-        var viewControllersWithNewDashboard: [UIViewController] = navigationController.viewControllers
-        
-        viewControllersWithNewDashboard.remove(at: 0)
-        viewControllersWithNewDashboard.insert(newDashboardView, at: 0)
-        
-        navigationController.setViewControllers(viewControllersWithNewDashboard, animated: false)
-    }
-    
+
     private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
         
         for viewController in navigationController.viewControllers {
@@ -751,11 +735,19 @@ extension AppFlow {
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<AllYourFavoriteToolsView>(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTappedFromAllFavoriteTools)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<AllYourFavoriteToolsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return hostingView
@@ -850,16 +842,22 @@ extension AppFlow {
         
         let view = ToolDetailsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<ToolDetailsView>(rootView: view)
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
         
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolDetails))
+        let hostingView = AppHostingController<ToolDetailsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
         
         return hostingView
-    }
-    
-    @objc private func backTappedFromToolDetails() {
-        
-        navigate(step: .backTappedFromToolDetails)
     }
 }
 

@@ -34,9 +34,7 @@ class TutorialViewModel: ObservableObject {
             currentPageDidChange(page: currentPage)
         }
     }
-    
-    let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: false)
-    
+        
     init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate

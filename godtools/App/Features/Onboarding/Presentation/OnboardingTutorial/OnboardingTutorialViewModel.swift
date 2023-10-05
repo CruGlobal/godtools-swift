@@ -17,10 +17,9 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
+    private let hidesSkipButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private weak var flowDelegate: FlowDelegate?
-    
-    let hidesSkipButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     @Published var currentPage: Int = 0 {
         didSet {
@@ -29,7 +28,6 @@ class OnboardingTutorialViewModel: ObservableObject {
     }
     
     @Published var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
-    @Published var skipButtonTitle: String
     @Published var continueButtonTitle: String = ""
     
     init(flowDelegate: FlowDelegate, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, localizationServices: LocalizationServices, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
@@ -40,9 +38,7 @@ class OnboardingTutorialViewModel: ObservableObject {
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
-        
+                
         onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
         
         didSetPage(page: currentPage)
@@ -67,14 +63,13 @@ class OnboardingTutorialViewModel: ObservableObject {
         switch page {
         
         case 0:
-            hidesSkipButton.send(true)
+            hidesSkipButtonSubject.send(true)
             continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.beginButton.title")
        
         default:
-            hidesSkipButton.send(false)
+            hidesSkipButtonSubject.send(false)
             continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.nextButton.title")
         }
-        
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
         
@@ -85,6 +80,11 @@ class OnboardingTutorialViewModel: ObservableObject {
             contentLanguage: pageAnalytics.contentLanguage,
             contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
         )
+    }
+    
+    var hidesSkipButtonPublisher: AnyPublisher<Bool, Never> {
+        return hidesSkipButtonSubject
+            .eraseToAnyPublisher()
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {

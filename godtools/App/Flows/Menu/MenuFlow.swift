@@ -19,7 +19,7 @@ class MenuFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
@@ -28,7 +28,7 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = AppLayoutDirectionBasedNavigationController()
+        navigationController = AppNavigationController()
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
@@ -334,11 +334,19 @@ class MenuFlow: Flow {
         
         let view = AccountView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<AccountView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<AccountView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return hostingView

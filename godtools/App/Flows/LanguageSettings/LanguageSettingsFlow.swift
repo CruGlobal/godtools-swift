@@ -15,11 +15,11 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -61,11 +61,18 @@ extension LanguageSettingsFlow {
         
         let view = LanguageSettingsView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<LanguageSettingsView> = AppLayoutDirectionBasedHostingController(
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<LanguageSettingsView>(
             rootView: view,
-            appLayoutBasedBackButton: AppLayoutDirectionBasedBackBarButtonItem(
-                target: viewModel,
-                action: #selector(viewModel.backTapped)
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
             )
         )
 

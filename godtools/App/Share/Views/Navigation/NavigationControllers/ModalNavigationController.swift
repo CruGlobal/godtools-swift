@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModalNavigationController: AppLayoutDirectionBasedNavigationController {
+class ModalNavigationController: AppNavigationController {
         
     private let rootView: UIViewController
     private let statusBarStyle: UIStatusBarStyle

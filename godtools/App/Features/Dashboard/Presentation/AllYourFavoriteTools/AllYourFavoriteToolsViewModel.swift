@@ -133,7 +133,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
 
 extension AllYourFavoriteToolsViewModel {
     
-    @objc func backTappedFromAllFavoriteTools() {
+    @objc func backTapped() {
         closePage()
     }
     
