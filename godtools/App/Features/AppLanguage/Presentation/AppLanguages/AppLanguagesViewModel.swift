@@ -49,10 +49,6 @@ extension AppLanguagesViewModel {
         flowDelegate?.navigate(step: .backTappedFromAppLanguages)
     }
     
-    func searchInputChanged(searchText: AnyPublisher<String, Never>) {
-        
-    }
-    
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
