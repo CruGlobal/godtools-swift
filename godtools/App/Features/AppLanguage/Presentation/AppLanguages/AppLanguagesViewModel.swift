@@ -12,6 +12,7 @@ import Combine
 class AppLanguagesViewModel: ObservableObject {
     
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
     private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
@@ -21,22 +22,39 @@ class AppLanguagesViewModel: ObservableObject {
     
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
+    @Published var searchText: String = "" {
+        didSet {
+            print("did set search text: \(searchText)")
+            /*
+            searchAppLanguageInAppLanguagesListUseCase
+                .getSearchResultsPublisher(for: searchText.publisher
+                    .reduce("") { (previousResult, value) in
+                        return previousResult + String(value)
+                    }
+                    .eraseToAnyPublisher())
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$appLanguageSearchResults)*/
+            
+            searchAppLanguageInAppLanguagesListUseCase
+                .getSearchResultsPublisher(for: Just(searchText).eraseToAnyPublisher())
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$appLanguageSearchResults)
+        }
+    }
     
     init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
-                
+                        
+        searchText = ""
+        
         getInterfaceStringInAppLanguageUseCase
             .observeStringChangedPublisher(id: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
-                
-        searchAppLanguageInAppLanguagesListUseCase
-            .getSearchResultsPublisher(for: searchTextPublisher)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguageSearchResults)
     }
 }
 
@@ -47,6 +65,10 @@ extension AppLanguagesViewModel {
     @objc func backTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromAppLanguages)
+    }
+    
+    func searchInputChanged(searchText: AnyPublisher<String, Never>) {
+        
     }
     
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {

@@ -14,6 +14,8 @@ struct ToolFilterSelectionView: View {
     
     @ObservedObject private var viewModel: ToolFilterSelectionViewModel
     
+    @State private var searchText: String = ""
+    
     init(viewModel: ToolFilterSelectionViewModel) {
         
         self.viewModel = viewModel
@@ -23,7 +25,7 @@ struct ToolFilterSelectionView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel())
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $searchText)
             
             List {
                 ForEach(viewModel.rowViewModels) { rowViewModel in

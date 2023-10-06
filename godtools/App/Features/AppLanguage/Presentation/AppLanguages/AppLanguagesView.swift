@@ -11,7 +11,7 @@ import SwiftUI
 struct AppLanguagesView: View {
     
     @ObservedObject private var viewModel: AppLanguagesViewModel
-    
+        
     init(viewModel: AppLanguagesViewModel) {
         
         self.viewModel = viewModel
@@ -21,7 +21,7 @@ struct AppLanguagesView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel())
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
                 ForEach(viewModel.appLanguageSearchResults) { appLanguage in
@@ -38,4 +38,5 @@ struct AppLanguagesView: View {
         .navigationTitle(viewModel.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
+
 }
