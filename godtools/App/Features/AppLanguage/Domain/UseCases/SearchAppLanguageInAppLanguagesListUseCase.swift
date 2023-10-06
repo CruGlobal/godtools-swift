@@ -28,7 +28,6 @@ class SearchAppLanguageInAppLanguagesListUseCase {
                 if searchText.isEmpty {
                     
                     return Just(languageItems)
-                        .eraseToAnyPublisher()
                     
                 } else {
                     
@@ -42,7 +41,6 @@ class SearchAppLanguageInAppLanguagesListUseCase {
                     }
                     
                     return Just(filteredItems)
-                        .eraseToAnyPublisher()
                 }
             }
             .eraseToAnyPublisher()
