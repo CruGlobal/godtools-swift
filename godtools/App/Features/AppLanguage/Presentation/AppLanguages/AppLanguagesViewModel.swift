@@ -22,11 +22,7 @@ class AppLanguagesViewModel: ObservableObject {
     
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
-    @Published var searchText: String = "" {
-        didSet {
-            searchTextPublisher.send(searchText)
-        }
-    }
+    @Published var searchText: String = "Chinese"
     
     init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
         
@@ -41,19 +37,9 @@ class AppLanguagesViewModel: ObservableObject {
             .assign(to: &$navTitle)
         
         searchAppLanguageInAppLanguagesListUseCase
-            .getSearchResultsPublisher(for: searchTextPublisher.eraseToAnyPublisher())
+            .getSearchResultsPublisher(for: $searchText.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguageSearchResults)
-        
-        /*
-        searchAppLanguageInAppLanguagesListUseCase
-            .getSearchResultsPublisher(for: searchText.publisher
-                .reduce("") { (previousResult, value) in
-                    return previousResult + String(value)
-                }
-                .eraseToAnyPublisher())
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguageSearchResults)*/
     }
 }
 
