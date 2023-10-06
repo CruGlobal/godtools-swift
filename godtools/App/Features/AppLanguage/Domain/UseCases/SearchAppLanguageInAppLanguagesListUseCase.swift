@@ -7,25 +7,44 @@
 //
 
 import Foundation
+import Combine
 
 class SearchAppLanguageInAppLanguagesListUseCase {
     
-    func getSearchResults(for searchText: String, searchingIn languageItems: [AppLanguageListItemDomainModel]) -> [AppLanguageListItemDomainModel] {
+    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
+    
+    init(getAppLanguagesListUseCase: GetAppLanguagesListUseCase) {
+        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
+    }
+    
+    func getSearchResultsPublisher(for searchTextPublisher: CurrentValueSubject<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        if searchText.isEmpty {
-            
-            return languageItems
-            
-        } else {
-            
-            let lowercasedSearchText = searchText.lowercased()
-            
-            return languageItems.filter { languageItem in
+        return Publishers.CombineLatest(
+            searchTextPublisher,
+            getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
+        )
+            .flatMap { searchText, languageItems in
                 
-                let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.value.lowercased()
-                
-                return lowercasedLanguageName.contains(lowercasedSearchText)
+                if searchText.isEmpty {
+                    
+                    return Just(languageItems)
+                        .eraseToAnyPublisher()
+                    
+                } else {
+                    
+                    let lowercasedSearchText = searchText.lowercased()
+                    
+                    let filteredItems = languageItems.filter { languageItem in
+                        
+                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.value.lowercased()
+                        
+                        return lowercasedLanguageName.contains(lowercasedSearchText)
+                    }
+                    
+                    return Just(filteredItems)
+                        .eraseToAnyPublisher()
+                }
             }
-        }
+            .eraseToAnyPublisher()
     }
 }

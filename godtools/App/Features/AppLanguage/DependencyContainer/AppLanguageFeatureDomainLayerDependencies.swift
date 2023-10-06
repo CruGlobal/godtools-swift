@@ -64,7 +64,9 @@ class AppLanguageFeatureDomainLayerDependencies {
     }
     
     func getSearchAppLanguageInAppLanguagesListUseCase() -> SearchAppLanguageInAppLanguagesListUseCase {
-        return SearchAppLanguageInAppLanguagesListUseCase()
+        return SearchAppLanguageInAppLanguagesListUseCase(
+            getAppLanguagesListUseCase: getAppLanguagesListUseCase()
+        )
     }
     
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
