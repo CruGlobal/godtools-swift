@@ -1,3 +1,11 @@
+"allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Any category";
+"allTools.filter.anyLanguage" = "Any language";
+"allTools.filter.navBar.language" = "Filter by language";
+"allTools.filter.navBar.category" = "Filter by category";
+"languageSettings.appLanguage.title" = "App Language";
+"authError.userAccountAlreadyExists.message" = "User account already exists.";
+"authError.userAccountNotFound.message" = "User account not found.";
 "createAccount.title" = "Create account";
 "createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
 "deleteAccountProgress.title" = "Deleting account...";
@@ -120,11 +128,7 @@
 "toolSettings.shareables.title" = "Related graphics";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
-"allTools.filter.title" = "Filter";
-"allTools.filter.anyCategory" = "Any category";
-"allTools.filter.anyLanguage" = "Any language";
-"allTools.filter.navBar.language" = "Filter by language";
-"allTools.filter.navBar.category" = "Filter by category";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";
@@ -432,6 +436,3 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
-
-"authError.userAccountAlreadyExists.message" = "User account already exists.";
-"authError.userAccountNotFound.message" = "User account not found.";
