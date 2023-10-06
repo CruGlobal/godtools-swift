@@ -24,21 +24,7 @@ class AppLanguagesViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var searchText: String = "" {
         didSet {
-            print("did set search text: \(searchText)")
-            /*
-            searchAppLanguageInAppLanguagesListUseCase
-                .getSearchResultsPublisher(for: searchText.publisher
-                    .reduce("") { (previousResult, value) in
-                        return previousResult + String(value)
-                    }
-                    .eraseToAnyPublisher())
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$appLanguageSearchResults)*/
-            
-            searchAppLanguageInAppLanguagesListUseCase
-                .getSearchResultsPublisher(for: Just(searchText).eraseToAnyPublisher())
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$appLanguageSearchResults)
+            searchTextPublisher.send(searchText)
         }
     }
     
@@ -48,13 +34,26 @@ class AppLanguagesViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
-                        
-        searchText = ""
-        
+                           
         getInterfaceStringInAppLanguageUseCase
             .observeStringChangedPublisher(id: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
+        
+        searchAppLanguageInAppLanguagesListUseCase
+            .getSearchResultsPublisher(for: searchTextPublisher.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguageSearchResults)
+        
+        /*
+        searchAppLanguageInAppLanguagesListUseCase
+            .getSearchResultsPublisher(for: searchText.publisher
+                .reduce("") { (previousResult, value) in
+                    return previousResult + String(value)
+                }
+                .eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguageSearchResults)*/
     }
 }
 
