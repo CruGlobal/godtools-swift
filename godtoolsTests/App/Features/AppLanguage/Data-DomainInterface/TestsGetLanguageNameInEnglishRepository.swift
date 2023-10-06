@@ -24,6 +24,12 @@ class TestsGetLanguageNameInEnglishRepository: GetAppLanguageNameRepositoryInter
             
             switch languageCodeDomainModel {
             
+            case .chinese:
+                languageName = "Chinese"
+                
+            case .czech:
+                languageName = "Czech"
+                
             case .english:
                 languageName = "English"
                 
