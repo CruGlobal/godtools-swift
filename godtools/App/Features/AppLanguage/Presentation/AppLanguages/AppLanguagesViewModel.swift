@@ -12,9 +12,7 @@ import Combine
 class AppLanguagesViewModel: ObservableObject {
     
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
-    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
-    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,13 +20,12 @@ class AppLanguagesViewModel: ObservableObject {
     
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
-    @Published var searchText: String = "Chinese"
+    @Published var searchText: String = ""
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
+    init(flowDelegate: FlowDelegate, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
-        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
                            
         getInterfaceStringInAppLanguageUseCase
@@ -64,7 +61,7 @@ extension AppLanguagesViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            searchTextPublisher: searchTextPublisher,
+            searchTextPublisher: CurrentValueSubject(""),
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }

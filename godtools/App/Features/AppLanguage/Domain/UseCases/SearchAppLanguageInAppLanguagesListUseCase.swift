@@ -24,9 +24,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
             getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
         )
             .flatMap { searchText, languageItems in
-                
-                print("did search: \(searchText)")
-                
+                                
                 if searchText.isEmpty {
                     
                     return Just(languageItems)
