@@ -38,7 +38,20 @@ class ArticleFlow: Flow {
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
-        let view = ArticleCategoriesView(viewModel: viewModel)
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let view = ArticleCategoriesView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
         
         sharedNavigationController.pushViewController(view, animated: true)
     }
@@ -113,13 +126,21 @@ extension ArticleFlow {
             currentArticleDownloadReceipt: currentArticleDownloadReceipt
         )
         
-        let view = ArticlesView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
         )
         
+        let view = ArticlesView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                
         return view
     }
     
@@ -134,11 +155,19 @@ extension ArticleFlow {
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let view = ArticleWebView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let view = ArticleWebView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return view
@@ -153,14 +182,20 @@ extension ArticleFlow {
         
         let view = ArticleDebugView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<ArticleDebugView>(rootView: view)
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<ArticleDebugView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
         )
         
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)

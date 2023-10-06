@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class ArticleWebView: UIViewController {
+class ArticleWebView: AppViewController {
     
     private let viewModel: ArticleWebViewModel
         
@@ -25,10 +25,12 @@ class ArticleWebView: UIViewController {
     @IBOutlet weak private var errorMessageLabel: UILabel!
     @IBOutlet weak private var reloadArticleButton: UIButton!
         
-    required init(viewModel: ArticleWebViewModel) {
+    init(viewModel: ArticleWebViewModel, navigationBar: AppNavigationBar?) {
+        
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ArticleWebView.self), bundle: nil)
+        
+        super.init(nibName: String(describing: ArticleWebView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {

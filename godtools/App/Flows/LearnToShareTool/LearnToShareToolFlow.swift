@@ -74,6 +74,7 @@ class LearnToShareToolFlow: Flow {
         )
         
         let closeButton = AppCloseBarItem(
+            color: nil,
             target: viewModel,
             action: #selector(viewModel.closeTapped),
             accessibilityIdentifier: nil

@@ -245,15 +245,23 @@ class MenuFlow: Flow {
         
         let view = MenuView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<MenuView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            title: localizationServices.stringForSystemElseEnglish(key: "done"),
+        let doneButton = AppInterfaceStringBarItem(
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            localizedStringKey: "done",
             style: .done,
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.doneTapped)
+            action: #selector(viewModel.doneTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [doneButton]
+            )
         )
         
         return hostingView
@@ -274,17 +282,23 @@ class MenuFlow: Flow {
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<SocialSignInView> = UIHostingController(rootView: view)
-        
-        hostingView.view.backgroundColor = viewBackgroundUIColor
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
+        
+        let hostingView = AppHostingController<SocialSignInView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
+                
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,
@@ -364,17 +378,23 @@ class MenuFlow: Flow {
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<DeleteAccountView> = UIHostingController(rootView: view)
-        
-        hostingView.view.backgroundColor = viewBackgroundUIColor
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
         )
+        
+        let hostingView = AppHostingController<DeleteAccountView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
+                
+        hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
             rootView: hostingView,
@@ -424,8 +444,11 @@ class MenuFlow: Flow {
         
         let view = DeleteAccountProgressView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
         
-        let hostingView: UIHostingController<DeleteAccountProgressView> = UIHostingController(rootView: view)
-        
+        let hostingView = AppHostingController<DeleteAccountProgressView>(
+            rootView: view,
+            navigationBar: nil
+        )
+                
         hostingView.view.backgroundColor = viewBackgroundUIColor
         
         let modal: ModalNavigationController = ModalNavigationController(
@@ -450,11 +473,19 @@ class MenuFlow: Flow {
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let view = WebContentView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let view = WebContentView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return view

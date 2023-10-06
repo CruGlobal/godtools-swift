@@ -34,11 +34,11 @@ class AppNavigationController: UINavigationController {
                 
                 for viewController in viewControllers {
                     
-                    if let dashboardHostingView = viewController as? UIHostingController<DashboardView> {
+                    if let dashboardHostingView = viewController as? AppHostingController<DashboardView> {
                         let currentTab: DashboardTabTypeDomainModel = dashboardHostingView.rootView.getCurrentTab()
                         dashboardHostingView.rootView.navigateToTab(tab: currentTab)
                     }
-                    else if let onboardingTutorialHostingView = viewController as? UIHostingController<OnboardingTutorialView> {
+                    else if let onboardingTutorialHostingView = viewController as? AppHostingController<OnboardingTutorialView> {
                         let currentPage: Int = onboardingTutorialHostingView.rootView.getCurrentPage()
                         onboardingTutorialHostingView.rootView.setCurrentPage(page: currentPage)
                     }
