@@ -74,7 +74,7 @@ struct SearchBar: View {
             }
         }
         .onChange(of: searchText) { newValue in
-            self.searchText = searchText
+           
             viewModel.searchTextPublisher.send(searchText)
         }
 
