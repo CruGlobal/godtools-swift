@@ -9,7 +9,7 @@
 import SwiftUI
 import UIKit
 
-class ToolSettingsHostingView: UIHostingController<ToolSettingsView> {
+class ToolSettingsHostingView: AppHostingController<ToolSettingsView> {
     
     private let modalHeightPercentageOfScreen: CGFloat = 0.6
     private let modalHorizontalPadding: CGFloat = 12
@@ -17,10 +17,10 @@ class ToolSettingsHostingView: UIHostingController<ToolSettingsView> {
     
     private var modalBottomToParent: NSLayoutConstraint?
     
-    required init(view: ToolSettingsView) {
+    init(view: ToolSettingsView, navigationBar: AppNavigationBar?) {
         
-        super.init(rootView: view)
-        
+        super.init(rootView: view, navigationBar: navigationBar)
+                
         setupLayout()
     }
     

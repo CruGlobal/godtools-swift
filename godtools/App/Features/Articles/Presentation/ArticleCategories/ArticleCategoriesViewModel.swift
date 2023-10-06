@@ -97,6 +97,10 @@ class ArticleCategoriesViewModel {
 
 extension ArticleCategoriesViewModel {
     
+    @objc func backTapped() {
+        flowDelegate?.navigate(step: .backTappedFromArticleCategories)
+    }
+    
     func pageViewed() {
         
         if pageViewCount == 0 {
@@ -140,9 +144,5 @@ extension ArticleCategoriesViewModel {
     
     func refreshArticles() {
         downloadArticles(forceDownload: true)
-    }
-    
-    func backButtonTapped() {
-        flowDelegate?.navigate(step: .backTappedFromArticleCategories)
     }
 }
