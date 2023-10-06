@@ -14,7 +14,6 @@ struct SearchBar: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
 
-    //@State private var searchText: String
     @State private var isEditing = false
     
     @Binding private var searchText: String
@@ -22,7 +21,6 @@ struct SearchBar: View {
     init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
         
         self.viewModel = viewModel
-        //self.searchText = viewModel.searchTextPublisher.value
         self._searchText = searchText
     }
         
@@ -77,6 +75,7 @@ struct SearchBar: View {
         }
         .onChange(of: searchText) { newValue in
             self.searchText = searchText
+            viewModel.searchTextPublisher.send(searchText)
         }
 
     }
