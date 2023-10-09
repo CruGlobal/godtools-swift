@@ -41,7 +41,7 @@ class GetUserActivityStatsUseCase {
             textColor: Color.getColorWithRGB(red: 229, green: 91, blue: 54, opacity: 1),
             value: String(userActivity.screenShares)
         )
-                
+        
         let linksSharedStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLinksShared.name,
             text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.linksShared.rawValue, activityCount: userActivity.linksShared),
