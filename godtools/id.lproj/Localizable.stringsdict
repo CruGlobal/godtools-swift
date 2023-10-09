@@ -16,48 +16,6 @@
 <string>%d gambar dibagikan</string>
 </dict>
 </dict>
-<key>badges.articlesOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@articlesCount@</string>
-<key>articlesCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>other</key>
-<string>Membaca %d article</string>
-</dict>
-</dict>
-<key>badges.lessonsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonsCount@</string>
-<key>lessonsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>other</key>
-<string>%d pelajaran terselesaikan</string>
-</dict>
-</dict>
-<key>badges.toolsOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolsCount@</string>
-<key>toolsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>other</key>
-<string>%d Alat-alat terbuka</string>
-</dict>
-</dict>
 <key>badges.tipsCompleted</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -71,6 +29,48 @@
 <key>other</key>
 <string>%d tip-tip latihan terselesaikan</string>
 </dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>other</key>
+<string>%d Alat-alat terbuka</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>other</key>
+<string>%d pelajaran terselesaikan</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>other</key>
+<string>Membaca %d article</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
 </dict>
 </dict>
 </plist>

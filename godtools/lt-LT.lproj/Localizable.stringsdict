@@ -22,66 +22,6 @@
 <string>Shared %d images</string>
 </dict>
 </dict>
-<key>badges.articlesOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@articlesCount@</string>
-<key>articlesCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Read 1 article</string>
-<key>few</key>
-<string/>
-<key>many</key>
-<string/>
-<key>other</key>
-<string>Read %d articles</string>
-</dict>
-</dict>
-<key>badges.lessonsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonsCount@</string>
-<key>lessonsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Completed 1 lesson</string>
-<key>few</key>
-<string/>
-<key>many</key>
-<string/>
-<key>other</key>
-<string>Completed %d lessons</string>
-</dict>
-</dict>
-<key>badges.toolsOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolsCount@</string>
-<key>toolsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Opened 1 tool</string>
-<key>few</key>
-<string/>
-<key>many</key>
-<string/>
-<key>other</key>
-<string>Opened %d tools</string>
-</dict>
-</dict>
 <key>badges.tipsCompleted</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -101,6 +41,66 @@
 <key>other</key>
 <string>Completed %d training tips</string>
 </dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Opened 1 tool</string>
+<key>few</key>
+<string/>
+<key>many</key>
+<string/>
+<key>other</key>
+<string>Opened %d tools</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Completed 1 lesson</string>
+<key>few</key>
+<string/>
+<key>many</key>
+<string/>
+<key>other</key>
+<string>Completed %d lessons</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Read 1 article</string>
+<key>few</key>
+<string/>
+<key>many</key>
+<string/>
+<key>other</key>
+<string>Read %d articles</string>
+</dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
 </dict>
 </dict>
 </plist>

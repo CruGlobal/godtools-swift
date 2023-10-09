@@ -1,3 +1,11 @@
+"allTools.filter.title" = "Filtrs";
+"allTools.filter.anyCategory" = "Jebkura kategorija";
+"allTools.filter.anyLanguage" = "Jebkura valoda";
+"allTools.filter.navBar.language" = "Atlasīt pēc valodas";
+"allTools.filter.navBar.category" = "Atlasīt pēc kategorijas";
+"languageSettings.appLanguage.title" = "Lietotnes valoda";
+"authError.userAccountAlreadyExists.message" = "Lietotāja konts jau pastāv.";
+"authError.userAccountNotFound.message" = "Lietotāja konts nav atrasts.";
 "createAccount.title" = "Reģistrēt kontu";
 "createAccount.subtitle" = "Izveido kontu, lai tev būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "deleteAccountProgress.title" = "Notiek konta dzēšana...";
@@ -19,7 +27,7 @@
 "menu_about" = "Par lietotni";
 "menu.sendFeedback" = "Nosūtīt atsauksmes";
 "menu.reportABug" = "Ziņot par kļūdu";
-"menu.askAQuestion" = "Uzdod jautājumu";
+"menu.askAQuestion" = "Uzdot jautājumu";
 "menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
 "account.activity.sectionTitle" = "Tava aktivitāte";
@@ -69,7 +77,7 @@
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
 
-"account.globalActivity.title" = "Aktivitātes";
+"account.globalActivity.title" = "Globālā aktivitāte";
 "toolDetails.conversationStarters.title" = "Sarunas uzsākšanai";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
