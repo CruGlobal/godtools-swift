@@ -23,14 +23,7 @@ struct ToolFilterSelectionView: View {
         
         VStack(spacing: 0) {
             
-            ZStack {
-                Rectangle()
-                    .fill(ToolFilterSelectionView.ultraLightGrey)
-
-                SearchBar(viewModel: viewModel.getSearchBarViewModel())
-                    .padding(10)
-            }
-            .fixedSize(horizontal: false, vertical: true)
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel())
             
             List {
                 ForEach(viewModel.rowViewModels) { rowViewModel in

@@ -34,7 +34,7 @@ class LanguageSettingsViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "language_settings")
+        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
