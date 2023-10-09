@@ -239,6 +239,11 @@ class ToolDetailsViewModel: ObservableObject {
 
 extension ToolDetailsViewModel {
     
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromToolDetails)
+    }
+    
     func pageViewed() {
         
         trackScreenViewAnalyticsUseCase.trackScreen(

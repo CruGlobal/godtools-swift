@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(*, deprecated) // TODO: Needs to be removed in GT-2154.  All navigation bar button item logic needs to be in Share/Views/Navigation/NavigationBar/* ~Levi
 public extension UIViewController {
   
     func addBarButtonItem(to barPosition: BarButtonItemBarPosition, index: Int? = nil, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {

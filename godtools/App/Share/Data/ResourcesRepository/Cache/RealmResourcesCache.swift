@@ -25,18 +25,13 @@ class RealmResourcesCache {
         return realmDatabase.openRealm().objects(RealmResource.self).count
     }
     
-    func getResourcesChanged() -> AnyPublisher<Void, Never> {
+    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
             .eraseToAnyPublisher()
     }
     
-    func getAllLessons() -> [ResourceModel] {
-        return getResources(sorted: true).filter { resource in
-            return resource.isLessonType && resource.isHidden == false
-        }
-    }
-    
     func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
+        
         let metaTools = getResources(with: .metaTool)
         let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
         let defaultVariants = getResources(ids: defaultVariantIds)
@@ -64,10 +59,6 @@ class RealmResourcesCache {
         }
         
         return allTools
-    }
-    
-    func getFeaturedLessons() -> [ResourceModel] {
-        return getAllLessons().filter { $0.attrSpotlight == true }
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -136,5 +127,50 @@ class RealmResourcesCache {
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
+    }
+}
+
+// MARK: - Lessons
+
+extension RealmResourcesCache {
+    
+    func getAllLessons(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
+       
+        var filterByAttributes: [NSPredicate] = Array()
+        
+        if let additionalAttributeFilters = additionalAttributeFilters, !additionalAttributeFilters.isEmpty {
+            filterByAttributes.append(contentsOf: additionalAttributeFilters)
+        }
+        
+        let filterIsLessonType = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) == [c] %@", ResourceType.lesson.rawValue)
+        let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+        
+        filterByAttributes.append(filterIsLessonType)
+        filterByAttributes.append(filterIsNotHidden)
+        
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
+             
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let allLessons: Results<RealmResource>
+        
+        if sorted {
+            allLessons = realm.objects(RealmResource.self).filter(filterPredicate).sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        else {
+            allLessons = realm.objects(RealmResource.self).filter(filterPredicate)
+        }
+        
+        return allLessons
+            .map {
+                ResourceModel(model: $0)
+            }
+    }
+    
+    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+        
+        let filterIsSpotlight = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
+        
+        return getAllLessons(additionalAttributeFilters: [filterIsSpotlight], sorted: sorted)
     }
 }

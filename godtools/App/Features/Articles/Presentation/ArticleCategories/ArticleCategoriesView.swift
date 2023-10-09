@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArticleCategoriesView: UIViewController {
+class ArticleCategoriesView: AppViewController {
     
     private let viewModel: ArticleCategoriesViewModel
     
@@ -16,9 +16,9 @@ class ArticleCategoriesView: UIViewController {
            
     @IBOutlet weak private var categoriesTableView: UITableView!
     
-    required init(viewModel: ArticleCategoriesViewModel) {
+    init(viewModel: ArticleCategoriesViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ArticleCategoriesView.self), bundle: nil)
+        super.init(nibName: String(describing: ArticleCategoriesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,9 +35,7 @@ class ArticleCategoriesView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        _ = addDefaultNavBackItem(target: self, action: #selector(backButtonTapped))
-                        
+                                
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
         
@@ -92,10 +90,6 @@ class ArticleCategoriesView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
-    }
-    
-    @objc func backButtonTapped() {
-        viewModel.backButtonTapped()
     }
     
     @objc func handleRefreshArticleCategoriesControl() {

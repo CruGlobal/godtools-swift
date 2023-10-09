@@ -29,7 +29,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
-    private var dashboardLanguageSettingsButton: UIBarButtonItem?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var uiApplicationLifeCycleObserversAdded: Bool = false
@@ -39,7 +38,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
     var articleFlow: ArticleFlow?
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
@@ -50,7 +49,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppLayoutDirectionBasedNavigationController()
+        self.navigationController = AppNavigationController()
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
@@ -165,11 +164,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
             
-        case .lessonTappedFromLessonsList(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+        case .lessonTappedFromLessonsList(let lessonListItem):
+            navigateToTool(resourceId: lessonListItem.lesson.id, trainingTipsEnabled: false)
             
-        case .lessonTappedFromFavorites(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+        case .featuredLessonTappedFromFavorites(let featuredLesson):
+            navigateToTool(resourceId: featuredLesson.lesson.id, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavorites:
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
@@ -430,27 +429,11 @@ extension AppFlow {
 // MARK: - Dashboard
 
 extension AppFlow {
-    
-    func reallocateDashboard() {
-        
-        guard let currentDashboardView = navigationController.viewControllers.first as? UIHostingController<DashboardView> else {
-            return
-        }
-        
-        let newDashboardView: UIViewController = getNewDashboardView(startingTab: currentDashboardView.rootView.getCurrentTab())
-        
-        var viewControllersWithNewDashboard: [UIViewController] = navigationController.viewControllers
-        
-        viewControllersWithNewDashboard.remove(at: 0)
-        viewControllersWithNewDashboard.insert(newDashboardView, at: 0)
-        
-        navigationController.setViewControllers(viewControllersWithNewDashboard, animated: false)
-    }
-    
-    private func getDashboardInNavigationStack() -> UIHostingController<DashboardView>? {
+
+    private func getDashboardInNavigationStack() -> AppHostingController<DashboardView>? {
         
         for viewController in navigationController.viewControllers {
-            if let dashboardView = viewController as? UIHostingController<DashboardView> {
+            if let dashboardView = viewController as? AppHostingController<DashboardView> {
                 return dashboardView
             }
         }
@@ -460,7 +443,7 @@ extension AppFlow {
     
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
         
-        let dashboardShowsLanguageSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
+        let hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
         
         let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
@@ -470,41 +453,34 @@ extension AppFlow {
                 flowDelegate: self
             ),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            showsLanguagesSettingsButton: dashboardShowsLanguageSettingsButton
+            hidesLanguagesSettingsButton: hidesLanguagesSettingsButton
         )
-        
-        let languageSettingsButton = UIBarButtonItem()
-        languageSettingsButton.image = ImageCatalog.navLanguage.uiImage
-        languageSettingsButton.tintColor = .white
-        languageSettingsButton.target = viewModel
-        languageSettingsButton.action = #selector(viewModel.languageSettingsTapped)
-        
-        dashboardLanguageSettingsButton = languageSettingsButton
-        
+                
         let view = DashboardView(viewModel: viewModel)
         
-        let hostingController: UIHostingController<DashboardView> = UIHostingController(rootView: view)
-        
-        _ = hostingController.addBarButtonItem(
-            to: .left,
-            image: ImageCatalog.navMenu.uiImage,
+        let menuButton = AppMenuBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.menuTapped)
+            action: #selector(viewModel.menuTapped),
+            accessibilityIdentifier: nil
         )
         
-        dashboardShowsLanguageSettingsButton
-            .receive(on: DispatchQueue.main)
-            .sink { (showsLanguageSettingsButton: Bool) in
-                
-                if showsLanguageSettingsButton {
-                    hostingController.addBarButtonItem(item: languageSettingsButton, barPosition: .right)
-                }
-                else {
-                    hostingController.removeBarButtonItem(item: languageSettingsButton)
-                }
-            }
-            .store(in: &cancellables)
+        let languageSettingsButton = AppLanguageSettingsBarItem(
+            color: .white,
+            target: viewModel,
+            action: #selector(viewModel.languageSettingsTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: hidesLanguagesSettingsButton.eraseToAnyPublisher()
+        )
+        
+        let hostingController = AppHostingController<DashboardView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [menuButton],
+                trailingItems: [languageSettingsButton]
+            )
+        )
     
         return hostingController
     }
@@ -751,11 +727,19 @@ extension AppFlow {
         
         let view = AllYourFavoriteToolsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<AllYourFavoriteToolsView>(rootView: view)
-        
-        _ = hostingView.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTappedFromAllFavoriteTools)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<AllYourFavoriteToolsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
         )
         
         return hostingView
@@ -793,31 +777,41 @@ extension AppFlow {
         case .category:
             
             viewModel = ToolFilterCategorySelectionViewModel(
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
                 getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher
+                toolFilterSelectionPublisher: toolFilterSelectionPublisher,
+                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
             )
             
         case .language:
             
             viewModel = ToolFilterLanguageSelectionViewModel(
                 getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
+                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
                 toolFilterSelectionPublisher: toolFilterSelectionPublisher
             )
         }
         
         let view = ToolFilterSelectionView(viewModel: viewModel)
         
-        let hostingView = UIHostingController(rootView: view)
+        let backButton = AppBackBarItem(
+            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
+            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            accessibilityIdentifier: nil
+        )
         
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolFilterSelection))
-        
+        let hostingView = AppHostingController<ToolFilterSelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                        
         return hostingView
     }
     
+    // TODO: Would like this to go through the ViewModel. ~Levi
     @objc private func backTappedFromToolFilterSelection() {
         
         navigate(step: .backTappedFromToolFilter)
@@ -852,16 +846,22 @@ extension AppFlow {
         
         let view = ToolDetailsView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<ToolDetailsView>(rootView: view)
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
         
-        _ = hostingView.addDefaultNavBackItem(target: self, action: #selector(backTappedFromToolDetails))
+        let hostingView = AppHostingController<ToolDetailsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
         
         return hostingView
-    }
-    
-    @objc private func backTappedFromToolDetails() {
-        
-        navigate(step: .backTappedFromToolDetails)
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class WebContentView: UIViewController {
+class WebContentView: AppViewController {
     
     private let viewModel: WebContentViewModel
         
@@ -17,10 +17,12 @@ class WebContentView: UIViewController {
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    required init(viewModel: WebContentViewModel) {
+    init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?) {
+        
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
-        super.init(nibName: String(describing: WebContentView.self), bundle: nil)
+        
+        super.init(nibName: String(describing: WebContentView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {

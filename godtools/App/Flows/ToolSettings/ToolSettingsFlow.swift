@@ -26,9 +26,9 @@ class ToolSettingsFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: AppLayoutDirectionBasedNavigationController
+    let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppLayoutDirectionBasedNavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolData: ToolSettingsFlowToolData, tool: ToolSettingsToolType) {
             
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -53,7 +53,10 @@ class ToolSettingsFlow: Flow {
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         
-        let hostingView = ToolSettingsHostingView(view: toolSettingsView)
+        let hostingView = ToolSettingsHostingView(
+            view: toolSettingsView,
+            navigationBar: nil
+        )
         
         let transparentModal = TransparentModalView(
             flowDelegate: self,
@@ -219,8 +222,12 @@ class ToolSettingsFlow: Flow {
             )
             
             let view = ReviewShareShareableView(viewModel: viewModel)
-                        
-            let hostingView: UIHostingController<ReviewShareShareableView> = UIHostingController(rootView: view)
+            
+            let hostingView = AppHostingController<ReviewShareShareableView>(
+                rootView: view,
+                navigationBar: nil
+            )
+            
             hostingView.view.backgroundColor = .white
             
             reviewShareShareableModal = hostingView
@@ -350,7 +357,11 @@ class ToolSettingsFlow: Flow {
         
         let view = LanguagesListView(viewModel: viewModel)
                 
-        let hostingView: UIHostingController<LanguagesListView> = UIHostingController(rootView: view)
+        let hostingView = AppHostingController<LanguagesListView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
         hostingView.view.backgroundColor = .white
         
         navigationController.present(hostingView, animated: true)

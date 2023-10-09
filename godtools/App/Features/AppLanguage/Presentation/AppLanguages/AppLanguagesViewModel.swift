@@ -11,22 +11,32 @@ import Combine
 
 class AppLanguagesViewModel: ObservableObject {
     
-    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
+    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var appLanguages: [AppLanguageListItemDomainModel] = Array()
+    @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
+    @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
-        
-        getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
+                
+        getInterfaceStringInAppLanguageUseCase
+            .observeStringChangedPublisher(id: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguages)
+            .assign(to: &$navTitle)
+                
+        searchAppLanguageInAppLanguagesListUseCase
+            .getSearchResultsPublisher(for: searchTextPublisher)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguageSearchResults)
     }
 }
 
@@ -42,5 +52,13 @@ extension AppLanguagesViewModel {
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
         
         flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
+    }
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(
+            searchTextPublisher: searchTextPublisher,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+        )
     }
 }

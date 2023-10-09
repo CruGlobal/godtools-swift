@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArticlesView: UIViewController {
+class ArticlesView: AppViewController {
     
     private let viewModel: ArticlesViewModel
            
@@ -16,9 +16,11 @@ class ArticlesView: UIViewController {
     @IBOutlet weak private var articlesTableView: UITableView!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
-    init(viewModel: ArticlesViewModel) {
+    init(viewModel: ArticlesViewModel, navigationBar: AppNavigationBar?) {
+        
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ArticlesView.self), bundle: nil)
+        
+        super.init(nibName: String(describing: ArticlesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {

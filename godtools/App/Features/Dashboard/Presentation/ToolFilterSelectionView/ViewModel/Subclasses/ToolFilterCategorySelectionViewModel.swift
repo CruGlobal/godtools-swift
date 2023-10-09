@@ -15,21 +15,16 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
     
     private var categories: [ToolCategoryDomainModel] = [ToolCategoryDomainModel]()
         
-    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    init(getToolCategoriesUseCase: GetToolCategoriesUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
         
         self.getToolCategoriesUseCase = getToolCategoriesUseCase
         
-        super.init(localizationServices: localizationServices, getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
+        super.init(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
-        getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+        getInterfaceStringInAppLanguageUseCase
+            .observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (primaryLanguage: LanguageDomainModel?) in
-                
-                let primaryLocaleId: String? = primaryLanguage?.localeIdentifier
-
-                self?.navTitle = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleId, key: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
-            }
-            .store(in: &cancellables)
+            .assign(to: &$navTitle)
         
         getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
             .sink { [weak self] categories in

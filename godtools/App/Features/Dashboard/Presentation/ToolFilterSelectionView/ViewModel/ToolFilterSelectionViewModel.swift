@@ -10,8 +10,7 @@ import Foundation
 import Combine
 
 class ToolFilterSelectionViewModel: ObservableObject {
-    let localizationServices: LocalizationServices
-    let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     let toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>
     let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
 
@@ -49,10 +48,9 @@ class ToolFilterSelectionViewModel: ObservableObject {
         }
     }
     
-    init(localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
         
-        self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.toolFilterSelectionPublisher = toolFilterSelectionPublisher
     }
     
@@ -76,6 +74,9 @@ extension ToolFilterSelectionViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(searchTextPublisher: searchTextPublisher, localizationServices: localizationServices)
+        return SearchBarViewModel(
+            searchTextPublisher: searchTextPublisher,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+        )
     }
 }
