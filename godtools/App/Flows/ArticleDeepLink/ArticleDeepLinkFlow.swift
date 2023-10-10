@@ -79,6 +79,14 @@ class ArticleDeepLinkFlow: Flow {
     
     private func navigateToArticleWebView(aemCacheObject: ArticleAemCacheObject, animated: Bool) {
        
+        navigationController.pushViewController(getArticleWebView(aemCacheObject: aemCacheObject), animated: animated)
+    }
+}
+
+extension ArticleDeepLinkFlow {
+    
+    private func getArticleWebView(aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+        
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             flowType: .deeplink,
@@ -87,9 +95,22 @@ class ArticleDeepLinkFlow: Flow {
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
     
-        let view = ArticleWebView(viewModel: viewModel)
-    
-        navigationController.pushViewController(view, animated: animated)
+        let view = ArticleWebView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return view
     }
 }

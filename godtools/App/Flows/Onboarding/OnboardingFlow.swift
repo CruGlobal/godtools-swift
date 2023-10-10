@@ -181,15 +181,20 @@ extension OnboardingFlow {
         
         let view = OnboardingQuickStartView(viewModel: viewModel)
         
-        let hostingView = UIHostingController<OnboardingQuickStartView>(rootView: view)
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            title: viewModel.skipButtonTitle,
-            style: .plain,
-            color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
+        let skipButton = AppSkipBarItem(
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             target: viewModel,
-            action: #selector(viewModel.skipTapped)
+            action: #selector(viewModel.skipTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<OnboardingQuickStartView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [skipButton]
+            )
         )
         
         return hostingView

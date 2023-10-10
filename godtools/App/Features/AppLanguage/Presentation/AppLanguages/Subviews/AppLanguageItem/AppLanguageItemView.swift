@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AppLanguageItemView: View {
     
+    private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
+    
     private let appLanguage: AppLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
     
@@ -21,21 +23,29 @@ struct AppLanguageItemView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
-            
-            FixedVerticalSpacer(height: 24)
-            
-            Text("Language Code: \(appLanguage.languageCode)")
-                .font(FontLibrary.sfProTextRegular.font(size: 15))
-                .foregroundColor(Color.black)
-            
-            FixedVerticalSpacer(height: 24)
-            
-            SeparatorView()
-        }
-        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
-        .onTapGesture {
+        Button {
             tappedClosure?()
+            
+        } label: {
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    HStack(spacing: 10) {
+                        
+                        Text(appLanguage.languageNameTranslatedInOwnLanguage.value)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        Text(appLanguage.languageNameTranslatedInCurrentAppLanguage.value)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(AppLanguageItemView.lightGrey)
+                    }
+                }
+                .padding(.vertical, 3)
+                
+                Spacer()
+            }
         }
     }
 }

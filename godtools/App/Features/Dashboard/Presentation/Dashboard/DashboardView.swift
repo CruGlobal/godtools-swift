@@ -78,7 +78,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            showsLanguagesSettingsButton: CurrentValueSubject<Bool, Never>(false)
+            hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never>(false)
         )
         
         return viewModel

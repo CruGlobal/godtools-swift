@@ -84,6 +84,7 @@ extension TutorialFlow {
         )
         
         let closeButton = AppCloseBarItem(
+            color: nil,
             target: viewModel,
             action: #selector(viewModel.closeTapped),
             accessibilityIdentifier: nil
