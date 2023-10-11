@@ -67,7 +67,8 @@ enum FlowStep {
     // tools
     case toolFilterTappedFromTools(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>)
     case backTappedFromToolFilter
-    case toolTappedFromTools(resource: ResourceModel)
+    case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
+    case toolTappedFromTools(tool: ToolDomainModel)
     
     // toolDetails
     case backTappedFromToolDetails
