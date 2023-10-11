@@ -32,7 +32,7 @@ class ToolDetailsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var tool: ToolDomainModel {
-        didSet {
+        willSet {
             showsLearnToShareToolButton = false
         }
     }
