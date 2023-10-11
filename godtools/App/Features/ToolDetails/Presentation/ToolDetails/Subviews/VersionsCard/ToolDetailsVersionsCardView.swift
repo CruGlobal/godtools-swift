@@ -9,9 +9,7 @@
 import SwiftUI
 
 struct ToolDetailsVersionsCardView: View {
-    
-    private let bannerHeight: CGFloat = 87
-    
+        
     @ObservedObject private var viewModel: ToolDetailsVersionsCardViewModel
     
     let width: CGFloat
@@ -30,18 +28,12 @@ struct ToolDetailsVersionsCardView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                if let bannerImage = viewModel.bannerImage {
-                    bannerImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: width, height: bannerHeight)
-                        .clipped()
-                }
-                else {
-                    Rectangle()
-                        .fill(ColorPalette.gtLightestGrey.color)
-                        .frame(width: width, height: bannerHeight)
-                }
+                OptionalImage(
+                    imageData: viewModel.bannerImageData,
+                    imageSize: .aspectRatio(width: width, aspectRatio: CGSize(width: 335, height: 87)),
+                    contentMode: .fill,
+                    placeholderColor: ColorPalette.gtLightestGrey.color
+                )
                 
                 HStack(alignment: .top, spacing: 0) {
                     
@@ -78,12 +70,8 @@ struct ToolDetailsVersionsCardView: View {
                                 
                                 Text(viewModel.languages)
                                 
-                                if let primaryLanguageName = viewModel.primaryLanguageName {
-                                    LanguageSupportedText(languageName: primaryLanguageName, isSupported: viewModel.primaryLanguageIsSupported)
-                                }
-                                
-                                if let parallelLanguageName = viewModel.parallelLanguageName {
-                                    LanguageSupportedText(languageName: parallelLanguageName, isSupported: viewModel.parallelLanguageIsSupported)
+                                if let toolLanguageName = viewModel.toolLanguageName, !toolLanguageName.isEmpty {
+                                    LanguageSupportedText(languageName: toolLanguageName, isSupported: viewModel.toolLanguageNameIsSupported)
                                 }
                             }
                             .foregroundColor(ColorPalette.gtLightGrey.color)
@@ -108,15 +96,11 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         let toolVersion = ToolVersionDomainModel(
             bannerImageId: "1",
             dataModelId: "1",
-            name: "Tool Name",
             description: "Tool description",
-            numberOfLanguages: 45,
-            numberOfLanguagesString: "45 languages",
-            primaryLanguage: "English",
-            primaryLanguageIsSupported: true,
-            parallelLanguage: "Spanish",
-            parallelLanguageIsSupported: false,
-            isDefaultVersion: false
+            name: "Tool name",
+            numberOfLanguages: "45 languages",
+            toolLanguageName: "Spanish",
+            toolLanguageNameIsSupported: true
         )
         
         let viewModel = ToolDetailsVersionsCardViewModel(
