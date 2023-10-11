@@ -18,14 +18,20 @@ class GetToolDetailsInterfaceStringsUseCase {
         self.getToolDetailsInterfaceStringsRepository = getToolDetailsInterfaceStringsRepository
     }
     
-    func getStringsPublisher(toolLanguageCodePublisher: AnyPublisher<String, Never>) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> {
+    func observeStringsPublisher(toolLanguageCodeChangedPublisher: AnyPublisher<String, Never>) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> {
         
-        toolLanguageCodePublisher
-        .flatMap({ (languageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> in
-            
-            return self.getToolDetailsInterfaceStringsRepository.getStringsPublisher(translateInToolLanguageCode: languageCode)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+        toolLanguageCodeChangedPublisher
+            .flatMap({ (toolLanguageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> in
+              
+                return self.getStringsPublisher(translateInToolLanguageCode: toolLanguageCode)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func getStringsPublisher(translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> {
+        
+        return self.getToolDetailsInterfaceStringsRepository.getStringsPublisher(translateInToolLanguageCode: translateInToolLanguageCode)
+            .eraseToAnyPublisher()
     }
 }

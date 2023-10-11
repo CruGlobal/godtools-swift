@@ -18,16 +18,23 @@ class GetToolDetailsUseCase {
         self.getToolDetailsRepository = getToolDetailsRepository
     }
     
-    func getToolDetailsPublisher(toolPublisher: AnyPublisher<ToolDomainModel, Never>, toolLanguageCodePublisher: AnyPublisher<String, Never>) -> AnyPublisher<ToolDetailsDomainModel, Never> {
+    func observeToolDetailsPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>, toolLanguageCodeChangedPublisher: AnyPublisher<String, Never>) -> AnyPublisher<ToolDetailsDomainModel, Never> {
         
         Publishers.CombineLatest(
-            toolPublisher.eraseToAnyPublisher(),
-            toolLanguageCodePublisher.eraseToAnyPublisher()
+            toolChangedPublisher.eraseToAnyPublisher(),
+            toolLanguageCodeChangedPublisher.eraseToAnyPublisher()
         )
         .flatMap({ (tool: ToolDomainModel, toolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never> in
             
-            return self.getToolDetailsRepository.getDetailsPublisher(tool: tool, translateInToolLanguageCode: toolLanguageCode)
+            return self.getToolDetailsPublisher(tool: tool, translateInToolLanguageCode: toolLanguageCode)
+                .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
+    }
+    
+    func getToolDetailsPublisher(tool: ToolDomainModel, translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never> {
+        
+        return self.getToolDetailsRepository.getDetailsPublisher(tool: tool, translateInToolLanguageCode: translateInToolLanguageCode)
+            .eraseToAnyPublisher()
     }
 }

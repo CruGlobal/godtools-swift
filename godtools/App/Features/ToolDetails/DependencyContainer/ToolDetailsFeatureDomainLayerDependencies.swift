@@ -29,7 +29,7 @@ class ToolDetailsFeatureDomainLayerDependencies {
     
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
-            attachmentsRepository: coreDataLayer.getAttachmentsRepository()
+            getToolDetailsMediaRepository: dataLayer.getToolDetailsMediaRepository()
         )
     }
     

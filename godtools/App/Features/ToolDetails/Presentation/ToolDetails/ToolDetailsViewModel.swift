@@ -14,6 +14,7 @@ class ToolDetailsViewModel: ObservableObject {
     
     private static var toggleToolFavoriteCancellable: AnyCancellable?
     
+    private let getToolUseCase: GetToolUseCase
     private let getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase
     private let getToolDetailsUseCase: GetToolDetailsUseCase
     private let resourcesRepository: ResourcesRepository
@@ -63,10 +64,11 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
+        self.getToolUseCase = getToolUseCase
         self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
         self.getToolDetailsUseCase = getToolDetailsUseCase
         self.resourcesRepository = resourcesRepository
@@ -91,13 +93,18 @@ class ToolDetailsViewModel: ObservableObject {
             self.resource = resourcesRepository.getResource(id: "1")!
         }
         
-        getToolDetailsMediaUseCase.getMediaPublisher(resource: resource)
+        getToolDetailsMediaUseCase.observeMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
         Publishers.CombineLatest(
-            getToolDetailsInterfaceStringsUseCase.getStringsPublisher(toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher()),
-            getToolDetailsUseCase.getToolDetailsPublisher(toolPublisher: $tool.eraseToAnyPublisher(), toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher())
+            getToolDetailsInterfaceStringsUseCase.observeStringsPublisher(
+                toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
+            ),
+            getToolDetailsUseCase.observeToolDetailsPublisher(
+                toolChangedPublisher: $tool.eraseToAnyPublisher(),
+                toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
+            )
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (interfaceStrings: ToolDetailsInterfaceStringsDomainModel, toolDetails: ToolDetailsDomainModel) in
@@ -296,6 +303,8 @@ extension ToolDetailsViewModel {
         guard let resource = resourcesRepository.getResource(id: toolVersion.dataModelId) else {
             return
         }
+        
+        tool = getToolUseCase.getTool(resource: resource)
         
         selectedToolVersion = toolVersion
 

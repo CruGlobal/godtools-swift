@@ -830,6 +830,7 @@ extension AppFlow {
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             tool: tool,
+            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
             getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),

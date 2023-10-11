@@ -22,6 +22,13 @@ class ToolDetailsFeatureDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getToolDetailsMediaRepository() -> GetToolDetailsMediaRepositoryInterface {
+        return GetToolDetailsMediaRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            attachmentsRepository: coreDataLayer.getAttachmentsRepository()
+        )
+    }
         
     func getToolDetailsRepository() -> GetToolDetailsRepositoryInterface {
         return GetToolDetailsRepository(

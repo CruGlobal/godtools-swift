@@ -11,75 +11,27 @@ import Combine
 
 class GetToolDetailsMediaUseCase {
     
-    private let attachmentsRepository: AttachmentsRepository
+    private let getToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface
     
-    init(attachmentsRepository: AttachmentsRepository) {
+    init(getToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface) {
         
-        self.attachmentsRepository = attachmentsRepository
+        self.getToolDetailsMediaRepository = getToolDetailsMediaRepository
     }
     
-    func getMediaPublisher(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
-                
-        if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            
-            return getYouTubeMedia(videoId: resource.attrAboutOverviewVideoYoutube)
-        }
-        else if !resource.attrAboutBannerAnimation.isEmpty {
-            
-            return getAnimatedMediaElseImage(resource: resource)
-        }
-        else {
-            
-            return getImageMediaElseEmpty(resource: resource)
-        }
-    }
-    
-    private func getYouTubeMedia(videoId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func observeMediaPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        let playsInFullScreen: Int = 0
-        let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
-        
-        return Just(.youtube(videoId: videoId, playerParameters: playerParameters))
-            .eraseToAnyPublisher()
-    }
-    
-    private func getAnimatedMediaElseImage(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
-        
-        return attachmentsRepository.getAttachmentUrlPublisher(id: resource.attrAboutBannerAnimation)
-            .flatMap({ url -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+        toolChangedPublisher
+            .flatMap({ (tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
-                guard let url = url else {
-                    return self.getImageMediaElseEmpty(resource: resource)
-                }
-                
-                let resource: AnimatedResource = .deviceFileManagerfilepathJsonFile(filepath: url.path)
-                let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
-                
-                return Just(.animation(viewModel: viewModel))
-                    .eraseToAnyPublisher()
-
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    private func getImageMediaElseEmpty(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
-        
-        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBanner)
-            .flatMap({ image -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
-                
-                guard let image = image else {
-                    return self.getEmptyMedia()
-                }
-                
-                return Just(.image(image: image))
+                return self.getMediaPublisher(tool: tool)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func getEmptyMedia() -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func getMediaPublisher(tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return Just(.empty)
+        return getToolDetailsMediaRepository.getMediaPublisher(tool: tool)
             .eraseToAnyPublisher()
     }
 }
