@@ -32,7 +32,7 @@ struct ToolDetailsAboutView: View {
             ToolDetailsSectionDescriptionTextView(
                 viewModel: viewModel,
                 geometry: geometry,
-                text: viewModel.aboutDetails
+                text: viewModel.aboutDescription
             )
             
             Rectangle()
@@ -56,9 +56,9 @@ struct ToolDetailsAboutView: View {
                     AccordionView(title: viewModel.bibleReferencesTitle, contents: viewModel.bibleReferencesContent, isExpanded: $accordionExpandedBibleReferences)
                 }
                 
-                if viewModel.availableLanguagesList.isEmpty == false {
+                if viewModel.languagesAvailable.isEmpty == false {
                     
-                    AccordionView(title: viewModel.availableLanguagesTitle, contents: viewModel.availableLanguagesList, isExpanded: $accordionExpandedLanguageAvailability)
+                    AccordionView(title: viewModel.languagesAvailableTitle, contents: viewModel.languagesAvailable, isExpanded: $accordionExpandedLanguageAvailability)
                 }
             }
             .padding(ToolDetailsView.sectionDescriptionTextInsets)
