@@ -39,4 +39,10 @@ class ToolDetailsFeatureDataLayerDependencies {
             localeLanguageName: coreDataLayer.getLocaleLanguageName()
         )
     }
+    
+    func getToolDetailsToolIsFavoritedRepository() -> GetToolDetailsToolIsFavoritedRepositoryInterface {
+        return GetToolDetailsToolIsFavoritedRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
 }

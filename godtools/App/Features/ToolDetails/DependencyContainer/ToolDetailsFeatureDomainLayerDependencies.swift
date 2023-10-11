@@ -33,6 +33,12 @@ class ToolDetailsFeatureDomainLayerDependencies {
         )
     }
     
+    func getToolDetailsToolIsFavoritedUseCase() -> GetToolDetailsToolIsFavoritedUseCase {
+        return GetToolDetailsToolIsFavoritedUseCase(
+            getToolDetailsToolIsFavoritedRepository: dataLayer.getToolDetailsToolIsFavoritedRepository()
+        )
+    }
+    
     func getToolDetailsUseCase() -> GetToolDetailsUseCase {
         return GetToolDetailsUseCase(
             getToolDetailsRepository: dataLayer.getToolDetailsRepository()

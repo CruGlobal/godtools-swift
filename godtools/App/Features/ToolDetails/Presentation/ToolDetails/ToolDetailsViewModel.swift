@@ -17,6 +17,7 @@ class ToolDetailsViewModel: ObservableObject {
     private let getToolUseCase: GetToolUseCase
     private let getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase
     private let getToolDetailsUseCase: GetToolDetailsUseCase
+    private let getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
@@ -31,7 +32,6 @@ class ToolDetailsViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
-    private var resource: ResourceModel
     private var hidesLearnToShareCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -64,13 +64,14 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
         self.getToolUseCase = getToolUseCase
         self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
         self.getToolDetailsUseCase = getToolDetailsUseCase
+        self.getToolDetailsToolIsFavoritedUseCase = getToolDetailsToolIsFavoritedUseCase
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
@@ -83,17 +84,11 @@ class ToolDetailsViewModel: ObservableObject {
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+
+        reloadToolDetails(tool: tool) // TODO: Need to remove this method call, see TODO in method implementation. ~Levi
         
-        if let resource = resourcesRepository.getResource(id: tool.dataModelId) {
-            self.resource = resource
-            reloadToolDetails(resource: resource) // TODO: Should remove this and reload when ToolDomainModel changes. ~Levi
-        }
-        else {
-            assertionFailure("Failed to load resource from resources repository with id: \(tool.dataModelId)")
-            self.resource = resourcesRepository.getResource(id: "1")!
-        }
-        
-        getToolDetailsMediaUseCase.observeMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
+        getToolDetailsMediaUseCase
+            .observeMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
@@ -150,15 +145,10 @@ class ToolDetailsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        $tool
-            .flatMap({ (tool: ToolDomainModel) -> AnyPublisher<Bool, Never> in
-                return self.getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.dataModelId)
-                    .eraseToAnyPublisher()
-            })
-            .sink { [weak self] (isFavorited: Bool) in
-                self?.isFavorited = isFavorited
-            }
-            .store(in: &cancellables)
+        getToolDetailsToolIsFavoritedUseCase
+            .observeToolIsFavoritedPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isFavorited)
     }
     
     deinit {
@@ -166,22 +156,22 @@ class ToolDetailsViewModel: ObservableObject {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-tool-info"
+        return tool.abbreviation + "-tool-info"
     }
     
     private var analyticsSiteSection: String {
-        return resource.abbreviation
+        return tool.abbreviation
     }
     
     private var analyticsSiteSubSection: String {
         return "tool-info"
     }
     
-    private func reloadToolDetails(resource: ResourceModel) {
+    private func reloadToolDetails(tool: ToolDomainModel) {
+                
+        // TODO: Need to use a UseCase for Learn To Share Tool Visibility and remove this method. ~Levi
         
-        self.resource = resource
-        
-        reloadLearnToShareToolButtonState(resourceId: resource.id)
+        reloadLearnToShareToolButtonState(resourceId: tool.dataModelId)
     }
     
     private func reloadLearnToShareToolButtonState(resourceId: String) {
@@ -218,7 +208,7 @@ class ToolDetailsViewModel: ObservableObject {
         })
     }
     
-    private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
+    private func trackToolVersionTappedAnalytics(for tool: ToolDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -268,21 +258,21 @@ extension ToolDetailsViewModel {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
-                AnalyticsConstants.Keys.tool: resource.abbreviation
+                AnalyticsConstants.Keys.tool: tool.abbreviation
             ]
         )
         
-        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(tool: tool))
     }
     
     func learnToShareToolTapped() {
         
-        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(resource: resource))
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(tool: tool))
     }
     
     func toggleFavorited() {
         
-        ToolDetailsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: resource.id)
+        ToolDetailsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: tool.dataModelId)
             .sink { _ in
                 
             }
@@ -300,17 +290,17 @@ extension ToolDetailsViewModel {
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
         
-        guard let resource = resourcesRepository.getResource(id: toolVersion.dataModelId) else {
+        guard let tool = getToolUseCase.getTool(id: toolVersion.dataModelId) else {
             return
         }
         
-        tool = getToolUseCase.getTool(resource: resource)
-        
+        self.tool = tool
+            
         selectedToolVersion = toolVersion
 
-        trackToolVersionTappedAnalytics(for: resource)
+        trackToolVersionTappedAnalytics(for: tool)
         
-        reloadToolDetails(resource: resource) // TODO: Should remove this and reload when ToolDomainModel changes. ~Levi
+        reloadToolDetails(tool: tool) // TODO: Need to remove this method call, see TODO in method implementation. ~Levi
     }
     
     func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
