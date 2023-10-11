@@ -164,8 +164,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .toolTappedFromTools(let tool):
             navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
                                     
-        case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+        case .openToolTappedFromToolDetails(let tool):
+            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToTool(resourceId: lessonListItem.lesson.id, trainingTipsEnabled: false)
@@ -364,17 +364,17 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 UIApplication.shared.open(url)
             }
             
-        case .learnToShareToolTappedFromToolDetails(let resource):
-            navigateToLearnToShareTool(resource: resource)
+        case .learnToShareToolTappedFromToolDetails(let tool):
+            navigateToLearnToShareTool(tool: tool)
             
-        case .continueTappedFromLearnToShareTool(let resource):
+        case .continueTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
-        case .closeTappedFromLearnToShareTool(let resource):
+        case .closeTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLessonEvaluation:
@@ -833,6 +833,7 @@ extension AppFlow {
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
             getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
+            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
@@ -873,20 +874,20 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToLearnToShareTool(resource: ResourceModel) {
+    private func navigateToLearnToShareTool(tool: ToolDomainModel) {
         
         let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
                     
-        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(resource: resource)
+        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(tool: tool)
         
         if !toolTrainingTipReachedMaximumViews {
             
-            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(resource: resource)
+            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(tool: tool)
             
             let learnToShareToolFlow = LearnToShareToolFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
-                resource: resource
+                tool: tool
             )
             
             navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
@@ -895,7 +896,7 @@ extension AppFlow {
         }
         else {
             
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
         }
     }
     
