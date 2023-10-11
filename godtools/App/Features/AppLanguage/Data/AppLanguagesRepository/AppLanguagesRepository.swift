@@ -17,8 +17,8 @@ class AppLanguagesRepository {
     
     func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
-        /*
         let appLanguages: [AppLanguageDataModel] = [
+            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
             AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "es", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "pt", languageDirection: .leftToRight),
@@ -27,15 +27,9 @@ class AppLanguagesRepository {
             AppLanguageDataModel(languageCode: "zh-Hans", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "zh-Hant", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "hi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
             AppLanguageDataModel(languageCode: "ru", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "vi", languageDirection: .leftToRight),
             AppLanguageDataModel(languageCode: "lv", languageDirection: .leftToRight)
-        ]*/
-        
-        let appLanguages: [AppLanguageDataModel] = [
-            AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft)
         ]
         
         return Just(appLanguages)
