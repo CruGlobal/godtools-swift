@@ -108,7 +108,7 @@ class ToolDetailsViewModel: ObservableObject {
             self?.aboutDescription = toolDetails.aboutDescription
             self?.conversationStartersContent = toolDetails.conversationStarters
             self?.bibleReferencesContent = toolDetails.bibleReferences
-            self?.languagesAvailable = toolDetails.languages.map({$0.languageNameTranslatedInToolLanguage}).sorted(by: { $0 < $1 }).joined(separator: ", ")
+            self?.languagesAvailable = toolDetails.languagesAvailable
             self?.versionsDescription = toolDetails.versionsDescription
             
             var segmentTypes: [ToolDetailsSegmentType] = Array()

@@ -32,7 +32,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             aboutDescription: "",
             bibleReferences: "",
             conversationStarters: "",
-            languages: [],
+            languagesAvailable: "",
             name: "",
             numberOfViews: "",
             versions: [],
@@ -70,6 +70,8 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 languageNameTranslatedInToolLanguage: languageDisplayName
             )
         }
+        
+        let languagesAvailable: String = languages.map({$0.languageNameTranslatedInToolLanguage}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         let resourceVariants: [ResourceModel]
         
@@ -110,7 +112,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             aboutDescription: translation.translatedDescription,
             bibleReferences: translation.toolDetailsBibleReferences,
             conversationStarters: translation.toolDetailsConversationStarters,
-            languages: languages,
+            languagesAvailable: languagesAvailable,
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: versions,

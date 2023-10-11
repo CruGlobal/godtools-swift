@@ -13,7 +13,7 @@ struct ToolDetailsDomainModel {
     let aboutDescription: String
     let bibleReferences: String
     let conversationStarters: String
-    let languages: [ToolDetailsToolLanguageDomainModel]
+    let languagesAvailable: String
     let name: String
     let numberOfViews: String
     let versions: [ToolVersionDomainModel]
