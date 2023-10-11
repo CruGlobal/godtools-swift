@@ -1,0 +1,15 @@
+//
+//  GetToolDetailsInterfaceStringsRepositoryInterface.swift
+//  godtools
+//
+//  Created by Levi Eggert on 10/11/23.
+//  Copyright © 2023 Cru. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+protocol GetToolDetailsInterfaceStringsRepositoryInterface {
+    
+    func getStringsPublisher(translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never>
+}

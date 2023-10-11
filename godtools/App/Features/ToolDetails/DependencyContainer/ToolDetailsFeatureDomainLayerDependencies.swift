@@ -21,15 +21,21 @@ class ToolDetailsFeatureDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getToolDetailsInterfaceStringsInToolLanguageUseCase() -> GetToolDetailsInterfaceStringsInToolLanguageUseCase {
-        return GetToolDetailsInterfaceStringsInToolLanguageUseCase(
-            getInterfaceStringForLanguageRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface()
+    func getToolDetailsInterfaceStringsUseCase() -> GetToolDetailsInterfaceStringsUseCase {
+        return GetToolDetailsInterfaceStringsUseCase(
+            getToolDetailsInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository()
         )
     }
     
-    func getToolDetailsInToolLanguageUseCase() -> GetToolDetailsInToolLanguageUseCase {
-        return GetToolDetailsInToolLanguageUseCase(
-            getToolDetailsRepositoryInterface: dataLayer.getToolDetailsRepositoryInterface()
+    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
+        return GetToolDetailsMediaUseCase(
+            attachmentsRepository: coreDataLayer.getAttachmentsRepository()
+        )
+    }
+    
+    func getToolDetailsUseCase() -> GetToolDetailsUseCase {
+        return GetToolDetailsUseCase(
+            getToolDetailsRepository: dataLayer.getToolDetailsRepository()
         )
     }
 }

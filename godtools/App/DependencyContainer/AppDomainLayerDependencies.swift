@@ -249,12 +249,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
-        return GetToolDetailsMediaUseCase(
-            attachmentsRepository: dataLayer.getAttachmentsRepository()
-        )
-    }
-    
     func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
         return GetToolFilterLanguagesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),

@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolDetailsRepositoryInterface {
     
-    func getToolDetailsPublisher(tool: ToolDomainModel, inToolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never>
+    func getDetailsPublisher(tool: ToolDomainModel, translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never>
 }

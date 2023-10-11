@@ -14,8 +14,8 @@ class ToolDetailsViewModel: ObservableObject {
     
     private static var toggleToolFavoriteCancellable: AnyCancellable?
     
-    private let getToolDetailsInterfaceStringsInToolLanguageUseCase: GetToolDetailsInterfaceStringsInToolLanguageUseCase
-    private let getToolDetailsInToolLanguageUseCase: GetToolDetailsInToolLanguageUseCase
+    private let getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase
+    private let getToolDetailsUseCase: GetToolDetailsUseCase
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
@@ -63,12 +63,12 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolDetailsInterfaceStringsInToolLanguageUseCase: GetToolDetailsInterfaceStringsInToolLanguageUseCase, getToolDetailsInToolLanguageUseCase: GetToolDetailsInToolLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
-        self.getToolDetailsInterfaceStringsInToolLanguageUseCase = getToolDetailsInterfaceStringsInToolLanguageUseCase
-        self.getToolDetailsInToolLanguageUseCase = getToolDetailsInToolLanguageUseCase
+        self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
+        self.getToolDetailsUseCase = getToolDetailsUseCase
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
@@ -96,8 +96,8 @@ class ToolDetailsViewModel: ObservableObject {
             .assign(to: &$mediaType)
         
         Publishers.CombineLatest(
-            getToolDetailsInterfaceStringsInToolLanguageUseCase.getStringsPublisher(toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher()),
-            getToolDetailsInToolLanguageUseCase.getToolsDetailsPublisher(toolPublisher: $tool.eraseToAnyPublisher(), toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher())
+            getToolDetailsInterfaceStringsUseCase.getStringsPublisher(toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher()),
+            getToolDetailsUseCase.getToolDetailsPublisher(toolPublisher: $tool.eraseToAnyPublisher(), toolLanguageCodePublisher: $toolLanguage.eraseToAnyPublisher())
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (interfaceStrings: ToolDetailsInterfaceStringsDomainModel, toolDetails: ToolDetailsDomainModel) in

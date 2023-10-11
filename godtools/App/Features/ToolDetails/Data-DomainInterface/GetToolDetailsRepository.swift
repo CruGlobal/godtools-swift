@@ -14,19 +14,19 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
-    private let getInterfaceStringForLanguageRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface
+    private let localizationServices: LocalizationServices
     private let localeLanguageName: LocaleLanguageName
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, getInterfaceStringForLanguageRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface, localeLanguageName: LocaleLanguageName) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
-        self.getInterfaceStringForLanguageRepositoryInterface = getInterfaceStringForLanguageRepositoryInterface
+        self.localizationServices = localizationServices
         self.localeLanguageName = localeLanguageName
     }
     
-    func getToolDetailsPublisher(tool: ToolDomainModel, inToolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never> {
+    func getDetailsPublisher(tool: ToolDomainModel, translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never> {
         
         let defaultTool = ToolDetailsDomainModel(
             aboutDescription: "",
@@ -40,21 +40,21 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         )
         
         guard let toolDataModel = resourcesRepository.getResource(id: tool.dataModelId),
-              let toolLanguageDataModel = languagesRepository.getLanguage(code: inToolLanguageCode) else {
+              let toolLanguageDataModel = languagesRepository.getLanguage(code: translateInToolLanguageCode) else {
             
             return Just(defaultTool)
                 .eraseToAnyPublisher()
         }
         
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: inToolLanguageCode) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: translateInToolLanguageCode) else {
             
             return Just(defaultTool)
                 .eraseToAnyPublisher()
         }
         
         let numberOfViewsString: String = String(
-            format: getInterfaceStringForLanguageRepositoryInterface.getString(languageCode: inToolLanguageCode, stringId: "total_views").capitalized,
-            locale: Locale(identifier: inToolLanguageCode),
+            format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguageCode, key: "total_views").capitalized,
+            locale: Locale(identifier: translateInToolLanguageCode),
             toolDataModel.totalViews
         )
         
@@ -62,7 +62,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         
         let languages: [ToolDetailsToolLanguageDomainModel] = languagesDataModels.compactMap { (languageDataModel: LanguageModel) in
             
-            guard let languageDisplayName = self.localeLanguageName.getDisplayName(forLanguageCode: languageDataModel.code, translatedInLanguageCode: inToolLanguageCode) else {
+            guard let languageDisplayName = self.localeLanguageName.getDisplayName(forLanguageCode: languageDataModel.code, translatedInLanguageCode: translateInToolLanguageCode) else {
                 return nil
             }
             
@@ -80,18 +80,18 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             resourceVariants = []
         }
         
-        let localizedTotalLanguages: String = getInterfaceStringForLanguageRepositoryInterface.getString(languageCode: inToolLanguageCode, stringId: "total_languages")
-        let toolLanguageName: String? = localeLanguageName.getDisplayName(forLanguageCode: inToolLanguageCode, translatedInLanguageCode: inToolLanguageCode)
+        let localizedTotalLanguages: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguageCode, key: "total_languages")
+        let toolLanguageName: String? = localeLanguageName.getDisplayName(forLanguageCode: translateInToolLanguageCode, translatedInLanguageCode: translateInToolLanguageCode)
         
         let versions: [ToolVersionDomainModel] = resourceVariants.compactMap { (variantDataModel: ResourceModel) in
             
-            guard let translation = self.translationsRepository.getLatestTranslation(resourceId: variantDataModel.id, languageCode: inToolLanguageCode) else {
+            guard let translation = self.translationsRepository.getLatestTranslation(resourceId: variantDataModel.id, languageCode: translateInToolLanguageCode) else {
                 return nil
             }
             
             let numberOfLanguagesString: String = String(
                 format: localizedTotalLanguages,
-                locale: Locale(identifier: inToolLanguageCode),
+                locale: Locale(identifier: translateInToolLanguageCode),
                 variantDataModel.languageIds.count
             )
             
@@ -114,7 +114,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
             versions: versions,
-            versionsDescription: getInterfaceStringForLanguageRepositoryInterface.getString(languageCode: inToolLanguageCode, stringId: "toolDetails.versions.message")
+            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguageCode, key: "toolDetails.versions.message")
         )
         
         return Just(toolDetails)
