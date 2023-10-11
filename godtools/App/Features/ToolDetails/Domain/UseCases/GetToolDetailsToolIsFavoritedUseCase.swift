@@ -18,7 +18,7 @@ class GetToolDetailsToolIsFavoritedUseCase {
         self.getToolDetailsToolIsFavoritedRepository = getToolDetailsToolIsFavoritedRepository
     }
     
-    func observeToolIsFavoritedPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>) -> AnyPublisher<Bool, Never> {
+    func getToolIsFavoritedPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>) -> AnyPublisher<Bool, Never> {
         
         Publishers.CombineLatest(
             toolChangedPublisher.eraseToAnyPublisher(),
@@ -26,15 +26,9 @@ class GetToolDetailsToolIsFavoritedUseCase {
         )
         .flatMap({ (tool: ToolDomainModel, favoritedToolsChanged: Void) -> AnyPublisher<Bool, Never> in
             
-            return self.getToolIsFavoritedPublisher(tool: tool)
+            return self.getToolDetailsToolIsFavoritedRepository.getToolIsFavorited(tool: tool)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
-    }
-    
-    func getToolIsFavoritedPublisher(tool: ToolDomainModel) -> AnyPublisher<Bool, Never> {
-        
-        return getToolDetailsToolIsFavoritedRepository.getToolIsFavorited(tool: tool)
-            .eraseToAnyPublisher()
     }
 }

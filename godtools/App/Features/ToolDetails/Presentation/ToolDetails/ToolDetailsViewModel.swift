@@ -77,15 +77,15 @@ class ToolDetailsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         getToolDetailsMediaUseCase
-            .observeMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
+            .getMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
         Publishers.CombineLatest(
-            getToolDetailsInterfaceStringsUseCase.observeStringsPublisher(
+            getToolDetailsInterfaceStringsUseCase.getStringsPublisher(
                 toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
             ),
-            getToolDetailsUseCase.observeToolDetailsPublisher(
+            getToolDetailsUseCase.getToolDetailsPublisher(
                 toolChangedPublisher: $tool.eraseToAnyPublisher(),
                 toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
             )
@@ -135,12 +135,12 @@ class ToolDetailsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         getToolDetailsToolIsFavoritedUseCase
-            .observeToolIsFavoritedPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
+            .getToolIsFavoritedPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)
         
         getToolDetailsLearnToShareToolIsAvailableUseCase
-            .observeIsAvailablePublisher(
+            .getIsAvailablePublisher(
                 toolChangedPublisher: $tool.eraseToAnyPublisher(),
                 toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
             )

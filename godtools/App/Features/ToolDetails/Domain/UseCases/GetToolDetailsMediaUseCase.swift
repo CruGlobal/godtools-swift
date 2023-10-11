@@ -18,20 +18,14 @@ class GetToolDetailsMediaUseCase {
         self.getToolDetailsMediaRepository = getToolDetailsMediaRepository
     }
     
-    func observeMediaPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func getMediaPublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
         toolChangedPublisher
             .flatMap({ (tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
-                return self.getMediaPublisher(tool: tool)
+                return self.getToolDetailsMediaRepository.getMediaPublisher(tool: tool)
                     .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
-    }
-    
-    func getMediaPublisher(tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
-        
-        return getToolDetailsMediaRepository.getMediaPublisher(tool: tool)
             .eraseToAnyPublisher()
     }
 }
