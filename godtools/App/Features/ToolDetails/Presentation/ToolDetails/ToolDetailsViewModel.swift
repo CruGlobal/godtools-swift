@@ -26,7 +26,6 @@ class ToolDetailsViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
-    private var hidesLearnToShareCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
