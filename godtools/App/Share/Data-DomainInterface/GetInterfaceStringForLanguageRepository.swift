@@ -17,12 +17,17 @@ class GetInterfaceStringForLanguageRepository: GetInterfaceStringForLanguageRepo
         
         self.localizationServices = localizationServices
     }
-
-    func getInterfaceStringForLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel, stringId: String) -> AnyPublisher<String, Never> {
-            
-        let interfaceString: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: stringId)
+    
+    func getString(languageCode: String, stringId: String) -> String {
         
-        return Just(interfaceString)
+        let interfaceString: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: languageCode, key: stringId)
+        
+        return interfaceString
+    }
+
+    func getStringPublisher(languageCode: String, stringId: String) -> AnyPublisher<String, Never> {
+                    
+        return Just(getString(languageCode: languageCode, stringId: stringId))
             .eraseToAnyPublisher()
     }
 }
