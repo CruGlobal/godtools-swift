@@ -13,12 +13,24 @@ class GetToolUseCase {
     
     private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
+    private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     
-    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, translationsRepository: TranslationsRepository) {
+    init(getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
+        self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
+    }
+    
+    func getTool(id: String) -> ToolDomainModel? {
+        
+        guard let resource = resourcesRepository.getResource(id: id) else {
+            return nil
+        }
+        
+        return getTool(resource: resource)
+        
     }
     
     func getTool(resource: ResourceModel) -> ToolDomainModel {
