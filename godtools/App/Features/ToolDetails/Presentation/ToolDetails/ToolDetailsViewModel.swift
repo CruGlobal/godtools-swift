@@ -16,17 +16,11 @@ class ToolDetailsViewModel: ObservableObject {
     
     private let getToolUseCase: GetToolUseCase
     private let getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase
+    private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
     private let getToolDetailsUseCase: GetToolDetailsUseCase
     private let getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase
-    private let resourcesRepository: ResourcesRepository
-    private let translationsRepository: TranslationsRepository
-    private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
-    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let localizationServices: LocalizationServices
-    private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -37,7 +31,11 @@ class ToolDetailsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var tool: ToolDomainModel
+    @Published private var tool: ToolDomainModel {
+        didSet {
+            showsLearnToShareToolButton = false
+        }
+    }
     @Published private var toolLanguage: String = LanguageCodeDomainModel.english.value // TODO: Should use type other than string here for better visibility? ~Levi
     
     @Published var mediaType: ToolDetailsMediaDomainModel = .empty
@@ -64,28 +62,20 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, localizationServices: LocalizationServices, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
         self.getToolUseCase = getToolUseCase
         self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
+        self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
         self.getToolDetailsUseCase = getToolDetailsUseCase
         self.getToolDetailsToolIsFavoritedUseCase = getToolDetailsToolIsFavoritedUseCase
-        self.resourcesRepository = resourcesRepository
-        self.translationsRepository = translationsRepository
-        self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
-        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.getToolDetailsLearnToShareToolIsAvailableUseCase = getToolDetailsLearnToShareToolIsAvailableUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.localizationServices = localizationServices
-        self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-
-        reloadToolDetails(tool: tool) // TODO: Need to remove this method call, see TODO in method implementation. ~Levi
         
         getToolDetailsMediaUseCase
             .observeMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
@@ -149,6 +139,14 @@ class ToolDetailsViewModel: ObservableObject {
             .observeToolIsFavoritedPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$isFavorited)
+        
+        getToolDetailsLearnToShareToolIsAvailableUseCase
+            .observeIsAvailablePublisher(
+                toolChangedPublisher: $tool.eraseToAnyPublisher(),
+                toolLanguageCodeChangedPublisher: $toolLanguage.eraseToAnyPublisher()
+            )
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$showsLearnToShareToolButton)
     }
     
     deinit {
@@ -165,47 +163,6 @@ class ToolDetailsViewModel: ObservableObject {
     
     private var analyticsSiteSubSection: String {
         return "tool-info"
-    }
-    
-    private func reloadToolDetails(tool: ToolDomainModel) {
-                
-        // TODO: Need to use a UseCase for Learn To Share Tool Visibility and remove this method. ~Levi
-        
-        reloadLearnToShareToolButtonState(resourceId: tool.dataModelId)
-    }
-    
-    private func reloadLearnToShareToolButtonState(resourceId: String) {
-        
-        guard let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() else {
-            return
-        }
-        
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: resourceId,
-            languageIds: [primaryLanguage.id],
-            resourcesRepository: resourcesRepository,
-            translationsRepository: translationsRepository
-        )
-        
-        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
-            
-        })
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { completed in
-                        
-        }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
-            
-            let hidesLearnToShareToolButtonValue: Bool
-            
-            if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
-                hidesLearnToShareToolButtonValue = !manifest.hasTips
-            }
-            else {
-                hidesLearnToShareToolButtonValue = true
-            }
-            
-            self?.showsLearnToShareToolButton = !hidesLearnToShareToolButtonValue
-        })
     }
     
     private func trackToolVersionTappedAnalytics(for tool: ToolDomainModel) {
@@ -299,8 +256,6 @@ extension ToolDetailsViewModel {
         selectedToolVersion = toolVersion
 
         trackToolVersionTappedAnalytics(for: tool)
-        
-        reloadToolDetails(tool: tool) // TODO: Need to remove this method call, see TODO in method implementation. ~Levi
     }
     
     func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {

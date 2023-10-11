@@ -27,6 +27,12 @@ class ToolDetailsFeatureDomainLayerDependencies {
         )
     }
     
+    func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {
+        return GetToolDetailsLearnToShareToolIsAvailableUseCase(
+            getToolDetailsLearnToShareToolIsAvailableRepository: dataLayer.getToolDetailsLearnToShareToolIsAvailableRepository()
+        )
+    }
+    
     func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
         return GetToolDetailsMediaUseCase(
             getToolDetailsMediaRepository: dataLayer.getToolDetailsMediaRepository()

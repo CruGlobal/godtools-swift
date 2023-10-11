@@ -23,6 +23,12 @@ class ToolDetailsFeatureDataLayerDependencies {
         )
     }
     
+    func getToolDetailsLearnToShareToolIsAvailableRepository() -> GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface {
+        return GetToolDetailsLearnToShareToolIsAvailableRepository(
+            translationsRepository: coreDataLayer.getTranslationsRepository()
+        )
+    }
+    
     func getToolDetailsMediaRepository() -> GetToolDetailsMediaRepositoryInterface {
         return GetToolDetailsMediaRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
