@@ -38,7 +38,7 @@ class GetInterfaceStringInAppLanguageUseCase {
         return getCurrentAppLanguageUseCase.getLanguagePublisher()
             .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> in
                 
-                return self.getInterfaceStringRepositoryInterface.getInterfaceStringForLanguagePublisher(appLanguageCode: appLanguageCode, stringId: id)
+                return self.getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: appLanguageCode, stringId: id)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
