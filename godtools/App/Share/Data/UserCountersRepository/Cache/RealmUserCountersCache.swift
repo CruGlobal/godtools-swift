@@ -55,6 +55,31 @@ class RealmUserCountersCache {
         return userCountersSync.incrementUserCounterBy1(id: id)
     }
     
+    func deleteAllUserCounters() -> AnyPublisher<Void, Error> {
+        
+        return Future() { promise in
+            
+            self.realmDatabase.background { realm in
+                
+                let userCounters = realm.objects(RealmUserCounter.self)
+                
+                do {
+                    
+                    try realm.write {
+                        realm.delete(userCounters)
+                    }
+                    
+                    promise(.success(()))
+                }
+                catch let error {
+                    
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeRemoteUpdate: incrementValueBeforeRemoteUpdate)

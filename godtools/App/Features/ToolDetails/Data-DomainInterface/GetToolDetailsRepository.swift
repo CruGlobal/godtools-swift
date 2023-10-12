@@ -60,18 +60,16 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         
         let languagesDataModels: [LanguageModel] = languagesRepository.getLanguages(ids: toolDataModel.languageIds)
         
-        let languages: [ToolDetailsToolLanguageDomainModel] = languagesDataModels.compactMap { (languageDataModel: LanguageModel) in
+        let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.compactMap { (languageDataModel: LanguageModel) in
             
             guard let languageDisplayName = self.localeLanguageName.getDisplayName(forLanguageCode: languageDataModel.code, translatedInLanguageCode: translateInToolLanguageCode) else {
                 return nil
             }
             
-            return ToolDetailsToolLanguageDomainModel(
-                languageNameTranslatedInToolLanguage: languageDisplayName
-            )
+            return languageDisplayName
         }
         
-        let languagesAvailable: String = languages.map({$0.languageNameTranslatedInToolLanguage}).sorted(by: { $0 < $1 }).joined(separator: ", ")
+        let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         let resourceVariants: [ResourceModel]
         
