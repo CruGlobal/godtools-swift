@@ -22,7 +22,7 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
         super.init(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
         
         getInterfaceStringInAppLanguageUseCase
-            .observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
+            .getStringPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         

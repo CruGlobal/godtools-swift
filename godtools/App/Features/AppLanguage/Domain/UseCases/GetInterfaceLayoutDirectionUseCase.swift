@@ -22,17 +22,6 @@ class GetInterfaceLayoutDirectionUseCase {
         self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
     }
     
-    func observeLayoutDirectionPublisher() -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
-        
-        return getUserPreferredAppLanguageRepositoryInterface.observeLanguageChangedPublisher()
-            .flatMap({ _ -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
-                
-                return self.getLayoutDirectionPublisher()
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
-    }
-    
     func getLayoutDirectionPublisher() -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
         return getCurrentAppLanguageUseCase.getLanguagePublisher()

@@ -43,7 +43,7 @@ class ApplicationLayout: ObservableObject {
         
         isConfigured = true
         
-        appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase().observeLayoutDirectionPublisher()
+        appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase().getLayoutDirectionPublisher()
             .receive(on: DispatchQueue.main)
             .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 

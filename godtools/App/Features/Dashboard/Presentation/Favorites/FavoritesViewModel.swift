@@ -58,39 +58,39 @@ class FavoritesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                  
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "openTutorial.showTutorialLabel.text")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.showTutorialLabel.text")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openTutorialBannerMessage)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "openTutorial.openTutorialButton.title")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.openTutorialButton.title")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openTutorialBannerButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.pageTitle")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.pageTitle")
             .receive(on: DispatchQueue.main)
             .assign(to: &$welcomeTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteLessons.title")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.title")
             .receive(on: DispatchQueue.main)
             .assign(to: &$featuredLessonsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.title")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
             .receive(on: DispatchQueue.main)
             .assign(to: &$yourFavoriteToolsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteTools.viewAll")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.viewAll")
             .receive(on: DispatchQueue.main)
             .assign(to: &$viewAllFavoriteToolsButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.title")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.title")
             .receive(on: DispatchQueue.main)
             .assign(to: &$noFavoriteToolsTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.description")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.description")
             .receive(on: DispatchQueue.main)
             .assign(to: &$noFavoriteToolsDescription)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.noTools.button")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.button")
             .receive(on: DispatchQueue.main)
             .assign(to: &$noFavoriteToolsButtonText)
         
@@ -101,7 +101,7 @@ class FavoritesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getFeaturedLessonsUseCase.observeFeaturedLessonsPublisher()
+        getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
                 
@@ -177,7 +177,7 @@ class FavoritesViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                AnalyticsConstants.Keys.tool: featuredLesson.lesson.analyticsToolName
+                AnalyticsConstants.Keys.tool: featuredLesson.analyticsToolName
               ]
         )
     }

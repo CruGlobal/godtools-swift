@@ -33,7 +33,7 @@ class AppInterfaceStringNavBarItemController: NarBarItemController {
         
         Publishers.CombineLatest(
             toggleVisibility,
-            getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: interfaceStringBarItem.localizedStringKey)
+            getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: interfaceStringBarItem.localizedStringKey)
         )
         .receive(on: DispatchQueue.main)
         .sink{ [weak self] (hidden: Bool, interfaceString: String) in

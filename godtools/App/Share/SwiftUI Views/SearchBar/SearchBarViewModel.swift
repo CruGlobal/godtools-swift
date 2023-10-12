@@ -19,7 +19,7 @@ class SearchBarViewModel: ObservableObject {
         self.searchTextPublisher = searchTextPublisher
         
         getInterfaceStringInAppLanguageUseCase
-            .observeStringChangedPublisher(id: "cancel")
+            .getStringPublisher(id: "cancel")
             .receive(on: DispatchQueue.main)
             .assign(to: &$cancelText)
     }
