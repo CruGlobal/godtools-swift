@@ -1,25 +1,32 @@
 //
-//  GetToolDetailsMediaUseCase.swift
+//  GetToolDetailsMediaRepository.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/4/22.
-//  Copyright © 2022 Cru. All rights reserved.
+//  Created by Levi Eggert on 10/11/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetToolDetailsMediaUseCase {
+class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
+    private let resourcesRepository: ResourcesRepository
     private let attachmentsRepository: AttachmentsRepository
     
-    init(attachmentsRepository: AttachmentsRepository) {
+    init(resourcesRepository: ResourcesRepository, attachmentsRepository: AttachmentsRepository) {
         
+        self.resourcesRepository = resourcesRepository
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func getMedia(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func getMediaPublisher(tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
+        guard let resource = resourcesRepository.getResource(id: tool.dataModelId) else {
+            return Just(.empty)
+                .eraseToAnyPublisher()
+        }
+        
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
             
             return getYouTubeMedia(videoId: resource.attrAboutOverviewVideoYoutube)

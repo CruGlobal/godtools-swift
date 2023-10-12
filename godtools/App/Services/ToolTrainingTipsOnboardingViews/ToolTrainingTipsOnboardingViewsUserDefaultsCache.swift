@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolTrainingTipsOnboardingViewsUserDefaultsCache: ToolTrainingTipsOnboardingViewsCacheType {
+class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
     
     private let userDefaultsCache: SharedUserDefaultsCache
     
@@ -17,23 +17,23 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache: ToolTrainingTipsOnboardi
         self.userDefaultsCache = userDefaultsCache
     }
     
-    private func getNumberOfViewsKey(resource: ResourceModel) -> String {
+    private func getNumberOfViewsKey(tool: ToolDomainModel) -> String {
         
-        return "ToolTrainingTipsOnboardingViewsService." + resource.name + "_" + resource.id
+        return "ToolTrainingTipsOnboardingViewsService." + tool.name + "_" + tool.dataModelId
     }
     
-    func getNumberOfToolTrainingTipViews(resource: ResourceModel) -> Int {
+    func getNumberOfToolTrainingTipViews(tool: ToolDomainModel) -> Int {
         
-        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(resource: resource)) as? NSNumber {
+        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(tool: tool)) as? NSNumber {
             return number.intValue
         }
         
         return 0
     }
     
-    func storeToolTrainingTipViewed(resource: ResourceModel) {
+    func storeToolTrainingTipViewed(tool: ToolDomainModel) {
         
-        let numberOfViews: Int = getNumberOfToolTrainingTipViews(resource: resource)
+        let numberOfViews: Int = getNumberOfToolTrainingTipViews(tool: tool)
         
         if numberOfViews < Int.max {
             
@@ -41,7 +41,7 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache: ToolTrainingTipsOnboardi
             
             userDefaultsCache.cache(
                 value: NSNumber(value: newNumberOfViews),
-                forKey: getNumberOfViewsKey(resource: resource)
+                forKey: getNumberOfViewsKey(tool: tool)
             )
             
             userDefaultsCache.commitChanges()

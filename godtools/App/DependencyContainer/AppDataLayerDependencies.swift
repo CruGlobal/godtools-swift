@@ -177,6 +177,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
+        return GetInterfaceStringForLanguageRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()

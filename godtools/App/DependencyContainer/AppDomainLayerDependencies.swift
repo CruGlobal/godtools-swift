@@ -256,12 +256,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
-        return GetToolDetailsMediaUseCase(
-            attachmentsRepository: dataLayer.getAttachmentsRepository()
-        )
-    }
-    
     func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
         return GetToolFilterLanguagesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
@@ -289,18 +283,8 @@ class AppDomainLayerDependencies {
         return GetToolUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: dataLayer.getTranslationsRepository()
-        )
-    }
-    
-    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
-        return GetToolVersionsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository(),
-            localizationServices: dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            getToolLanguagesUseCase: getToolLanguagesUseCase()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     

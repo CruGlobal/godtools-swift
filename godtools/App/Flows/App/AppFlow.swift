@@ -157,12 +157,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .backTappedFromToolFilter:
             navigationController.popViewController(animated: true)
+            
+        case .spotlightToolTappedFromTools(let spotlightTool):
+            navigationController.pushViewController(getToolDetails(tool: spotlightTool), animated: true)
                         
-        case .toolTappedFromTools(let resource):
-            navigationController.pushViewController(getToolDetails(resource: resource), animated: true)
+        case .toolTappedFromTools(let tool):
+            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
                                     
-        case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: false)
+        case .openToolTappedFromToolDetails(let tool):
+            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToTool(resourceId: lessonListItem.lesson.id, trainingTipsEnabled: false)
@@ -174,7 +177,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
         case .toolDetailsTappedFromFavorites(let tool):
-            navigationController.pushViewController(getToolDetails(resource: tool.resource), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
         
         case .openToolTappedFromFavorites(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -192,7 +195,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
             
         case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            navigationController.pushViewController(getToolDetails(resource: tool.resource), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
         
         case .openToolTappedFromAllYourFavoriteTools(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -361,17 +364,17 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 UIApplication.shared.open(url)
             }
             
-        case .learnToShareToolTappedFromToolDetails(let resource):
-            navigateToLearnToShareTool(resource: resource)
+        case .learnToShareToolTappedFromToolDetails(let tool):
+            navigateToLearnToShareTool(tool: tool)
             
-        case .continueTappedFromLearnToShareTool(let resource):
+        case .continueTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
-        case .closeTappedFromLearnToShareTool(let resource):
+        case .closeTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLessonEvaluation:
@@ -822,26 +825,21 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(resource: ResourceModel) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
-            resource: resource,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            tool: tool,
+            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
+            getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
+            getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
+            getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
+            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
+            getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
-            getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-            
         )
         
         let view = ToolDetailsView(viewModel: viewModel)
@@ -869,20 +867,20 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToLearnToShareTool(resource: ResourceModel) {
+    private func navigateToLearnToShareTool(tool: ToolDomainModel) {
         
         let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
                     
-        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(resource: resource)
+        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(tool: tool)
         
         if !toolTrainingTipReachedMaximumViews {
             
-            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(resource: resource)
+            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(tool: tool)
             
             let learnToShareToolFlow = LearnToShareToolFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
-                resource: resource
+                tool: tool
             )
             
             navigationController.present(learnToShareToolFlow.navigationController, animated: true, completion: nil)
@@ -891,7 +889,7 @@ extension AppFlow {
         }
         else {
             
-            navigateToTool(resourceId: resource.id, trainingTipsEnabled: true)
+            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
         }
     }
     

@@ -67,17 +67,18 @@ enum FlowStep {
     // tools
     case toolFilterTappedFromTools(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>)
     case backTappedFromToolFilter
-    case toolTappedFromTools(resource: ResourceModel)
+    case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
+    case toolTappedFromTools(tool: ToolDomainModel)
     
     // toolDetails
     case backTappedFromToolDetails
-    case openToolTappedFromToolDetails(resource: ResourceModel)
-    case learnToShareToolTappedFromToolDetails(resource: ResourceModel)
+    case openToolTappedFromToolDetails(tool: ToolDomainModel)
+    case learnToShareToolTappedFromToolDetails(tool: ToolDomainModel)
     case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
-    case closeTappedFromLearnToShareTool(resource: ResourceModel)
-    case continueTappedFromLearnToShareTool(resource: ResourceModel)
+    case closeTappedFromLearnToShareTool(tool: ToolDomainModel)
+    case continueTappedFromLearnToShareTool(tool: ToolDomainModel)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)

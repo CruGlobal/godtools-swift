@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ToolDetailsView: View {
     
-    private static let headerViewId: String = "HeaderViewId"
+    static let scrollToTopViewId: String = "ToolDetailsView.scrollToTopViewId"
     
     static let sectionDescriptionTextInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
     
@@ -35,10 +35,59 @@ struct ToolDetailsView: View {
                 
                 ScrollViewReader { scrollViewReader in
                     
-                    getScrollViewContent(geometry: geometry, contentWidth: contentWidth) {
+                    VStack(alignment: .leading, spacing: 0) {
                         
-                        scrollViewReader.scrollTo(ToolDetailsView.headerViewId)
+                        ToolDetailsScrollViewTopView(geometry: geometry)
+                        
+                        ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
+                        
+                        VStack(alignment: .center, spacing: 0) {
+                                                     
+                             ToolDetailsTitleHeaderView(viewModel: viewModel)
+                                 .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                             
+                             ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
+                                 .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
+                                                 
+                             SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                                 
+                                 viewModel.segmentTapped(index: index)
+                             })
+                             .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                         }
+                         .background(Rectangle()
+                             .fill(Color.white)
+                             .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                             .mask(Rectangle().padding(.bottom, -8))
+                         )
+                         
+                         Rectangle()
+                             .frame(width: geometry.size.width, height: 20)
+                             .foregroundColor(.clear)
+                         
+                         switch viewModel.selectedSegment {
+                         
+                         case .about:
+                             ToolDetailsAboutView(
+                                viewModel: viewModel,
+                                geometry: geometry
+                             )
+                         
+                         case .versions:
+                             ToolDetailsVersionsView(
+                                viewModel: viewModel,
+                                geometry: geometry,
+                                toolVersionTappedClosure: {
+                                    scrollViewReader.scrollTo(ToolDetailsView.scrollToTopViewId)
+                                }
+                             )
+                         }
+                         
+                         Rectangle()
+                             .frame(width: geometry.size.width, height: 20)
+                             .foregroundColor(.clear)
                     }
+                    .frame(width: geometry.size.width)
                 }
             }
         }
@@ -50,67 +99,6 @@ struct ToolDetailsView: View {
             viewModel.pageViewed()
         }
     }
-    
-    @ViewBuilder
-    private func getScrollViewContent(geometry: GeometryProxy, contentWidth: CGFloat, toolVersionTappedClosure: @escaping (() -> Void)) -> some View {
-        
-        VStack(alignment: .leading, spacing: 0) {
-            
-            ZStack {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: geometry.size.width, height: 0)
-            }
-            .id(ToolDetailsView.headerViewId)
-            
-            ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
-            
-            VStack(alignment: .center, spacing: 0) {
-                                         
-                 ToolDetailsTitleHeaderView(viewModel: viewModel)
-                     .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                 
-                 ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
-                     .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                                     
-                 SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
-                     
-                     viewModel.segmentTapped(index: index)
-                 })
-                 .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
-             }
-             .background(Rectangle()
-                 .fill(Color.white)
-                 .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
-                 .mask(Rectangle().padding(.bottom, -8))
-             )
-             
-             Rectangle()
-                 .frame(width: geometry.size.width, height: 20)
-                 .foregroundColor(.clear)
-             
-             switch viewModel.selectedSegment {
-             
-             case .about:
-                 ToolDetailsAboutView(
-                    viewModel: viewModel,
-                    geometry: geometry
-                 )
-             
-             case .versions:
-                 ToolDetailsVersionsView(
-                    viewModel: viewModel,
-                    geometry: geometry,
-                    toolVersionTappedClosure: toolVersionTappedClosure
-                 )
-             }
-             
-             Rectangle()
-                 .frame(width: geometry.size.width, height: 20)
-                 .foregroundColor(.clear)
-        }
-        .frame(width: geometry.size.width)
-    }
 }
 
 struct ToolDetailsView_Preview: PreviewProvider {
@@ -119,20 +107,18 @@ struct ToolDetailsView_Preview: PreviewProvider {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
+        let tool: ToolDomainModel = appDiContainer.domainLayer.getToolUseCase().getTool(id: "1")!
+        
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
-            resource: appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            getToolDetailsMediaUseCase: appDiContainer.domainLayer.getToolDetailsMediaUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            tool: tool,
+            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
+            getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
+            getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
+            getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
+            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
+            getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getToolLanguagesUseCase: appDiContainer.domainLayer.getToolLanguagesUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getToolTranslationsFilesUseCase: appDiContainer.domainLayer.getToolTranslationsFilesUseCase(),
-            getToolVersionsUseCase: appDiContainer.domainLayer.getToolVersionsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()

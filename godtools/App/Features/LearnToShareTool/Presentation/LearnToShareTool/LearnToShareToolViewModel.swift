@@ -11,7 +11,7 @@ import Combine
 
 class LearnToShareToolViewModel: ObservableObject {
     
-    private let resource: ResourceModel
+    private let tool: ToolDomainModel
     private let getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase
     private let localizationServices: LocalizationServices
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
@@ -29,10 +29,10 @@ class LearnToShareToolViewModel: ObservableObject {
         }
     }
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
-        self.resource = resource
+        self.tool = tool
         self.getLearnToShareToolItemsUseCase = getLearnToShareToolItemsUseCase
         self.localizationServices = localizationServices
                 
@@ -96,13 +96,13 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(resource: resource))
+        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool))
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(resource: resource))
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool))
         }
         else {
             currentPage = currentPage + 1

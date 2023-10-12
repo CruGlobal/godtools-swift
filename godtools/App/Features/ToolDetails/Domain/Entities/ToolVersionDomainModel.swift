@@ -12,15 +12,11 @@ struct ToolVersionDomainModel {
     
     let bannerImageId: String
     let dataModelId: String
-    let name: String
     let description: String
-    let numberOfLanguages: Int
-    let numberOfLanguagesString: String
-    let primaryLanguage: String?
-    let primaryLanguageIsSupported: Bool
-    let parallelLanguage: String?
-    let parallelLanguageIsSupported: Bool
-    let isDefaultVersion: Bool
+    let name: String
+    let numberOfLanguages: String
+    let toolLanguageName: String?
+    let toolLanguageNameIsSupported: Bool
 }
 
 extension ToolVersionDomainModel: Identifiable {

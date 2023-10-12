@@ -11,5 +11,6 @@ import Combine
 
 protocol GetInterfaceStringForLanguageRepositoryInterface {
     
-    func getInterfaceStringForLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel, stringId: String) -> AnyPublisher<String, Never>
+    func getString(languageCode: String, stringId: String) -> String
+    func getStringPublisher(languageCode: String, stringId: String) -> AnyPublisher<String, Never>
 }

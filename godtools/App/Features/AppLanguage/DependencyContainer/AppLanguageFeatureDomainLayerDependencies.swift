@@ -11,10 +11,12 @@ import Foundation
 class AppLanguageFeatureDomainLayerDependencies {
     
     private let dataLayer: AppLanguageFeatureDataLayerDependencies
+    private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: AppLanguageFeatureDataLayerDependencies) {
+    init(dataLayer: AppLanguageFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
+        self.coreDataLayer = coreDataLayer
     }
     
     func getAppLanguageNameInAppLanguageUseCase() -> GetAppLanguageNameInAppLanguageUseCase {
@@ -58,7 +60,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     func getInterfaceStringInAppLanguageUseCase() -> GetInterfaceStringInAppLanguageUseCase {
         return GetInterfaceStringInAppLanguageUseCase(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: dataLayer.getInterfaceStringForLanguageRepositoryInterface(),
+            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface(),
             getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
         )
     }

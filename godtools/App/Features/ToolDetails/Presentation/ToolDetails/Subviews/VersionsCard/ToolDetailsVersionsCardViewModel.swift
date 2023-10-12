@@ -17,16 +17,14 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     private var getBannerImageCancellable: AnyCancellable?
     
-    @Published var bannerImage: Image?
+    @Published var bannerImageData: OptionalImageData?
     
     let isSelected: Bool
     let name: String
     let description: String
     let languages: String
-    let primaryLanguageName: String?
-    let primaryLanguageIsSupported: Bool
-    let parallelLanguageName: String?
-    let parallelLanguageIsSupported: Bool
+    let toolLanguageName: String?
+    let toolLanguageNameIsSupported: Bool
     
     init(toolVersion: ToolVersionDomainModel, attachmentsRepository: AttachmentsRepository, isSelected: Bool) {
         
@@ -36,11 +34,9 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         
         name = toolVersion.name
         description = toolVersion.description
-        languages = toolVersion.numberOfLanguagesString
-        primaryLanguageName = toolVersion.primaryLanguage
-        primaryLanguageIsSupported = toolVersion.primaryLanguageIsSupported
-        parallelLanguageName = toolVersion.parallelLanguage
-        parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
+        languages = toolVersion.numberOfLanguages
+        toolLanguageName = toolVersion.toolLanguageName
+        toolLanguageNameIsSupported = toolVersion.toolLanguageNameIsSupported
         
         downloadBannerImage()
     }
@@ -53,14 +49,14 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         
         if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
             
-            bannerImage = cachedImage
+            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
         }
         else {
             
             getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (image: Image?) in
-                    self?.bannerImage = image
+                    self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
                 }
         }
     }
