@@ -23,7 +23,11 @@ class FeaturedLessonsDataLayerDependencies {
     
     func getFeaturedLessonsRepositoryInterface() -> GetFeaturedLessonsRepositoryInterface {
         return GetFeaturedLessonsRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository()
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            translationsRepository: coreDataLayer.getTranslationsRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName()
         )
     }
 }

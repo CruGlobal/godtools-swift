@@ -16,6 +16,6 @@ class FeaturedLessonsDiContainer {
     init(coreDataLayer: AppDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies, lessonsFeatureDomainLayer: LessonsFeatureDomainLayerDependencies) {
         
         dataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = FeaturedLessonsDomainLayerDependencies(dataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageFeatureDomainLayer, lessonsFeatureDomainLayer: lessonsFeatureDomainLayer)
+        domainLayer = FeaturedLessonsDomainLayerDependencies(dataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageFeatureDomainLayer)
     }
 }
