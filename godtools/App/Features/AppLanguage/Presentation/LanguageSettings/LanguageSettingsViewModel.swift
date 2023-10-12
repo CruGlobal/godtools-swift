@@ -12,12 +12,14 @@ import Combine
 class LanguageSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
         
     private weak var flowDelegate: FlowDelegate?
+    
+    @Published private var appLanguage: AppLanguageCodeDomainModel = ""
     
     @Published var navTitle: String = ""
     @Published var appInterfaceLanguageTitle: String = "App "
@@ -25,29 +27,28 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
     @Published var appInterfaceLanguageButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.getLanguageSettingsInterfaceStringsUseCase = getLanguageSettingsInterfaceStringsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue)
+        getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$navTitle)
+            .assign(to: &$appLanguage)
         
-        /*
-        getCurrentAppLanguageUseCase.getLanguageChangedPublisher()
-            .flatMap({ (currentAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> in
-                
-                return self.getAppLanguageNameInAppLanguageUseCase.getLanguageNamePublisher(language: currentAppLanguage)
-                    .eraseToAnyPublisher()
-            })
-            .map { (appLanguageName: AppLanguageNameDomainModel) in
-                appLanguageName.value
-            }
+        getLanguageSettingsInterfaceStringsUseCase.getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appInterfaceLanguageButtonTitle)*/
+            .sink { [weak self] (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                
+                self?.navTitle = interfaceStrings.navTitle
+                self?.appInterfaceLanguageTitle = interfaceStrings.appInterfaceLanguageTitle
+                self?.setLanguageYouWouldLikeAppDisplayedInLabel = interfaceStrings.setAppLanguageMessage
+                self?.appInterfaceLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
+                
+            }
+            .store(in: &cancellables)
     }
 }
 

@@ -58,6 +58,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
+        return GetLanguageSettingsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
     func getSetUserPreferredAppLanguageRepositoryInterface() -> SetUserPreferredAppLanguageRepositoryInterface {
         return SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: getUserAppLanguageRepository()
