@@ -70,6 +70,11 @@ class UserCountersRepository {
         return cache.incrementUserCounterBy1(id: id)
     }
     
+    func deleteUserCounters() -> AnyPublisher<Void, Error> {
+        
+        return cache.deleteAllUserCounters()
+    }
+    
     func syncUpdatedUserCountersWithRemote() {
         
         remoteUserCountersSync.syncUpdatedUserCountersWithRemote()

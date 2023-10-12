@@ -13,23 +13,34 @@ class LogOutUserUseCase {
     
     private let userAuthentication: UserAuthentication
     private let firebaseAnalytics: FirebaseAnalytics
+    private let deleteUserCountersUseCase: DeleteUserCountersUseCase
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalytics) {
+    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalytics, deleteUserCountersUseCase: DeleteUserCountersUseCase) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics
+        self.deleteUserCountersUseCase = deleteUserCountersUseCase
     }
     
     func logOutPublisher() -> AnyPublisher<Bool, Error> {
                 
         return userAuthentication.signOutPublisher()
-            .flatMap({ (void: Void) -> AnyPublisher<Bool, Never> in
+            .flatMap { (void: Void) in
                 
                 self.setAnalyticsUserProperties()
                 
-                return Just(true)
-                    .eraseToAnyPublisher()
-            })
+                return self.deleteUserCountersUseCase.deleteUserCountersPublisher()
+                    .flatMap { void in
+                        
+                        return Just(true)
+                            .eraseToAnyPublisher()
+                    }
+                    .catch({ error in
+                        
+                        return Just(false)
+                            .eraseToAnyPublisher()
+                    })
+            }
             .eraseToAnyPublisher()
     }
     

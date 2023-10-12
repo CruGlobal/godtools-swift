@@ -87,6 +87,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
+        return DeleteUserCountersUseCase(
+            repository: dataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
             getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
@@ -134,7 +140,8 @@ class AppDomainLayerDependencies {
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
         )
     }
     
