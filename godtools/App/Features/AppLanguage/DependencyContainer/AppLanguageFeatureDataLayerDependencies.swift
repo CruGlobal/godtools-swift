@@ -33,12 +33,6 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getAppLanguageNameRepositoryInterface() -> GetAppLanguageNameRepositoryInterface {
-        return GetAppLanguageNameRepository(
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
-        )
-    }
-    
     func getAppLanguageRepositoryInterface() -> GetAppLanguageRepositoryInterface {
         return GetAppLanguageRepository(
             appLanguagesRepository: getAppLanguagesRepository()
@@ -47,6 +41,13 @@ class AppLanguageFeatureDataLayerDependencies {
     
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
+            appLanguagesRepository: getAppLanguagesRepository(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
+    func getAppLanguagesRepositoryInterface() -> GetAppLanguagesRepositoryInterface {
+        return GetAppLanguagesRepository(
             appLanguagesRepository: getAppLanguagesRepository()
         )
     }

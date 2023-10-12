@@ -12,7 +12,6 @@ import Combine
 class LanguageSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
@@ -26,20 +25,19 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
     @Published var appInterfaceLanguageButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguageNameInAppLanguageUseCase: GetAppLanguageNameInAppLanguageUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getAppLanguageNameInAppLanguageUseCase = getAppLanguageNameInAppLanguageUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
-        
-        getCurrentAppLanguageUseCase.observeLanguageChangedPublisher()
+        /*
+        getCurrentAppLanguageUseCase.getLanguageChangedPublisher()
             .flatMap({ (currentAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageNameDomainModel, Never> in
                 
                 return self.getAppLanguageNameInAppLanguageUseCase.getLanguageNamePublisher(language: currentAppLanguage)
@@ -49,7 +47,7 @@ class LanguageSettingsViewModel: ObservableObject {
                 appLanguageName.value
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appInterfaceLanguageButtonTitle)
+            .assign(to: &$appInterfaceLanguageButtonTitle)*/
     }
 }
 

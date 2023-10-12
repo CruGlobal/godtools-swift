@@ -18,32 +18,18 @@ class AppLanguageFeatureDomainLayerDependencies {
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
     }
-    
-    func getAppLanguageNameInAppLanguageUseCase() -> GetAppLanguageNameInAppLanguageUseCase {
-        return GetAppLanguageNameInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguageNameRepositoryInterface: dataLayer.getAppLanguageNameRepositoryInterface()
-        )
-    }
-    
-    func getAppLanguageNameUseCase() -> GetAppLanguageNameUseCase {
-        return GetAppLanguageNameUseCase(
-            getAppLanguageNameRepositoryInterface: dataLayer.getAppLanguageNameRepositoryInterface()
-        )
-    }
-    
+            
     func getAppLanguagesListUseCase() -> GetAppLanguagesListUseCase {
         return GetAppLanguagesListUseCase(
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
             getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
-            getAppLanguageNameUseCase: getAppLanguageNameUseCase(),
-            getAppLanguageNameInAppLanguageUseCase: getAppLanguageNameInAppLanguageUseCase(),
             getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
         )
     }
     
     func getCurrentAppLanguageUseCase() -> GetCurrentAppLanguageUseCase {
         return GetCurrentAppLanguageUseCase(
-            getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
+            getAppLanguagesRepositoryInterface: dataLayer.getAppLanguagesRepositoryInterface(),
             getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface(),
             getDeviceAppLanguageRepositoryInterface: dataLayer.getDeviceAppLanguageRepositoryInterface()
         )
@@ -60,8 +46,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     func getInterfaceStringInAppLanguageUseCase() -> GetInterfaceStringInAppLanguageUseCase {
         return GetInterfaceStringInAppLanguageUseCase(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
+            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface()
         )
     }
     
