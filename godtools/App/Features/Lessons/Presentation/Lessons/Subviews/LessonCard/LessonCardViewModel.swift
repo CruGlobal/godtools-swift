@@ -26,8 +26,8 @@ class LessonCardViewModel: ObservableObject {
         
         self.lessonListItem = lessonListItem
         self.attachmentsRepository = attachmentsRepository
-        self.title = lessonListItem.name.value
-        self.appLanguageAvailability = lessonListItem.appLanguageAvailability.availabilityString
+        self.title = lessonListItem.name
+        self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage
         
         downloadBannerImage()
     }
@@ -36,7 +36,7 @@ class LessonCardViewModel: ObservableObject {
         
         getBannerImageCancellable = nil
         
-        let attachmentId: String = lessonListItem.lesson.bannerImageId
+        let attachmentId: String = lessonListItem.bannerImageId
         
         if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
             

@@ -21,7 +21,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in Spanish and the user's preferred app language is null.") {
                 
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
-                    getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
+                    getAppLanguagesRepositoryInterface: TestsGetAppLanguagesRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: nil),
                     getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .spanish)
                 )
@@ -31,9 +31,16 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     waitUntil { done in
                      
                         var appLanguageRef: AppLanguageCodeDomainModel?
+                        var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
                             .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCompleted = true
                                 
                                 appLanguageRef = appLanguage
                                 
@@ -48,7 +55,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in hebrew and the user's app language is null.") {
                 
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
-                    getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
+                    getAppLanguagesRepositoryInterface: TestsGetAppLanguagesRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: nil),
                     getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .hebrew)
                 )
@@ -58,12 +65,19 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         var appLanguageRef: AppLanguageCodeDomainModel?
+                        var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
                             .sink { (appLanguage: AppLanguageCodeDomainModel) in
                                 
-                                appLanguageRef = appLanguage
+                                guard !sinkCompleted else {
+                                    return
+                                }
                                 
+                                sinkCompleted = true
+                                
+                                appLanguageRef = appLanguage
+         
                                 done()
                             }
                                                 
@@ -75,7 +89,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian.") {
                 
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
-                    getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
+                    getAppLanguagesRepositoryInterface: TestsGetAppLanguagesRepository(appLanguagesCodes: [.english, .french, .russian, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
                     getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
@@ -85,9 +99,16 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         var appLanguageRef: AppLanguageCodeDomainModel?
+                        var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
                             .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCompleted = true
                                 
                                 appLanguageRef = appLanguage
                                 
@@ -102,7 +123,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian and Russian is not an available app language.") {
                 
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
-                    getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .french, .spanish]),
+                    getAppLanguagesRepositoryInterface: TestsGetAppLanguagesRepository(appLanguagesCodes: [.english, .french, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
                     getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
@@ -112,9 +133,16 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         var appLanguageRef: AppLanguageCodeDomainModel?
+                        var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
                             .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCompleted = true
                                 
                                 appLanguageRef = appLanguage
                                 
@@ -129,7 +157,7 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
             context("The device language is in French and the user's app language is Russian and Russian and French are not available app languages.") {
                 
                 let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase = GetCurrentAppLanguageUseCase(
-                    getAppLanguagesListRepositoryInterface: TestsGetAppLanguagesListRepository(appLanguagesCodes: [.english, .spanish]),
+                    getAppLanguagesRepositoryInterface: TestsGetAppLanguagesRepository(appLanguagesCodes: [.english, .spanish]),
                     getUserPreferredAppLanguageRepositoryInterface: TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .russian),
                     getDeviceAppLanguageRepositoryInterface: TestsGetDeviceLanguageRepository(deviceLanguageCode: .french)
                 )
@@ -139,9 +167,16 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         var appLanguageRef: AppLanguageCodeDomainModel?
+                        var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
                             .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCompleted = true
                                 
                                 appLanguageRef = appLanguage
                                 

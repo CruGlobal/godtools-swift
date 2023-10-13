@@ -21,7 +21,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
         
         return Publishers.CombineLatest(
             searchTextPublisher,
-            getAppLanguagesListUseCase.observeAppLanguagesListPublisher()
+            getAppLanguagesListUseCase.getAppLanguagesListPublisher()
         )
             .flatMap { searchText, languageItems in
                 
@@ -35,7 +35,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
                     
                     let filteredItems = languageItems.filter { languageItem in
                         
-                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.value.lowercased()
+                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
                         
                         return lowercasedLanguageName.contains(lowercasedSearchText)
                     }

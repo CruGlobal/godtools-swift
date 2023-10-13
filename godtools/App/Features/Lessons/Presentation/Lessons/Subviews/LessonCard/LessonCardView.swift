@@ -84,15 +84,11 @@ struct LessonCardView_Previews: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let lessonListItem = LessonListItemDomainModel(
-            appLanguageAvailability: LessonAvailabilityInAppLanguageDomainModel(
-                availabilityString: "available in language"
-            ),
-            lesson: LessonDomainModel(
-                analyticsToolName: "",
-                bannerImageId: "",
-                id: "1"
-            ),
-            name: LessonNameDomainModel(value: "Five Reasons to be Courageous")
+            analyticsToolName: "",
+            availabilityInAppLanguage: "available in language",
+            bannerImageId: "1",
+            dataModelId: "1",
+            name: "Five Reasons to be Courageous"
         )
         
         let viewModel = LessonCardViewModel(

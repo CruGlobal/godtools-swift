@@ -38,15 +38,15 @@ class LessonsViewModel: ObservableObject {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "lessons.pageTitle")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "lessons.pageTitle")
             .receive(on: DispatchQueue.main)
             .assign(to: &$sectionTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "lessons.pageSubtitle")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "lessons.pageSubtitle")
             .receive(on: DispatchQueue.main)
             .assign(to: &$subtitle)
                 
-        getLessonsListUseCase.observeLessonsListPublisher()
+        getLessonsListUseCase.getLessonsListPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (lessonsList: [LessonListItemDomainModel]) in
                 
@@ -104,7 +104,7 @@ class LessonsViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.lessons,
-                AnalyticsConstants.Keys.tool: lessonListItem.lesson.analyticsToolName
+                AnalyticsConstants.Keys.tool: lessonListItem.analyticsToolName
             ]
         )
     }

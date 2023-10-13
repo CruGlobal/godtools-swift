@@ -10,13 +10,15 @@ import Foundation
 
 struct LessonListItemDomainModel: LessonListItemDomainModelInterface {
     
-    let appLanguageAvailability: LessonAvailabilityInAppLanguageDomainModel
-    let lesson: LessonDomainModel
-    let name: LessonNameDomainModel
+    let analyticsToolName: String
+    let availabilityInAppLanguage: String
+    let bannerImageId: String
+    let dataModelId: String
+    let name: String
 }
 
 extension LessonListItemDomainModel: Identifiable {
     var id: String {
-        return lesson.id
+        return dataModelId
     }
 }

@@ -12,20 +12,16 @@ import Combine
 
 class TestsGetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
-    private let appLanguagesCodes: [LanguageCodeDomainModel]
+    private let appLanguages: [AppLanguageListItemDomainModel]
     
-    init(appLanguagesCodes: [LanguageCodeDomainModel]) {
+    init(appLanguages: [AppLanguageListItemDomainModel]) {
         
-        self.appLanguagesCodes = appLanguagesCodes
+        self.appLanguages = appLanguages
     }
 
-    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
+    func getLanguagesPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        let languages: [AppLanguageCodeDomainModel] = appLanguagesCodes.map {
-            $0.value
-        }
-        
-        return Just(languages)
+        return Just(appLanguages)
             .eraseToAnyPublisher()
     }
     

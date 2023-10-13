@@ -436,3 +436,10 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
 "onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+"languageSettings.appInterface.title" = "App interface language";
+"languageSettings.appInterface.message" = "Set the language you’d like the whole app to be displayed in.";
+"languageSettings.appInterface.languagesAvailable" = "Languages available";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Tool languages available offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Download all the tools in a language to make them available even if you’re out of WiFi or cell service. Set the tool language via the options button within a tool.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit downloaded languages";

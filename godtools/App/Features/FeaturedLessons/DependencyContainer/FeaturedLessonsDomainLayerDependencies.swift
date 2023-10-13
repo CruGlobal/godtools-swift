@@ -12,22 +12,18 @@ class FeaturedLessonsDomainLayerDependencies {
     
     private let dataLayer: FeaturedLessonsDataLayerDependencies
     private let appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies
-    private let lessonsFeatureDomainLayer: LessonsFeatureDomainLayerDependencies
     
-    init(dataLayer: FeaturedLessonsDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies, lessonsFeatureDomainLayer: LessonsFeatureDomainLayerDependencies) {
+    init(dataLayer: FeaturedLessonsDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
         
         self.dataLayer = dataLayer
         self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
-        self.lessonsFeatureDomainLayer = lessonsFeatureDomainLayer
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         
         return GetFeaturedLessonsUseCase(
             getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getFeaturedLessonsRepositoryInterface: dataLayer.getFeaturedLessonsRepositoryInterface(),
-            getLessonNameInAppLanguageUseCase: lessonsFeatureDomainLayer.getLessonNameInAppLanguageUseCase(),
-            getLessonAvailabilityInAppLanguageUseCase: lessonsFeatureDomainLayer.getLessonAvailabilityInAppLanguageUseCase()
+            getFeaturedLessonsRepositoryInterface: dataLayer.getFeaturedLessonsRepositoryInterface()
         )
     }
 }

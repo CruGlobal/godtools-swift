@@ -10,7 +10,7 @@ import Foundation
 
 protocol LessonListItemDomainModelInterface {
     
-    var appLanguageAvailability: LessonAvailabilityInAppLanguageDomainModel { get }
-    var lesson: LessonDomainModel { get }
-    var name: LessonNameDomainModel { get }
+    var availabilityInAppLanguage: String { get }
+    var bannerImageId: String { get }
+    var name: String { get }
 }

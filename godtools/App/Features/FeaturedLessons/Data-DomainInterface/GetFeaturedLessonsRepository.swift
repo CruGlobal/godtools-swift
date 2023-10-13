@@ -12,22 +12,67 @@ import Combine
 class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     private let resourcesRepository: ResourcesRepository
+    private let languagesRepository: LanguagesRepository
+    private let translationsRepository: TranslationsRepository
+    private let localizationServices: LocalizationServices
+    private let localeLanguageName: LocaleLanguageName
     
-    init(resourcesRepository: ResourcesRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
         
         self.resourcesRepository = resourcesRepository
+        self.languagesRepository = languagesRepository
+        self.translationsRepository = translationsRepository
+        self.localizationServices = localizationServices
+        self.localeLanguageName = localeLanguageName
     }
     
-    func getFeaturedLessonsPublisher() -> AnyPublisher<[LessonDomainModel], Never> {
+    func getFeaturedLessonsPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
         let featuredLessonsDataModels: [ResourceModel] = resourcesRepository.getFeaturedLessons(sorted: true)
         
-        let featuredLessons: [LessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceModel) in
+        let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceModel) in
+
+            let lessonNameInAppLanguage: String
+            let lessonIsAvailableInAppLanguage: Bool
             
-            LessonDomainModel(
+            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: currentAppLanguageCode) {
+                lessonNameInAppLanguage = translation.translatedName
+            }
+            else {
+                lessonNameInAppLanguage = ""
+            }
+            
+            if let appLanguage = languagesRepository.getLanguage(code: currentAppLanguageCode) {
+                lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)    
+            }
+            else {
+                lessonIsAvailableInAppLanguage = false
+            }
+             
+            let availabilityInAppLanguage: String
+            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageCode: currentAppLanguageCode, translatedInLanguageCode: currentAppLanguageCode) ?? ""
+            
+            if lessonIsAvailableInAppLanguage {
+                
+                availabilityInAppLanguage = appLanguageName + " ✓"
+            }
+            else {
+                
+                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: currentAppLanguageCode, key: "lessonCard.languageNotAvailable")
+                
+                availabilityInAppLanguage = String(
+                    format: languageNotAvailable,
+                    locale: Locale(identifier: currentAppLanguageCode),
+                    appLanguageName
+                ) + " x"
+            }
+ 
+            return FeaturedLessonDomainModel(
                 analyticsToolName: resource.abbreviation,
+                availabilityInAppLanguage: availabilityInAppLanguage,
                 bannerImageId: resource.attrBanner,
-                id: resource.id
+                dataModelId: resource.id,
+                name: lessonNameInAppLanguage
             )
         }
         
