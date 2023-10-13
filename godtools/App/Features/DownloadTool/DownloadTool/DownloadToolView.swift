@@ -38,7 +38,8 @@ class DownloadToolView: UIViewController {
         setupBinding()
         
         _ = addBarButtonItem(
-            to: .right,
+            barPosition: .trailing,
+            index: nil,
             image: ImageCatalog.navClose.uiImage,
             color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
             target: self,

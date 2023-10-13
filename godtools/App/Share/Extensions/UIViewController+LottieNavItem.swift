@@ -11,7 +11,7 @@ import Lottie
 
 extension UIViewController {
   
-    func addAnimatedBarButtonItem(to barPosition: BarButtonItemBarPosition, index: Int? = nil, animationName: String) -> UIBarButtonItem {
+    func addAnimatedBarButtonItem(barPosition: BarButtonItemBarPosition, index: Int?, animationName: String) -> UIBarButtonItem {
         
         let animationView = LottieAnimationView()
         
