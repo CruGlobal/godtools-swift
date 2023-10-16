@@ -10,14 +10,19 @@ import UIKit
 
 class AppNavigationBar {
     
+    private let appearance: AppNavigationBarAppearance?
+    
     private(set) var navBarItems: NavBarItems?
+    
+    private weak var viewController: UIViewController?
     
     let backButton: AppBackBarItem?
     let leadingItems: [NavBarItem]
     let trailingItems: [NavBarItem]
     
-    init(backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem]) {
+    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem]) {
         
+        self.appearance = appearance
         self.backButton = backButton
         self.leadingItems = leadingItems
         self.trailingItems = trailingItems
@@ -28,6 +33,8 @@ class AppNavigationBar {
         guard navBarItems == nil else {
             return
         }
+        
+        self.viewController = viewController
         
         var leadingItemsWithBackButton: [NavBarItem] = leadingItems
         
@@ -41,5 +48,20 @@ class AppNavigationBar {
             leadingItems: leadingItemsWithBackButton,
             trailingItems: trailingItems
         )
+    }
+    
+    func willAppear(animated: Bool) {
+        
+        if let appearance = self.appearance,
+           let navigationBar = viewController?.navigationController?.navigationBar {
+            
+            navigationBar.setupNavigationBarAppearance(
+                backgroundColor: appearance.backgroundColor,
+                controlColor: appearance.controlColor,
+                titleFont: appearance.titleFont,
+                titleColor: appearance.titleColor,
+                isTranslucent: appearance.isTranslucent
+            )
+        }
     }
 }

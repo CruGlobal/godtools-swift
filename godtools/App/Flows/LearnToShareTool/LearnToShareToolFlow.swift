@@ -83,6 +83,7 @@ class LearnToShareToolFlow: Flow {
         let hostingView = AppHostingController<LearnToShareToolView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]

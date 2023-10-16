@@ -479,6 +479,7 @@ extension AppFlow {
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [menuButton],
                 trailingItems: [languageSettingsButton]
@@ -739,6 +740,7 @@ extension AppFlow {
         let hostingView = AppHostingController<AllYourFavoriteToolsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -805,6 +807,7 @@ extension AppFlow {
         let hostingView = AppHostingController<ToolFilterSelectionView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -853,6 +856,7 @@ extension AppFlow {
         let hostingView = AppHostingController<ToolDetailsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []

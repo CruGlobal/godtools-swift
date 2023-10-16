@@ -69,6 +69,7 @@ extension LanguageSettingsFlow {
         let hostingView = AppHostingController<LanguageSettingsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []

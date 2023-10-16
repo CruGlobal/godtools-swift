@@ -93,6 +93,7 @@ extension TutorialFlow {
         let hostingView = AppHostingController<TutorialView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]
