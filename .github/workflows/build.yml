@@ -40,6 +40,11 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
@@ -56,9 +61,6 @@ jobs:
           path: ~/.konan
           key: ${{ runner.os }}-konan-${{ github.sha }}
           restore-keys: ${{ runner.os }}-konan-
-
-      - name: Bundle Install
-        run: bundle install
 
       - name: Pod install
         run: bundle exec pod install --repo-update
