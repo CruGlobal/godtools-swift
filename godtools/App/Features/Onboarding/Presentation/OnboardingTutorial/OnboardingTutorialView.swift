@@ -71,8 +71,10 @@ struct OnboardingTutorialView: View {
             }
             .frame(maxWidth: .infinity)
             
-            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
-                viewModel.chooseAppLanguageTapped()
+            if !viewModel.hidesChooseLanguageButton {
+                ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
+                    viewModel.chooseAppLanguageTapped()
+                }
             }
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)

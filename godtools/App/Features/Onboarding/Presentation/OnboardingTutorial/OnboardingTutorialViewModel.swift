@@ -27,6 +27,7 @@ class OnboardingTutorialViewModel: ObservableObject {
         }
     }
     
+    @Published var hidesChooseLanguageButton: Bool = true
     @Published var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published var continueButtonTitle: String = ""
     
@@ -63,10 +64,12 @@ class OnboardingTutorialViewModel: ObservableObject {
         switch page {
         
         case 0:
+            hidesChooseLanguageButton = false
             hidesSkipButtonSubject.send(true)
             continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.beginButton.title")
        
         default:
+            hidesChooseLanguageButton = true
             hidesSkipButtonSubject.send(false)
             continueButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.nextButton.title")
         }
