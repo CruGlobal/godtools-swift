@@ -10,26 +10,24 @@ import UIKit
 
 class AppViewController: UIViewController {
     
-    private var navBarItems: NavBarItems?
+    private let navigationBar: AppNavigationBar?
     
     init(navigationBar: AppNavigationBar?) {
-                
+          
+        self.navigationBar = navigationBar
+        
         super.init(nibName: nil, bundle: nil)
         
-        configureNavigationBar(navigationBar: navigationBar)
+        navigationBar?.configure(viewController: self)
     }
     
     init(nibName: String?, bundle: Bundle?, navigationBar: AppNavigationBar?) {
         
+        self.navigationBar = navigationBar
+        
         super.init(nibName: nibName, bundle: bundle)
         
-        configureNavigationBar(navigationBar: navigationBar)
-    }
-    
-    private func configureNavigationBar(navigationBar: AppNavigationBar?) {
-        if let navigationBar = navigationBar {
-            navBarItems = NavBarItems(viewController: self, leadingItems: navigationBar.leadingItems, trailingItems: navigationBar.trailingItems)
-        }
+        navigationBar?.configure(viewController: self)
     }
     
     required init?(coder: NSCoder) {

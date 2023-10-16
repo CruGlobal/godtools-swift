@@ -14,9 +14,10 @@ extension UIViewController {
     func addDefaultNavBackItem(target: Any, action: Selector) -> UIBarButtonItem? {
             
         navigationItem.setHidesBackButton(true, animated: false)
-                
+                        
         return addBarButtonItem(
-            to: .left,
+            barPosition: .leading,
+            index: nil,
             image: ImageCatalog.navBack.uiImage,
             color: nil,
             target: target,

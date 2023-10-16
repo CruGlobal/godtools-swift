@@ -60,7 +60,8 @@ class ArticleWebView: AppViewController {
         
         // right bar button items
         let shareButton: UIBarButtonItem = addBarButtonItem(
-            to: .right,
+            barPosition: .trailing,
+            index: nil,
             image: ImageCatalog.navShare.uiImage,
             color: .white,
             target: self,
@@ -70,7 +71,8 @@ class ArticleWebView: AppViewController {
         self.shareButton = shareButton
                 
         let debugButton: UIBarButtonItem = addBarButtonItem(
-            to: .right,
+            barPosition: .trailing,
+            index: nil,
             image: ImageCatalog.navDebug.uiImage,
             color: .white,
             target: self,
@@ -167,11 +169,11 @@ class ArticleWebView: AppViewController {
         removeRightBarButtonItems()
         
         if !viewModel.hidesShareButton.value, let shareButton = self.shareButton {
-            addBarButtonItem(item: shareButton, barPosition: .right)
+            addBarButtonItem(item: shareButton, barPosition: .trailing, index: nil)
         }
         
         if !viewModel.hidesDebugButton.value, let debugButton = self.debugButton {
-            addBarButtonItem(item: debugButton, barPosition: .right)
+            addBarButtonItem(item: debugButton, barPosition: .trailing, index: nil)
         }
     }
     

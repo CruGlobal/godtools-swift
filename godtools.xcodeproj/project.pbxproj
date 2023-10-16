@@ -1143,7 +1143,7 @@
 		45FE82562ACE5D8C00930C39 /* NavBarItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE824A2ACE5D8C00930C39 /* NavBarItemData.swift */; };
 		45FE82582ACE5D8C00930C39 /* NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE824C2ACE5D8C00930C39 /* NavBarItems.swift */; };
 		45FE82592ACE5D8C00930C39 /* NavBarItemControllerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE824E2ACE5D8C00930C39 /* NavBarItemControllerType.swift */; };
-		45FE825A2ACE5D8C00930C39 /* NarBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE824F2ACE5D8C00930C39 /* NarBarItemController.swift */; };
+		45FE825A2ACE5D8C00930C39 /* NavBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE824F2ACE5D8C00930C39 /* NavBarItemController.swift */; };
 		45FE825B2ACE5D8C00930C39 /* AppLayoutDirectionNavBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE82502ACE5D8C00930C39 /* AppLayoutDirectionNavBarItemController.swift */; };
 		45FE825C2ACE5D8C00930C39 /* NavBarItemContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE82522ACE5D8C00930C39 /* NavBarItemContentType.swift */; };
 		45FE825D2ACE5D8C00930C39 /* NavBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE82532ACE5D8C00930C39 /* NavBarItem.swift */; };
@@ -2338,7 +2338,7 @@
 		45FE824A2ACE5D8C00930C39 /* NavBarItemData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItemData.swift; sourceTree = "<group>"; };
 		45FE824C2ACE5D8C00930C39 /* NavBarItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItems.swift; sourceTree = "<group>"; };
 		45FE824E2ACE5D8C00930C39 /* NavBarItemControllerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItemControllerType.swift; sourceTree = "<group>"; };
-		45FE824F2ACE5D8C00930C39 /* NarBarItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NarBarItemController.swift; sourceTree = "<group>"; };
+		45FE824F2ACE5D8C00930C39 /* NavBarItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItemController.swift; sourceTree = "<group>"; };
 		45FE82502ACE5D8C00930C39 /* AppLayoutDirectionNavBarItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionNavBarItemController.swift; sourceTree = "<group>"; };
 		45FE82522ACE5D8C00930C39 /* NavBarItemContentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItemContentType.swift; sourceTree = "<group>"; };
 		45FE82532ACE5D8C00930C39 /* NavBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarItem.swift; sourceTree = "<group>"; };
@@ -8510,7 +8510,7 @@
 			children = (
 				45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */,
 				45FE82502ACE5D8C00930C39 /* AppLayoutDirectionNavBarItemController.swift */,
-				45FE824F2ACE5D8C00930C39 /* NarBarItemController.swift */,
+				45FE824F2ACE5D8C00930C39 /* NavBarItemController.swift */,
 				45FE824E2ACE5D8C00930C39 /* NavBarItemControllerType.swift */,
 			);
 			path = NavBarItemController;
@@ -10542,7 +10542,7 @@
 				45131A0F2AB498AD0085AF0D /* FontLibrary.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
-				45FE825A2ACE5D8C00930C39 /* NarBarItemController.swift in Sources */,
+				45FE825A2ACE5D8C00930C39 /* NavBarItemController.swift in Sources */,
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
 				D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */,

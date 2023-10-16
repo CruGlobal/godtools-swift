@@ -68,7 +68,7 @@ class LoadingView: UIViewController {
     
     private func setCloseButton(hidden: Bool) {
         
-        let position: BarButtonItemBarPosition = .right
+        let position: BarButtonItemBarPosition = .trailing
         
         if hidden, let closeButton = closeButton {
             
@@ -79,7 +79,7 @@ class LoadingView: UIViewController {
         else if !hidden && closeButton == nil {
             
             closeButton = addBarButtonItem(
-                to: position,
+                barPosition: position,
                 index: 0,
                 image: ImageCatalog.navClose.uiImage,
                 color: UIColor.black,
