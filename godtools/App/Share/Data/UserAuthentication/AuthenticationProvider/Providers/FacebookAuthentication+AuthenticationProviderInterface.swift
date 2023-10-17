@@ -30,7 +30,8 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             profile: AuthenticationProviderProfile(
                 email: profile.email,
                 familyName: profile.lastName,
-                givenName: profile.firstName
+                givenName: profile.firstName,
+                name: profile.name
             ),
             providerType: .facebook,
             refreshToken: nil
@@ -108,6 +109,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             firstName: profile.firstName,
             grMasterPersonId: nil,
             lastName: profile.lastName,
+            name: profile.name,
             ssoGuid: nil
         )
     }
