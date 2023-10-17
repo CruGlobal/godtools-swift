@@ -49,7 +49,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController()
+        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
