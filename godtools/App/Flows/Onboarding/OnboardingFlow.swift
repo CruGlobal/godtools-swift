@@ -162,7 +162,7 @@ extension OnboardingFlow {
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [skipButton],
-                titleView: ChooseAppLanguageButtonUIKit(title: "Choose Language", tappedClosure: {
+                titleView: InvisibleChooseAppLanguageButtonForNavigationBar(tappedClosure: {
                     viewModel.chooseAppLanguageTapped()
                 })
             )

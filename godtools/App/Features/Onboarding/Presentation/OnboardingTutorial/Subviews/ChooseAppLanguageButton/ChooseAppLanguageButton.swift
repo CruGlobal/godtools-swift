@@ -10,6 +10,9 @@ import SwiftUI
 
 struct ChooseAppLanguageButton: View {
 
+    static let width: CGFloat = 175
+    static let height: CGFloat = 50
+    
     private let backgroundColor: Color = Color.getColorWithRGB(red: 238, green: 236, blue: 238, opacity: 1)
     private let cornerRadius: CGFloat = 25
     private let width: CGFloat = 175
