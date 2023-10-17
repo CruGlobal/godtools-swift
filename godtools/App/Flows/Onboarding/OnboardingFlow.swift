@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
-    
+            
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -28,21 +28,19 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         print("init: \(type(of: self))")
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController()
-                
-        navigationController.modalPresentationStyle = .fullScreen
-        
-        navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: .clear,
             controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: true
         )
+        
+        self.flowDelegate = flowDelegate
+        self.appDiContainer = appDiContainer
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        
+        navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setViewControllers([getInitialView()], animated: false)
     }
@@ -146,7 +144,7 @@ extension OnboardingFlow {
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
-        
+                
         let view = OnboardingTutorialView(viewModel: viewModel)
         
         let skipButton = AppSkipBarItem(
@@ -160,12 +158,16 @@ extension OnboardingFlow {
         let hostingView = AppHostingController<OnboardingTutorialView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
-                trailingItems: [skipButton]
+                trailingItems: [skipButton],
+                titleView: ChooseAppLanguageButtonUIKit(title: "Choose Language", tappedClosure: {
+                    viewModel.chooseAppLanguageTapped()
+                })
             )
         )
-        
+                        
         return hostingView
     }
     
@@ -191,6 +193,7 @@ extension OnboardingFlow {
         let hostingView = AppHostingController<OnboardingQuickStartView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [skipButton]
