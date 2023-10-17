@@ -78,7 +78,7 @@ struct OnboardingTutorialView: View {
             
             let chooseAppLanguageButtonPosition: CGFloat = viewModel.showsChooseLanguageButton ? OnboardingTutorialView.chooseAppLanguageButtonVisiblePosition : OnboardingTutorialView.chooseAppLanguageButtonHiddenPosition
             
-            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
+            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: viewModel.chooseAppLanguageButtonTitle) {
                 viewModel.chooseAppLanguageTapped()
             }
             .padding([.top], chooseAppLanguageButtonPosition)

@@ -29,6 +29,7 @@ class OnboardingTutorialViewModel: ObservableObject {
         }
     }
     
+    @Published var chooseAppLanguageButtonTitle: String
     @Published var showsChooseLanguageButton: Bool = true
     @Published var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published var continueButtonTitle: String = ""
@@ -42,6 +43,8 @@ class OnboardingTutorialViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                 
+        chooseAppLanguageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.chooseLanguageButton.title")
+        
         onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
         
         didSetPage(page: currentPage)

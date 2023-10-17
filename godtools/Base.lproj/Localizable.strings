@@ -431,6 +431,7 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Countries";
 
+"onboardingTutorial.chooseLanguageButton.title" = "Choose Language";
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
 "onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
