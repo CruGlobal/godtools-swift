@@ -11,7 +11,8 @@ import UIKit
 class AppNavigationBar {
     
     private let appearance: AppNavigationBarAppearance?
-    
+    private let titleView: UIView?
+
     private(set) var navBarItems: NavBarItems?
     
     private weak var viewController: UIViewController?
@@ -20,12 +21,28 @@ class AppNavigationBar {
     let leadingItems: [NavBarItem]
     let trailingItems: [NavBarItem]
     
-    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem]) {
+    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil) {
         
         self.appearance = appearance
         self.backButton = backButton
         self.leadingItems = leadingItems
         self.trailingItems = trailingItems
+        self.titleView = titleView
+    }
+    
+    private func setAppearance() {
+        
+        guard let navigationController = viewController?.navigationController, let appearance = self.appearance else {
+            return
+        }
+        
+        navigationController.navigationBar.setupNavigationBarAppearance(
+            backgroundColor: appearance.backgroundColor,
+            controlColor: appearance.controlColor,
+            titleFont: appearance.titleFont,
+            titleColor: appearance.titleColor,
+            isTranslucent: appearance.isTranslucent
+        )
     }
     
     func configure(viewController: UIViewController) {
@@ -48,20 +65,14 @@ class AppNavigationBar {
             leadingItems: leadingItemsWithBackButton,
             trailingItems: trailingItems
         )
+        
+        if let titleView = self.titleView {
+            viewController.navigationItem.titleView = titleView
+        }
     }
     
     func willAppear(animated: Bool) {
-        
-        if let appearance = self.appearance,
-           let navigationBar = viewController?.navigationController?.navigationBar {
-            
-            navigationBar.setupNavigationBarAppearance(
-                backgroundColor: appearance.backgroundColor,
-                controlColor: appearance.controlColor,
-                titleFont: appearance.titleFont,
-                titleColor: appearance.titleColor,
-                isTranslucent: appearance.isTranslucent
-            )
-        }
+                
+        setAppearance()
     }
 }
