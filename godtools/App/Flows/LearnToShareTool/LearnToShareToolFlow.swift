@@ -23,7 +23,7 @@ class LearnToShareToolFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController()
+        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
         
         navigationController.modalPresentationStyle = .fullScreen
         

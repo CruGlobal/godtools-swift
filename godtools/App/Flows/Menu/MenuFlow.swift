@@ -28,7 +28,7 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = AppNavigationController()
+        navigationController = AppNavigationController(navigationBarAppearance: nil)
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
