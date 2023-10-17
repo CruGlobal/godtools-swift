@@ -28,7 +28,7 @@ class TutorialFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController()
+        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
              
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: false)
@@ -93,6 +93,7 @@ extension TutorialFlow {
         let hostingView = AppHostingController<TutorialView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]

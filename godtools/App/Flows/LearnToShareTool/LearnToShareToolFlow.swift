@@ -23,7 +23,7 @@ class LearnToShareToolFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController()
+        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
         
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -83,6 +83,7 @@ class LearnToShareToolFlow: Flow {
         let hostingView = AppHostingController<LearnToShareToolView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]

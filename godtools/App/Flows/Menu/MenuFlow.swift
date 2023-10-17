@@ -28,7 +28,7 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = AppNavigationController()
+        navigationController = AppNavigationController(navigationBarAppearance: nil)
         navigationController.setNavigationBarHidden(false, animated: false)
         
         navigationController.navigationBar.setupNavigationBarAppearance(
@@ -258,6 +258,7 @@ class MenuFlow: Flow {
         let hostingView = AppHostingController(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [doneButton]
@@ -292,6 +293,7 @@ class MenuFlow: Flow {
         let hostingView = AppHostingController<SocialSignInView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [closeButton]
@@ -357,6 +359,7 @@ class MenuFlow: Flow {
         let hostingView = AppHostingController<AccountView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -388,6 +391,7 @@ class MenuFlow: Flow {
         let hostingView = AppHostingController<DeleteAccountView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [closeButton]
@@ -482,6 +486,7 @@ class MenuFlow: Flow {
         let view = WebContentView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []

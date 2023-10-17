@@ -31,6 +31,7 @@ extension Flow {
         let hostingView = AppHostingController<FullScreenVideoView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [closeButton]
