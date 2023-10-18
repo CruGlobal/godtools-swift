@@ -19,10 +19,6 @@ class GetOnboardingQuickStartIsAvailableUseCase {
     
     func getAvailablePublisher(appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<Bool, Never> {
         
-        return Just(true)
-            .eraseToAnyPublisher()
-        
-        /*
         return appLanguageCodeChangedPublisher
             .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<Bool, Never> in
                 
@@ -34,6 +30,6 @@ class GetOnboardingQuickStartIsAvailableUseCase {
                 return Just(available)
                     .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()*/
+            .eraseToAnyPublisher()
     }
 }
