@@ -1,5 +1,5 @@
 //
-//  GetOnboardingQuickLinksAvailableUseCase.swift
+//  GetOnboardingQuickStartIsAvailableUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/24/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetOnboardingQuickLinksAvailableUseCase {
+class GetOnboardingQuickStartIsAvailableUseCase {
     
     private static let supportedLanguages: [LanguageCodeDomainModel] = [.english, .french, .latvian, .spanish, .vietnamese]
         
@@ -19,10 +19,14 @@ class GetOnboardingQuickLinksAvailableUseCase {
     
     func getAvailablePublisher(appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<Bool, Never> {
         
+        return Just(true)
+            .eraseToAnyPublisher()
+        
+        /*
         return appLanguageCodeChangedPublisher
             .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<Bool, Never> in
                 
-                let available: Bool = GetOnboardingQuickLinksAvailableUseCase
+                let available: Bool = GetOnboardingQuickStartIsAvailableUseCase
                     .supportedLanguages
                     .map({$0.value})
                     .contains(appLanguageCode)
@@ -30,6 +34,6 @@ class GetOnboardingQuickLinksAvailableUseCase {
                 return Just(available)
                     .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
+            .eraseToAnyPublisher()*/
     }
 }

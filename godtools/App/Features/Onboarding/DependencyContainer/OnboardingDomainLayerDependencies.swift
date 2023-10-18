@@ -19,8 +19,23 @@ class OnboardingDomainLayerDependencies {
         self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
-    func getOnboardingQuickLinksAvailableUseCase() -> GetOnboardingQuickLinksAvailableUseCase {
-        return GetOnboardingQuickLinksAvailableUseCase()
+    func getOnboardingQuickStartInterfaceStringsUseCase() -> GetOnboardingQuickStartInterfaceStringsUseCase {
+        
+        return GetOnboardingQuickStartInterfaceStringsUseCase(
+            getStringsRepositoryInterface: dataLayer.getOnboardingQuickStartInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getOnboardingQuickStartIsAvailableUseCase() -> GetOnboardingQuickStartIsAvailableUseCase {
+        
+        return GetOnboardingQuickStartIsAvailableUseCase()
+    }
+    
+    func getOnboardingQuickStartLinksUseCase() -> GetOnboardingQuickStartLinksUseCase {
+        
+        return GetOnboardingQuickStartLinksUseCase(
+            getLinksRepositoryInterface: dataLayer.getOnboardingQuickStartLinksRepositoryInterface()
+        )
     }
     
     func getOnboardingTutorialInterfaceStringsUseCase() -> GetOnboardingTutorialInterfaceStringsUseCase {

@@ -158,12 +158,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getOnboardingQuickStartItemsUseCase() -> GetOnboardingQuickStartItemsUseCase {
-        return GetOnboardingQuickStartItemsUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
         return GetOnboardingTutorialAvailabilityUseCase(
             launchCountRepository: dataLayer.getSharedLaunchCountRepository(),

@@ -96,7 +96,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         switch step {
         
         case .appLaunchedFromTerminatedState:
-                     
+              
+            navigate(step: .showOnboardingTutorial(animated: true))
+            
+            /*
             if let deepLink = appLaunchedFromDeepLink {
                 
                 appLaunchedFromDeepLink = nil
@@ -109,7 +112,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             else {
                 
                 navigateToDashboard()
-            }
+            }*/
             
             loadInitialData()
             countAppSessionLaunch()

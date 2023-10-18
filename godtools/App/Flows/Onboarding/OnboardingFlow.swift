@@ -12,7 +12,7 @@ import Combine
 
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
-    @Published private var quickLinksIsAvailable: Bool = false
+    @Published private var quickStartIsAvailable: Bool = false
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -47,12 +47,12 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         navigationController.setViewControllers([getInitialView()], animated: false)
         
         let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
-        let getOnboardingQuickLinksAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickLinksAvailableUseCase()
+        let getOnboardingQuickStartIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartIsAvailableUseCase()
         
-        getOnboardingQuickLinksAvailableUseCase
+        getOnboardingQuickStartIsAvailableUseCase
             .getAvailablePublisher(appLanguageCodeChangedPublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
             .receive(on: DispatchQueue.main)
-            .assign(to: &$quickLinksIsAvailable)
+            .assign(to: &$quickStartIsAvailable)
     }
     
     func getInitialView() -> UIViewController {
@@ -120,7 +120,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     private func navigateToQuickLinksIfAvailableElseCompleteOnboarding() {
         
-        if quickLinksIsAvailable {
+        if quickStartIsAvailable {
             navigationController.setViewControllers([getOnboardingQuickStartView()], animated: true)
         }
         else {
@@ -180,10 +180,10 @@ extension OnboardingFlow {
         
         let viewModel = OnboardingQuickStartViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            getOnboardingQuickStartItemsUseCase: appDiContainer.domainLayer.getOnboardingQuickStartItemsUseCase(),
-            trackActionAnalytics: appDiContainer.dataLayer.getAnalytics().trackActionAnalytics
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getOnboardingQuickStartInterfaceStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartInterfaceStringsUseCase(),
+            getOnboardingQuickStartLinksUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartLinksUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = OnboardingQuickStartView(viewModel: viewModel)
