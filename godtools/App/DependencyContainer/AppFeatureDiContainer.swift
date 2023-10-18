@@ -13,13 +13,15 @@ class AppFeatureDiContainer {
     let appLanguage: AppLanguageFeatureDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
     let lessons: LessonsFeatureDiContainer
+    let onboarding: OnboardingDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     
-    init(appLanguage: AppLanguageFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessons: LessonsFeatureDiContainer, toolDetails: ToolDetailsFeatureDiContainer) {
+    init(appLanguage: AppLanguageFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer) {
         
         self.appLanguage = appLanguage
         self.featuredLessons = featuredLessons
         self.lessons = lessons
+        self.onboarding = onboarding
         self.toolDetails = toolDetails
     }
 }
