@@ -139,6 +139,8 @@ extension OnboardingFlow {
         let viewModel = OnboardingTutorialViewModel(
             flowDelegate: self,
             onboardingTutorialViewedRepository: appDiContainer.dataLayer.getOnboardingTutorialViewedRepository(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getOnboardingTutorialInterfaceStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialInterfaceStringsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             trackTutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
