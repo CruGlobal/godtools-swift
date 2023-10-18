@@ -11,7 +11,9 @@ import SwiftUI
 import Combine
 
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
-            
+    
+    @Published private var quickLinksIsAvailable: Bool = false
+    
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -43,6 +45,14 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setViewControllers([getInitialView()], animated: false)
+        
+        let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        let getOnboardingQuickLinksAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickLinksAvailableUseCase()
+        
+        getOnboardingQuickLinksAvailableUseCase
+            .getAvailablePublisher(appLanguageCodeChangedPublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$quickLinksIsAvailable)
     }
     
     func getInitialView() -> UIViewController {
@@ -70,10 +80,10 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             dismissVideoModal(animated: true, completion: nil)
             
         case .skipTappedFromOnboardingTutorial:
-            navigateToQuickStartOrTools()
+            navigateToQuickStartIfAvailableElseTools()
             
         case .endTutorialFromOnboardingTutorial:
-            navigateToQuickStartOrTools()
+            navigateToQuickStartIfAvailableElseTools()
 
         case .skipTappedFromOnboardingQuickStart:
             completeOnboardingFlow(onboardingFlowCompletedState: nil)
@@ -108,18 +118,12 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
     }
     
-    private func navigateToQuickStartOrTools() {
+    private func navigateToQuickStartIfAvailableElseTools() {
         
-        let getOnboardingQuickLinksEnabledUseCase: GetOnboardingQuickLinksEnabledUseCase = appDiContainer.domainLayer.getOnboardingQuickLinksEnabledUseCase()
-        
-        if getOnboardingQuickLinksEnabledUseCase.getQuickLinksEnabled() {
-                        
-            let view = getOnboardingQuickStartView()
-            
-            navigationController.setViewControllers([view], animated: true)
+        if quickLinksIsAvailable {
+            navigationController.setViewControllers([getOnboardingQuickStartView()], animated: true)
         }
         else {
-            
             flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
         }
     }
