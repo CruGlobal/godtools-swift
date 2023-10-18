@@ -32,7 +32,7 @@ struct ToolDetailsVersionsView: View {
             ToolDetailsSectionDescriptionTextView(
                 viewModel: viewModel,
                 geometry: geometry,
-                text: viewModel.versionsMessage
+                text: viewModel.versionsDescription
             )
             
             LazyVStack(alignment: .center, spacing: cardSpacing) {

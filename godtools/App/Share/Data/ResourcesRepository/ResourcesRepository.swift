@@ -60,11 +60,6 @@ class ResourcesRepository {
         return cache.getResources(with: resourceType)
     }
     
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
-        
-        return cache.getResourceVariants(resourceId: resourceId)
-    }
-    
     func getSpotlightTools() -> [ResourceModel] {
         return cache.getSpotlightTools()
     }
@@ -146,5 +141,15 @@ extension ResourcesRepository {
     
     func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
         return cache.getFeaturedLessons(sorted: sorted)
+    }
+}
+
+// MARK: - Variants
+
+extension ResourcesRepository {
+    
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        return cache.getResourceVariants(resourceId: resourceId)
     }
 }

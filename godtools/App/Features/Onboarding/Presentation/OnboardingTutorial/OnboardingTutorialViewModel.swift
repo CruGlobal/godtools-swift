@@ -18,15 +18,19 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let hidesSkipButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
+    private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published var currentPage: Int = 0 {
+        
         didSet {
             didSetPage(page: currentPage)
         }
     }
     
+    @Published var chooseAppLanguageButtonTitle: String
+    @Published var showsChooseLanguageButton: Bool = true
     @Published var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published var continueButtonTitle: String = ""
     
@@ -39,9 +43,18 @@ class OnboardingTutorialViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                 
+        chooseAppLanguageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.chooseLanguageButton.title")
+        
         onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
         
         didSetPage(page: currentPage)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
+            weakSelf.updateShowsChooseLanguageButtonState(page: weakSelf.currentPage)
+        }
     }
     
     private func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
@@ -58,8 +71,14 @@ class OnboardingTutorialViewModel: ObservableObject {
         )
     }
     
+    private func updateShowsChooseLanguageButtonState(page: Int) {
+        showsChooseLanguageButton = showsChooseAppLanguageButtonOnPages.contains(page)
+    }
+    
     private func didSetPage(page: Int) {
-        
+                
+        updateShowsChooseLanguageButtonState(page: page)
+                
         switch page {
         
         case 0:

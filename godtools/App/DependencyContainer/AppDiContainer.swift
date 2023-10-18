@@ -30,11 +30,13 @@ class AppDiContainer {
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
+        let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         
         feature = AppFeatureDiContainer(
             appLanguage: appLanguageDiContainer,
             featuredLessons: featuredLessonsDiContainer,
-            lessons: lessonsDiContainer
+            lessons: lessonsDiContainer,
+            toolDetails: toolDetailsDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

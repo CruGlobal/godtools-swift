@@ -74,6 +74,7 @@ extension ChooseAppLanguageFlow {
         let hostingView = AppHostingController<AppLanguagesView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []

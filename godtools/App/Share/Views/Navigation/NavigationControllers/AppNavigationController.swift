@@ -13,6 +13,32 @@ import Combine
 class AppNavigationController: UINavigationController {
     
     private var cancellables: Set<AnyCancellable> = Set()
+        
+    let navigationBarAppearance: AppNavigationBarAppearance?
+    
+    init(hidesNavigationBar: Bool = false, navigationBarAppearance: AppNavigationBarAppearance?) {
+        
+        self.navigationBarAppearance = navigationBarAppearance
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        setNavigationBarHidden(hidesNavigationBar, animated: false)
+        
+        if let appearance = self.navigationBarAppearance {
+            
+            navigationBar.setupNavigationBarAppearance(
+                backgroundColor: appearance.backgroundColor,
+                controlColor: appearance.controlColor,
+                titleFont: appearance.titleFont,
+                titleColor: appearance.titleColor,
+                isTranslucent: appearance.isTranslucent
+            )
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("x deinit: \(type(of: self))")

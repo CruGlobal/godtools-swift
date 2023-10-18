@@ -11,18 +11,24 @@ import SwiftUI
 
 class AppHostingController<Content: View>: UIHostingController<Content> {
         
-    private var navBarItems: NavBarItems?
+    private let navigationBar: AppNavigationBar?
     
     init(rootView: Content, navigationBar: AppNavigationBar?) {
         
+        self.navigationBar = navigationBar
+        
         super.init(rootView: rootView)
         
-        if let navigationBar = navigationBar {
-            navBarItems = NavBarItems(viewController: self, leadingItems: navigationBar.leadingItems, trailingItems: navigationBar.trailingItems)
-        }
+        navigationBar?.configure(viewController: self)
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationBar?.willAppear(animated: animated)
     }
 }

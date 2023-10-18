@@ -26,7 +26,7 @@ end
 target 'godtoolsTests' do
     
   pod 'Quick', '~> 7.3.0'
-  pod 'Nimble', '~> 12.3.0'
+  pod 'Nimble', '~> 13.0.0'
   
   shared_pods
 end

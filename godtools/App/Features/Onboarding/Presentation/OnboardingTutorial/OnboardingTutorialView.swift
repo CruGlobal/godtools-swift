@@ -9,7 +9,12 @@
 import SwiftUI
 
 struct OnboardingTutorialView: View {
-            
+        
+    private static let chooseAppLanguageButtonHiddenPosition: CGFloat = (ChooseAppLanguageButton.height * 3) * -1
+    private static let chooseAppLanguageButtonVisiblePosition: CGFloat = -40
+    
+    @State private var chooseAppLanguageButtonPosition: CGFloat = OnboardingTutorialView.chooseAppLanguageButtonHiddenPosition
+    
     @ObservedObject private var viewModel: OnboardingTutorialViewModel
     
     init(viewModel: OnboardingTutorialViewModel) {
@@ -71,9 +76,13 @@ struct OnboardingTutorialView: View {
             }
             .frame(maxWidth: .infinity)
             
-            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
+            let chooseAppLanguageButtonPosition: CGFloat = viewModel.showsChooseLanguageButton ? OnboardingTutorialView.chooseAppLanguageButtonVisiblePosition : OnboardingTutorialView.chooseAppLanguageButtonHiddenPosition
+            
+            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: viewModel.chooseAppLanguageButtonTitle) {
                 viewModel.chooseAppLanguageTapped()
             }
+            .padding([.top], chooseAppLanguageButtonPosition)
+            .animation(.interpolatingSpring(stiffness: 80, damping: 10), value: chooseAppLanguageButtonPosition)
         }
         .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)

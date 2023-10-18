@@ -40,7 +40,8 @@ class ShareToolScreenTutorialView: UIViewController {
         setupBinding()
         
         closeButton = addBarButtonItem(
-            to: .left,
+            barPosition: .leading,
+            index: nil,
             image: ImageCatalog.navClose.uiImage,
             color: nil,
             target: self,
@@ -92,12 +93,13 @@ class ShareToolScreenTutorialView: UIViewController {
     
     private func setSkipButton(hidden: Bool) {
         
-        let buttonPosition: BarButtonItemBarPosition = .right
+        let buttonPosition: BarButtonItemBarPosition = .trailing
         
         if skipButton == nil && !hidden {
             
             skipButton = addBarButtonItem(
-                to: buttonPosition,
+                barPosition: buttonPosition,
+                index: nil,
                 title: viewModel.skipTitle,
                 style: .plain,
                 color: ColorPalette.gtBlue.uiColor,
@@ -106,7 +108,7 @@ class ShareToolScreenTutorialView: UIViewController {
             )
         }
         else if let skipButton = skipButton {
-            hidden ? removeBarButtonItem(item: skipButton) : addBarButtonItem(item: skipButton, barPosition: buttonPosition)
+            hidden ? removeBarButtonItem(item: skipButton) : addBarButtonItem(item: skipButton, barPosition: buttonPosition, index: nil)
         }
     }
     

@@ -19,31 +19,11 @@ class LessonsFeatureDomainLayerDependencies {
         self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
-    func getLessonAvailabilityInAppLanguageUseCase() -> GetLessonAvailabilityInAppLanguageUseCase {
-        
-        return GetLessonAvailabilityInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getAppLanguageNameUseCase: appLanguageFeatureDomainLayer.getAppLanguageNameUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appLanguageFeatureDomainLayer.getInterfaceStringInAppLanguageUseCase(),
-            getLessonIsAvailableInAppLanguageRepositoryInterface: dataLayer.getLessonIsAvailableInAppLanguageRepositoryInterface()
-        )
-    }
-    
-    func getLessonNameInAppLanguageUseCase() -> GetLessonNameInAppLanguageUseCase {
-        
-        return GetLessonNameInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getLessonNameRepositoryInterface: dataLayer.getLessonNameRepositoryInterface()
-        )
-    }
-    
     func getLessonsListUseCase() -> GetLessonsListUseCase {
         
         return GetLessonsListUseCase(
             getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getLessonsListRepositoryInterface: dataLayer.getLessonsListRepositoryInterface(),
-            getLessonNameInAppLanguageUseCase: getLessonNameInAppLanguageUseCase(),
-            getLessonAvailabilityInAppLanguageUseCase: getLessonAvailabilityInAppLanguageUseCase()
+            getLessonsListRepositoryInterface: dataLayer.getLessonsListRepositoryInterface()
         )
     }
 }

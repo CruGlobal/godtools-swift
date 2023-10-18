@@ -40,15 +40,15 @@ class ToolCardViewModel: ObservableObject {
                         
         title = tool.name
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_category_\(tool.category)")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_category_\(tool.category)")
             .receive(on: DispatchQueue.main)
             .assign(to: &$category)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "favorites.favoriteLessons.details")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.details")
             .receive(on: DispatchQueue.main)
             .assign(to: &$detailsButtonTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "open")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "open")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openButtonTitle)
                 

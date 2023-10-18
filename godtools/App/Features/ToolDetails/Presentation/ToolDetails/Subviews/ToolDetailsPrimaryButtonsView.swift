@@ -37,7 +37,7 @@ struct ToolDetailsPrimaryButtonsView: View {
                 viewModel.openToolTapped()
             }
             
-            if !viewModel.hidesLearnToShareToolButton {
+            if viewModel.showsLearnToShareToolButton {
                 
                 GTBlueButton(
                     title: viewModel.learnToShareToolButtonTitle,

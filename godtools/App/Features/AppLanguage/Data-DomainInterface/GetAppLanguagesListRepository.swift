@@ -12,22 +12,35 @@ import Combine
 class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
     private let appLanguagesRepository: AppLanguagesRepository
+    private let localeLanguageName: LocaleLanguageName
     
-    init(appLanguagesRepository: AppLanguagesRepository) {
+    init(appLanguagesRepository: AppLanguagesRepository, localeLanguageName: LocaleLanguageName) {
         
         self.appLanguagesRepository = appLanguagesRepository
+        self.localeLanguageName = localeLanguageName
     }
     
-    func getLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
+    func getLanguagesPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return appLanguagesRepository.getLanguagesPublisher()
-            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageCodeDomainModel], Never> in
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
-                let appLanguages: [AppLanguageCodeDomainModel] = languages.map {
-                    $0.languageCode
+                let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
+                    
+                    return AppLanguageListItemDomainModel(
+                        languageCode: languageDataModel.languageCode,
+                        languageNameTranslatedInOwnLanguage: self.localeLanguageName.getDisplayName(
+                            forLanguageCode: languageDataModel.languageCode,
+                            translatedInLanguageCode: languageDataModel.languageCode
+                        ) ?? "",
+                        languageNameTranslatedInCurrentAppLanguage: self.localeLanguageName.getDisplayName(
+                            forLanguageCode: languageDataModel.languageCode,
+                            translatedInLanguageCode: currentAppLanguageCode
+                        ) ?? ""
+                    )
                 }
                 
-                return Just(appLanguages)
+                return Just(appLanguagesList)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

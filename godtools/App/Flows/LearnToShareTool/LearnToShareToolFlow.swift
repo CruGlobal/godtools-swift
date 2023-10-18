@@ -19,11 +19,11 @@ class LearnToShareToolFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, resource: ResourceModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController()
+        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
         
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -37,29 +37,29 @@ class LearnToShareToolFlow: Flow {
             isTranslucent: true
         )
         
-        navigationController.setViewControllers([getLearnToShareToolView(resource: resource)], animated: false)
+        navigationController.setViewControllers([getLearnToShareToolView(tool: tool)], animated: false)
     }
     
     func navigate(step: FlowStep) {
         
         switch step {
             
-        case .continueTappedFromLearnToShareTool(let resource):
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(resource: resource))
+        case .continueTappedFromLearnToShareTool(let tool):
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool))
             
-        case .closeTappedFromLearnToShareTool(let resource):
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(resource: resource))
+        case .closeTappedFromLearnToShareTool(let tool):
+            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool))
             
         default:
             break
         }
     }
     
-    private func getLearnToShareToolView(resource: ResourceModel) -> UIViewController {
+    private func getLearnToShareToolView(tool: ToolDomainModel) -> UIViewController {
         
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
-            resource: resource,
+            tool: tool,
             getLearnToShareToolItemsUseCase: appDiContainer.domainLayer.getLearnToShareToolItemsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
@@ -83,6 +83,7 @@ class LearnToShareToolFlow: Flow {
         let hostingView = AppHostingController<LearnToShareToolView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: [closeButton]

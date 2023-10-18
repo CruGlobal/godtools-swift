@@ -9,41 +9,38 @@
 import UIKit
 import Combine
 
-class AppInterfaceStringNavBarItemController: NarBarItemController {
+class AppInterfaceStringNavBarItemController: NavBarItemController {
         
     private let interfaceStringBarItem: AppInterfaceStringBarItem
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
-    private let toggleVisibility: AnyPublisher<Bool, Never>
     
+    private var currentInterfaceString: String?
     private var cancellables: Set<AnyCancellable> = Set()
     
     init(viewController: UIViewController, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
                
         self.interfaceStringBarItem = navBarItem
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
-        self.toggleVisibility = navBarItem.toggleVisibilityPublisher ?? CurrentValueSubject<Bool, Never>(false).eraseToAnyPublisher()
         
         super.init(
             viewController: viewController,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
-            itemIndex: itemIndex,
-            shouldSinkToggleVisibility: false
+            itemIndex: itemIndex
         )
         
-        Publishers.CombineLatest(
-            toggleVisibility,
-            getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: interfaceStringBarItem.localizedStringKey)
-        )
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: interfaceStringBarItem.localizedStringKey)
         .receive(on: DispatchQueue.main)
-        .sink{ [weak self] (hidden: Bool, interfaceString: String) in
+        .sink{ [weak self] (interfaceString: String) in
             
-            if hidden {
-                self?.setHidden(hidden: hidden)
+            let shouldRedraw: Bool = self?.currentInterfaceString != interfaceString
+            
+            if shouldRedraw, let newBarButtonItem = self?.interfaceStringBarItem.itemData.getNewBarButtonItem(contentType: .title(value: interfaceString)) {
+                
+                self?.reDrawBarButtonItem(barButtonItem: newBarButtonItem)
             }
-            else if let newBarButtonItem = self?.interfaceStringBarItem.itemData.getNewBarButtonItem(contentType: .title(value: interfaceString)) {
-                self?.setBarButtonItem(barButtonItem: newBarButtonItem)
-            }
+            
+            self?.currentInterfaceString = interfaceString
         }
         .store(in: &cancellables)
     }

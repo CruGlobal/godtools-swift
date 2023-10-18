@@ -64,19 +64,19 @@ class ToolsViewModel: ObservableObject {
         let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
         toolFilterSelectionPublisher = CurrentValueSubject(ToolFilterSelection(selectedCategory: anyCategorySelection, selectedLanguage: anyLanguageSelection))
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: "tool_offline_favorite_message")
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_offline_favorite_message")
             .receive(on: DispatchQueue.main)
             .assign(to: &$favoritingToolBannerMessage)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.title.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$toolSpotlightTitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.Spotlight.subtitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$toolSpotlightSubtitle)
         
-        getInterfaceStringInAppLanguageUseCase.observeStringChangedPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
+        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$filterTitle)
         
@@ -223,7 +223,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool, isSpotlight: true)
         
-        flowDelegate?.navigate(step: .toolTappedFromTools(resource: spotlightTool.resource))
+        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool))
     }
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
@@ -235,6 +235,6 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: tool, isSpotlight: false)
         
-        flowDelegate?.navigate(step: .toolTappedFromTools(resource: tool.resource))
+        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool))
     }
 }

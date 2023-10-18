@@ -16,6 +16,6 @@ class AppLanguageFeatureDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = AppLanguageFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = AppLanguageFeatureDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = AppLanguageFeatureDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
     }
 }

@@ -8,10 +8,9 @@
 
 import UIKit
 
-@available(*, deprecated) // TODO: Needs to be removed in GT-2154.  All navigation bar button item logic needs to be in Share/Views/Navigation/NavigationBar/* ~Levi
 public extension UIViewController {
-  
-    func addBarButtonItem(to barPosition: BarButtonItemBarPosition, index: Int? = nil, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
+    
+    func addBarButtonItem(barPosition: BarButtonItemBarPosition, index: Int?, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
         let buttonStyle: UIBarButtonItem.Style = style ?? .plain
         
@@ -20,77 +19,39 @@ public extension UIViewController {
             item.tintColor = color
         }
         
-        switch barPosition {
-        case .left:
-            addLeftBarButtonItem(item: item, index: index)
-        case .right:
-            addRightBarButtonItem(item: item, index: index)
-        }
+        addBarButtonItem(item: item, barPosition: barPosition, index: index)
         
         return item
     }
     
-    func addBarButtonItem(to barPosition: BarButtonItemBarPosition, index: Int? = nil, image: UIImage?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
+    func addBarButtonItem(barPosition: BarButtonItemBarPosition, index: Int?, image: UIImage?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
         let item = UIBarButtonItem(image: image, style: .plain, target: target, action: action)
         if let color = color {
             item.tintColor = color
         }
         
-        switch barPosition {
-        case .left:
-            addLeftBarButtonItem(item: item, index: index)
-        case .right:
-            addRightBarButtonItem(item: item, index: index)
-        }
+        addBarButtonItem(item: item, barPosition: barPosition, index: index)
         
         return item
     }
-    
-    func addBarButtonItem(item: UIBarButtonItem, barPosition: BarButtonItemBarPosition, index: Int? = nil) {
-        switch barPosition {
-        case .left:
-            addLeftBarButtonItem(item: item, index: index)
-        case .right:
-            addRightBarButtonItem(item: item, index: index)
-        }
-    }
-    
-    private func addLeftBarButtonItem(item: UIBarButtonItem, index: Int?) {
-        if var leftItems = navigationItem.leftBarButtonItems {
-            if !leftItems.contains(item) {
-                if let index = index, index >= 0 && index < leftItems.count {
-                    leftItems.insert(item, at: index)
-                }
-                else {
-                    leftItems.append(item)
-                }
-                navigationItem.leftBarButtonItems = leftItems
-            }
-        }
-        else {
-            navigationItem.leftBarButtonItem = item
-        }
-    }
+}
 
-    private func addRightBarButtonItem(item: UIBarButtonItem, index: Int?) {
-        if var rightItems = navigationItem.rightBarButtonItems {
-            if !rightItems.contains(item) {
-                if let index = index, index >= 0 && index < rightItems.count {
-                    rightItems.insert(item, at: index)
-                }
-                else {
-                    rightItems.append(item)
-                }
-                navigationItem.rightBarButtonItems = rightItems
-            }
-        }
-        else {
-            navigationItem.rightBarButtonItem = item
-        }
+// MARK: - Retrieving Bar Items
+
+extension UIViewController {
+    
+    func containsBarButtonItem(item: UIBarButtonItem) -> Bool {
+        
+        return getAllBarButtonItems().contains(item)
     }
     
-    func getLeftBarButtonItems() -> [UIBarButtonItem] {
+    func getAllBarButtonItems() -> [UIBarButtonItem] {
+        
+        return getLeadingBarButtonItems() + getTrailingBarButtonItems()
+    }
+    
+    func getLeadingBarButtonItems() -> [UIBarButtonItem] {
         
         if let leadingItems = navigationItem.leftBarButtonItems, !leadingItems.isEmpty {
             return leadingItems
@@ -102,7 +63,7 @@ public extension UIViewController {
         return Array()
     }
     
-    func getRightBarButtonItems() -> [UIBarButtonItem] {
+    func getTrailingBarButtonItems() -> [UIBarButtonItem] {
         
         if let trailingItems = navigationItem.rightBarButtonItems, !trailingItems.isEmpty {
             return trailingItems
@@ -115,9 +76,75 @@ public extension UIViewController {
     }
 }
 
-// MARK: - Removing Button Items
+// MARK: - Adding Bar Items
 
-public extension UIViewController {
+extension UIViewController {
+    
+    func addBarButtonItem(item: UIBarButtonItem, barPosition: BarButtonItemBarPosition, index: Int?) {
+        
+        switch barPosition {
+        
+        case .leading:
+            addLeadingBarButtonItem(item: item, index: index)
+        
+        
+        case .trailing:
+            addTrailingBarButtonItem(item: item, index: index)
+        }
+    }
+    
+    func addLeadingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        if var leadingItems = navigationItem.leftBarButtonItems, !leadingItems.isEmpty {
+            
+            if !leadingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < leadingItems.count {
+                    
+                    leadingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    leadingItems.append(item)
+                }
+                
+                navigationItem.leftBarButtonItems = leadingItems
+            }
+        }
+        else {
+            
+            navigationItem.leftBarButtonItem = item
+        }
+    }
+
+    func addTrailingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        if var trailingItems = navigationItem.rightBarButtonItems, !trailingItems.isEmpty {
+            
+            if !trailingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < trailingItems.count {
+                    
+                    trailingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    trailingItems.append(item)
+                }
+                
+                navigationItem.rightBarButtonItems = trailingItems
+            }
+        }
+        else {
+            
+            navigationItem.rightBarButtonItem = item
+        }
+    }
+}
+
+// MARK: - Removing Bar Items
+
+extension UIViewController {
     
     func removeAllBarButtonItems() {
         

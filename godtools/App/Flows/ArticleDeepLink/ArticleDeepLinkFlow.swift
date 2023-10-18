@@ -105,6 +105,7 @@ extension ArticleDeepLinkFlow {
         let view = ArticleWebView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []

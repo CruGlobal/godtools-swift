@@ -84,7 +84,8 @@ class ToolNavBarView: NSObject {
         )
 
         _ = parentViewController.addBarButtonItem(
-            to: .left,
+            barPosition: .leading,
+            index: nil,
             image: viewModel.backButtonImage,
             color: navBarControlColor,
             target: self,
@@ -92,7 +93,7 @@ class ToolNavBarView: NSObject {
         )
         
         _ = parentViewController.addBarButtonItem(
-            to: .right,
+            barPosition: .trailing,
             index: RightNavbarPosition.toolSettings.rawValue,
             image: ImageCatalog.navToolSettings.uiImage,
             color: navBarControlColor,
@@ -199,7 +200,7 @@ class ToolNavBarView: NSObject {
         else if !hidden && remoteShareActiveNavItem == nil {
             
             remoteShareActiveNavItem = parentViewController?.addAnimatedBarButtonItem(
-                to: .right,
+                barPosition: .trailing,
                 index: RightNavbarPosition.remoteShareActive.rawValue,
                 animationName: "remote_share_active"
             )

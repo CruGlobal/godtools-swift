@@ -110,13 +110,6 @@ class RealmResourcesCache {
             .map { ResourceModel(model: $0) }
     }
     
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
-        
-        let predicate = NSPredicate(format: "metatoolId".appending(" = [c] %@"), resourceId)
-        
-        return realmDatabase.openRealm().objects(RealmResource.self).filter(predicate).map({ResourceModel(model: $0)})
-    }
-    
     func getSpotlightTools() -> [ResourceModel] {
         return realmDatabase.openRealm().objects(RealmResource.self)
             .where { $0.attrSpotlight == true && $0.isHidden == false }
@@ -172,5 +165,23 @@ extension RealmResourcesCache {
         let filterIsSpotlight = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
         
         return getAllLessons(additionalAttributeFilters: [filterIsSpotlight], sorted: sorted)
+    }
+}
+
+// MARK: - Variants
+
+extension RealmResourcesCache {
+    
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        let filterByMetaToolId = NSPredicate(format: "\(#keyPath(RealmResource.metatoolId).appending(" = [c] %@"))", resourceId)
+        let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [filterByMetaToolId, filterIsNotHidden])
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        return realm.objects(RealmResource.self).filter(filterPredicate).map{
+            ResourceModel(model: $0)
+        }
     }
 }

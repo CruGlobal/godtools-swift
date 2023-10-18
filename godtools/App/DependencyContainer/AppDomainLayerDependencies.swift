@@ -87,6 +87,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
+        return DeleteUserCountersUseCase(
+            repository: dataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
         return GetDeviceLanguageUseCase(
             getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
@@ -134,7 +140,8 @@ class AppDomainLayerDependencies {
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
         )
     }
     
@@ -249,12 +256,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolDetailsMediaUseCase() -> GetToolDetailsMediaUseCase {
-        return GetToolDetailsMediaUseCase(
-            attachmentsRepository: dataLayer.getAttachmentsRepository()
-        )
-    }
-    
     func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
         return GetToolFilterLanguagesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
@@ -282,18 +283,8 @@ class AppDomainLayerDependencies {
         return GetToolUseCase(
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            translationsRepository: dataLayer.getTranslationsRepository()
-        )
-    }
-    
-    func getToolVersionsUseCase() -> GetToolVersionsUseCase {
-        return GetToolVersionsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository(),
-            localizationServices: dataLayer.getLocalizationServices(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            getToolLanguagesUseCase: getToolLanguagesUseCase()
+            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     

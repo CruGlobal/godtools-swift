@@ -29,7 +29,7 @@ class ModalNavigationController: AppNavigationController {
         self.rootView = rootView
         self.statusBarStyle = statusBarStyle
         
-        super.init(nibName: nil, bundle: nil)
+        super.init(navigationBarAppearance: nil)
         
         modalPresentationStyle = .fullScreen
         
