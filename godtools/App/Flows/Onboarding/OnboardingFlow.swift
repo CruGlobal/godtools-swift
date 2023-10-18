@@ -80,10 +80,10 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             dismissVideoModal(animated: true, completion: nil)
             
         case .skipTappedFromOnboardingTutorial:
-            navigateToQuickStartIfAvailableElseTools()
+            navigateToQuickLinksIfAvailableElseCompleteOnboarding()
             
         case .endTutorialFromOnboardingTutorial:
-            navigateToQuickStartIfAvailableElseTools()
+            navigateToQuickLinksIfAvailableElseCompleteOnboarding()
 
         case .skipTappedFromOnboardingQuickStart:
             completeOnboardingFlow(onboardingFlowCompletedState: nil)
@@ -118,7 +118,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
     }
     
-    private func navigateToQuickStartIfAvailableElseTools() {
+    private func navigateToQuickLinksIfAvailableElseCompleteOnboarding() {
         
         if quickLinksIsAvailable {
             navigationController.setViewControllers([getOnboardingQuickStartView()], animated: true)
