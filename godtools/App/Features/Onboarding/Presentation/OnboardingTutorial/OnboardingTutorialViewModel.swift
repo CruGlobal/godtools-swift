@@ -16,7 +16,6 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase
-    private let localizationServices: LocalizationServices
     private let trackTutorialVideoAnalytics: TutorialVideoAnalytics
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -43,13 +42,12 @@ class OnboardingTutorialViewModel: ObservableObject {
     @Published var pages: [OnboardingTutorialPage] = Array()
     @Published var continueButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, localizationServices: LocalizationServices, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getOnboardingTutorialInterfaceStringsUseCase = getOnboardingTutorialInterfaceStringsUseCase
-        self.localizationServices = localizationServices
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
