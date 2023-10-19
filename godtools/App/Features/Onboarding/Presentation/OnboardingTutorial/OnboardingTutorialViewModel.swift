@@ -13,7 +13,9 @@ class OnboardingTutorialViewModel: ObservableObject {
     
     private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     
-    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
+    private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
+    
+    private let trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase
     private let trackTutorialVideoAnalytics: TutorialVideoAnalytics
@@ -42,18 +44,23 @@ class OnboardingTutorialViewModel: ObservableObject {
     @Published var pages: [OnboardingTutorialPage] = Array()
     @Published var continueButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
+        self.trackViewedOnboardingTutorialUseCase = trackViewedOnboardingTutorialUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getOnboardingTutorialInterfaceStringsUseCase = getOnboardingTutorialInterfaceStringsUseCase
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                         
-        onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
-        
+        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = trackViewedOnboardingTutorialUseCase
+            .viewedPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (void: Void) in
+                
+            }
+                
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
