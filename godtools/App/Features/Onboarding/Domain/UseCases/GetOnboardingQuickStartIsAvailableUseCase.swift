@@ -11,25 +11,28 @@ import Combine
 
 class GetOnboardingQuickStartIsAvailableUseCase {
     
-    private static let supportedLanguages: [LanguageCodeDomainModel] = [.english, .french, .latvian, .spanish, .vietnamese]
+    private let getSupportedLanguagesRepositoryInterface: GetOnboardingQuickStartSupportedLanguagesRepositoryInterface
+    
+    init(getSupportedLanguagesRepositoryInterface: GetOnboardingQuickStartSupportedLanguagesRepositoryInterface) {
         
-    init() {
-        
+        self.getSupportedLanguagesRepositoryInterface = getSupportedLanguagesRepositoryInterface
     }
     
     func getAvailablePublisher(appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<Bool, Never> {
         
-        return appLanguageCodeChangedPublisher
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<Bool, Never> in
-                
-                let available: Bool = GetOnboardingQuickStartIsAvailableUseCase
-                    .supportedLanguages
-                    .map({$0.value})
-                    .contains(appLanguageCode)
-                
-                return Just(available)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            appLanguageCodeChangedPublisher,
+            getSupportedLanguagesRepositoryInterface.getLanguagesPublisher()
+        )
+        .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel, supportedLanguages: [LanguageCodeDomainModel]) -> AnyPublisher<Bool, Never> in
+            
+            let available: Bool = supportedLanguages
+                .map({$0.value})
+                .contains(appLanguageCode)
+            
+            return Just(available)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
 }

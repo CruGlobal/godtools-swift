@@ -28,7 +28,9 @@ class OnboardingDomainLayerDependencies {
     }
     
     func getOnboardingQuickStartIsAvailableUseCase() -> GetOnboardingQuickStartIsAvailableUseCase {
-        return GetOnboardingQuickStartIsAvailableUseCase()
+        return GetOnboardingQuickStartIsAvailableUseCase(
+            getSupportedLanguagesRepositoryInterface: dataLayer.getOnboardingQuickStartSupportedLanguagesRepositoryInterface()
+        )
     }
     
     func getOnboardingQuickStartLinksUseCase() -> GetOnboardingQuickStartLinksUseCase {
