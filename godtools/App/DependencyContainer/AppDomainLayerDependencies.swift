@@ -131,6 +131,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getLaunchCountUseCase() -> GetLaunchCountUseCase {
+        return GetLaunchCountUseCase(
+            launchCountRepository: dataLayer.getSharedLaunchCountRepository()
+        )
+    }
+    
     func getLearnToShareToolItemsUseCase() -> GetLearnToShareToolItemsUseCase {
         return GetLearnToShareToolItemsUseCase(
             localizationServices: dataLayer.getLocalizationServices()
@@ -155,13 +161,6 @@ class AppDomainLayerDependencies {
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
-    func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
-        return GetOnboardingTutorialAvailabilityUseCase(
-            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
-            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
     

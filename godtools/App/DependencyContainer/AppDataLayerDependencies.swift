@@ -252,12 +252,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
-        return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
             cache: OptInOnboardingBannerEnabledCache()
@@ -312,6 +306,10 @@ class AppDataLayerDependencies {
     
     func getSharedRealmDatabase() -> RealmDatabase {
         return sharedRealmDatabase
+    }
+    
+    func getSharedUserDefaultsCache() -> SharedUserDefaultsCache {
+        return sharedUserDefaultsCache
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {

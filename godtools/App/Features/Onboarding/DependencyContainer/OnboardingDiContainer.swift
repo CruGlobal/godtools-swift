@@ -13,9 +13,9 @@ class OnboardingDiContainer {
     let dataLayer: OnboardingDataLayerDependencies
     let domainLayer: OnboardingDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, appDomainLayer: AppDomainLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
         
         dataLayer = OnboardingDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = OnboardingDomainLayerDependencies(dataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageFeatureDomainLayer)
+        domainLayer = OnboardingDomainLayerDependencies(dataLayer: dataLayer, appDomainLayer: appDomainLayer, appLanguageFeatureDomainLayer: appLanguageFeatureDomainLayer)
     }
 }
