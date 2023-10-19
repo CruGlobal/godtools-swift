@@ -31,7 +31,9 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-        
+    
+    // MARK: - Data Layer Classes
+            
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -95,12 +97,6 @@ class AppDataLayerDependencies {
     func getDeepLinkingService() -> DeepLinkingService {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
-        )
-    }
-    
-    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
-        return GetDeviceLanguageRepository(
-            deviceSystemLanguage: getDeviceSystemLanguage()
         )
     }
     
@@ -174,12 +170,6 @@ class AppDataLayerDependencies {
     func getInitialDataDownloader() -> InitialDataDownloader {
         return InitialDataDownloader(
             resourcesRepository: getResourcesRepository()
-        )
-    }
-    
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
         )
     }
     
@@ -417,5 +407,25 @@ class AppDataLayerDependencies {
     
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
+    }
+    
+    // MARK: - Domain Interface
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
+        return GetInterfaceStringForLanguageRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
+    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
+        return GetLaunchCountRepository(
+            launchCountRepository: getSharedLaunchCountRepository()
+        )
     }
 }

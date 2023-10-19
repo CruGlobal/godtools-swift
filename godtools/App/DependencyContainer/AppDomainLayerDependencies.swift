@@ -133,7 +133,7 @@ class AppDomainLayerDependencies {
     
     func getLaunchCountUseCase() -> GetLaunchCountUseCase {
         return GetLaunchCountUseCase(
-            launchCountRepository: dataLayer.getSharedLaunchCountRepository()
+            getLaunchCountRepositoryInterface: dataLayer.getLaunchCountRepositoryInterface()
         )
     }
     

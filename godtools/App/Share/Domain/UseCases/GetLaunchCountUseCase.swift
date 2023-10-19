@@ -11,16 +11,16 @@ import Combine
 
 class GetLaunchCountUseCase {
     
-    private let launchCountRepository: LaunchCountRepository
+    private let getLaunchCountRepositoryInterface: GetLaunchCountRepositoryInterface
     
-    init(launchCountRepository: LaunchCountRepository) {
+    init(getLaunchCountRepositoryInterface: GetLaunchCountRepositoryInterface) {
         
-        self.launchCountRepository = launchCountRepository
+        self.getLaunchCountRepositoryInterface = getLaunchCountRepositoryInterface
     }
     
     func getCountPublisher() -> AnyPublisher<Int, Never> {
         
-        return launchCountRepository.getLaunchCountPublisher()
+        return getLaunchCountRepositoryInterface.getCountPublisher()
             .eraseToAnyPublisher()
     }
 }
