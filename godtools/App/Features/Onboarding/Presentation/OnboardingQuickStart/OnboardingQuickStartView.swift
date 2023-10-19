@@ -37,13 +37,13 @@ struct OnboardingQuickStartView: View {
                     
                     LazyVStack(alignment: .center, spacing: itemSpacing) {
                         
-                        ForEach(0 ..< viewModel.numberOfQuickStartItems, id: \.self) { index in
+                        ForEach(viewModel.quickStartLinks) { (link: OnboardingQuickStartLinkDomainModel) in
                             
                             OnboardingQuickStartItemView(
-                                viewModel: viewModel.getQuickStartItemViewModel(index: index),
+                                domainModel: link,
                                 geometry: geometry,
                                 itemTappedClosure: {
-                                    viewModel.quickStartItemTapped(index: index)
+                                    viewModel.quickStartLinkTapped(link: link)
                                 })
                             .padding(EdgeInsets(top: 0, leading: itemHorizontalPadding, bottom: 0, trailing: itemHorizontalPadding))
                         }
@@ -60,5 +60,6 @@ struct OnboardingQuickStartView: View {
                 FixedVerticalSpacer(height: 30)
             }
         }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

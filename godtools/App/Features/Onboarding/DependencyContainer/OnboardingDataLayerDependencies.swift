@@ -21,6 +21,20 @@ class OnboardingDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getOnboardingQuickStartInterfaceStringsRepositoryInterface() -> GetOnboardingQuickStartInterfaceStringsRepositoryInterface {
+        
+        return GetOnboardingQuickStartInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getOnboardingQuickStartLinksRepositoryInterface() -> GetOnboardingQuickStartLinksRepositoryInterface {
+        
+        return GetOnboardingQuickStartLinksRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
         
         return GetOnboardingTutorialInterfaceStringsRepository(
