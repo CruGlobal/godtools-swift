@@ -44,11 +44,13 @@ class GetOnboardingQuickStartLinksUseCaseTests: QuickSpec {
                                     return
                                 }
                                 
-                                if sinkCount == 0 {
+                                sinkCount += 1
+                                
+                                if sinkCount == 1 {
                                     
                                     englishLinksRef = links
                                 }
-                                else if sinkCount == 1 {
+                                else if sinkCount == 2 {
                                     
                                     spanishLinksRef = links
                                     
@@ -56,9 +58,7 @@ class GetOnboardingQuickStartLinksUseCaseTests: QuickSpec {
                                     
                                     done()
                                 }
-                                
-                                sinkCount += 1
-                                
+                                                                
                                 if sinkCount == 1 {
                                     appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                                 }
