@@ -39,6 +39,10 @@ class OnboardingDataLayerDependencies {
         )
     }
     
+    func getOnboardingQuickStartSupportedLanguagesRepositoryInterface() -> GetOnboardingQuickStartSupportedLanguagesRepositoryInterface {
+        return GetOnboardingQuickStartSupportedLanguagesRepository()
+    }
+    
     func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
         return GetOnboardingTutorialInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
