@@ -252,6 +252,8 @@
 		455310C92AE1C97F00C0D3CB /* GetOnboardingQuickStartSupportedLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455310C82AE1C97F00C0D3CB /* GetOnboardingQuickStartSupportedLanguagesRepository.swift */; };
 		455310CB2AE1CBB000C0D3CB /* GetOnboardingQuickStartIsAvailableUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455310CA2AE1CBB000C0D3CB /* GetOnboardingQuickStartIsAvailableUseCaseTests.swift */; };
 		455310CD2AE1CC8300C0D3CB /* TestsGetOnboardingQuickStartSupportedLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455310CC2AE1CC8300C0D3CB /* TestsGetOnboardingQuickStartSupportedLanguagesRepository.swift */; };
+		455310CF2AE1D0FC00C0D3CB /* GetOnboardingQuickStartLinksUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455310CE2AE1D0FC00C0D3CB /* GetOnboardingQuickStartLinksUseCaseTests.swift */; };
+		455310D12AE1D14100C0D3CB /* TestsGetOnboardingQuickStartLinksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455310D02AE1D14100C0D3CB /* TestsGetOnboardingQuickStartLinksRepository.swift */; };
 		4554205B28B17AEA00368CFE /* AttachmentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */; };
 		4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512428948D220072EC6E /* LanguageSettingsRepository.swift */; };
 		4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */; };
@@ -1539,6 +1541,8 @@
 		455310C82AE1C97F00C0D3CB /* GetOnboardingQuickStartSupportedLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickStartSupportedLanguagesRepository.swift; sourceTree = "<group>"; };
 		455310CA2AE1CBB000C0D3CB /* GetOnboardingQuickStartIsAvailableUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickStartIsAvailableUseCaseTests.swift; sourceTree = "<group>"; };
 		455310CC2AE1CC8300C0D3CB /* TestsGetOnboardingQuickStartSupportedLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsGetOnboardingQuickStartSupportedLanguagesRepository.swift; sourceTree = "<group>"; };
+		455310CE2AE1D0FC00C0D3CB /* GetOnboardingQuickStartLinksUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingQuickStartLinksUseCaseTests.swift; sourceTree = "<group>"; };
+		455310D02AE1D14100C0D3CB /* TestsGetOnboardingQuickStartLinksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsGetOnboardingQuickStartLinksRepository.swift; sourceTree = "<group>"; };
 		4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDataModel.swift; sourceTree = "<group>"; };
 		4554512428948D220072EC6E /* LanguageSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsRepository.swift; sourceTree = "<group>"; };
 		4554512928948D9A0072EC6E /* LanguageSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsCache.swift; sourceTree = "<group>"; };
@@ -5463,6 +5467,7 @@
 			children = (
 				45E61ECF2AE1BD0D00A98872 /* GetOnboardingQuickStartInterfaceStringsUseCaseTests.swift */,
 				455310CA2AE1CBB000C0D3CB /* GetOnboardingQuickStartIsAvailableUseCaseTests.swift */,
+				455310CE2AE1D0FC00C0D3CB /* GetOnboardingQuickStartLinksUseCaseTests.swift */,
 				45E61EC02AE1AE2800A98872 /* GetOnboardingTutorialInterfaceStringsUseCaseTests.swift */,
 				45E61EC52AE1B72600A98872 /* GetOnboardingTutorialIsAvailableUseCaseTests.swift */,
 			);
@@ -7994,6 +7999,7 @@
 			children = (
 				45E61ECD2AE1B90B00A98872 /* TestsGetLaunchCountRepository.swift */,
 				45E61ED12AE1BD6A00A98872 /* TestsGetOnboardingQuickStartInterfaceStringsRepository.swift */,
+				455310D02AE1D14100C0D3CB /* TestsGetOnboardingQuickStartLinksRepository.swift */,
 				455310CC2AE1CC8300C0D3CB /* TestsGetOnboardingQuickStartSupportedLanguagesRepository.swift */,
 				45E61EC32AE1AFD700A98872 /* TestsGetOnboardingTutorialInterfaceStringsRepository.swift */,
 				45E61EC72AE1B78600A98872 /* TestsGetOnboardingTutorialViewedRepository.swift */,
@@ -10898,6 +10904,7 @@
 				450AF5B72AD8216D00524A15 /* TestsGetAppLanguagesListRepository.swift in Sources */,
 				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
 				45D7782529A570FC00F23D99 /* AppsFlyerDeepLinkValueComponentsParser.swift in Sources */,
+				455310CF2AE1D0FC00C0D3CB /* GetOnboardingQuickStartLinksUseCaseTests.swift in Sources */,
 				45D7781A29A570DA00F23D99 /* DeepLinkingManifestType.swift in Sources */,
 				450EE29C29A668E700524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */,
 				450EE29B29A668E400524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
@@ -10918,6 +10925,7 @@
 				45368A152ABB2D850028A570 /* Collection+SafeLookupTests.swift in Sources */,
 				45368A1B2ABB2D850028A570 /* LocalizableStringsRepositoryTests.swift in Sources */,
 				45D7781C29A570DF00F23D99 /* DeepLinkingParserManifestType.swift in Sources */,
+				455310D12AE1D14100C0D3CB /* TestsGetOnboardingQuickStartLinksRepository.swift in Sources */,
 				45DB18922AD7924700E9578F /* TestsGetAppLanguagesRepository.swift in Sources */,
 				45368A172ABB2D850028A570 /* RealmDatabaseTests.swift in Sources */,
 				45E61ED02AE1BD0D00A98872 /* GetOnboardingQuickStartInterfaceStringsUseCaseTests.swift in Sources */,
