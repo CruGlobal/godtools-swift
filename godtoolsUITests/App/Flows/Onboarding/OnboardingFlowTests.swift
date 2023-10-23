@@ -34,11 +34,11 @@ class OnboardingFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    private func launchApp(appLanguageCode: LanguageCodeDomainModel? = nil) {
+    private func launchApp(appLanguageCode: String? = nil) {
         
         self.app = XCUIApplication()
         
-        let languageCode: String = appLanguageCode?.value ?? LanguageCodeDomainModel.english.value
+        let languageCode: String = appLanguageCode ?? LanguageCodeDomainModel.english.value
         
         let deepLinkUrl: String = onboardingDeepLinkUrl + "?" + "appLanguageCode=" + languageCode
         
@@ -125,7 +125,7 @@ class OnboardingFlowTests: XCTestCase {
     
     func testSkippingOnboardingTutorialNavigatesToQuickStartWhenQuickStartIsAvailable() {
               
-        launchApp(appLanguageCode: .english)
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
         
         let nextTutorialPageButton = getNextTutorialPageButton(app: app)
         
@@ -143,8 +143,30 @@ class OnboardingFlowTests: XCTestCase {
     }
     
     func testSkippingOnboardingTutorialNavigatesToDashboardWhenQuickStartIsNotAvailable() {
-              
-        launchApp(appLanguageCode: .portuguese) // NOTE: Language will have to be an available app language that is not supported by quick start. ~Levi
+                      
+        let appLanguages: [AppLanguageDataModel] = AppLanguagesCache().getAppLanguages()
+        let supportedLanguages: [String] = OnboardingQuickStartSupportedLanguagesCache().getSupportedLanguages().map({ $0.value })
+        
+        var unsupportedAppLanguage: AppLanguageCodeDomainModel?
+        
+        for appLanguage in appLanguages {
+         
+            let appLanguageCode: String = appLanguage.languageCode
+            let isSupportedByQuickStart: Bool = supportedLanguages.contains(appLanguageCode)
+            
+            if !isSupportedByQuickStart {
+                unsupportedAppLanguage = appLanguageCode
+                break
+            }
+        }
+        
+        guard let unsupportedAppLanguage = unsupportedAppLanguage else {
+            return
+        }
+        
+        // NOTE: Language will have to be an available app language that is not supported by quick start. ~Levi
+        
+        launchApp(appLanguageCode: unsupportedAppLanguage)
         
         let nextTutorialPageButton = getNextTutorialPageButton(app: app)
         
