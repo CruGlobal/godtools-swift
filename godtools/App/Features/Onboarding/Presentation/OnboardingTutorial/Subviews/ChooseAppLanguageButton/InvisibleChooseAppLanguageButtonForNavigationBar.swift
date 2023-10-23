@@ -28,6 +28,7 @@ class InvisibleChooseAppLanguageButtonForNavigationBar: UIView {
         addSubview(button)
         
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = AccessibilityStrings.Button.chooseAppLanguage.id
     }
     
     required init?(coder: NSCoder) {
