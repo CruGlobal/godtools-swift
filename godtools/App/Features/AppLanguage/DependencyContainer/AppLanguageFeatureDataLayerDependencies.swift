@@ -19,8 +19,12 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    private func getAppLanguagesCache() -> AppLanguagesCache {
+        return AppLanguagesCache()
+    }
+    
     private func getAppLanguagesRepository() -> AppLanguagesRepository {
-        return AppLanguagesRepository()
+        return AppLanguagesRepository(cache: getAppLanguagesCache())
     }
     
     func getUserAppLanguageCache() -> RealmUserAppLanguageCache {

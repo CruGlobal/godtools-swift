@@ -914,6 +914,11 @@
 		45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF5D2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift */; };
 		45D318F42AE6FDB100D74A87 /* OnboardingQuickStartSupportedLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D318F32AE6FDB100D74A87 /* OnboardingQuickStartSupportedLanguagesRepository.swift */; };
 		45D318F72AE6FDD000D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D318F62AE6FDD000D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift */; };
+		45D318FA2AE700A200D74A87 /* AppLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D318F92AE700A200D74A87 /* AppLanguagesCache.swift */; };
+		45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F4472AC3A86100D61BFD /* AppLanguageDataModel.swift */; };
+		45D318FC2AE7020D00D74A87 /* AppLanguageCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5592AC353EC00B2FE3A /* AppLanguageCodeDomainModel.swift */; };
+		45D318FD2AE7031D00D74A87 /* AppLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D318F92AE700A200D74A87 /* AppLanguagesCache.swift */; };
+		45D318FE2AE7032700D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D318F62AE6FDD000D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift */; };
 		45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */; };
 		45D40C682A5315B400E8E4AE /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C672A5315B400E8E4AE /* Starscream */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
@@ -2171,6 +2176,7 @@
 		45D1202729FABD5E00523FBA /* AuthUserDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUserDomainModel.swift; sourceTree = "<group>"; };
 		45D318F32AE6FDB100D74A87 /* OnboardingQuickStartSupportedLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartSupportedLanguagesRepository.swift; sourceTree = "<group>"; };
 		45D318F62AE6FDD000D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartSupportedLanguagesCache.swift; sourceTree = "<group>"; };
+		45D318F92AE700A200D74A87 /* AppLanguagesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguagesCache.swift; sourceTree = "<group>"; };
 		45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewPlayerState.swift; sourceTree = "<group>"; };
 		45D48C8229F81082004E92B1 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		45D48C8829F81692004E92B1 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -6575,6 +6581,7 @@
 		45B3F4452AC3A86100D61BFD /* AppLanguagesRepository */ = {
 			isa = PBXGroup;
 			children = (
+				45D318F82AE7009700D74A87 /* Cache */,
 				45B3F4462AC3A86100D61BFD /* AppLanguagesRepository.swift */,
 				45B3F4472AC3A86100D61BFD /* AppLanguageDataModel.swift */,
 			);
@@ -7226,6 +7233,14 @@
 			isa = PBXGroup;
 			children = (
 				45D318F62AE6FDD000D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		45D318F82AE7009700D74A87 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				45D318F92AE700A200D74A87 /* AppLanguagesCache.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -9820,12 +9835,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45D318FD2AE7031D00D74A87 /* AppLanguagesCache.swift in Sources */,
 				459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */,
 				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
 				45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */,
+				45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */,
+				45D318FE2AE7032700D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift in Sources */,
 				45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */,
+				45D318FC2AE7020D00D74A87 /* AppLanguageCodeDomainModel.swift in Sources */,
 				459B7E6A2ABA3A510088F44B /* AccessibilityStrings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10457,6 +10476,7 @@
 				45558321269F2C7B00C3FF14 /* ToolPagePositions.swift in Sources */,
 				458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */,
 				45677780287DB21F0044AEB2 /* ToolTrainingTipView.swift in Sources */,
+				45D318FA2AE700A200D74A87 /* AppLanguagesCache.swift in Sources */,
 				4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */,
 				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
