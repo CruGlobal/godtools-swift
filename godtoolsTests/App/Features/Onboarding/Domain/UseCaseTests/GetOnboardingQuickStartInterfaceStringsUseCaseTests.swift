@@ -44,11 +44,13 @@ class GetOnboardingQuickStartInterfaceStringsUseCaseTests: QuickSpec {
                                     return
                                 }
                                 
-                                if sinkCount == 0 {
+                                sinkCount += 1
+                                
+                                if sinkCount == 1 {
                                     
                                     englishInterfaceStringsRef = interfaceStrings
                                 }
-                                else if sinkCount == 1 {
+                                else if sinkCount == 2 {
                                     
                                     spanishInterfaceStringsRef = interfaceStrings
                                     
@@ -56,8 +58,6 @@ class GetOnboardingQuickStartInterfaceStringsUseCaseTests: QuickSpec {
                                     
                                     done()
                                 }
-                                
-                                sinkCount += 1
                                 
                                 if sinkCount == 1 {
                                     appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)

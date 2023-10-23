@@ -1,5 +1,5 @@
 //
-//  GetOnboardingTutorialInterfaceStringsUseCaseTests.swift
+//  GetOnboardingQuickStartLinksUseCaseTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 10/19/23.
@@ -12,33 +12,33 @@ import Combine
 import Quick
 import Nimble
 
-class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
+class GetOnboardingQuickStartLinksUseCaseTests: QuickSpec {
     
     override class func spec() {
         
-        describe("User is viewing the onboarding tutorial.") {
+        describe("User is viewing the onboarding quick start links.") {
          
             context("When the app language is switched from English to Spanish.") {
                 
-                let getOnboardingTutorialInterfaceStringsUseCase = GetOnboardingTutorialInterfaceStringsUseCase(
-                    getStringsRepositoryInterface: TestsGetOnboardingTutorialInterfaceStringsRepository()
+                let getOnboardingQuickStartLinksUseCase = GetOnboardingQuickStartLinksUseCase(
+                    getLinksRepositoryInterface: TestsGetOnboardingQuickStartLinksRepository()
                 )
                 
-                it("The interface strings should be translated into Spanish.") {
+                it("The quick start links interface strings should be translated into Spanish.") {
                     
                     let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
-                    var englishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
-                    var spanishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
+                    var englishLinksRef: [OnboardingQuickStartLinkDomainModel] = Array()
+                    var spanishLinksRef: [OnboardingQuickStartLinkDomainModel] = Array()
                     
                     var sinkCount: Int = 0
                     var sinkCompleted: Bool = false
                     
                     waitUntil { done in
                         
-                        _ = getOnboardingTutorialInterfaceStringsUseCase
-                            .getStringsPublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
-                            .sink { (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+                        _ = getOnboardingQuickStartLinksUseCase
+                            .getLinksPublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .sink { (links: [OnboardingQuickStartLinkDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -48,11 +48,11 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
                                 
                                 if sinkCount == 1 {
                                     
-                                    englishInterfaceStringsRef = interfaceStrings
+                                    englishLinksRef = links
                                 }
                                 else if sinkCount == 2 {
                                     
-                                    spanishInterfaceStringsRef = interfaceStrings
+                                    spanishLinksRef = links
                                     
                                     sinkCompleted = true
                                     
@@ -65,11 +65,9 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
                             }
                     }
 
-                    expect(englishInterfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Choose Language"))
-                    expect(englishInterfaceStringsRef?.beginTutorialButtonTitle).to(equal("Begin"))
+                    expect(englishLinksRef[0].title).to(equal("English Title"))
                     
-                    expect(spanishInterfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Elige lengua"))
-                    expect(spanishInterfaceStringsRef?.beginTutorialButtonTitle).to(equal("Comenzar"))
+                    expect(spanishLinksRef[0].title).to(equal("Título en inglés"))
                 }
             }
         }
