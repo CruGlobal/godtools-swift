@@ -156,7 +156,7 @@ extension OnboardingFlow {
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: nil,
+            accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,
             toggleVisibilityPublisher: viewModel.hidesSkipButtonPublisher
         )
         
