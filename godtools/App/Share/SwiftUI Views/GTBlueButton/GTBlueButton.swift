@@ -16,15 +16,17 @@ struct GTBlueButton: View {
     let height: CGFloat
     let cornerRadius: CGFloat
     let highlightsTitleOnTap: Bool
+    let accessibility: AccessibilityStrings.Button?
     let action: () -> Void
     
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, highlightsTitleOnTap: Bool = true, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, highlightsTitleOnTap: Bool = true, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         
         self.title = title
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
         self.highlightsTitleOnTap = highlightsTitleOnTap
+        self.accessibility = accessibility
         self.action = action
         
         if let font = font {
@@ -62,6 +64,7 @@ struct GTBlueButton: View {
                     }
                 }
             }
+            .accessibilityIdentifier(accessibility?.id ?? "")
             .frame(width: width, height: height, alignment: .center)
             .background(ColorPalette.gtBlue.color)
             .cornerRadius(cornerRadius)
