@@ -16,7 +16,7 @@ struct OnboardingTutorialPrimaryButton: View {
     
     var body: some View {
         
-        GTBlueButton(title: title, font: FontLibrary.sfProTextSemibold.font(size: 17), width: geometry.size.width - 60, height: 50, highlightsTitleOnTap: false) {
+        GTBlueButton(title: title, font: FontLibrary.sfProTextSemibold.font(size: 17), width: geometry.size.width - 60, height: 50, highlightsTitleOnTap: false, accessibility: .nextOnboardingTutorial) {
             
             action()
         }
