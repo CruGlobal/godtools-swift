@@ -25,6 +25,8 @@ struct OnboardingQuickStartView: View {
          
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .onboardingQuickStart)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 Text(viewModel.title)
