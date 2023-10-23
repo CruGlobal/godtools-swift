@@ -10,10 +10,13 @@ import Foundation
 import XCTest
 @testable import godtools
 import SwiftUI
+import Combine
 
 class OnboardingFlowTests: XCTestCase {
     
     private let onboardingDeepLinkUrl: String = "godtools://org.cru.godtools/onboarding"
+    
+    private var app: XCUIApplication = XCUIApplication()
     
     override func setUp() {
         super.setUp()
@@ -31,39 +34,82 @@ class OnboardingFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    func testOnboardingFlow() {
+    private func launchApp(appLanguageCode: LanguageCodeDomainModel? = nil) {
         
-        let app = XCUIApplication()
+        self.app = XCUIApplication()
         
-        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = onboardingDeepLinkUrl
+        let languageCode: String = appLanguageCode?.value ?? LanguageCodeDomainModel.english.value
+        
+        let deepLinkUrl: String = onboardingDeepLinkUrl + "?" + "appLanguageCode=" + languageCode
+        
+        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = deepLinkUrl
                 
         app.launch()
                 
         checkInitialScreenIsOnboardingTutorial(app: app)
-        
-        navigateToWatchOnboardingVideoTutorial(app: app)
-        
-        navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: app)
     }
     
     private func checkInitialScreenIsOnboardingTutorial(app: XCUIApplication) {
         
         let initialScreenIsTutorialScreen = app.queryScreen(screenAccessibility: .onboardingTutorial)
                 
-        XCTAssertTrue(initialScreenIsTutorialScreen?.exists ?? false)
+        XCTAssertTrue(initialScreenIsTutorialScreen.exists)
+    }
+    
+    private func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen) {
+        
+        let screen = app.queryScreen(screenAccessibility: screenAccessibility)
+        
+        XCTAssertTrue(screen.exists)
+    }
+    
+    private func getNextTutorialPageButton(app: XCUIApplication) -> XCUIElement {
+        return app.queryButton(buttonAccessibility: .nextOnboardingTutorial)
+    }
+    
+    private func getSkipTutorialButton(app: XCUIApplication) -> XCUIElement {
+        return app.queryButton(buttonAccessibility: .skipOnboardingTutorial)
+    }
+    
+    // MARK: - Tests
+    
+    func testNavigationToChooseAppLanguage() {
+              
+        launchApp()
+        
+        let chooseAppLanguageButton = app.queryButton(buttonAccessibility: AccessibilityStrings.Button.chooseAppLanguage)
+        
+        XCTAssertTrue(chooseAppLanguageButton.exists)
+        
+        chooseAppLanguageButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
+    }
+    
+    func testNavigationToWatchOnboardingVideoTutorialAndNavigationBackToOnboardingTutorial() {
+              
+        launchApp()
+        
+        navigateToWatchOnboardingVideoTutorial(app: app)
+        
+        navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: app)
     }
     
     private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
-        
+                
         let watchVideoButton = app.queryButton(buttonAccessibility: .watchOnboardingTutorialVideo)
         
         XCTAssertTrue(watchVideoButton.exists)
         
         watchVideoButton.tap()
         
-        let watchOnboardingVideoTutorialScreen = app.queryScreen(screenAccessibility: .watchOnboardingTutorialVideo)
-        
-        XCTAssertTrue(watchOnboardingVideoTutorialScreen?.exists ?? false)
+        // Adding waitForExistence I believe helped with the fact this view is presented with an animation. ~Levi
+        if app.staticTexts[AccessibilityStrings.Screen.watchOnboardingTutorialVideo.id].waitForExistence(timeout: 1) {
+            
+            let watchOnboardingVideoTutorialScreen = app.queryScreen(screenAccessibility: .watchOnboardingTutorialVideo)
+            
+            XCTAssertTrue(watchOnboardingVideoTutorialScreen.exists)
+        }
     }
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
@@ -75,5 +121,43 @@ class OnboardingFlowTests: XCTestCase {
         closeVideoButton.tap()
         
         checkInitialScreenIsOnboardingTutorial(app: app)
+    }
+    
+    func testSkippingOnboardingTutorialNavigatesToQuickStartWhenQuickStartIsAvailable() {
+              
+        launchApp(appLanguageCode: .english)
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingQuickStart)
+    }
+    
+    func testSkippingOnboardingTutorialNavigatesToDashboardWhenQuickStartIsNotAvailable() {
+              
+        launchApp(appLanguageCode: .portuguese) // NOTE: Language will have to be an available app language that is not supported by quick start. ~Levi
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }
 }
