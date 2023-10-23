@@ -142,12 +142,12 @@ class OnboardingFlowTests: XCTestCase {
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingQuickStart)
     }
     
-    func testSkippingOnboardingTutorialNavigatesToDashboardWhenQuickStartIsNotAvailable() {
+    func testSkippingOnboardingTutorialNavigatesToDashboardFavoritesWhenQuickStartIsNotAvailable() {
                       
         let appLanguages: [AppLanguageDataModel] = AppLanguagesCache().getAppLanguages()
         let supportedLanguages: [String] = OnboardingQuickStartSupportedLanguagesCache().getSupportedLanguages().map({ $0.value })
         
-        var unsupportedAppLanguage: AppLanguageCodeDomainModel?
+        var appLanguageNotAvailableForQuickStart: AppLanguageCodeDomainModel?
         
         for appLanguage in appLanguages {
          
@@ -155,18 +155,18 @@ class OnboardingFlowTests: XCTestCase {
             let isSupportedByQuickStart: Bool = supportedLanguages.contains(appLanguageCode)
             
             if !isSupportedByQuickStart {
-                unsupportedAppLanguage = appLanguageCode
+                appLanguageNotAvailableForQuickStart = appLanguageCode
                 break
             }
         }
         
-        guard let unsupportedAppLanguage = unsupportedAppLanguage else {
+        guard let appLanguageNotAvailableForQuickStart = appLanguageNotAvailableForQuickStart else {
             return
         }
         
         // NOTE: Language will have to be an available app language that is not supported by quick start. ~Levi
         
-        launchApp(appLanguageCode: unsupportedAppLanguage)
+        launchApp(appLanguageCode: appLanguageNotAvailableForQuickStart)
         
         let nextTutorialPageButton = getNextTutorialPageButton(app: app)
         
