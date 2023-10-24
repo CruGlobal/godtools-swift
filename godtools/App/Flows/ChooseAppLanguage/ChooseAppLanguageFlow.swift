@@ -37,6 +37,11 @@ class ChooseAppLanguageFlow: Flow {
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
             
+            let view = getConfirmAppLanguageView(selectedLanguage: appLanguage)
+            navigationController.present(view, animated: true)
+        
+        case .appLanguageChangeConfirmed(let appLanguage):
+            
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
             
             ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.languageCode)
@@ -78,6 +83,23 @@ extension ChooseAppLanguageFlow {
                 leadingItems: [],
                 trailingItems: []
             )
+        )
+        
+        return hostingView
+    }
+    
+    func getConfirmAppLanguageView(selectedLanguage: AppLanguageListItemDomainModel) -> UIViewController {
+        
+        let viewModel = ConfirmAppLanguageViewModel(
+            selectedLanguage: selectedLanguage,
+            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase()
+        )
+        
+        let view = ConfirmAppLanguageView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<ConfirmAppLanguageView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(backButton: nil, leadingItems: [], trailingItems: [])
         )
         
         return hostingView

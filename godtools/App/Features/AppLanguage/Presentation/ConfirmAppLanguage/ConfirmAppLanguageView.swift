@@ -9,6 +9,14 @@
 import SwiftUI
 
 struct ConfirmAppLanguageView: View {
+    
+    @ObservedObject private var viewModel: ConfirmAppLanguageViewModel
+    
+    init(viewModel: ConfirmAppLanguageViewModel) {
+        
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         
         let horizontalPadding: CGFloat = 20
@@ -33,11 +41,11 @@ struct ConfirmAppLanguageView: View {
                 FixedVerticalSpacer(height: 10)
                 
                 Group {
-                    Text("You have selected English as your app language. This will change the language of the whole GodTools app. Are you sure?")
+                    Text(viewModel.confirmLanguageText)
                         .font(FontLibrary.sfProTextRegular.font(size: 18))
                         .foregroundColor(ColorPalette.gtGrey.color)
                                         
-                    Text("Ha seleccinado Ingles como idioma de su aplicacion. Esto cambiara toda la aplicacion GodTools. Esta seguro?")
+                    Text(viewModel.translatedConfirmLanguageText)
                         .font(FontLibrary.sfProTextRegular.font(size: 14))
                         .foregroundColor(ColorPalette.gtGrey.color)
                 }
@@ -51,11 +59,11 @@ struct ConfirmAppLanguageView: View {
                     
                     let buttonWidth = (geometry.size.width - buttonSpacing - 2*horizontalPadding) / 2
                     
-                    GTBlueButton(title: "Change language", fontSize: 15, width: buttonWidth, height: 48) {
+                    GTBlueButton(title: viewModel.changeLanguageButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
                         
                     }
                     
-                    GTWhiteButton(title: "Nevermind", fontSize: 15, width: buttonWidth, height: 48) {
+                    GTWhiteButton(title: viewModel.nevermindButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
                         
                     }
                     
@@ -67,11 +75,5 @@ struct ConfirmAppLanguageView: View {
             }
             .padding(.horizontal, horizontalPadding)
         }
-    }
-}
-
-struct ConfirmAppLanguageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfirmAppLanguageView()
     }
 }

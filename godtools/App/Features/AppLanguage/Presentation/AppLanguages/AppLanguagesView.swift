@@ -11,7 +11,6 @@ import SwiftUI
 struct AppLanguagesView: View {
     
     @ObservedObject private var viewModel: AppLanguagesViewModel
-    @State var showingPopup = false
     
     init(viewModel: AppLanguagesViewModel) {
         
@@ -29,9 +28,7 @@ struct AppLanguagesView: View {
                     
                     AppLanguageItemView(appLanguage: appLanguage) {
                         
-                        showingPopup = true
-
-//                        viewModel.appLanguageTapped(appLanguage: appLanguage)
+                        viewModel.appLanguageTapped(appLanguage: appLanguage)
                     }
                 }
             }
@@ -39,9 +36,6 @@ struct AppLanguagesView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
-        .popover(isPresented: $showingPopup, content: {
-            ConfirmAppLanguageView()
-        })
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
