@@ -35,7 +35,6 @@ class AccessibilityStrings {
             return rawValue
         }
         
-        case testButton = "Test Button"
         case chooseAppLanguage = "Choose App Language"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
         case closeOnboardingTutorialVideo = "Close Onboarding Tutorial Video Button"
