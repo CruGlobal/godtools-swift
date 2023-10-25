@@ -7,49 +7,58 @@
 //
 
 import Foundation
+import Combine
 
 class LessonEvaluationViewModel {
     
     private let lesson: ResourceModel
     private let pageIndexReached: Int
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase
     private let lessonEvaluationRepository: LessonEvaluationRepository
     private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let localization: LocalizationServices
+    
+    private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private(set) var readyToShareFaithScale: Int = 6
     
-    let title: String
-    let wasThisHelpful: String
-    let yesButtonTitle: String
-    let noButtonTitle: String
-    let shareFaith: String
     let readyToShareFaithMinimumScaleValue: Int = 1
     let readyToShareFaithMaximumScaleValue: Int = 10
-    let sendButtonTitle: String
+    
+    let interfaceStrings: ObservableValue<LessonEvaluationInterfaceStringsDomainModel?> = ObservableValue(value: nil)
     let yesIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
     let noIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
     
     private weak var flowDelegate: FlowDelegate?
     
-    init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localization: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.lesson = lesson
         self.pageIndexReached = pageIndexReached
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getLessonEvaluationInterfaceStringsUseCase = getLessonEvaluationInterfaceStringsUseCase
         self.lessonEvaluationRepository = lessonEvaluationRepository
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.localization = localization
         
-        let primaryLocaleIdentifier: String? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageCodeDomainModel) in
+                
+                self?.currentAppLanguageSubject.send(appLanguage)
+            }
+            .store(in: &cancellables)
         
-        title = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.title")
-        wasThisHelpful = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.wasThisHelpful")
-        yesButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "yes")
-        noButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "no")
-        shareFaith = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
-        sendButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
+        getLessonEvaluationInterfaceStringsUseCase
+            .getStringsPublisher(appLanguageCodeChangedPublisher: currentAppLanguageSubject.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
+                
+                self?.interfaceStrings.accept(value: interfaceStrings)
+            }
+            .store(in: &cancellables)
     }
 }
 

@@ -152,6 +152,13 @@
 		4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533C4CF28AC2ED200F9628B /* LaunchCountCache.swift */; };
 		4534208D289C45ED003442E3 /* DeleteResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */; };
 		4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */; };
+		4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91B2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift */; };
+		4534F91E2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91D2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift */; };
+		4534F9202AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91F2AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift */; };
+		4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F9212AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift */; };
+		4534F9242AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F9232AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift */; };
+		4534F9262AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F9252AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift */; };
+		4534F9282AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F9272AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift */; };
 		453649EC295E0B3F00B5B354 /* LanguageSettingsFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453649EB295E0B3F00B5B354 /* LanguageSettingsFlowCompletedState.swift */; };
 		45368A152ABB2D850028A570 /* Collection+SafeLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A022ABB2D840028A570 /* Collection+SafeLookupTests.swift */; };
 		45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A042ABB2D840028A570 /* LocaleTests.swift */; };
@@ -1432,6 +1439,13 @@
 		4533C4CF28AC2ED200F9628B /* LaunchCountCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCountCache.swift; sourceTree = "<group>"; };
 		4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResourcesFilesResult.swift; sourceTree = "<group>"; };
 		4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreResourcesFilesResult.swift; sourceTree = "<group>"; };
+		4534F91B2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
+		4534F91D2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		4534F91F2AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		4534F9212AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationFeatureDiContainer.swift; sourceTree = "<group>"; };
+		4534F9232AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
+		4534F9252AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		4534F9272AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		453649EB295E0B3F00B5B354 /* LanguageSettingsFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsFlowCompletedState.swift; sourceTree = "<group>"; };
 		45368A022ABB2D840028A570 /* Collection+SafeLookupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeLookupTests.swift"; sourceTree = "<group>"; };
 		45368A042ABB2D840028A570 /* LocaleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleTests.swift; sourceTree = "<group>"; };
@@ -3391,6 +3405,65 @@
 				4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */,
 			);
 			path = LaunchCountRepository;
+			sourceTree = "<group>";
+		};
+		4534F9142AE99E6800A7A071 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				4534F91F2AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		4534F9152AE99E6800A7A071 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				4534F9182AE99E6800A7A071 /* Entities */,
+				4534F9162AE99E6800A7A071 /* Interface */,
+				4534F9172AE99E6800A7A071 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		4534F9162AE99E6800A7A071 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4534F91D2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		4534F9172AE99E6800A7A071 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				4534F91B2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		4534F9182AE99E6800A7A071 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4534F9272AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		4534F9192AE99E6800A7A071 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4534F91A2AE99E6800A7A071 /* DependencyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				4534F9212AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift */,
+				4534F9232AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift */,
+				4534F9252AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift */,
+			);
+			path = DependencyContainer;
 			sourceTree = "<group>";
 		};
 		453689F82ABB2D840028A570 /* App */ = {
@@ -6937,6 +7010,10 @@
 		45C1526E2A44888100F2A1E8 /* LessonEvaluation */ = {
 			isa = PBXGroup;
 			children = (
+				4534F9192AE99E6800A7A071 /* Data */,
+				4534F9142AE99E6800A7A071 /* Data-DomainInterface */,
+				4534F91A2AE99E6800A7A071 /* DependencyContainer */,
+				4534F9152AE99E6800A7A071 /* Domain */,
 				45C1526F2A44888100F2A1E8 /* Presentation */,
 			);
 			path = LessonEvaluation;
@@ -9956,6 +10033,7 @@
 				D496B9042A9D205000CBEA19 /* ToolFilterSelectionView.swift in Sources */,
 				45920D502A8D3D1800E336A8 /* ToolsView.swift in Sources */,
 				45BDA61D2954FE3E007E259B /* CategoryArticleUUID.swift in Sources */,
+				4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */,
 				4573133E28C1821100481640 /* ToolDetailsVersionsCardViewModel.swift in Sources */,
 				45EB9B7D29F16CF200CA74A8 /* BarButtonItemBarPosition.swift in Sources */,
 				4515D4092A2E73AB0001545D /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */,
@@ -10069,8 +10147,10 @@
 				45D63E85288F75B0009B4610 /* RealmAttachmentsCache.swift in Sources */,
 				454ADADD2ABDDA3900037C27 /* AppLanguagesViewModel.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
+				4534F91E2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift in Sources */,
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
 				45227BAB2A1D00FA0021C131 /* DeleteAccountUseCase.swift in Sources */,
+				4534F9282AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
 				455583FD269F2DA500C3FF14 /* MobileContentInputViewModel.swift in Sources */,
 				D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */,
@@ -10328,6 +10408,7 @@
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				450E3D092958916A000FF6D0 /* LessonEvaluationDataModel.swift in Sources */,
 				45558498269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift in Sources */,
+				4534F9262AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift in Sources */,
 				45B212B629229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift in Sources */,
 				45AE974E27C97A9500C2CB33 /* LessonPage+MobileContentRenderableModel.swift in Sources */,
 				45920D342A8D17FE00E336A8 /* ToolSpotlightView.swift in Sources */,
@@ -10428,6 +10509,7 @@
 				452E44D32AB8F53200A0B1B6 /* AuthenticateUserAuthType.swift in Sources */,
 				451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */,
 				45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */,
+				4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */,
 				45E347892A49C0120014CCD1 /* ProgressBarView.swift in Sources */,
 				45F71676290A13530019B715 /* EmailSignUpService.swift in Sources */,
 				459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */,
@@ -10659,6 +10741,7 @@
 				45C0FAE12A8A7CFB009A7E71 /* PullToRefreshScrollView.swift in Sources */,
 				45325F26285CF8B40078D932 /* VideoView.swift in Sources */,
 				457101F92AB9D5C800D1BFFC /* UserAuthentication+AuthenticateUserInterface.swift in Sources */,
+				4534F9242AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift in Sources */,
 				D4E243D329F1A62B00EA4BB7 /* SocialSignInView.swift in Sources */,
 				45A8BE092ACC9FD5007A1EBB /* LessonsFeatureDiContainer.swift in Sources */,
 				45C152A02A44896C00F2A1E8 /* ToolBackButtonImageType+Image.swift in Sources */,
@@ -10915,6 +10998,7 @@
 				450D63AA2AC8A84600B90319 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift in Sources */,
 				D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */,
 				45FB160827DBDDB60009DF8E /* LessonFlow.swift in Sources */,
+				4534F9202AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift in Sources */,
 				452E44CD2AB8F31000A0B1B6 /* AuthenticateUserInterface.swift in Sources */,
 				45D63E76288F698C009B4610 /* MobileContentLanguagesApi.swift in Sources */,
 				454B47E82AE024E000C7B5E7 /* OnboardingDataLayerDependencies.swift in Sources */,

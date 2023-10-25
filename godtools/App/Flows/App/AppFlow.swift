@@ -934,10 +934,10 @@ extension AppFlow {
             flowDelegate: self,
             lesson: lesson,
             pageIndexReached: pageIndexReached,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
             lessonEvaluationRepository: appDiContainer.dataLayer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            localization: appDiContainer.dataLayer.getLocalizationServices()
+            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics()
         )
         let view = LessonEvaluationView(viewModel: viewModel)
         
