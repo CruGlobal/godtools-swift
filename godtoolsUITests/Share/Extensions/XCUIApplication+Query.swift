@@ -11,9 +11,16 @@ import XCTest
 
 extension XCUIApplication {
     
-    func queryScreen(screenAccessibility: AccessibilityStrings.Screen) -> XCUIElement? {
+    func queryDescendants(id: String) -> XCUIElement? {
     
-        return descendants(matching: .any).matching(NSPredicate(format: "identifier == %@", screenAccessibility.id)).allElementsBoundByIndex.first
+        return descendants(matching: .any).matching(NSPredicate(format: "identifier == %@", id)).allElementsBoundByIndex.first
+    }
+    
+    func queryScreen(screenAccessibility: AccessibilityStrings.Screen) -> XCUIElement {
+    
+        // NOTE: See AccessibilityScreenElementView.swift ~Levi
+        
+        return staticTexts[screenAccessibility.id]
     }
     
     func queryButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {

@@ -19,6 +19,16 @@ class OnboardingDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    private func getOnboardingQuickStartSupportedLanguagesCache() -> OnboardingQuickStartSupportedLanguagesCache {
+        return OnboardingQuickStartSupportedLanguagesCache()
+    }
+    
+    private func getOnboardingQuickStartSupportedLanguagesRepository() -> OnboardingQuickStartSupportedLanguagesRepository {
+        return OnboardingQuickStartSupportedLanguagesRepository(
+            cache: getOnboardingQuickStartSupportedLanguagesCache()
+        )
+    }
+    
     private func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
         return OnboardingTutorialViewedRepository(
             cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
@@ -40,7 +50,9 @@ class OnboardingDataLayerDependencies {
     }
     
     func getOnboardingQuickStartSupportedLanguagesRepositoryInterface() -> GetOnboardingQuickStartSupportedLanguagesRepositoryInterface {
-        return GetOnboardingQuickStartSupportedLanguagesRepository()
+        return GetOnboardingQuickStartSupportedLanguagesRepository(
+            onboardingQuickStartSupportedLanguagesRepository: getOnboardingQuickStartSupportedLanguagesRepository()
+        )
     }
     
     func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {

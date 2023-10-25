@@ -24,6 +24,8 @@ struct FavoritesView: View {
         
         GeometryReader { geometry in
                   
+            AccessibilityScreenElementView(screenAccessibility: .dashboardFavorites)
+            
             if viewModel.isLoadingYourFavoritedTools {
                 CenteredCircularProgressView(
                     progressColor: ColorPalette.gtGrey.color

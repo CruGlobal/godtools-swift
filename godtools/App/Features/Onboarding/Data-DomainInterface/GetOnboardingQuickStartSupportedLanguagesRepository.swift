@@ -11,15 +11,16 @@ import Combine
 
 class GetOnboardingQuickStartSupportedLanguagesRepository: GetOnboardingQuickStartSupportedLanguagesRepositoryInterface {
     
-    private let supportedLanguages: [LanguageCodeDomainModel] = [.english, .french, .latvian, .spanish, .vietnamese]
-    
-    init() {
+    private let onboardingQuickStartSupportedLanguagesRepository: OnboardingQuickStartSupportedLanguagesRepository
         
+    init(onboardingQuickStartSupportedLanguagesRepository: OnboardingQuickStartSupportedLanguagesRepository) {
+        
+        self.onboardingQuickStartSupportedLanguagesRepository = onboardingQuickStartSupportedLanguagesRepository
     }
     
     func getLanguagesPublisher() -> AnyPublisher<[LanguageCodeDomainModel], Never> {
         
-        return Just(supportedLanguages)
+        return onboardingQuickStartSupportedLanguagesRepository.getLanguagesPublisher()
             .eraseToAnyPublisher()
     }
 }

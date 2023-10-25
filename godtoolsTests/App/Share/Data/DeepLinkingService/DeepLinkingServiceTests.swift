@@ -362,6 +362,6 @@ class DeepLinkingServiceTests: XCTestCase {
         
         let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.godtoolsCustomUrlSchemeOnboarding.incomingDeepLinkUrl)
         
-        XCTAssertTrue(parsedDeepLink == .onboarding)
+        XCTAssertTrue(parsedDeepLink == .onboarding(appLanguageCode: "en"))
     }
 }

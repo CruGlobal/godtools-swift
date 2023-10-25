@@ -26,6 +26,8 @@ struct OnboardingTutorialView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .onboardingTutorial)
+
             VStack(alignment: .center, spacing: 0) {
                    
                 PagedView(numberOfPages: viewModel.pages.count, currentPage: $viewModel.currentPage) { (page: Int) in
@@ -84,7 +86,6 @@ struct OnboardingTutorialView: View {
             .padding([.top], chooseAppLanguageButtonPosition)
             .animation(.interpolatingSpring(stiffness: 80, damping: 10), value: chooseAppLanguageButtonPosition)
         }
-        .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

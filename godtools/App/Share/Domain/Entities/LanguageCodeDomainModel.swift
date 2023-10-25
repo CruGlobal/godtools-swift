@@ -10,6 +10,7 @@ import Foundation
 
 enum LanguageCodeDomainModel: String {
     
+    case afrikaans = "af"
     case arabic = "ar"
     case chinese = "zh"
     case czech = "cs"
@@ -17,6 +18,7 @@ enum LanguageCodeDomainModel: String {
     case french = "fr"
     case hebrew = "he"
     case latvian = "lv"
+    case portuguese = "pt"
     case russian = "ru"
     case spanish = "es"
     case vietnamese = "vi"

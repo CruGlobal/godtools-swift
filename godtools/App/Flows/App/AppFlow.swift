@@ -104,7 +104,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         switch step {
         
         case .appLaunchedFromTerminatedState:
-              
+                          
             if let deepLink = appLaunchedFromDeepLink {
                 
                 appLaunchedFromDeepLink = nil
@@ -656,7 +656,12 @@ extension AppFlow {
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
             
-        case .onboarding:
+        case .onboarding(let appLanguageCode):
+            
+            let userAppLanguageCache: RealmUserAppLanguageCache = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageCache()
+            
+            userAppLanguageCache.storeLanguage(languageCode: appLanguageCode)
+            
             navigateToOnboarding(animated: true)
         }
     }
