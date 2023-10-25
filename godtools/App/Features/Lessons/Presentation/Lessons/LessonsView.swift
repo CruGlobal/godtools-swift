@@ -26,6 +26,8 @@ struct LessonsView: View {
         
         GeometryReader { geometry in
                     
+            AccessibilityScreenElementView(screenAccessibility: .dashboardLessons)
+            
             if viewModel.isLoadingLessons {
                 CenteredCircularProgressView(
                     progressColor: ColorPalette.gtGrey.color

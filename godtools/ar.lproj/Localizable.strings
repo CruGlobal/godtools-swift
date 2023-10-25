@@ -1,3 +1,50 @@
+"languageSettings.appInterface.title" = "لغة واجهة التطبيق";
+"languageSettings.appInterface.message" = "عيّن اللغة التي تريد أن يظهر بها التطبيق بالكامل.";
+"languageSettings.appInterface.languagesAvailable" = "اللغات المتاحة";
+"languageSettings.toolLanguagesAvailableOffline.title" = "لغات الأداة متاحة في وضع عدم الاتصال";
+"languageSettings.toolLanguagesAvailableOffline.message" = "قم بتنزيل جميع الأدوات بلغة ما لإتاحتها حتى إذا كنت خارج شبكة WiFi أو الخدمة الخلوية. اضبط لغة الأداة عبر زر الخيارات داخل الأداة.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "ضبط اللغات التي تم تنزيلها";
+"allTools.filter.title" = "فلتر";
+"allTools.filter.anyCategory" = "أي فئة:";
+"allTools.filter.anyLanguage" = "أي لغة:";
+"languageSettings.appLanguage.title" = "لغة التطبيق";
+"createAccount.title" = "إنشاء حساب";
+"createAccount.subtitle" = "قم بإنشاء حساب للحصول على قصص حقيقية وتشجيع ونصائح عملية في متناول يدك.";
+"signIn.title" = "تسجيل دخول";
+"menu_getStarted" = "ابدأ";
+"menu_support" = "دعم";
+"menu_about" = "حول";
+"menu.sendFeedback" = "ارسل رأيك";
+"menu.reportABug" = "الإبلاغ عن خطأ";
+"menu.askAQuestion" = "طرح سؤال";
+"menu.leaveAReview" = "ترك تعليق";
+"account.badges.sectionTitle" = "شاراتك";
+"account.activity.sectionTitle" = "نشاط حركتك";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "تفتح الأداة";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "الدروس المتممة";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "مشاركة الشاشة";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "الروابط المشتركة";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "اللغات المستخدمة";
+
+"account.activity.sessions" = "الجلسات";
+"account.globalActivity.title" = "النشاط العالمي";
+"toolDetails.conversationStarters.title" = "بدايات المحادثة";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "الخطوط العريضة";
+
+"toolDetails.bibleReferences.title" = "الشواهد الكتابية";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "عن";
 
@@ -34,13 +81,55 @@
 "allTools.spotlight.title" = "تسليط الضوء على الأداة";
 "allTools.spotlight.description" = "إليك بعض الأدوات التي نعتقد أنها قد تنال إعجابك";
 "allTools.categories.title" = "الفئات";
+"training_tip_ask" = "بسأل";
+"training_tip_consider" = "فكر فيه";
+"training_tip_prepare" = "حضر";
+"training_tip_quote" = "إقتباس";
+"training_tip_tip" = "فكرة عملية";
+"start_training" = "ابدأ التدريب";
 "tool_menu_item.lessons" = "الدروس";
 "parallelLanguage.yesButton.title" = "نعم";
 "parallelLanguage.noButton.title" = "لا شكراً";
 "parallelLanguage.getStartedButton.title" = "ابدأ";
 "parallelLanguage.selectLanguageButton.title" = "تحديد اللغة";
 "parellelLanguage.prompt" = "هل ترغب في تعيين لغة ثانوية؟";
-"tool_offline_favorite_message" = "اجعل الأداة متوفرة في وضع عدم الاتصال بالضغط على أيقونة القلب مما يضيفها إلى المفضلة.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "الأدوات";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "تم تصميم كل أداة لمرحلة مختلفة من المحادثة - قبل أو أثناء أو بعد.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "نصائح حول الأدوات";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "ترشدك نصائح GodTools وأنت تساعد شخصًا ما على فهم الإنجيل والتعرف على يسوع.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "مشاركة الشاشة";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "يمكنك الآن مشاركة شاشتك عن بُعد حتى يتمكن الشخص الآخر من المتابعة أثناء استخدامك لأداة لمناقشة الإنجيل.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "الدروس";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "تتعلم في كل درس من دروس GodTools شيئًا ما لمساعدتك على إجراء محادثات حقيقية عن الله.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "ابحث عن هذا البرنامج التعليمي في القائمة متى احتجت إليه.";
+
+"onboardingTutorial.beginButton.title" = "ابدأ";
+"onboardingQuickStart.2.title" = "أريد أن أشارك الكتاب المقدس مع أحد الأشخاص";
+"onboardingQuickStart.2.button.title" = "اختر أحد أدواتنا";
+"onboardingTutorial.nextButton.title" = "التالي";
+"onboardingQuickStart.title" = "روابط بداية سريعة";
+"onboardingQuickStart.0.button.title" = "اقرأ مقالاتنا";
+"onboardingQuickStart.1.title" = "أريد أن أتعلم كيفية إجراء حوارًا باستخدام الكتاب المقدس";
+"onboardingQuickStart.1.button.title" = "جرّب دروسنا";
+"tool_offline_favorite_message" = "اجعل الأداة متوفرة في وضع عدم الاتصال عبر النقر على أيقونة القلب الذي يضيفها إلى المفضلة.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "باديء المحادثة";
@@ -56,10 +145,26 @@
 "share_tool_screen_tutorial.mirrored_experience.title" = "استخدام جهازين بالتزامن";
 "share_tool_screen_tutorial.mirrored_experience.message" = "أثناء تمرير الأداة على هاتفك، ستستجيب شاشة صديقك بنفس الطريقة. هذا يتيح لك بالتنقل عبر الأداة معاً على جهازين في نفس الوقت.";
 "share_tool_screen_tutorial.get_started.title" = "ابدأ";
-"share_tool_screen_tutorial.get_started.message" = "أرسل الرابط إلى شخص أو أكثر لبدء جلسة مشاركة الشاشة الآن. تتطلب هذه التجربة حالياً من جميع المشاركين تنزيل تطبيق GodTools على أجهزتهم.";
+"share_tool_screen_tutorial.get_started.message" = "أرسل الرابط إلى شخص أو أكثر لبدء جلسة مشاركة الشاشة الآن.";
 "share_tool_remote_link_message" = "مرحباً، تابعني في GodTools عبر مشاركة الشاشة. إليك الرابط: %@ إذا لم تتلق هذه الرسالة حتى وقت لاحق، فقد لا يعمل الرابط. يمكننا المحاولة مرة أخرى في وقت آخر.";
 "exit_tract_remote_share_session.message" = "الخروج من جلسة المشاركة عن بُعد الآن؟";
 "load_tool_remote_session.message" = "بدء مشاركة الشاشة جارٍ...";
+"learn_to_share_tool.learn_to_share.title" = "تعلم مشاركة هذه الأداة مع أي شخص";
+"learn_to_share_tool.learn_to_share.message" = "تدرب على استخدام العديد من النصائح التي تحتاجها لتشعر بالثقة عند مشاركة هذه الأداة مع الآخرين.";
+"learn_to_share_tool.tips_light_the_way.title" = "نصائح لترشد الطريق";
+"learn_to_share_tool.light_up_the_tips.title" = "أضئ النصائح.";
+"lesson_evaluation.title" = "مراجعة";
+"lesson_evaluation.wasThisHelpful" = "هل كان هذا الدرس مفيدًا لك؟";
+"lesson_evaluation.shareFaith" = "ما مدى استعدادك لبدء محادثة روحية؟";
+"lesson_evaluation.sendButtonTitle" = "ارسل رأيك";
+"onboardingTutorial.0.title" = "مستعد لكل محادثة";
+"onboardingTutorial.0.videoLink.title" = "شاهد الفيديو";
+"onboardingTutorial.1.title" = "تحدث عن الله مع أي شخص";
+"onboardingTutorial.1.message" = "تساعدك أداة GodTools على إجراء محادثات قيّمة عن الله.";
+"onboardingTutorial.2.title" = "كُن على استعداد للحظات المهمة";
+"onboardingTutorial.2.message" = "تعلّم كيفية إجراء محادثات عن الإيمان كجزء طبيعي من حياتك.";
+"onboardingTutorial.3.title" = "ساعد شخصًا على اكتشاف يسوع";
+"onboardingTutorial.3.message" = "GodTools هو دليلك على التواصل عبر الكتاب المقدس بطرق واضحة وذات صلة.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "التدريب";
@@ -91,6 +196,9 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "المقالات";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "إصدار";
 "language_onboard" = "أكثر من 90 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -113,9 +221,11 @@
 "okay" = "حسناً";
 // Menu
 "menu_general" = "عام";
+"menu_account" = "إصدار";
 "menu_share" = "شارك";
 "menu_legal" = "قانوني";
 "language_settings" = "إعدادات اللغة";
+"menu.tutorial" = "شرح";
 // Login
 "login" = "تسجيل الدخول";
 "logout" = "تسجيل الخروج";
@@ -124,14 +234,14 @@
 
 // Tool Detail
 "about" = "حول";
-"help" = "مساعدة";
+"help" = "الأسئلة المتكررة";
 "contact_us" = "اتصل بنا";
 "preview_mode_translators_only" = "وضع المعاينة (المترجمون فقط)";
 "share_god_tools" = "شارك تطبيق GodTools";
 "share_a_story_with_us" = "شارك قصة معنا";
 "terms_of_use" = "شروط الاستخدام";
 "privacy_policy" = "سياسة الخصوصية";
-"copyright_info" = "معلومات حق النشر والتأليف";
+"copyright_info" = "حق النشر والتأليف";
 "share_god_tools_share_sheet_text" = "حمل تطبيق GodTools:
 https://godtoolsapp.com
 
@@ -201,6 +311,8 @@ https://godtoolsapp.com
 "general_about_9" = "بمجرد المبادرة في مشاركة إيمانك، تذكر بأن الرب هو الذي يغير القلب. امنح حبك لكل واحد جيداً بالإستماع من أجل الفهم.";
 "general_about_10" = "\"اجعل محادثتك دائماً ملأى بالنعم، متبلة بالملح، بحيث يمكنك معرفة كيفية إجابة كل واحد.\" كولوسي 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "أرني شرح تعليمي";
 // Downloads
 "Download in progress" = "التنزيل قيد التقدم";
 
@@ -208,6 +320,10 @@ https://godtoolsapp.com
 "card_status1" = "السابق";
 "card_status2" = "التالي";
 
+"account.activity.title" = "الحركة";
+
 // Language Name Strings
 "language_name_fa" = "فارسية";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "النشاط العالمي";

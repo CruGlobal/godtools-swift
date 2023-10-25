@@ -27,7 +27,9 @@ class GetInterfaceLayoutDirectionUseCaseTests: QuickSpec {
                 )
                 
                 let getAppLanguageRepository = GetAppLanguageRepository(
-                    appLanguagesRepository: AppLanguagesRepository()
+                    appLanguagesRepository: AppLanguagesRepository(
+                        cache: AppLanguagesCache()
+                    )
                 )
                 
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .arabic)
@@ -73,7 +75,9 @@ class GetInterfaceLayoutDirectionUseCaseTests: QuickSpec {
                 )
                 
                 let getAppLanguageRepository = GetAppLanguageRepository(
-                    appLanguagesRepository: AppLanguagesRepository()
+                    appLanguagesRepository: AppLanguagesRepository(
+                        cache: AppLanguagesCache()
+                    )
                 )
                 
                 let getUserPreferredAppLanguageRepository = TestsGetUserPreferredAppLanguageRepository(userAppLanguageCode: .arabic)

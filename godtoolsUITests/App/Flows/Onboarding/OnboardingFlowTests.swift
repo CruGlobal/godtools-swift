@@ -10,10 +10,13 @@ import Foundation
 import XCTest
 @testable import godtools
 import SwiftUI
+import Combine
 
 class OnboardingFlowTests: XCTestCase {
     
     private let onboardingDeepLinkUrl: String = "godtools://org.cru.godtools/onboarding"
+    
+    private var app: XCUIApplication = XCUIApplication()
     
     override func setUp() {
         super.setUp()
@@ -31,39 +34,67 @@ class OnboardingFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    func testOnboardingFlow() {
+    private func launchApp(appLanguageCode: String? = nil) {
         
-        let app = XCUIApplication()
+        self.app = XCUIApplication()
         
-        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = onboardingDeepLinkUrl
+        let languageCode: String = appLanguageCode ?? LanguageCodeDomainModel.english.value
+        
+        let deepLinkUrl: String = onboardingDeepLinkUrl + "?" + "appLanguageCode=" + languageCode
+        
+        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = deepLinkUrl
                 
         app.launch()
                 
         checkInitialScreenIsOnboardingTutorial(app: app)
+    }
+    
+    private func checkInitialScreenIsOnboardingTutorial(app: XCUIApplication) {
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorial)
+    }
+    
+    private func getNextTutorialPageButton(app: XCUIApplication) -> XCUIElement {
+        return app.queryButton(buttonAccessibility: .nextOnboardingTutorial)
+    }
+    
+    private func getSkipTutorialButton(app: XCUIApplication) -> XCUIElement {
+        return app.queryButton(buttonAccessibility: .skipOnboardingTutorial)
+    }
+    
+    // MARK: - Tests
+    
+    func testNavigationToChooseAppLanguage() {
+              
+        launchApp()
+        
+        let chooseAppLanguageButton = app.queryButton(buttonAccessibility: AccessibilityStrings.Button.chooseAppLanguage)
+        
+        XCTAssertTrue(chooseAppLanguageButton.exists)
+        
+        chooseAppLanguageButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages)
+    }
+    
+    func testNavigationToWatchOnboardingVideoTutorialAndNavigationBackToOnboardingTutorial() {
+              
+        launchApp()
         
         navigateToWatchOnboardingVideoTutorial(app: app)
         
         navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: app)
     }
     
-    private func checkInitialScreenIsOnboardingTutorial(app: XCUIApplication) {
-        
-        let initialScreenIsTutorialScreen = app.queryScreen(screenAccessibility: .onboardingTutorial)
-                
-        XCTAssertTrue(initialScreenIsTutorialScreen?.exists ?? false)
-    }
-    
     private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
-        
+                
         let watchVideoButton = app.queryButton(buttonAccessibility: .watchOnboardingTutorialVideo)
         
         XCTAssertTrue(watchVideoButton.exists)
         
         watchVideoButton.tap()
         
-        let watchOnboardingVideoTutorialScreen = app.queryScreen(screenAccessibility: .watchOnboardingTutorialVideo)
-        
-        XCTAssertTrue(watchOnboardingVideoTutorialScreen?.exists ?? false)
+        // Adding waitForExistence I believe helped with the fact this view is presented with an animation. ~Levi
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .watchOnboardingTutorialVideo, waitForExistence: 1)
     }
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
@@ -75,5 +106,161 @@ class OnboardingFlowTests: XCTestCase {
         closeVideoButton.tap()
         
         checkInitialScreenIsOnboardingTutorial(app: app)
+    }
+    
+    func testSkippingOnboardingTutorialNavigatesToQuickStartWhenQuickStartIsAvailable() {
+              
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingQuickStart)
+    }
+    
+    func testSkippingOnboardingTutorialNavigatesToDashboardFavoritesWhenQuickStartIsNotAvailable() {
+                      
+        let appLanguages: [AppLanguageDataModel] = AppLanguagesCache().getAppLanguages()
+        let supportedLanguages: [String] = OnboardingQuickStartSupportedLanguagesCache().getSupportedLanguages().map({ $0.value })
+        
+        var appLanguageNotAvailableForQuickStart: AppLanguageCodeDomainModel?
+        
+        for appLanguage in appLanguages {
+         
+            let appLanguageCode: String = appLanguage.languageCode
+            let isSupportedByQuickStart: Bool = supportedLanguages.contains(appLanguageCode)
+            
+            if !isSupportedByQuickStart {
+                appLanguageNotAvailableForQuickStart = appLanguageCode
+                break
+            }
+        }
+        
+        guard let appLanguageNotAvailableForQuickStart = appLanguageNotAvailableForQuickStart else {
+            return
+        }
+        
+        // NOTE: Language will have to be an available app language that is not supported by quick start. ~Levi
+        
+        launchApp(appLanguageCode: appLanguageNotAvailableForQuickStart)
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+    }
+    
+    func testNavigationThroughTutorialPagesUsingNextTutorialPageButton() {
+        
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        
+        nextTutorialPageButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2)
+        
+        nextTutorialPageButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3)
+        
+        nextTutorialPageButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4)
+        
+        nextTutorialPageButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingQuickStart)
+    }
+    
+    func testQuickStartGetStartedButtonNavigatesToDashboardFavorites() {
+        
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        skipOnboardingTutorialToQuickStart()
+        
+        let quickStartGetStartedButton = app.queryButton(buttonAccessibility: .quickStartGetStarted)
+        
+        quickStartGetStartedButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+    }
+    
+    private func skipOnboardingTutorialToQuickStart() {
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingQuickStart)
+    }
+    
+    func testQuickStartReadAnArticleLinkNavigatesToArticles() {
+        
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        skipOnboardingTutorialToQuickStart()
+        
+        let readAnArticleLink = app.staticTexts[AccessibilityStrings.Button.quickStartArticlesLink.id]
+        
+        readAnArticleLink.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .articles, waitForExistence: 3)
+    }
+    
+    func testQuickStartTryALessonLinkNavigatesToLessons() {
+        
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        skipOnboardingTutorialToQuickStart()
+        
+        let tryALessonLink = app.staticTexts[AccessibilityStrings.Button.quickStartLessonsLink.id]
+        
+        tryALessonLink.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons)
+    }
+    
+    func testQuickStartChooseAToolLinkNavigatesToTools() {
+        
+        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        
+        skipOnboardingTutorialToQuickStart()
+        
+        let chooseAToolLink = app.staticTexts[AccessibilityStrings.Button.quickStartToolsLink.id]
+        
+        chooseAToolLink.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardTools)
     }
 }

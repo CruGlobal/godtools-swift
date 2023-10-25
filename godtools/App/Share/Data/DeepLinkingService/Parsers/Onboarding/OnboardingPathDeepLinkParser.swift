@@ -20,6 +20,8 @@ class OnboardingPathDeepLinkParser: DeepLinkUrlParserType {
             return nil
         }
         
-        return .onboarding
+        let appLanguageCode: AppLanguageCodeDomainModel = (queryParameters["appLanguageCode"] as? String) ?? LanguageCodeDomainModel.english.value
+        
+        return .onboarding(appLanguageCode: appLanguageCode)
     }
 }
