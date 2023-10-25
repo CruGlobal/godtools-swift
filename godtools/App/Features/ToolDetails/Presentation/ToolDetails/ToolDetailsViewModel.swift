@@ -36,7 +36,7 @@ class ToolDetailsViewModel: ObservableObject {
             showsLearnToShareToolButton = false
         }
     }
-    @Published private var toolLanguage: AppLanguageCodeDomainModel
+    @Published private var toolLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
     
     @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
@@ -66,7 +66,6 @@ class ToolDetailsViewModel: ObservableObject {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
-        self.toolLanguage = toolLanguage ?? LanguageCodeDomainModel.english.value
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
