@@ -48,8 +48,13 @@ class ChooseAppLanguageFlow: Flow {
                 .sink(receiveValue: { _ in
 
                 })
-                        
+            
+            navigationController.dismiss(animated: true)
+            
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userChoseAppLanguage(appLanguage: appLanguage)))
+            
+        case .backTappedFromConfirmAppLanguageChange:
+            navigationController.dismiss(animated: true)
             
         default:
             break
@@ -92,7 +97,8 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = ConfirmAppLanguageViewModel(
             selectedLanguage: selectedLanguage,
-            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase()
+            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase(),
+            flowDelegate: self
         )
         
         let view = ConfirmAppLanguageView(viewModel: viewModel)

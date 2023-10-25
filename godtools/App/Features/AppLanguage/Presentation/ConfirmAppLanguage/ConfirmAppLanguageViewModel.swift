@@ -11,14 +11,20 @@ import Combine
 
 class ConfirmAppLanguageViewModel: ObservableObject {
     
+    private let selectedLanguage: AppLanguageListItemDomainModel
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    private weak var flowDelegate: FlowDelegate?
+    
     @Published var confirmLanguageText: String = ""
     @Published var translatedConfirmLanguageText: String = ""
     @Published var changeLanguageButtonTitle: String = ""
     @Published var nevermindButtonTitle: String = ""
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    init(selectedLanguage: AppLanguageListItemDomainModel, getConfirmAppLanguageInterfaceStringsUseCase: GetConfirmAppLanguageInterfaceStringsUseCase) {
+
+    init(selectedLanguage: AppLanguageListItemDomainModel, getConfirmAppLanguageInterfaceStringsUseCase: GetConfirmAppLanguageInterfaceStringsUseCase, flowDelegate: FlowDelegate?) {
+        
+        self.selectedLanguage = selectedLanguage
+        self.flowDelegate = flowDelegate
         
         getConfirmAppLanguageInterfaceStringsUseCase.getStringsPublisher(for: selectedLanguage.languageCode)
             .receive(on: DispatchQueue.main)
@@ -33,6 +39,20 @@ class ConfirmAppLanguageViewModel: ObservableObject {
                 self?.nevermindButtonTitle = stringsDomainModel.nevermindButtonText
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - Inputs
+
+extension ConfirmAppLanguageViewModel {
+    
+    func confirmLanguageButtonTapped() {
         
+        flowDelegate?.navigate(step: .appLanguageChangeConfirmed(appLanguage: selectedLanguage))
+    }
+    
+    func nevermindButtonTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
     }
 }
