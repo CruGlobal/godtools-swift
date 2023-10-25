@@ -44,6 +44,7 @@ struct OnboardingQuickStartView: View {
                             OnboardingQuickStartItemView(
                                 domainModel: link,
                                 geometry: geometry,
+                                accessibility: getLinkAccessibility(linkType: link.linkType),
                                 itemTappedClosure: {
                                     viewModel.quickStartLinkTapped(link: link)
                                 })
@@ -55,7 +56,7 @@ struct OnboardingQuickStartView: View {
                 
                 Spacer()
                 
-                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.endTutorialButtonTitle) {
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.endTutorialButtonTitle, accessibility: .quickStartGetStarted) {
                     viewModel.endTutorialTapped()
                 }
                 
@@ -63,5 +64,20 @@ struct OnboardingQuickStartView: View {
             }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func getLinkAccessibility(linkType: OnboardingQuickStartLinkTypeDomainModel) -> AccessibilityStrings.Button {
+        
+        switch linkType {
+        
+        case .chooseOneOfOurTools:
+            return AccessibilityStrings.Button.quickStartToolsLink
+        
+        case .readOurArticles:
+            return AccessibilityStrings.Button.quickStartArticlesLink
+        
+        case .tryOurLessons:
+            return AccessibilityStrings.Button.quickStartLessonsLink
+        }
     }
 }

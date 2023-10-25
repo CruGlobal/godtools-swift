@@ -14,12 +14,14 @@ struct OnboardingQuickStartItemView: View {
     private let backgroundColor: Color = Color.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
     
     let geometry: GeometryProxy
+    let accessibility: AccessibilityStrings.Button
     let itemTappedClosure: (() -> Void)
     
-    init(domainModel: OnboardingQuickStartLinkDomainModel, geometry: GeometryProxy, itemTappedClosure: @escaping (() -> Void)) {
+    init(domainModel: OnboardingQuickStartLinkDomainModel, geometry: GeometryProxy, accessibility: AccessibilityStrings.Button, itemTappedClosure: @escaping (() -> Void)) {
         
         self.domainModel = domainModel
         self.geometry = geometry
+        self.accessibility = accessibility
         self.itemTappedClosure = itemTappedClosure
     }
     
@@ -33,6 +35,7 @@ struct OnboardingQuickStartItemView: View {
                     .multilineTextAlignment(.leading)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextLight.font(size: 19))
+                    .accessibilityIdentifier(accessibility.id) // NOTE: Not using a Button so will assign the accessibility id to static text. ~Levi
                                 
                 HStack(alignment: .center, spacing: 8) {
                     

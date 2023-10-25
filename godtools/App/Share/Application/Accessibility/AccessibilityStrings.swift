@@ -27,6 +27,7 @@ class AccessibilityStrings {
         case dashboardLessons = "Dashboard Lessons"
         case dashboardFavorites = "Dashboard Favorites"
         case dashboardTools = "Dashboard Tools"
+        case articles = "Articles"
     }
     
     enum Button: String {
@@ -40,5 +41,9 @@ class AccessibilityStrings {
         case closeOnboardingTutorialVideo = "Close Onboarding Tutorial Video Button"
         case nextOnboardingTutorial = "Next Onboarding Tutorial Button"
         case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
+        case quickStartArticlesLink = "Quick Start Read An Article Link"
+        case quickStartLessonsLink = "Quick Start Try A Lesson Link"
+        case quickStartToolsLink = "Quick Start Choose A Tool Link"
+        case quickStartGetStarted = "Get Started Button"
     }
 }
