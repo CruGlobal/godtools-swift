@@ -1,3 +1,6 @@
+"allTools.filter.anyCategory" = "Bất kỳ loại nào";
+"allTools.filter.anyLanguage" = "Bất kỳ ngôn ngữ nào";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Giới thiệu";
 
