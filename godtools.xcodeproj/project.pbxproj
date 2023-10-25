@@ -1000,6 +1000,8 @@
 		45DD84CE2A8BD65F0066A020 /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DD84CC2A8BD65F0066A020 /* FavoritingToolBannerView.swift */; };
 		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
+		45DEF4DC2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF4DB2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift */; };
+		45DEF4DE2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF4DD2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift */; };
 		45DF34522A28D41600BB717E /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34512A28D41500BB717E /* AppBuild.swift */; };
 		45DF34542A28D41E00BB717E /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF34532A28D41E00BB717E /* AppEnvironment.swift */; };
 		45E066BF2AE16736004393CD /* GetOnboardingTutorialViewedRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E066BE2AE16736004393CD /* GetOnboardingTutorialViewedRepositoryInterface.swift */; };
@@ -2241,6 +2243,8 @@
 		45DEF4B824DEF4E100996695 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BB24DEF6E700996695 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45DEF4BC24DEF6FA00996695 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		45DEF4DB2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AccessibilityScreenId.swift"; sourceTree = "<group>"; };
+		45DEF4DD2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AssertScreenDoesNotExist.swift"; sourceTree = "<group>"; };
 		45DF34512A28D41500BB717E /* AppBuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45DF34532A28D41E00BB717E /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		45E066BE2AE16736004393CD /* GetOnboardingTutorialViewedRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialViewedRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -3122,6 +3126,7 @@
 			children = (
 				45131A0C2AB498AD0085AF0D /* AccessibilityStrings.swift */,
 				45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */,
+				45DEF4DB2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift */,
 			);
 			path = Accessibility;
 			sourceTree = "<group>";
@@ -5627,6 +5632,7 @@
 		45A415F12A99429B0030E2C7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				45DEF4DD2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift */,
 				45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */,
 			);
 			path = Extensions;
@@ -9815,6 +9821,7 @@
 				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
+				45DEF4DE2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift in Sources */,
 				45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */,
 				45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */,
 				45D318FE2AE7032700D74A87 /* OnboardingQuickStartSupportedLanguagesCache.swift in Sources */,
@@ -10342,6 +10349,7 @@
 				D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */,
 				45AD20EC259391B000A096A0 /* JsonServicesType.swift in Sources */,
 				458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */,
+				45DEF4DC2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift in Sources */,
 				45B3F4492AC3A86100D61BFD /* RealmUserAppLanguageCache.swift in Sources */,
 				45D63EA4288F77D4009B4610 /* ResourceType.swift in Sources */,
 				45F71679290A13530019B715 /* EmailSignUpApi.swift in Sources */,

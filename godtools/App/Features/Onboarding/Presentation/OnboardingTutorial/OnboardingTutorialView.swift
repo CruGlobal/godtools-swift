@@ -39,6 +39,7 @@ struct OnboardingTutorialView: View {
                         OnboardingTutorialReadyForEveryConversationView(
                             viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
                             geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage1,
                             watchVideoTappedClosure: {
                                 viewModel.watchReadyForEveryConversationVideoTapped()
                             }
@@ -48,26 +49,29 @@ struct OnboardingTutorialView: View {
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage2
                         )
                         
                     case .prepareForTheMomentsThatMatter:
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage3
                         )
                         
                     case .helpSomeoneDiscoverJesus:
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage4
                         )
                     }
                 }
                 
-                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: .nextOnboardingTutorial) {
                     viewModel.continueTapped()
                 }
                 
