@@ -37,6 +37,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getConfirmAppLanguageInterfaceStringsUseCase() -> GetConfirmAppLanguageInterfaceStringsUseCase {
         return GetConfirmAppLanguageInterfaceStringsUseCase(
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase(),
             getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface(),
             localeLanguageName: coreDataLayer.getLocaleLanguageName()

@@ -11,12 +11,14 @@ import Combine
 
 class GetConfirmAppLanguageInterfaceStringsUseCase {
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface
     private let localeLanguageName: LocaleLanguageName
     
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface, localeLanguageName: LocaleLanguageName) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getInterfaceStringRepositoryInterface: GetInterfaceStringForLanguageRepositoryInterface, localeLanguageName: LocaleLanguageName) {
         
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.getInterfaceStringRepositoryInterface = getInterfaceStringRepositoryInterface
         self.localeLanguageName = localeLanguageName
@@ -60,16 +62,19 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
     
     private func getMessageInCurrentLanguagePublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
         
-        return getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "languageSettings.confirmAppLanguage.message")
-            .flatMap { formatString in
-                
-                let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: selectedLanguage, translatedInLanguageCode: selectedLanguage) ?? ""
-                
-                let str = String.localizedStringWithFormat(formatString, languageName)
-                                
-                return Just(str)
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "languageSettings.confirmAppLanguage.message"),
+            getCurrentAppLanguageUseCase.getLanguagePublisher()
+        )
+        .flatMap { formatString, currentAppLanguage in
+            
+            let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: selectedLanguage, translatedInLanguageCode: currentAppLanguage) ?? ""
+            
+            let str = String.localizedStringWithFormat(formatString, languageName)
+                            
+            return Just(str)
+        }
+        .eraseToAnyPublisher()
     }
     
     private func getChangeLanguageButtonTextPublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
