@@ -167,10 +167,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
             
         case .spotlightToolTappedFromTools(let spotlightTool):
-            navigationController.pushViewController(getToolDetails(tool: spotlightTool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: spotlightTool, toolLanguage: nil), animated: true)
                         
-        case .toolTappedFromTools(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+        case .toolTappedFromTools(let tool, let toolFilterLanguage):
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: toolFilterLanguage?.language?.localeIdentifier), animated: true)
                                     
         case .openToolTappedFromToolDetails(let tool):
             navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: false)
@@ -185,7 +185,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
         case .toolDetailsTappedFromFavorites(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromFavorites(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -203,7 +203,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
             
         case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromAllYourFavoriteTools(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -841,11 +841,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageCodeDomainModel?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             tool: tool,
+            toolLanguage: toolLanguage,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
