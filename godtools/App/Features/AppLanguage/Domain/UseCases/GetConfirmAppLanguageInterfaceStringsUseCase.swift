@@ -24,14 +24,24 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
     
     func getStringsPublisher(for selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<ConfirmAppLanguageInterfaceStringsDomainModel, Never> {
         
-        return getMessageInNewlySelectedLanguagePublisher(selectedLanguage: selectedLanguage)
-            .flatMap { message in
-                
-                let domainModel = ConfirmAppLanguageInterfaceStringsDomainModel(messageInNewlySelectedLanguage: message, messageInCurrentLanguage: message, changeLanguageButtonText: "Change Lang", nevermindButtonText: "Nvm")
-                
-                return Just(domainModel)
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest4(
+            getMessageInNewlySelectedLanguagePublisher(selectedLanguage: selectedLanguage),
+            getMessageInCurrentLanguagePublisher(selectedLanguage: selectedLanguage),
+            getChangeLanguageButtonTextPublisher(selectedLanguage: selectedLanguage),
+            getNevermindButtonTextPublisher(selectedLanguage: selectedLanguage)
+        )
+        .flatMap { messageInNewlySelectedLanguage, messageInCurrenttLanguage, changeLanguageButtonText, nevermindButtonText in
+            
+            let domainModel = ConfirmAppLanguageInterfaceStringsDomainModel(
+                messageInNewlySelectedLanguage: messageInNewlySelectedLanguage,
+                messageInCurrentLanguage: messageInCurrenttLanguage,
+                changeLanguageButtonText: changeLanguageButtonText,
+                nevermindButtonText: nevermindButtonText
+            )
+            
+            return Just(domainModel)
+        }
+        .eraseToAnyPublisher()
     }
     
     private func getMessageInNewlySelectedLanguagePublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
@@ -46,5 +56,29 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
                 return Just(str)
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getMessageInCurrentLanguagePublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
+        
+        return getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "languageSettings.confirmAppLanguage.message")
+            .flatMap { formatString in
+                
+                let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: selectedLanguage, translatedInLanguageCode: selectedLanguage) ?? ""
+                
+                let str = String.localizedStringWithFormat(formatString, languageName)
+                                
+                return Just(str)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getChangeLanguageButtonTextPublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
+        
+        return getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: selectedLanguage, stringId: "languageSettings.confirmAppLanguage.changeLanguageButton.title")
+    }
+    
+    private func getNevermindButtonTextPublisher(selectedLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> {
+        
+        return getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: selectedLanguage, stringId: "languageSettings.confirmAppLanguage.nevermindButton.title")
     }
 }
