@@ -14,6 +14,7 @@ class ToolDetailsViewModel: ObservableObject {
     
     private static var toggleToolFavoriteCancellable: AnyCancellable?
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolUseCase: GetToolUseCase
     private let getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
@@ -35,7 +36,7 @@ class ToolDetailsViewModel: ObservableObject {
             showsLearnToShareToolButton = false
         }
     }
-    @Published private var toolLanguage: String = LanguageCodeDomainModel.english.value // TODO: Should use type other than string here for better visibility? ~Levi
+    @Published private var toolLanguage: AppLanguageCodeDomainModel
     
     @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
@@ -61,10 +62,12 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, toolLanguage: AppLanguageCodeDomainModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolUseCase: GetToolUseCase, getToolDetailsInterfaceStringsUseCase: GetToolDetailsInterfaceStringsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsUseCase: GetToolDetailsUseCase, getToolDetailsToolIsFavoritedUseCase: GetToolDetailsToolIsFavoritedUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
+        self.toolLanguage = toolLanguage ?? LanguageCodeDomainModel.english.value
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.getToolDetailsInterfaceStringsUseCase = getToolDetailsInterfaceStringsUseCase
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
@@ -75,6 +78,17 @@ class ToolDetailsViewModel: ObservableObject {
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        
+        if let toolLanguage = toolLanguage {
+            
+            self.toolLanguage = toolLanguage
+        }
+        else {
+            
+            getCurrentAppLanguageUseCase
+                .getLanguagePublisher()
+                .assign(to: &$toolLanguage)
+        }
         
         getToolDetailsMediaUseCase
             .getMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())

@@ -847,6 +847,7 @@ extension AppFlow {
             flowDelegate: self,
             tool: tool,
             toolLanguage: toolLanguage,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
