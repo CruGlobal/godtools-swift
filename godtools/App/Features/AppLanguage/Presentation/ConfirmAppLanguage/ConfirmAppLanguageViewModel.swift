@@ -16,8 +16,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var confirmLanguageText: String = ""
-    @Published var translatedConfirmLanguageText: String = ""
+    @Published var confirmLanguageText: NSAttributedString = NSAttributedString()
+    @Published var translatedConfirmLanguageText: NSAttributedString = NSAttributedString()
     @Published var changeLanguageButtonTitle: String = ""
     @Published var nevermindButtonTitle: String = ""
 

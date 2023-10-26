@@ -41,13 +41,9 @@ struct ConfirmAppLanguageView: View {
                 FixedVerticalSpacer(height: 10)
                 
                 Group {
-                    Text(viewModel.confirmLanguageText)
-                        .font(FontLibrary.sfProTextRegular.font(size: 18))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                                        
-                    Text(viewModel.translatedConfirmLanguageText)
-                        .font(FontLibrary.sfProTextRegular.font(size: 14))
-                        .foregroundColor(ColorPalette.gtGrey.color)
+                    attributedMessageView(attributedString: viewModel.confirmLanguageText, fontSize: 18)
+                    
+                    attributedMessageView(attributedString: viewModel.translatedConfirmLanguageText, fontSize: 14)
                 }
                 .padding(.horizontal, 10)
                 
@@ -77,4 +73,17 @@ struct ConfirmAppLanguageView: View {
             .padding(.horizontal, horizontalPadding)
         }
     }
+    
+    @ViewBuilder func attributedMessageView(attributedString: NSAttributedString, fontSize: CGFloat) -> some View {
+        
+        Group {
+            if #available(iOS 15, *) {
+                Text(AttributedString(attributedString))
+            } else {
+                Text(attributedString.string)
+            }
+        }
+        .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+        .foregroundColor(ColorPalette.gtGrey.color)
+     }
 }

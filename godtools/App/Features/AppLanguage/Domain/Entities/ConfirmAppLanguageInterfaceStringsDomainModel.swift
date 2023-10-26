@@ -10,8 +10,8 @@ import Foundation
 
 struct ConfirmAppLanguageInterfaceStringsDomainModel {
     
-    let messageInNewlySelectedLanguage: String
-    let messageInCurrentLanguage: String
+    let messageInNewlySelectedLanguage: NSAttributedString
+    let messageInCurrentLanguage: NSAttributedString
     let changeLanguageButtonText: String
     let nevermindButtonText: String
 }

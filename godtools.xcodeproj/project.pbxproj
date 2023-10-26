@@ -1196,6 +1196,7 @@
 		D4670AED2ADDB5D900FAD896 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D4670AEC2ADDB5CB00FAD896 /* SF-Pro-Display-Regular.otf */; };
 		D4670AEF2AE7063A00FAD896 /* GetConfirmAppLanguageInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670AEE2AE7063A00FAD896 /* GetConfirmAppLanguageInterfaceStringsUseCase.swift */; };
 		D4670AF12AE706C100FAD896 /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670AF02AE706C100FAD896 /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */; };
+		D4670AF82AE9DFC000FAD896 /* NSAttributedString+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670AF72AE9DFC000FAD896 /* NSAttributedString+Format.swift */; };
 		D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */; };
 		D471CFD328B9532100DCE61C /* LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD228B9532100DCE61C /* LanguageSupportable.swift */; };
 		D48018C028EF650700389565 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018BF28EF650700389565 /* DashboardView.swift */; };
@@ -2456,6 +2457,7 @@
 		D4670AEC2ADDB5CB00FAD896 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
 		D4670AEE2AE7063A00FAD896 /* GetConfirmAppLanguageInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfirmAppLanguageInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
 		D4670AF02AE706C100FAD896 /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		D4670AF72AE9DFC000FAD896 /* NSAttributedString+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Format.swift"; sourceTree = "<group>"; };
 		D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D471CFD228B9532100DCE61C /* LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSupportable.swift; sourceTree = "<group>"; };
 		D48018BF28EF650700389565 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -8014,6 +8016,7 @@
 				45EB9B6329F16CF200CA74A8 /* Collection */,
 				45EB9B6729F16CF200CA74A8 /* Error */,
 				45EB9B6529F16CF200CA74A8 /* Locale */,
+				D4670AF62AE9DFA400FAD896 /* NSAttributedString */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -8887,6 +8890,14 @@
 				D4670AEA2AD9D16A00FAD896 /* ConfirmAppLanguageViewModel.swift */,
 			);
 			path = ConfirmAppLanguage;
+			sourceTree = "<group>";
+		};
+		D4670AF62AE9DFA400FAD896 /* NSAttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				D4670AF72AE9DFC000FAD896 /* NSAttributedString+Format.swift */,
+			);
+			path = NSAttributedString;
 			sourceTree = "<group>";
 		};
 		D471CFBF28B3D67100DCE61C /* Preview Content */ = {
@@ -10295,6 +10306,7 @@
 				45C1527E2A44888100F2A1E8 /* PrimaryEvaluationOptionButton.swift in Sources */,
 				45F7163F290A12D70019B715 /* DeleteAccountViewModel.swift in Sources */,
 				45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */,
+				D4670AF82AE9DFC000FAD896 /* NSAttributedString+Format.swift in Sources */,
 				D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */,
 				45DBE62E2ACDAD05008A93BF /* FeaturedLessonsView.swift in Sources */,
 				45E39ED427457CB5006A59E4 /* MobileContentAnimationViewModel.swift in Sources */,
