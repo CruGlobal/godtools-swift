@@ -66,12 +66,6 @@ class AppDiContainer {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
-    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
-        return LessonFeedbackAnalytics(
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(

@@ -203,12 +203,6 @@ class AppDataLayerDependencies {
         return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
-        return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
-        )
-    }
-    
     func getLocaleLanguageName() -> LocaleLanguageName {
         return LocaleLanguageName()
     }

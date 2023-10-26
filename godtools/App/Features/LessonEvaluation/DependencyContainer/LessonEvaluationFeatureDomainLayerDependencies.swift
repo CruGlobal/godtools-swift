@@ -19,6 +19,24 @@ class LessonEvaluationFeatureDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    func getCancelLessonEvaluationUseCase() -> CancelLessonEvaluationUseCase {
+        return CancelLessonEvaluationUseCase(
+            cancelLessonEvaluationRepositoryInterface: dataLayer.getCancelLessonEvaluationRepositoryInterface()
+        )
+    }
+    
+    func getEvaluateLessonUseCase() -> EvaluateLessonUseCase {
+        return EvaluateLessonUseCase(
+            evaluateLessonRepositoryInterface: dataLayer.getEvaluateLessonRepositoryInterface()
+        )
+    }
+    
+    func getLessonEvaluatedUseCase() -> GetLessonEvaluatedUseCase {
+        return GetLessonEvaluatedUseCase(
+            getLessonEvaluatedRepositoryInterface: dataLayer.getLessonEvaluatedRepositoryInterface()
+        )
+    }
+    
     func getLessonEvaluationInterfaceStringsUseCase() -> GetLessonEvaluationInterfaceStringsUseCase {
         return GetLessonEvaluationInterfaceStringsUseCase(
             getLessonEvaluationInterfaceStringsRepositoryInterface: dataLayer.getLessonEvaluationInterfaceStringsRepositoryInterface()

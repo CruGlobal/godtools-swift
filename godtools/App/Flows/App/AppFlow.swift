@@ -241,24 +241,17 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .userClosedLesson(let lesson, let highestPageNumberViewed):
                 
-                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.dataLayer.getLessonsEvaluationRepository()
-                let lessonEvaluated: Bool
-                let numberOfEvaluationAttempts: Int
+                let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
-                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
-                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
-                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
-                }
-                else {
-                    lessonEvaluated = false
-                    numberOfEvaluationAttempts = 0
-                }
-                
-                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
-                
-                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
-                }
+                getLessonEvaluatedUseCase.getEvaluatedPublisher(lesson: lesson)
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] (lessonEvaluated: Bool) in
+                        
+                        if highestPageNumberViewed > 2 && !lessonEvaluated {
+                            self?.presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                        }
+                    }
+                    .store(in: &cancellables)
             }
             
         case .tractFlowCompleted(let state):
@@ -928,7 +921,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lesson: ToolDomainModel, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
@@ -936,8 +929,8 @@ extension AppFlow {
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
-            lessonEvaluationRepository: appDiContainer.dataLayer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics()
+            evaluateLessonUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLessonUseCase(),
+            cancelLessonEvaluationUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluationUseCase()
         )
         let view = LessonEvaluationView(viewModel: viewModel)
         

@@ -19,7 +19,40 @@ class LessonEvaluationFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    private func getLessonEvaluationRepository() -> LessonEvaluationRepository {
+        return LessonEvaluationRepository(
+            cache: LessonEvaluationRealmCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
+        )
+    }
+    
+    private func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
+        return LessonFeedbackAnalytics(
+            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
+        )
+    }
+    
     // MARK: - Domain Interface
+    
+    func getCancelLessonEvaluationRepositoryInterface() -> CancelLessonEvaluationRepositoryInterface {
+        return CancelLessonEvaluationRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            lessonEvaluationRepository: getLessonEvaluationRepository()
+        )
+    }
+    
+    func getEvaluateLessonRepositoryInterface() -> EvaluateLessonRepositoryInterface {
+        return EvaluateLessonRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            lessonEvaluationRepository: getLessonEvaluationRepository(),
+            lessonFeedbackAnalytics: getLessonFeedbackAnalytics()
+        )
+    }
+    
+    func getLessonEvaluatedRepositoryInterface() -> GetLessonEvaluatedRepositoryInterface {
+        return GetLessonEvaluatedRepository(
+            lessonEvaluationRepository: getLessonEvaluationRepository()
+        )
+    }
     
     func getLessonEvaluationInterfaceStringsRepositoryInterface() -> GetLessonEvaluationInterfaceStringsRepositoryInterface {
         return GetLessonEvaluationInterfaceStringsRepository(
