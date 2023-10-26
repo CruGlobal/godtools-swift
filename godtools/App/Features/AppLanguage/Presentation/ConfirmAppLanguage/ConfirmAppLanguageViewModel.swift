@@ -52,7 +52,19 @@ extension ConfirmAppLanguageViewModel {
     }
     
     func nevermindButtonTapped() {
-        
+        dismissView()
+    }
+    
+    @objc func closeTapped() {
+        dismissView()
+    }
+}
+
+// MARK: - Private
+
+extension ConfirmAppLanguageViewModel {
+    
+    private func dismissView() {
         flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
     }
 }

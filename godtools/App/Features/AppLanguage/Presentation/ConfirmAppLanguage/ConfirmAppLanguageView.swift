@@ -25,6 +25,18 @@ struct ConfirmAppLanguageView: View {
             
             VStack(alignment: .leading, spacing: 16) {
                 
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        viewModel.closeTapped()
+                    } label: {
+                        ImageCatalog.navClose.image
+                            .frame(width: 25, height: 25)
+                    }
+                }
+                .padding(.top, 20)
+                
                 Spacer()
                 
                 HStack {
@@ -72,6 +84,7 @@ struct ConfirmAppLanguageView: View {
             }
             .padding(.horizontal, horizontalPadding)
         }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
     @ViewBuilder func attributedMessageView(attributedString: NSAttributedString, fontSize: CGFloat) -> some View {
