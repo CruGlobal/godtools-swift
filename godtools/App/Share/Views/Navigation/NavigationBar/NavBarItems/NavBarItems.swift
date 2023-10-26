@@ -10,37 +10,37 @@ import UIKit
 
 class NavBarItems {
         
-    private let leadingItemControllers: [NarBarItemController]
-    private let trailingItemControllers: [NarBarItemController]
-            
+    private let leadingItemControllers: [NavBarItemController]
+    private let trailingItemControllers: [NavBarItemController]
+                
     init(viewController: UIViewController, leadingItems: [NavBarItem], trailingItems: [NavBarItem]) {
         
         leadingItemControllers = NavBarItems.getItemControllers(
             viewController: viewController,
             items: leadingItems,
-            itemBarPosition: .left
+            barPosition: .leading
         )
         
         trailingItemControllers = NavBarItems.getItemControllers(
             viewController: viewController,
             items: trailingItems,
-            itemBarPosition: .right
+            barPosition: .trailing
         )
     }
     
-    private static func getItemControllers(viewController: UIViewController, items: [NavBarItem], itemBarPosition: BarButtonItemBarPosition) -> [NarBarItemController] {
+    private static func getItemControllers(viewController: UIViewController, items: [NavBarItem], barPosition: BarButtonItemBarPosition) -> [NavBarItemController] {
         
-        var itemControllers: [NarBarItemController] = Array()
+        var itemControllers: [NavBarItemController] = Array()
         
         for index in 0 ..< items.count {
             
             let navBarItem: NavBarItem = items[index]
             
-            let controller = NarBarItemController.newNavBarItemController(
+            let controller = NavBarItemController.newNavBarItemController(
                 controllerType: navBarItem.controllerType,
                 viewController: viewController,
                 navBarItem: navBarItem,
-                itemBarPosition: itemBarPosition,
+                itemBarPosition: barPosition,
                 itemIndex: index
             )
             

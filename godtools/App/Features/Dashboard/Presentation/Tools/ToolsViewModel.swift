@@ -235,6 +235,6 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: tool, isSpotlight: false)
         
-        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool))
+        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterSelectionPublisher.value.selectedLanguage))
     }
 }

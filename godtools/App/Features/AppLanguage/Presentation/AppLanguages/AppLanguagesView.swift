@@ -21,6 +21,8 @@ struct AppLanguagesView: View {
         
         VStack(spacing: 0) {
             
+            AccessibilityScreenElementView(screenAccessibility: .appLanguages)
+                        
             SearchBarView(viewModel: viewModel.getSearchBarViewModel())
             
             List {

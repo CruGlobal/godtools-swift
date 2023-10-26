@@ -28,7 +28,7 @@ class TractFlow: ToolNavigationFlow, Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController()
+        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
           
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,

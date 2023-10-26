@@ -9,7 +9,12 @@
 import SwiftUI
 
 struct OnboardingTutorialView: View {
-            
+        
+    private static let chooseAppLanguageButtonHiddenPosition: CGFloat = (ChooseAppLanguageButton.height * 3) * -1
+    private static let chooseAppLanguageButtonVisiblePosition: CGFloat = -40
+    
+    @State private var chooseAppLanguageButtonPosition: CGFloat = OnboardingTutorialView.chooseAppLanguageButtonHiddenPosition
+    
     @ObservedObject private var viewModel: OnboardingTutorialViewModel
     
     init(viewModel: OnboardingTutorialViewModel) {
@@ -21,6 +26,8 @@ struct OnboardingTutorialView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .onboardingTutorial)
+
             VStack(alignment: .center, spacing: 0) {
                    
                 PagedView(numberOfPages: viewModel.pages.count, currentPage: $viewModel.currentPage) { (page: Int) in
@@ -32,6 +39,7 @@ struct OnboardingTutorialView: View {
                         OnboardingTutorialReadyForEveryConversationView(
                             viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
                             geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage1,
                             watchVideoTappedClosure: {
                                 viewModel.watchReadyForEveryConversationVideoTapped()
                             }
@@ -41,26 +49,29 @@ struct OnboardingTutorialView: View {
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage2
                         )
                         
                     case .prepareForTheMomentsThatMatter:
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage3
                         )
                         
                     case .helpSomeoneDiscoverJesus:
                         
                         OnboardingTutorialMediaView(
                             viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
-                            geometry: geometry
+                            geometry: geometry,
+                            screenAccessibility: .onboardingTutorialPage4
                         )
                     }
                 }
                 
-                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle) {
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: .nextOnboardingTutorial) {
                     viewModel.continueTapped()
                 }
                 
@@ -71,11 +82,14 @@ struct OnboardingTutorialView: View {
             }
             .frame(maxWidth: .infinity)
             
-            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: "Choose Language") {
+            let chooseAppLanguageButtonPosition: CGFloat = viewModel.showsChooseLanguageButton ? OnboardingTutorialView.chooseAppLanguageButtonVisiblePosition : OnboardingTutorialView.chooseAppLanguageButtonHiddenPosition
+            
+            ChooseAppLanguageCenteredHorizontallyView(buttonTitle: viewModel.chooseAppLanguageButtonTitle) {
                 viewModel.chooseAppLanguageTapped()
             }
+            .padding([.top], chooseAppLanguageButtonPosition)
+            .animation(.interpolatingSpring(stiffness: 80, damping: 10), value: chooseAppLanguageButtonPosition)
         }
-        .accessibilityIdentifier(AccessibilityStrings.Screen.onboardingTutorial.id)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

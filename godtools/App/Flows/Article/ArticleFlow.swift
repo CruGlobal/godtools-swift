@@ -47,6 +47,7 @@ class ArticleFlow: Flow {
         let view = ArticleCategoriesView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -135,6 +136,7 @@ extension ArticleFlow {
         let view = ArticlesView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -164,6 +166,7 @@ extension ArticleFlow {
         let view = ArticleWebView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
@@ -192,6 +195,7 @@ extension ArticleFlow {
         let hostingView = AppHostingController<ArticleDebugView>(
             rootView: view,
             navigationBar: AppNavigationBar(
+                appearance: nil,
                 backButton: nil,
                 leadingItems: [],
                 trailingItems: [closeButton]

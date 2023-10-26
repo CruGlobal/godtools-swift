@@ -11,26 +11,16 @@ import Combine
 
 class AppLanguagesRepository {
     
-    init() {
+    private let cache: AppLanguagesCache
+    
+    init(cache: AppLanguagesCache) {
         
+        self.cache = cache
     }
     
     func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
-        let appLanguages: [AppLanguageDataModel] = [
-            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
-            AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "es", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "pt", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "fr", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "id", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "zh-Hans", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "zh-Hant", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "hi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "ru", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "vi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "lv", languageDirection: .leftToRight)
-        ]
+        let appLanguages: [AppLanguageDataModel] = cache.getAppLanguages()
         
         return Just(appLanguages)
             .eraseToAnyPublisher()

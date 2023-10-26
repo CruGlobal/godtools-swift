@@ -7,43 +7,58 @@
 //
 
 import Foundation
+import Combine
 
 class OnboardingQuickStartViewModel: ObservableObject {
     
-    private let quickStartItems: [OnboardingQuickStartItemDomainModel]
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getOnboardingQuickStartInterfaceStringsUseCase: GetOnboardingQuickStartInterfaceStringsUseCase
+    private let getOnboardingQuickStartLinksUseCase: GetOnboardingQuickStartLinksUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase
-    private let trackActionAnalytics: TrackActionAnalytics
+    
+    private var interfaceStrings: OnboardingQuickStartInterfaceStringsDomainModel?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let title: String
-    let skipButtonTitle: String
-    let endTutorialButtonTitle: String
+    @Published private var appLanguage: AppLanguageCodeDomainModel = ""
     
-    @Published var numberOfQuickStartItems: Int = 0
+    @Published var title: String = ""
+    @Published var quickStartLinks: [OnboardingQuickStartLinkDomainModel] = Array()
+    @Published var endTutorialButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, getOnboardingQuickStartItemsUseCase: GetOnboardingQuickStartItemsUseCase, trackActionAnalytics: TrackActionAnalytics) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingQuickStartInterfaceStringsUseCase: GetOnboardingQuickStartInterfaceStringsUseCase, getOnboardingQuickStartLinksUseCase: GetOnboardingQuickStartLinksUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getOnboardingQuickStartInterfaceStringsUseCase = getOnboardingQuickStartInterfaceStringsUseCase
+        self.getOnboardingQuickStartLinksUseCase = getOnboardingQuickStartLinksUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.getOnboardingQuickStartItemsUseCase = getOnboardingQuickStartItemsUseCase
-        self.trackActionAnalytics = trackActionAnalytics
         
-        title = localizationServices.stringForSystemElseEnglish(key: "onboardingQuickStart.title")
-        skipButtonTitle = localizationServices.stringForSystemElseEnglish(key: "navigationBar.navigationItem.skip")
-        endTutorialButtonTitle = localizationServices.stringForSystemElseEnglish(key: "onboardingTutorial.getStartedButton.title")
-        quickStartItems = getOnboardingQuickStartItemsUseCase.getOnboardingQuickStartItems()
-        numberOfQuickStartItems = quickStartItems.count
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
+        
+        getOnboardingQuickStartInterfaceStringsUseCase
+            .getStringsPublisher(appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: OnboardingQuickStartInterfaceStringsDomainModel) in
+                
+                self?.interfaceStrings = interfaceStrings
+                self?.title = interfaceStrings.title
+                self?.endTutorialButtonTitle = interfaceStrings.getStartedButtonTitle
+            }
+            .store(in: &cancellables)
+        
+        getOnboardingQuickStartLinksUseCase
+            .getLinksPublisher(appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$quickStartLinks)
     }
     
     private var analyticsScreenName: String {
         return "onboarding-quick-start"
-    }
-    
-    func getQuickStartItemViewModel(index: Int) -> OnboardingQuickStartItemViewModel {
-        
-        return OnboardingQuickStartItemViewModel(item: quickStartItems[index])
     }
 }
 
@@ -51,13 +66,11 @@ class OnboardingQuickStartViewModel: ObservableObject {
 
 extension OnboardingQuickStartViewModel {
     
-    func quickStartItemTapped(index: Int) {
-        
-        let item = quickStartItems[index]
-        
+    func quickStartLinkTapped(link: OnboardingQuickStartLinkDomainModel) {
+                
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
-            actionName: item.analyticsEventActionName,
+            actionName: link.analyticsEventActionName,
             siteSection: "",
             siteSubSection: "",
             contentLanguage: nil,
@@ -66,7 +79,21 @@ extension OnboardingQuickStartViewModel {
             data: nil
         )
         
-        flowDelegate?.navigate(step: item.actionFlowStep)
+        let linkFlowStep: FlowStep
+        
+        switch link.linkType {
+            
+        case .chooseOneOfOurTools:
+            linkFlowStep = .chooseToolTappedFromOnboardingQuickStart
+            
+        case .readOurArticles:
+            linkFlowStep = .readArticlesTappedFromOnboardingQuickStart
+            
+        case .tryOurLessons:
+            linkFlowStep = .tryLessonsTappedFromOnboardingQuickStart
+        }
+        
+        flowDelegate?.navigate(step: linkFlowStep)
     }
     
     @objc func skipTapped() {

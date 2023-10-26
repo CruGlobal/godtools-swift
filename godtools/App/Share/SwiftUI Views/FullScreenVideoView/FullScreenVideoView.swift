@@ -28,6 +28,8 @@ struct FullScreenVideoView: View {
     var body: some View {
         
         GeometryReader { geometry in
+                        
+            AccessibilityScreenElementView(screenAccessibility: screenAccessibility)
             
             VStack(alignment: .center, spacing: 0) {
                 
@@ -52,7 +54,6 @@ struct FullScreenVideoView: View {
         .onDisappear {
             videoPlayerState = .paused
         }
-        .accessibilityIdentifier(screenAccessibility.id)
         .statusBarHidden(true)
         .background(backgroundColor)
     }

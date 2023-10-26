@@ -25,6 +25,8 @@ struct ToolsView: View {
         
         GeometryReader { geometry in
               
+            AccessibilityScreenElementView(screenAccessibility: .dashboardTools)
+            
             if viewModel.isLoadingAllTools {
                 CenteredCircularProgressView(
                     progressColor: ColorPalette.gtGrey.color

@@ -31,7 +31,9 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-        
+    
+    // MARK: - Data Layer Classes
+            
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -95,12 +97,6 @@ class AppDataLayerDependencies {
     func getDeepLinkingService() -> DeepLinkingService {
         return DeepLinkingService(
             manifest: GodToolsDeepLinkingManifest()
-        )
-    }
-    
-    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
-        return GetDeviceLanguageRepository(
-            deviceSystemLanguage: getDeviceSystemLanguage()
         )
     }
     
@@ -177,12 +173,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
-    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -252,12 +242,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
-        return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-        )
-    }
-    
     func getOptInOnboardingBannerEnabledRepository() -> OptInOnboardingBannerEnabledRepository {
         return OptInOnboardingBannerEnabledRepository(
             cache: OptInOnboardingBannerEnabledCache()
@@ -312,6 +296,10 @@ class AppDataLayerDependencies {
     
     func getSharedRealmDatabase() -> RealmDatabase {
         return sharedRealmDatabase
+    }
+    
+    func getSharedUserDefaultsCache() -> SharedUserDefaultsCache {
+        return sharedUserDefaultsCache
     }
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
@@ -419,5 +407,25 @@ class AppDataLayerDependencies {
     
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
+    }
+    
+    // MARK: - Domain Interface
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
+        return GetInterfaceStringForLanguageRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
+    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
+        return GetLaunchCountRepository(
+            launchCountRepository: getSharedLaunchCountRepository()
+        )
     }
 }

@@ -10,17 +10,18 @@ import SwiftUI
 
 struct OnboardingQuickStartItemView: View {
     
+    private let domainModel: OnboardingQuickStartLinkDomainModel
     private let backgroundColor: Color = Color.getColorWithRGB(red: 244, green: 244, blue: 244, opacity: 1)
     
-    @ObservedObject private var viewModel: OnboardingQuickStartItemViewModel
-    
     let geometry: GeometryProxy
+    let accessibility: AccessibilityStrings.Button
     let itemTappedClosure: (() -> Void)
     
-    init(viewModel: OnboardingQuickStartItemViewModel, geometry: GeometryProxy, itemTappedClosure: @escaping (() -> Void)) {
+    init(domainModel: OnboardingQuickStartLinkDomainModel, geometry: GeometryProxy, accessibility: AccessibilityStrings.Button, itemTappedClosure: @escaping (() -> Void)) {
         
-        self.viewModel = viewModel
+        self.domainModel = domainModel
         self.geometry = geometry
+        self.accessibility = accessibility
         self.itemTappedClosure = itemTappedClosure
     }
     
@@ -30,14 +31,15 @@ struct OnboardingQuickStartItemView: View {
                             
             VStack(alignment: .leading, spacing: 0) {
                 
-                Text(viewModel.title)
+                Text(domainModel.title)
                     .multilineTextAlignment(.leading)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextLight.font(size: 19))
+                    .accessibilityIdentifier(accessibility.id) // NOTE: Not using a Button so will assign the accessibility id to static text. ~Levi
                                 
                 HStack(alignment: .center, spacing: 8) {
                     
-                    Text(viewModel.actionTitle)
+                    Text(domainModel.actionTitle)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(ColorPalette.gtBlue.color)
                         .font(FontLibrary.sfProTextSemibold.font(size: 16))
@@ -47,6 +49,7 @@ struct OnboardingQuickStartItemView: View {
                         .scaledToFit()
                         .frame(width: 12, height:12)
                         .clipped()
+                        .flipVertically(shouldFlip: ApplicationLayout.shared.layoutDirection == .rightToLeft)
                 }
                 .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0) )
             }

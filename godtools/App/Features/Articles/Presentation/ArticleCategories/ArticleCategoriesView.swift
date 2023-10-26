@@ -33,6 +33,8 @@ class ArticleCategoriesView: AppViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
+        addScreenAccessibility(screenAccessibility: .articles)
+        
         setupLayout()
         setupBinding()
                                 
