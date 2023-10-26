@@ -53,9 +53,9 @@ struct ConfirmAppLanguageView: View {
                 FixedVerticalSpacer(height: 10)
                 
                 Group {
-                    attributedMessageView(attributedString: viewModel.confirmLanguageText, fontSize: 18)
+                    attributedMessageView(attributedString: viewModel.messageInNewlySelectedLanguage, fontSize: 18)
                     
-                    attributedMessageView(attributedString: viewModel.translatedConfirmLanguageText, fontSize: 14)
+                    attributedMessageView(attributedString: viewModel.messageInCurrentLanguage, fontSize: 14)
                 }
                 .padding(.horizontal, 10)
                 

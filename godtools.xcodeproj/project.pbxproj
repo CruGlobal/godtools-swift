@@ -2926,8 +2926,8 @@
 				450DB5592AC353EC00B2FE3A /* AppLanguageCodeDomainModel.swift */,
 				45B3F4632AC3B02600D61BFD /* AppLanguageDomainModel.swift */,
 				450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */,
-				453D2F7D2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift */,
 				D4670AF02AE706C100FAD896 /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */,
+				453D2F7D2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";

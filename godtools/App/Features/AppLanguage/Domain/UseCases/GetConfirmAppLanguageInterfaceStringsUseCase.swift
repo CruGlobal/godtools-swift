@@ -72,9 +72,9 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
                     attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
                 )
                 
-                let str = NSAttributedString(format: NSAttributedString(string: formatString), args: languageNameAttributed)
+                let attributedString = NSAttributedString(format: NSAttributedString(string: formatString), args: languageNameAttributed)
                                 
-                return Just(str)
+                return Just(attributedString)
             }
             .eraseToAnyPublisher()
     }

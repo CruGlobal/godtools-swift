@@ -16,8 +16,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var confirmLanguageText: NSAttributedString = NSAttributedString()
-    @Published var translatedConfirmLanguageText: NSAttributedString = NSAttributedString()
+    @Published var messageInNewlySelectedLanguage: NSAttributedString = NSAttributedString()
+    @Published var messageInCurrentLanguage: NSAttributedString = NSAttributedString()
     @Published var changeLanguageButtonTitle: String = ""
     @Published var nevermindButtonTitle: String = ""
 
@@ -32,9 +32,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
                 
             } receiveValue: { [weak self] stringsDomainModel in
                 
-                self?.confirmLanguageText = stringsDomainModel.messageInNewlySelectedLanguage
-                self?.translatedConfirmLanguageText = stringsDomainModel.messageInCurrentLanguage
-
+                self?.messageInNewlySelectedLanguage = stringsDomainModel.messageInNewlySelectedLanguage
+                self?.messageInCurrentLanguage = stringsDomainModel.messageInCurrentLanguage
                 self?.changeLanguageButtonTitle = stringsDomainModel.changeLanguageButtonText
                 self?.nevermindButtonTitle = stringsDomainModel.nevermindButtonText
             }
@@ -47,7 +46,6 @@ class ConfirmAppLanguageViewModel: ObservableObject {
 extension ConfirmAppLanguageViewModel {
     
     func confirmLanguageButtonTapped() {
-        
         flowDelegate?.navigate(step: .appLanguageChangeConfirmed(appLanguage: selectedLanguage))
     }
     

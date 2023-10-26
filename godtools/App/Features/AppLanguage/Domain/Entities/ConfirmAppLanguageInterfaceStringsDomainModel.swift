@@ -10,6 +10,7 @@ import Foundation
 
 struct ConfirmAppLanguageInterfaceStringsDomainModel {
     
+    // TODO: - once our minimum deployment target is iOS 15, we can use AttributedString instead of NSAttributedString
     let messageInNewlySelectedLanguage: NSAttributedString
     let messageInCurrentLanguage: NSAttributedString
     let changeLanguageButtonText: String
