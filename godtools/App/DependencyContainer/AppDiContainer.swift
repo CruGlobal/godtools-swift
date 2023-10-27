@@ -28,6 +28,7 @@ class AppDiContainer {
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
@@ -36,6 +37,7 @@ class AppDiContainer {
         feature = AppFeatureDiContainer(
             appLanguage: appLanguageDiContainer,
             featuredLessons: featuredLessonsDiContainer,
+            lessonEvaluation: lessonEvaluationDiContainer,
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             toolDetails: toolDetailsDiContainer
@@ -62,12 +64,6 @@ class AppDiContainer {
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
-    }
-    
-    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
-        return LessonFeedbackAnalytics(
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {

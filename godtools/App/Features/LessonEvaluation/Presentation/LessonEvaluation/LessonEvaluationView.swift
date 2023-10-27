@@ -2,145 +2,121 @@
 //  LessonEvaluationView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/29/21.
-//  Copyright © 2021 Cru. All rights reserved.
+//  Created by Levi Eggert on 10/26/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class LessonEvaluationView: UIView, NibBased {
+struct LessonEvaluationView: View {
     
-    private let viewModel: LessonEvaluationViewModel
+    private let viewInsets: EdgeInsets = EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+    private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+    private let closeButtonSize: CGFloat = 44
+    private let closeButtonTop: CGFloat = 5
     
-    private let buttonCornerRadius: CGFloat = 24
-            
-    @IBOutlet weak private var closeButton: UIButton!
-    @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var wasThisHelpfulLabel: UILabel!
-    @IBOutlet weak private var yesButton: PrimaryEvaluationOptionButton!
-    @IBOutlet weak private var noButton: PrimaryEvaluationOptionButton!
-    @IBOutlet weak private var shareFaithLabel: UILabel!
-    @IBOutlet weak private var chooseScaleSliderView: ChooseScaleSliderView!
-    @IBOutlet weak private var sendButton: UIButton!
-    
+    @ObservedObject private var viewModel: LessonEvaluationViewModel
+        
     init(viewModel: LessonEvaluationViewModel) {
         
         self.viewModel = viewModel
-        
-        super.init(frame: UIScreen.main.bounds)
-        
-        loadNib()
-        setupLayout()
-        setupBinding()
-        
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        yesButton.addTarget(self, action: #selector(yesButtonTapped), for: .touchUpInside)
-        noButton.addTarget(self, action: #selector(noButtonTapped), for: .touchUpInside)
-        sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        
-        chooseScaleSliderView.setDelegate(delegate: self)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    private func setupLayout() {
+    var body: some View {
         
-        backgroundColor = .white
-        
-        yesButton.layer.cornerRadius = buttonCornerRadius
-        noButton.layer.cornerRadius = buttonCornerRadius
-        sendButton.layer.cornerRadius = buttonCornerRadius
-    }
-    
-    private func setupBinding() {
-        
-        chooseScaleSliderView.setMinScaleValue(
-            minScaleValue: viewModel.readyToShareFaithMinimumScaleValue,
-            maxScaleValue: viewModel.readyToShareFaithMaximumScaleValue
-        )
-        chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
-        
-        titleLabel.text = viewModel.title
-        wasThisHelpfulLabel.text = viewModel.wasThisHelpful
-        yesButton.setTitle(viewModel.yesButtonTitle, for: .normal)
-        noButton.setTitle(viewModel.noButtonTitle, for: .normal)
-        shareFaithLabel.text = viewModel.shareFaith
-        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
-        
-        viewModel.yesIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
-            
-            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
-            self?.yesButton.setOptionState(optionState: optionState)
+        GeometryReader { geometry in
+         
+            VStack(alignment: .center, spacing: 0) {
+                
+                Spacer()
+                
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    HStack(alignment: .top, spacing: 0) {
+                        Spacer()
+                        
+                        CloseButton(
+                            buttonSize: closeButtonSize,
+                            tapped: {
+                                viewModel.closeTapped()
+                        })
+                        .padding([.top], closeButtonTop)
+                        .padding([.trailing], 5)
+                    }
+
+                    Text(viewModel.title)
+                        .font(FontLibrary.sfProTextSemibold.font(size: 22))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top], 30 - closeButtonSize - closeButtonTop)
+                        .padding([.leading], contentInsets.leading)
+                        
+                    Text(viewModel.wasThisHelpful)
+                        .font(FontLibrary.sfProTextRegular.font(size: 18))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top], 20)
+                        .padding([.leading], contentInsets.leading)
+                    
+                    HStack(alignment: .center, spacing: 10) {
+                        
+                        EvaluationOptionButton(
+                            title: viewModel.yesButtonTitle,
+                            isSelected: $viewModel.yesIsSelected,
+                            action: {
+                                
+                                viewModel.yesTapped()
+                            }
+                        )
+                        
+                        EvaluationOptionButton(
+                            title: viewModel.noButtonTitle,
+                            isSelected: $viewModel.noIsSelected,
+                            action: {
+                                
+                                viewModel.noTapped()
+                            }
+                        )
+                    }
+                    .padding([.top], 14)
+                    
+                    Text(viewModel.shareFaithReadiness)
+                        .font(FontLibrary.sfProTextRegular.font(size: 18))
+                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top], 30)
+                        .padding([.leading], contentInsets.leading)
+                    
+                    ScaleValueSliderView(
+                        viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
+                        tintColor: ColorPalette.gtBlue.color,
+                        minScaleValue: viewModel.readyToShareFaithMinimumScaleValue,
+                        maxScaleValue: viewModel.readyToShareFaithMaximumScaleValue,
+                        scale: $viewModel.readyToShareFaithScale
+                    )
+                    .padding([.top], 14)
+                    
+                    GTBlueButton(
+                        title: viewModel.sendFeedbackButtonTitle,
+                        fontSize: 18,
+                        width: 248,
+                        height: 50,
+                        cornerRadius: 24,
+                        action: {
+                            viewModel.sendFeedbackTapped()
+                        }
+                    )
+                    .padding([.top, .bottom], 30)
+                }
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+                .padding(EdgeInsets(top: 0, leading: viewInsets.leading, bottom: 0, trailing: viewInsets.trailing))
+                
+                Spacer()
+            }
         }
-        
-        viewModel.noIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
-            
-            let optionState: PrimaryEvaluationOptionState = isSelected ? .selected : .deSelected
-            self?.noButton.setOptionState(optionState: optionState)
-        }
-    }
-    
-    @objc func closeButtonTapped() {
-        
-        viewModel.closeTapped()
-    }
-    
-    @objc func yesButtonTapped() {
-        
-        viewModel.yesTapped()
-    }
-    
-    @objc func noButtonTapped() {
-        
-        viewModel.noTapped()
-    }
-    
-    @objc func sendButtonTapped() {
-        
-        viewModel.sendTapped()
-    }
-}
-
-// MARK: - TransparentModalCustomView
-
-extension LessonEvaluationView: TransparentModalCustomView {
-    
-    var modal: UIView {
-        return self
-    }
-    
-    var modalInsets: UIEdgeInsets {
-        
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    }
-    
-    var modalLayoutType: TransparentModalCustomViewLayoutType {
-        return .centerVertically
-    }
-    
-    func addToParentForCustomLayout(parent: UIView) {}
-    
-    func transparentModalDidLayout() {
-        chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
-    }
-    
-    func transparentModalParentWillAnimateForPresented() {}
-    
-    func transparentModalParentWillAnimateForDismissed() {}
-}
-
-// MARK: - ChooseScaleSliderViewDelegate
-
-extension LessonEvaluationView: ChooseScaleSliderViewDelegate {
-    
-    func chooseScaleSliderDidChangeScaleValue(chooseScaleSlider: ChooseScaleSliderView, scaleValue: Int) {
-        
-        viewModel.didSetScaleForReadyToShareFaith(scale: scaleValue)
+        .background(Color.clear)
     }
 }

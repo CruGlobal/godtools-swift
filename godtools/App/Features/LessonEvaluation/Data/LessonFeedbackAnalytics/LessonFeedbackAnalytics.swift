@@ -24,31 +24,30 @@ class LessonFeedbackAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(siteSection: String, feedbackHelpful: LessonFeedbackHelpful?, readinessScaleValue: Int, pageIndexReached: Int) {
+    func trackLessonFeedback(lesson: ResourceModel, feedback: TrackLessonFeedbackDomainModel) {
             
         var data: [String: String] = Dictionary()
         
-        if let feedbackHelpful = feedbackHelpful {
+        if let feedbackHelpful = feedback.feedbackHelpful {
             
             let feedbackHelpfulValue: String
             
             switch feedbackHelpful {
-            case .yes:
-                feedbackHelpfulValue = LessonFeedbackAnalytics.valueHelpfulYes
-                
             case .no:
                 feedbackHelpfulValue = LessonFeedbackAnalytics.valueHelpfulNo
+            case .yes:
+                feedbackHelpfulValue = LessonFeedbackAnalytics.valueHelpfulYes
             }
             
             data[LessonFeedbackAnalytics.propertyHelpful] = feedbackHelpfulValue
         }
         
-        data[LessonFeedbackAnalytics.propertyReadiness] = String(readinessScaleValue)
-        data[LessonFeedbackAnalytics.propertyPageReached] = String(pageIndexReached)
+        data[LessonFeedbackAnalytics.propertyReadiness] = String(feedback.readinessScaleValue)
+        data[LessonFeedbackAnalytics.propertyPageReached] = String(feedback.pageIndexReached)
         
         firebaseAnalytics.trackAction(
             screenName: "",
-            siteSection: siteSection,
+            siteSection: lesson.abbreviation,
             siteSubSection: "",
             contentLanguage: nil,
             secondaryContentLanguage: nil,
