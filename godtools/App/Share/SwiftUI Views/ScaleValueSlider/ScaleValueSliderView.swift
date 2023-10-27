@@ -116,7 +116,11 @@ struct ScaleValueSliderView: View {
             clampedPanGestureX = panGestureXRelativeToView
         }
         
-        let progress: CGFloat = (clampedPanGestureX - minScrubberX) / scrubberBarWidth
+        var progress: CGFloat = (clampedPanGestureX - minScrubberX) / scrubberBarWidth
+        
+        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+            progress = ScaleValueSliderView.invertProgress(progress: progress)
+        }
         
         self.progress = progress
         self.scale = getScale(progress: progress)
@@ -128,9 +132,10 @@ struct ScaleValueSliderView: View {
         let maximumScaleValueBasedOnMinimumScaleToZero: CGFloat = maxScaleValue + minimumScaleToZero
         let floatScale: CGFloat = CGFloat(scale)
         let floatScaleBasedOnMinimumScaleToZero: CGFloat = floatScale + minimumScaleToZero
-        let percentage: CGFloat = floatScaleBasedOnMinimumScaleToZero / maximumScaleValueBasedOnMinimumScaleToZero
         
-        return percentage
+        let progress: CGFloat = floatScaleBasedOnMinimumScaleToZero / maximumScaleValueBasedOnMinimumScaleToZero
+        
+        return progress
     }
 
     private func getScale(progress: CGFloat) -> Int {
@@ -139,6 +144,10 @@ struct ScaleValueSliderView: View {
         let scaleValue: Int = Int(floatScaleValue)
         
         return scaleValue
+    }
+    
+    private static func invertProgress(progress: CGFloat) -> CGFloat {
+        return (progress * -1) + 1
     }
 }
 

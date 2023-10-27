@@ -118,5 +118,6 @@ struct LessonEvaluationView: View {
             }
         }
         .background(Color.clear)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
