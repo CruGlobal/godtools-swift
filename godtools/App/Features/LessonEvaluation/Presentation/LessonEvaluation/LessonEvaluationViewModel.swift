@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonEvaluationViewModel {
+class LessonEvaluationViewModel: ObservableObject {
     
     private static var evaluateLessonInBackgroundCancellable: AnyCancellable?
     private static var cancelLessonEvaluationInBackgroundCancellable: AnyCancellable?
@@ -23,17 +23,21 @@ class LessonEvaluationViewModel {
     
     private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    private(set) var readyToShareFaithScale: Int = 6
+        
+    private weak var flowDelegate: FlowDelegate?
     
     let readyToShareFaithMinimumScaleValue: Int = 1
     let readyToShareFaithMaximumScaleValue: Int = 10
-    
-    let interfaceStrings: ObservableValue<LessonEvaluationInterfaceStringsDomainModel?> = ObservableValue(value: nil)
-    let yesIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
-    let noIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
-    
-    private weak var flowDelegate: FlowDelegate?
+            
+    @Published var readyToShareFaithScale: Int = 6
+    @Published var title: String = ""
+    @Published var wasThisHelpful: String = ""
+    @Published var yesIsSelected: Bool = false
+    @Published var noIsSelected: Bool = false
+    @Published var yesButtonTitle: String = ""
+    @Published var noButtonTitle: String = ""
+    @Published var shareFaithReadiness: String = ""
+    @Published var sendFeedbackButtonTitle: String = ""
     
     init(flowDelegate: FlowDelegate, lesson: ToolDomainModel, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
         
@@ -59,7 +63,12 @@ class LessonEvaluationViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
                 
-                self?.interfaceStrings.accept(value: interfaceStrings)
+                self?.title = interfaceStrings.title
+                self?.wasThisHelpful = interfaceStrings.wasThisHelpful
+                self?.yesButtonTitle = interfaceStrings.yesButtonTitle
+                self?.noButtonTitle = interfaceStrings.noButtonTitle
+                self?.shareFaithReadiness = interfaceStrings.shareFaith
+                self?.sendFeedbackButtonTitle = interfaceStrings.sendButtonTitle
             }
             .store(in: &cancellables)
     }
@@ -83,29 +92,24 @@ extension LessonEvaluationViewModel {
     
     func yesTapped() {
         
-        yesIsSelected.accept(value: true)
-        noIsSelected.accept(value: false)
+        yesIsSelected = true
+        noIsSelected = false
     }
     
     func noTapped() {
         
-        yesIsSelected.accept(value: false)
-        noIsSelected.accept(value: true)
+        yesIsSelected = false
+        noIsSelected = true
     }
     
-    func didSetScaleForReadyToShareFaith(scale: Int) {
-        
-        readyToShareFaithScale = scale
-    }
-    
-    func sendTapped() {
+    func sendFeedbackTapped() {
              
         let feedbackHelpful: TrackLessonFeedbackDomainModel.FeedbackHelpful?
         
-        if yesIsSelected.value {
+        if yesIsSelected {
             feedbackHelpful = .yes
         }
-        else if noIsSelected.value {
+        else if noIsSelected {
             feedbackHelpful = .no
         }
         else {

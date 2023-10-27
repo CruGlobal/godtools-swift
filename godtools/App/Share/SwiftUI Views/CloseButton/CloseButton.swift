@@ -10,7 +10,14 @@ import SwiftUI
 
 struct CloseButton: View {
     
-    let tapped: (() -> Void)
+    private let buttonSize: CGFloat
+    private let tapped: (() -> Void)
+    
+    init(buttonSize: CGFloat = 44, tapped: @escaping (() -> Void)) {
+        
+        self.buttonSize = buttonSize
+        self.tapped = tapped
+    }
     
     var body: some View {
         Button {
@@ -18,6 +25,6 @@ struct CloseButton: View {
         } label: {
             Image(ImageCatalog.navClose.name)
         }
-        .frame(minWidth: 44, minHeight: 44)
+        .frame(minWidth: buttonSize, minHeight: buttonSize)
     }
 }
