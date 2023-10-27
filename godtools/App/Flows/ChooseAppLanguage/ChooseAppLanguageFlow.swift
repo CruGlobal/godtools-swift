@@ -53,6 +53,9 @@ class ChooseAppLanguageFlow: Flow {
             
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userChoseAppLanguage(appLanguage: appLanguage)))
             
+        case .nevermindTappedFromConfirmAppLanguageChange:
+            navigationController.dismiss(animated: true)
+            
         case .backTappedFromConfirmAppLanguageChange:
             navigationController.dismiss(animated: true)
             

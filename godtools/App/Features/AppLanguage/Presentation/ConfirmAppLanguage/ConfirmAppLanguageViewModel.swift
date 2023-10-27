@@ -50,11 +50,11 @@ extension ConfirmAppLanguageViewModel {
     }
     
     func nevermindButtonTapped() {
-        dismissView()
+        flowDelegate?.navigate(step: .nevermindTappedFromConfirmAppLanguageChange)
     }
     
     @objc func closeTapped() {
-        dismissView()
+        flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
     }
 }
 
