@@ -932,11 +932,20 @@ extension AppFlow {
             evaluateLessonUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLessonUseCase(),
             cancelLessonEvaluationUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluationUseCase()
         )
-        let view = LessonEvaluationView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromLessonEvaluation)
+        let view = LessonEvaluationView(
+            viewModel: viewModel
+        )
         
-        navigationController.present(modalView, animated: true, completion: nil)
+        let hostingView = AppHostingController<LessonEvaluationView>(rootView: view, navigationBar: nil)
+        
+        let overlayNavigationController = OverlayNavigationController(
+            rootView: hostingView,
+            hidesNavigationBar: true,
+            navigationBarAppearance: nil
+        )
+        
+        navigationController.present(overlayNavigationController, animated: true)
     }
     
     private func dismissLessonEvaluation() {
