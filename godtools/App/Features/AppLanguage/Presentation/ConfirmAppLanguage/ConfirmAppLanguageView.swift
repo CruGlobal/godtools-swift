@@ -28,11 +28,8 @@ struct ConfirmAppLanguageView: View {
                 HStack {
                     Spacer()
                     
-                    Button {
+                    CloseButton {
                         viewModel.closeTapped()
-                    } label: {
-                        ImageCatalog.navClose.image
-                            .frame(width: 25, height: 25)
                     }
                 }
                 .padding(.top, 20)
