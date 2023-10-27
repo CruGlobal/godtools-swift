@@ -66,12 +66,15 @@ class LessonEvaluationView: UIView, NibBased {
         )
         chooseScaleSliderView.setScale(scaleValue: viewModel.readyToShareFaithScale)
         
-        titleLabel.text = viewModel.title
-        wasThisHelpfulLabel.text = viewModel.wasThisHelpful
-        yesButton.setTitle(viewModel.yesButtonTitle, for: .normal)
-        noButton.setTitle(viewModel.noButtonTitle, for: .normal)
-        shareFaithLabel.text = viewModel.shareFaith
-        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
+        viewModel.interfaceStrings.addObserver(self) { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel?) in
+         
+            self?.titleLabel.text = interfaceStrings?.title
+            self?.wasThisHelpfulLabel.text = interfaceStrings?.wasThisHelpful
+            self?.yesButton.setTitle(interfaceStrings?.yesButtonTitle, for: .normal)
+            self?.noButton.setTitle(interfaceStrings?.noButtonTitle, for: .normal)
+            self?.shareFaithLabel.text = interfaceStrings?.shareFaith
+            self?.sendButton.setTitle(interfaceStrings?.sendButtonTitle, for: .normal)
+        }
         
         viewModel.yesIsSelected.addObserver(self) { [weak self] (isSelected: Bool) in
             
