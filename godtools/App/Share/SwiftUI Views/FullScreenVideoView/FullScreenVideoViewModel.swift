@@ -31,7 +31,7 @@ class FullScreenVideoViewModel: ObservableObject {
         
         var videoPlayerParameters: [String: Any] = fromParameters ?? Dictionary()
         
-        let playsInlineKey: String = Strings.YoutubePlayerParameters.playsInline.rawValue
+        let playsInlineKey: String = YoutubePlayerParameters.playsInline.rawValue
         let disablesFullScreen: Int = 1
         
         if videoPlayerParameters[playsInlineKey] == nil {

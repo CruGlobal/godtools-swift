@@ -141,7 +141,6 @@
 		45325F29285CF8B40078D932 /* TextViewLinksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F22285CF8B40078D932 /* TextViewLinksCoordinator.swift */; };
 		45325F2D285CF8DA0078D932 /* ViewGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2B285CF8D90078D932 /* ViewGeometry.swift */; };
 		45325F2E285CF8DA0078D932 /* ViewSizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2C285CF8D90078D932 /* ViewSizePreferenceKey.swift */; };
-		45325F30285CF90D0078D932 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2F285CF90D0078D932 /* Strings.swift */; };
 		45328C082AC46D14006B3B8A /* TestsGetDeviceLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C052AC46D14006B3B8A /* TestsGetDeviceLanguageRepository.swift */; };
 		45328C092AC46D14006B3B8A /* TestsGetUserPreferredAppLanguageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C062AC46D14006B3B8A /* TestsGetUserPreferredAppLanguageRepository.swift */; };
 		45328C0F2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C0D2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift */; };
@@ -444,6 +443,7 @@
 		4573134028C1821200481640 /* ToolDetailsPrimaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573133428C1821100481640 /* ToolDetailsPrimaryButtonsView.swift */; };
 		4573134128C1821200481640 /* ToolDetailsSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573133528C1821100481640 /* ToolDetailsSegmentType.swift */; };
 		4573134228C1821200481640 /* ToolDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573133628C1821100481640 /* ToolDetailsView.swift */; };
+		45738FA92AF067DF0006E9F0 /* YoutubePlayerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45738FA82AF067DF0006E9F0 /* YoutubePlayerParameters.swift */; };
 		457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457579DF26E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift */; };
 		457579E426E96ABE00C898D2 /* MobileContentMultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457579E126E96ABE00C898D2 /* MobileContentMultiSelectView.swift */; };
 		457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739E727A0955000999270 /* MobileContentViewWidth.swift */; };
@@ -1434,7 +1434,6 @@
 		45325F22285CF8B40078D932 /* TextViewLinksCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewLinksCoordinator.swift; sourceTree = "<group>"; };
 		45325F2B285CF8D90078D932 /* ViewGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewGeometry.swift; sourceTree = "<group>"; };
 		45325F2C285CF8D90078D932 /* ViewSizePreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSizePreferenceKey.swift; sourceTree = "<group>"; };
-		45325F2F285CF90D0078D932 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		45328C052AC46D14006B3B8A /* TestsGetDeviceLanguageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestsGetDeviceLanguageRepository.swift; sourceTree = "<group>"; };
 		45328C062AC46D14006B3B8A /* TestsGetUserPreferredAppLanguageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestsGetUserPreferredAppLanguageRepository.swift; sourceTree = "<group>"; };
 		45328C072AC46D14006B3B8A /* TestsGetAppLanguagesListRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestsGetAppLanguagesListRepository.swift; sourceTree = "<group>"; };
@@ -1744,6 +1743,7 @@
 		4573133428C1821100481640 /* ToolDetailsPrimaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsPrimaryButtonsView.swift; sourceTree = "<group>"; };
 		4573133528C1821100481640 /* ToolDetailsSegmentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsSegmentType.swift; sourceTree = "<group>"; };
 		4573133628C1821100481640 /* ToolDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsView.swift; sourceTree = "<group>"; };
+		45738FA82AF067DF0006E9F0 /* YoutubePlayerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerParameters.swift; sourceTree = "<group>"; };
 		457579DF26E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectViewModel.swift; sourceTree = "<group>"; };
 		457579E126E96ABE00C898D2 /* MobileContentMultiSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectView.swift; sourceTree = "<group>"; };
 		4576FCD427EA0B6100CB9CC6 /* ps */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ps; path = ps.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3087,6 +3087,7 @@
 				45131A092AB498AD0085AF0D /* ImageCatalog */,
 				45131A052AB498AD0085AF0D /* LaunchEnvironment */,
 				450DB5512AC352A300B2FE3A /* LocaleLanguageName */,
+				45738FA72AF067A80006E9F0 /* Strings */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -5068,6 +5069,14 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		45738FA72AF067A80006E9F0 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				45738FA82AF067DF0006E9F0 /* YoutubePlayerParameters.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		457579D826E969BC00C898D2 /* ContentMultiSelect */ = {
 			isa = PBXGroup;
 			children = (
@@ -6080,7 +6089,6 @@
 		45AD189925938A4E00A096A0 /* Share */ = {
 			isa = PBXGroup;
 			children = (
-				45325F2F285CF90D0078D932 /* Strings.swift */,
 				45BF6EBD27050D26003596A4 /* AnimationTransitions */,
 				45131A022AB498AD0085AF0D /* Application */,
 				45AD207125938B6A00A096A0 /* Common */,
@@ -10210,6 +10218,7 @@
 				455583DA269F2DA500C3FF14 /* MobileContentAccordionView.swift in Sources */,
 				4585E0692706560600DD6608 /* TransparentModalCustomView.swift in Sources */,
 				45AD1AAE25938A4E00A096A0 /* TutorialCellViewModel.swift in Sources */,
+				45738FA92AF067DF0006E9F0 /* YoutubePlayerParameters.swift in Sources */,
 				45D63E9F288F77D4009B4610 /* ResourcesJsonFileCache.swift in Sources */,
 				459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */,
 				4555832E269F2C7B00C3FF14 /* ToolPageCardsState.swift in Sources */,
@@ -10437,7 +10446,6 @@
 				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
-				45325F30285CF90D0078D932 /* Strings.swift in Sources */,
 				452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
