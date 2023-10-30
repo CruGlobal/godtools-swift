@@ -93,7 +93,22 @@ class DownloadToolTranslationsFlow: Flow {
         
         let view = DownloadToolProgressView(viewModel: viewModel)
         
-        let hostingView = AppHostingController<DownloadToolProgressView>(rootView: view, navigationBar: nil)
+        let closeButton = AppCloseBarItem(
+            color: ColorPalette.gtBlue.uiColor,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<DownloadToolProgressView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
+        )
         
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
         
