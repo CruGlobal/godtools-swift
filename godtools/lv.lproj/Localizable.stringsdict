@@ -13,11 +13,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Atvērto rīku skaits:</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Atvērto rīku skaits:</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Atvērto rīku skaits:</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -31,11 +31,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Pabeigtā(s) nodarbība(s):</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Pabeigtā(s) nodarbība(s):</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Pabeigtā(s) nodarbība(s):</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -49,11 +49,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Kopīgoto ekrānu skaits:</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Kopīgoto ekrānu skaits:</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Kopīgoto ekrānu skaits:</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -67,11 +67,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Kopīgoto saišu skaits:</string>
 <key>one</key>
-<string>Link share</string>
+<string>Kopīgoto saišu skaits:</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Kopīgoto saišu skaits:</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -85,11 +85,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Izmantotā(s) valoda(s):</string>
 <key>one</key>
-<string>Language used</string>
+<string>Izmantotā(s) valoda(s):</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Izmantotā(s) valoda(s):</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -103,11 +103,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Sesija(s):</string>
 <key>one</key>
-<string>Session</string>
+<string>Sesija(s):</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sesija(s):</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -121,11 +121,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>Pieejamo rīku skaits: %d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>Pieejamo rīku skaits: %d</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>Pieejamo rīku skaits: %d</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
