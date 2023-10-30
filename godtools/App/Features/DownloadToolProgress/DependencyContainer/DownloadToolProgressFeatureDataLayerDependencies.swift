@@ -21,10 +21,6 @@ class DownloadToolProgressFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getDownloadToolRepositoryInterface() -> DownloadToolRepositoryInterface {
-        return DownloadToolRepository()
-    }
-    
     func getDownloadToolProgressInterfaceStringsRepositoryInterface() -> GetDownloadToolProgressInterfaceStringsRepositoryInterface {
         return GetDownloadToolProgressInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),

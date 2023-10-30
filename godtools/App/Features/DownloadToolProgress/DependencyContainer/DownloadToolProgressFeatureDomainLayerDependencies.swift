@@ -17,12 +17,6 @@ class DownloadToolProgressFeatureDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getDownloadToolUseCase() -> DownloadToolUseCase {
-        return DownloadToolUseCase(
-            downloadToolRepositoryInterface: dataLayer.getDownloadToolRepositoryInterface()
-        )
-    }
-    
     func getDownloadToolProgressInterfaceStringsUseCase() -> GetDownloadToolProgressInterfaceStringsUseCase {
         return GetDownloadToolProgressInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getDownloadToolProgressInterfaceStringsRepositoryInterface()
