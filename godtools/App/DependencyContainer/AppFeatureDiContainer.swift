@@ -11,15 +11,17 @@ import Foundation
 class AppFeatureDiContainer {
     
     let appLanguage: AppLanguageFeatureDiContainer
+    let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
     let lessonEvaluation: LessonEvaluationFeatureDiContainer
     let lessons: LessonsFeatureDiContainer
     let onboarding: OnboardingDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     
-    init(appLanguage: AppLanguageFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer) {
+    init(appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer) {
         
         self.appLanguage = appLanguage
+        self.downloadToolProgress = downloadToolProgress
         self.featuredLessons = featuredLessons
         self.lessonEvaluation = lessonEvaluation
         self.lessons = lessons
