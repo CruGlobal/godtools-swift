@@ -24,6 +24,8 @@ class ProgressTimer {
     private var progressChangedClosure: ((_ progress: Double) -> Void)?
     private var progressCompletedClosure: (() -> Void)?
     
+    private(set) var isPaused: Bool = false
+    
     init() {
         
     }
@@ -85,6 +87,8 @@ class ProgressTimer {
             return
         }
         
+        isPaused = false
+        
         self.maxIntervalCount = ProgressTimer.getIntervalCountForSeconds(seconds: lengthSeconds)
         
         progressChangedClosure = changed
@@ -99,6 +103,23 @@ class ProgressTimer {
         )
     }
     
+    func pause(progress: Double?) {
+        
+        isPaused = true
+        
+        guard let progress = progress else {
+            return
+        }
+        
+        intervalCount = progress * maxIntervalCount
+        self.progress = progress
+    }
+    
+    func resume() {
+        
+        isPaused = false
+    }
+    
     func stop() {
         
         guard let progressTimer = self.progressTimer else {
@@ -106,15 +127,22 @@ class ProgressTimer {
         }
         
         progressChangedClosure = nil
+        progressCompletedClosure = nil
         
         progressTimer.invalidate()
         self.progressTimer = nil
+        
+        isPaused = false
         
         intervalCount = 0
     }
     
     @objc private func handleProgressTimerInterval() {
 
+        guard !isPaused else {
+            return
+        }
+        
         intervalCount += 1
         
         let completed: Bool = intervalCount >= maxIntervalCount
@@ -125,7 +153,9 @@ class ProgressTimer {
             progress = 1
             
             progressCompletedClosure?()
-                                    
+                
+            stop()
+            
             return
         }
                 
