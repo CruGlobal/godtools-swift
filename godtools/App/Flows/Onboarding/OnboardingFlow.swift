@@ -13,6 +13,7 @@ import Combine
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     @Published private var quickStartIsAvailable: Bool = false
+    @Published private var currentAppLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -53,6 +54,11 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             .getAvailablePublisher(appLanguageCodeChangedPublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$quickStartIsAvailable)
+        
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$currentAppLanguage)
     }
     
     func getInitialView() -> UIViewController {
@@ -107,10 +113,14 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     private func presentWatchOnboardingTutorialVideoPlayer(youtubeVideoId: String) {
         
+        let videoPlayerParameters: [String: Any] = [
+            YoutubePlayerParameters.interfaceLanguage.rawValue: currentAppLanguage
+        ]
+        
         let viewModel = FullScreenVideoViewModel(
             flowDelegate: self,
             videoId: youtubeVideoId,
-            videoPlayerParameters: nil,
+            videoPlayerParameters: videoPlayerParameters,
             userDidCloseVideoStep: .closeVideoPlayerTappedFromOnboardingTutorial,
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
