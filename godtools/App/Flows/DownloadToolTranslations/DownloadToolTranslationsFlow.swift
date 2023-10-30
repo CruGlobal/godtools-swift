@@ -15,8 +15,8 @@ class DownloadToolTranslationsFlow: Flow {
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)
     
-    private var downloadToolView: DownloadToolView?
-    private var downloadToolModal: UIViewController?
+    private var downloadToolProgressModal: ModalNavigationController?
+    private var downloadToolProgressView: DownloadToolProgressView?
     private var cancellables = Set<AnyCancellable>()
     
     private weak var presentInFlow: Flow?
@@ -52,8 +52,9 @@ class DownloadToolTranslationsFlow: Flow {
             
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
             
-            if let downloadToolView = self?.downloadToolView {
-                downloadToolView.completeDownloadProgress {
+            if let downloadToolProgressView = self?.downloadToolProgressView {
+                
+                downloadToolProgressView.completeDownloadProgress {
                     self?.dismissDownloadTool(completion: nil)
                     self?.didDownloadToolTranslations(.success(toolTranslations))
                 }
@@ -78,61 +79,40 @@ class DownloadToolTranslationsFlow: Flow {
     
     private func navigateToDownloadTool() {
         
-        guard downloadToolModal == nil else {
+        guard downloadToolProgressView == nil else {
             return
         }
         
-        let favoritedResourcesRepository: FavoritedResourcesRepository = appDiContainer.dataLayer.getFavoritedResourcesRepository()
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
-        let resource: ResourceModel? = determineToolTranslationsToDownload.getResource()
-        
-        let downloadMessageLocalizedKey: String
-        let downloadMessage: String
-        
-        let resourceType: ResourceType? = resource?.resourceTypeEnum
-        
-        if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
-            
-            let isFavoritedResource: Bool = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
-            
-            downloadMessageLocalizedKey = isFavoritedResource ? "loading_favorited_tool" : "loading_unfavorited_tool"
-        }
-        else if resourceType == .lesson {
-            
-            downloadMessageLocalizedKey = "loading_favorited_tool"
-        }
-        else {
-            
-            downloadMessageLocalizedKey = "loading_favorited_tool"
-        }
-        
-        downloadMessage = localizationServices.stringForSystemElseEnglish(key: downloadMessageLocalizedKey)
-        
-        let viewModel = DownloadToolViewModel(
+        let viewModel = DownloadToolProgressViewModel(
             flowDelegate: self,
-            downloadMessage: downloadMessage
+            resource: determineToolTranslationsToDownload.getResource(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getDownloadToolProgressInterfaceStringsUseCase: appDiContainer.feature.downloadToolProgress.domainLayer.getDownloadToolProgressInterfaceStringsUseCase(),
+            getToolDownloadProgressInterfaceStringUseCase: appDiContainer.feature.downloadToolProgress.domainLayer.getToolDownloadProgressInterfaceStringUseCase()
         )
         
-        let view = DownloadToolView(viewModel: viewModel)
+        let view = DownloadToolProgressView(viewModel: viewModel)
         
-        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
+        let hostingView = AppHostingController<DownloadToolProgressView>(rootView: view, navigationBar: nil)
+        
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
         
         navigationController.present(modal, animated: true, completion: nil)
         
-        downloadToolView = view
-        downloadToolModal = modal
+        downloadToolProgressView = view
+        downloadToolProgressModal = modal
     }
     
     private func dismissDownloadTool(completion: (() -> Void)?) {
         
-        guard let modal = downloadToolModal else {
+        guard let modal = downloadToolProgressModal else {
             return
         }
         
         modal.dismiss(animated: true, completion: completion)
                 
-        downloadToolView = nil
-        downloadToolModal = nil
+        downloadToolProgressView = nil
+        downloadToolProgressModal = nil
     }
 }
 
