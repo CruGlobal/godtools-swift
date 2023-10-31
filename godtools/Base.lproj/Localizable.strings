@@ -3,6 +3,7 @@
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
 
 
+"onboardingTutorial.chooseLanguageButton.title" = "Choose language";
 "languageSettings.appInterface.title" = "App interface language";
 "languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
 "languageSettings.appInterface.languagesAvailable" = "Languages available";
