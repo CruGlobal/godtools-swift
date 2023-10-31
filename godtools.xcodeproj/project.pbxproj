@@ -123,8 +123,6 @@
 		452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D35592A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift */; };
 		452D355D2A8FCC5D00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D355C2A8FCC5D00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertView.swift */; };
 		452D355F2A8FCCFF00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D355E2A8FCCFF00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift */; };
-		452D55332A3356FB00DE70BF /* GetAppVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D55322A3356FB00DE70BF /* GetAppVersionUseCase.swift */; };
-		452D55352A33570800DE70BF /* AppVersionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D55342A33570800DE70BF /* AppVersionDomainModel.swift */; };
 		452D55372A33615900DE70BF /* MenuAccountSectionVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452D55362A33615900DE70BF /* MenuAccountSectionVisibility.swift */; };
 		452E44CA2AB8F0F000A0B1B6 /* AuthErrorDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E44C92AB8F0F000A0B1B6 /* AuthErrorDomainModel.swift */; };
 		452E44CD2AB8F31000A0B1B6 /* AuthenticateUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E44CC2AB8F31000A0B1B6 /* AuthenticateUserInterface.swift */; };
@@ -1147,6 +1145,10 @@
 		45F7167A290A13530019B715 /* EmailSignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71674290A13530019B715 /* EmailSignUpModel.swift */; };
 		45F7167B290A13530019B715 /* EmailSignUpModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71675290A13530019B715 /* EmailSignUpModelType.swift */; };
 		45F7167D290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7167C290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift */; };
+		45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B22AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift */; };
+		45F7B0B52AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B42AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift */; };
+		45F7B0B82AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B72AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift */; };
+		45F7B0BB2AF18EC000A0E7B4 /* GetMenuInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0BA2AF18EC000A0E7B4 /* GetMenuInterfaceStringsRepository.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
 		45F88B102860BA8800C8027F /* Array+ResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F88B042860BA8700C8027F /* Array+ResourceModel.swift */; };
 		45FB160727DBDDB60009DF8E /* LessonFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB15E927DBDDB40009DF8E /* LessonFlowCompletedState.swift */; };
@@ -1416,8 +1418,6 @@
 		452D35592A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedResourceDataModel.swift; sourceTree = "<group>"; };
 		452D355C2A8FCC5D00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRemoveToolFromFavoritesAlertView.swift; sourceTree = "<group>"; };
 		452D355E2A8FCCFF00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRemoveToolFromFavoritesAlertViewModel.swift; sourceTree = "<group>"; };
-		452D55322A3356FB00DE70BF /* GetAppVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppVersionUseCase.swift; sourceTree = "<group>"; };
-		452D55342A33570800DE70BF /* AppVersionDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionDomainModel.swift; sourceTree = "<group>"; };
 		452D55362A33615900DE70BF /* MenuAccountSectionVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuAccountSectionVisibility.swift; sourceTree = "<group>"; };
 		452E44C92AB8F0F000A0B1B6 /* AuthErrorDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorDomainModel.swift; sourceTree = "<group>"; };
 		452E44CC2AB8F31000A0B1B6 /* AuthenticateUserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserInterface.swift; sourceTree = "<group>"; };
@@ -2401,6 +2401,10 @@
 		45F71674290A13530019B715 /* EmailSignUpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpModel.swift; sourceTree = "<group>"; };
 		45F71675290A13530019B715 /* EmailSignUpModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpModelType.swift; sourceTree = "<group>"; };
 		45F7167C290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsLoggedInUserProperties.swift; sourceTree = "<group>"; };
+		45F7B0B22AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMenuInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
+		45F7B0B42AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		45F7B0B72AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMenuInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		45F7B0BA2AF18EC000A0E7B4 /* GetMenuInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMenuInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
 		45F88B042860BA8700C8027F /* Array+ResourceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+ResourceModel.swift"; sourceTree = "<group>"; };
 		45FB15E927DBDDB40009DF8E /* LessonFlowCompletedState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonFlowCompletedState.swift; sourceTree = "<group>"; };
@@ -3296,15 +3300,6 @@
 				452D355E2A8FCCFF00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift */,
 			);
 			path = ConfirmRemoveToolFromFavorites;
-			sourceTree = "<group>";
-		};
-		452D55312A3356F000DE70BF /* GetAppVersionUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				452D55342A33570800DE70BF /* AppVersionDomainModel.swift */,
-				452D55322A3356FB00DE70BF /* GetAppVersionUseCase.swift */,
-			);
-			path = GetAppVersionUseCase;
 			sourceTree = "<group>";
 		};
 		452E44C22AB8EFD100A0B1B6 /* MobileContentApi */ = {
@@ -6017,6 +6012,7 @@
 			isa = PBXGroup;
 			children = (
 				458CFEA129D4E15D007B423C /* MenuStringKeys.swift */,
+				45F7B0B92AF18EB200A0E7B4 /* Data-DomainInterface */,
 				45F71613290A12D70019B715 /* Domain */,
 				45F715BC290A12D70019B715 /* Presentation */,
 			);
@@ -8495,6 +8491,7 @@
 		45F71613290A12D70019B715 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				45F7B0B62AF18E8500A0E7B4 /* Interface */,
 				45F71614290A12D70019B715 /* UseCases */,
 			);
 			path = Domain;
@@ -8508,8 +8505,8 @@
 				45227BA92A1D00ED0021C131 /* DeleteAccountUseCase */,
 				459E27F82AD8280D008275B3 /* DeleteUserCountersUseCase */,
 				458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */,
-				452D55312A3356F000DE70BF /* GetAppVersionUseCase */,
 				45860A78292421DF0089C836 /* GetGlobalActivityThisWeekUseCase */,
+				45F7B0B12AF18E2D00A0E7B4 /* GetMenuInterfaceStringsUseCase */,
 				45C2AF4B2A818F15004958AB /* GetTutorialUseCase */,
 				D409F2B4292BEDF100D9D2FE /* GetUserAccountDetailsUseCase */,
 				D455F3FC29805BD9009D5F93 /* GetUserActivityBadgeUseCase */,
@@ -8592,6 +8589,31 @@
 				45F71675290A13530019B715 /* EmailSignUpModelType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		45F7B0B12AF18E2D00A0E7B4 /* GetMenuInterfaceStringsUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				45F7B0B22AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift */,
+				45F7B0B42AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift */,
+			);
+			path = GetMenuInterfaceStringsUseCase;
+			sourceTree = "<group>";
+		};
+		45F7B0B62AF18E8500A0E7B4 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				45F7B0B72AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		45F7B0B92AF18EB200A0E7B4 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				45F7B0BA2AF18EC000A0E7B4 /* GetMenuInterfaceStringsRepository.swift */,
+			);
+			path = "Data-DomainInterface";
 			sourceTree = "<group>";
 		};
 		45F88AFA2860BA8700C8027F /* UseCases */ = {
@@ -10057,6 +10079,7 @@
 				4534F93B2AE9B11600A7A071 /* RealmLessonEvaluation.swift in Sources */,
 				45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */,
 				459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */,
+				45F7B0B52AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift in Sources */,
 				45A833572ADEC4D3007C8D77 /* InvisibleChooseAppLanguageButtonForNavigationBar.swift in Sources */,
 				45DD84A12A8BB72F0066A020 /* OpenTutorialBannerView.swift in Sources */,
 				454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */,
@@ -10234,6 +10257,7 @@
 				45920D4A2A8D1C9700E336A8 /* ToolCardView.swift in Sources */,
 				D4BC79DE299D70E40040651B /* CompletedTrainingTipDataModel.swift in Sources */,
 				45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */,
+				45F7B0BB2AF18EC000A0E7B4 /* GetMenuInterfaceStringsRepository.swift in Sources */,
 				45DBE5FF2ACD9EAA008A93BF /* ToolCategoryDomainModel.swift in Sources */,
 				45E60D022AEAE1E600E14BEA /* CircledTextView.swift in Sources */,
 				450D7B0328E32965006C3FDF /* TrackDownloadedTranslationsRepository.swift in Sources */,
@@ -10241,6 +10265,7 @@
 				4555833F269F2C7B00C3FF14 /* ToolPageModalViewModel.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				455E98B029A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift in Sources */,
+				45F7B0B82AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift in Sources */,
 				451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */,
 				D496B9152AA11C9600CBEA19 /* ToolFilterLanguageSelectionViewModel.swift in Sources */,
 				4570B7052889B1760024C931 /* DownloadToolViewModel.swift in Sources */,
@@ -10738,7 +10763,6 @@
 				45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */,
 				453F84C92A029FC00005101E /* ArticleAemDataParserError.swift in Sources */,
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,
-				452D55332A3356FB00DE70BF /* GetAppVersionUseCase.swift in Sources */,
 				45C2AF3A2A813371004958AB /* PageControl.swift in Sources */,
 				45DD849A2A8BB6AE0066A020 /* FavoritesViewModel.swift in Sources */,
 				45E3478A2A49C0120014CCD1 /* OptionalImage.swift in Sources */,
@@ -10870,6 +10894,7 @@
 				45131A0F2AB498AD0085AF0D /* FontLibrary.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
+				45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */,
 				45FE825A2ACE5D8C00930C39 /* NavBarItemController.swift in Sources */,
 				4570C3032ADDC86600F0B83B /* AppNavigationBarAppearance.swift in Sources */,
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
@@ -10971,7 +10996,6 @@
 				45677789287DB3520044AEB2 /* ShareToolScreenTutorialNumberOfViewsCache.swift in Sources */,
 				455582EA269F2C1000C3FF14 /* TrainingPageViewModel.swift in Sources */,
 				D409F2B3292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift in Sources */,
-				452D55352A33570800DE70BF /* AppVersionDomainModel.swift in Sources */,
 				458CFEA629D4E172007B423C /* UserActivityStatDomainModel.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,
 				4573133A28C1821100481640 /* ToolDetailsToggleFavoriteButton.swift in Sources */,
