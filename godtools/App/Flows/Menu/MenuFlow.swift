@@ -227,18 +227,16 @@ class MenuFlow: Flow {
     }
     
     private func getMenuView() -> UIViewController {
-    
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
-        
+            
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            localizationServices: localizationServices,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getMenuInterfaceStringsUseCase: appDiContainer.domainLayer.getMenuInterfaceStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )

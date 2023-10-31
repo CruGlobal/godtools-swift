@@ -64,12 +64,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAppVersionUseCase() -> GetAppVersionUseCase {
-        return GetAppVersionUseCase(
-            infoPlist: dataLayer.getInfoPlist()
-        )
-    }
-    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -77,8 +71,6 @@ class AppDomainLayerDependencies {
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
         )
     }
-    
-    
     
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
@@ -148,6 +140,12 @@ class AppDomainLayerDependencies {
             userAuthentication: dataLayer.getUserAuthentication(),
             firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
             deleteUserCountersUseCase: getDeleteUserCountersUseCase()
+        )
+    }
+    
+    func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
+        return GetMenuInterfaceStringsUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()
         )
     }
     
