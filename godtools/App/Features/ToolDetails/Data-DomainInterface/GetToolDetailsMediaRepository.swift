@@ -44,7 +44,7 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     private func getYouTubeMedia(videoId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
         let playsInFullScreen: Int = 0
-        let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
+        let playerParameters: [String: Any] = [YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
         
         return Just(.youtube(videoId: videoId, playerParameters: playerParameters))
             .eraseToAnyPublisher()

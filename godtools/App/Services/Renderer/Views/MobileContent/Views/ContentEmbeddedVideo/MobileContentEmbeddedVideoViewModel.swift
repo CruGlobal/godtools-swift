@@ -47,7 +47,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
         let playsInFullScreen = 0
         
         return [
-            Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
+            YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
         ]
 
     }
