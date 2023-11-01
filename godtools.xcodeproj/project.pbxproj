@@ -816,6 +816,8 @@
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45B8C1A52AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A42AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift */; };
 		45B8C1A72AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A62AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift */; };
+		45BA7B872AF2E0D4001BAB31 /* GetDownloadToolProgressInterfaceStringsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA7B862AF2E0D4001BAB31 /* GetDownloadToolProgressInterfaceStringsUseCaseTests.swift */; };
+		45BA7B8C2AF2F7BD001BAB31 /* TestsGetDownloadToolProgressInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BA7B8B2AF2F7BD001BAB31 /* TestsGetDownloadToolProgressInterfaceStringsRepository.swift */; };
 		45BCD7702ABB328C0097B4A5 /* DeviceSystemLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BCD76E2ABB328C0097B4A5 /* DeviceSystemLanguage.swift */; };
 		45BD7A7026A235780007426B /* MobileContentRendererPageViewFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */; };
 		45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */; };
@@ -2099,6 +2101,8 @@
 		45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolPageHeaderView.xib; sourceTree = "<group>"; };
 		45B8C1A42AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluatedRepositoryInterface.swift; sourceTree = "<group>"; };
 		45B8C1A62AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluatedRepository.swift; sourceTree = "<group>"; };
+		45BA7B862AF2E0D4001BAB31 /* GetDownloadToolProgressInterfaceStringsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadToolProgressInterfaceStringsUseCaseTests.swift; sourceTree = "<group>"; };
+		45BA7B8B2AF2F7BD001BAB31 /* TestsGetDownloadToolProgressInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsGetDownloadToolProgressInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45BCD76E2ABB328C0097B4A5 /* DeviceSystemLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSystemLanguage.swift; sourceTree = "<group>"; };
 		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
 		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
@@ -3541,6 +3545,7 @@
 			isa = PBXGroup;
 			children = (
 				453689FA2ABB2D840028A570 /* AppLanguage */,
+				45BA7B832AF2E0AC001BAB31 /* DownloadToolProgress */,
 				459DF8E42AE17A350035D97B /* Onboarding */,
 			);
 			path = Features;
@@ -6821,6 +6826,39 @@
 				45B3F4612AC3AE4E00D61BFD /* GetDeviceLanguageRepository.swift */,
 				457766EC2AD6FB3C0093B19A /* GetInterfaceStringForLanguageRepository.swift */,
 				45E61ECB2AE1B7F800A98872 /* GetLaunchCountRepository.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		45BA7B832AF2E0AC001BAB31 /* DownloadToolProgress */ = {
+			isa = PBXGroup;
+			children = (
+				45BA7B8A2AF2F7B8001BAB31 /* Data-DomainInterface */,
+				45BA7B842AF2E0C4001BAB31 /* Domain */,
+			);
+			path = DownloadToolProgress;
+			sourceTree = "<group>";
+		};
+		45BA7B842AF2E0C4001BAB31 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				45BA7B852AF2E0C4001BAB31 /* UseCaseTests */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		45BA7B852AF2E0C4001BAB31 /* UseCaseTests */ = {
+			isa = PBXGroup;
+			children = (
+				45BA7B862AF2E0D4001BAB31 /* GetDownloadToolProgressInterfaceStringsUseCaseTests.swift */,
+			);
+			path = UseCaseTests;
+			sourceTree = "<group>";
+		};
+		45BA7B8A2AF2F7B8001BAB31 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				45BA7B8B2AF2F7BD001BAB31 /* TestsGetDownloadToolProgressInterfaceStringsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -11262,6 +11300,7 @@
 				45E61EC12AE1AE2800A98872 /* GetOnboardingTutorialInterfaceStringsUseCaseTests.swift in Sources */,
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
 				455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */,
+				45BA7B872AF2E0D4001BAB31 /* GetDownloadToolProgressInterfaceStringsUseCaseTests.swift in Sources */,
 				45D7783229A572EA00F23D99 /* JsonServicesType.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				45E61ED22AE1BD6A00A98872 /* TestsGetOnboardingQuickStartInterfaceStringsRepository.swift in Sources */,
@@ -11269,6 +11308,7 @@
 				45368A1C2ABB2D850028A570 /* LocalizationServicesTests.swift in Sources */,
 				45328C0F2AC46D7F006B3B8A /* GetCurrentAppLanguageUseCaseTests.swift in Sources */,
 				45328C082AC46D14006B3B8A /* TestsGetDeviceLanguageRepository.swift in Sources */,
+				45BA7B8C2AF2F7BD001BAB31 /* TestsGetDownloadToolProgressInterfaceStringsRepository.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				450AF5B52AD81F3B00524A15 /* GetInterfaceLayoutDirectionUseCaseTests.swift in Sources */,
 			);
