@@ -57,12 +57,3 @@ extension ConfirmAppLanguageViewModel {
         flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
     }
 }
-
-// MARK: - Private
-
-extension ConfirmAppLanguageViewModel {
-    
-    private func dismissView() {
-        flowDelegate?.navigate(step: .backTappedFromConfirmAppLanguageChange)
-    }
-}
