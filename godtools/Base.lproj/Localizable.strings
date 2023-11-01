@@ -1,3 +1,8 @@
+"languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
+
+
 "onboardingTutorial.chooseLanguageButton.title" = "Choose language";
 "languageSettings.appInterface.title" = "App interface language";
 "languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
