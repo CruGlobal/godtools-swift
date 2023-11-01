@@ -434,9 +434,6 @@
 		456D44422AF2A4EE008F61B9 /* AuthenticateUserAuthPlatformDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D443F2AF2A4EE008F61B9 /* AuthenticateUserAuthPlatformDomainModel.swift */; };
 		456D44432AF2A4EE008F61B9 /* AuthenticateUserAuthPolicyDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44402AF2A4EE008F61B9 /* AuthenticateUserAuthPolicyDomainModel.swift */; };
 		456D44442AF2A4EE008F61B9 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44412AF2A4EE008F61B9 /* AuthenticateUserAuthTypeDomainModel.swift */; };
-		456D44562AF2A617008F61B9 /* MobileContentApiError+AuthErrorDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44472AF2A617008F61B9 /* MobileContentApiError+AuthErrorDomainModel.swift */; };
-		456D44572AF2A617008F61B9 /* UserAuthentication+AuthenticateUserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44482AF2A617008F61B9 /* UserAuthentication+AuthenticateUserInterface.swift */; };
-		456D44582AF2A617008F61B9 /* AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44492AF2A617008F61B9 /* AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift */; };
 		456D44592AF2A617008F61B9 /* LastAuthenticatedProviderCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D444A2AF2A617008F61B9 /* LastAuthenticatedProviderCache.swift */; };
 		456D445A2AF2A617008F61B9 /* AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D444C2AF2A617008F61B9 /* AuthenticationProviderInterface.swift */; };
 		456D445B2AF2A617008F61B9 /* AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D444E2AF2A617008F61B9 /* AuthenticationProviderProfile.swift */; };
@@ -472,6 +469,7 @@
 		457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739E727A0955000999270 /* MobileContentViewWidth.swift */; };
 		457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739EA27A0984200999270 /* MobileContentFlowRow.swift */; };
 		457739ED27A0985A00999270 /* MobileContentFlowRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739EC27A0985A00999270 /* MobileContentFlowRowItem.swift */; };
+		45774C012AF2FD5A00AC40B7 /* AuthenticateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45774C002AF2FD5A00AC40B7 /* AuthenticateUser.swift */; };
 		457766E72AD6F3180093B19A /* GetToolDetailsInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766E62AD6F3180093B19A /* GetToolDetailsInterfaceStringsRepository.swift */; };
 		457766E92AD6F3340093B19A /* GetToolDetailsInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766E82AD6F3340093B19A /* GetToolDetailsInterfaceStringsRepositoryInterface.swift */; };
 		457766EB2AD6FB360093B19A /* GetInterfaceStringForLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766EA2AD6FB350093B19A /* GetInterfaceStringForLanguageRepositoryInterface.swift */; };
@@ -1756,9 +1754,6 @@
 		456D443F2AF2A4EE008F61B9 /* AuthenticateUserAuthPlatformDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserAuthPlatformDomainModel.swift; sourceTree = "<group>"; };
 		456D44402AF2A4EE008F61B9 /* AuthenticateUserAuthPolicyDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserAuthPolicyDomainModel.swift; sourceTree = "<group>"; };
 		456D44412AF2A4EE008F61B9 /* AuthenticateUserAuthTypeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateUserAuthTypeDomainModel.swift; sourceTree = "<group>"; };
-		456D44472AF2A617008F61B9 /* MobileContentApiError+AuthErrorDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MobileContentApiError+AuthErrorDomainModel.swift"; sourceTree = "<group>"; };
-		456D44482AF2A617008F61B9 /* UserAuthentication+AuthenticateUserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserAuthentication+AuthenticateUserInterface.swift"; sourceTree = "<group>"; };
-		456D44492AF2A617008F61B9 /* AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift"; sourceTree = "<group>"; };
 		456D444A2AF2A617008F61B9 /* LastAuthenticatedProviderCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastAuthenticatedProviderCache.swift; sourceTree = "<group>"; };
 		456D444C2AF2A617008F61B9 /* AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderInterface.swift; sourceTree = "<group>"; };
 		456D444E2AF2A617008F61B9 /* AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderProfile.swift; sourceTree = "<group>"; };
@@ -1796,6 +1791,7 @@
 		457739E727A0955000999270 /* MobileContentViewWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewWidth.swift; sourceTree = "<group>"; };
 		457739EA27A0984200999270 /* MobileContentFlowRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowRow.swift; sourceTree = "<group>"; };
 		457739EC27A0985A00999270 /* MobileContentFlowRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowRowItem.swift; sourceTree = "<group>"; };
+		45774C002AF2FD5A00AC40B7 /* AuthenticateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUser.swift; sourceTree = "<group>"; };
 		457766E62AD6F3180093B19A /* GetToolDetailsInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDetailsInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		457766E82AD6F3340093B19A /* GetToolDetailsInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDetailsInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		457766EA2AD6FB350093B19A /* GetInterfaceStringForLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetInterfaceStringForLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -3237,6 +3233,7 @@
 		451C848A2AF1C2A40003BF1A /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				45774C002AF2FD5A00AC40B7 /* AuthenticateUser.swift */,
 				456D44332AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift */,
 				451C84A02AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift */,
 			);
@@ -5136,20 +5133,9 @@
 			children = (
 				456D444A2AF2A617008F61B9 /* LastAuthenticatedProviderCache.swift */,
 				456D44552AF2A617008F61B9 /* UserAuthentication.swift */,
-				456D44462AF2A617008F61B9 /* AuthenticateUserInterface */,
 				456D444B2AF2A617008F61B9 /* AuthenticationProvider */,
 			);
 			path = UserAuthentication;
-			sourceTree = "<group>";
-		};
-		456D44462AF2A617008F61B9 /* AuthenticateUserInterface */ = {
-			isa = PBXGroup;
-			children = (
-				456D44492AF2A617008F61B9 /* AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift */,
-				456D44472AF2A617008F61B9 /* MobileContentApiError+AuthErrorDomainModel.swift */,
-				456D44482AF2A617008F61B9 /* UserAuthentication+AuthenticateUserInterface.swift */,
-			);
-			path = AuthenticateUserInterface;
 			sourceTree = "<group>";
 		};
 		456D444B2AF2A617008F61B9 /* AuthenticationProvider */ = {
@@ -10241,7 +10227,6 @@
 				45FB160A27DBDDB60009DF8E /* OnboardingFlowCompletedState.swift in Sources */,
 				45EB9B7B29F16CF200CA74A8 /* UIViewController+DismissPresented.swift in Sources */,
 				4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */,
-				456D44572AF2A617008F61B9 /* UserAuthentication+AuthenticateUserInterface.swift in Sources */,
 				45BDA5D02954F67D007E259B /* ResourceViewsService.swift in Sources */,
 				454ADAE12ABDDB3E00037C27 /* AppLanguageItemView.swift in Sources */,
 				45DBE6072ACD9EAB008A93BF /* LanguageFilterType.swift in Sources */,
@@ -10380,7 +10365,6 @@
 				454ADAE62ABDDD3800037C27 /* ChooseAppLanguageFlowCompleted.swift in Sources */,
 				45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */,
 				45EB9B8029F16CF200CA74A8 /* Locale+Extensions.swift in Sources */,
-				456D44582AF2A617008F61B9 /* AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift in Sources */,
 				45860A512923E73A0089C836 /* AccountUserDetailsView.swift in Sources */,
 				458CFE8D29D4E0B9007B423C /* LoadingArticleView.swift in Sources */,
 				454B47E22AE0228200C7B5E7 /* GetOnboardingTutorialInterfaceStringsRepository.swift in Sources */,
@@ -10496,7 +10480,6 @@
 				453F84C22A029FC00005101E /* ArticleAemCacheObject.swift in Sources */,
 				45F7167A290A13530019B715 /* EmailSignUpModel.swift in Sources */,
 				45DBE6252ACDA40C008A93BF /* FeaturedLessonDomainModel.swift in Sources */,
-				456D44562AF2A617008F61B9 /* MobileContentApiError+AuthErrorDomainModel.swift in Sources */,
 				45070A852ACF43E900229EDD /* AppLanguageSettingsBarItem.swift in Sources */,
 				45070A7F2ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift in Sources */,
 				45558405269F2DA500C3FF14 /* MobileContentPagesView.swift in Sources */,
@@ -10599,6 +10582,7 @@
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
 				45FE82442ACE5BFE00930C39 /* ModalNavigationController.swift in Sources */,
 				450DB5642AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift in Sources */,
+				45774C012AF2FD5A00AC40B7 /* AuthenticateUser.swift in Sources */,
 				D48018C228EF6A7200389565 /* DashboardViewModel.swift in Sources */,
 				D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */,
 				45A8351C2AD1A71C004F5593 /* GetToolDetailsUseCase.swift in Sources */,

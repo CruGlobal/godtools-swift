@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SocialAuthentication
 
 class AppDataLayerDependencies {
     
@@ -329,6 +330,25 @@ class AppDataLayerDependencies {
     func getTutorialVideoAnalytics() -> TutorialVideoAnalytics {
         return TutorialVideoAnalytics(
             trackActionAnalytics: getAnalytics().trackActionAnalytics
+        )
+    }
+
+    func getUserAuthentication() -> UserAuthentication {
+        
+        return UserAuthentication(
+            authenticationProviders: [
+                .apple: AppleAuthentication(
+                    appleUserPersistentStore: AppleUserPersistentStore()
+                ),
+                .facebook: FacebookAuthentication(
+                    configuration: FacebookAuthenticationConfiguration(permissions: ["email"])
+                ),
+                .google: GoogleAuthentication(
+                    configuration: getAppConfig().getGoogleAuthenticationConfiguration()
+                )
+            ],
+            lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache),
+            mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
     

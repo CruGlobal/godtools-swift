@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SocialAuthentication
 
 class AccountCreationFeatureDataLayerDependencies {
     
@@ -20,39 +19,13 @@ class AccountCreationFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getAppleAuthentication() -> AppleAuthentication {
-        return AppleAuthentication(
-            appleUserPersistentStore: AppleUserPersistentStore()
-        )
-    }
-    
-    private func getFacebookAuthentication() -> FacebookAuthentication {
-        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
-    }
-    
-    private func getGoogleAuthentication() -> GoogleAuthentication {
-        return GoogleAuthentication(
-            configuration: coreDataLayer.getAppConfig().getGoogleAuthenticationConfiguration()
-        )
-    }
-    
-    private func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
-        return LastAuthenticatedProviderCache(userDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
-    }
-    
-    private func getUserAuthentication() -> UserAuthentication {
-        return UserAuthentication(
-            authenticationProviders: [
-                .apple: getAppleAuthentication(),
-                .facebook: getFacebookAuthentication(),
-                .google: getGoogleAuthentication()
-            ],
-            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache(),
-            mobileContentAuthTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
-        )
-    }
-    
     // MARK: - Domain Interface
+    
+    func getAuthenticateUserInterface() -> AuthenticateUserInterface {
+        return AuthenticateUser(
+            userAuthentication: coreDataLayer.getUserAuthentication()
+        )
+    }
     
     func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
         return GetSocialCreateAccountInterfaceStringsRepository(

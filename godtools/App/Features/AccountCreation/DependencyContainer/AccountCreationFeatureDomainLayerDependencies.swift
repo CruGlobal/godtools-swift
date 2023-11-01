@@ -11,10 +11,20 @@ import Foundation
 class AccountCreationFeatureDomainLayerDependencies {
     
     private let dataLayer: AccountCreationFeatureDataLayerDependencies
+    private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: AccountCreationFeatureDataLayerDependencies) {
+    init(dataLayer: AccountCreationFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
+        self.coreDataLayer = coreDataLayer
+    }
+    
+    func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
+        return AuthenticateUserUseCase(
+            authenticateUser: dataLayer.getAuthenticateUserInterface(),
+            emailSignUpService: coreDataLayer.getEmailSignUpService(),
+            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
+        )
     }
     
     func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {

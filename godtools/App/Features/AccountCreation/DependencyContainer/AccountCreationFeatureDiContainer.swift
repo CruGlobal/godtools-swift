@@ -16,6 +16,6 @@ class AccountCreationFeatureDiContainer {
     init(coreDataLayer: AppDataLayerDependencies) {
         
         dataLayer = AccountCreationFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = AccountCreationFeatureDomainLayerDependencies(dataLayer: dataLayer)
+        domainLayer = AccountCreationFeatureDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
     }
 }

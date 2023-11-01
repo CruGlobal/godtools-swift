@@ -1,16 +1,22 @@
 //
-//  UserAuthentication+AuthenticateUserInterface.swift
+//  AuthenticateUser.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/19/23.
+//  Created by Levi Eggert on 11/1/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
-import UIKit
 import Combine
 
-extension UserAuthentication: AuthenticateUserInterface {
+class AuthenticateUser: AuthenticateUserInterface {
+    
+    private let userAuthentication: UserAuthentication
+    
+    init(userAuthentication: UserAuthentication) {
+        
+        self.userAuthentication = userAuthentication
+    }
     
     func authenticateUserPublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> {
         
@@ -21,7 +27,7 @@ extension UserAuthentication: AuthenticateUserInterface {
         )
         .flatMap({ (authToken: MobileContentAuthTokenDataModel) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> in
                             
-            return self.getAuthUserPublisher()
+            return self.userAuthentication.getAuthUserPublisher()
                 .mapError { (error: Error) in
                     return .other(error: error)
                 }
@@ -36,21 +42,21 @@ extension UserAuthentication: AuthenticateUserInterface {
             
         case .renewAccessTokenElseAskUserToAuthenticate(let fromViewController):
                         
-            return signInPublisher(
-                provider: authPlatform.toAuthenticationProviderType(),
+            return userAuthentication.signInPublisher(
+                provider: self.mapAuthPlatformToProvider(authPlatform: authPlatform),
                 createUser: authType == .createAccount,
                 fromViewController: fromViewController
             )
             .mapError { (apiError: MobileContentApiError) in
-                return apiError.toAuthErrorDomainModel()
+                return self.mapApiErrorToAuthErrorDomainModel(apiError: apiError)
             }
             .eraseToAnyPublisher()
             
         case .renewAccessToken:
             
-            return renewTokenPublisher()
+            return userAuthentication.renewTokenPublisher()
                 .mapError { (apiError: MobileContentApiError) in
-                    return apiError.toAuthErrorDomainModel()
+                    return self.mapApiErrorToAuthErrorDomainModel(apiError: apiError)
                 }
                 .eraseToAnyPublisher()
         }
@@ -58,18 +64,55 @@ extension UserAuthentication: AuthenticateUserInterface {
     
     func renewAuthenticationPublisher() -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> {
         
-        return renewTokenPublisher()
+        return userAuthentication.renewTokenPublisher()
             .mapError { (apiError: MobileContentApiError) in
-                return apiError.toAuthErrorDomainModel()
+                return self.mapApiErrorToAuthErrorDomainModel(apiError: apiError)
             }
             .flatMap({ (authToken: MobileContentAuthTokenDataModel) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> in
                                 
-                return self.getAuthUserPublisher()
+                return self.userAuthentication.getAuthUserPublisher()
                     .mapError { (error: Error) in
                         return .other(error: error)
                     }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+    
+    private func mapApiErrorToAuthErrorDomainModel(apiError: MobileContentApiError) -> AuthErrorDomainModel {
+        
+        switch apiError {
+            
+        case .other(let error):
+            return .other(error: error)
+            
+        case .responseError(let responseErrors, let error):
+            
+            for responseError in responseErrors {
+                
+                let code: MobileContentApiErrorCodableCode = responseError.getCodeEnum()
+                
+                if code == .userNotFound {
+                    return .accountNotFound
+                }
+                else if code == .userAlreadyExists {
+                    return .accountAlreadyExists
+                }
+            }
+
+            return .other(error: error)
+        }
+    }
+    
+    private func mapAuthPlatformToProvider(authPlatform: AuthenticateUserAuthPlatformDomainModel) -> AuthenticationProviderType {
+        
+        switch authPlatform {
+        case .apple:
+            return .apple
+        case .facebook:
+            return .facebook
+        case .google:
+            return .google
+        }
     }
 }
