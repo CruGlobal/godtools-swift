@@ -1,5 +1,5 @@
 //
-//  AuthenticateUserAuthType.swift
+//  AuthenticateUserAuthTypeDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/18/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticateUserAuthType {
+enum AuthenticateUserAuthTypeDomainModel {
     
     case createAccount
     case signIn

@@ -1,5 +1,5 @@
 //
-//  AuthenticateUserAuthPlatform.swift
+//  AuthenticateUserAuthPlatformDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/18/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AuthenticateUserAuthPlatform {
+enum AuthenticateUserAuthPlatformDomainModel {
     
     case apple
     case facebook

@@ -1,5 +1,5 @@
 //
-//  AuthenticateUserAuthPlatform+AuthenticationProviderType.swift
+//  AuthenticateUserAuthPlatformDomainModel+AuthenticationProviderType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/19/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension AuthenticateUserAuthPlatform {
+extension AuthenticateUserAuthPlatformDomainModel {
     
     func toAuthenticationProviderType() -> AuthenticationProviderType {
         

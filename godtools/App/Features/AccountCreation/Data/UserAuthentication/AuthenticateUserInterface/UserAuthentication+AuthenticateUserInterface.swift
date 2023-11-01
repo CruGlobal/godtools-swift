@@ -12,7 +12,7 @@ import Combine
 
 extension UserAuthentication: AuthenticateUserInterface {
     
-    func authenticateUserPublisher(authType: AuthenticateUserAuthType, authPlatform: AuthenticateUserAuthPlatform, authPolicy: AuthenticateUserAuthPolicy) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> {
+    func authenticateUserPublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel> {
         
         return authenticateByAuthTypePublisher(
             authType: authType,
@@ -30,7 +30,7 @@ extension UserAuthentication: AuthenticateUserInterface {
         .eraseToAnyPublisher()
     }
     
-    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthType, authPlatform: AuthenticateUserAuthPlatform, authPolicy: AuthenticateUserAuthPolicy) -> AnyPublisher<MobileContentAuthTokenDataModel, AuthErrorDomainModel> {
+    private func authenticateByAuthTypePublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<MobileContentAuthTokenDataModel, AuthErrorDomainModel> {
                                 
         switch authPolicy {
             

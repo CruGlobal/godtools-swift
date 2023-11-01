@@ -8,6 +8,8 @@
 
 import Foundation
 
+// TODO: Would like to remove these raw values. ~Levi
+
 enum AuthenticationProviderType: String {
     
     case apple = "apple"

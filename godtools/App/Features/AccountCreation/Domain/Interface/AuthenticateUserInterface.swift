@@ -11,6 +11,6 @@ import Combine
 
 protocol AuthenticateUserInterface {
     
-    func authenticateUserPublisher(authType: AuthenticateUserAuthType, authPlatform: AuthenticateUserAuthPlatform, authPolicy: AuthenticateUserAuthPolicy) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel>
+    func authenticateUserPublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel>
     func renewAuthenticationPublisher() -> AnyPublisher<AuthUserDomainModel?, AuthErrorDomainModel>
 }

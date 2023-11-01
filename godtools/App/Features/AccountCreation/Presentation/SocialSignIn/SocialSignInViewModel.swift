@@ -78,7 +78,7 @@ class SocialSignInViewModel: ObservableObject {
         }
     }
     
-    private func authenticateUser(authPlatform: AuthenticateUserAuthPlatform) {
+    private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
         authenticateUserUseCase.authenticatePublisher(
             authType: authenticationType == .createAccount ? .createAccount : .signIn,

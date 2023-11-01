@@ -22,7 +22,7 @@ class AuthenticateUserUseCase {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func authenticatePublisher(authType: AuthenticateUserAuthType, authPlatform: AuthenticateUserAuthPlatform, authPolicy: AuthenticateUserAuthPolicy) -> AnyPublisher<Bool, AuthErrorDomainModel> {
+    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<Bool, AuthErrorDomainModel> {
         
         return userAuthentication.authenticateUserPublisher(authType: authType, authPlatform: authPlatform, authPolicy: authPolicy)
             .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<Bool, AuthErrorDomainModel> in
