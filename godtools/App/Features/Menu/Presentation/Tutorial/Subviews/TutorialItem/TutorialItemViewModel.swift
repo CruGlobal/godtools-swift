@@ -48,7 +48,7 @@ class TutorialItemViewModel: ObservableObject {
     var youtubePlayerParameters: [String: Any] {
         
         let playsInFullScreen: Int = 0
-        let playerParameters: [String: Any] = [Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
+        let playerParameters: [String: Any] = [YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
         
         return playerParameters
     }
