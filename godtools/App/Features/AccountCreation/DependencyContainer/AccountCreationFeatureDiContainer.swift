@@ -10,7 +10,12 @@ import Foundation
 
 class AccountCreationFeatureDiContainer {
     
-    init() {
+    let dataLayer: AccountCreationFeatureDataLayerDependencies
+    let domainLayer: AccountCreationFeatureDomainLayerDependencies
+    
+    init(coreDataLayer: AppDataLayerDependencies) {
         
+        dataLayer = AccountCreationFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
+        domainLayer = AccountCreationFeatureDomainLayerDependencies(dataLayer: dataLayer)
     }
 }

@@ -10,7 +10,26 @@ import Foundation
 
 class AccountCreationFeatureDataLayerDependencies {
     
-    init() {
+    private let coreDataLayer: AppDataLayerDependencies
+    
+    init(coreDataLayer: AppDataLayerDependencies) {
         
+        self.coreDataLayer = coreDataLayer
+    }
+    
+    // MARK: - Data Layer Classes
+    
+    // MARK: - Domain Interface
+    
+    func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
+        return GetSocialCreateAccountInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getSocialSignInInterfaceStringsRepositoryInterface() -> GetSocialSignInInterfaceStringsRepositoryInterface {
+        return GetSocialSignInInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
 }

@@ -10,4 +10,9 @@ import Foundation
 
 struct SocialSignInInterfaceStringsDomainModel {
     
+    let title: String
+    let subtitle: String
+    let signInWithAppleActionTitle: String
+    let signInWithFacebookActionTitle: String
+    let signInWithGoogleActionTitle: String
 }

@@ -100,7 +100,6 @@
 		451C848E2AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84832AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift */; };
 		451C848F2AF1C2A40003BF1A /* SocialSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84842AF1C2A40003BF1A /* SocialSignInView.swift */; };
 		451C84902AF1C2A40003BF1A /* SocialSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84852AF1C2A40003BF1A /* SocialSignInViewModel.swift */; };
-		451C84912AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */; };
 		451C84922AF1C2A40003BF1A /* SocialSignInButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */; };
 		451C84972AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84962AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift */; };
 		451C84992AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84982AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift */; };
@@ -436,6 +435,11 @@
 		456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */; };
 		456BB02B27C588E80087CCA4 /* MobileContentHeadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02827C588E80087CCA4 /* MobileContentHeadingViewModel.swift */; };
 		456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */; };
+		456D442E2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D442D2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift */; };
+		456D44302AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D442F2AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */; };
+		456D44322AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44312AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift */; };
+		456D44342AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44332AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift */; };
+		456D44362AF290F6008F61B9 /* SocialSignInButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D44352AF290F6008F61B9 /* SocialSignInButtonType.swift */; };
 		457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */; };
 		457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */; };
 		4570C3032ADDC86600F0B83B /* AppNavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570C3022ADDC86600F0B83B /* AppNavigationBarAppearance.swift */; };
@@ -1409,7 +1413,6 @@
 		451C84832AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInAuthenticationType.swift; sourceTree = "<group>"; };
 		451C84842AF1C2A40003BF1A /* SocialSignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInView.swift; sourceTree = "<group>"; };
 		451C84852AF1C2A40003BF1A /* SocialSignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInViewModel.swift; sourceTree = "<group>"; };
-		451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonViewModel.swift; sourceTree = "<group>"; };
 		451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonView.swift; sourceTree = "<group>"; };
 		451C84962AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationFeatureDiContainer.swift; sourceTree = "<group>"; };
 		451C84982AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
@@ -1754,6 +1757,11 @@
 		456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingView.swift; sourceTree = "<group>"; };
 		456BB02827C588E80087CCA4 /* MobileContentHeadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingViewModel.swift; sourceTree = "<group>"; };
 		456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewHeightConstraintType.swift; sourceTree = "<group>"; };
+		456D442D2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCreateAccountInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		456D442F2AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		456D44312AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialCreateAccountInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
+		456D44332AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialCreateAccountInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		456D44352AF290F6008F61B9 /* SocialSignInButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonType.swift; sourceTree = "<group>"; };
 		457032A426D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRenderer.swift; sourceTree = "<group>"; };
 		457032A626D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageRendererType.swift; sourceTree = "<group>"; };
 		4570C3022ADDC86600F0B83B /* AppNavigationBarAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationBarAppearance.swift; sourceTree = "<group>"; };
@@ -3251,8 +3259,8 @@
 		451C84872AF1C2A40003BF1A /* SocialSignInButtonView */ = {
 			isa = PBXGroup;
 			children = (
+				456D44352AF290F6008F61B9 /* SocialSignInButtonType.swift */,
 				451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */,
-				451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */,
 			);
 			path = SocialSignInButtonView;
 			sourceTree = "<group>";
@@ -3260,6 +3268,7 @@
 		451C848A2AF1C2A40003BF1A /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				456D44332AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift */,
 				451C84A02AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -3295,6 +3304,7 @@
 		451C84932AF1C2E00003BF1A /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				456D442D2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift */,
 				451C84A22AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift */,
 			);
 			path = Entities;
@@ -3303,6 +3313,7 @@
 		451C84942AF1C2E00003BF1A /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				456D442F2AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */,
 				451C849E2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */,
 			);
 			path = Interface;
@@ -3311,6 +3322,7 @@
 		451C84952AF1C2E00003BF1A /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				456D44312AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift */,
 				451C849C2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift */,
 			);
 			path = UseCases;
@@ -10210,6 +10222,7 @@
 				45AE975C27C97A9500C2CB33 /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				450DB5622AC3552700B2FE3A /* GetAppLanguagesListUseCase.swift in Sources */,
 				45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */,
+				456D44322AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift in Sources */,
 				45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */,
 				45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */,
 				45B3F4642AC3B02600D61BFD /* AppLanguageDomainModel.swift in Sources */,
@@ -10235,6 +10248,7 @@
 				45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
 				453F84C32A029FC00005101E /* ArticleAemCache.swift in Sources */,
 				45CF8FEF2A0EC76400802A88 /* ArticleWebViewState.swift in Sources */,
+				456D44302AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				452D355F2A8FCCFF00BC4F97 /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift in Sources */,
 				45920D302A8CFE2500E336A8 /* YourFavoriteToolsHeaderView.swift in Sources */,
 				45860A572923E7B30089C836 /* FixedVerticalSpacer.swift in Sources */,
@@ -10597,6 +10611,7 @@
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
 				451FB9372896B3DE00423865 /* LanguageDomainModel.swift in Sources */,
 				459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */,
+				456D44342AF28D2F008F61B9 /* GetSocialCreateAccountInterfaceStringsRepository.swift in Sources */,
 				459E86E228EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift in Sources */,
 				45FE82382ACE5BFE00930C39 /* AppViewController.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
@@ -10845,6 +10860,7 @@
 				4552F54A2AD4745A0075415E /* TrackScreenViewAnalyticsUseCase.swift in Sources */,
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
+				456D442E2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift in Sources */,
 				45DBE5FE2ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
 				4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */,
@@ -10888,6 +10904,7 @@
 				45DBE6032ACD9EAB008A93BF /* GetAllToolsUseCase.swift in Sources */,
 				D496B90C2A9FC2D300CBEA19 /* ToolFilterSelectionRowViewModel.swift in Sources */,
 				4581D97F297AD21E00D056D6 /* JsonApiResponseData.swift in Sources */,
+				456D44362AF290F6008F61B9 /* SocialSignInButtonType.swift in Sources */,
 				45920D592A8D4F2800E336A8 /* ToolCardLayout.swift in Sources */,
 				454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */,
 				458CFE9B29D4E0B9007B423C /* ArticleCategoryCellViewModel.swift in Sources */,
@@ -11052,7 +11069,6 @@
 				45131A142AB4995F0085AF0D /* ApplicationLayout.swift in Sources */,
 				45AE974127C97A9400C2CB33 /* Video+MobileContentRenderableModel.swift in Sources */,
 				45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */,
-				451C84912AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift in Sources */,
 				45558352269F2D1000C3FF14 /* LessonPageView.swift in Sources */,
 				45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */,
 				4555832A269F2C7B00C3FF14 /* ToolPageCardAnalyticsScreenName.swift in Sources */,

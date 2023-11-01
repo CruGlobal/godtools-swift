@@ -14,53 +14,67 @@ class SocialSignInViewModel: ObservableObject {
     
     private let presentAuthViewController: UIViewController
     private let authenticationType: SocialSignInAuthenticationType
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getSocialCreateAccountInterfaceStringsUseCase: GetSocialCreateAccountInterfaceStringsUseCase
+    private let getSocialSignInInterfaceStringsUseCase: GetSocialSignInInterfaceStringsUseCase
     private let authenticateUserUseCase: AuthenticateUserUseCase
-    private let localizationServices: LocalizationServices
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let titleText: String
-    let subtitleText: String
+    @Published private var appLanguage: String = LanguageCodeDomainModel.english.value
     
-    lazy var googleSignInButtonViewModel: SocialSignInButtonViewModel = {
-        SocialSignInButtonViewModel(
-            buttonType: .google,
-            localizationServices: localizationServices
-        )
-    }()
+    @Published var title: String = ""
+    @Published var subtitle: String = ""
+    @Published var signInWithAppleButtonTitle: String = ""
+    @Published var signInWithFacebookButtonTitle: String = ""
+    @Published var signInWithGoogleButtonTitle: String = ""
     
-    lazy var facebookSignInButtonViewModel: SocialSignInButtonViewModel = {
-        SocialSignInButtonViewModel(
-            buttonType: .facebook,
-            localizationServices: localizationServices
-        )
-    }()
-    
-    lazy var appleSignInButtonViewModel: SocialSignInButtonViewModel = {
-        SocialSignInButtonViewModel(
-            buttonType: .apple,
-            localizationServices: localizationServices
-        )
-    }()
-    
-    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, authenticateUserUseCase: AuthenticateUserUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, presentAuthViewController: UIViewController, authenticationType: SocialSignInAuthenticationType, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getSocialCreateAccountInterfaceStringsUseCase: GetSocialCreateAccountInterfaceStringsUseCase, getSocialSignInInterfaceStringsUseCase: GetSocialSignInInterfaceStringsUseCase, authenticateUserUseCase: AuthenticateUserUseCase) {
         
         self.flowDelegate = flowDelegate
         self.presentAuthViewController = presentAuthViewController
         self.authenticationType = authenticationType
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getSocialCreateAccountInterfaceStringsUseCase = getSocialCreateAccountInterfaceStringsUseCase
+        self.getSocialSignInInterfaceStringsUseCase = getSocialSignInInterfaceStringsUseCase
         self.authenticateUserUseCase = authenticateUserUseCase
-        self.localizationServices = localizationServices
+        
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
         
         switch authenticationType {
         case .createAccount:
-            titleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.createAccountTitle.rawValue)
-            subtitleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.createAccountSubtitle.rawValue)
+            
+            getSocialCreateAccountInterfaceStringsUseCase
+                .getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (interfaceStrings: SocialCreateAccountInterfaceStringsDomainModel) in
+                    
+                    self?.title = interfaceStrings.title
+                    self?.subtitle = interfaceStrings.subtitle
+                    self?.signInWithAppleButtonTitle = interfaceStrings.createWithAppleActionTitle
+                    self?.signInWithFacebookButtonTitle = interfaceStrings.createWithFacebookActionTitle
+                    self?.signInWithGoogleButtonTitle = interfaceStrings.createWithGoogleActionTitle
+                }
+                .store(in: &cancellables)
         
         case .login:
-            titleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.signInTitle.rawValue)
-            subtitleText = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SocialSignIn.signInSubtitle.rawValue)
+            
+            getSocialSignInInterfaceStringsUseCase
+                .getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (interfaceStrings: SocialSignInInterfaceStringsDomainModel) in
+                    
+                    self?.title = interfaceStrings.title
+                    self?.subtitle = interfaceStrings.subtitle
+                    self?.signInWithAppleButtonTitle = interfaceStrings.signInWithAppleActionTitle
+                    self?.signInWithFacebookButtonTitle = interfaceStrings.signInWithFacebookActionTitle
+                    self?.signInWithGoogleButtonTitle = interfaceStrings.signInWithGoogleActionTitle
+                }
+                .store(in: &cancellables)
         }
     }
     

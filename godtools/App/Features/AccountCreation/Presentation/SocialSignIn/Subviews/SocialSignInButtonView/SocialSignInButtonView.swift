@@ -10,16 +10,43 @@ import SwiftUI
 
 struct SocialSignInButtonView: View {
     
+    private let buttonType: SocialSignInButtonType
+    private let backgroundColor: Color
+    private let font: Font = FontLibrary.sfProTextSemibold.font(size: 16)
+    private let fontColor: Color
+    private let title: String
+    private let iconName: String
+    private let iconSize: CGSize
     private let height: CGFloat = 43
     private let cornerRadius: CGFloat = 6
     private let tappedClosure: (() -> Void)
-    
-    @ObservedObject private var viewModel: SocialSignInButtonViewModel
-    
-    init(viewModel: SocialSignInButtonViewModel, tappedClosure: @escaping (() -> Void)) {
         
-        self.viewModel = viewModel
+    init(buttonType: SocialSignInButtonType, title: String, tappedClosure: @escaping (() -> Void)) {
+        
+        self.buttonType = buttonType
+        self.title = title
         self.tappedClosure = tappedClosure
+        
+        switch buttonType {
+            
+        case .google:
+            backgroundColor = .white
+            fontColor = ColorPalette.gtGrey.color
+            iconName = ImageCatalog.googleIcon.name
+            iconSize = CGSize(width: 18, height: 18)
+            
+        case .facebook:
+            backgroundColor = Color.getColorWithRGB(red: 24, green: 119, blue: 242, opacity: 1)
+            fontColor = .white
+            iconName = ImageCatalog.facebookIcon.name
+            iconSize = CGSize(width: 24, height: 24)
+            
+        case .apple:
+            backgroundColor = .black
+            fontColor = .white
+            iconName = ImageCatalog.appleIcon.name
+            iconSize = CGSize(width: 24, height: 24)
+        }
     }
     
     var body: some View {
@@ -42,17 +69,17 @@ struct SocialSignInButtonView: View {
                     
                     HStack(spacing: 12) {
                         
-                        Image(viewModel.iconName)
-                            .frame(width: viewModel.iconSize.width, height: viewModel.iconSize.height)
+                        Image(iconName)
+                            .frame(width: iconSize.width, height: iconSize.height)
                         
-                        Text(viewModel.buttonText)
-                            .font(viewModel.font)
-                            .foregroundColor(viewModel.fontColor)
+                        Text(title)
+                            .font(font)
+                            .foregroundColor(fontColor)
                     }
                 }
             }
             .frame(height: height)
-            .background(viewModel.backgroundColor)
+            .background(backgroundColor)
             .cornerRadius(cornerRadius)
         }
     }

@@ -10,7 +10,22 @@ import Foundation
 
 class AccountCreationFeatureDomainLayerDependencies {
     
-    init() {
+    private let dataLayer: AccountCreationFeatureDataLayerDependencies
+    
+    init(dataLayer: AccountCreationFeatureDataLayerDependencies) {
         
+        self.dataLayer = dataLayer
+    }
+    
+    func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
+        return GetSocialCreateAccountInterfaceStringsUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getSocialCreateAccountInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getSocialSignInInterfaceStringsUseCase() -> GetSocialSignInInterfaceStringsUseCase {
+        return GetSocialSignInInterfaceStringsUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getSocialSignInInterfaceStringsRepositoryInterface()
+        )
     }
 }
