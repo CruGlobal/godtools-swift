@@ -97,6 +97,18 @@
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
+		451C848E2AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84832AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift */; };
+		451C848F2AF1C2A40003BF1A /* SocialSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84842AF1C2A40003BF1A /* SocialSignInView.swift */; };
+		451C84902AF1C2A40003BF1A /* SocialSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84852AF1C2A40003BF1A /* SocialSignInViewModel.swift */; };
+		451C84912AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */; };
+		451C84922AF1C2A40003BF1A /* SocialSignInButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */; };
+		451C84972AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84962AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift */; };
+		451C84992AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84982AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift */; };
+		451C849B2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C849A2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift */; };
+		451C849D2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C849C2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift */; };
+		451C849F2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C849E2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */; };
+		451C84A12AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84A02AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift */; };
+		451C84A32AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C84A22AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift */; };
 		451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */; };
 		451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */; };
 		451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */; };
@@ -228,7 +240,6 @@
 		453F84DB2A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D82A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift */; };
 		453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D92A02A0390005101E /* ArticleCategory.swift */; };
 		454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454365AF28B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift */; };
-		454A82DF29F71C8F00F54000 /* SocialSignInAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A82DE29F71C8F00F54000 /* SocialSignInAuthenticationType.swift */; };
 		454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */; };
 		454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */; };
 		454ADAD72ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */; };
@@ -1271,10 +1282,6 @@
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
-		D4E243D329F1A62B00EA4BB7 /* SocialSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243D229F1A62B00EA4BB7 /* SocialSignInView.swift */; };
-		D4E243D529F1A64400EA4BB7 /* SocialSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243D429F1A64400EA4BB7 /* SocialSignInViewModel.swift */; };
-		D4E243DB29F1B61900EA4BB7 /* SocialSignInButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243DA29F1B61900EA4BB7 /* SocialSignInButtonView.swift */; };
-		D4E243DD29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243DC29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift */; };
 		D4E243DF29F30DAD00EA4BB7 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4E243DE29F30DAC00EA4BB7 /* Roboto-Medium.ttf */; };
 		D4F1DE8D2967538A00A2F674 /* IncrementUserCounterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1DE8C2967538A00A2F674 /* IncrementUserCounterUseCase.swift */; };
 		D4F1DE9029676B8A00A2F674 /* UserCounterDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F1DE8F29676B8A00A2F674 /* UserCounterDomainModel.swift */; };
@@ -1399,6 +1406,18 @@
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
+		451C84832AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInAuthenticationType.swift; sourceTree = "<group>"; };
+		451C84842AF1C2A40003BF1A /* SocialSignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInView.swift; sourceTree = "<group>"; };
+		451C84852AF1C2A40003BF1A /* SocialSignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInViewModel.swift; sourceTree = "<group>"; };
+		451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonViewModel.swift; sourceTree = "<group>"; };
+		451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonView.swift; sourceTree = "<group>"; };
+		451C84962AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationFeatureDiContainer.swift; sourceTree = "<group>"; };
+		451C84982AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
+		451C849A2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		451C849C2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialSignInInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
+		451C849E2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialSignInInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		451C84A02AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialSignInInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		451C84A22AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackgroundState.swift; sourceTree = "<group>"; };
 		451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewPositionState.swift; sourceTree = "<group>"; };
 		451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionState.swift; sourceTree = "<group>"; };
@@ -1538,7 +1557,6 @@
 		453F84D82A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestDownloadArticlesReceipt.swift; sourceTree = "<group>"; };
 		453F84D92A02A0390005101E /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
 		454365AF28B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+NetworkErrorAlert.swift"; sourceTree = "<group>"; };
-		454A82DE29F71C8F00F54000 /* SocialSignInAuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInAuthenticationType.swift; sourceTree = "<group>"; };
 		454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
@@ -2660,10 +2678,6 @@
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
-		D4E243D229F1A62B00EA4BB7 /* SocialSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInView.swift; sourceTree = "<group>"; };
-		D4E243D429F1A64400EA4BB7 /* SocialSignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInViewModel.swift; sourceTree = "<group>"; };
-		D4E243DA29F1B61900EA4BB7 /* SocialSignInButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonView.swift; sourceTree = "<group>"; };
-		D4E243DC29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignInButtonViewModel.swift; sourceTree = "<group>"; };
 		D4E243DE29F30DAC00EA4BB7 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		D4F1DE8C2967538A00A2F674 /* IncrementUserCounterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterUseCase.swift; sourceTree = "<group>"; };
 		D4F1DE8F29676B8A00A2F674 /* UserCounterDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDomainModel.swift; sourceTree = "<group>"; };
@@ -3193,6 +3207,113 @@
 				4515D4012A2E73AB0001545D /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
 			);
 			path = Providers;
+			sourceTree = "<group>";
+		};
+		451C84802AF1C06C0003BF1A /* AccountCreation */ = {
+			isa = PBXGroup;
+			children = (
+				451C848B2AF1C2A40003BF1A /* Data */,
+				451C848A2AF1C2A40003BF1A /* Data-DomainInterface */,
+				451C848C2AF1C2A40003BF1A /* DependencyContainer */,
+				451C848D2AF1C2A40003BF1A /* Domain */,
+				451C84812AF1C2A40003BF1A /* Presentation */,
+			);
+			path = AccountCreation;
+			sourceTree = "<group>";
+		};
+		451C84812AF1C2A40003BF1A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				451C84822AF1C2A40003BF1A /* SocialSignIn */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		451C84822AF1C2A40003BF1A /* SocialSignIn */ = {
+			isa = PBXGroup;
+			children = (
+				451C84832AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift */,
+				451C84842AF1C2A40003BF1A /* SocialSignInView.swift */,
+				451C84852AF1C2A40003BF1A /* SocialSignInViewModel.swift */,
+				451C84862AF1C2A40003BF1A /* Subviews */,
+			);
+			path = SocialSignIn;
+			sourceTree = "<group>";
+		};
+		451C84862AF1C2A40003BF1A /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				451C84872AF1C2A40003BF1A /* SocialSignInButtonView */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		451C84872AF1C2A40003BF1A /* SocialSignInButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				451C84892AF1C2A40003BF1A /* SocialSignInButtonView.swift */,
+				451C84882AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift */,
+			);
+			path = SocialSignInButtonView;
+			sourceTree = "<group>";
+		};
+		451C848A2AF1C2A40003BF1A /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				451C84A02AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		451C848B2AF1C2A40003BF1A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		451C848C2AF1C2A40003BF1A /* DependencyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				451C84962AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift */,
+				451C84982AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift */,
+				451C849A2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift */,
+			);
+			path = DependencyContainer;
+			sourceTree = "<group>";
+		};
+		451C848D2AF1C2A40003BF1A /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				451C84932AF1C2E00003BF1A /* Entities */,
+				451C84942AF1C2E00003BF1A /* Interface */,
+				451C84952AF1C2E00003BF1A /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		451C84932AF1C2E00003BF1A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				451C84A22AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		451C84942AF1C2E00003BF1A /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				451C849E2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		451C84952AF1C2E00003BF1A /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				451C849C2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
@@ -6078,6 +6199,7 @@
 		45AD174D25938A4D00A096A0 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				451C84802AF1C06C0003BF1A /* AccountCreation */,
 				45EE103D2AB887AF00D0AC33 /* AppLanguage */,
 				45AD17BB25938A4D00A096A0 /* Articles */,
 				D473469029072A0D00579463 /* Dashboard */,
@@ -8504,7 +8626,6 @@
 		45F715BC290A12D70019B715 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D4E243D129F1A61300EA4BB7 /* SocialSignIn */,
 				45F715FA290A12D70019B715 /* Account */,
 				45F715E2290A12D70019B715 /* DeleteAccount */,
 				45F715D0290A12D70019B715 /* Mail */,
@@ -9497,34 +9618,6 @@
 			path = SetCompletedTrainingTipUseCase;
 			sourceTree = "<group>";
 		};
-		D4E243D129F1A61300EA4BB7 /* SocialSignIn */ = {
-			isa = PBXGroup;
-			children = (
-				454A82DE29F71C8F00F54000 /* SocialSignInAuthenticationType.swift */,
-				D4E243D229F1A62B00EA4BB7 /* SocialSignInView.swift */,
-				D4E243D429F1A64400EA4BB7 /* SocialSignInViewModel.swift */,
-				D4E243D629F1B5D000EA4BB7 /* Subviews */,
-			);
-			path = SocialSignIn;
-			sourceTree = "<group>";
-		};
-		D4E243D629F1B5D000EA4BB7 /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				D4E243D729F1B5F100EA4BB7 /* SocialSignInButtonView */,
-			);
-			path = Subviews;
-			sourceTree = "<group>";
-		};
-		D4E243D729F1B5F100EA4BB7 /* SocialSignInButtonView */ = {
-			isa = PBXGroup;
-			children = (
-				D4E243DA29F1B61900EA4BB7 /* SocialSignInButtonView.swift */,
-				D4E243DC29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift */,
-			);
-			path = SocialSignInButtonView;
-			sourceTree = "<group>";
-		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -10154,6 +10247,7 @@
 				45BDA5D02954F67D007E259B /* ResourceViewsService.swift in Sources */,
 				454ADAE12ABDDB3E00037C27 /* AppLanguageItemView.swift in Sources */,
 				45DBE6072ACD9EAB008A93BF /* LanguageFilterType.swift in Sources */,
+				451C84902AF1C2A40003BF1A /* SocialSignInViewModel.swift in Sources */,
 				453A9EF32A045006007BB892 /* MenuViewModel.swift in Sources */,
 				45DBE6232ACDA37B008A93BF /* FeaturedLessonsDomainLayerDependencies.swift in Sources */,
 				45A464CC2A7BE18800E8BAF0 /* MobileContentRendererUserAnalytics.swift in Sources */,
@@ -10268,7 +10362,9 @@
 				459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */,
 				45D63E71288F698C009B4610 /* LanguagesJsonFileCache.swift in Sources */,
 				45E066BF2AE16736004393CD /* GetOnboardingTutorialViewedRepositoryInterface.swift in Sources */,
+				451C84A32AF1C7820003BF1A /* SocialSignInInterfaceStringsDomainModel.swift in Sources */,
 				45DBE60F2ACD9EAB008A93BF /* LanguageAvailabilityDomainModel.swift in Sources */,
+				451C849F2AF1C7180003BF1A /* GetSocialSignInInterfaceStringsRepositoryInterface.swift in Sources */,
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
 				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,
@@ -10519,6 +10615,7 @@
 				45FB1CC1295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift in Sources */,
 				457766EB2AD6FB360093B19A /* GetInterfaceStringForLanguageRepositoryInterface.swift in Sources */,
 				45DF34522A28D41600BB717E /* AppBuild.swift in Sources */,
+				451C848E2AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift in Sources */,
 				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AE975227C97A9500C2CB33 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
@@ -10532,7 +10629,6 @@
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
 				45920D472A8D1C9700E336A8 /* ToolCardCategoryView.swift in Sources */,
 				D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */,
-				D4E243D529F1A64400EA4BB7 /* SocialSignInViewModel.swift in Sources */,
 				457F6BDD28B0132F0055456C /* AttachmentsBundleCache.swift in Sources */,
 				45C1524D2A43D3CD00F2A1E8 /* GetShareableImageUseCase.swift in Sources */,
 				459E86F228EDA86C00E197A5 /* DeepLinkingService.swift in Sources */,
@@ -10577,6 +10673,7 @@
 				452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */,
 				459C56D325FF954F00F15967 /* (null) in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
+				451C84972AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				45558498269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift in Sources */,
 				4534F9262AE99F0100A7A071 /* LessonEvaluationFeatureDomainLayerDependencies.swift in Sources */,
@@ -10679,6 +10776,7 @@
 				45A835172AD1A414004F5593 /* ToolVersionDomainModel.swift in Sources */,
 				45FE82392ACE5BFE00930C39 /* AppHostingController.swift in Sources */,
 				452E44D32AB8F53200A0B1B6 /* AuthenticateUserAuthType.swift in Sources */,
+				451C84A12AF1C72E0003BF1A /* GetSocialSignInInterfaceStringsRepository.swift in Sources */,
 				451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */,
 				45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */,
@@ -10870,7 +10968,6 @@
 				451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */,
 				4555833A269F2C7B00C3FF14 /* ToolPageHeroView.swift in Sources */,
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,
-				D4E243DB29F1B61900EA4BB7 /* SocialSignInButtonView.swift in Sources */,
 				45A8BE0A2ACC9FD5007A1EBB /* LessonsFeatureDataLayerDependencies.swift in Sources */,
 				45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */,
 				453F84C92A029FC00005101E /* ArticleAemDataParserError.swift in Sources */,
@@ -10916,7 +11013,6 @@
 				45325F26285CF8B40078D932 /* VideoView.swift in Sources */,
 				457101F92AB9D5C800D1BFFC /* UserAuthentication+AuthenticateUserInterface.swift in Sources */,
 				4534F9242AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift in Sources */,
-				D4E243D329F1A62B00EA4BB7 /* SocialSignInView.swift in Sources */,
 				45A8BE092ACC9FD5007A1EBB /* LessonsFeatureDiContainer.swift in Sources */,
 				45C152A02A44896C00F2A1E8 /* ToolBackButtonImageType+Image.swift in Sources */,
 				45E41B7B2A83D14600F886A2 /* LocaleLocalizableStringsBundle.swift in Sources */,
@@ -10956,6 +11052,7 @@
 				45131A142AB4995F0085AF0D /* ApplicationLayout.swift in Sources */,
 				45AE974127C97A9400C2CB33 /* Video+MobileContentRenderableModel.swift in Sources */,
 				45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */,
+				451C84912AF1C2A40003BF1A /* SocialSignInButtonViewModel.swift in Sources */,
 				45558352269F2D1000C3FF14 /* LessonPageView.swift in Sources */,
 				45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */,
 				4555832A269F2C7B00C3FF14 /* ToolPageCardAnalyticsScreenName.swift in Sources */,
@@ -10992,7 +11089,6 @@
 				456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */,
 				458CFE9429D4E0B9007B423C /* ArticlesErrorMessageViewModel.swift in Sources */,
 				458CFE8329D4E0B9007B423C /* ShareArticleViewModel.swift in Sources */,
-				454A82DF29F71C8F00F54000 /* SocialSignInAuthenticationType.swift in Sources */,
 				45EB9B7929F16CF200CA74A8 /* UIImageView+ImageColor.swift in Sources */,
 				4563D9A12A94FC7A00E0701C /* AppDiContainer.swift in Sources */,
 				45BDA5C02954F605007E259B /* ResourceViewModelType.swift in Sources */,
@@ -11014,6 +11110,7 @@
 				45AE974F27C97A9500C2CB33 /* Hero+MobileContentRenderableModel.swift in Sources */,
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
 				D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */,
+				451C849B2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift in Sources */,
 				459BD08F289AD4310075901B /* ToolTranslationsDomainModel.swift in Sources */,
 				458CFE9629D4E0B9007B423C /* ArticleCategoriesViewModel.swift in Sources */,
 				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,
@@ -11026,6 +11123,7 @@
 				455583D5269F2DA500C3FF14 /* MobileContentHeaderViewModel.swift in Sources */,
 				45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */,
 				4555832F269F2C7B00C3FF14 /* ToolPageCardTopConstantState.swift in Sources */,
+				451C849D2AF1C6FA0003BF1A /* GetSocialSignInInterfaceStringsUseCase.swift in Sources */,
 				45ACEE1C2AD0493F004B62E4 /* SearchBarView.swift in Sources */,
 				4585BF5E2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift in Sources */,
 				457C36E82A96607F001288D8 /* PageNavigationCollectionViewLayoutType.swift in Sources */,
@@ -11046,8 +11144,10 @@
 				45AD1AAF25938A4E00A096A0 /* TutorialCell.swift in Sources */,
 				45FE82452ACE5BFE00930C39 /* AppNavigationController.swift in Sources */,
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,
+				451C848F2AF1C2A40003BF1A /* SocialSignInView.swift in Sources */,
 				45B3F4392AC3A82E00D61BFD /* GetAppLanguagesListRepository.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
+				451C84992AF1C6870003BF1A /* AccountCreationFeatureDataLayerDependencies.swift in Sources */,
 				D45922D42867973B00904B87 /* BannerView.swift in Sources */,
 				459E86DE28EDA86C00E197A5 /* LegacyAppsFlyerDeepLinkValueParser.swift in Sources */,
 				4573133C28C1821100481640 /* ToolDetailsMediaView.swift in Sources */,
@@ -11081,7 +11181,6 @@
 				45DB18902AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift in Sources */,
 				45860A8C29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift in Sources */,
 				45E066D22AE16B93004393CD /* StoreOnboardingTutorialViewedRepositoryInterface.swift in Sources */,
-				D4E243DD29F1BF3700EA4BB7 /* SocialSignInButtonViewModel.swift in Sources */,
 				D4BC79DC299D6CBF0040651B /* RealmCompletedTrainingTipCache.swift in Sources */,
 				45C152472A43D21D00F2A1E8 /* ToolSettingsSeparatorView.swift in Sources */,
 				457766ED2AD6FB3C0093B19A /* GetInterfaceStringForLanguageRepository.swift in Sources */,
@@ -11139,6 +11238,7 @@
 				45B3F44D2AC3A86100D61BFD /* AppLanguageDataModel.swift in Sources */,
 				454B47DC2AE0210300C7B5E7 /* OnboardingTutorialInterfaceStringsDomainModel.swift in Sources */,
 				45E3476C2A49BE230014CCD1 /* MockFlowDelegate.swift in Sources */,
+				451C84922AF1C2A40003BF1A /* SocialSignInButtonView.swift in Sources */,
 				456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */,
 				45DBE61F2ACDA34D008A93BF /* FeaturedLessonsDiContainer.swift in Sources */,
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
