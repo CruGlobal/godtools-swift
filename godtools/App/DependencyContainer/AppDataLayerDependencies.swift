@@ -46,12 +46,6 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
-    func getAppleAuthentication() -> AppleAuthentication {
-        return AppleAuthentication(
-            appleUserPersistentStore: AppleUserPersistentStore()
-        )
-    }
-    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(
@@ -111,10 +105,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getFacebookAuthentication() -> FacebookAuthentication {
-        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
-    }
-    
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
             cache: RealmFavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
@@ -156,13 +146,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getGoogleAuthentication() -> GoogleAuthentication {
-        
-        return GoogleAuthentication(
-            configuration: sharedAppConfig.getGoogleAuthenticationConfiguration()
-        )
-    }
-    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -197,10 +180,6 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache
         )
-    }
-    
-    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
-        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
     func getLocaleLanguageName() -> LocaleLanguageName {
@@ -353,15 +332,22 @@ class AppDataLayerDependencies {
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
     }
-    
+
     func getUserAuthentication() -> UserAuthentication {
+        
         return UserAuthentication(
             authenticationProviders: [
-                .apple: getAppleAuthentication(),
-                .facebook: getFacebookAuthentication(),
-                .google: getGoogleAuthentication()
+                .apple: AppleAuthentication(
+                    appleUserPersistentStore: AppleUserPersistentStore()
+                ),
+                .facebook: FacebookAuthentication(
+                    configuration: FacebookAuthenticationConfiguration(permissions: ["email"])
+                ),
+                .google: GoogleAuthentication(
+                    configuration: getAppConfig().getGoogleAuthenticationConfiguration()
+                )
             ],
-            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache(),
+            lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }

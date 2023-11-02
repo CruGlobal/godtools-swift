@@ -64,14 +64,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
-        return AuthenticateUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
-    }
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),

@@ -41,11 +41,11 @@ struct SocialSignInView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         
-                        Text(viewModel.titleText)
+                        Text(viewModel.title)
                             .font(FontLibrary.sfProTextRegular.font(size: 40))
                             .foregroundColor(.white)
                         
-                        Text(viewModel.subtitleText)
+                        Text(viewModel.subtitle)
                             .font(FontLibrary.sfProTextRegular.font(size: 16))
                             .foregroundColor(.white)
                             .fixedSize(horizontal: false, vertical: true)
@@ -54,17 +54,17 @@ struct SocialSignInView: View {
                         
                         VStack(spacing: 10) {
                             
-                            SocialSignInButtonView(viewModel: viewModel.googleSignInButtonViewModel, tappedClosure: {
+                            SocialSignInButtonView(buttonType: .google, title: viewModel.signInWithGoogleButtonTitle) {
                                 viewModel.signInWithGoogleTapped()
-                            })
+                            }
                             
-                            SocialSignInButtonView(viewModel: viewModel.facebookSignInButtonViewModel, tappedClosure: {
+                            SocialSignInButtonView(buttonType: .facebook, title: viewModel.signInWithFacebookButtonTitle) {
                                 viewModel.signInWithFacebookTapped()
-                            })
+                            }
                             
-                            SocialSignInButtonView(viewModel: viewModel.appleSignInButtonViewModel, tappedClosure: {
+                            SocialSignInButtonView(buttonType: .apple, title: viewModel.signInWithAppleButtonTitle) {
                                 viewModel.signInWithAppleTapped()
-                            })
+                            }
                         }
                         
                     }

@@ -11,20 +11,20 @@ import Combine
 
 class AuthenticateUserUseCase {
     
-    private let userAuthentication: AuthenticateUserInterface
+    private let authenticateUser: AuthenticateUserInterface
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
     
-    init(userAuthentication: AuthenticateUserInterface, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
+    init(authenticateUser: AuthenticateUserInterface, emailSignUpService: EmailSignUpService, firebaseAnalytics: FirebaseAnalytics) {
         
-        self.userAuthentication = userAuthentication
+        self.authenticateUser = authenticateUser
         self.emailSignUpService = emailSignUpService
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func authenticatePublisher(authType: AuthenticateUserAuthType, authPlatform: AuthenticateUserAuthPlatform, authPolicy: AuthenticateUserAuthPolicy) -> AnyPublisher<Bool, AuthErrorDomainModel> {
+    func authenticatePublisher(authType: AuthenticateUserAuthTypeDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel, authPolicy: AuthenticateUserAuthPolicyDomainModel) -> AnyPublisher<Bool, AuthErrorDomainModel> {
         
-        return userAuthentication.authenticateUserPublisher(authType: authType, authPlatform: authPlatform, authPolicy: authPolicy)
+        return authenticateUser.authenticateUserPublisher(authType: authType, authPlatform: authPlatform, authPolicy: authPolicy)
             .flatMap({ (authUser: AuthUserDomainModel?) -> AnyPublisher<Bool, AuthErrorDomainModel> in
                 
                 if let authUser = authUser {

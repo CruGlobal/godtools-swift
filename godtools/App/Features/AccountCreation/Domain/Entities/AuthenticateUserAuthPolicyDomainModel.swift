@@ -1,5 +1,5 @@
 //
-//  AuthenticateUserAuthPolicy.swift
+//  AuthenticateUserAuthPolicyDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/18/23.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum AuthenticateUserAuthPolicy {
+enum AuthenticateUserAuthPolicyDomainModel {
     
     case renewAccessTokenElseAskUserToAuthenticate(fromViewController: UIViewController)
     case renewAccessToken
