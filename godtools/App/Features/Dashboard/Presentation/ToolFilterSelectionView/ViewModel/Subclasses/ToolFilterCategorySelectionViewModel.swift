@@ -9,39 +9,73 @@
 import Foundation
 import Combine
 
-class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
+class ToolFilterCategorySelectionViewModel: ObservableObject {
     
-    private let getToolCategoriesUseCase: GetToolCategoriesUseCase
+    private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
+    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let selectedLanguage: LanguageFilterDomainModel
     
-    private var categories: [ToolCategoryDomainModel] = [ToolCategoryDomainModel]()
+    private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    @Published var selectedCategory: CategoryFilterDomainModel
+    @Published var navTitle: String = ""
+    @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
+    
+    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
         
-    init(getToolCategoriesUseCase: GetToolCategoriesUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
-        
-        self.getToolCategoriesUseCase = getToolCategoriesUseCase
-        
-        super.init(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
+        self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
+        self.selectedLanguage = selectedLanguage
+        self.selectedCategory = categoryFilterSelectionPublisher.value
         
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
-        getToolCategoriesUseCase.getToolCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
+        getToolFilterCategoriesUseCase.getToolFilterCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
             .sink { [weak self] categories in
                 
-                self?.categories = categories
-                self?.createRowViewModels()
+                self?.allCategories = categories
+                self?.getSearchResults()
             }
             .store(in: &cancellables)
         
         searchTextPublisher
             .sink { [weak self] _ in
                 
-                self?.createRowViewModels()
+                self?.getSearchResults()
             }
             .store(in: &cancellables)
         
-        filterValueSelected = .category(categoryModel: selectedCategory)
+        $selectedCategory
+            .sink { [weak self] category in
+                
+                self?.categoryFilterSelectionPublisher.send(category)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolFilterCategorySelectionViewModel {
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(
+            searchTextPublisher: searchTextPublisher,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+        )
+    }
+    
+    func rowTapped(with category: CategoryFilterDomainModel) {
+        
+        selectedCategory = category
     }
 }
 
@@ -49,28 +83,17 @@ class ToolFilterCategorySelectionViewModel: ToolFilterSelectionViewModel {
 
 extension ToolFilterCategorySelectionViewModel {
     
-    private func createRowViewModels() {
+    private func getSearchResults() {
         
-        let categories: [ToolCategoryDomainModel]
         let searchText = searchTextPublisher.value
         
         if searchText.isEmpty == false {
             
-            categories = self.categories.filter { $0.searchableText.contains(searchText) }
+            categorySearchResults = self.allCategories.filter { $0.searchableText.contains(searchText) }
             
         } else {
             
-            categories = self.categories
+            categorySearchResults = self.allCategories
         }
-        
-        rowViewModels = categories.map { category in
-            
-            return ToolFilterSelectionRowViewModel(
-                title: category.translatedName,
-                subtitle: nil,
-                toolsAvailableText: category.toolsAvailableText,
-                filterValue: .category(categoryModel: category)
-            )
-        }        
     }
 }

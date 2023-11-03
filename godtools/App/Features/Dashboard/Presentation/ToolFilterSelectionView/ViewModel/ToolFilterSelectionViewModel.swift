@@ -20,7 +20,7 @@ class ToolFilterSelectionViewModel: ObservableObject {
     @Published var rowViewModels: [ToolFilterSelectionRowViewModel] = [ToolFilterSelectionRowViewModel]()
     @Published var filterValueSelected: ToolFilterValue?
     
-    var selectedCategory: ToolCategoryDomainModel {
+    var selectedCategory: CategoryFilterDomainModel {
         get {
             return toolFilterSelectionPublisher.value.selectedCategory
             

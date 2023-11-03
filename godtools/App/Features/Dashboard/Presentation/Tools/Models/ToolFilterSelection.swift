@@ -10,6 +10,6 @@ import Foundation
 
 struct ToolFilterSelection {
     
-    var selectedCategory: ToolCategoryDomainModel
+    var selectedCategory: CategoryFilterDomainModel
     var selectedLanguage: LanguageFilterDomainModel
 }

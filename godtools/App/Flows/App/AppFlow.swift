@@ -135,6 +135,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
             
+        case .toolCategoryFilterTappedFromTools(let categoryFilterSelectionPublisher, let selectedLanguage):
+            navigationController.pushViewController(getToolCategoryFilterSelection(categoryFilterSelectionPublisher: categoryFilterSelectionPublisher, selectedLanguage: selectedLanguage), animated: true)
+            
         case .toolFilterTappedFromTools(let toolFilterType, let toolFilterSelectionPublisher):
             navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, toolFilterSelectionPublisher: toolFilterSelectionPublisher), animated: true)
             
@@ -775,27 +778,43 @@ extension AppFlow {
 
 extension AppFlow {
     
+    private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
+        
+        let viewModel = ToolFilterCategorySelectionViewModel(
+            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
+            categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
+            selectedLanguage: selectedLanguage,
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
+         )
+        
+        let view = ToolFilterCategorySelectionView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
+            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<ToolFilterCategorySelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                        
+        return hostingView
+    }
+    
     private func getToolFilterSelection(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) -> UIViewController {
         
-        let viewModel: ToolFilterSelectionViewModel
-        
-        switch toolFilterType {
-        case .category:
-            
-            viewModel = ToolFilterCategorySelectionViewModel(
-                getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher,
-                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
-            )
-            
-        case .language:
-            
-            viewModel = ToolFilterLanguageSelectionViewModel(
-                getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher
-            )
-        }
+        let viewModel: ToolFilterSelectionViewModel = ToolFilterLanguageSelectionViewModel(
+            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            toolFilterSelectionPublisher: toolFilterSelectionPublisher
+        )
         
         let view = ToolFilterSelectionView(viewModel: viewModel)
         

@@ -9,7 +9,7 @@
 import Foundation
 
 enum ToolFilterValue {
-    case category(categoryModel: ToolCategoryDomainModel)
+    case category(categoryModel: CategoryFilterDomainModel)
     case language(languageModel: LanguageFilterDomainModel)
 }
 
