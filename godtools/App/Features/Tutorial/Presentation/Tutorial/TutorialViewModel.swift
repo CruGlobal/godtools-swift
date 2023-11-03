@@ -19,12 +19,12 @@ class TutorialViewModel: ObservableObject {
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
-    private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     
     @Published var tutorialPages: [TutorialPageDomainModel] = Array()
     @Published var continueTitle: String = ""
@@ -50,9 +50,20 @@ class TutorialViewModel: ObservableObject {
                 
                 self?.interfaceStrings = tutorial.interfaceStrings
                 self?.tutorialPages = tutorial.pages
-                self?.continueTitle = self?.getContinueButtonTitle(interfaceStrings: tutorial.interfaceStrings) ?? ""
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $currentPage.eraseToAnyPublisher(),
+            $interfaceStrings.eraseToAnyPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (currentPage: Int, interfaceStrings: TutorialInterfaceStringsDomainModel?) in
+            if let interfaceStrings = interfaceStrings {
+                self?.refreshContinueTitle(interfaceStrings: interfaceStrings)
+            }
+        }
+        .store(in: &cancellables)
         
         $currentPage
             .eraseToAnyPublisher()
@@ -114,10 +125,6 @@ class TutorialViewModel: ObservableObject {
             url: nil,
             data: nil
         )
-        
-        if let interfaceStrings = self.interfaceStrings {
-            continueTitle = getContinueButtonTitle(interfaceStrings: interfaceStrings)
-        }
     }
     
     var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
@@ -125,8 +132,8 @@ class TutorialViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    private func getContinueButtonTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) -> String {
-        return isOnLastPage ? interfaceStrings.completeTutorialActionTitle : interfaceStrings.nextTutorialPageActionTitle
+    private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) {
+        continueTitle = isOnLastPage ? interfaceStrings.completeTutorialActionTitle : interfaceStrings.nextTutorialPageActionTitle
     }
 }
 
