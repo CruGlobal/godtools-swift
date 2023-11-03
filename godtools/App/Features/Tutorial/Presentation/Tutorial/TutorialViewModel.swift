@@ -11,6 +11,7 @@ import Combine
 
 class TutorialViewModel: ObservableObject {
         
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getTutorialUseCase: GetTutorialUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -18,36 +19,46 @@ class TutorialViewModel: ObservableObject {
     private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
-    private var tutorialDomainModel: TutorialDomainModel? = nil {
-        didSet {
-            numberOfPages = tutorialDomainModel?.tutorialItems.count ?? 0
-        }
-    }
+    private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var numberOfPages: Int = 0
+    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    
+    @Published var tutorialPages: [TutorialPageDomainModel] = Array()
     @Published var continueTitle: String = ""
-    @Published var currentPage: Int = 0 {
-        didSet {
-            currentPageDidChange(page: currentPage)
-        }
-    }
+    @Published var currentPage: Int = 0
         
-    init(flowDelegate: FlowDelegate, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTutorialUseCase: GetTutorialUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, tutorialVideoAnalytics: TutorialVideoAnalytics) {
         
         self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getTutorialUseCase = getTutorialUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.tutorialVideoAnalytics = tutorialVideoAnalytics
                 
-        getTutorialUseCase.getTutorialPublisher()
-            .sink { [weak self] (tutorialDomainModel: TutorialDomainModel) in
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        getTutorialUseCase
+            .getTutorialPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
-                self?.tutorialDomainModel = tutorialDomainModel
-                self?.currentPageDidChange(page: 0)
+                self?.interfaceStrings = tutorial.interfaceStrings
+                self?.tutorialPages = tutorial.pages
+                self?.continueTitle = self?.getContinueButtonTitle(interfaceStrings: tutorial.interfaceStrings) ?? ""
+            }
+            .store(in: &cancellables)
+        
+        $currentPage
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (page: Int) in
+                self?.pageDidChange(page: page)
             }
             .store(in: &cancellables)
     }
@@ -64,24 +75,20 @@ class TutorialViewModel: ObservableObject {
         return ""
     }
     
-    private var tutorialItems: [TutorialItemDomainModel] {
-        return tutorialDomainModel?.tutorialItems ?? []
-    }
-    
     private var isOnFirstPage: Bool {
         return currentPage == 0
     }
     
     private var isOnLastPage: Bool {
         
-        guard numberOfPages > 0 else {
+        guard tutorialPages.count > 0 else {
             return false
         }
         
-        return currentPage >= numberOfPages - 1
+        return currentPage >= tutorialPages.count - 1
     }
     
-    private func currentPageDidChange(page: Int) {
+    private func pageDidChange(page: Int) {
                 
         hidesBackButtonSubject.send(isOnFirstPage)
                                 
@@ -108,11 +115,8 @@ class TutorialViewModel: ObservableObject {
             data: nil
         )
         
-        if isOnLastPage {
-            continueTitle = tutorialDomainModel?.lastPageContinueButtonTitle ?? ""
-        }
-        else {
-            continueTitle = tutorialDomainModel?.defaultContinueButtonTitle ?? ""
+        if let interfaceStrings = self.interfaceStrings {
+            continueTitle = getContinueButtonTitle(interfaceStrings: interfaceStrings)
         }
     }
     
@@ -120,18 +124,15 @@ class TutorialViewModel: ObservableObject {
         return hidesBackButtonSubject
             .eraseToAnyPublisher()
     }
+    
+    private func getContinueButtonTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) -> String {
+        return isOnLastPage ? interfaceStrings.completeTutorialActionTitle : interfaceStrings.nextTutorialPageActionTitle
+    }
 }
 
 // MARK: - Inputs
 
 extension TutorialViewModel {
-    
-    func tutorialPageWillAppear(tutorialItemIndex: Int) -> TutorialItemViewModel {
-        
-        return TutorialItemViewModel(
-            tutorialItem: tutorialItems[tutorialItemIndex]
-        )
-    }
     
     @objc func backTapped() {
         
@@ -144,11 +145,11 @@ extension TutorialViewModel {
         flowDelegate?.navigate(step: .closeTappedFromTutorial)
     }
     
-    func tutorialVideoPlayTapped(tutorialItemIndex: Int) {
-          
-        let tutorialItem: TutorialItemDomainModel = tutorialItems[tutorialItemIndex]
+    func tutorialVideoPlayTapped(tutorialPageIndex: Int) {
         
-        guard let videoId = tutorialItem.youTubeVideoId, !videoId.isEmpty else {
+        let tutorialPage: TutorialPageDomainModel = tutorialPages[tutorialPageIndex]
+        
+        guard let videoId = tutorialPage.getVideoId(), !videoId.isEmpty else {
             return
         }
         
@@ -160,7 +161,7 @@ extension TutorialViewModel {
             
             tutorialVideoAnalytics.trackVideoPlayed(
                 videoId: videoId,
-                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialItemIndex),
+                screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
                 contentLanguage: nil,
                 secondaryContentLanguage: nil
             )

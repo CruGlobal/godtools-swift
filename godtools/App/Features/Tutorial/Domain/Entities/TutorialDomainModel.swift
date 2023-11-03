@@ -10,7 +10,6 @@ import Foundation
 
 struct TutorialDomainModel {
     
-    let tutorialItems: [TutorialItemDomainModel]
-    let defaultContinueButtonTitle: String
-    let lastPageContinueButtonTitle: String
+    let interfaceStrings: TutorialInterfaceStringsDomainModel
+    let pages: [TutorialPageDomainModel]
 }
