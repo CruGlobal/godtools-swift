@@ -7763,8 +7763,8 @@
 			isa = PBXGroup;
 			children = (
 				45DBE5DC2ACD9EAA008A93BF /* CategoryFilterDomainModel.swift */,
-				45DBE5DD2ACD9EAA008A93BF /* GetToolFilterCategoriesUseCase.swift */,
 				45DBE5DE2ACD9EAA008A93BF /* CategoryFilterType.swift */,
+				45DBE5DD2ACD9EAA008A93BF /* GetToolFilterCategoriesUseCase.swift */,
 			);
 			path = GetToolFilterCategoriesUseCase;
 			sourceTree = "<group>";
@@ -9320,6 +9320,40 @@
 			path = BannerView;
 			sourceTree = "<group>";
 		};
+		D4670AFF2AF580EC00FAD896 /* ToolFilterCategorySelectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D4670AFB2AF4237500FAD896 /* ToolFilterCategorySelectionView.swift */,
+				D4670B002AF5810300FAD896 /* ViewModel */,
+				D4670B012AF5812C00FAD896 /* Subviews */,
+			);
+			path = ToolFilterCategorySelectionView;
+			sourceTree = "<group>";
+		};
+		D4670B002AF5810300FAD896 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D496B9102AA1160B00CBEA19 /* ToolFilterCategorySelectionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D4670B012AF5812C00FAD896 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				D4670B022AF5813800FAD896 /* ToolFilterCategorySelectionRowView */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D4670B022AF5813800FAD896 /* ToolFilterCategorySelectionRowView */ = {
+			isa = PBXGroup;
+			children = (
+				D4670AFD2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift */,
+			);
+			path = ToolFilterCategorySelectionRowView;
+			sourceTree = "<group>";
+		};
 		D471CFBF28B3D67100DCE61C /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -9347,7 +9381,8 @@
 				45DD84972A8BB6AE0066A020 /* Favorites */,
 				45C152822A4488D100F2A1E8 /* Lesson */,
 				45C1528D2A44896C00F2A1E8 /* Tool */,
-				D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */,
+				D4670AFF2AF580EC00FAD896 /* ToolFilterCategorySelectionView */,
+				D496B9002A9937C300CBEA19 /* ToolFilterLanguageSelectionView */,
 				D473469629072A8700579463 /* Tools */,
 			);
 			path = Presentation;
@@ -9376,16 +9411,15 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
-		D496B9002A9937C300CBEA19 /* ToolFilterSelectionView */ = {
+		D496B9002A9937C300CBEA19 /* ToolFilterLanguageSelectionView */ = {
 			isa = PBXGroup;
 			children = (
-				D4670AFB2AF4237500FAD896 /* ToolFilterCategorySelectionView.swift */,
 				D496B9032A9D205000CBEA19 /* ToolFilterSelectionView.swift */,
 				D496B9012A9D1BF000CBEA19 /* ToolFilterType.swift */,
 				D496B9122AA1161A00CBEA19 /* ViewModel */,
 				D496B9072A9FC22A00CBEA19 /* Subviews */,
 			);
-			path = ToolFilterSelectionView;
+			path = ToolFilterLanguageSelectionView;
 			sourceTree = "<group>";
 		};
 		D496B9072A9FC22A00CBEA19 /* Subviews */ = {
@@ -9400,7 +9434,6 @@
 			isa = PBXGroup;
 			children = (
 				D496B9092A9FC26500CBEA19 /* ToolFilterSelectionRowView.swift */,
-				D4670AFD2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift */,
 				D496B90B2A9FC2D300CBEA19 /* ToolFilterSelectionRowViewModel.swift */,
 				D40D77B72AAA6AC1008D3642 /* ToolFilterValue.swift */,
 			);
@@ -9410,19 +9443,10 @@
 		D496B9122AA1161A00CBEA19 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D496B9142AA11C9600CBEA19 /* ToolFilterLanguageSelectionViewModel.swift */,
 				D496B8FE2A99327400CBEA19 /* ToolFilterSelectionViewModel.swift */,
-				D496B9132AA1162600CBEA19 /* Subclasses */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D496B9132AA1162600CBEA19 /* Subclasses */ = {
-			isa = PBXGroup;
-			children = (
-				D496B9102AA1160B00CBEA19 /* ToolFilterCategorySelectionViewModel.swift */,
-				D496B9142AA11C9600CBEA19 /* ToolFilterLanguageSelectionViewModel.swift */,
-			);
-			path = Subclasses;
 			sourceTree = "<group>";
 		};
 		D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */ = {
