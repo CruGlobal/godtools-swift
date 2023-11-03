@@ -16,23 +16,23 @@ struct CategoryFilterDomainModel {
     let searchableText: String
 }
 
-extension CategoryFilterDomainModel: Identifiable {
+extension CategoryFilterDomainModel {
     
-    var id: String {
+    var id: String? {
         
         switch type {
         case .anyCategory:
-            return "any_category"
+            return nil
         case .category(let id):
             return id
         }
     }
     
-    var categoryId: String? {
+    var filterId: String {
         
         switch type {
         case .anyCategory:
-            return nil
+            return "any_category"
         case .category(let id):
             return id
         }

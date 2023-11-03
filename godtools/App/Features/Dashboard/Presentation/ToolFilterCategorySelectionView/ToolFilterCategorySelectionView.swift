@@ -26,7 +26,7 @@ struct ToolFilterCategorySelectionView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel())
             
             List {
-                ForEach(viewModel.categorySearchResults) { category in
+                ForEach(viewModel.categorySearchResults, id: \.filterId) { category in
                     
                     ToolFilterCategorySelectionRowView(
                         category: category,

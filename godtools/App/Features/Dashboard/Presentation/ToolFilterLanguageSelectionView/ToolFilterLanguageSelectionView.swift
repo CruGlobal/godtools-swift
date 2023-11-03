@@ -1,5 +1,5 @@
 //
-//  ToolFilterSelectionView.swift
+//  ToolFilterLanguageSelectionView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/28/23.
@@ -8,13 +8,13 @@
 
 import SwiftUI
 
-struct ToolFilterSelectionView: View {
+struct ToolFilterLanguageSelectionView: View {
     
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
-    @ObservedObject private var viewModel: ToolFilterSelectionViewModel
+    @ObservedObject private var viewModel: ToolFilterLanguageSelectionViewModel
     
-    init(viewModel: ToolFilterSelectionViewModel) {
+    init(viewModel: ToolFilterLanguageSelectionViewModel) {
         
         self.viewModel = viewModel
     }
@@ -26,14 +26,14 @@ struct ToolFilterSelectionView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel())
             
             List {
-                ForEach(viewModel.rowViewModels) { rowViewModel in
+                ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
                     
-                    ToolFilterSelectionRowView(viewModel: rowViewModel, isSelected: viewModel.filterValueSelected == rowViewModel.filterValue)
+                    ToolFilterLanguageSelectionRowView(language: language, isSelected: viewModel.selectedLanguage.id == language.id)
                         .listRowBackground(Color.clear)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             
-                            viewModel.rowTapped(with: rowViewModel.filterValue)
+                            viewModel.rowTapped(with: language)
                         }
                 }
             }

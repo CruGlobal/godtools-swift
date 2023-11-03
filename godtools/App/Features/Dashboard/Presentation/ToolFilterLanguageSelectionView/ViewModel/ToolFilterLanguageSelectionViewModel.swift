@@ -9,17 +9,28 @@
 import Foundation
 import Combine
 
-class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
+class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
+    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>
+    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
+    private let selectedCategory: CategoryFilterDomainModel
     
-    private var languages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    private var cancellables: Set<AnyCancellable> = Set()
     
-    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) {
+    @Published var selectedLanguage: LanguageFilterDomainModel
+    @Published var navTitle: String = ""
+    @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) {
         
         self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
-        
-        super.init(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase, toolFilterSelectionPublisher: toolFilterSelectionPublisher)
+        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
+        self.languageFilterSelectionPublisher = languageFilterSelectionPublisher
+        self.selectedCategory = selectedCategory
+        self.selectedLanguage = languageFilterSelectionPublisher.value
         
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
@@ -29,19 +40,42 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
         getToolFilterLanguagesUseCase.getToolFilterLanguagesPublisher(filteredByCategory: selectedCategory)
             .sink { [weak self] languages in
                 
-                self?.languages = languages
-                self?.createRowViewModels()
+                self?.allLanguages = languages
+                self?.getSearchResults()
             }
             .store(in: &cancellables)
         
         searchTextPublisher
             .sink { [weak self] searchText in
                 
-                self?.createRowViewModels()
+                self?.getSearchResults()
             }
             .store(in: &cancellables)
         
-        filterValueSelected = .language(languageModel: selectedLanguage)
+        $selectedLanguage
+            .sink { [weak self] language in
+                
+                self?.languageFilterSelectionPublisher.send(language)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolFilterLanguageSelectionViewModel {
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(
+            searchTextPublisher: searchTextPublisher,
+            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+        )
+    }
+    
+    func rowTapped(with language: LanguageFilterDomainModel) {
+        
+        selectedLanguage = language
     }
 }
 
@@ -49,27 +83,16 @@ class ToolFilterLanguageSelectionViewModel: ToolFilterSelectionViewModel {
 
 extension ToolFilterLanguageSelectionViewModel {
     
-    private func createRowViewModels() {
+    private func getSearchResults() {
         
-        let languages: [LanguageFilterDomainModel]
         let searchText = searchTextPublisher.value
         
         if searchText.isEmpty == false {
             
-            languages = self.languages.filter { $0.searchableText.contains(searchText) }
+            languageSearchResults = self.allLanguages.filter { $0.searchableText.contains(searchText) }
         } else {
             
-            languages = self.languages
-        }
-        
-        rowViewModels = languages.map { language in
-            
-            return ToolFilterSelectionRowViewModel(
-                title: language.languageName,
-                subtitle: language.translatedName,
-                toolsAvailableText: language.toolsAvailableText,
-                filterValue: .language(languageModel: language)
-            )
+            languageSearchResults = self.allLanguages
         }
     }
 }
