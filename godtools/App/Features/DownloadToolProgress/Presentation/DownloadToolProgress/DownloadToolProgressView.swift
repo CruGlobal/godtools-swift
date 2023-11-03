@@ -21,8 +21,9 @@ struct DownloadToolProgressView: View {
         
         FullScreenDownloadProgressView(
             downloadMessage: viewModel.message,
-            downloadProgress: viewModel.downloadProgress,
-            downloadProgressString: viewModel.downloadProgressString
+            hidesSpinner: false,
+            downloadProgress: nil,
+            downloadProgressString: nil
         )
     }
     

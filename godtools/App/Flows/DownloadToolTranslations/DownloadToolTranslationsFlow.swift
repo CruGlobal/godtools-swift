@@ -87,8 +87,7 @@ class DownloadToolTranslationsFlow: Flow {
             flowDelegate: self,
             resource: determineToolTranslationsToDownload.getResource(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getDownloadToolProgressInterfaceStringsUseCase: appDiContainer.feature.downloadToolProgress.domainLayer.getDownloadToolProgressInterfaceStringsUseCase(),
-            getToolDownloadProgressInterfaceStringUseCase: appDiContainer.feature.downloadToolProgress.domainLayer.getToolDownloadProgressInterfaceStringUseCase()
+            getDownloadToolProgressInterfaceStringsUseCase: appDiContainer.feature.downloadToolProgress.domainLayer.getDownloadToolProgressInterfaceStringsUseCase()
         )
         
         let view = DownloadToolProgressView(viewModel: viewModel)
