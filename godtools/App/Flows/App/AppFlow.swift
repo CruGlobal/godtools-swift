@@ -141,7 +141,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .toolLanguageFilterTappedFromTools(let languageFilterSelectionPublisher, let selectedCategory):
             navigationController.pushViewController(getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: languageFilterSelectionPublisher, selectedCategory: selectedCategory), animated: true)
             
-        case .backTappedFromToolFilter:
+        case .backTappedFromToolCategoryFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .backTappedFromToolLanguageFilter:
             navigationController.popViewController(animated: true)
             
         case .spotlightToolTappedFromTools(let spotlightTool):
@@ -784,14 +787,15 @@ extension AppFlow {
             getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            flowDelegate: self
          )
         
         let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
-            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
-            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            target: viewModel,
+            action: #selector(viewModel.backButtonTapped),
             accessibilityIdentifier: nil
         )
         
@@ -814,14 +818,15 @@ extension AppFlow {
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
-            selectedCategory: selectedCategory
+            selectedCategory: selectedCategory,
+            flowDelegate: self
         )
         
         let view = ToolFilterLanguageSelectionView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
-            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
-            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            target: viewModel,
+            action: #selector(viewModel.backButtonTapped),
             accessibilityIdentifier: nil
         )
         
@@ -836,12 +841,6 @@ extension AppFlow {
         )
                         
         return hostingView
-    }
-    
-    // TODO: Would like this to go through the ViewModel. ~Levi
-    @objc private func backTappedFromToolFilterSelection() {
-        
-        navigate(step: .backTappedFromToolFilter)
     }
 }
 

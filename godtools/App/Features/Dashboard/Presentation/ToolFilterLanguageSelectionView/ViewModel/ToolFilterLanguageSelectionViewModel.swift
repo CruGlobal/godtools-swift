@@ -20,17 +20,20 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     private var cancellables: Set<AnyCancellable> = Set()
     
+    private weak var flowDelegate: FlowDelegate?
+    
     @Published var selectedLanguage: LanguageFilterDomainModel
     @Published var navTitle: String = ""
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
-    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) {
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.languageFilterSelectionPublisher = languageFilterSelectionPublisher
         self.selectedCategory = selectedCategory
         self.selectedLanguage = languageFilterSelectionPublisher.value
+        self.flowDelegate = flowDelegate
         
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
@@ -76,6 +79,11 @@ extension ToolFilterLanguageSelectionViewModel {
     func rowTapped(with language: LanguageFilterDomainModel) {
         
         selectedLanguage = language
+    }
+    
+    @objc func backButtonTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromToolLanguageFilter)
     }
 }
 
