@@ -68,7 +68,8 @@ extension TutorialFlow {
         
         let viewModel = TutorialViewModel(
             flowDelegate: self,
-            getTutorialUseCase: appDiContainer.domainLayer.getTutorialUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getTutorialUseCase: appDiContainer.feature.tutorial.domainLayer.getTutorialUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             tutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()

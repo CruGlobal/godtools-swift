@@ -29,13 +29,13 @@ struct TutorialView: View {
                 
                 FixedVerticalSpacer(height: 50)
                 
-                PagedView(numberOfPages: viewModel.numberOfPages, currentPage: $viewModel.currentPage) { page in
+                PagedView(numberOfPages: viewModel.tutorialPages.count, currentPage: $viewModel.currentPage) { (index: Int) in
                     
                     TutorialItemView(
-                        viewModel: viewModel.tutorialPageWillAppear(tutorialItemIndex: page),
+                        tutorialPage: viewModel.tutorialPages[index],
                         geometry: geometry,
                         videoPlayingClosure: {
-                            viewModel.tutorialVideoPlayTapped(tutorialItemIndex: page)
+                            viewModel.tutorialVideoPlayTapped(tutorialPageIndex: index)
                         }
                     )
                 }
@@ -46,7 +46,7 @@ struct TutorialView: View {
                 }
                 
                 PageControl(
-                    numberOfPages: viewModel.numberOfPages,
+                    numberOfPages: viewModel.tutorialPages.count,
                     attributes: pageControlAttributes,
                     currentPage: $viewModel.currentPage
                 )

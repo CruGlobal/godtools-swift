@@ -300,13 +300,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getTutorialUseCase() -> GetTutorialUseCase {
-        return GetTutorialUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
             repository: dataLayer.getUserDetailsRepository(),

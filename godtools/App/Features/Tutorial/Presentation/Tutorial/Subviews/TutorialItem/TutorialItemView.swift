@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TutorialItemView: View {
     
+    private let tutorialPage: TutorialPageDomainModel
     private let textHorizontalSpacing: CGFloat = 30
     private let videoAssetHorizontalSpacing: CGFloat = 30
     private let imageAssetHorizontalSpacing: CGFloat = 30
@@ -17,12 +18,10 @@ struct TutorialItemView: View {
     private let videoPlayingClosure: (() -> Void)?
     
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
-    
-    @ObservedObject private var viewModel: TutorialItemViewModel
-    
-    init(viewModel: TutorialItemViewModel, geometry: GeometryProxy, videoPlayingClosure: (() -> Void)?) {
         
-        self.viewModel = viewModel
+    init(tutorialPage: TutorialPageDomainModel, geometry: GeometryProxy, videoPlayingClosure: (() -> Void)?) {
+        
+        self.tutorialPage = tutorialPage
         self.geometry = geometry
         self.videoPlayingClosure = videoPlayingClosure
     }
@@ -31,14 +30,14 @@ struct TutorialItemView: View {
         
         VStack(alignment: .center, spacing: 0) {
             
-            Text(viewModel.title)
+            Text(tutorialPage.title)
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .font(FontLibrary.sfProDisplayLight.font(size: 27))
                 .multilineTextAlignment(.center)
                 .lineSpacing(1)
                 .padding(EdgeInsets(top: 0, leading: textHorizontalSpacing, bottom: 0, trailing: textHorizontalSpacing))
             
-            Text(viewModel.message)
+            Text(tutorialPage.message)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextLight.font(size: 17))
                 .multilineTextAlignment(.center)
@@ -53,33 +52,47 @@ struct TutorialItemView: View {
              
                 Spacer()
                 
-                if let youtubeVideoId = viewModel.youtubeVideoId, !youtubeVideoId.isEmpty {
+                switch tutorialPage.media {
+                
+                case .animation(let animatedResource):
+                    
+                    AnimatedSwiftUIView(
+                        viewModel: AnimatedViewModel(animationDataResource: animatedResource, autoPlay: true, loop: true),
+                        contentMode: .scaleAspectFit
+                    )
+                
+                case .image(let name):
+                    
+                    Image(name)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(EdgeInsets(top: 0, leading: imageAssetHorizontalSpacing, bottom: 0, trailing: imageAssetHorizontalSpacing))
+                
+                case .noMedia:
+                    
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(width: 100, height: 100)
+                
+                case .video(let videoId):
                     
                     let videoAspectRatio: CGSize = CGSize(width: 16, height: 9)
                     let videoViewWidth: CGFloat = (mediaContainerWidth * 1) - (videoAssetHorizontalSpacing * 2)
                     let videoViewHeight: CGFloat = (videoViewWidth / videoAspectRatio.width) * videoAspectRatio.height
                     
+                    let playsInFullScreen: Int = 0
+                    let playerParameters: [String: Any] = [YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
+                    
                     VideoView(
                         playerState: $videoPlayerState,
                         frameSize: CGSize(width: videoViewWidth, height: videoViewHeight),
-                        videoId: youtubeVideoId,
-                        videoPlayerParameters: viewModel.youtubePlayerParameters,
+                        videoId: videoId,
+                        videoPlayerParameters: playerParameters,
                         configuration: nil,
                         videoPlayingClosure: videoPlayingClosure,
                         videoEndedClosure: nil
                     )
                     .frame(width: videoViewWidth, height: videoViewHeight)
-                }
-                else if let animatedViewModel = viewModel.animatedViewModel {
-                                        
-                    AnimatedSwiftUIView(viewModel: animatedViewModel, contentMode: .scaleAspectFit)
-                }
-                else if let imageName = viewModel.imageName, !imageName.isEmpty {
-                    
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .padding(EdgeInsets(top: 0, leading: imageAssetHorizontalSpacing, bottom: 0, trailing: imageAssetHorizontalSpacing))
                 }
                 
                 Spacer()
