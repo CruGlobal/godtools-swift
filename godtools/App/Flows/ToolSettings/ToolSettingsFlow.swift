@@ -262,6 +262,19 @@ class ToolSettingsFlow: Flow {
     
     private func navigateToShareToolScreenTutorial() {
         
+        // TODO: Update commented out code. ~Levi
+        
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView()
+        
+        navigationController.present(
+            toolScreenShareTutorialView,
+            animated: true,
+            completion: nil
+        )
+        
+        self.shareToolScreenTutorialModal = toolScreenShareTutorialView
+        
+        /*
         let tutorialItemsProvider = ShareToolScreenTutorialItemProvider(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
                     
         let viewModel = ShareToolScreenTutorialViewModel(
@@ -286,6 +299,7 @@ class ToolSettingsFlow: Flow {
         )
         
         self.shareToolScreenTutorialModal = modal
+         */
     }
     
     private func navigateToLoadToolRemoteSession() {
@@ -490,5 +504,28 @@ class ToolSettingsFlow: Flow {
         }
         
         self.reviewShareShareableModal = nil
+    }
+}
+
+extension ToolSettingsFlow {
+    
+    private func getToolScreenShareTutorialView() -> UIViewController {
+        
+        let viewModel = ToolScreenShareTutorialViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialUseCase()
+        )
+        
+        let view = ToolScreenShareTutorialView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<ToolScreenShareTutorialView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
+        
+        return modal
     }
 }
