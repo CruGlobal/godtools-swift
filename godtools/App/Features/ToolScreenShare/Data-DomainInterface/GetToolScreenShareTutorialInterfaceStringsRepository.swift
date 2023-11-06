@@ -23,8 +23,8 @@ class GetToolScreenShareTutorialInterfaceStringsRepository: GetToolScreenShareTu
         let localeId: String = translateInLanguage
         
         let interfaceStrings = ToolScreenShareInterfaceStringsDomainModel(
-            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: ""),
-            shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "")
+            nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
+            shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "share_link")
         )
         
         return Just(interfaceStrings)

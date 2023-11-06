@@ -112,14 +112,14 @@ class ToolSettingsFlow: Flow {
                 navigateToShareToolScreenTutorial()
             }
             
-        case .closeTappedFromShareToolScreenTutorial:
+        case .closeTappedFromToolScreenShareTutorial:
             
             shareToolScreenTutorialModal?.dismiss(animated: true, completion: nil)
             shareToolScreenTutorialModal = nil
             
             flowDelegate?.navigate(step: .closeTappedFromToolSettings)
             
-        case .shareLinkTappedFromShareToolScreenTutorial:
+        case .shareLinkTappedFromToolScreenShareTutorial:
             
             shareToolScreenTutorialModal?.dismiss(animated: true, completion: nil)
             shareToolScreenTutorialModal = nil
@@ -519,9 +519,31 @@ extension ToolSettingsFlow {
         
         let view = ToolScreenShareTutorialView(viewModel: viewModel)
         
+        let closeButton = AppCloseBarItem(
+            color: ColorPalette.gtBlue.uiColor,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let skipButton = AppSkipBarItem(
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            target: viewModel,
+            action: #selector(viewModel.skipTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
+        )
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [closeButton],
+            trailingItems: [skipButton]
+        )
+        
         let hostingView = AppHostingController<ToolScreenShareTutorialView>(
             rootView: view,
-            navigationBar: nil
+            navigationBar: navigationBar
         )
         
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)

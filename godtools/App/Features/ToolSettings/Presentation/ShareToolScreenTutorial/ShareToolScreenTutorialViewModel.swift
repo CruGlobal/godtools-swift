@@ -68,11 +68,11 @@ class ShareToolScreenTutorialViewModel {
 extension ShareToolScreenTutorialViewModel {
     
     func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromShareToolScreenTutorial)
+        flowDelegate?.navigate(step: .closeTappedFromToolScreenShareTutorial)
     }
     
     func shareLinkTapped() {
         shareToolScreenTutorialNumberOfViewsCache.tutorialViewed(resource: resource)
-        flowDelegate?.navigate(step: .shareLinkTappedFromShareToolScreenTutorial)
+        flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
 }
