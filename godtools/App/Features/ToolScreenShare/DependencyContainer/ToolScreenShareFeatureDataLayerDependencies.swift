@@ -19,6 +19,14 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    private func getToolScreenShareViewsRepository() -> ToolScreenShareViewsRepository {
+        return ToolScreenShareViewsRepository(
+            cache: RealmToolScreenShareViewsCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase()
+            )
+        )
+    }
+    
     // MARK: - Domain Interface
     
     func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
@@ -30,6 +38,18 @@ class ToolScreenShareFeatureDataLayerDependencies {
     func getToolScreenShareTutorialRepositoryInterface() -> GetToolScreenShareTutorialRepositoryInterface {
         return GetToolScreenShareTutorialRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolScreenShareViewedRepositoryInterface() -> GetToolScreenShareViewedRepositoryInterface {
+        return GetToolScreenShareViewedRepository(
+            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
+        )
+    }
+    
+    func getIncrementNumberOfToolScreenShareViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareViewsRepositoryInterface {
+        return IncrementNumberOfToolScreenShareViewsRepository(
+            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
         )
     }
 }

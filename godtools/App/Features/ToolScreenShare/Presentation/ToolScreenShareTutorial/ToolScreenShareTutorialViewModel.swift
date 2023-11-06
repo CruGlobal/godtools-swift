@@ -11,8 +11,12 @@ import Combine
 
 class ToolScreenShareTutorialViewModel: ObservableObject {
     
+    private static var didViewToolScreenShareCancellable: AnyCancellable?
+    
+    private let tool: ResourceModel // TODO: Eventually this will need to be ToolDomainModel. ~Levi
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase
+    private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
+    private let didViewToolScreenShareUseCase: DidViewToolScreenShareUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -26,18 +30,20 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolScreenShareTutorialUseCase: GetToolScreenShareTutorialUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareUseCase: DidViewToolScreenShareUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getToolScreenShareTutorialUseCase = getToolScreenShareTutorialUseCase
+        self.viewToolScreenShareTutorialUseCase = viewToolScreenShareTutorialUseCase
+        self.didViewToolScreenShareUseCase = didViewToolScreenShareUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        getToolScreenShareTutorialUseCase
-            .getTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        viewToolScreenShareTutorialUseCase
+            .viewTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (toolScreenShareTutorial: ToolScreenShareTutorialDomainModel) in
                 
@@ -114,6 +120,13 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     private func shareLinkTapped() {
+        
+        ToolScreenShareTutorialViewModel.didViewToolScreenShareCancellable = didViewToolScreenShareUseCase
+            .viewedToolScreenSharePublisher(tool: tool)
+            .sink { _ in
+                
+            }
+        
         flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
 }

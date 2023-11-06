@@ -117,10 +117,6 @@ class AppDiContainer {
         )
     }
     
-    func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
-        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
-    }
-    
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
         return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
     }

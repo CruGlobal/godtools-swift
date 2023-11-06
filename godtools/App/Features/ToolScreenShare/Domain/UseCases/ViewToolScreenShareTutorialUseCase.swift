@@ -1,5 +1,5 @@
 //
-//  GetToolScreenShareTutorialUseCase.swift
+//  ViewToolScreenShareTutorialUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolScreenShareTutorialUseCase {
+class ViewToolScreenShareTutorialUseCase {
     
     private let getInterfaceStringsRepositoryInterface: GetToolScreenShareTutorialInterfaceStringsRepositoryInterface
     private let getTutorialRepositoryInterface: GetToolScreenShareTutorialRepositoryInterface
@@ -20,7 +20,7 @@ class GetToolScreenShareTutorialUseCase {
         self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
     }
     
-    func getTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
+    func viewTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
         
         return appLanguagePublisher
             .flatMap({ (appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<(ToolScreenShareInterfaceStringsDomainModel, [ToolScreenShareTutorialPageDomainModel]), Never> in
