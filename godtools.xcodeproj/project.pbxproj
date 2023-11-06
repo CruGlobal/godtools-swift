@@ -1259,6 +1259,7 @@
 		D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45922D52867998200904B87 /* BannerTextStyle.swift */; };
 		D4670AFC2AF4237500FAD896 /* ToolFilterCategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670AFB2AF4237500FAD896 /* ToolFilterCategorySelectionView.swift */; };
 		D4670AFE2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670AFD2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift */; };
+		D4670B042AF9770700FAD896 /* SearchToolFilterLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B032AF9770700FAD896 /* SearchToolFilterLanguagesUseCase.swift */; };
 		D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */; };
 		D471CFD328B9532100DCE61C /* LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD228B9532100DCE61C /* LanguageSupportable.swift */; };
 		D48018C028EF650700389565 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018BF28EF650700389565 /* DashboardView.swift */; };
@@ -2595,6 +2596,7 @@
 		D45922D52867998200904B87 /* BannerTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTextStyle.swift; sourceTree = "<group>"; };
 		D4670AFB2AF4237500FAD896 /* ToolFilterCategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterCategorySelectionView.swift; sourceTree = "<group>"; };
 		D4670AFD2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterCategorySelectionRowView.swift; sourceTree = "<group>"; };
+		D4670B032AF9770700FAD896 /* SearchToolFilterLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterLanguagesUseCase.swift; sourceTree = "<group>"; };
 		D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D471CFD228B9532100DCE61C /* LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSupportable.swift; sourceTree = "<group>"; };
 		D48018BF28EF650700389565 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -7847,6 +7849,7 @@
 				45DBE5ED2ACD9EAA008A93BF /* GetToolIsFavoritedUseCase */,
 				45DBE5F32ACD9EAA008A93BF /* GetToolUseCase */,
 				45DBE5EF2ACD9EAA008A93BF /* RemoveToolFromFavoritesUseCase */,
+				D4670B052AF9770D00FAD896 /* SearchToolFilterLanguageUseCase */,
 				45DBE5D92ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase */,
 				45DBE5DF2ACD9EAA008A93BF /* ToggleToolFavoritedUseCase */,
 			);
@@ -9447,6 +9450,14 @@
 				D4670AFD2AF4287900FAD896 /* ToolFilterCategorySelectionRowView.swift */,
 			);
 			path = ToolFilterCategorySelectionRowView;
+			sourceTree = "<group>";
+		};
+		D4670B052AF9770D00FAD896 /* SearchToolFilterLanguageUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				D4670B032AF9770700FAD896 /* SearchToolFilterLanguagesUseCase.swift */,
+			);
+			path = SearchToolFilterLanguageUseCase;
 			sourceTree = "<group>";
 		};
 		D471CFBF28B3D67100DCE61C /* Preview Content */ = {
@@ -11309,6 +11320,7 @@
 				453F84DB2A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift in Sources */,
 				455CB57E2A439B6700E95834 /* LearnToShareToolView.swift in Sources */,
 				45FB161127DBDDB60009DF8E /* ToolNavigationFlow.swift in Sources */,
+				D4670B042AF9770700FAD896 /* SearchToolFilterLanguagesUseCase.swift in Sources */,
 				45AE975627C97A9500C2CB33 /* Spacer+MobileContentRenderableModel.swift in Sources */,
 				453F84D52A029FC00005101E /* ArticleAemRepositoryResult.swift in Sources */,
 				45C152352A43D1BD00F2A1E8 /* ToolSettingsOptionItemBackgroundType.swift in Sources */,

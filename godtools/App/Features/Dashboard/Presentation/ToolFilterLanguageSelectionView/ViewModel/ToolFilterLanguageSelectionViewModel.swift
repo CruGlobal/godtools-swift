@@ -12,23 +12,25 @@ import Combine
 class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private let getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase
+    private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>
     private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     private let selectedCategory: CategoryFilterDomainModel
     
-    private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     @Published var selectedLanguage: LanguageFilterDomainModel
     @Published var navTitle: String = ""
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
-    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
+    init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterLanguagesUseCase = getToolFilterLanguagesUseCase
+        self.searchToolFilterLanguagesUseCase = searchToolFilterLanguagesUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.languageFilterSelectionPublisher = languageFilterSelectionPublisher
         self.selectedCategory = selectedCategory
@@ -41,19 +43,13 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .assign(to: &$navTitle)
         
         getToolFilterLanguagesUseCase.getToolFilterLanguagesPublisher(filteredByCategory: selectedCategory)
-            .sink { [weak self] languages in
-                
-                self?.allLanguages = languages
-                self?.getSearchResults()
-            }
-            .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$allLanguages)
         
-        searchTextPublisher
-            .sink { [weak self] searchText in
-                
-                self?.getSearchResults()
-            }
-            .store(in: &cancellables)
+        searchToolFilterLanguagesUseCase
+            .getSearchResultsPublisher(for: searchTextPublisher.eraseToAnyPublisher(), in: $allLanguages.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$languageSearchResults)
         
         $selectedLanguage
             .sink { [weak self] language in
@@ -84,23 +80,5 @@ extension ToolFilterLanguageSelectionViewModel {
     @objc func backButtonTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromToolLanguageFilter)
-    }
-}
-
-// MARK: - Private
-
-extension ToolFilterLanguageSelectionViewModel {
-    
-    private func getSearchResults() {
-        
-        let searchText = searchTextPublisher.value
-        
-        if searchText.isEmpty == false {
-            
-            languageSearchResults = self.allLanguages.filter { $0.searchableText.contains(searchText) }
-        } else {
-            
-            languageSearchResults = self.allLanguages
-        }
     }
 }

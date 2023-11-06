@@ -160,6 +160,10 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
+        return SearchToolFilterLanguagesUseCase()
+    }
+    
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
