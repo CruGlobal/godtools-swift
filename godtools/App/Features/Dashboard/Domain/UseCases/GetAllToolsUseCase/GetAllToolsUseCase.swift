@@ -22,16 +22,17 @@ class GetAllToolsUseCase {
         self.resourcesRepository = resourcesRepository
     }
     
-    func getToolsForFilterSelectionPublisher(filterSelection: CurrentValueSubject<ToolFilterSelection, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
+    func getToolsForFilterSelectionPublisher(languagefilterSelection: CurrentValueSubject<LanguageFilterDomainModel, Never>, categoryFilterSelection: CurrentValueSubject<CategoryFilterDomainModel, Never>) -> AnyPublisher<[ToolDomainModel], Never> {
         
-        return Publishers.CombineLatest3(
+        return Publishers.CombineLatest4(
             resourcesRepository.getResourcesChangedPublisher(),
-            filterSelection,
+            languagefilterSelection,
+            categoryFilterSelection,
             getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
         )
-        .flatMap({ (resourcesChanged: Void, filterSelection: ToolFilterSelection, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolDomainModel], Never> in
+        .flatMap({ (resourcesChanged: Void, languageSelection: LanguageFilterDomainModel, categorySelection, primaryLanguage: LanguageDomainModel?) -> AnyPublisher<[ToolDomainModel], Never> in
                 
-            let tools = self.getAllTools(sorted: true, categoryId: filterSelection.selectedCategory.id, languageId: filterSelection.selectedLanguage.id)
+            let tools = self.getAllTools(sorted: true, categoryId: categorySelection.id, languageId: languageSelection.id)
                 
             return Just(tools)
                 .eraseToAnyPublisher()

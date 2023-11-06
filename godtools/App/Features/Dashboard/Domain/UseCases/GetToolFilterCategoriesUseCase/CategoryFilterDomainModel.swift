@@ -1,5 +1,5 @@
 //
-//  ToolCategoryDomainModel.swift
+//  CategoryFilterDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/29/22.
@@ -8,21 +8,31 @@
 
 import Foundation
 
-struct ToolCategoryDomainModel {
+struct CategoryFilterDomainModel {
     
-    let type: ToolCategoryType
+    let type: CategoryFilterType
     let translatedName: String
     let toolsAvailableText: String
     let searchableText: String
 }
 
-extension ToolCategoryDomainModel {
+extension CategoryFilterDomainModel {
     
     var id: String? {
         
         switch type {
         case .anyCategory:
             return nil
+        case .category(let id):
+            return id
+        }
+    }
+    
+    var filterId: String {
+        
+        switch type {
+        case .anyCategory:
+            return "any_category"
         case .category(let id):
             return id
         }

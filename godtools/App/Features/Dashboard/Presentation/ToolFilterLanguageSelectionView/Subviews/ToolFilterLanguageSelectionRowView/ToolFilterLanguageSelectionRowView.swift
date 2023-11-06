@@ -1,5 +1,5 @@
 //
-//  ToolFilterSelectionRowView.swift
+//  ToolFilterLanguageSelectionRowView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/30/23.
@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-struct ToolFilterSelectionRowView: View {
+struct ToolFilterLanguageSelectionRowView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    @ObservedObject private var viewModel: ToolFilterSelectionRowViewModel
+    private let language: LanguageFilterDomainModel
     private let isSelected: Bool
     
-    init(viewModel: ToolFilterSelectionRowViewModel, isSelected: Bool) {
-        self.viewModel = viewModel
+    init(language: LanguageFilterDomainModel, isSelected: Bool) {
+        self.language = language
         self.isSelected = isSelected
     }
     
@@ -29,21 +29,21 @@ struct ToolFilterSelectionRowView: View {
                     
                     let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     
-                    Text(viewModel.title)
+                    Text(language.languageName)
                         .font(titleFont.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                     
-                    if let subtitle = viewModel.subtitle {
+                    if let translatedName = language.translatedName {
                         
-                        Text(subtitle)
+                        Text(translatedName)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
-                            .foregroundColor(ToolFilterSelectionRowView.lightGrey)
+                            .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
                     }
                 }
                 
-                Text(viewModel.toolsAvailableText)
+                Text(language.toolsAvailableText)
                     .font(FontLibrary.sfProTextRegular.font(size: 12))
-                    .foregroundColor(ToolFilterSelectionRowView.lightGrey)
+                    .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
             }
             .padding(.vertical, 7)
             

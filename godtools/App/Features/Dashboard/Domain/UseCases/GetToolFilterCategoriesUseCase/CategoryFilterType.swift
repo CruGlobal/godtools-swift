@@ -1,5 +1,5 @@
 //
-//  ToolCategoryType.swift
+//  CategoryFilterType.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 9/9/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ToolCategoryType {
+enum CategoryFilterType {
     case anyCategory
     case category(id: String)
 }

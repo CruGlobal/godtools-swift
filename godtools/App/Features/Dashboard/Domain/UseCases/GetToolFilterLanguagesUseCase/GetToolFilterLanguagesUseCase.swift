@@ -26,7 +26,7 @@ class GetToolFilterLanguagesUseCase {
         self.localizationServices = localizationServices
     }
     
-    func getToolFilterLanguagesPublisher(filteredByCategory: ToolCategoryDomainModel?) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
+    func getToolFilterLanguagesPublisher(filteredByCategory: CategoryFilterDomainModel?) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
         
         let languageIds = self.getAllToolsUseCase
             .getAllTools(sorted: false, optimizeForBatchRequests: true, categoryId: filteredByCategory?.id)

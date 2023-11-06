@@ -65,8 +65,10 @@ enum FlowStep {
     case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
     
     // tools
-    case toolFilterTappedFromTools(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>)
-    case backTappedFromToolFilter
+    case toolCategoryFilterTappedFromTools(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel)
+    case toolLanguageFilterTappedFromTools(languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel)
+    case backTappedFromToolCategoryFilter
+    case backTappedFromToolLanguageFilter
     case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
     case toolTappedFromTools(tool: ToolDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
     
