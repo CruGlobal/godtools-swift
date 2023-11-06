@@ -17,7 +17,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: CurrentValueSubject<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
             searchTextPublisher,

@@ -15,7 +15,6 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>
-    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     private let selectedCategory: CategoryFilterDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -23,9 +22,10 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    @Published var searchText: String = ""
     @Published var selectedLanguage: LanguageFilterDomainModel
     @Published var navTitle: String = ""
-    @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
     init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
         
@@ -47,7 +47,10 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .assign(to: &$allLanguages)
         
         searchToolFilterLanguagesUseCase
-            .getSearchResultsPublisher(for: searchTextPublisher.eraseToAnyPublisher(), in: $allLanguages.eraseToAnyPublisher())
+            .getSearchResultsPublisher(
+                for: $searchText.eraseToAnyPublisher(),
+                in: $allLanguages.eraseToAnyPublisher()
+            )
             .receive(on: DispatchQueue.main)
             .assign(to: &$languageSearchResults)
         
@@ -67,7 +70,6 @@ extension ToolFilterLanguageSelectionViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            searchTextPublisher: searchTextPublisher,
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }

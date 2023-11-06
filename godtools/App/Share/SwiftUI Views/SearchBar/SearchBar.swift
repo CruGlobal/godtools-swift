@@ -14,13 +14,13 @@ struct SearchBar: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
 
-    @State private var searchText: String
     @State private var isEditing = false
+    @Binding private var searchText: String
     
-    init(viewModel: SearchBarViewModel) {
+    init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
         
         self.viewModel = viewModel
-        self.searchText = viewModel.searchTextPublisher.value
+        self._searchText = searchText
     }
         
     var body: some View {
@@ -71,10 +71,6 @@ struct SearchBar: View {
                     Text(viewModel.cancelText)
                 }
             }
-        }
-        .onChange(of: searchText) { newValue in
-            
-            viewModel.searchTextPublisher.send(searchText)
         }
     }
 }

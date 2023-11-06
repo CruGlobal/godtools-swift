@@ -14,7 +14,6 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
-    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     private let selectedLanguage: LanguageFilterDomainModel
     
     private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
@@ -22,6 +21,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published var searchText: String = ""
     @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
@@ -48,7 +48,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        searchTextPublisher
+        $searchText
             .sink { [weak self] _ in
                 
                 self?.getSearchResults()
@@ -71,7 +71,6 @@ extension ToolFilterCategorySelectionViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            searchTextPublisher: searchTextPublisher,
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }
@@ -92,8 +91,6 @@ extension ToolFilterCategorySelectionViewModel {
 extension ToolFilterCategorySelectionViewModel {
     
     private func getSearchResults() {
-        
-        let searchText = searchTextPublisher.value
         
         if searchText.isEmpty == false {
             

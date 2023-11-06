@@ -11,13 +11,10 @@ import Combine
 
 class SearchBarViewModel: ObservableObject {
     
-    let searchTextPublisher: CurrentValueSubject<String, Never>
     @Published var cancelText: String = ""
 
-    init(searchTextPublisher: CurrentValueSubject<String, Never>, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
-        
-        self.searchTextPublisher = searchTextPublisher
-        
+    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
+                
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: "cancel")
             .receive(on: DispatchQueue.main)

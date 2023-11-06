@@ -23,7 +23,7 @@ struct AppLanguagesView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .appLanguages)
                         
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel())
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
                 ForEach(viewModel.appLanguageSearchResults) { appLanguage in
