@@ -21,31 +21,25 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
     }
     
     func getStringsPublisher(resource: ResourceModel?, translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
-                
-        let downloadMessageLocalizedKey: String
-        let downloadMessage: String
+                        
+        let localeId: String = translateInAppLanguageCode
+        let toolIsFavorited: Bool?
         
         let resourceType: ResourceType? = resource?.resourceTypeEnum
         
         if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
 
-            let isFavoritedResource: Bool = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
-            
-            downloadMessageLocalizedKey = isFavoritedResource ? "loading_favorited_tool" : "loading_unfavorited_tool"
-        }
-        else if resourceType == .lesson {
-            
-            downloadMessageLocalizedKey = "loading_favorited_tool"
+            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
         }
         else {
             
-            downloadMessageLocalizedKey = "loading_favorited_tool"
+            toolIsFavorited = nil
         }
-        
-        downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInAppLanguageCode, key: downloadMessageLocalizedKey)
-        
+     
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
-            downloadMessage: downloadMessage
+            toolIsFavorited: toolIsFavorited,
+            downloadingToolMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool"),
+            favoriteThisToolForOfflineUseMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool")
         )
         
         return Just(interfaceStrings)
