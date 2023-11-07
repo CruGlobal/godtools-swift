@@ -18,6 +18,7 @@ struct LanguageFilterDomainModel {
 
 extension LanguageFilterDomainModel: StringSearchable {
     
+    // TODO: - update this to allow searching from two different translations (GT-2158)
     var searchableStrings: [String] {
         return [searchableText]
     }

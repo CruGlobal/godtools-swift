@@ -12,23 +12,24 @@ import Combine
 class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
+    private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     private let selectedLanguage: LanguageFilterDomainModel
     
-    private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     private var cancellables: Set<AnyCancellable> = Set()
-    
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
     @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
+    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase,  categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
+        self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.selectedLanguage = selectedLanguage
@@ -41,19 +42,16 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .assign(to: &$navTitle)
         
         getToolFilterCategoriesUseCase.getToolFilterCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
-            .sink { [weak self] categories in
-                
-                self?.allCategories = categories
-                self?.getSearchResults()
-            }
-            .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$allCategories)
         
-        $searchText
-            .sink { [weak self] _ in
-                
-                self?.getSearchResults()
-            }
-            .store(in: &cancellables)
+        searchToolFilterCategoriesUseCase
+            .getSearchResultsPublisher(
+                for: $searchText.eraseToAnyPublisher(),
+                in: $allCategories.eraseToAnyPublisher()
+            )
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$categorySearchResults)
         
         $selectedCategory
             .sink { [weak self] category in
@@ -83,22 +81,5 @@ extension ToolFilterCategorySelectionViewModel {
     @objc func backButtonTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromToolCategoryFilter)
-    }
-}
-
-// MARK: - Private
-
-extension ToolFilterCategorySelectionViewModel {
-    
-    private func getSearchResults() {
-        
-        if searchText.isEmpty == false {
-            
-            categorySearchResults = self.allCategories.filter { $0.searchableText.contains(searchText) }
-            
-        } else {
-            
-            categorySearchResults = self.allCategories
-        }
     }
 }
