@@ -10,6 +10,7 @@ import Foundation
 
 class AppFeatureDiContainer {
     
+    let accountCreation: AccountCreationFeatureDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
@@ -17,9 +18,11 @@ class AppFeatureDiContainer {
     let lessons: LessonsFeatureDiContainer
     let onboarding: OnboardingDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
+    let tutorial: TutorialFeatureDiContainer
     
-    init(appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer) {
+    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer, tutorial: TutorialFeatureDiContainer) {
         
+        self.accountCreation = accountCreation
         self.appLanguage = appLanguage
         self.downloadToolProgress = downloadToolProgress
         self.featuredLessons = featuredLessons
@@ -27,5 +30,6 @@ class AppFeatureDiContainer {
         self.lessons = lessons
         self.onboarding = onboarding
         self.toolDetails = toolDetails
+        self.tutorial = tutorial
     }
 }

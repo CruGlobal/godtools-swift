@@ -64,14 +64,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
-        return AuthenticateUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
-    }
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -232,8 +224,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
-        return GetToolCategoriesUseCase(
+    func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
+        return GetToolFilterCategoriesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
@@ -305,13 +297,6 @@ class AppDomainLayerDependencies {
             repository: dataLayer.getCompletedTrainingTipRepository(),
             service: dataLayer.getViewedTrainingTipsService(),
             setCompletedTrainingTipUseCase: getSetCompletedTrainingTipUseCase()
-        )
-    }
-    
-    func getTutorialUseCase() -> GetTutorialUseCase {
-        return GetTutorialUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }
     

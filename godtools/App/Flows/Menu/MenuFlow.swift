@@ -275,8 +275,10 @@ class MenuFlow: Flow {
             flowDelegate: self,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
-            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
+            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialSignInInterfaceStringsUseCase(),
+            authenticateUserUseCase: appDiContainer.feature.accountCreation.domainLayer.getAuthenticateUserUseCase()
         )
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)

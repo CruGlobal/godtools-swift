@@ -27,6 +27,7 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
+        let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
@@ -34,15 +35,18 @@ class AppDiContainer {
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
+        let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
+            accountCreation: accountCreationDiContainer,
             appLanguage: appLanguageDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
             featuredLessons: featuredLessonsDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
-            toolDetails: toolDetailsDiContainer
+            toolDetails: toolDetailsDiContainer,
+            tutorial: tutorialDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

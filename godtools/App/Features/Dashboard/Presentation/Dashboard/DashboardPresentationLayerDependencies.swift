@@ -80,7 +80,7 @@ class DashboardPresentationLayerDependencies {
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),

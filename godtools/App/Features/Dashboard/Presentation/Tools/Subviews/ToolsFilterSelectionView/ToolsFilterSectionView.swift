@@ -40,7 +40,7 @@ struct ToolsFilterSectionView: View {
                     width: buttonWidth,
                     tappedClosure: {
                         
-                        viewModel.toolFilterTapped(filterType: .category)
+                        viewModel.toolCategoryFilterTapped()
                     }
                 )
                 
@@ -49,7 +49,7 @@ struct ToolsFilterSectionView: View {
                     width: buttonWidth,
                     tappedClosure: {
                         
-                        viewModel.toolFilterTapped(filterType: .language)
+                        viewModel.toolLanguageFilterTapped()
                     }
                 )
                 
