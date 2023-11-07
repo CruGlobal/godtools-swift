@@ -70,21 +70,6 @@ struct ToolScreenShareTutorialPageView: View {
                         .frame(width: 100, height: 100)
                 }
                 
-                /*
-                if animationMedia {
-                    
-                    AnimatedSwiftUIView(
-                        viewModel: AnimatedViewModel(animationDataResource: animatedResource, autoPlay: true, loop: true),
-                        contentMode: .scaleAspectFit
-                    )
-                }
-                else {
-                    
-                    Rectangle()
-                        .fill(Color.clear)
-                        .frame(width: 100, height: 100)
-                }*/
-                
                 Spacer()
             }
             .frame(minWidth: mediaContainerWidth, idealWidth: mediaContainerWidth, maxWidth: mediaContainerWidth, minHeight: nil, idealHeight: nil, maxHeight: mediaContainerHeight, alignment: .top)
