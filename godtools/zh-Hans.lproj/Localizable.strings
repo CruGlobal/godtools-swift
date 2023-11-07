@@ -1,6 +1,13 @@
 "onboardingTutorial.chooseLanguageButton.title" = "选择语言";
 "allTools.filter.anyCategory" = "任何类别";
 "allTools.filter.anyLanguage" = "任何语言";
+"menu_getStarted" = "开始体验";
+"menu_support" = "支持";
+"menu_about" = "关于";
+"menu.sendFeedback" = "发送反馈";
+"menu.reportABug" = "报告错误";
+"menu.askAQuestion" = "提问";
+"menu.leaveAReview" = "发表评论";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "关于";
