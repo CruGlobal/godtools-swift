@@ -144,7 +144,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-        case .toolSettingsFlowCompleted:
+        case .toolSettingsFlowCompleted(let state):
             
             guard toolSettingsFlow != nil else {
                 return

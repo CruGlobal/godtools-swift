@@ -181,11 +181,12 @@ enum FlowStep {
     case shareableTappedFromToolSettings(shareableImageDomainModel: ShareableImageDomainModel)
     case closeTappedFromReviewShareShareable
     case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
-    case toolSettingsFlowCompleted
+    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
+    case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
     
     // download tool
     case closeTappedFromDownloadToolProgress
