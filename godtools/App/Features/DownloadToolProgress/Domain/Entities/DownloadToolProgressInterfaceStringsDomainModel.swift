@@ -11,4 +11,14 @@ import Foundation
 struct DownloadToolProgressInterfaceStringsDomainModel {
     
     let downloadMessage: String
+    
+    init(toolIsFavorited: Bool?, downloadingToolMessage: String, favoriteThisToolForOfflineUseMessage: String) {
+        
+        if let toolIsFavorited = toolIsFavorited {
+            downloadMessage = toolIsFavorited ? downloadingToolMessage : favoriteThisToolForOfflineUseMessage
+        }
+        else {
+            downloadMessage = downloadingToolMessage
+        }
+    }
 }

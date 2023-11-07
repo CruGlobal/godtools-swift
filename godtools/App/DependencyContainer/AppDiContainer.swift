@@ -36,6 +36,7 @@ class AppDiContainer {
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
             accountCreation: accountCreationDiContainer,
@@ -46,7 +47,8 @@ class AppDiContainer {
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             toolDetails: toolDetailsDiContainer,
-            toolScreenShare: toolScreenShareDiContainer
+            toolScreenShare: toolScreenShareDiContainer,
+            tutorial: tutorialDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

@@ -29,6 +29,17 @@ extension LanguageFilterDomainModel {
         }
     }
     
+    var filterId: String {
+        
+        switch type {
+        case .anyLanguage:
+            return "any_language"
+            
+        case .language(let languageModel):
+            return languageModel.id
+        }
+    }
+    
     var translatedName: String? {
         
         switch type {
