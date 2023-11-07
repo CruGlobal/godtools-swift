@@ -247,6 +247,7 @@ class AppDomainLayerDependencies {
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             languagesRepository: dataLayer.getLanguagesRepository(),
+            localeLanguageName: dataLayer.getLocaleLanguageName(),
             localizationServices: dataLayer.getLocalizationServices()
         )
     }
