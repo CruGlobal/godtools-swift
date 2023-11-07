@@ -161,7 +161,7 @@ class AppDomainLayerDependencies {
     }
     
     func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
-        return SearchToolFilterLanguagesUseCase()
+        return SearchToolFilterLanguagesUseCase(stringSearcher: dataLayer.getStringSearcher())
     }
     
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {

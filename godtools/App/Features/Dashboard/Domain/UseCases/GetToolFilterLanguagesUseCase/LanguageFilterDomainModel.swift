@@ -16,6 +16,13 @@ struct LanguageFilterDomainModel {
     let searchableText: String
 }
 
+extension LanguageFilterDomainModel: StringSearchable {
+    
+    var searchableStrings: [String] {
+        return [searchableText]
+    }
+}
+
 extension LanguageFilterDomainModel {
     
     var id: String? {
