@@ -29,6 +29,12 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface {
+        return GetCreatingToolScreenShareSessionInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
         return GetToolScreenShareTutorialInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()

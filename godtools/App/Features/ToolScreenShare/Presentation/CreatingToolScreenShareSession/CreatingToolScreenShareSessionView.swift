@@ -10,11 +10,23 @@ import SwiftUI
 
 struct CreatingToolScreenShareSessionView: View {
     
+    @ObservedObject private var viewModel: CreatingToolScreenShareSessionViewModel
+    
+    init(viewModel: CreatingToolScreenShareSessionViewModel) {
+        
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         
-        VStack {
-            Text("creating session...")
-                .foregroundColor(Color.black)
+        FullScreenDownloadProgressView(
+            downloadMessage: "Creating session...",
+            hidesSpinner: false,
+            downloadProgress: nil,
+            downloadProgressString: nil
+        )
+        .onAppear {
+            viewModel.pageViewed()
         }
     }
 }

@@ -24,7 +24,7 @@ class ToolScreenShareFlow: Flow {
     let navigationController: AppNavigationController
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolData: ToolSettingsFlowToolData) {
-            
+        
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
@@ -44,23 +44,20 @@ class ToolScreenShareFlow: Flow {
     
     private func navigateToInitialView(toolScreenShareTutorialViewed: ToolScreenShareViewedDomainModel) {
         
-        presentCreatingToolScreenShareSession()
-        
-        /*
-        let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
-                    
-        if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
-            
-            navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
-        }
-        else if toolScreenShareTutorialHasBeenViewed || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
-           
-            presentCreatingToolScreenShareSession()
-        }
-        else {
-            
-            presentToolScreenShareTutorial()
-        }*/
+         let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
+         
+         if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
+         
+             navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel)))
+         }
+         else if toolScreenShareTutorialHasBeenViewed || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
+         
+             presentCreatingToolScreenShareSession()
+         }
+         else {
+         
+             presentToolScreenShareTutorial()
+         }
     }
     
     func navigate(step: FlowStep) {
@@ -68,11 +65,77 @@ class ToolScreenShareFlow: Flow {
         switch step {
             
         case .closeTappedFromToolScreenShareTutorial:
+            
             dismissToolScreenShareTutorial()
             
         case .shareLinkTappedFromToolScreenShareTutorial:
+           
             dismissToolScreenShareTutorial()
             presentCreatingToolScreenShareSession()
+            
+        case .closeTappedFromCreatingToolScreenShareSession:
+            
+            dismissCreatingToolScreenShareSession()
+            
+        case .didCreateSessionFromCreatingToolScreenShareSession(let result):
+            
+            dismissCreatingToolScreenShareSession()
+            
+            // TODO: Implement back in. ~Levi
+            //flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
+            
+            switch result {
+                
+            case .success(let channel):
+                
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.dataLayer.getTractRemoteShareURLBuilder()
+                
+                let resource: ResourceModel = toolData.renderer.value.resource
+                let primaryLanguage: LanguageDomainModel = settingsPrimaryLanguage.value
+                let parallelLanguage: LanguageDomainModel? = settingsParallelLanguage.value
+                
+                guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                    
+                    let viewModel = AlertMessageViewModel(
+                        title: "Error",
+                        message: "Failed to create remote share url.",
+                        cancelTitle: nil,
+                        acceptTitle: "OK",
+                        acceptHandler: nil
+                    )
+                    let view = AlertMessageView(viewModel: viewModel)
+                    
+                    navigationController.present(view.controller, animated: true, completion: nil)
+                    
+                    return
+                }
+                
+                let viewModel = ShareToolRemoteSessionURLViewModel(
+                    toolRemoteShareUrl: remoteShareUrl,
+                    localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+                    trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+                )
+                let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+                
+            case .failure(let error):
+                
+                switch error {
+                
+                case .timeOut:
+                    let viewModel = AlertMessageViewModel(
+                        title: "Timed Out",
+                        message: "Timed out creating remote share session.",
+                        cancelTitle: nil,
+                        acceptTitle: "OK",
+                        acceptHandler: nil
+                    )
+                    let view = AlertMessageView(viewModel: viewModel)
+                    
+                    navigationController.present(view.controller, animated: true, completion: nil)
+                }
+            }
             
         default:
             break
@@ -91,7 +154,7 @@ class ToolScreenShareFlow: Flow {
             rootView: toolScreenShareTutorialView,
             statusBarStyle: .default
         )
-                
+        
         navigationController.present(
             modal,
             animated: true,
@@ -127,6 +190,16 @@ class ToolScreenShareFlow: Flow {
         navigationController.present(modal, animated: true, completion: nil)
         
         creatingToolScreenShareSessionModal = modal
+    }
+    
+    private func dismissCreatingToolScreenShareSession() {
+        
+        guard let modal = creatingToolScreenShareSessionModal else {
+            return
+        }
+        
+        modal.dismiss(animated: true)
+        creatingToolScreenShareSessionModal = nil
     }
 }
 
@@ -177,28 +250,38 @@ extension ToolScreenShareFlow {
     
     private func getCreatingToolScreenShareSessionView() -> UIViewController {
         
-        let viewModel = CreatingToolScreenShareSessionViewModel()
-        
-        let view = CreatingToolScreenShareSessionView()
-        
-        let hostingView = AppHostingController<CreatingToolScreenShareSessionView>(
-            rootView: view,
-            navigationBar: nil
-        )
-        
-        return hostingView
-        
-        /*
-        let viewModel = LoadToolRemoteSessionViewModel(
-            resourceId: toolData.renderer.value.resource.id,
+        let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            resourceId: toolData.renderer.value.resource.id,
+            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCreatingToolScreenShareSessionInterfaceStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionInterfaceStringsUseCase(),
             tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = LoadingView(viewModel: viewModel)
+        let view = CreatingToolScreenShareSessionView(
+            viewModel: viewModel
+        )
         
-        return view*/
+        let closeButton = AppCloseBarItem(
+            color: ColorPalette.gtBlue.uiColor,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [],
+            trailingItems: [closeButton]
+        )
+        
+        let hostingView = AppHostingController<CreatingToolScreenShareSessionView>(
+            rootView: view,
+            navigationBar: navigationBar
+        )
+        
+        return hostingView
     }
 }
