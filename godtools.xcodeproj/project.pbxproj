@@ -610,8 +610,6 @@
 		4595E0E52A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0E42A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift */; };
 		459602E328400DBB00C66387 /* DownloadToolTranslationsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */; };
 		4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4597101529CDE02400C47040 /* View+CornerRadius.swift */; };
-		459830F52AF028400018E159 /* ToolDownloadProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459830F42AF028400018E159 /* ToolDownloadProgressDomainModel.swift */; };
-		459831032AF02F110018E159 /* GetToolDownloadProgressInterfaceStringUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459831022AF02F100018E159 /* GetToolDownloadProgressInterfaceStringUseCase.swift */; };
 		459A33FB29BFE46B00C49308 /* OnboardingQuickStartItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A33FA29BFE46B00C49308 /* OnboardingQuickStartItemView.swift */; };
 		459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A668B289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift */; };
 		459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A062AB498AD0085AF0D /* LaunchEnvironmentKey.swift */; };
@@ -1960,8 +1958,6 @@
 		4595E0E42A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealmUserDetails+UserDetailsDataModelType.swift"; sourceTree = "<group>"; };
 		459602E128400DBB00C66387 /* DownloadToolTranslationsFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolTranslationsFlow.swift; sourceTree = "<group>"; };
 		4597101529CDE02400C47040 /* View+CornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
-		459830F42AF028400018E159 /* ToolDownloadProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDownloadProgressDomainModel.swift; sourceTree = "<group>"; };
-		459831022AF02F100018E159 /* GetToolDownloadProgressInterfaceStringUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolDownloadProgressInterfaceStringUseCase.swift; sourceTree = "<group>"; };
 		459A33FA29BFE46B00C49308 /* OnboardingQuickStartItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingQuickStartItemView.swift; sourceTree = "<group>"; };
 		459A668B289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolTranslationsFilesFilter.swift; sourceTree = "<group>"; };
 		459BD083289AD4310075901B /* DetermineToolTranslationsToDownloadError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineToolTranslationsToDownloadError.swift; sourceTree = "<group>"; };
@@ -5215,7 +5211,6 @@
 			isa = PBXGroup;
 			children = (
 				455EE83B2AEC586200C3205C /* GetDownloadToolProgressInterfaceStringsUseCase.swift */,
-				459831022AF02F100018E159 /* GetToolDownloadProgressInterfaceStringUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -5224,7 +5219,6 @@
 			isa = PBXGroup;
 			children = (
 				455EE8392AEC582900C3205C /* DownloadToolProgressInterfaceStringsDomainModel.swift */,
-				459830F42AF028400018E159 /* ToolDownloadProgressDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -10634,7 +10628,6 @@
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
 				4554512528948D220072EC6E /* LanguageSettingsRepository.swift in Sources */,
 				45860A562923E7B30089C836 /* FixedHorizontalSpacer.swift in Sources */,
-				459830F52AF028400018E159 /* ToolDownloadProgressDomainModel.swift in Sources */,
 				457766E92AD6F3340093B19A /* GetToolDetailsInterfaceStringsRepositoryInterface.swift in Sources */,
 				45D4A6CF29B12AE200DED984 /* ToolDeepLinkPage+MobileContentPagesPage.swift in Sources */,
 				453D2F7E2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift in Sources */,
@@ -11147,7 +11140,6 @@
 				45AE975F27C97A9500C2CB33 /* Text+MobileContentRenderableModel.swift in Sources */,
 				45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */,
 				45D318F42AE6FDB100D74A87 /* OnboardingQuickStartSupportedLanguagesRepository.swift in Sources */,
-				459831032AF02F110018E159 /* GetToolDownloadProgressInterfaceStringUseCase.swift in Sources */,
 				45E41B792A83D14600F886A2 /* LocalizableStringsBundleLoader.swift in Sources */,
 				45A415FD2A9942ED0030E2C7 /* OnboardingPathDeepLinkParser.swift in Sources */,
 				455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */,
