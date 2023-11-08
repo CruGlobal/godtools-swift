@@ -8,6 +8,13 @@
 
 import SwiftUI
 
-struct CreatingToolScreenShareSessionView {
+struct CreatingToolScreenShareSessionView: View {
     
+    var body: some View {
+        
+        VStack {
+            Text("creating session...")
+                .foregroundColor(Color.black)
+        }
+    }
 }

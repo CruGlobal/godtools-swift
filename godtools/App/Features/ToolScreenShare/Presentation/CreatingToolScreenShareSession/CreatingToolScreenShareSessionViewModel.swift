@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Combine
 
-class CreatingToolScreenShareSessionViewModel {
+class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     init() {
         

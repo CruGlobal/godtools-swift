@@ -15,7 +15,7 @@ class ToolScreenShareFlow: Flow {
     private let toolData: ToolSettingsFlowToolData
     
     private var toolScreenShareTutorialModal: UIViewController?
-    private var loadToolScreenShareRemoteSessionModal: UIViewController?
+    private var creatingToolScreenShareSessionModal: UIViewController?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -44,6 +44,9 @@ class ToolScreenShareFlow: Flow {
     
     private func navigateToInitialView(toolScreenShareTutorialViewed: ToolScreenShareViewedDomainModel) {
         
+        presentCreatingToolScreenShareSession()
+        
+        /*
         let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
                     
         if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
@@ -52,12 +55,12 @@ class ToolScreenShareFlow: Flow {
         }
         else if toolScreenShareTutorialHasBeenViewed || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
            
-            presentLoadToolScreenShareSession()
+            presentCreatingToolScreenShareSession()
         }
         else {
             
             presentToolScreenShareTutorial()
-        }
+        }*/
     }
     
     func navigate(step: FlowStep) {
@@ -69,7 +72,7 @@ class ToolScreenShareFlow: Flow {
             
         case .shareLinkTappedFromToolScreenShareTutorial:
             dismissToolScreenShareTutorial()
-            presentLoadToolScreenShareSession()
+            presentCreatingToolScreenShareSession()
             
         default:
             break
@@ -108,22 +111,22 @@ class ToolScreenShareFlow: Flow {
         toolScreenShareTutorialModal = nil
     }
     
-    private func presentLoadToolScreenShareSession() {
+    private func presentCreatingToolScreenShareSession() {
         
-        guard loadToolScreenShareRemoteSessionModal == nil else {
+        guard creatingToolScreenShareSessionModal == nil else {
             return
         }
         
-        let loadToolScreenShareSessionView = getLoadToolScreenShareSessionView()
+        let creatingToolScreenShareSessionView = getCreatingToolScreenShareSessionView()
         
         let modal = ModalNavigationController.defaultModal(
-            rootView: loadToolScreenShareSessionView,
+            rootView: creatingToolScreenShareSessionView,
             statusBarStyle: .default
         )
         
         navigationController.present(modal, animated: true, completion: nil)
         
-        loadToolScreenShareRemoteSessionModal = modal
+        creatingToolScreenShareSessionModal = modal
     }
 }
 
@@ -172,8 +175,20 @@ extension ToolScreenShareFlow {
         return hostingView
     }
     
-    private func getLoadToolScreenShareSessionView() -> UIViewController {
+    private func getCreatingToolScreenShareSessionView() -> UIViewController {
         
+        let viewModel = CreatingToolScreenShareSessionViewModel()
+        
+        let view = CreatingToolScreenShareSessionView()
+        
+        let hostingView = AppHostingController<CreatingToolScreenShareSessionView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        return hostingView
+        
+        /*
         let viewModel = LoadToolRemoteSessionViewModel(
             resourceId: toolData.renderer.value.resource.id,
             flowDelegate: self,
@@ -184,6 +199,6 @@ extension ToolScreenShareFlow {
         
         let view = LoadingView(viewModel: viewModel)
         
-        return view
+        return view*/
     }
 }
