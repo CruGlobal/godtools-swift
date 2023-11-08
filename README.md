@@ -39,9 +39,13 @@ GodTools
 
 
 #### Summary
-The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, an Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles.
+The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles.
 
-The purpose of this pattern is to create a clear separation of concerns and responsibilities.
+The purpose of this pattern is to create a clear separation of concerns and responsibilities.  Implementing strict coding standards means code can be easily read, modified, and tested.
+
+Clean Architecture at its core is about creating a separation of concerns and building it in such a way that it becomes hard to violate this core principle.  This approach enables us to build a system in the same way that follows best practices without the need for micromanagement. 
+
+Having Clean Architecture enables changes to have isolated impact and allows for the system to be easily extended and maintained.
 
 References:
 - Solid principles: 
@@ -108,27 +112,28 @@ ViewModels are considered a view representation.  They're the data backing of a 
 - Provides data outputs to the View which the View can observe and react to.
 - Each data output connects to a UseCase (Domain Layer) which computes data.  Computing can also happen directly in the ViewModel although UseCases are preferred.
 
-#### Domain Layer
+#### Domain Layer With Dependency Inversion
 
-The domain layer is responsible for the business rules of the application and is broken up into Use Cases.  The benefits of the domain layer include:
-- It avoids code duplication.
-- It improves readability in ViewModels that use domain layer use cases.
-- It improves testability of the app.
-- It avoids large ViewModels by allowing you to split responsibilities.
+The domain layer is responsible for the business rules of the application.  The benefits of the domain layer include:
+- It splits responsibilities of the ViewModel into readable UseCases which reduces ViewModel complexity and also provides better readability (Screaming Architecture).
+- It improves testability.  UseCases can be easily mocked (by using dependency inversion) to write behavior tests.
+- It isolates the business rules and logic keeping the data layer clean from such responsibilities. 
 
+In GodTools our Domain Layer will be broken into 3 categories (UseCases, Interfaces, and Entities).
 
 ##### - Use Cases
 
-Use cases make up the domain layer.  Use cases should be responsible for a single task and named to reflect that task.  For example: AuthenticateUserUseCase, GetSpotlightToolsUseCase.
+UseCases are the meat of the domain layer and give us insight to how the app behaves from a user stand point.  UseCases describe some type of user action such as AuthenticateUserUseCase, ViewSpotlightToolsUseCase, CreateToolScreenShareSessionUseCase.
 
 Responsibilities:
 
-- Operates on the data layer classes and other use cases to perform a single task and applies the business rules.
+- Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.
+- Should be responsible for a single task and named to reflect that task.
+- Operates on the data layer utilizing dependency inversion.  This means UseCases should only point to interfaces.  This makes UseCases easy to mock when writing behavior tests.
+- Typically will provide a single method that takes in 0 or more inputs and produces a single output (domain model).
 
 File Naming and Organization:
-- Use cases are typically stored by feature under Features/Domain/UseCases/ folder.  Use cases should be specific to the business use case for a feature.  In some situations Use cases can be shared across features and those should be stored in Share/Domain/UseCases. 
-- Each UseCase should have it's own folder named the same as the use case.  
-- If a UseCase provides a domain model, that model should be included in the same folder as the use case and suffixed with DomainModel.
+- Use cases are typically stored by feature under Features/Domain/UseCases/ folder.  Use cases should be specific to the business use case for a feature. 
 
 In this screenshot the ToolDetails feature Use cases are expanded.  These are all of the Use cases that make up that feature.  Each Use case is in a directory that matches the Use case name and contains a domain model with DomainModel suffix.
 
@@ -142,7 +147,7 @@ Typical data storage can include a remote database, disk cache (CoreData, Realm,
 
 ##### - Repositories
 
-Repositories are a pattern that GodTools is shifting towards in the data layer and is responsible for encapsulating data storage types.
+Repositories are a pattern that GodTools is shifting towards in the data layer and is responsible for encapsulating data storage types.  Think of a repository as a container for storing data.  How that data is stored is up to the repository.  
 
 A Repository has the following responsibilities:
 
