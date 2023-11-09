@@ -15,7 +15,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     private let resourceId: String // TODO: Eventually we will want to use ToolDomainModel here. ~Levi
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
-    private let getCreatingToolScreenShareSessionInterfaceStringsUseCase: GetCreatingToolScreenShareSessionInterfaceStringsUseCase
+    private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
@@ -27,12 +27,12 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published var loadingMessage: String = ""
     
-    init(flowDelegate: FlowDelegate, resourceId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, getCreatingToolScreenShareSessionInterfaceStringsUseCase: GetCreatingToolScreenShareSessionInterfaceStringsUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, resourceId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resourceId = resourceId
         self.getCurrentAppLanguage = getCurrentAppLanguage
-        self.getCreatingToolScreenShareSessionInterfaceStringsUseCase = getCreatingToolScreenShareSessionInterfaceStringsUseCase
+        self.viewCreatingToolScreenShareSessionUseCase = viewCreatingToolScreenShareSessionUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         
@@ -40,9 +40,12 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        getCreatingToolScreenShareSessionInterfaceStringsUseCase
-            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
-            .sink { [weak self] (interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel) in
+        viewCreatingToolScreenShareSessionUseCase
+            .viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionDomainModel) in
+                
+                let interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
                 self?.loadingMessage = interfaceStrings.creatingSessionMessage
             }

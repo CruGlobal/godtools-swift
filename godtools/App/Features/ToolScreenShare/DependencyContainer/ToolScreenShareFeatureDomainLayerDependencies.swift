@@ -23,15 +23,21 @@ class ToolScreenShareFeatureDomainLayerDependencies {
         )
     }
     
-    func getCreatingToolScreenShareSessionInterfaceStringsUseCase() -> GetCreatingToolScreenShareSessionInterfaceStringsUseCase {
-        return GetCreatingToolScreenShareSessionInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface()
-        )
-    }
-    
     func getDidViewToolScreenShareUseCase() -> DidViewToolScreenShareUseCase {
         return DidViewToolScreenShareUseCase(
             incrementNumberOfToolScreenShareViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareViewsRepositoryInterface()
+        )
+    }
+    
+    func getViewCreatingToolScreenShareSessionTimedOutUseCase() -> ViewCreatingToolScreenShareSessionTimedOutUseCase {
+        return ViewCreatingToolScreenShareSessionTimedOutUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewCreatingToolScreenShareSessionUseCase() -> ViewCreatingToolScreenShareSessionUseCase {
+        return ViewCreatingToolScreenShareSessionUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface()
         )
     }
     

@@ -13,22 +13,30 @@ import Combine
 class ToolScreenShareFlow: Flow {
     
     private let toolData: ToolSettingsFlowToolData
+    private let primaryLanguage: LanguageDomainModel
+    private let parallelLanguage: LanguageDomainModel?
     
     private var toolScreenShareTutorialModal: UIViewController?
     private var creatingToolScreenShareSessionModal: UIViewController?
     private var cancellables: Set<AnyCancellable> = Set()
+    
+    // NOTE: I need to keep this stored in the Flow since we use UIAlertController which must set the title and message when allocating that view. ~Levi
+    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var creatingToolScreenShareSessionTimedOutDomainModel: CreatingToolScreenShareSessionTimedOutDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolData: ToolSettingsFlowToolData) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolData: ToolSettingsFlowToolData, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.toolData = toolData
+        self.primaryLanguage = primaryLanguage
+        self.parallelLanguage = parallelLanguage
         
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
@@ -38,6 +46,17 @@ class ToolScreenShareFlow: Flow {
             .first()
             .sink { [weak self] (toolScreenShareTutorialViewed: ToolScreenShareViewedDomainModel) in
                 self?.navigateToInitialView(toolScreenShareTutorialViewed: toolScreenShareTutorialViewed)
+            }
+            .store(in: &cancellables)
+        
+        appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionTimedOutUseCase()
+            .viewPublisher(appLanguage: appLanguage)
+            .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
+                self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
             }
             .store(in: &cancellables)
     }
@@ -91,8 +110,6 @@ class ToolScreenShareFlow: Flow {
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.dataLayer.getTractRemoteShareURLBuilder()
                 
                 let resource: ResourceModel = toolData.renderer.value.resource
-                let primaryLanguage: LanguageDomainModel = settingsPrimaryLanguage.value
-                let parallelLanguage: LanguageDomainModel? = settingsParallelLanguage.value
                 
                 guard let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
                     
@@ -124,16 +141,13 @@ class ToolScreenShareFlow: Flow {
                 switch error {
                 
                 case .timeOut:
-                    let viewModel = AlertMessageViewModel(
-                        title: "Timed Out",
-                        message: "Timed out creating remote share session.",
-                        cancelTitle: nil,
-                        acceptTitle: "OK",
-                        acceptHandler: nil
-                    )
-                    let view = AlertMessageView(viewModel: viewModel)
                     
-                    navigationController.present(view.controller, animated: true, completion: nil)
+                    if let domainModel = creatingToolScreenShareSessionTimedOutDomainModel {
+                        
+                        let view = getCreatingToolScreenShareSessionTimedOutView(domainModel: domainModel)
+                        
+                        navigationController.present(view, animated: true, completion: nil)
+                    }
                 }
             }
             
@@ -254,7 +268,7 @@ extension ToolScreenShareFlow {
             flowDelegate: self,
             resourceId: toolData.renderer.value.resource.id,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getCreatingToolScreenShareSessionInterfaceStringsUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getCreatingToolScreenShareSessionInterfaceStringsUseCase(),
+            viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
@@ -283,5 +297,16 @@ extension ToolScreenShareFlow {
         )
         
         return hostingView
+    }
+    
+    private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
+        
+        let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
+            domainModel: domainModel
+        )
+        
+        let view = CreatingToolScreenShareSessionTimedOutView(viewModel: viewModel)
+        
+        return view.controller
     }
 }

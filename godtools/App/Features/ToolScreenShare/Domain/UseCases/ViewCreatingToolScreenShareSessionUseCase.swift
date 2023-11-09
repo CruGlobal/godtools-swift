@@ -1,5 +1,5 @@
 //
-//  GetCreatingToolScreenShareSessionInterfaceStringsUseCase.swift
+//  ViewCreatingToolScreenShareSessionUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/8/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetCreatingToolScreenShareSessionInterfaceStringsUseCase {
+class ViewCreatingToolScreenShareSessionUseCase {
     
     private let getInterfaceStringsRepositoryInterface: GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface
     
@@ -18,13 +18,20 @@ class GetCreatingToolScreenShareSessionInterfaceStringsUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<CreatingToolScreenShareSessionInterfaceStringsDomainModel, Never> {
+    func viewPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<CreatingToolScreenShareSessionDomainModel, Never> {
         
         return appLanguagePublisher
             .flatMap({ (appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionInterfaceStringsDomainModel, Never> in
                 
                 return self.getInterfaceStringsRepositoryInterface
                     .getStringsPublisher(translateInLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionDomainModel, Never> in
+                
+                let domainModel = CreatingToolScreenShareSessionDomainModel(interfaceStrings: interfaceStrings)
+                
+                return Just(domainModel)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

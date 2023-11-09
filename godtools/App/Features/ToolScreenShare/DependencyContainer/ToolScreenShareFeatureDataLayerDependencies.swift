@@ -35,6 +35,12 @@ class ToolScreenShareFeatureDataLayerDependencies {
         )
     }
     
+    func getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface {
+        return GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
         return GetToolScreenShareTutorialInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()

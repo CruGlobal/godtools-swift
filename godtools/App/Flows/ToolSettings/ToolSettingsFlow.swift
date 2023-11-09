@@ -394,7 +394,9 @@ extension ToolSettingsFlow {
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
-            toolData: toolData
+            toolData: toolData,
+            primaryLanguage: settingsPrimaryLanguage.value,
+            parallelLanguage: settingsParallelLanguage.value
         )
         
         self.toolScreenShareFlow = toolScreenShareFlow
