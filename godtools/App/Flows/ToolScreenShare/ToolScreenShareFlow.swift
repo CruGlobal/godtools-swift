@@ -107,7 +107,7 @@ class ToolScreenShareFlow: Flow {
                 
             case .success(let channel):
                 
-                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.dataLayer.getTractRemoteShareURLBuilder()
+                let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
                 
                 let resource: ResourceModel = toolData.renderer.value.resource
                 
