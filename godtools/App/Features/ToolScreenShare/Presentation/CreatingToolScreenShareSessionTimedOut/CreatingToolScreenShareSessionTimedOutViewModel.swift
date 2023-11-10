@@ -13,13 +13,18 @@ class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType
         
     private var cancellables = Set<AnyCancellable>()
     
-    let title: String? = nil
-    let message: String? = nil
+    let title: String?
+    let message: String?
     let cancelTitle: String? = nil
-    let acceptTitle: String = ""
+    let acceptTitle: String
     
     init(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) {
         
+        let interfaceStrings: CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel = domainModel.interfaceStrings
+        
+        title = interfaceStrings.title
+        message = interfaceStrings.message
+        acceptTitle = interfaceStrings.acceptActionTitle
     }
 }
 
@@ -29,5 +34,6 @@ extension CreatingToolScreenShareSessionTimedOutViewModel {
     
     func acceptTapped() {
         
+        // Nothing to here, but implementing for protocol AlertMessageViewModelType. ~Levi
     }
 }
