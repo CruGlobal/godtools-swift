@@ -3123,7 +3123,6 @@
 				45D63E8C288F77D4009B4610 /* ResourcesRepository */,
 				45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */,
 				45BDA5B92954F5CF007E259B /* ResourceViewsService */,
-				D4670B0A2AFAA17C00FAD896 /* StringSearcher */,
 				450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */,
 				45B36523288504D40012BE53 /* TranslationsRepository */,
 				45052131295F3B9C0018ABD0 /* UserCountersRepository */,
@@ -6676,6 +6675,7 @@
 				45AD20B725938F1A00A096A0 /* Oberservables */,
 				455EE8472AEC5F4A00C3205C /* ProgressTimer */,
 				45EB9B4429F16CF200CA74A8 /* SharedAppleExtensions */,
+				D4670B0A2AFAA17C00FAD896 /* StringSearcher */,
 				45D63E54288F67F8009B4610 /* URLSession */,
 			);
 			path = Common;
