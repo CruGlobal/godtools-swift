@@ -1,33 +1,32 @@
 //
-//  ShareToolRemoteSessionURLViewModel.swift
+//  ShareToolScreenShareSessionViewModel.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/14/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 11/10/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class ShareToolRemoteSessionURLViewModel {
-        
+class ShareToolScreenShareSessionViewModel {
+    
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     let shareMessage: String
     
-    init(toolRemoteShareUrl: String, localizationServices: LocalizationServices, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(domainModel: ShareToolScreenShareSessionDomainModel, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
               
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        shareMessage = String.localizedStringWithFormat(
-            localizationServices.stringForSystemElseEnglish(key: "share_tool_remote_link_message"),
-            toolRemoteShareUrl
-        )
+        let interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
+        
+        shareMessage = interfaceStrings.shareMessage
     }
 }
 
 // MARK: - Inputs
 
-extension ShareToolRemoteSessionURLViewModel {
+extension ShareToolScreenShareSessionViewModel {
     
     func pageViewed() {
         

@@ -41,6 +41,12 @@ class ToolScreenShareFeatureDomainLayerDependencies {
         )
     }
     
+    func getViewShareToolScreenShareSessionUseCase() -> ViewShareToolScreenShareSessionUseCase {
+        return ViewShareToolScreenShareSessionUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getShareToolScreenShareSessionInterfaceStringsRepositoryInterface()
+        )
+    }
+    
     func getViewToolScreenShareTutorialUseCase() -> ViewToolScreenShareTutorialUseCase {
         return ViewToolScreenShareTutorialUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getToolScreenShareTutorialInterfaceStringsRepositoryInterface(),

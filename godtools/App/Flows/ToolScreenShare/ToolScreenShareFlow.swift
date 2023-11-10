@@ -20,9 +20,10 @@ class ToolScreenShareFlow: Flow {
     private var creatingToolScreenShareSessionModal: UIViewController?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    // NOTE: I need to keep this stored in the Flow since we use UIAlertController which must set the title and message when allocating that view. ~Levi
+    // NOTE: I need to keep these stored in the Flow since we use UIAlertController for the TimedOut alert and Share Modal which must set the title and message when allocating those views. ~Levi
     @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
     @Published private var creatingToolScreenShareSessionTimedOutDomainModel: CreatingToolScreenShareSessionTimedOutDomainModel?
+    @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -57,6 +58,13 @@ class ToolScreenShareFlow: Flow {
             .viewPublisher(appLanguage: appLanguage)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
                 self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
+            }
+            .store(in: &cancellables)
+        
+        appDiContainer.feature.toolScreenShare.domainLayer.getViewShareToolScreenShareSessionUseCase()
+            .viewPublisher(appLanguage: appLanguage)
+            .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
+                self?.shareToolScreenShareSessionDomainModel = domainModel
             }
             .store(in: &cancellables)
     }
@@ -127,27 +135,28 @@ class ToolScreenShareFlow: Flow {
                     return
                 }
                 
-                let viewModel = ShareToolRemoteSessionURLViewModel(
-                    toolRemoteShareUrl: remoteShareUrl,
-                    localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                    trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-                )
-                let view = ShareToolRemoteSessionURLView(viewModel: viewModel)
-                
-                navigationController.present(view.controller, animated: true, completion: nil)
+                if let domainModel = shareToolScreenShareSessionDomainModel {
+                    
+                    let view = getShareToolScreenShareSessionView(domainModel: domainModel)
+                    
+                    navigationController.present(view, animated: true, completion: nil)
+                }
                 
             case .failure(let error):
                 
                 switch error {
                 
                 case .timeOut:
-                    
-                    if let domainModel = creatingToolScreenShareSessionTimedOutDomainModel {
-                        
-                        let view = getCreatingToolScreenShareSessionTimedOutView(domainModel: domainModel)
-                        
-                        navigationController.present(view, animated: true, completion: nil)
+                   
+                    guard let domainModel = creatingToolScreenShareSessionTimedOutDomainModel else {
+                        return
                     }
+
+                    navigationController.present(
+                        getCreatingToolScreenShareSessionTimedOutView(domainModel: domainModel),
+                        animated: true,
+                        completion: nil
+                    )
                 }
             }
             
@@ -306,6 +315,20 @@ extension ToolScreenShareFlow {
         )
         
         let view = CreatingToolScreenShareSessionTimedOutView(viewModel: viewModel)
+        
+        return view.controller
+    }
+    
+    private func getShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel) -> UIViewController {
+        
+        let viewModel = ShareToolScreenShareSessionViewModel(
+            domainModel: domainModel,
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+        )
+        
+        let view = ShareToolScreenShareSessionView(
+            viewModel: viewModel
+        )
         
         return view.controller
     }

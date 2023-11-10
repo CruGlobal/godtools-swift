@@ -1,20 +1,20 @@
 //
-//  ShareToolRemoteSessionURLView.swift
+//  ShareToolScreenShareSessionView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/14/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 11/10/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import UIKit
 
-class ShareToolRemoteSessionURLView {
+class ShareToolScreenShareSessionView {
     
-    private let viewModel: ShareToolRemoteSessionURLViewModel
+    private let viewModel: ShareToolScreenShareSessionViewModel
         
     let controller: UIActivityViewController
     
-    init(viewModel: ShareToolRemoteSessionURLViewModel) {
+    init(viewModel: ShareToolScreenShareSessionViewModel) {
         
         self.viewModel = viewModel
         

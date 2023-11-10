@@ -73,6 +73,12 @@ class ToolScreenShareFeatureDataLayerDependencies {
         )
     }
     
+    func getShareToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface {
+        return GetShareToolScreenShareSessionInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
         return GetToolScreenShareTutorialInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
