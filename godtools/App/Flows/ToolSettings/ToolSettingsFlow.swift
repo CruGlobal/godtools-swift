@@ -179,24 +179,6 @@ class ToolSettingsFlow: Flow {
         }
     }
     
-    private func navigateToLoadToolRemoteSession() {
-        /*
-        let viewModel = LoadToolRemoteSessionViewModel(
-            resourceId: toolData.renderer.value.resource.id,
-            flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
-        )
-        let view = LoadingView(viewModel: viewModel)
-        
-        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
-        
-        navigationController.present(modal, animated: true, completion: nil)
-        
-        loadToolRemoteSessionModal = modal*/
-    }
-    
     private func presentLanguagesList(languageListType: ToolSettingsLanguageListType) {
         
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.domainLayer.getToolLanguagesUseCase()
