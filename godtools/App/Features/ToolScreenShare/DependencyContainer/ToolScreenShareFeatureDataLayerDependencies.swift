@@ -27,6 +27,38 @@ class ToolScreenShareFeatureDataLayerDependencies {
         )
     }
     
+    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        
+        return TractRemoteSharePublisher(
+            config: coreDataLayer.getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        
+        return TractRemoteShareSubscriber(
+            config: coreDataLayer.getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
+        return TractRemoteShareURLBuilder()
+    }
+    
     // MARK: - Domain Interface
     
     func getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface {

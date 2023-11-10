@@ -280,6 +280,14 @@
 		454B47E72AE024E000C7B5E7 /* OnboardingDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B47E42AE024DF00C7B5E7 /* OnboardingDiContainer.swift */; };
 		454B47E82AE024E000C7B5E7 /* OnboardingDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B47E52AE024DF00C7B5E7 /* OnboardingDataLayerDependencies.swift */; };
 		454B47E92AE024E000C7B5E7 /* OnboardingDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454B47E62AE024DF00C7B5E7 /* OnboardingDomainLayerDependencies.swift */; };
+		454BFDA12AFD8CD200104BC8 /* TractRemoteSharePublisherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD972AFD8CD200104BC8 /* TractRemoteSharePublisherError.swift */; };
+		454BFDA22AFD8CD200104BC8 /* TractRemoteShareChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD982AFD8CD200104BC8 /* TractRemoteShareChannel.swift */; };
+		454BFDA32AFD8CD200104BC8 /* TractRemoteShareURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD992AFD8CD200104BC8 /* TractRemoteShareURLBuilder.swift */; };
+		454BFDA42AFD8CD200104BC8 /* TractRemoteSharePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD9A2AFD8CD200104BC8 /* TractRemoteSharePublisher.swift */; };
+		454BFDA52AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD9C2AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift */; };
+		454BFDA62AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD9D2AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift */; };
+		454BFDA72AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFD9F2AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift */; };
+		454BFDA82AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454BFDA02AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift */; };
 		4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */; };
 		4550BC722A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */; };
 		455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */; };
@@ -741,14 +749,6 @@
 		45AD1F7425938A9800A096A0 /* ViewedTrainingTipsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF525938A9700A096A0 /* ViewedTrainingTipsCacheType.swift */; };
 		45AD1F7525938A9800A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DF625938A9700A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift */; };
 		45AD1F7825938A9800A096A0 /* ViewedTrainingTipsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */; };
-		45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4D25938A9800A096A0 /* TractRemoteSharePublisherError.swift */; };
-		45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4E25938A9800A096A0 /* TractRemoteShareChannel.swift */; };
-		45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E4F25938A9800A096A0 /* TractRemoteShareURLBuilder.swift */; };
-		45AD1FBA25938A9800A096A0 /* TractRemoteSharePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5025938A9800A096A0 /* TractRemoteSharePublisher.swift */; };
-		45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5225938A9800A096A0 /* TractRemoteShareSubscriberError.swift */; };
-		45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5325938A9800A096A0 /* TractRemoteShareSubscriber.swift */; };
-		45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5525938A9800A096A0 /* TractRemoteShareNavigationEvent.swift */; };
-		45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5625938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift */; };
 		45AD1FBF25938A9800A096A0 /* FirebaseDebugArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5825938A9800A096A0 /* FirebaseDebugArguments.swift */; };
 		45AD202625938A9800A096A0 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */; };
 		45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE625938A9800A096A0 /* CardJumpService.swift */; };
@@ -1640,6 +1640,14 @@
 		454B47E42AE024DF00C7B5E7 /* OnboardingDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDiContainer.swift; sourceTree = "<group>"; };
 		454B47E52AE024DF00C7B5E7 /* OnboardingDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataLayerDependencies.swift; sourceTree = "<group>"; };
 		454B47E62AE024DF00C7B5E7 /* OnboardingDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		454BFD972AFD8CD200104BC8 /* TractRemoteSharePublisherError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherError.swift; sourceTree = "<group>"; };
+		454BFD982AFD8CD200104BC8 /* TractRemoteShareChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareChannel.swift; sourceTree = "<group>"; };
+		454BFD992AFD8CD200104BC8 /* TractRemoteShareURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareURLBuilder.swift; sourceTree = "<group>"; };
+		454BFD9A2AFD8CD200104BC8 /* TractRemoteSharePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisher.swift; sourceTree = "<group>"; };
+		454BFD9C2AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriberError.swift; sourceTree = "<group>"; };
+		454BFD9D2AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
+		454BFD9F2AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
+		454BFDA02AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherNavigationEvent.swift; sourceTree = "<group>"; };
 		4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashableCurrentValueSubject.swift; sourceTree = "<group>"; };
 		4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsAuthenticatedDomainModel.swift; sourceTree = "<group>"; };
 		4552F5472AD474590075415E /* TrackScreenViewAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsUseCase.swift; sourceTree = "<group>"; };
@@ -2079,14 +2087,6 @@
 		45AD1DF525938A9700A096A0 /* ViewedTrainingTipsCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsCacheType.swift; sourceTree = "<group>"; };
 		45AD1DF625938A9700A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD1DFA25938A9700A096A0 /* ViewedTrainingTipsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewedTrainingTipsService.swift; sourceTree = "<group>"; };
-		45AD1E4D25938A9800A096A0 /* TractRemoteSharePublisherError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherError.swift; sourceTree = "<group>"; };
-		45AD1E4E25938A9800A096A0 /* TractRemoteShareChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareChannel.swift; sourceTree = "<group>"; };
-		45AD1E4F25938A9800A096A0 /* TractRemoteShareURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareURLBuilder.swift; sourceTree = "<group>"; };
-		45AD1E5025938A9800A096A0 /* TractRemoteSharePublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisher.swift; sourceTree = "<group>"; };
-		45AD1E5225938A9800A096A0 /* TractRemoteShareSubscriberError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriberError.swift; sourceTree = "<group>"; };
-		45AD1E5325938A9800A096A0 /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
-		45AD1E5525938A9800A096A0 /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
-		45AD1E5625938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisherNavigationEvent.swift; sourceTree = "<group>"; };
 		45AD1E5825938A9800A096A0 /* FirebaseDebugArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseDebugArguments.swift; sourceTree = "<group>"; };
 		45AD1EE025938A9800A096A0 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		45AD1EE625938A9800A096A0 /* CardJumpService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardJumpService.swift; sourceTree = "<group>"; };
@@ -3998,6 +3998,7 @@
 			isa = PBXGroup;
 			children = (
 				45369AA22AFA7FA500BD10F0 /* ToolScreenShareViewsRepository */,
+				454BFD952AFD8CD200104BC8 /* TractRemoteShare */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -4435,6 +4436,45 @@
 				454B47E62AE024DF00C7B5E7 /* OnboardingDomainLayerDependencies.swift */,
 			);
 			path = DependencyContainer;
+			sourceTree = "<group>";
+		};
+		454BFD952AFD8CD200104BC8 /* TractRemoteShare */ = {
+			isa = PBXGroup;
+			children = (
+				454BFD9E2AFD8CD200104BC8 /* Models */,
+				454BFD962AFD8CD200104BC8 /* TractRemoteSharePublisher */,
+				454BFD9B2AFD8CD200104BC8 /* TractRemoteShareSubscriber */,
+			);
+			path = TractRemoteShare;
+			sourceTree = "<group>";
+		};
+		454BFD962AFD8CD200104BC8 /* TractRemoteSharePublisher */ = {
+			isa = PBXGroup;
+			children = (
+				454BFD982AFD8CD200104BC8 /* TractRemoteShareChannel.swift */,
+				454BFD9A2AFD8CD200104BC8 /* TractRemoteSharePublisher.swift */,
+				454BFD972AFD8CD200104BC8 /* TractRemoteSharePublisherError.swift */,
+				454BFD992AFD8CD200104BC8 /* TractRemoteShareURLBuilder.swift */,
+			);
+			path = TractRemoteSharePublisher;
+			sourceTree = "<group>";
+		};
+		454BFD9B2AFD8CD200104BC8 /* TractRemoteShareSubscriber */ = {
+			isa = PBXGroup;
+			children = (
+				454BFD9D2AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift */,
+				454BFD9C2AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift */,
+			);
+			path = TractRemoteShareSubscriber;
+			sourceTree = "<group>";
+		};
+		454BFD9E2AFD8CD200104BC8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				454BFD9F2AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift */,
+				454BFDA02AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4554512328948D090072EC6E /* LanguageSettingsRepository */ = {
@@ -6767,7 +6807,6 @@
 				45AD1D4225938A9700A096A0 /* FontService */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
 				45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */,
-				45AD1E4B25938A9800A096A0 /* TractRemoteShare */,
 				45AD1EE825938A9800A096A0 /* UserDefaultsCache */,
 				45AD1DF425938A9700A096A0 /* ViewedTrainingTips */,
 				45AD1DD725938A9700A096A0 /* WebSocket */,
@@ -6845,45 +6884,6 @@
 				45AD1DF625938A9700A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift */,
 			);
 			path = ViewedTrainingTips;
-			sourceTree = "<group>";
-		};
-		45AD1E4B25938A9800A096A0 /* TractRemoteShare */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E4C25938A9800A096A0 /* TractRemoteSharePublisher */,
-				45AD1E5125938A9800A096A0 /* TractRemoteShareSubscriber */,
-				45AD1E5425938A9800A096A0 /* Models */,
-			);
-			path = TractRemoteShare;
-			sourceTree = "<group>";
-		};
-		45AD1E4C25938A9800A096A0 /* TractRemoteSharePublisher */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E4E25938A9800A096A0 /* TractRemoteShareChannel.swift */,
-				45AD1E5025938A9800A096A0 /* TractRemoteSharePublisher.swift */,
-				45AD1E4D25938A9800A096A0 /* TractRemoteSharePublisherError.swift */,
-				45AD1E4F25938A9800A096A0 /* TractRemoteShareURLBuilder.swift */,
-			);
-			path = TractRemoteSharePublisher;
-			sourceTree = "<group>";
-		};
-		45AD1E5125938A9800A096A0 /* TractRemoteShareSubscriber */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E5325938A9800A096A0 /* TractRemoteShareSubscriber.swift */,
-				45AD1E5225938A9800A096A0 /* TractRemoteShareSubscriberError.swift */,
-			);
-			path = TractRemoteShareSubscriber;
-			sourceTree = "<group>";
-		};
-		45AD1E5425938A9800A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1E5525938A9800A096A0 /* TractRemoteShareNavigationEvent.swift */,
-				45AD1E5625938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45AD1E5725938A9800A096A0 /* FirebaseDebugArguments */ = {
@@ -10561,6 +10561,7 @@
 				45DBE6082ACD9EAB008A93BF /* AddToolToFavoritesUseCase.swift in Sources */,
 				45FF773D28B66D370027DDE4 /* ShortcutItemType.swift in Sources */,
 				45F71629290A12D70019B715 /* WebContentType.swift in Sources */,
+				454BFDA12AFD8CD200104BC8 /* TractRemoteSharePublisherError.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
 				45920D2F2A8CFE2500E336A8 /* NoFavoriteToolsView.swift in Sources */,
 				45D63E9D288F77D4009B4610 /* RealmResourcesCache.swift in Sources */,
@@ -10598,6 +10599,7 @@
 				4534F93E2AE9B11600A7A071 /* LessonEvaluationRepository.swift in Sources */,
 				450D7B0228E32965006C3FDF /* TrackDownloadedTranslationsCache.swift in Sources */,
 				45D7CAEB2A9BA23C00913E12 /* SwiftUIPreviewDatabaseConfiguration.swift in Sources */,
+				454BFDA32AFD8CD200104BC8 /* TractRemoteShareURLBuilder.swift in Sources */,
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
@@ -10691,7 +10693,6 @@
 				45EB9B8129F16CF200CA74A8 /* NSError+WithDescription.swift in Sources */,
 				45E347682A49BE230014CCD1 /* FlowStep.swift in Sources */,
 				4556CEAA29F2D57800643BBC /* RealmDatabaseCacheType.swift in Sources */,
-				45AD1FBE25938A9800A096A0 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45AD206525938B1300A096A0 /* AlertMessage.swift in Sources */,
 				45A8BDE42ACC9F47007A1EBB /* LessonCardView.swift in Sources */,
 				45558351269F2D1000C3FF14 /* LessonPageViewModel.swift in Sources */,
@@ -10770,6 +10771,7 @@
 				45AE974727C97A9400C2CB33 /* Header+MobileContentRenderableModel.swift in Sources */,
 				45B3F4482AC3A86100D61BFD /* RealmUserAppLanguage.swift in Sources */,
 				45C1522F2A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift in Sources */,
+				454BFDA82AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				459C526F289418EB00DA9E95 /* TranslationManifestFileDataModel.swift in Sources */,
 				45BE4A7B2AF28776004021DA /* NSAttributedString+Format.swift in Sources */,
 				45E60CFF2AEAE1C300E14BEA /* ScaleValueSliderView.swift in Sources */,
@@ -10924,7 +10926,6 @@
 				458CFEA229D4E15D007B423C /* MenuStringKeys.swift in Sources */,
 				45C152342A43D1BD00F2A1E8 /* ToolSettingsOptionsView.swift in Sources */,
 				45369AD22AFA7FA500BD10F0 /* ToolScreenShareTutorialDomainModel.swift in Sources */,
-				45AD1FBA25938A9800A096A0 /* TractRemoteSharePublisher.swift in Sources */,
 				45BDA64D2954FF08007E259B /* WebArchiveOperation.swift in Sources */,
 				4554205B28B17AEA00368CFE /* AttachmentDataModel.swift in Sources */,
 				45ACEE1A2AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift in Sources */,
@@ -10960,7 +10961,6 @@
 				45369AC32AFA7FA500BD10F0 /* GetToolScreenShareTutorialRepository.swift in Sources */,
 				45DF34522A28D41600BB717E /* AppBuild.swift in Sources */,
 				451C848E2AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift in Sources */,
-				45AD1FBB25938A9800A096A0 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45AE975227C97A9500C2CB33 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
 				457766F32AD724CD0093B19A /* GetToolDetailsToolIsFavoritedUseCase.swift in Sources */,
@@ -11012,7 +11012,7 @@
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				455EE83A2AEC582900C3205C /* DownloadToolProgressInterfaceStringsDomainModel.swift in Sources */,
-				45AD1FBD25938A9800A096A0 /* TractRemoteShareNavigationEvent.swift in Sources */,
+				454BFDA62AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift in Sources */,
 				455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */,
 				45BE4A812AF287D2004021DA /* ConfirmAppLanguageViewModel.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
@@ -11118,7 +11118,6 @@
 				4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				45BE4A842AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */,
-				45AD1FB725938A9800A096A0 /* TractRemoteSharePublisherError.swift in Sources */,
 				D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */,
 				45A5200E26C481DB009B68D4 /* MobileContentRendererManifestResourcesCache.swift in Sources */,
 				45B3F4522AC3A92700D61BFD /* AppLanguageFeatureDomainLayerDependencies.swift in Sources */,
@@ -11149,7 +11148,6 @@
 				45DB188E2AD7906900E9578F /* GetAppLanguagesRepository.swift in Sources */,
 				455582E5269F2C1000C3FF14 /* TrainingTipView.swift in Sources */,
 				45D63E84288F75B0009B4610 /* AttachmentsRepository.swift in Sources */,
-				45AD1FB825938A9800A096A0 /* TractRemoteShareChannel.swift in Sources */,
 				453F84BB2A029FC00005101E /* ArticleAemCacheErrorData.swift in Sources */,
 				45F7167D290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift in Sources */,
 				45BDA64A2954FF08007E259B /* WebArchiveOperationResult.swift in Sources */,
@@ -11196,6 +11194,7 @@
 				4552F54A2AD4745A0075415E /* TrackScreenViewAnalyticsUseCase.swift in Sources */,
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
+				454BFDA72AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				456D442E2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift in Sources */,
 				45DBE5FE2ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase.swift in Sources */,
 				45EA98FA2AFD67FC00E7EA9A /* ViewCreatingToolScreenShareSessionTimedOutUseCase.swift in Sources */,
@@ -11237,7 +11236,6 @@
 				45325F2D285CF8DA0078D932 /* ViewGeometry.swift in Sources */,
 				45558401269F2DA500C3FF14 /* MobileContentBackgroundImageViewModel.swift in Sources */,
 				45D95CCE271F3F1100263D46 /* MobileContentRendererEventAnalyticsTracking.swift in Sources */,
-				45AD1FBC25938A9800A096A0 /* TractRemoteShareSubscriber.swift in Sources */,
 				453D2F802AD88C1D001C44E3 /* GetLanguageSettingsInterfaceStringsRepositoryInterface.swift in Sources */,
 				45DBE6032ACD9EAB008A93BF /* GetAllToolsUseCase.swift in Sources */,
 				4581D97F297AD21E00D056D6 /* JsonApiResponseData.swift in Sources */,
@@ -11314,7 +11312,6 @@
 				4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */,
 				4555840C269F2DA500C3FF14 /* MobileContentErrorViewModel.swift in Sources */,
 				45AD1BDA25938A4F00A096A0 /* AlertMessageViewModelType.swift in Sources */,
-				45AD1FB925938A9800A096A0 /* TractRemoteShareURLBuilder.swift in Sources */,
 				45EB9B7129F16CF200CA74A8 /* UIImage+ScalePresevingAspectRatio.swift in Sources */,
 				455582E4269F2C1000C3FF14 /* TrainingTipViewModel.swift in Sources */,
 				45369AD52AFA7FA500BD10F0 /* ToolScreenShareViewedDomainModel.swift in Sources */,
@@ -11342,6 +11339,7 @@
 				454B47D22AE01F9E00C7B5E7 /* GetOnboardingQuickStartIsAvailableUseCase.swift in Sources */,
 				454ADAD82ABDD9D400037C27 /* LanguageSettingsView.swift in Sources */,
 				45D7CAEE2A9BA47200913E12 /* FirebaseInAppMessaging.swift in Sources */,
+				454BFDA42AFD8CD200104BC8 /* TractRemoteSharePublisher.swift in Sources */,
 				454B47E02AE0225200C7B5E7 /* GetOnboardingTutorialInterfaceStringsRepositoryInterface.swift in Sources */,
 				45BDA5C22954F605007E259B /* ResourceViewModel.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
@@ -11453,6 +11451,7 @@
 				4563D9A12A94FC7A00E0701C /* AppDiContainer.swift in Sources */,
 				45BDA5C02954F605007E259B /* ResourceViewModelType.swift in Sources */,
 				45C1528A2A4488D100F2A1E8 /* LessonProgressView.swift in Sources */,
+				454BFDA52AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45070A822ACF42AD00229EDD /* AppSkipBarItem.swift in Sources */,
 				45AD202C25938A9800A096A0 /* SharedUserDefaultsCache.swift in Sources */,
 				45AE973E27C97A9400C2CB33 /* MultiplatformModals.swift in Sources */,
@@ -11472,6 +11471,7 @@
 				45AE975727C97A9500C2CB33 /* Form+MobileContentRenderableModel.swift in Sources */,
 				D4B060042913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift in Sources */,
 				451C849B2AF1C6910003BF1A /* AccountCreationFeatureDomainLayerDependencies.swift in Sources */,
+				454BFDA22AFD8CD200104BC8 /* TractRemoteShareChannel.swift in Sources */,
 				459BD08F289AD4310075901B /* ToolTranslationsDomainModel.swift in Sources */,
 				458CFE9629D4E0B9007B423C /* ArticleCategoriesViewModel.swift in Sources */,
 				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,
