@@ -266,10 +266,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getStringSearcher() -> StringSearcher {
-        return StringSearcher()
-    }
-    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }

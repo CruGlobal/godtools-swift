@@ -1,6 +1,13 @@
 "onboardingTutorial.chooseLanguageButton.title" = "選擇語言";
 "allTools.filter.anyCategory" = "不限類別";
 "allTools.filter.anyLanguage" = "不限語言";
+"menu_getStarted" = "開始使用";
+"menu_support" = "支援";
+"menu_about" = "關於";
+"menu.sendFeedback" = "傳送回饋";
+"menu.reportABug" = "回報問題";
+"menu.askAQuestion" = "問個問題";
+"menu.leaveAReview" = "留言";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "關於";
@@ -79,6 +86,7 @@
 "share_tool_remote_link_message" = "你好，歡迎與我一同在 GodTools 中參加螢幕分享會。連結為：%@ 如果你稍後才收到此訊息，該連結可能已經失效。我們可以改天再試一次。";
 "exit_tract_remote_share_session.message" = "確定要現在離開遠端分享會？";
 "load_tool_remote_session.message" = "正在開始進行螢幕分享……";
+"lesson_evaluation.sendButtonTitle" = "傳送回饋";
 "onboardingTutorial.0.title" = "準備好進行每次對話";
 "onboardingTutorial.0.videoLink.title" = "觀看影片";
 "onboardingTutorial.1.title" = "與任何人談論上帝";

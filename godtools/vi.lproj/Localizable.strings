@@ -1,6 +1,13 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
 "allTools.filter.anyCategory" = "Bất kỳ loại nào";
 "allTools.filter.anyLanguage" = "Bất kỳ ngôn ngữ nào";
+"menu_getStarted" = "Bắt đầu";
+"menu_support" = "Hỗ trợ";
+"menu_about" = "Giới thiệu";
+"menu.sendFeedback" = "Gửi ý kiến";
+"menu.reportABug" = "Báo cáo lỗi";
+"menu.askAQuestion" = "Đặt câu hỏi";
+"menu.leaveAReview" = "Để lại đánh giá";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Giới thiệu";

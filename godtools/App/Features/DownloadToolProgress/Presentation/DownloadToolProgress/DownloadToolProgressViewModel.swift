@@ -13,10 +13,8 @@ class DownloadToolProgressViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase
-    private let getToolDownloadProgressInterfaceStringUseCase: GetToolDownloadProgressInterfaceStringUseCase
     private let progressTimer: ProgressTimer = ProgressTimer()
-    private let initialProgressDownloadLengthSeconds: TimeInterval = 10
-    private let pauseProgressTimerOnProgress: TimeInterval = 0.99
+    private let initialProgressDownloadLengthSeconds: TimeInterval = 1
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var didCompleteToolDownload: Bool = false
@@ -27,23 +25,20 @@ class DownloadToolProgressViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
     
     @Published var message: String = ""
-    @Published var downloadProgress: Double = 0
-    @Published var downloadProgressString: String = ""
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase, getToolDownloadProgressInterfaceStringUseCase: GetToolDownloadProgressInterfaceStringUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase) {
                 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getDownloadToolProgressInterfaceStringsUseCase = getDownloadToolProgressInterfaceStringsUseCase
-        self.getToolDownloadProgressInterfaceStringUseCase = getToolDownloadProgressInterfaceStringUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        progressTimer.start(lengthSeconds: initialProgressDownloadLengthSeconds, changed: { [weak self] (progress: Double) in
-            self?.progressChanged(progress: progress)
+        progressTimer.start(lengthSeconds: initialProgressDownloadLengthSeconds, changed: { (progress: Double) in
+
         }, completed: { [weak self] in
             self?.didCompleteProgressTimerClosure?()
         })
@@ -56,38 +51,10 @@ class DownloadToolProgressViewModel: ObservableObject {
                 self?.message = interfaceStrings.downloadMessage
             }
             .store(in: &cancellables)
-        
-        getToolDownloadProgressInterfaceStringUseCase
-            .getDownloadProgress(
-                appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher(),
-                downloadProgressChangedPublisher: $downloadProgress.eraseToAnyPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (toolDownloadProgress: ToolDownloadProgressDomainModel) in
-                self?.downloadProgressString = toolDownloadProgress.value
-            }
-            .store(in: &cancellables)
     }
     
     deinit {
         progressTimer.stop()
-    }
-    
-    private func progressChanged(progress: Double) {
-        
-        guard !progressTimer.isPaused else {
-            return
-        }
-        
-        if progress >= pauseProgressTimerOnProgress && !didCompleteToolDownload {
-            
-            progressTimer.pause(progress: pauseProgressTimerOnProgress)
-            downloadProgress = pauseProgressTimerOnProgress
-        }
-        else {
-            
-            downloadProgress = progress
-        }
     }
     
     func completeDownloadProgress(didCompleteProgress: @escaping (() -> Void)) {
