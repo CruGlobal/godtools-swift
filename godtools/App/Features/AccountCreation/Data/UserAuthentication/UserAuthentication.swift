@@ -228,7 +228,7 @@ class UserAuthentication {
                 
                 let profile = authProviderResponse.profile
                 
-                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName, name: profile.name))
                 
             } else if let refreshToken = authProviderResponse.refreshToken, refreshToken.isEmpty == false {
                 
