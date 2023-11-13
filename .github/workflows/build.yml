@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
 
@@ -31,7 +31,7 @@ jobs:
       - name: Select Xcode Version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.2'
+          xcode-version: '15.0.1'
 
       # Required for KotlinMultiplatform
       - name: Setup Java
