@@ -27,16 +27,28 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
+        let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
+        let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
+        let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
+            accountCreation: accountCreationDiContainer,
             appLanguage: appLanguageDiContainer,
+            downloadToolProgress: downloadToolProgressDiContainer,
             featuredLessons: featuredLessonsDiContainer,
+            lessonEvaluation: lessonEvaluationDiContainer,
             lessons: lessonsDiContainer,
-            toolDetails: toolDetailsDiContainer
+            onboarding: onboardingDiContainer,
+            toolDetails: toolDetailsDiContainer,
+            toolScreenShare: toolScreenShareDiContainer,
+            tutorial: tutorialDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
@@ -60,12 +72,6 @@ class AppDiContainer {
     
     func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
         return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
-    }
-    
-    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
-        return LessonFeedbackAnalytics(
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -111,10 +117,6 @@ class AppDiContainer {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
-    }
-    
-    func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
-        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {

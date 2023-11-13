@@ -64,22 +64,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getAppVersionUseCase() -> GetAppVersionUseCase {
-        return GetAppVersionUseCase(
-            infoPlist: dataLayer.getInfoPlist()
-        )
-    }
-    
-    func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
-        return AuthenticateUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            emailSignUpService: dataLayer.getEmailSignUpService(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics
-        )
-    }
-    
-    
-    
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
@@ -131,6 +115,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getLaunchCountUseCase() -> GetLaunchCountUseCase {
+        return GetLaunchCountUseCase(
+            getLaunchCountRepositoryInterface: dataLayer.getLaunchCountRepositoryInterface()
+        )
+    }
+    
     func getLearnToShareToolItemsUseCase() -> GetLearnToShareToolItemsUseCase {
         return GetLearnToShareToolItemsUseCase(
             localizationServices: dataLayer.getLocalizationServices()
@@ -145,6 +135,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
+        return GetMenuInterfaceStringsUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()
+        )
+    }
+    
     func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
         return GetOptInOnboardingBannerEnabledUseCase(
             getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
@@ -155,25 +151,6 @@ class AppDomainLayerDependencies {
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase(
             getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
-    func getOnboardingQuickLinksEnabledUseCase() -> GetOnboardingQuickLinksEnabledUseCase {
-        return GetOnboardingQuickLinksEnabledUseCase(
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
-    }
-    
-    func getOnboardingQuickStartItemsUseCase() -> GetOnboardingQuickStartItemsUseCase {
-        return GetOnboardingQuickStartItemsUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getOnboardingTutorialAvailabilityUseCase() -> GetOnboardingTutorialAvailabilityUseCase {
-        return GetOnboardingTutorialAvailabilityUseCase(
-            launchCountRepository: dataLayer.getSharedLaunchCountRepository(),
-            onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
     }
     
@@ -247,8 +224,8 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolCategoriesUseCase() -> GetToolCategoriesUseCase {
-        return GetToolCategoriesUseCase(
+    func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
+        return GetToolFilterCategoriesUseCase(
             getAllToolsUseCase: getAllToolsUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             localizationServices: dataLayer.getLocalizationServices(),
@@ -320,13 +297,6 @@ class AppDomainLayerDependencies {
             repository: dataLayer.getCompletedTrainingTipRepository(),
             service: dataLayer.getViewedTrainingTipsService(),
             setCompletedTrainingTipUseCase: getSetCompletedTrainingTipUseCase()
-        )
-    }
-    
-    func getTutorialUseCase() -> GetTutorialUseCase {
-        return GetTutorialUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
         )
     }
     

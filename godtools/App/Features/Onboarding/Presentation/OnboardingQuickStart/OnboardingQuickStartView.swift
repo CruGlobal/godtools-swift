@@ -25,6 +25,8 @@ struct OnboardingQuickStartView: View {
          
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .onboardingQuickStart)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 Text(viewModel.title)
@@ -37,13 +39,14 @@ struct OnboardingQuickStartView: View {
                     
                     LazyVStack(alignment: .center, spacing: itemSpacing) {
                         
-                        ForEach(0 ..< viewModel.numberOfQuickStartItems, id: \.self) { index in
+                        ForEach(viewModel.quickStartLinks) { (link: OnboardingQuickStartLinkDomainModel) in
                             
                             OnboardingQuickStartItemView(
-                                viewModel: viewModel.getQuickStartItemViewModel(index: index),
+                                domainModel: link,
                                 geometry: geometry,
+                                accessibility: getLinkAccessibility(linkType: link.linkType),
                                 itemTappedClosure: {
-                                    viewModel.quickStartItemTapped(index: index)
+                                    viewModel.quickStartLinkTapped(link: link)
                                 })
                             .padding(EdgeInsets(top: 0, leading: itemHorizontalPadding, bottom: 0, trailing: itemHorizontalPadding))
                         }
@@ -53,12 +56,28 @@ struct OnboardingQuickStartView: View {
                 
                 Spacer()
                 
-                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.endTutorialButtonTitle) {
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.endTutorialButtonTitle, accessibility: .quickStartGetStarted) {
                     viewModel.endTutorialTapped()
                 }
                 
                 FixedVerticalSpacer(height: 30)
             }
+        }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func getLinkAccessibility(linkType: OnboardingQuickStartLinkTypeDomainModel) -> AccessibilityStrings.Button {
+        
+        switch linkType {
+        
+        case .chooseOneOfOurTools:
+            return AccessibilityStrings.Button.quickStartToolsLink
+        
+        case .readOurArticles:
+            return AccessibilityStrings.Button.quickStartArticlesLink
+        
+        case .tryOurLessons:
+            return AccessibilityStrings.Button.quickStartLessonsLink
         }
     }
 }

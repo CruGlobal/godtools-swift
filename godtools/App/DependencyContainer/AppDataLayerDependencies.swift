@@ -31,7 +31,9 @@ class AppDataLayerDependencies {
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
-        
+    
+    // MARK: - Data Layer Classes
+            
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -42,12 +44,6 @@ class AppDataLayerDependencies {
     
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
-    }
-    
-    func getAppleAuthentication() -> AppleAuthentication {
-        return AppleAuthentication(
-            appleUserPersistentStore: AppleUserPersistentStore()
-        )
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -98,12 +94,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
-        return GetDeviceLanguageRepository(
-            deviceSystemLanguage: getDeviceSystemLanguage()
-        )
-    }
-    
     func getDeviceSystemLanguage() -> DeviceSystemLanguage {
         return DeviceSystemLanguage()
     }
@@ -113,10 +103,6 @@ class AppDataLayerDependencies {
             api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
-    }
-    
-    func getFacebookAuthentication() -> FacebookAuthentication {
-        return FacebookAuthentication(configuration: FacebookAuthenticationConfiguration(permissions: ["email"]))
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
@@ -160,13 +146,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getGoogleAuthentication() -> GoogleAuthentication {
-        
-        return GoogleAuthentication(
-            configuration: sharedAppConfig.getGoogleAuthenticationConfiguration()
-        )
-    }
-    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -174,12 +153,6 @@ class AppDataLayerDependencies {
     func getInitialDataDownloader() -> InitialDataDownloader {
         return InitialDataDownloader(
             resourcesRepository: getResourcesRepository()
-        )
-    }
-    
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
         )
     }
     
@@ -209,22 +182,19 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getLastAuthenticatedProviderCache() -> LastAuthenticatedProviderCache {
-        return LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache)
-    }
-    
-    func getLessonsEvaluationRepository() -> LessonEvaluationRepository {
-        return LessonEvaluationRepository(
-            cache: LessonEvaluationRealmCache(realmDatabase: sharedRealmDatabase)
-        )
-    }
-    
     func getLocaleLanguageName() -> LocaleLanguageName {
         return LocaleLanguageName()
     }
     
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
+    }
+    
+    func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {
+        return GetMenuInterfaceStringsRepository(
+            localizationServices: getLocalizationServices(),
+            infoPlist: getInfoPlist()
+        )
     }
     
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
@@ -249,12 +219,6 @@ class AppDataLayerDependencies {
             ignoreCacheSession: sharedIgnoreCacheSession,
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
-        )
-    }
-    
-    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
-        return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
         )
     }
     
@@ -314,6 +278,10 @@ class AppDataLayerDependencies {
         return sharedRealmDatabase
     }
     
+    func getSharedUserDefaultsCache() -> SharedUserDefaultsCache {
+        return sharedUserDefaultsCache
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
@@ -364,15 +332,22 @@ class AppDataLayerDependencies {
             trackActionAnalytics: getAnalytics().trackActionAnalytics
         )
     }
-    
+
     func getUserAuthentication() -> UserAuthentication {
+        
         return UserAuthentication(
             authenticationProviders: [
-                .apple: getAppleAuthentication(),
-                .facebook: getFacebookAuthentication(),
-                .google: getGoogleAuthentication()
+                .apple: AppleAuthentication(
+                    appleUserPersistentStore: AppleUserPersistentStore()
+                ),
+                .facebook: FacebookAuthentication(
+                    configuration: FacebookAuthenticationConfiguration(permissions: ["email"])
+                ),
+                .google: GoogleAuthentication(
+                    configuration: getAppConfig().getGoogleAuthenticationConfiguration()
+                )
             ],
-            lastAuthenticatedProviderCache: getLastAuthenticatedProviderCache(),
+            lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )
     }
@@ -419,5 +394,25 @@ class AppDataLayerDependencies {
     
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
+    }
+    
+    // MARK: - Domain Interface
+    
+    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
+        return GetDeviceLanguageRepository(
+            deviceSystemLanguage: getDeviceSystemLanguage()
+        )
+    }
+    
+    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
+        return GetInterfaceStringForLanguageRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
+    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
+        return GetLaunchCountRepository(
+            launchCountRepository: getSharedLaunchCountRepository()
+        )
     }
 }

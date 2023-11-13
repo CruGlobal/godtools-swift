@@ -227,18 +227,16 @@ class MenuFlow: Flow {
     }
     
     private func getMenuView() -> UIViewController {
-    
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
-        
+            
         let viewModel = MenuViewModel(
             flowDelegate: self,
-            localizationServices: localizationServices,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getMenuInterfaceStringsUseCase: appDiContainer.domainLayer.getMenuInterfaceStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
-            getAppVersionUseCase: appDiContainer.domainLayer.getAppVersionUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -277,8 +275,10 @@ class MenuFlow: Flow {
             flowDelegate: self,
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
-            authenticateUserUseCase: appDiContainer.domainLayer.getAuthenticateUserUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
+            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialSignInInterfaceStringsUseCase(),
+            authenticateUserUseCase: appDiContainer.feature.accountCreation.domainLayer.getAuthenticateUserUseCase()
         )
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)

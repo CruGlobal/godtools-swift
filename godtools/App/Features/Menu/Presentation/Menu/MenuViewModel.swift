@@ -10,14 +10,14 @@ import Foundation
 import Combine
 
 class MenuViewModel: ObservableObject {
-    
-    private let localizationServices: LocalizationServices
+        
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase
     private let getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase
     private let getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase
     private let logOutUserUseCase: LogOutUserUseCase
-    private let getAppVersionUseCase: GetAppVersionUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
@@ -25,69 +25,83 @@ class MenuViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var navTitle: String
-    @Published var getStartedSectionTitle: String
-    @Published var accountSectionTitle: String
-    @Published var supportSectionTitle: String
-    @Published var shareSectionTitle: String
-    @Published var aboutSectionTitle: String
-    @Published var versionSectionTitle: String
-    @Published var tutorialOptionTitle: String
-    @Published var languageSettingsOptionTitle: String
-    @Published var loginOptionTitle: String
-    @Published var createAccountOptionTitle: String
-    @Published var activityOptionTitle: String
-    @Published var logoutOptionTitle: String
-    @Published var deleteAccountOptionTitle: String
-    @Published var sendFeedbackOptionTitle: String
-    @Published var reportABugOptionTitle: String
-    @Published var askAQuestionOptionTitle: String
-    @Published var leaveAReviewOptionTitle: String
-    @Published var shareAStoryWithUsOptionTitle: String
-    @Published var shareGodToolsOptionTitle: String
-    @Published var termsOfUseOptionTitle: String
-    @Published var privacyPolicyOptionTitle: String
-    @Published var copyrightInfoOptionTitle: String
+    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    
+    @Published var navTitle: String = ""
+    @Published var getStartedSectionTitle: String = ""
+    @Published var accountSectionTitle: String = ""
+    @Published var supportSectionTitle: String = ""
+    @Published var shareSectionTitle: String = ""
+    @Published var aboutSectionTitle: String = ""
+    @Published var versionSectionTitle: String = ""
+    @Published var tutorialOptionTitle: String = ""
+    @Published var languageSettingsOptionTitle: String = ""
+    @Published var loginOptionTitle: String = ""
+    @Published var createAccountOptionTitle: String = ""
+    @Published var activityOptionTitle: String = ""
+    @Published var logoutOptionTitle: String = ""
+    @Published var deleteAccountOptionTitle: String = ""
+    @Published var sendFeedbackOptionTitle: String = ""
+    @Published var reportABugOptionTitle: String = ""
+    @Published var askAQuestionOptionTitle: String = ""
+    @Published var leaveAReviewOptionTitle: String = ""
+    @Published var shareAStoryWithUsOptionTitle: String = ""
+    @Published var shareGodToolsOptionTitle: String = ""
+    @Published var termsOfUseOptionTitle: String = ""
+    @Published var privacyPolicyOptionTitle: String = ""
+    @Published var copyrightInfoOptionTitle: String = ""
     @Published var appVersion: String = ""
     @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, getAppVersionUseCase: GetAppVersionUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.localizationServices = localizationServices
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getMenuInterfaceStringsUseCase = getMenuInterfaceStringsUseCase
         self.getOptInOnboardingTutorialAvailableUseCase = getOptInOnboardingTutorialAvailableUseCase
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAccountCreationIsSupportedUseCase = getAccountCreationIsSupportedUseCase
         self.getUserIsAuthenticatedUseCase = getUserIsAuthenticatedUseCase
         self.logOutUserUseCase = logOutUserUseCase
-        self.getAppVersionUseCase = getAppVersionUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        navTitle = localizationServices.stringForSystemElseEnglish(key: "settings")
-        getStartedSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.getStarted.rawValue)
-        accountSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.account.rawValue)
-        supportSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.support.rawValue)
-        shareSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.share.rawValue)
-        aboutSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.about.rawValue)
-        versionSectionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.SectionTitles.version.rawValue)
-        tutorialOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.tutorial.rawValue)
-        languageSettingsOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.languageSettings.rawValue)
-        loginOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.login.rawValue)
-        createAccountOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.createAccount.rawValue)
-        activityOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.activity.rawValue)
-        logoutOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.logout.rawValue)
-        deleteAccountOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.deleteAccount.rawValue)
-        sendFeedbackOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.sendFeedback.rawValue)
-        reportABugOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.reportABug.rawValue)
-        askAQuestionOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.askAQuestion.rawValue)
-        leaveAReviewOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.leaveAReview.rawValue)
-        shareAStoryWithUsOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.shareAStoryWithUs.rawValue)
-        shareGodToolsOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.shareGodTools.rawValue)
-        termsOfUseOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.termsOfUse.rawValue)
-        privacyPolicyOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue)
-        copyrightInfoOptionTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue)
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        getMenuInterfaceStringsUseCase
+            .getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: MenuInterfaceStringsDomainModel) in
                 
+                self?.navTitle = interfaceStrings.title
+                self?.getStartedSectionTitle = interfaceStrings.getStartedTitle
+                self?.accountSectionTitle = interfaceStrings.accountTitle
+                self?.supportSectionTitle = interfaceStrings.supportTitle
+                self?.shareSectionTitle = interfaceStrings.shareTitle
+                self?.aboutSectionTitle = interfaceStrings.aboutTitle
+                self?.versionSectionTitle = interfaceStrings.versionTitle
+                self?.tutorialOptionTitle = interfaceStrings.tutorialOptionTitle
+                self?.languageSettingsOptionTitle = interfaceStrings.languageSettingsOptionTitle
+                self?.loginOptionTitle = interfaceStrings.loginOptionTitle
+                self?.createAccountOptionTitle = interfaceStrings.createAccountOptionTitle
+                self?.activityOptionTitle = interfaceStrings.activityOptionTitle
+                self?.logoutOptionTitle = interfaceStrings.logoutOptionTitle
+                self?.deleteAccountOptionTitle = interfaceStrings.deleteAccountOptionTitle
+                self?.sendFeedbackOptionTitle = interfaceStrings.sendFeedbackOptionTitle
+                self?.reportABugOptionTitle = interfaceStrings.reportABugOptionTitle
+                self?.askAQuestionOptionTitle = interfaceStrings.askAQuestionOptionTitle
+                self?.leaveAReviewOptionTitle = interfaceStrings.leaveAReviewOptionTitle
+                self?.shareAStoryWithUsOptionTitle = interfaceStrings.shareAStoryWithUsOptionTitle
+                self?.shareGodToolsOptionTitle = interfaceStrings.shareGodToolsOptionTitle
+                self?.termsOfUseOptionTitle = interfaceStrings.termsOfUseOptionTitle
+                self?.privacyPolicyOptionTitle = interfaceStrings.privacyPolicyOptionTitle
+                self?.copyrightInfoOptionTitle = interfaceStrings.copyrightInfoOptionTitle
+                self?.appVersion = interfaceStrings.version
+            }
+            .store(in: &cancellables)
+                        
         Publishers.CombineLatest(
             getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(),
             getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
@@ -103,13 +117,6 @@ class MenuViewModel: ObservableObject {
             self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
         }
         .store(in: &cancellables)
-        
-        getAppVersionUseCase.getAppVersionPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appVersion: AppVersionDomainModel) in
-                self?.appVersion = appVersion.versionString
-            }
-            .store(in: &cancellables)
     }
     
     private func getMenuAnalyticsScreenName() -> String {

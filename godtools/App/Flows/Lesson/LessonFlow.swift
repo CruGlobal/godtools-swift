@@ -116,7 +116,11 @@ class LessonFlow: ToolNavigationFlow, Flow {
     }
     
     private func closeTool(lesson: ResourceModel, highestPageNumberViewed: Int) {
-        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)))
+        
+        // TODO: Eventually ResourceModel should not be passed into the closeTool method.  Should be a domain model. ~Levi
+        let lessonDomainModel = appDiContainer.domainLayer.getToolUseCase().getTool(resource: lesson)
+        
+        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lessonDomainModel, highestPageNumberViewed: highestPageNumberViewed)))
     }
 }
 

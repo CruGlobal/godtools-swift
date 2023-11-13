@@ -1,3 +1,13 @@
+"onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
+"languageSettings.confirmAppLanguage.message" = "Tu izvēlējies %@ valodu – līdz ar to mainīsies lietotnes 'GodTools' valoda kopumā. Vai esi drošs, ka to vēlies?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mainīt valodu";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Atcelt";
+"languageSettings.appInterface.title" = "Lietotnes valoda";
+"languageSettings.appInterface.message" = "Iestati sev vēlamo valodu.";
+"languageSettings.appInterface.languagesAvailable" = "Pieejamās valodas";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Rīka valodas pieejamas bezsaistē.";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Lejupielādē visus rīkus izvēlētā valodā, lai tie būtu pieejami bezsaistē.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Labot lejupielādēto valodu pieejamību.";
 "allTools.filter.title" = "Filtrs";
 "allTools.filter.anyCategory" = "Jebkura kategorija";
 "allTools.filter.anyLanguage" = "Jebkura valoda";

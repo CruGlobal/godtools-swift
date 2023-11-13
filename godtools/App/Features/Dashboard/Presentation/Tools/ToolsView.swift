@@ -25,6 +25,8 @@ struct ToolsView: View {
         
         GeometryReader { geometry in
               
+            AccessibilityScreenElementView(screenAccessibility: .dashboardTools)
+            
             if viewModel.isLoadingAllTools {
                 CenteredCircularProgressView(
                     progressColor: ColorPalette.gtGrey.color
@@ -115,7 +117,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),

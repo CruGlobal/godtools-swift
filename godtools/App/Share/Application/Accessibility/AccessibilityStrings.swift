@@ -16,8 +16,18 @@ class AccessibilityStrings {
             return rawValue
         }
         
+        case appLanguages = "App Languages"
         case onboardingTutorial = "Onboarding Tutorial Screen"
+        case onboardingTutorialPage1 = "Onboarding Tutorial Page 1"
+        case onboardingTutorialPage2 = "Onboarding Tutorial Page 2"
+        case onboardingTutorialPage3 = "Onboarding Tutorial Page 3"
+        case onboardingTutorialPage4 = "Onboarding Tutorial Page 4"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Screen"
+        case onboardingQuickStart = "Onboarding Quick Start"
+        case dashboardLessons = "Dashboard Lessons"
+        case dashboardFavorites = "Dashboard Favorites"
+        case dashboardTools = "Dashboard Tools"
+        case articles = "Articles"
     }
     
     enum Button: String {
@@ -26,7 +36,14 @@ class AccessibilityStrings {
             return rawValue
         }
         
+        case chooseAppLanguage = "Choose App Language"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
         case closeOnboardingTutorialVideo = "Close Onboarding Tutorial Video Button"
+        case nextOnboardingTutorial = "Next Onboarding Tutorial Button"
+        case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
+        case quickStartArticlesLink = "Quick Start Read An Article Link"
+        case quickStartLessonsLink = "Quick Start Try A Lesson Link"
+        case quickStartToolsLink = "Quick Start Choose A Tool Link"
+        case quickStartGetStarted = "Get Started Button"
     }
 }

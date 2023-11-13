@@ -22,6 +22,9 @@ class ToolSettingsFlow: Flow {
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    @Published private var toolScreenShareHasBeenViewedDomainModel: ToolScreenShareViewedDomainModel = ToolScreenShareViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -37,6 +40,12 @@ class ToolSettingsFlow: Flow {
         self.tool = tool
         self.settingsPrimaryLanguage = CurrentValueSubject(toolData.renderer.value.primaryLanguage)
         self.settingsParallelLanguage = CurrentValueSubject(toolData.renderer.value.pageRenderers[safe: 1]?.language)
+        
+        let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
+        
+        getToolScreenShareTutorialHasBeenViewedUseCase
+            .getViewedPublisher(tool: toolData.renderer.value.resource)
+            .assign(to: &$toolScreenShareHasBeenViewedDomainModel)
     }
     
     func getInitialView() -> UIViewController {
@@ -99,27 +108,26 @@ class ToolSettingsFlow: Flow {
                     
         case .screenShareTappedFromToolSettings:
             
-            let shareToolScreenTutorialNumberOfViewsCache: ShareToolScreenTutorialNumberOfViewsCache = appDiContainer.getShareToolScreenTutorialNumberOfViewsCache()
-            let numberOfTutorialViews: Int = shareToolScreenTutorialNumberOfViewsCache.getNumberOfViews(resource: toolData.renderer.value.resource)
-            
+            let toolScreenShareViewed: Bool = toolScreenShareHasBeenViewedDomainModel.hasBeenViewed
+                        
             if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
                 navigate(step: .finishedLoadingToolRemoteSession(result: .success(channel)))
             }
-            else if numberOfTutorialViews >= 3 || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
+            else if toolScreenShareViewed || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
                 navigateToLoadToolRemoteSession()
             }
             else {
                 navigateToShareToolScreenTutorial()
             }
             
-        case .closeTappedFromShareToolScreenTutorial:
+        case .closeTappedFromToolScreenShareTutorial:
             
             shareToolScreenTutorialModal?.dismiss(animated: true, completion: nil)
             shareToolScreenTutorialModal = nil
             
             flowDelegate?.navigate(step: .closeTappedFromToolSettings)
             
-        case .shareLinkTappedFromShareToolScreenTutorial:
+        case .shareLinkTappedFromToolScreenShareTutorial:
             
             shareToolScreenTutorialModal?.dismiss(animated: true, completion: nil)
             shareToolScreenTutorialModal = nil
@@ -261,31 +269,16 @@ class ToolSettingsFlow: Flow {
     }
     
     private func navigateToShareToolScreenTutorial() {
+                
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(tool: toolData.renderer.value.resource)
         
-        let tutorialItemsProvider = ShareToolScreenTutorialItemProvider(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
-                    
-        let viewModel = ShareToolScreenTutorialViewModel(
-            flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            tutorialItemsProvider: tutorialItemsProvider,
-            shareToolScreenTutorialNumberOfViewsCache: appDiContainer.getShareToolScreenTutorialNumberOfViewsCache(),
-            resource: toolData.renderer.value.resource,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analyticsContainer: appDiContainer.dataLayer.getAnalytics(),
-            tutorialVideoAnalytics: appDiContainer.dataLayer.getTutorialVideoAnalytics()
-        )
-
-        let view = ShareToolScreenTutorialView(viewModel: viewModel)
-        let modal = ModalNavigationController.defaultModal(rootView: view, statusBarStyle: .default)
-
         navigationController.present(
-            modal,
+            toolScreenShareTutorialView,
             animated: true,
             completion: nil
         )
         
-        self.shareToolScreenTutorialModal = modal
+        self.shareToolScreenTutorialModal = toolScreenShareTutorialView
     }
     
     private func navigateToLoadToolRemoteSession() {
@@ -490,5 +483,53 @@ class ToolSettingsFlow: Flow {
         }
         
         self.reviewShareShareableModal = nil
+    }
+}
+
+extension ToolSettingsFlow {
+    
+    // TODO: Eventually this will need to be ToolDomainModel. ~Levi
+    private func getToolScreenShareTutorialView(tool: ResourceModel) -> UIViewController {
+        
+        let viewModel = ToolScreenShareTutorialViewModel(
+            flowDelegate: self,
+            tool: tool,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
+            didViewToolScreenShareUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareUseCase()
+        )
+        
+        let view = ToolScreenShareTutorialView(viewModel: viewModel)
+        
+        let closeButton = AppCloseBarItem(
+            color: ColorPalette.gtBlue.uiColor,
+            target: viewModel,
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let skipButton = AppSkipBarItem(
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            target: viewModel,
+            action: #selector(viewModel.skipTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
+        )
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [closeButton],
+            trailingItems: [skipButton]
+        )
+        
+        let hostingView = AppHostingController<ToolScreenShareTutorialView>(
+            rootView: view,
+            navigationBar: navigationBar
+        )
+        
+        let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)
+        
+        return modal
     }
 }

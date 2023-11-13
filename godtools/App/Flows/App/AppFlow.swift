@@ -19,7 +19,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let followUpsService: FollowUpsService
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
-    private let onboardingTutorialIsAvailable: Bool
     private let inAppMessaging: FirebaseInAppMessaging
     
     private var onboardingFlow: OnboardingFlow?
@@ -54,7 +53,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
-        self.onboardingTutorialIsAvailable = appDiContainer.domainLayer.getOnboardingTutorialAvailabilityUseCase().getOnboardingTutorialIsAvailable().isAvailable
         self.inAppMessaging = appDiContainer.dataLayer.getFirebaseInAppMessaing()
         
         super.init()
@@ -71,14 +69,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addDeepLinkingObservers()
         
         inAppMessaging.setDelegate(delegate: self)
-                
-        // NOTE: This fixes a bug with the Dashboard TabView that occurs when launching the app from a terminated state.
-        // The bug occurs when the Dashboard TabView starts on any index other than 0 and then tab index 0 is tapped.  Tab index 0 will correctly highlight, but tab navigation doesn't occur.
-        // This happens in the device in iOS 16.3.1.
-        // I think this bug has something to do with attaching SwiftUI views to UIKit during UIApplicationDelegate life cycle.
-        if !onboardingTutorialIsAvailable {
-            navigateToDashboard()
-        }
     }
     
     deinit {
@@ -96,23 +86,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         switch step {
         
         case .appLaunchedFromTerminatedState:
-                     
-            if let deepLink = appLaunchedFromDeepLink {
-                
-                appLaunchedFromDeepLink = nil
-                navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-            else if onboardingTutorialIsAvailable {
-                
-                navigate(step: .showOnboardingTutorial(animated: true))
-            }
-            else {
-                
-                navigateToDashboard()
-            }
-            
-            loadInitialData()
-            countAppSessionLaunch()
+                  
+            appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
+                .getAvailablePublisher()
+                .receive(on: DispatchQueue.main)
+                .first()
+                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool) in
+                   
+                    self?.launchAppFromTerminatedState(onboardingTutorialIsAvailable: onboardingTutorialIsAvailable)
+                })
+                .store(in: &cancellables)
                         
         case .appLaunchedFromBackgroundState:
             
@@ -152,17 +135,23 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
             
-        case .toolFilterTappedFromTools(let toolFilterType, let toolFilterSelectionPublisher):
-            navigationController.pushViewController(getToolFilterSelection(toolFilterType: toolFilterType, toolFilterSelectionPublisher: toolFilterSelectionPublisher), animated: true)
+        case .toolCategoryFilterTappedFromTools(let categoryFilterSelectionPublisher, let selectedLanguage):
+            navigationController.pushViewController(getToolCategoryFilterSelection(categoryFilterSelectionPublisher: categoryFilterSelectionPublisher, selectedLanguage: selectedLanguage), animated: true)
             
-        case .backTappedFromToolFilter:
+        case .toolLanguageFilterTappedFromTools(let languageFilterSelectionPublisher, let selectedCategory):
+            navigationController.pushViewController(getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: languageFilterSelectionPublisher, selectedCategory: selectedCategory), animated: true)
+            
+        case .backTappedFromToolCategoryFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .backTappedFromToolLanguageFilter:
             navigationController.popViewController(animated: true)
             
         case .spotlightToolTappedFromTools(let spotlightTool):
-            navigationController.pushViewController(getToolDetails(tool: spotlightTool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: spotlightTool, toolLanguage: nil), animated: true)
                         
-        case .toolTappedFromTools(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+        case .toolTappedFromTools(let tool, let toolFilterLanguage):
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: toolFilterLanguage?.language?.localeIdentifier), animated: true)
                                     
         case .openToolTappedFromToolDetails(let tool):
             navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: false)
@@ -177,7 +166,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
             
         case .toolDetailsTappedFromFavorites(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromFavorites(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -195,7 +184,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
             
         case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            navigationController.pushViewController(getToolDetails(tool: tool), animated: true)
+            navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromAllYourFavoriteTools(let tool):
             navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
@@ -233,24 +222,17 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             case .userClosedLesson(let lesson, let highestPageNumberViewed):
                 
-                let lessonEvaluationRepository: LessonEvaluationRepository = appDiContainer.dataLayer.getLessonsEvaluationRepository()
-                let lessonEvaluated: Bool
-                let numberOfEvaluationAttempts: Int
+                let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
-                if let cachedLessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.id) {
-                    lessonEvaluated = cachedLessonEvaluation.lessonEvaluated
-                    numberOfEvaluationAttempts = cachedLessonEvaluation.numberOfEvaluationAttempts
-                }
-                else {
-                    lessonEvaluated = false
-                    numberOfEvaluationAttempts = 0
-                }
-                
-                let lessonMarkedAsEvaluated: Bool = lessonEvaluated || numberOfEvaluationAttempts > 0
-                
-                if highestPageNumberViewed > 2 && !lessonMarkedAsEvaluated {
-                    presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
-                }
+                getLessonEvaluatedUseCase.getEvaluatedPublisher(lesson: lesson)
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] (lessonEvaluated: Bool) in
+                        
+                        if highestPageNumberViewed > 2 && !lessonEvaluated {
+                            self?.presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                        }
+                    }
+                    .store(in: &cancellables)
             }
             
         case .tractFlowCompleted(let state):
@@ -396,6 +378,26 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
 extension AppFlow {
     
+    private func launchAppFromTerminatedState(onboardingTutorialIsAvailable: Bool) {
+        
+        if let deepLink = appLaunchedFromDeepLink {
+            
+            appLaunchedFromDeepLink = nil
+            navigate(step: .deepLink(deepLinkType: deepLink))
+        }
+        else if onboardingTutorialIsAvailable {
+            
+            navigate(step: .showOnboardingTutorial(animated: true))
+        }
+        else {
+            
+            navigateToDashboard()
+        }
+        
+        loadInitialData()
+        countAppSessionLaunch()
+    }
+    
     private func loadInitialData() {
         
         dataDownloader.downloadInitialData()
@@ -404,9 +406,9 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        let userAuthentication: AuthenticateUserInterface = appDiContainer.dataLayer.getUserAuthentication()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.accountCreation.dataLayer.getAuthenticateUserInterface()
         
-        userAuthentication.renewAuthenticationPublisher()
+        authenticateUser.renewAuthenticationPublisher()
             .sink { finished in
 
             } receiveValue: { authUser in
@@ -648,7 +650,12 @@ extension AppFlow {
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
             
-        case .onboarding:
+        case .onboarding(let appLanguageCode):
+            
+            let userAppLanguageCache: RealmUserAppLanguageCache = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageCache()
+            
+            userAppLanguageCache.storeLanguage(languageCode: appLanguageCode)
+            
             navigateToOnboarding(animated: true)
         }
     }
@@ -774,37 +781,25 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolFilterSelection(toolFilterType: ToolFilterType, toolFilterSelectionPublisher: CurrentValueSubject<ToolFilterSelection, Never>) -> UIViewController {
+    private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
         
-        let viewModel: ToolFilterSelectionViewModel
+        let viewModel = ToolFilterCategorySelectionViewModel(
+            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
+            categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
+            selectedLanguage: selectedLanguage,
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            flowDelegate: self
+         )
         
-        switch toolFilterType {
-        case .category:
-            
-            viewModel = ToolFilterCategorySelectionViewModel(
-                getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher,
-                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase()
-            )
-            
-        case .language:
-            
-            viewModel = ToolFilterLanguageSelectionViewModel(
-                getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-                getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
-                toolFilterSelectionPublisher: toolFilterSelectionPublisher
-            )
-        }
-        
-        let view = ToolFilterSelectionView(viewModel: viewModel)
+        let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
-            target: self, // TODO: Would like this to go through the ViewModel. ~Levi
-            action: #selector(backTappedFromToolFilterSelection), // TODO: Would like this to go through the ViewModel. ~Levi
+            target: viewModel,
+            action: #selector(viewModel.backButtonTapped),
             accessibilityIdentifier: nil
         )
         
-        let hostingView = AppHostingController<ToolFilterSelectionView>(
+        let hostingView = AppHostingController<ToolFilterCategorySelectionView>(
             rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
@@ -817,10 +812,35 @@ extension AppFlow {
         return hostingView
     }
     
-    // TODO: Would like this to go through the ViewModel. ~Levi
-    @objc private func backTappedFromToolFilterSelection() {
+    private func getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) -> UIViewController {
         
-        navigate(step: .backTappedFromToolFilter)
+        let viewModel = ToolFilterLanguageSelectionViewModel(
+            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
+            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
+            selectedCategory: selectedCategory,
+            flowDelegate: self
+        )
+        
+        let view = ToolFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backButtonTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<ToolFilterLanguageSelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                        
+        return hostingView
     }
 }
 
@@ -828,11 +848,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageCodeDomainModel?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             tool: tool,
+            toolLanguage: toolLanguage,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
@@ -913,22 +935,31 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func presentLessonEvaluation(lesson: ResourceModel, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lesson: ToolDomainModel, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
             lesson: lesson,
             pageIndexReached: pageIndexReached,
-            lessonEvaluationRepository: appDiContainer.dataLayer.getLessonsEvaluationRepository(),
-            lessonFeedbackAnalytics: appDiContainer.getLessonFeedbackAnalytics(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            localization: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
+            evaluateLessonUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLessonUseCase(),
+            cancelLessonEvaluationUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluationUseCase()
         )
-        let view = LessonEvaluationView(viewModel: viewModel)
         
-        let modalView = TransparentModalView(flowDelegate: self, modalView: view, closeModalFlowStep: .backgroundTappedFromLessonEvaluation)
+        let view = LessonEvaluationView(
+            viewModel: viewModel
+        )
         
-        navigationController.present(modalView, animated: true, completion: nil)
+        let hostingView = AppHostingController<LessonEvaluationView>(rootView: view, navigationBar: nil)
+        
+        let overlayNavigationController = OverlayNavigationController(
+            rootView: hostingView,
+            hidesNavigationBar: true,
+            navigationBarAppearance: nil
+        )
+        
+        navigationController.present(overlayNavigationController, animated: true)
     }
     
     private func dismissLessonEvaluation() {

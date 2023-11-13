@@ -7,49 +7,70 @@
 //
 
 import Foundation
+import Combine
 
-class LessonEvaluationViewModel {
+class LessonEvaluationViewModel: ObservableObject {
     
-    private let lesson: ResourceModel
+    private static var evaluateLessonInBackgroundCancellable: AnyCancellable?
+    private static var cancelLessonEvaluationInBackgroundCancellable: AnyCancellable?
+    
+    private let lesson: ToolDomainModel
     private let pageIndexReached: Int
-    private let lessonEvaluationRepository: LessonEvaluationRepository
-    private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let localization: LocalizationServices
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase
+    private let evaluateLessonUseCase: EvaluateLessonUseCase
+    private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
-    private(set) var readyToShareFaithScale: Int = 6
-    
-    let title: String
-    let wasThisHelpful: String
-    let yesButtonTitle: String
-    let noButtonTitle: String
-    let shareFaith: String
-    let readyToShareFaithMinimumScaleValue: Int = 1
-    let readyToShareFaithMaximumScaleValue: Int = 10
-    let sendButtonTitle: String
-    let yesIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
-    let noIsSelected: ObservableValue<Bool> = ObservableValue(value: false)
-    
+    private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+    private var cancellables: Set<AnyCancellable> = Set()
+        
     private weak var flowDelegate: FlowDelegate?
     
-    init(flowDelegate: FlowDelegate, lesson: ResourceModel, pageIndexReached: Int, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, localization: LocalizationServices) {
+    let readyToShareFaithMinimumScaleValue: Int = 1
+    let readyToShareFaithMaximumScaleValue: Int = 10
+            
+    @Published var readyToShareFaithScale: Int = 6
+    @Published var title: String = ""
+    @Published var wasThisHelpful: String = ""
+    @Published var yesIsSelected: Bool = false
+    @Published var noIsSelected: Bool = false
+    @Published var yesButtonTitle: String = ""
+    @Published var noButtonTitle: String = ""
+    @Published var shareFaithReadiness: String = ""
+    @Published var sendFeedbackButtonTitle: String = ""
+    
+    init(flowDelegate: FlowDelegate, lesson: ToolDomainModel, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
         
         self.flowDelegate = flowDelegate
         self.lesson = lesson
         self.pageIndexReached = pageIndexReached
-        self.lessonEvaluationRepository = lessonEvaluationRepository
-        self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.localization = localization
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getLessonEvaluationInterfaceStringsUseCase = getLessonEvaluationInterfaceStringsUseCase
+        self.evaluateLessonUseCase = evaluateLessonUseCase
+        self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
         
-        let primaryLocaleIdentifier: String? = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.localeIdentifier
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageCodeDomainModel) in
+                
+                self?.currentAppLanguageSubject.send(appLanguage)
+            }
+            .store(in: &cancellables)
         
-        title = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.title")
-        wasThisHelpful = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.wasThisHelpful")
-        yesButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "yes")
-        noButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "no")
-        shareFaith = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.shareFaith")
-        sendButtonTitle = localization.stringForLocaleElseSystemElseEnglish(localeIdentifier: primaryLocaleIdentifier, key: "lesson_evaluation.sendButtonTitle")
+        getLessonEvaluationInterfaceStringsUseCase
+            .getStringsPublisher(appLanguageCodeChangedPublisher: currentAppLanguageSubject.eraseToAnyPublisher())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
+                
+                self?.title = interfaceStrings.title
+                self?.wasThisHelpful = interfaceStrings.wasThisHelpful
+                self?.yesButtonTitle = interfaceStrings.yesButtonTitle
+                self?.noButtonTitle = interfaceStrings.noButtonTitle
+                self?.shareFaithReadiness = interfaceStrings.shareFaith
+                self?.sendFeedbackButtonTitle = interfaceStrings.sendButtonTitle
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -59,56 +80,54 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        lessonEvaluationRepository.storeLessonEvaluation(
-            lesson: lesson,
-            lessonEvaluated: false
-        )
+        LessonEvaluationViewModel.cancelLessonEvaluationInBackgroundCancellable = cancelLessonEvaluationUseCase
+            .cancelPublisher(lesson: lesson)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { _ in
+                
+            })
         
         flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
     }
     
     func yesTapped() {
         
-        yesIsSelected.accept(value: true)
-        noIsSelected.accept(value: false)
+        yesIsSelected = true
+        noIsSelected = false
     }
     
     func noTapped() {
         
-        yesIsSelected.accept(value: false)
-        noIsSelected.accept(value: true)
+        yesIsSelected = false
+        noIsSelected = true
     }
     
-    func didSetScaleForReadyToShareFaith(scale: Int) {
+    func sendFeedbackTapped() {
+             
+        let feedbackHelpful: TrackLessonFeedbackDomainModel.FeedbackHelpful?
         
-        readyToShareFaithScale = scale
-    }
-    
-    func sendTapped() {
-                
-        lessonEvaluationRepository.storeLessonEvaluation(
-            lesson: lesson,
-            lessonEvaluated: true
-        )
-        
-        let feedbackHelpful: LessonFeedbackHelpful?
-        
-        if yesIsSelected.value {
+        if yesIsSelected {
             feedbackHelpful = .yes
         }
-        else if noIsSelected.value {
+        else if noIsSelected {
             feedbackHelpful = .no
         }
         else {
             feedbackHelpful = nil
         }
         
-        lessonFeedbackAnalytics.trackLessonFeedback(
-            siteSection: lesson.abbreviation,
+        let feedback = TrackLessonFeedbackDomainModel(
             feedbackHelpful: feedbackHelpful,
             readinessScaleValue: readyToShareFaithScale,
             pageIndexReached: pageIndexReached
         )
+        
+        LessonEvaluationViewModel.evaluateLessonInBackgroundCancellable = evaluateLessonUseCase
+            .evaluateLessonPublisher(lesson: lesson, feedback: feedback)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { _ in
+                
+            })
         
         flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
     }

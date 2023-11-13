@@ -37,14 +37,27 @@ class ChooseAppLanguageFlow: Flow {
             
         case .appLanguageTappedFromAppLanguages(let appLanguage):
             
+            let view = getConfirmAppLanguageView(selectedLanguage: appLanguage)
+            navigationController.present(view, animated: true)
+        
+        case .appLanguageChangeConfirmed(let appLanguage):
+            
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
             
             ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.languageCode)
                 .sink(receiveValue: { _ in
 
                 })
-                        
+            
+            navigationController.dismiss(animated: true)
+            
             flowDelegate?.navigate(step: .chooseAppLanguageFlowCompleted(state: .userChoseAppLanguage(appLanguage: appLanguage)))
+            
+        case .nevermindTappedFromConfirmAppLanguageChange:
+            navigationController.dismiss(animated: true)
+            
+        case .backTappedFromConfirmAppLanguageChange:
+            navigationController.dismiss(animated: true)
             
         default:
             break
@@ -76,6 +89,29 @@ extension ChooseAppLanguageFlow {
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return hostingView
+    }
+    
+    func getConfirmAppLanguageView(selectedLanguage: AppLanguageListItemDomainModel) -> UIViewController {
+        
+        let viewModel = ConfirmAppLanguageViewModel(
+            selectedLanguage: selectedLanguage,
+            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase(),
+            flowDelegate: self
+        )
+        
+        let view = ConfirmAppLanguageView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<ConfirmAppLanguageView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: nil,
                 leadingItems: [],
                 trailingItems: []
             )

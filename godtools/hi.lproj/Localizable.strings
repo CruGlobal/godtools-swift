@@ -1,3 +1,14 @@
+"onboardingTutorial.chooseLanguageButton.title" = "भाषा चुनें";
+"allTools.filter.anyCategory" = "कोई भी श्रेणी";
+"allTools.filter.anyLanguage" = "कोई भी भाषा";
+"menu_getStarted" = "अभी शुरू करें";
+"menu_support" = "सहायता";
+"menu_about" = "बारे में";
+"menu.sendFeedback" = "प्रतिक्रिया भेजें";
+"menu.reportABug" = "बग की जानकारी दें";
+"menu.askAQuestion" = "प्रश्न पूछें";
+"menu.leaveAReview" = "समीक्षा लिखें";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "परिचय";
 
