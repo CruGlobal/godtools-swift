@@ -23,7 +23,7 @@ class ToolSettingsFlow: Flow {
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    @Published private var toolScreenShareHasBeenViewedDomainModel: ToolScreenShareViewedDomainModel = ToolScreenShareViewedDomainModel(numberOfViews: 0)
+    @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -44,7 +44,7 @@ class ToolSettingsFlow: Flow {
         
         getToolScreenShareTutorialHasBeenViewedUseCase
             .getViewedPublisher(tool: toolData.renderer.value.resource)
-            .assign(to: &$toolScreenShareHasBeenViewedDomainModel)
+            .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
     }
     
     func getInitialView() -> UIViewController {

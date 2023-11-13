@@ -14,13 +14,11 @@ class ShareToolScreenShareSessionViewModel {
     
     let shareMessage: String
     
-    init(domainModel: ShareToolScreenShareSessionDomainModel, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
-              
+    init(shareMessage: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+            
+        self.shareMessage = shareMessage
+        
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        let interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
-        
-        shareMessage = interfaceStrings.shareMessage
     }
 }
 

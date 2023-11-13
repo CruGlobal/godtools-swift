@@ -24,13 +24,6 @@ class GetShareToolScreenShareSessionInterfaceStringsRepository: GetShareToolScre
         
         let shareMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "share_tool_remote_link_message")
         
-        // TODO: Need to include share link. ~Levi
-        /*
-        shareMessage = String.localizedStringWithFormat(
-            localizationServices.stringForSystemElseEnglish(key: "share_tool_remote_link_message"),
-            toolRemoteShareUrl
-        )*/
-        
         let interfaceStrings = ShareToolScreenShareSessionInterfaceStringsDomainModel(
             shareMessage: shareMessage
         )

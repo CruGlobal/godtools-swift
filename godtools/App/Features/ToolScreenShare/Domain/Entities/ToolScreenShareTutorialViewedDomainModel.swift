@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareViewedDomainModel.swift
+//  ToolScreenShareTutorialViewedDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolScreenShareViewedDomainModel {
+struct ToolScreenShareTutorialViewedDomainModel {
     
     let hasBeenViewed: Bool
     

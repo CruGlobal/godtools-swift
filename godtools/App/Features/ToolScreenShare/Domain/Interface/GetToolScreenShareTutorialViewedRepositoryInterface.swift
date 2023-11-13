@@ -1,5 +1,5 @@
 //
-//  GetToolScreenShareViewedRepositoryInterface.swift
+//  GetToolScreenShareTutorialViewedRepositoryInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-protocol GetToolScreenShareViewedRepositoryInterface {
+protocol GetToolScreenShareTutorialViewedRepositoryInterface {
     
     // TODO: Eventually ToolDomainModel should be passed here instead of ResourceModel. ~Levi
-    func getViewed(tool: ResourceModel) -> AnyPublisher<ToolScreenShareViewedDomainModel, Never>
+    func getViewed(tool: ResourceModel) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never>
 }

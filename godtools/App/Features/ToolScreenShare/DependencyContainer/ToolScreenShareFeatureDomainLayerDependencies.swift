@@ -19,13 +19,13 @@ class ToolScreenShareFeatureDomainLayerDependencies {
     
     func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCase {
         return GetToolScreenShareTutorialHasBeenViewedUseCase(
-            getToolScreenShareViewedRepositoryInterface: dataLayer.getToolScreenShareViewedRepositoryInterface()
+            tutorialViewedRepositoryInterface: dataLayer.getToolScreenShareTutorialViewedRepositoryInterface()
         )
     }
     
-    func getDidViewToolScreenShareUseCase() -> DidViewToolScreenShareUseCase {
-        return DidViewToolScreenShareUseCase(
-            incrementNumberOfToolScreenShareViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareViewsRepositoryInterface()
+    func getDidViewToolScreenShareTutorialUseCase() -> DidViewToolScreenShareTutorialUseCase {
+        return DidViewToolScreenShareTutorialUseCase(
+            incrementNumberOfViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface()
         )
     }
     

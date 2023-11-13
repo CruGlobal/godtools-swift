@@ -19,9 +19,9 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getToolScreenShareViewsRepository() -> ToolScreenShareViewsRepository {
-        return ToolScreenShareViewsRepository(
-            cache: RealmToolScreenShareViewsCache(
+    private func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
+        return ToolScreenShareTutorialViewsRepository(
+            cache: RealmToolScreenShareTutorialViewsCache(
                 realmDatabase: coreDataLayer.getSharedRealmDatabase()
             )
         )
@@ -91,15 +91,15 @@ class ToolScreenShareFeatureDataLayerDependencies {
         )
     }
     
-    func getToolScreenShareViewedRepositoryInterface() -> GetToolScreenShareViewedRepositoryInterface {
-        return GetToolScreenShareViewedRepository(
-            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
+    func getToolScreenShareTutorialViewedRepositoryInterface() -> GetToolScreenShareTutorialViewedRepositoryInterface {
+        return GetToolScreenShareTutorialViewedRepository(
+            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
         )
     }
     
-    func getIncrementNumberOfToolScreenShareViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareViewsRepositoryInterface {
-        return IncrementNumberOfToolScreenShareViewsRepository(
-            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
+    func getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface {
+        return IncrementNumberOfToolScreenShareTutorialViewsRepository(
+            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
         )
     }
 }

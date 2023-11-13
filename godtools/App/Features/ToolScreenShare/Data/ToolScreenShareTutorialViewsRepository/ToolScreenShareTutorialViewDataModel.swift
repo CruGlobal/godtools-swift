@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareViewDataModel.swift
+//  ToolScreenShareTutorialViewDataModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolScreenShareViewDataModel {
+struct ToolScreenShareTutorialViewDataModel {
     
     let id: String
     let numberOfViews: Int
@@ -19,7 +19,7 @@ struct ToolScreenShareViewDataModel {
         self.numberOfViews = numberOfViews
     }
     
-    init(realmToolScreenShareView: RealmToolScreenShareView) {
+    init(realmToolScreenShareView: RealmToolScreenShareTutorialView) {
             
         self.id = realmToolScreenShareView.id
         self.numberOfViews = realmToolScreenShareView.numberOfViews

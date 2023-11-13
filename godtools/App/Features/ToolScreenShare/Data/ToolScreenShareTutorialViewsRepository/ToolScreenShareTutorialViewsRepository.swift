@@ -1,5 +1,5 @@
 //
-//  ToolScreenShareViewsRepository.swift
+//  ToolScreenShareTutorialViewsRepository.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -9,16 +9,16 @@
 import Foundation
 import Combine
 
-class ToolScreenShareViewsRepository {
+class ToolScreenShareTutorialViewsRepository {
     
-    private let cache: RealmToolScreenShareViewsCache
+    private let cache: RealmToolScreenShareTutorialViewsCache
     
-    init(cache: RealmToolScreenShareViewsCache) {
+    init(cache: RealmToolScreenShareTutorialViewsCache) {
         
         self.cache = cache
     }
     
-    func getToolScreenShareViewPublisher(id: String) -> AnyPublisher<ToolScreenShareViewDataModel?, Never> {
+    func getToolScreenShareTutorialViewPublisher(id: String) -> AnyPublisher<ToolScreenShareTutorialViewDataModel?, Never> {
         
         let cachedToolScreenShareView = cache.getToolScreenShareView(id: id)
         
@@ -26,7 +26,7 @@ class ToolScreenShareViewsRepository {
             .eraseToAnyPublisher()
     }
     
-    func incrementToolScreenShareViewPublisher(id: String, incrementNumberOfViewsBy: Int) -> AnyPublisher<Void, Error> {
+    func incrementNumberOfViewsPublisher(id: String, incrementNumberOfViewsBy: Int) -> AnyPublisher<Void, Error> {
         
         let currentNumberOfViews: Int
         
