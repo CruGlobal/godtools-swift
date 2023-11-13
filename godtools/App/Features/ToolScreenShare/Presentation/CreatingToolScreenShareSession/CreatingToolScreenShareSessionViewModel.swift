@@ -25,7 +25,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var loadingMessage: String = ""
+    @Published var creatingSessionMessage: String = ""
     
     init(flowDelegate: FlowDelegate, resourceId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
@@ -47,7 +47,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
                 
                 let interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
-                self?.loadingMessage = interfaceStrings.creatingSessionMessage
+                self?.creatingSessionMessage = interfaceStrings.creatingSessionMessage
             }
             .store(in: &cancellables)
         
