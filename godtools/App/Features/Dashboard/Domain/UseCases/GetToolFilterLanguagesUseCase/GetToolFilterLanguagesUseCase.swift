@@ -15,14 +15,16 @@ class GetToolFilterLanguagesUseCase {
     private let getLanguageUseCase: GetLanguageUseCase
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
     private let languagesRepository: LanguagesRepository
+    private let localeLanguageName: LocaleLanguageName
     private let localizationServices: LocalizationServices
     
-    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
+    init(getAllToolsUseCase: GetAllToolsUseCase, getLanguageUseCase: GetLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, languagesRepository: LanguagesRepository, localeLanguageName: LocaleLanguageName, localizationServices: LocalizationServices) {
         
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getLanguageUseCase = getLanguageUseCase
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
         self.languagesRepository = languagesRepository
+        self.localeLanguageName = localeLanguageName
         self.localizationServices = localizationServices
     }
     
@@ -60,7 +62,7 @@ class GetToolFilterLanguagesUseCase {
                     return nil
                 }
                 
-                let languageName = getNameOfLanguage(languageModel)
+                let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: languageModel.code, translatedInLanguageCode: languageModel.code) ?? ""
                 let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
                 
                 let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
@@ -111,36 +113,6 @@ class GetToolFilterLanguagesUseCase {
         )
         
         return String.localizedStringWithFormat(formatString, toolsAvailableCount)
-    }
-    
-    private func getNameOfLanguage(_ language: LanguageModel) -> String {
-        
-        let languageCode = language.code
-        let strippedCode: String = languageCode.components(separatedBy: "-x-")[0]
-
-        let localizedKey: String = "language_name_" + languageCode
-        let localizedName: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: languageCode, key: localizedKey)
-        
-        var translatedLanguageName: String
-        
-        if !localizedName.isEmpty && localizedName != localizedKey {
-            translatedLanguageName = localizedName
-        }
-        else if let localeName = Locale.current.localizedString(forIdentifier: strippedCode), !localeName.isEmpty {
-            translatedLanguageName = localeName
-        }
-        else {
-            translatedLanguageName = language.name
-        }
-                        
-        if translatedLanguageName.contains(", ") {
-            let names: [String] = translatedLanguageName.components(separatedBy: ", ")
-            if names.count == 2 {
-                translatedLanguageName = names[0] + " (" + names[1] + ")"
-            }
-        }
-                
-        return translatedLanguageName
     }
 }
 

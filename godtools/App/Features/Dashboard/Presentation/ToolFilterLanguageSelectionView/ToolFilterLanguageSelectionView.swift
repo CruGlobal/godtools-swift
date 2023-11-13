@@ -23,7 +23,7 @@ struct ToolFilterLanguageSelectionView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarView(viewModel: viewModel.getSearchBarViewModel())
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
                 ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
