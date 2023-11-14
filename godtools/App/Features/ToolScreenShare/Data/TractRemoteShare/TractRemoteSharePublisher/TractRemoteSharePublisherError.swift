@@ -10,5 +10,5 @@ import Foundation
 
 enum TractRemoteSharePublisherError: Error {
     
-    case timeOut
+    case timedOut
 }

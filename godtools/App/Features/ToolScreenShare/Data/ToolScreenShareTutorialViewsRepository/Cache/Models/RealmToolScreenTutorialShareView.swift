@@ -1,5 +1,5 @@
 //
-//  RealmToolScreenShareView.swift
+//  RealmToolScreenShareTutorialView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmToolScreenShareView: Object {
+class RealmToolScreenShareTutorialView: Object {
     
     @objc dynamic var id: String = ""
     @objc dynamic var numberOfViews: Int = 0

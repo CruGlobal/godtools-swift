@@ -19,13 +19,31 @@ class ToolScreenShareFeatureDomainLayerDependencies {
     
     func getToolScreenShareTutorialHasBeenViewedUseCase() -> GetToolScreenShareTutorialHasBeenViewedUseCase {
         return GetToolScreenShareTutorialHasBeenViewedUseCase(
-            getToolScreenShareViewedRepositoryInterface: dataLayer.getToolScreenShareViewedRepositoryInterface()
+            tutorialViewedRepositoryInterface: dataLayer.getToolScreenShareTutorialViewedRepositoryInterface()
         )
     }
     
-    func getDidViewToolScreenShareUseCase() -> DidViewToolScreenShareUseCase {
-        return DidViewToolScreenShareUseCase(
-            incrementNumberOfToolScreenShareViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareViewsRepositoryInterface()
+    func getDidViewToolScreenShareTutorialUseCase() -> DidViewToolScreenShareTutorialUseCase {
+        return DidViewToolScreenShareTutorialUseCase(
+            incrementNumberOfViewsRepositoryInterface: dataLayer.getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface()
+        )
+    }
+    
+    func getViewCreatingToolScreenShareSessionTimedOutUseCase() -> ViewCreatingToolScreenShareSessionTimedOutUseCase {
+        return ViewCreatingToolScreenShareSessionTimedOutUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewCreatingToolScreenShareSessionUseCase() -> ViewCreatingToolScreenShareSessionUseCase {
+        return ViewCreatingToolScreenShareSessionUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewShareToolScreenShareSessionUseCase() -> ViewShareToolScreenShareSessionUseCase {
+        return ViewShareToolScreenShareSessionUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getShareToolScreenShareSessionInterfaceStringsRepositoryInterface()
         )
     }
     

@@ -1,5 +1,5 @@
 //
-//  RealmToolScreenShareViewsCache.swift
+//  RealmToolScreenShareTutorialViewsCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/6/23.
@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RealmSwift
 
-class RealmToolScreenShareViewsCache {
+class RealmToolScreenShareTutorialViewsCache {
     
     private let realmDatabase: RealmDatabase
     
@@ -19,22 +19,22 @@ class RealmToolScreenShareViewsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getToolScreenShareView(id: String) -> ToolScreenShareViewDataModel? {
+    func getToolScreenShareView(id: String) -> ToolScreenShareTutorialViewDataModel? {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        guard let realmToolScreenShareView = realm.object(ofType: RealmToolScreenShareView.self, forPrimaryKey: id) else {
+        guard let realmToolScreenShareView = realm.object(ofType: RealmToolScreenShareTutorialView.self, forPrimaryKey: id) else {
             return nil
         }
         
-        return ToolScreenShareViewDataModel(realmToolScreenShareView: realmToolScreenShareView)
+        return ToolScreenShareTutorialViewDataModel(realmToolScreenShareView: realmToolScreenShareView)
     }
     
     func setToolScreenShareNumberOfViews(id: String, numberOfViews: Int) -> Error? {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        let toolScreenShareView = RealmToolScreenShareView()
+        let toolScreenShareView = RealmToolScreenShareTutorialView()
         
         toolScreenShareView.id = id
         toolScreenShareView.numberOfViews = numberOfViews

@@ -158,7 +158,7 @@ class TractRemoteSharePublisher: NSObject {
     
     @objc func handleTimeoutTimer() {
         stopTimeoutTimer()
-        createNewPublisherBlock?(.failure(.timeOut))
+        createNewPublisherBlock?(.failure(.timedOut))
     }
     
     private func stopTimeoutTimer() {

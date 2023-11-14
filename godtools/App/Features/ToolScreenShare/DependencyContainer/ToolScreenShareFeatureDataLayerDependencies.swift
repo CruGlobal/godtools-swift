@@ -19,15 +19,65 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getToolScreenShareViewsRepository() -> ToolScreenShareViewsRepository {
-        return ToolScreenShareViewsRepository(
-            cache: RealmToolScreenShareViewsCache(
+    private func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
+        return ToolScreenShareTutorialViewsRepository(
+            cache: RealmToolScreenShareTutorialViewsCache(
                 realmDatabase: coreDataLayer.getSharedRealmDatabase()
             )
         )
     }
     
+    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        
+        return TractRemoteSharePublisher(
+            config: coreDataLayer.getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
+        
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        
+        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        
+        return TractRemoteShareSubscriber(
+            config: coreDataLayer.getAppConfig(),
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: loggingEnabled),
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
+        return TractRemoteShareURLBuilder()
+    }
+    
     // MARK: - Domain Interface
+    
+    func getCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface {
+        return GetCreatingToolScreenShareSessionInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface() -> GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface {
+        return GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getShareToolScreenShareSessionInterfaceStringsRepositoryInterface() -> GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface {
+        return GetShareToolScreenShareSessionInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
     
     func getToolScreenShareTutorialInterfaceStringsRepositoryInterface() -> GetToolScreenShareTutorialInterfaceStringsRepositoryInterface {
         return GetToolScreenShareTutorialInterfaceStringsRepository(
@@ -41,15 +91,15 @@ class ToolScreenShareFeatureDataLayerDependencies {
         )
     }
     
-    func getToolScreenShareViewedRepositoryInterface() -> GetToolScreenShareViewedRepositoryInterface {
-        return GetToolScreenShareViewedRepository(
-            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
+    func getToolScreenShareTutorialViewedRepositoryInterface() -> GetToolScreenShareTutorialViewedRepositoryInterface {
+        return GetToolScreenShareTutorialViewedRepository(
+            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
         )
     }
     
-    func getIncrementNumberOfToolScreenShareViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareViewsRepositoryInterface {
-        return IncrementNumberOfToolScreenShareViewsRepository(
-            toolScreenShareViewsRepository: getToolScreenShareViewsRepository()
+    func getIncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface() -> IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface {
+        return IncrementNumberOfToolScreenShareTutorialViewsRepository(
+            tutorialViewsRepository: getToolScreenShareTutorialViewsRepository()
         )
     }
 }
