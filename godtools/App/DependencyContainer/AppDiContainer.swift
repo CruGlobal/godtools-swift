@@ -35,6 +35,7 @@ class AppDiContainer {
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
+        let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
@@ -46,6 +47,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             toolDetails: toolDetailsDiContainer,
+            toolScreenShare: toolScreenShareDiContainer,
             tutorial: tutorialDiContainer
         )
                                                                 
@@ -115,10 +117,6 @@ class AppDiContainer {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
-    }
-    
-    func getShareToolScreenTutorialNumberOfViewsCache() -> ShareToolScreenTutorialNumberOfViewsCache {
-        return ShareToolScreenTutorialNumberOfViewsCache(sharedUserDefaultsCache: sharedUserDefaultsCache)
     }
     
     func getToolOpenedAnalytics() -> ToolOpenedAnalytics {

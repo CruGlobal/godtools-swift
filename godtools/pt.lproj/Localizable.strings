@@ -1,6 +1,13 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "allTools.filter.anyCategory" = "Qualquer categoria";
 "allTools.filter.anyLanguage" = "Qualquer idioma";
+"menu_getStarted" = "Comece";
+"menu_support" = "Suporte";
+"menu_about" = "Sobre";
+"menu.sendFeedback" = "Enviar feedback";
+"menu.reportABug" = "Relatar um erro";
+"menu.askAQuestion" = "Faça uma pergunta";
+"menu.leaveAReview" = "Deixe a sua opinião";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Sobre";
@@ -84,6 +91,7 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "lesson_evaluation.title" = "Revisão";
 "lesson_evaluation.wasThisHelpful" = "Esta lição lhe serviu?";
 "lesson_evaluation.shareFaith" = "Até que ponto você se sente preparado para iniciar uma conversa espiritual?";
+"lesson_evaluation.sendButtonTitle" = "Enviar feedback";
 "onboardingTutorial.0.title" = "Pronto para qualquer conversa";
 "onboardingTutorial.0.videoLink.title" = "Ver vídeo";
 "onboardingTutorial.1.title" = "Fale sobre Deus com qualquer pessoa";

@@ -22,8 +22,4 @@ class DownloadToolProgressFeatureDomainLayerDependencies {
             getInterfaceStringsRepositoryInterface: dataLayer.getDownloadToolProgressInterfaceStringsRepositoryInterface()
         )
     }
-    
-    func getToolDownloadProgressInterfaceStringUseCase() -> GetToolDownloadProgressInterfaceStringUseCase {
-        return GetToolDownloadProgressInterfaceStringUseCase()
-    }
 }

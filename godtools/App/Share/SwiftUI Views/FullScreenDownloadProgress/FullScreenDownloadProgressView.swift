@@ -14,12 +14,14 @@ struct FullScreenDownloadProgressView: View {
     private let progressBarCornerRadius: CGFloat = 6
     private let progressBarHorizontalInsets: CGFloat = 50
     private let downloadMessage: String
-    private let downloadProgress: Double
-    private let downloadProgressString: String
+    private let hidesSpinner: Bool
+    private let downloadProgress: Double?
+    private let downloadProgressString: String?
     
-    init(downloadMessage: String, downloadProgress: Double, downloadProgressString: String) {
+    init(downloadMessage: String, hidesSpinner: Bool, downloadProgress: Double?, downloadProgressString: String?) {
     
         self.downloadMessage = downloadMessage
+        self.hidesSpinner = hidesSpinner
         self.downloadProgress = downloadProgress
         self.downloadProgressString = downloadProgressString
     }
@@ -30,47 +32,60 @@ struct FullScreenDownloadProgressView: View {
             
             VStack(alignment: .center, spacing: 0) {
                 
+                Spacer()
+                
                 Text(downloadMessage)
                     .multilineTextAlignment(.center)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextRegular.font(size: 17))
-                    .padding([.top], 140)
                     .padding([.leading, .trailing], 30)
                 
-                HStack(alignment: .center, spacing: 0) {
+                if !hidesSpinner {
                     
-                    Spacer()
+                    HStack(alignment: .center, spacing: 0) {
+                        
+                        Spacer()
+                        
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        Spacer()
+                    }
+                    .padding([.top], 30)
+                }
+                
+                if let downloadProgress = self.downloadProgress {
                     
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
+                    let progressBarWidth: CGFloat = geometry.size.width - (progressBarHorizontalInsets * 2)
+                    
+                    ZStack(alignment: .leading) {
+                        
+                        Rectangle()
+                            .fill(Color.getColorWithRGB(red: 238, green: 236, blue: 238, opacity: 1))
+                            .frame(width: progressBarWidth, height: progressBarHeight)
+                            .cornerRadius(6)
+                        
+                        Rectangle()
+                            .fill(ColorPalette.gtBlue.color)
+                            .frame(width: getProgressBarDownloadWidth(downloadProgress: downloadProgress, progressBarWidth: progressBarWidth), height: progressBarHeight)
+                            .cornerRadius(6)
+                    }
+                    .padding([.top], 30)
+                    .padding([.leading, .trailing], progressBarHorizontalInsets)
+                }
+                
+                if let downloadProgressString = self.downloadProgressString, !downloadProgressString.isEmpty {
+                    
+                    Text(downloadProgressString)
+                        .multilineTextAlignment(.center)
                         .foregroundColor(ColorPalette.gtGrey.color)
-                    
-                    Spacer()
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .padding([.top], 15)
                 }
-                .padding([.top], 30)
                 
-                let progressBarWidth: CGFloat = geometry.size.width - (progressBarHorizontalInsets * 2)
-                
-                ZStack(alignment: .leading) {
-                    
-                    Rectangle()
-                        .fill(Color.getColorWithRGB(red: 238, green: 236, blue: 238, opacity: 1))
-                        .frame(width: progressBarWidth, height: progressBarHeight)
-                        .cornerRadius(6)
-                    
-                    Rectangle()
-                        .fill(ColorPalette.gtBlue.color)
-                        .frame(width: getProgressBarDownloadWidth(downloadProgress: downloadProgress, progressBarWidth: progressBarWidth), height: progressBarHeight)
-                        .cornerRadius(6)
-                }
-                .padding([.top], 30)
-                .padding([.leading, .trailing], progressBarHorizontalInsets)
-                
-                Text(downloadProgressString)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.gtGrey.color)
-                    .font(FontLibrary.sfProTextRegular.font(size: 17))
-                    .padding([.top], 15)
+                Spacer()
+                Spacer()
             }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
@@ -97,6 +112,7 @@ struct FullScreenDownloadProgressView_Preview: PreviewProvider {
         
         FullScreenDownloadProgressView(
             downloadMessage: "Download message here...",
+            hidesSpinner: false,
             downloadProgress: 0,
             downloadProgressString: ""
         )
