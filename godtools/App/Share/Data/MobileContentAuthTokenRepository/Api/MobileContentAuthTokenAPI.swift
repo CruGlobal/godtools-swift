@@ -29,11 +29,15 @@ class MobileContentAuthTokenAPI {
         attributes["create_user"] = createUser
         
         switch providerToken {
-        case .appleAuth(let authCode, let givenName, let familyName):
+        case .appleAuth(let authCode, let givenName, let familyName, let name):
             
             attributes["apple_auth_code"] = authCode
             attributes["apple_given_name"] = givenName
             attributes["apple_family_name"] = familyName
+            
+            if let name = name {
+                attributes["apple_name"] = name
+            }
             
         case .appleRefresh(let refreshToken):
             
