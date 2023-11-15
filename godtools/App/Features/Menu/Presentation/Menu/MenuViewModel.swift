@@ -71,7 +71,7 @@ class MenuViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         getMenuInterfaceStringsUseCase
-            .getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: MenuInterfaceStringsDomainModel) in
                 
