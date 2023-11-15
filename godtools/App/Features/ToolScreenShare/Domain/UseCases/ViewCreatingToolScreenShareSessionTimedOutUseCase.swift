@@ -18,7 +18,7 @@ class ViewCreatingToolScreenShareSessionTimedOutUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func viewPublisher(appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutDomainModel, Never> {
         
         return getInterfaceStringsRepositoryInterface
             .getStringsPublisher(translateInLanguage: appLanguage)

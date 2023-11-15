@@ -26,7 +26,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
         self.localeLanguageName = localeLanguageName
     }
     
-    func getLessonsListPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+    func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
         
         let lessons: [ResourceModel] = resourcesRepository.getAllLessons(sorted: true)
         
@@ -35,14 +35,14 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             let lessonIsAvailableInAppLanguage: Bool
             let lessonNameInAppLanguage: String
             
-            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: currentAppLanguageCode) {
+            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
                 lessonNameInAppLanguage = translation.translatedName
             }
             else {
                 lessonNameInAppLanguage = ""
             }
             
-            if let appLanguage = languagesRepository.getLanguage(code: currentAppLanguageCode) {
+            if let appLanguage = languagesRepository.getLanguage(code: appLanguage) {
                 lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
             }
             else {
@@ -50,17 +50,17 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             }
              
             let availabilityInAppLanguage: String
-            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageCode: currentAppLanguageCode, translatedInLanguageCode: currentAppLanguageCode) ?? ""
+            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageId: appLanguage, translatedInLanguageId: appLanguage) ?? ""
             
             if lessonIsAvailableInAppLanguage {
                 availabilityInAppLanguage = appLanguageName + " ✓"
             }
             else {
-                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: currentAppLanguageCode, key: "lessonCard.languageNotAvailable")
+                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
                 
                 availabilityInAppLanguage = String(
                     format: languageNotAvailable,
-                    locale: Locale(identifier: currentAppLanguageCode),
+                    locale: Locale(identifier: appLanguage),
                     appLanguageName
                 ) + " x"
             }

@@ -16,15 +16,15 @@ class TestsGetOnboardingTutorialInterfaceStringsRepository: GetOnboardingTutoria
         
     }
     
-    func getStringsPublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
         
         let interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel
         
-        if appLanguageCode == LanguageCodeDomainModel.english.value {
+        if appLanguage == LanguageCodeDomainModel.english.value {
             
             interfaceStrings = getEnglishInterfaceStrings()
         }
-        else if appLanguageCode == LanguageCodeDomainModel.spanish.rawValue {
+        else if appLanguage == LanguageCodeDomainModel.spanish.rawValue {
             
             interfaceStrings = getSpanishInterfaceStrings()
         }

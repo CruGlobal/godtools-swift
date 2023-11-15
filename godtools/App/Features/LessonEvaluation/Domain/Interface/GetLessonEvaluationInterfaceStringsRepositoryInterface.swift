@@ -11,5 +11,5 @@ import Combine
 
 protocol GetLessonEvaluationInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never>
 }

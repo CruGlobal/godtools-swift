@@ -26,7 +26,7 @@ class GetOnboardingQuickStartLinksUseCaseTests: QuickSpec {
                 
                 it("The quick start links interface strings should be translated into Spanish.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var englishLinksRef: [OnboardingQuickStartLinkDomainModel] = Array()
                     var spanishLinksRef: [OnboardingQuickStartLinkDomainModel] = Array()

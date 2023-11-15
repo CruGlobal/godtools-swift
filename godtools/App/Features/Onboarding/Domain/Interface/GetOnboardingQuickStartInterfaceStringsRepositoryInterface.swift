@@ -11,5 +11,5 @@ import Combine
 
 protocol GetOnboardingQuickStartInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never>
 }

@@ -18,12 +18,12 @@ class GetOnboardingQuickStartLinksUseCase {
         self.getLinksRepositoryInterface = getLinksRepositoryInterface
     }
     
-    func getLinksPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
+    func getLinksPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
         
         return appLanguagePublisher
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> in
                 
-                return self.getLinksRepositoryInterface.getLinks(appLanguageCode: appLanguageCode)
+                return self.getLinksRepositoryInterface.getLinks(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

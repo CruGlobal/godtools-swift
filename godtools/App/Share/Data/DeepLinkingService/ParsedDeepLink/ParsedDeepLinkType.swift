@@ -15,6 +15,6 @@ enum ParsedDeepLinkType: Equatable {
     case dashboard
     case favoritedToolsList
     case lessonsList
-    case onboarding(appLanguageCode: AppLanguageCodeDomainModel)
+    case onboarding(appLanguage: AppLanguageDomainModel)
     case tool(toolDeepLink: ToolDeepLink)
 }

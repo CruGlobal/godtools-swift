@@ -11,5 +11,5 @@ import Combine
 
 protocol GetOnboardingQuickStartLinksRepositoryInterface {
     
-    func getLinks(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never>
+    func getLinks(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never>
 }

@@ -18,7 +18,7 @@ class GetSocialCreateAccountInterfaceStringsRepository: GetSocialCreateAccountIn
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<SocialCreateAccountInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialCreateAccountInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

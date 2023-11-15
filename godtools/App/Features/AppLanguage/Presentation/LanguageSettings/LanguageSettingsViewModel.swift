@@ -19,7 +19,7 @@ class LanguageSettingsViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var navTitle: String = ""
     @Published var appInterfaceLanguageTitle: String = "App "

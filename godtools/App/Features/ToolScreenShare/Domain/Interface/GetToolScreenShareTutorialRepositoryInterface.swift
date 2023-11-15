@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolScreenShareTutorialRepositoryInterface {
     
-    func getTutorialPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<[ToolScreenShareTutorialPageDomainModel], Never>
+    func getTutorialPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolScreenShareTutorialPageDomainModel], Never>
 }

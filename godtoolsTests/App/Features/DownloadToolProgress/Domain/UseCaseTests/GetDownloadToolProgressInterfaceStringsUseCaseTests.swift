@@ -35,7 +35,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     
@@ -83,7 +83,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message with favorite this tool for offline use messaging.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     
@@ -131,7 +131,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     

@@ -18,7 +18,7 @@ class GetToolScreenShareTutorialRepository: GetToolScreenShareTutorialRepository
         self.localizationServices = localizationServices
     }
     
-    func getTutorialPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<[ToolScreenShareTutorialPageDomainModel], Never> {
+    func getTutorialPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolScreenShareTutorialPageDomainModel], Never> {
         
         let localeId: String = translateInLanguage
         

@@ -18,11 +18,11 @@ class GetOnboardingQuickStartInterfaceStringsRepository: GetOnboardingQuickStart
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
         
         let interfaceStrings = OnboardingQuickStartInterfaceStringsDomainModel(
-            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.title"),
-            getStartedButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.getStartedButton.title")
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "onboardingQuickStart.title"),
+            getStartedButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "onboardingTutorial.getStartedButton.title")
         )
         
         return Just(interfaceStrings)

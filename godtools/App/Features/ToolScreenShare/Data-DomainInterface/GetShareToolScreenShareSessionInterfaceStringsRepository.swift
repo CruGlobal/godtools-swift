@@ -18,7 +18,7 @@ class GetShareToolScreenShareSessionInterfaceStringsRepository: GetShareToolScre
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<ShareToolScreenShareSessionInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolScreenShareSessionInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

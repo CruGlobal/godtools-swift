@@ -74,7 +74,7 @@ class GetTutorialRepository: GetTutorialRepositoryInterface {
         return tutorialPages
     }
     
-    private func getNonEnglishTutorial(translateInLanguage: AppLanguageCodeDomainModel) -> [TutorialPageDomainModel] {
+    private func getNonEnglishTutorial(translateInLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
         
         let localeId: String = translateInLanguage
         

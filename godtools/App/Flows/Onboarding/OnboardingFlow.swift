@@ -13,7 +13,7 @@ import Combine
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     @Published private var quickStartIsAvailable: Bool = false
-    @Published private var currentAppLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     private var cancellables: Set<AnyCancellable> = Set()
     

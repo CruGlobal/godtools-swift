@@ -18,9 +18,9 @@ class GetToolDetailsInterfaceStringsRepository: GetToolDetailsInterfaceStringsRe
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInToolLanguageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInToolLanguage: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> {
                         
-        let localeId: String = translateInToolLanguageCode
+        let localeId: String = translateInToolLanguage
         
         let interfaceStrings = ToolDetailsInterfaceStringsDomainModel(
             aboutButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolDetails.about.title"),

@@ -18,12 +18,12 @@ class GetLessonEvaluationInterfaceStringsUseCase {
         self.getLessonEvaluationInterfaceStringsRepositoryInterface = getLessonEvaluationInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> {
         
         appLanguagePublisher
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> in
               
-                return self.getLessonEvaluationInterfaceStringsRepositoryInterface.getStringsPublisher(translateInAppLanguageCode: appLanguageCode)
+                return self.getLessonEvaluationInterfaceStringsRepositoryInterface.getStringsPublisher(translateInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

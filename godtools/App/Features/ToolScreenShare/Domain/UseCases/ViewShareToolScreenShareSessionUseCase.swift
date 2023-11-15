@@ -18,7 +18,7 @@ class ViewShareToolScreenShareSessionUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func viewPublisher(appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> {
         
         return getInterfaceStringsRepositoryInterface
             .getStringsPublisher(translateInLanguage: appLanguage)

@@ -47,13 +47,13 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguage(languageCode: String) {
+    func storeLanguage(languageId: String) {
         
         let realm: Realm = realmDatabase.openRealm()
         
         let realmUserAppLanguage = RealmUserAppLanguage()
         realmUserAppLanguage.id = RealmUserAppLanguageCache.sharedUserId
-        realmUserAppLanguage.languageCode = languageCode
+        realmUserAppLanguage.languageId = languageId
         
         do {
             

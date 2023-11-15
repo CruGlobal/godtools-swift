@@ -11,5 +11,5 @@ import Combine
 
 protocol GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel, Never>
 }

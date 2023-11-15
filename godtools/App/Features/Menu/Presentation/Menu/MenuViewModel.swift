@@ -25,7 +25,7 @@ class MenuViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published var navTitle: String = ""
     @Published var getStartedSectionTitle: String = ""

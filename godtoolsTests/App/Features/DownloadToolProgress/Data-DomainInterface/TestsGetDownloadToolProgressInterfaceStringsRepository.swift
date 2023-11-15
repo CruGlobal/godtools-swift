@@ -23,7 +23,7 @@ class TestsGetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolPro
         self.favoriteThisToolForOfflineUseMessage = favoriteThisToolForOfflineUseMessage
     }
     
-    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
         
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
             toolIsFavorited: toolIsFavorited,
