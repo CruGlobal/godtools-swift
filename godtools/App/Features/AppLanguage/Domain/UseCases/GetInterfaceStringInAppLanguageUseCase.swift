@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated)
 class GetInterfaceStringInAppLanguageUseCase {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

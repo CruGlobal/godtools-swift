@@ -8,4 +8,5 @@
 
 import Foundation
 
+@available(*, deprecated)
 typealias AppLanguageCodeDomainModel = String
