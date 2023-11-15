@@ -67,7 +67,7 @@ class OnboardingTutorialViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         getOnboardingTutorialInterfaceStringsUseCase
-            .getStringsPublisher(appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
                 

@@ -44,7 +44,7 @@ class DownloadToolProgressViewModel: ObservableObject {
         })
         
         getDownloadToolProgressInterfaceStringsUseCase
-            .getStringsPublisher(resource: resource, appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(resource: resource, appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                 

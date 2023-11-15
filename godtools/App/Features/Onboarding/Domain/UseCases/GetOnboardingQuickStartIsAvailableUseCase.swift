@@ -18,10 +18,10 @@ class GetOnboardingQuickStartIsAvailableUseCase {
         self.getSupportedLanguagesRepositoryInterface = getSupportedLanguagesRepositoryInterface
     }
     
-    func getAvailablePublisher(appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<Bool, Never> {
+    func getAvailablePublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<Bool, Never> {
         
         return Publishers.CombineLatest(
-            appLanguageCodeChangedPublisher,
+            appLanguagePublisher,
             getSupportedLanguagesRepositoryInterface.getLanguagesPublisher()
         )
         .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel, supportedLanguages: [LanguageCodeDomainModel]) -> AnyPublisher<Bool, Never> in

@@ -18,9 +18,9 @@ class GetOnboardingQuickStartInterfaceStringsUseCase {
         self.getStringsRepositoryInterface = getStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
         
-        return appLanguageCodeChangedPublisher
+        return appLanguagePublisher
             .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> in
                 
                 return self.getStringsRepositoryInterface.getStringsPublisher(appLanguageCode: appLanguageCode)

@@ -45,7 +45,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
@@ -93,7 +93,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
@@ -141,7 +141,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {

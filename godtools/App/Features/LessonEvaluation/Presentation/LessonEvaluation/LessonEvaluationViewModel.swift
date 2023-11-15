@@ -59,7 +59,7 @@ class LessonEvaluationViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getLessonEvaluationInterfaceStringsUseCase
-            .getStringsPublisher(appLanguageCodeChangedPublisher: currentAppLanguageSubject.eraseToAnyPublisher())
+            .getStringsPublisher(appLanguagePublisher: currentAppLanguageSubject.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
                 

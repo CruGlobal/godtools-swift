@@ -51,7 +51,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         let getOnboardingQuickStartIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartIsAvailableUseCase()
         
         getOnboardingQuickStartIsAvailableUseCase
-            .getAvailablePublisher(appLanguageCodeChangedPublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
+            .getAvailablePublisher(appLanguagePublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$quickStartIsAvailable)
         

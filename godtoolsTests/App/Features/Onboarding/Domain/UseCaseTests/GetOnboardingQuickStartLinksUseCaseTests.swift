@@ -37,7 +37,7 @@ class GetOnboardingQuickStartLinksUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getOnboardingQuickStartLinksUseCase
-                            .getLinksPublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getLinksPublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (links: [OnboardingQuickStartLinkDomainModel]) in
                                 
                                 guard !sinkCompleted else {

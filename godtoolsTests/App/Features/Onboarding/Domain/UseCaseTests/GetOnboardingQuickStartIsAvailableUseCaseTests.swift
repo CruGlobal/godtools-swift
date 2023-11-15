@@ -36,7 +36,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -74,7 +74,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -112,7 +112,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {

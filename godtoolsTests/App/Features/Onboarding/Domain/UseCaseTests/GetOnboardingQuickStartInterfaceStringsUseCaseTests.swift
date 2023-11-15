@@ -37,7 +37,7 @@ class GetOnboardingQuickStartInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getOnboardingQuickStartInterfaceStringsUseCase
-                            .getStringsPublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: OnboardingQuickStartInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
