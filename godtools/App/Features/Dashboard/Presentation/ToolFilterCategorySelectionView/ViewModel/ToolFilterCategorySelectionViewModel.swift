@@ -13,6 +13,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
+    private let storeUserFiltersUseCase: StoreUserFiltersUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     private let selectedLanguage: LanguageFilterDomainModel
@@ -26,10 +27,11 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase,  categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
+    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
+        self.storeUserFiltersUseCase = storeUserFiltersUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.selectedLanguage = selectedLanguage
@@ -76,6 +78,15 @@ extension ToolFilterCategorySelectionViewModel {
     func rowTapped(with category: CategoryFilterDomainModel) {
         
         selectedCategory = category
+        
+        if let categoryId = category.id {
+            
+            storeUserFiltersUseCase.storeCategoryFilterPublisher(with: categoryId)
+                .sink { _ in
+                    
+                }
+                .store(in: &cancellables)
+        }
     }
     
     @objc func backButtonTapped() {

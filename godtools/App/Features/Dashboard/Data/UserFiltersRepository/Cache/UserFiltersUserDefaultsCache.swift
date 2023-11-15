@@ -39,4 +39,14 @@ class UserFiltersUserDefaultsCache {
         
         sharedUserDefaultsCache.cache(value: value, forKey: key)
     }
+    
+    func getUserCategoryFilter() -> String? {
+        
+        return sharedUserDefaultsCache.getValue(key: CacheKey.category) as? String
+    }
+    
+    func getUserLanguageFilter() -> String? {
+        
+        return sharedUserDefaultsCache.getValue(key: CacheKey.language) as? String
+    }
 }

@@ -224,6 +224,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {
+        return StoreUserFiltersUseCase(
+            storeUserFiltersRepositoryInterface: dataLayer.getStoreUserFiltersRepositoryInterface()
+        )
+    }
+    
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
@@ -334,6 +340,12 @@ class AppDomainLayerDependencies {
             getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
             userCounterRepository: dataLayer.getUserCountersRepository(),
             completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
+        )
+    }
+    
+    func getUserFiltersUseCase() -> GetUserFiltersUseCase {
+        return GetUserFiltersUseCase(
+            getUserFiltersRepositoryInterface: dataLayer.getUserFiltersRepositoryInterface()
         )
     }
     

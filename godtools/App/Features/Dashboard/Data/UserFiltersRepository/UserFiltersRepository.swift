@@ -21,4 +21,12 @@ class UserFiltersRepository {
         
         cache.storeUserFilter(filter: filter)
     }
+    
+    func getUserCategoryFilter() -> String? {
+        return cache.getUserCategoryFilter()
+    }
+    
+    func getUserLanguageFilter() -> String? {
+        return cache.getUserLanguageFilter()
+    }
 }
