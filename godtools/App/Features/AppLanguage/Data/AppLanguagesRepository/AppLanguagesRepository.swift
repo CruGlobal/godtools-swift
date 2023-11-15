@@ -32,13 +32,13 @@ class AppLanguagesRepository {
             .eraseToAnyPublisher()
     }
 
-    func getLanguagePublisher(languageCode: String) -> AnyPublisher<AppLanguageDataModel?, Never> {
+    func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Never> {
         
         return getLanguagesPublisher()
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDataModel?, Never> in
                 
                 let language: AppLanguageDataModel? = languages.filter({
-                    $0.languageCode.lowercased() == languageCode.lowercased()
+                    $0.languageId.lowercased() == languageId.lowercased()
                 }).first
                 
                 return Just(language)

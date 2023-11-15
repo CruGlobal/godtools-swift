@@ -15,18 +15,18 @@ class AppLanguagesCache {
     init() {
         
         appLanguages = [
-            AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft),
-            AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "es", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "pt", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "fr", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "id", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "zh-Hans", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "zh-Hant", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "hi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "ru", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "vi", languageDirection: .leftToRight),
-            AppLanguageDataModel(languageCode: "lv", languageDirection: .leftToRight)
+            AppLanguageDataModel(languageId: "ar", languageDirection: .rightToLeft),
+            AppLanguageDataModel(languageId: "en", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "es", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "pt", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "fr", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "id", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "zh-Hans", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "zh-Hant", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "hi", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "ru", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "vi", languageDirection: .leftToRight),
+            AppLanguageDataModel(languageId: "lv", languageDirection: .leftToRight)
         ]
     }
     
