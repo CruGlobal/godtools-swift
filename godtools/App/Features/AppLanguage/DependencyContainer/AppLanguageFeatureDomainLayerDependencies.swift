@@ -46,9 +46,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getInterfaceLayoutDirectionUseCase() -> GetInterfaceLayoutDirectionUseCase {
         return GetInterfaceLayoutDirectionUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguageRepositoryInterface: dataLayer.getAppLanguageRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
+            getLayoutDirectionInterface: dataLayer.getAppInterfaceLayoutDirectionInterface()
         )
     }
     
