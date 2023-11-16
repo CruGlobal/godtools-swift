@@ -18,7 +18,7 @@ class StoreUserFiltersRepository: StoreUserFiltersRepositoryInterface {
         self.userFiltersRepository = userFiltersRepository
     }
     
-    func storeUserCategoryFilterPublisher(with id: String) -> AnyPublisher<Void, Never> {
+    func storeUserCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
         userFiltersRepository.storeUserFilters(filter: .category(id: id))
         
@@ -26,7 +26,7 @@ class StoreUserFiltersRepository: StoreUserFiltersRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    func storeUserLanguageFilterPublisher(with id: String) -> AnyPublisher<Void, Never> {
+    func storeUserLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
         userFiltersRepository.storeUserFilters(filter: .language(id: id))
         

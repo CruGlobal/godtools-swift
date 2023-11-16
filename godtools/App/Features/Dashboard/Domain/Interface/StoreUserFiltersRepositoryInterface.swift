@@ -11,6 +11,6 @@ import Combine
 
 protocol StoreUserFiltersRepositoryInterface {
     
-    func storeUserCategoryFilterPublisher(with id: String) -> AnyPublisher<Void, Never>
-    func storeUserLanguageFilterPublisher(with id: String) -> AnyPublisher<Void, Never>
+    func storeUserCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never>
+    func storeUserLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never>
 }

@@ -819,6 +819,7 @@ extension AppFlow {
         let viewModel = ToolFilterLanguageSelectionViewModel(
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
             searchToolFilterLanguagesUseCase: appDiContainer.domainLayer.getSearchToolFilterLanguagesUseCase(),
+            storeUserFilterUseCase: appDiContainer.domainLayer.getStoreUserFiltersUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
             selectedCategory: selectedCategory,

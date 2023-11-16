@@ -47,6 +47,21 @@ class GetToolFilterLanguagesUseCase {
         return createAnyLanguageDomainModel(translationLocaleId: translationLocaleId, filteredByCategoryId: nil)
     }
     
+    func getLanguageFilterPublisher(from languageId: String?) -> AnyPublisher<LanguageFilterDomainModel?, Never> {
+        
+        guard let languageId = languageId,
+              let language = languagesRepository.getLanguage(id: languageId)
+        else {
+            return Just<LanguageFilterDomainModel?>(nil)
+                .eraseToAnyPublisher()
+        }
+        
+        let languageFilter = createLanguageDomainModel(with: language, translationLocaleId: nil, filteredByCategoryId: nil)
+        
+        return Just<LanguageFilterDomainModel?>(languageFilter)
+            .eraseToAnyPublisher()
+    }
+    
     private func createLanguageFilterDomainModels(from languageIds: [String], withTranslation translationLanguage: LanguageDomainModel?, filteredByCategoryId: String?) -> [LanguageFilterDomainModel] {
         
         let translationLocaleId: String? = translationLanguage?.localeIdentifier
@@ -62,20 +77,27 @@ class GetToolFilterLanguagesUseCase {
                     return nil
                 }
                 
-                let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: languageModel.code, translatedInLanguageCode: languageModel.code) ?? ""
-                let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
-                
-                let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
-                
-                return LanguageFilterDomainModel(
-                    type: .language(languageModel: languageDomainModel),
-                    languageName: languageName,
-                    toolsAvailableText: toolsAvailableText,
-                    searchableText: languageDomainModel.translatedName
-                )
+                return self.createLanguageDomainModel(with: languageModel, translationLocaleId: translationLocaleId, filteredByCategoryId: filteredByCategoryId)
             }
         
         return [anyLanguage] + languages
+    }
+    
+    private func createLanguageDomainModel(with languageModel: LanguageModel, translationLocaleId: String?, filteredByCategoryId: String?) -> LanguageFilterDomainModel {
+        
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
+        
+        let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: languageModel.code, translatedInLanguageCode: languageModel.code) ?? ""
+        let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
+        
+        let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
+        
+        return LanguageFilterDomainModel(
+            type: .language(languageModel: languageDomainModel),
+            languageName: languageName,
+            toolsAvailableText: toolsAvailableText,
+            searchableText: languageDomainModel.translatedName
+        )
     }
     
     private func createAnyLanguageDomainModel(translationLocaleId: String?, filteredByCategoryId: String?) -> LanguageFilterDomainModel {

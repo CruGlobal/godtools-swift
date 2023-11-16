@@ -18,14 +18,14 @@ class StoreUserFiltersUseCase {
         self.storeUserFiltersRepositoryInterface = storeUserFiltersRepositoryInterface
     }
     
-    func storeCategoryFilterPublisher(with id: String) -> AnyPublisher<Void, Never> {
+    func storeCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
         return storeUserFiltersRepositoryInterface
             .storeUserCategoryFilterPublisher(with: id)
             .eraseToAnyPublisher()
     }
     
-    func storeLanguageFilterPublisher(with id: String) -> AnyPublisher<Void, Never> {
+    func storeLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
         return storeUserFiltersRepositoryInterface
             .storeUserLanguageFilterPublisher(with: id)

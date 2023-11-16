@@ -9,6 +9,6 @@
 import Foundation
 
 enum UserFilterType {
-    case category(id: String)
-    case language(id: String)
+    case category(id: String?)
+    case language(id: String?)
 }

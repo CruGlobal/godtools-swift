@@ -66,10 +66,10 @@ class ToolsViewModel: ObservableObject {
         toolFilterCategorySelectionPublisher = CurrentValueSubject(anyCategorySelection)
         
         getUserFiltersUseCase.getUserCategoryFilterIdPublisher()
-            .flatMap({ categoryFilterId in
+            .flatMap { categoryFilterId in
                 
                 return getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: categoryFilterId)
-            })
+            }
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { categoryFilterDomainModel in
                 
@@ -79,6 +79,19 @@ class ToolsViewModel: ObservableObject {
             })
             .store(in: &cancellables)
         
+        getUserFiltersUseCase.getUserLanguageFilterIdPublisher()
+            .flatMap { languageFilterId in
+                
+                return getToolFilterLanguagesUseCase.getLanguageFilterPublisher(from: languageFilterId)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { languageFilterDomainModel in
+                
+                guard let languageFilterDomainModel = languageFilterDomainModel else { return }
+                
+                self.toolFilterLanguageSelectionPublisher.send(languageFilterDomainModel)
+            }
+            .store(in: &cancellables)
         
         getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_offline_favorite_message")
             .receive(on: DispatchQueue.main)

@@ -79,14 +79,11 @@ extension ToolFilterCategorySelectionViewModel {
         
         selectedCategory = category
         
-        if let categoryId = category.id {
-            
-            storeUserFiltersUseCase.storeCategoryFilterPublisher(with: categoryId)
-                .sink { _ in
-                    
-                }
-                .store(in: &cancellables)
-        }
+        storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     @objc func backButtonTapped() {

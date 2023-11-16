@@ -24,7 +24,7 @@ class UserFiltersUserDefaultsCache {
     
     func storeUserFilter(filter: UserFilterType) {
         
-        let value: String
+        let value: String?
         let key: String
         
         switch filter {
