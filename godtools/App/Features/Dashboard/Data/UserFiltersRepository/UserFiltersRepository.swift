@@ -17,9 +17,12 @@ class UserFiltersRepository {
         self.cache = cache
     }
     
-    func storeUserFilters(filter: UserFilterType) {
-        
-        cache.storeUserFilter(filter: filter)
+    func storeUserCategoryFilter(with id: String?) {
+        cache.storeUserCategoryFilter(with: id)
+    }
+    
+    func storeUserLanguageFilter(with id: String?) {
+        cache.storeUserLanguageFilter(with: id)
     }
     
     func getUserCategoryFilter() -> String? {

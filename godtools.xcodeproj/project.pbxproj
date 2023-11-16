@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1309,7 +1309,6 @@
 		D4670B172AFC246900FAD896 /* StoreUserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B162AFC246900FAD896 /* StoreUserFiltersRepository.swift */; };
 		D4670B1A2AFC257900FAD896 /* UserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B192AFC257900FAD896 /* UserFiltersRepository.swift */; };
 		D4670B1E2AFC265F00FAD896 /* UserFiltersUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B1D2AFC265F00FAD896 /* UserFiltersUserDefaultsCache.swift */; };
-		D4670B202AFD2FE900FAD896 /* UserFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B1F2AFD2FE900FAD896 /* UserFilterType.swift */; };
 		D4670B222B02BF6B00FAD896 /* GetUserFiltersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B212B02BF6B00FAD896 /* GetUserFiltersUseCase.swift */; };
 		D4670B252B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B242B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift */; };
 		D4670B272B03BFB400FAD896 /* GetUserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B262B03BFB400FAD896 /* GetUserFiltersRepository.swift */; };
@@ -2699,7 +2698,6 @@
 		D4670B162AFC246900FAD896 /* StoreUserFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserFiltersRepository.swift; sourceTree = "<group>"; };
 		D4670B192AFC257900FAD896 /* UserFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFiltersRepository.swift; sourceTree = "<group>"; };
 		D4670B1D2AFC265F00FAD896 /* UserFiltersUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFiltersUserDefaultsCache.swift; sourceTree = "<group>"; };
-		D4670B1F2AFD2FE900FAD896 /* UserFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFilterType.swift; sourceTree = "<group>"; };
 		D4670B212B02BF6B00FAD896 /* GetUserFiltersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersUseCase.swift; sourceTree = "<group>"; };
 		D4670B242B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4670B262B03BFB400FAD896 /* GetUserFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersRepository.swift; sourceTree = "<group>"; };
@@ -9867,7 +9865,6 @@
 			isa = PBXGroup;
 			children = (
 				D4670B192AFC257900FAD896 /* UserFiltersRepository.swift */,
-				D4670B1F2AFD2FE900FAD896 /* UserFilterType.swift */,
 				D4670B1C2AFC264000FAD896 /* Cache */,
 			);
 			path = UserFiltersRepository;
@@ -11276,7 +11273,6 @@
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				45BE4A842AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */,
 				D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */,
-				D4670B202AFD2FE900FAD896 /* UserFilterType.swift in Sources */,
 				45A5200E26C481DB009B68D4 /* MobileContentRendererManifestResourcesCache.swift in Sources */,
 				45B3F4522AC3A92700D61BFD /* AppLanguageFeatureDomainLayerDependencies.swift in Sources */,
 				45860A87292424030089C836 /* MobileContentGlobalAnalyticsApi.swift in Sources */,

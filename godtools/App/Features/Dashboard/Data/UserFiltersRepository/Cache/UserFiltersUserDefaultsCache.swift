@@ -22,22 +22,14 @@ class UserFiltersUserDefaultsCache {
         self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
     
-    func storeUserFilter(filter: UserFilterType) {
+    func storeUserCategoryFilter(with id: String?) {
         
-        let value: String?
-        let key: String
+        sharedUserDefaultsCache.cache(value: id, forKey: CacheKey.category)
+    }
+    
+    func storeUserLanguageFilter(with id: String?) {
         
-        switch filter {
-        case .category(let id):
-            value = id
-            key = CacheKey.category
-       
-        case .language(let id):
-            value = id
-            key = CacheKey.language
-        }
-        
-        sharedUserDefaultsCache.cache(value: value, forKey: key)
+        sharedUserDefaultsCache.cache(value: id, forKey: CacheKey.language)
     }
     
     func getUserCategoryFilter() -> String? {
