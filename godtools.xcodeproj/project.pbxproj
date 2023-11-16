@@ -1312,6 +1312,7 @@
 		D4670B222B02BF6B00FAD896 /* GetUserFiltersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B212B02BF6B00FAD896 /* GetUserFiltersUseCase.swift */; };
 		D4670B252B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B242B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift */; };
 		D4670B272B03BFB400FAD896 /* GetUserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B262B03BFB400FAD896 /* GetUserFiltersRepository.swift */; };
+		D4670B292B069E8E00FAD896 /* UserFiltersDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4670B282B069E8E00FAD896 /* UserFiltersDomainModel.swift */; };
 		D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */; };
 		D471CFD328B9532100DCE61C /* LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD228B9532100DCE61C /* LanguageSupportable.swift */; };
 		D48018C028EF650700389565 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018BF28EF650700389565 /* DashboardView.swift */; };
@@ -2701,6 +2702,7 @@
 		D4670B212B02BF6B00FAD896 /* GetUserFiltersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersUseCase.swift; sourceTree = "<group>"; };
 		D4670B242B02BF9100FAD896 /* GetUserFiltersRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4670B262B03BFB400FAD896 /* GetUserFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserFiltersRepository.swift; sourceTree = "<group>"; };
+		D4670B282B069E8E00FAD896 /* UserFiltersDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFiltersDomainModel.swift; sourceTree = "<group>"; };
 		D471CFC028B3D6A200DCE61C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D471CFD228B9532100DCE61C /* LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSupportable.swift; sourceTree = "<group>"; };
 		D48018BF28EF650700389565 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -9831,6 +9833,7 @@
 		D4670B112AFACEA700FAD896 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				D4670B282B069E8E00FAD896 /* UserFiltersDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -11407,6 +11410,7 @@
 				457032A726D0056F00F5BADC /* MobileContentBackgroundImageRendererType.swift in Sources */,
 				4585BF662AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift in Sources */,
 				45B3F44A2AC3A86100D61BFD /* UserAppLanguageRepository.swift in Sources */,
+				D4670B292B069E8E00FAD896 /* UserFiltersDomainModel.swift in Sources */,
 				45B6482825E593110098BAF1 /* (null) in Sources */,
 				45A835102AD1A40D004F5593 /* GetToolDetailsMediaUseCase.swift in Sources */,
 				4534F9462AE9B8E700A7A071 /* GetLessonEvaluatedUseCase.swift in Sources */,

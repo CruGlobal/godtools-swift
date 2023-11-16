@@ -65,31 +65,24 @@ class ToolsViewModel: ObservableObject {
         toolFilterLanguageSelectionPublisher = CurrentValueSubject(anyLanguageSelection)
         toolFilterCategorySelectionPublisher = CurrentValueSubject(anyCategorySelection)
         
-        getUserFiltersUseCase.getUserCategoryFilterIdPublisher()
-            .flatMap { categoryFilterId in
+        getUserFiltersUseCase.getUserFiltersPublisher()
+            .flatMap { userFilters in
                 
-                return getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: categoryFilterId)
+                return Publishers.CombineLatest(
+                    getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: userFilters.categoryFilterId),
+                    getToolFilterLanguagesUseCase.getLanguageFilterPublisher(from: userFilters.languageFilterId)
+                )
+                .eraseToAnyPublisher()
             }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { categoryFilterDomainModel in
+            .sink { categoryFilter, languageFilter in
                 
-                guard let categoryFilterDomainModel = categoryFilterDomainModel else { return }
+                if let categoryFilter = categoryFilter {
+                    self.toolFilterCategorySelectionPublisher.send(categoryFilter)
+                }
                 
-                self.toolFilterCategorySelectionPublisher.send(categoryFilterDomainModel)
-            })
-            .store(in: &cancellables)
-        
-        getUserFiltersUseCase.getUserLanguageFilterIdPublisher()
-            .flatMap { languageFilterId in
-                
-                return getToolFilterLanguagesUseCase.getLanguageFilterPublisher(from: languageFilterId)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { languageFilterDomainModel in
-                
-                guard let languageFilterDomainModel = languageFilterDomainModel else { return }
-                
-                self.toolFilterLanguageSelectionPublisher.send(languageFilterDomainModel)
+                if let languageFilter = languageFilter {
+                    self.toolFilterLanguageSelectionPublisher.send(languageFilter)
+                }
             }
             .store(in: &cancellables)
         
