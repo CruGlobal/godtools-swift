@@ -11,39 +11,19 @@ import Combine
 
 class GetInterfaceLayoutDirectionUseCase {
     
-    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface
-    private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
+    private let getLayoutDirectionInterface: GetAppInterfaceLayoutDirectionInterface
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguageRepositoryInterface: GetAppLanguageRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface) {
+    init(getLayoutDirectionInterface: GetAppInterfaceLayoutDirectionInterface) {
         
-        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getAppLanguageRepositoryInterface = getAppLanguageRepositoryInterface
-        self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
+        self.getLayoutDirectionInterface = getLayoutDirectionInterface
     }
     
-    func getLayoutDirectionPublisher() -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
+    func getLayoutDirectionPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
-        return getCurrentAppLanguageUseCase.getLanguagePublisher()
-            .flatMap({ (currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageDomainModel?, Never> in
+        return appLanguagePublisher
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
                 
-                return self.getAppLanguageRepositoryInterface.getLanguagePublisher(appLanguageCode: currentAppLanguageCode)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (appLanguage: AppLanguageDomainModel?) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
-                
-                let layoutDirection: AppInterfaceLayoutDirectionDomainModel
-                
-                if let appLanguage = appLanguage {
-                    
-                    layoutDirection = appLanguage.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
-                }
-                else {
-                    
-                    layoutDirection = .leftToRight
-                }
-                
-                return Just(layoutDirection)
+                return self.getLayoutDirectionInterface.getLayoutDirectionPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

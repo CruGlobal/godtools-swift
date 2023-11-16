@@ -28,22 +28,22 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
                 
                 let appLanguages: [AppLanguageListItemDomainModel] = [
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.spanish.value,
+                        language: LanguageCodeDomainModel.spanish.value,
                         languageNameTranslatedInOwnLanguage: "",
                         languageNameTranslatedInCurrentAppLanguage: "Spanish"
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.french.value,
+                        language: LanguageCodeDomainModel.french.value,
                         languageNameTranslatedInOwnLanguage: "",
                         languageNameTranslatedInCurrentAppLanguage: "French"
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.english.value,
+                        language: LanguageCodeDomainModel.english.value,
                         languageNameTranslatedInOwnLanguage: "",
                         languageNameTranslatedInCurrentAppLanguage: "English"
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.russian.value,
+                        language: LanguageCodeDomainModel.russian.value,
                         languageNameTranslatedInOwnLanguage: "",
                         languageNameTranslatedInCurrentAppLanguage: "Russian"
                     )

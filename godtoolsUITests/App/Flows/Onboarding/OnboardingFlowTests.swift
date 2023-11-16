@@ -132,15 +132,15 @@ class OnboardingFlowTests: XCTestCase {
         let appLanguages: [AppLanguageDataModel] = AppLanguagesCache().getAppLanguages()
         let supportedLanguages: [String] = OnboardingQuickStartSupportedLanguagesCache().getSupportedLanguages().map({ $0.value })
         
-        var appLanguageNotAvailableForQuickStart: AppLanguageCodeDomainModel?
+        var appLanguageNotAvailableForQuickStart: AppLanguageDomainModel?
         
         for appLanguage in appLanguages {
          
-            let appLanguageCode: String = appLanguage.languageCode
-            let isSupportedByQuickStart: Bool = supportedLanguages.contains(appLanguageCode)
+            let appLanguageId: String = appLanguage.languageId
+            let isSupportedByQuickStart: Bool = supportedLanguages.contains(appLanguageId)
             
             if !isSupportedByQuickStart {
-                appLanguageNotAvailableForQuickStart = appLanguageCode
+                appLanguageNotAvailableForQuickStart = appLanguageId
                 break
             }
         }

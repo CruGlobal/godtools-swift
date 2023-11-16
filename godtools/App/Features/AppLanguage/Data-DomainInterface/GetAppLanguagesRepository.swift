@@ -18,13 +18,13 @@ class GetAppLanguagesRepository: GetAppLanguagesRepositoryInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
+    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDomainModel], Never> {
         
         return appLanguagesRepository.getLanguagesPublisher()
-            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageCodeDomainModel], Never> in
+            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageDomainModel], Never> in
                 
-                let appLanguages: [AppLanguageCodeDomainModel] = languages.map {
-                    $0.languageCode
+                let appLanguages: [AppLanguageDomainModel] = languages.map {
+                    $0.languageId
                 }
                 
                 return Just(appLanguages)

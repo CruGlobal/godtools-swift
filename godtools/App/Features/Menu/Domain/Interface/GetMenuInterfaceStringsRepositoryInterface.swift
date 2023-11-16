@@ -11,5 +11,5 @@ import Combine
 
 protocol GetMenuInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never>
 }

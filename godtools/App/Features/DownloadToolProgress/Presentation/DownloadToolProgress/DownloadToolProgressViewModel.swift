@@ -22,7 +22,7 @@ class DownloadToolProgressViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published var message: String = ""
     
@@ -44,7 +44,7 @@ class DownloadToolProgressViewModel: ObservableObject {
         })
         
         getDownloadToolProgressInterfaceStringsUseCase
-            .getStringsPublisher(resource: resource, appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(resource: resource, appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                 

@@ -26,7 +26,7 @@ class ConfirmAppLanguageViewModel: ObservableObject {
         self.selectedLanguage = selectedLanguage
         self.flowDelegate = flowDelegate
         
-        getConfirmAppLanguageInterfaceStringsUseCase.getStringsPublisher(for: selectedLanguage.languageCode)
+        getConfirmAppLanguageInterfaceStringsUseCase.getStringsPublisher(for: selectedLanguage.language)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

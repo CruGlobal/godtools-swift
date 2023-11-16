@@ -19,7 +19,7 @@ class TestsGetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageRep
         self.userAppLanguageCode = userAppLanguageCode
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel?, Never> {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel?, Never> {
         
         return Just(userAppLanguageCode?.value)
             .eraseToAnyPublisher()

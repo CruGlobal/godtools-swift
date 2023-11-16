@@ -1,5 +1,5 @@
 //
-//  GetAppLanguageRepository.swift
+//  GetAppInterfaceLayoutDirection.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
+class GetAppInterfaceLayoutDirection: GetAppInterfaceLayoutDirectionInterface {
     
     private let appLanguagesRepository: AppLanguagesRepository
     
@@ -18,19 +18,16 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func getLanguagePublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<AppLanguageDomainModel?, Never> {
+    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
-        return appLanguagesRepository.getLanguagePublisher(languageCode: appLanguageCode)
+        return appLanguagesRepository.getLanguagePublisher(languageId: appLanguage)
             .map { (dataModel: AppLanguageDataModel?) in
                 
                 guard let dataModel = dataModel else {
-                    return nil
+                    return .leftToRight
                 }
                 
-                return AppLanguageDomainModel(
-                    languageCode: dataModel.languageCode,
-                    languageDirection: dataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
-                )
+                return dataModel.languageDirection == .leftToRight ? .leftToRight : .rightToLeft
             }
             .eraseToAnyPublisher()
     }

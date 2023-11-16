@@ -14,13 +14,17 @@ class LocaleLanguageName {
         
     }
     
-    func getDisplayName(forLanguageCode: String, translatedInLanguageId: String) -> String? {
+    func getDisplayName(forLanguageId: BCP47LanguageIdentifier, translatedInLanguageId: BCP47LanguageIdentifier?) -> String? {
         
-        return Locale(identifier: translatedInLanguageId).localizedString(forLanguageCode: forLanguageCode)
-    }
-    
-    func getDisplayName(forLanguageCode: String, translatedInLanguageCode: String) -> String? {
+        let translateInLocale: Locale
         
-        return getDisplayName(forLanguageCode: forLanguageCode, translatedInLanguageId: translatedInLanguageCode)
+        if let translatedInLanguageId = translatedInLanguageId, !translatedInLanguageId.isEmpty {
+            translateInLocale = Locale(identifier: translatedInLanguageId)
+        }
+        else {
+            translateInLocale = Locale(identifier: "en")
+        }
+        
+        return translateInLocale.localizedString(forIdentifier: forLanguageId)
     }
 }

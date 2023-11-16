@@ -26,9 +26,9 @@ class GetFeaturedLessonsUseCase {
             getFeaturedLessonsRepositoryInterface.observeFeaturedLessonsChangedPublisher(),
             getCurrentAppLanguageUseCase.getLanguagePublisher()
         )
-        .flatMap({ (featuredLessonsChanged: Void, currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
+        .flatMap({ (featuredLessonsChanged: Void, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
 
-            return self.getFeaturedLessonsRepositoryInterface.getFeaturedLessonsPublisher(currentAppLanguageCode: currentAppLanguageCode)
+            return self.getFeaturedLessonsRepositoryInterface.getFeaturedLessonsPublisher(appLanguage: appLanguage)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()

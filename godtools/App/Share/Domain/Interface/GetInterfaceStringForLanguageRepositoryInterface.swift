@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated)
 protocol GetInterfaceStringForLanguageRepositoryInterface {
     
     func getString(languageCode: String, stringId: String) -> String

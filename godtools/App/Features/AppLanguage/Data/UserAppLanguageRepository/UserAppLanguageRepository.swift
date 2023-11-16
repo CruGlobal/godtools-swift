@@ -30,9 +30,9 @@ class UserAppLanguageRepository {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguagePublisher(languageCode: String) -> AnyPublisher<Bool, Never> {
+    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Bool, Never> {
         
-        cache.storeLanguage(languageCode: languageCode)
+        cache.storeLanguage(languageId: languageId)
         
         return Just(true)
             .eraseToAnyPublisher()

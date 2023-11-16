@@ -18,12 +18,12 @@ class GetDownloadToolProgressInterfaceStringsUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(resource: ResourceModel?, appLanguageCodeChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(resource: ResourceModel?, appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
         
-        appLanguageCodeChangedPublisher
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> in
+        appLanguagePublisher
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> in
                 
-                return self.getInterfaceStringsRepositoryInterface.getStringsPublisher(resource: resource, translateInAppLanguageCode: appLanguageCode)
+                return self.getInterfaceStringsRepositoryInterface.getStringsPublisher(resource: resource, translateInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

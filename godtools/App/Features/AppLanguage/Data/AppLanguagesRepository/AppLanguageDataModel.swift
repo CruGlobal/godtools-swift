@@ -10,8 +10,14 @@ import Foundation
 
 struct AppLanguageDataModel {
     
-    let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction
+    let languageId: BCP47LanguageIdentifier
+    
+    init(languageId: BCP47LanguageIdentifier, languageDirection: AppLanguageDataModel.Direction) {
+        
+        self.languageDirection = languageDirection
+        self.languageId = languageId
+    }
 }
 
 extension AppLanguageDataModel {

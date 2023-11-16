@@ -19,9 +19,9 @@ class TestsGetAppLanguagesRepository: GetAppLanguagesRepositoryInterface {
         self.appLanguagesCodes = appLanguagesCodes
     }
 
-    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodeDomainModel], Never> {
+    func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDomainModel], Never> {
         
-        let languages: [AppLanguageCodeDomainModel] = appLanguagesCodes.map {
+        let languages: [AppLanguageDomainModel] = appLanguagesCodes.map {
             $0.value
         }
         

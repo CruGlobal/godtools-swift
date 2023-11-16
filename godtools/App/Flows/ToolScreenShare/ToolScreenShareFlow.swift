@@ -21,7 +21,7 @@ class ToolScreenShareFlow: Flow {
     private var cancellables: Set<AnyCancellable> = Set()
     
     // NOTE: I need to keep these stored in the Flow since we use UIAlertController for the TimedOut alert and Share Modal which must set the title and message when allocating those views. ~Levi
-    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var creatingToolScreenShareSessionTimedOutDomainModel: CreatingToolScreenShareSessionTimedOutDomainModel?
     @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
     
