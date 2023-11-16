@@ -19,13 +19,13 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private let selectedCategory: CategoryFilterDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
-    
     private weak var flowDelegate: FlowDelegate?
+    
+    let selectedLanguage: LanguageFilterDomainModel
     
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     @Published var searchText: String = ""
-    @Published var selectedLanguage: LanguageFilterDomainModel
     @Published var navTitle: String = ""
     
     init(getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserFilterUseCase: StoreUserFiltersUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
@@ -55,13 +55,6 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             )
             .receive(on: DispatchQueue.main)
             .assign(to: &$languageSearchResults)
-        
-        $selectedLanguage
-            .sink { [weak self] language in
-                
-                self?.languageFilterSelectionPublisher.send(language)
-            }
-            .store(in: &cancellables)
     }
 }
 
@@ -75,16 +68,18 @@ extension ToolFilterLanguageSelectionViewModel {
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }
-    
-    func rowTapped(with language: LanguageFilterDomainModel) {
         
-        selectedLanguage = language
+    func rowTapped(with language: LanguageFilterDomainModel) {
+                
+        languageFilterSelectionPublisher.send(language)
         
         storeUserFilterUseCase.storeLanguageFilterPublisher(with: language.id)
             .sink { _ in
                 
             }
             .store(in: &cancellables)
+        
+        flowDelegate?.navigate(step: .languageTappedFromToolLanguageFilter)
     }
     
     @objc func backButtonTapped() {

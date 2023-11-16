@@ -21,9 +21,10 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
+    let selectedCategory: CategoryFilterDomainModel
+    
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
-    @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
@@ -54,13 +55,6 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             )
             .receive(on: DispatchQueue.main)
             .assign(to: &$categorySearchResults)
-        
-        $selectedCategory
-            .sink { [weak self] category in
-                
-                self?.categoryFilterSelectionPublisher.send(category)
-            }
-            .store(in: &cancellables)
     }
 }
 
@@ -76,14 +70,16 @@ extension ToolFilterCategorySelectionViewModel {
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {
-        
-        selectedCategory = category
+                
+        categoryFilterSelectionPublisher.send(category)
         
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in
                 
             }
             .store(in: &cancellables)
+        
+        flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
     }
     
     @objc func backButtonTapped() {

@@ -140,7 +140,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolLanguageFilterTappedFromTools(let languageFilterSelectionPublisher, let selectedCategory):
             navigationController.pushViewController(getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: languageFilterSelectionPublisher, selectedCategory: selectedCategory), animated: true)
+        
+        case .categoryTappedFromToolCategoryFilter:
+            navigationController.popViewController(animated: true)
             
+        case .languageTappedFromToolLanguageFilter:
+            navigationController.popViewController(animated: true)
+
         case .backTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
             
