@@ -66,7 +66,7 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
         return getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: translatedInLanguage, stringId: "languageSettings.confirmAppLanguage.message")
             .flatMap { formatString in
                 
-                let languageName = self.localeLanguageName.getDisplayName(forLanguageId: selectedLanguage, translatedInLanguageId: translatedInLanguage) ?? ""
+                let languageName = self.localeLanguageName.getLanguageName(forLanguageId: selectedLanguage, translatedInLanguageId: translatedInLanguage) ?? ""
                 let languageNameAttributed = NSAttributedString(
                     string: languageName,
                     attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]

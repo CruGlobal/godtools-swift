@@ -28,7 +28,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue),
             appInterfaceLanguageTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.title"),
             setAppLanguageMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.message"),
-            chooseAppLanguageButtonTitle: localeLanguageName.getDisplayName(forLanguageId: translateInAppLanguage, translatedInLanguageId: translateInAppLanguage) ?? "",
+            chooseAppLanguageButtonTitle: localeLanguageName.getLanguageName(forLanguageId: translateInAppLanguage, translatedInLanguageId: translateInAppLanguage) ?? "",
             toolLanguagesAvailableOfflineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.title"),
             downloadToolsForOfflineMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.message"),
             editDownloadedLanguagesButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title")

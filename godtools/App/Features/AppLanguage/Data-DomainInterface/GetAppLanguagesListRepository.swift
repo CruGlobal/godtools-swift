@@ -29,11 +29,11 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
-                        languageNameTranslatedInOwnLanguage: self.localeLanguageName.getDisplayName(
+                        languageNameTranslatedInOwnLanguage: self.localeLanguageName.getLanguageName(
                             forLanguageId: languageDataModel.languageId,
                             translatedInLanguageId: languageDataModel.languageId
                         ) ?? "",
-                        languageNameTranslatedInCurrentAppLanguage: self.localeLanguageName.getDisplayName(
+                        languageNameTranslatedInCurrentAppLanguage: self.localeLanguageName.getLanguageName(
                             forLanguageId: languageDataModel.languageId,
                             translatedInLanguageId: currentAppLanguage
                         ) ?? ""

@@ -50,7 +50,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
             }
              
             let availabilityInAppLanguage: String
-            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageId: appLanguage, translatedInLanguageId: appLanguage) ?? ""
+            let appLanguageName: String = localeLanguageName.getLanguageName(forLanguageId: appLanguage, translatedInLanguageId: appLanguage) ?? ""
             
             if lessonIsAvailableInAppLanguage {
                 
