@@ -62,7 +62,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         
         let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.compactMap { (languageDataModel: LanguageModel) in
             
-            guard let languageDisplayName = self.localeLanguageName.getLanguageName(forLanguageId: languageDataModel.code, translatedInLanguageId: translateInToolLanguage) else {
+            guard let languageDisplayName = self.localeLanguageName.getLanguageName(forLanguageCode: languageDataModel.code, translatedInLanguageId: translateInToolLanguage) else {
                 return nil
             }
             
@@ -81,7 +81,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         }
         
         let localizedTotalLanguages: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguage, key: "total_languages")
-        let toolLanguageName: String? = localeLanguageName.getLanguageName(forLanguageId: translateInToolLanguage, translatedInLanguageId: translateInToolLanguage)
+        let toolLanguageName: String? = localeLanguageName.getLanguageName(forLanguageCode: translateInToolLanguage, translatedInLanguageId: translateInToolLanguage)
         
         let versions: [ToolVersionDomainModel] = resourceVariants.compactMap { (variantDataModel: ResourceModel) in
             
