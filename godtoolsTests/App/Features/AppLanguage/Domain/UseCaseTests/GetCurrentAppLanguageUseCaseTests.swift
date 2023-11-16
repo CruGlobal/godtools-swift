@@ -30,11 +30,11 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                      
-                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        var appLanguageRef: AppLanguageDomainModel?
                         var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
-                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                            .sink { (appLanguage: AppLanguageDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -64,11 +64,11 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        var appLanguageRef: AppLanguageDomainModel?
                         var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
-                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                            .sink { (appLanguage: AppLanguageDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -98,11 +98,11 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        var appLanguageRef: AppLanguageDomainModel?
                         var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
-                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                            .sink { (appLanguage: AppLanguageDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -132,11 +132,11 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        var appLanguageRef: AppLanguageDomainModel?
                         var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
-                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                            .sink { (appLanguage: AppLanguageDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -166,11 +166,11 @@ class GetCurrentAppLanguageUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        var appLanguageRef: AppLanguageCodeDomainModel?
+                        var appLanguageRef: AppLanguageDomainModel?
                         var sinkCompleted: Bool = false
                         
                         _ = getCurrentAppLanguageUseCase.getLanguagePublisher()
-                            .sink { (appLanguage: AppLanguageCodeDomainModel) in
+                            .sink { (appLanguage: AppLanguageDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return

@@ -18,18 +18,18 @@ class GetDeviceAppLanguageRepository: GetDeviceAppLanguageRepositoryInterface {
         self.deviceSystemLanguage = deviceSystemLanguage
     }
     
-    func getDeviceAppLanguage() -> AppLanguageCodeDomainModel {
+    func getDeviceAppLanguage() -> AppLanguageDomainModel {
         
         let locale: Locale = deviceSystemLanguage.getLocale()
         
         return (locale.languageCode ?? locale.identifier).lowercased()
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
         
         let locale: Locale = deviceSystemLanguage.getLocale()
         
-        let deviceLanguage: AppLanguageCodeDomainModel = (locale.languageCode ?? locale.identifier).lowercased()
+        let deviceLanguage: AppLanguageDomainModel = (locale.languageCode ?? locale.identifier).lowercased()
         
         return Just(deviceLanguage)
             .eraseToAnyPublisher()

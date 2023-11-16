@@ -11,5 +11,5 @@ import Combine
 
 protocol GetTutorialRepositoryInterface {
     
-    func getTutorialPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<[TutorialPageDomainModel], Never>
+    func getTutorialPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[TutorialPageDomainModel], Never>
 }

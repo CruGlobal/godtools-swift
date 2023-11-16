@@ -14,6 +14,7 @@ struct AuthUserDomainModel {
     let firstName: String?
     let grMasterPersonId: String?
     let lastName: String?
+    let name: String?
     let ssoGuid: String?
 }
 

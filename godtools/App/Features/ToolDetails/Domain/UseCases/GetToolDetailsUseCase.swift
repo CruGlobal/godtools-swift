@@ -26,7 +26,7 @@ class GetToolDetailsUseCase {
         )
         .flatMap({ (tool: ToolDomainModel, toolLanguageCode: String) -> AnyPublisher<ToolDetailsDomainModel, Never> in
             
-            return self.getToolDetailsRepository.getDetailsPublisher(tool: tool, translateInToolLanguageCode: toolLanguageCode)
+            return self.getToolDetailsRepository.getDetailsPublisher(tool: tool, translateInToolLanguage: toolLanguageCode)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()

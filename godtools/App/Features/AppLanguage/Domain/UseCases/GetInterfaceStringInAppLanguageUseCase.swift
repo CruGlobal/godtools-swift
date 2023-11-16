@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated)
 class GetInterfaceStringInAppLanguageUseCase {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -23,9 +24,9 @@ class GetInterfaceStringInAppLanguageUseCase {
     func getStringPublisher(id: String) -> AnyPublisher<String, Never> {
         
         return getCurrentAppLanguageUseCase.getLanguagePublisher()
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<String, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<String, Never> in
                 
-                return self.getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: appLanguageCode, stringId: id)
+                return self.getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: appLanguage, stringId: id)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

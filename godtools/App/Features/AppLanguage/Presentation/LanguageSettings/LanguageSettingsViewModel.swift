@@ -19,7 +19,7 @@ class LanguageSettingsViewModel: ObservableObject {
         
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var navTitle: String = ""
     @Published var appInterfaceLanguageTitle: String = "App "
@@ -38,7 +38,7 @@ class LanguageSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getLanguageSettingsInterfaceStringsUseCase.getStringsPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+        getLanguageSettingsInterfaceStringsUseCase.getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
                 

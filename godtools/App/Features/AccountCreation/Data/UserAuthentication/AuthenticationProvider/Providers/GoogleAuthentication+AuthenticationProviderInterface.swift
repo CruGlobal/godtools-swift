@@ -30,7 +30,8 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
             profile: AuthenticationProviderProfile(
                 email: user.profile?.email,
                 familyName: user.profile?.familyName,
-                givenName: user.profile?.givenName
+                givenName: user.profile?.givenName,
+                name: user.profile?.name
             ),
             providerType: .google,
             refreshToken: user.refreshToken.tokenString
@@ -105,6 +106,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
             firstName: profile.givenName,
             grMasterPersonId: nil,
             lastName: profile.familyName,
+            name: profile.name,
             ssoGuid: nil
         )
     }

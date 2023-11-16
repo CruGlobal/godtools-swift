@@ -11,5 +11,5 @@ import Combine
 
 protocol GetDeviceAppLanguageRepositoryInterface {
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never>
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never>
 }

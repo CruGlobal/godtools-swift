@@ -20,7 +20,7 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
         self.localeLanguageName = localeLanguageName
     }
     
-    func getLanguagesPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return appLanguagesRepository.getLanguagesPublisher()
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
@@ -28,14 +28,14 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
                     
                     return AppLanguageListItemDomainModel(
-                        languageCode: languageDataModel.languageCode,
+                        language: languageDataModel.languageId,
                         languageNameTranslatedInOwnLanguage: self.localeLanguageName.getDisplayName(
-                            forLanguageCode: languageDataModel.languageCode,
-                            translatedInLanguageCode: languageDataModel.languageCode
+                            forLanguageId: languageDataModel.languageId,
+                            translatedInLanguageId: languageDataModel.languageId
                         ) ?? "",
                         languageNameTranslatedInCurrentAppLanguage: self.localeLanguageName.getDisplayName(
-                            forLanguageCode: languageDataModel.languageCode,
-                            translatedInLanguageCode: currentAppLanguageCode
+                            forLanguageId: languageDataModel.languageId,
+                            translatedInLanguageId: currentAppLanguage
                         ) ?? ""
                     )
                 }

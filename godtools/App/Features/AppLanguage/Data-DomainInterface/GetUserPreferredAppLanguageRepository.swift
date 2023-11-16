@@ -18,11 +18,11 @@ class GetUserPreferredAppLanguageRepository: GetUserPreferredAppLanguageReposito
         self.userAppLanguageRepository = userAppLanguageRepository
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel?, Never> {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel?, Never> {
         
         return userAppLanguageRepository.getLanguagePublisher()
             .map {
-                return $0?.languageCode
+                return $0?.languageId
             }
             .eraseToAnyPublisher()
     }

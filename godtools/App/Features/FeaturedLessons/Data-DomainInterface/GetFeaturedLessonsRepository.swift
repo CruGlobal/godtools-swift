@@ -26,7 +26,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
         self.localeLanguageName = localeLanguageName
     }
     
-    func getFeaturedLessonsPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
+    func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
         let featuredLessonsDataModels: [ResourceModel] = resourcesRepository.getFeaturedLessons(sorted: true)
         
@@ -35,22 +35,22 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
             let lessonNameInAppLanguage: String
             let lessonIsAvailableInAppLanguage: Bool
             
-            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: currentAppLanguageCode) {
+            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
                 lessonNameInAppLanguage = translation.translatedName
             }
             else {
                 lessonNameInAppLanguage = ""
             }
             
-            if let appLanguage = languagesRepository.getLanguage(code: currentAppLanguageCode) {
-                lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)    
+            if let appLanguage = languagesRepository.getLanguage(code: appLanguage) {
+                lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
             }
             else {
                 lessonIsAvailableInAppLanguage = false
             }
              
             let availabilityInAppLanguage: String
-            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageCode: currentAppLanguageCode, translatedInLanguageCode: currentAppLanguageCode) ?? ""
+            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageId: appLanguage, translatedInLanguageId: appLanguage) ?? ""
             
             if lessonIsAvailableInAppLanguage {
                 
@@ -58,11 +58,11 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
             }
             else {
                 
-                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: currentAppLanguageCode, key: "lessonCard.languageNotAvailable")
+                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
                 
                 availabilityInAppLanguage = String(
                     format: languageNotAvailable,
-                    locale: Locale(identifier: currentAppLanguageCode),
+                    locale: Locale(identifier: appLanguage),
                     appLanguageName
                 ) + " x"
             }

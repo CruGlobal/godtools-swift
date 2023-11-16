@@ -18,20 +18,22 @@ class GetOnboardingTutorialInterfaceStringsRepository: GetOnboardingTutorialInte
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+        
+        let localeId: String = appLanguage
         
         let interfaceStrings = OnboardingTutorialInterfaceStringsDomainModel(
-            chooseAppLanguageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.chooseLanguageButton.title"),
-            beginTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.beginButton.title"),
-            nextTutorialPageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.nextButton.title"),
-            readyForEveryConversationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.0.title"),
-            readyForEveryConversationVideoLinkTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.0.videoLink.title"),
-            prepareForMomentsThatMatterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.2.title"),
-            prepareForMomentsThatMatterMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.2.message"),
-            talkWithGodAboutAnyoneTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.1.title"),
-            talkWithGodAboutAnyoneMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.1.message"),
-            helpSomeoneDiscoverJesusTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.3.title"),
-            helpSomeoneDiscoverJesusMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingTutorial.3.message")
+            chooseAppLanguageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.chooseLanguageButton.title"),
+            beginTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.beginButton.title"),
+            nextTutorialPageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.nextButton.title"),
+            readyForEveryConversationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.0.title"),
+            readyForEveryConversationVideoLinkTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.0.videoLink.title"),
+            prepareForMomentsThatMatterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.2.title"),
+            prepareForMomentsThatMatterMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.2.message"),
+            talkWithGodAboutAnyoneTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.1.title"),
+            talkWithGodAboutAnyoneMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.1.message"),
+            helpSomeoneDiscoverJesusTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.3.title"),
+            helpSomeoneDiscoverJesusMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.3.message")
         )
         
         return Just(interfaceStrings)

@@ -13,7 +13,7 @@ import Combine
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     @Published private var quickStartIsAvailable: Bool = false
-    @Published private var currentAppLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -51,7 +51,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         let getOnboardingQuickStartIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartIsAvailableUseCase()
         
         getOnboardingQuickStartIsAvailableUseCase
-            .getAvailablePublisher(appLanguageCodeChangedPublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
+            .getAvailablePublisher(appLanguagePublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$quickStartIsAvailable)
         

@@ -19,7 +19,7 @@ class TestsGetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface
         self.appLanguages = appLanguages
     }
 
-    func getLanguagesPublisher(currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return Just(appLanguages)
             .eraseToAnyPublisher()

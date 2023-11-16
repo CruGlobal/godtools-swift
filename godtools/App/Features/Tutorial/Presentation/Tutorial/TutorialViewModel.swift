@@ -23,7 +23,7 @@ class TutorialViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     
     @Published var tutorialPages: [TutorialPageDomainModel] = Array()
@@ -44,7 +44,7 @@ class TutorialViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         getTutorialUseCase
-            .getTutorialPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 

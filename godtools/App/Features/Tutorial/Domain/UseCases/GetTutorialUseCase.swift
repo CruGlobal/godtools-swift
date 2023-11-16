@@ -20,10 +20,10 @@ class GetTutorialUseCase {
         self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
     }
     
-    func getTutorialPublisher(appLanguageChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<TutorialDomainModel, Never> {
+    func getTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<TutorialDomainModel, Never> {
         
-        return appLanguageChangedPublisher
-            .flatMap({ (appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<(TutorialInterfaceStringsDomainModel, [TutorialPageDomainModel]), Never> in
+        return appLanguagePublisher
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(TutorialInterfaceStringsDomainModel, [TutorialPageDomainModel]), Never> in
                 
                 return Publishers.CombineLatest(
                     self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),

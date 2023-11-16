@@ -12,15 +12,15 @@ import Combine
 
 class TestsGetOnboardingQuickStartLinksRepository: GetOnboardingQuickStartLinksRepositoryInterface {
     
-    func getLinks(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
+    func getLinks(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
         
         let links: [OnboardingQuickStartLinkDomainModel]
         
-        if appLanguageCode == LanguageCodeDomainModel.english.value {
+        if appLanguage == LanguageCodeDomainModel.english.value {
             
             links = getEnglishLinks()
         }
-        else if appLanguageCode == LanguageCodeDomainModel.spanish.rawValue {
+        else if appLanguage == LanguageCodeDomainModel.spanish.rawValue {
             
             links = getSpanishLinks()
         }

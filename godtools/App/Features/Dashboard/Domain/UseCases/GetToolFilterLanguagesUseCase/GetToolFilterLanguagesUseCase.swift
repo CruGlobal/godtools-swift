@@ -87,7 +87,7 @@ class GetToolFilterLanguagesUseCase {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
         
-        let languageName = self.localeLanguageName.getDisplayName(forLanguageCode: languageModel.code, translatedInLanguageCode: languageModel.code) ?? ""
+        let languageName = self.localeLanguageName.getDisplayName(forLanguageId: languageModel.code, translatedInLanguageId: languageModel.code) ?? ""
         let languageDomainModel = getLanguageUseCase.getLanguage(language: languageModel)
         
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)

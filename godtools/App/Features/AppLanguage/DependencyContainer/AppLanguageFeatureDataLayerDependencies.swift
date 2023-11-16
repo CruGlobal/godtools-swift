@@ -41,8 +41,8 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getAppLanguageRepositoryInterface() -> GetAppLanguageRepositoryInterface {
-        return GetAppLanguageRepository(
+    func getAppInterfaceLayoutDirectionInterface() -> GetAppInterfaceLayoutDirectionInterface {
+        return GetAppInterfaceLayoutDirection(
             appLanguagesRepository: getAppLanguagesRepository()
         )
     }

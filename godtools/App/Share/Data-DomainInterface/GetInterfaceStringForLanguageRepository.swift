@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated)
 class GetInterfaceStringForLanguageRepository: GetInterfaceStringForLanguageRepositoryInterface {
     
     private let localizationServices: LocalizationServices

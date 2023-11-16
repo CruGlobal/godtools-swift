@@ -47,8 +47,8 @@ class TractFlow: ToolNavigationFlow, Flow {
             flowDelegate: self,
             backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
             renderer: renderer,
-            tractRemoteSharePublisher: appDiContainer.dataLayer.getTractRemoteSharePublisher(),
-            tractRemoteShareSubscriber: appDiContainer.dataLayer.getTractRemoteShareSubscriber(),
+            tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
+            tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             fontService: appDiContainer.getFontService(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
@@ -144,7 +144,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
-        case .toolSettingsFlowCompleted:
+        case .toolSettingsFlowCompleted(let state):
             
             guard toolSettingsFlow != nil else {
                 return

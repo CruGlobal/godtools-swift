@@ -26,9 +26,9 @@ class GetLessonsListUseCase {
             getLessonsListRepositoryInterface.observeLessonsChangedPublisher(),
             getCurrentAppLanguageUseCase.getLanguagePublisher()
         )
-        .flatMap({ (lessonsListChanged: Void, currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+        .flatMap({ (lessonsListChanged: Void, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> in
 
-            return self.getLessonsListRepositoryInterface.getLessonsListPublisher(currentAppLanguageCode: currentAppLanguageCode)
+            return self.getLessonsListRepositoryInterface.getLessonsListPublisher(appLanguage: appLanguage)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
