@@ -50,7 +50,8 @@ class AppLanguageFeatureDataLayerDependencies {
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            localeLanguageScriptName: coreDataLayer.getLocaleLanguageScriptName()
         )
     }
     

@@ -823,6 +823,7 @@
 		45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AE973727C97A9400C2CB33 /* MobileContentRenderableModel.swift */; };
 		45AF070F2B066266000EACF2 /* LocaleLanguageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF070E2B066266000EACF2 /* LocaleLanguageName.swift */; };
 		45AF07142B0663FD000EACF2 /* LocaleLanguageScriptName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF07132B0663FD000EACF2 /* LocaleLanguageScriptName.swift */; };
+		45AF07162B06666B000EACF2 /* AppLanguageNameDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF07152B06666B000EACF2 /* AppLanguageNameDomainModel.swift */; };
 		45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
 		45B212AB2922965F00C9A94D /* Realm+SafeWrite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212A92922965F00C9A94D /* Realm+SafeWrite.swift */; };
 		45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212AA2922965F00C9A94D /* RealmDatabase.swift */; };
@@ -2169,6 +2170,7 @@
 		45AE973727C97A9400C2CB33 /* MobileContentRenderableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRenderableModel.swift; sourceTree = "<group>"; };
 		45AF070E2B066266000EACF2 /* LocaleLanguageName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLanguageName.swift; sourceTree = "<group>"; };
 		45AF07132B0663FD000EACF2 /* LocaleLanguageScriptName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLanguageScriptName.swift; sourceTree = "<group>"; };
+		45AF07152B06666B000EACF2 /* AppLanguageNameDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageNameDomainModel.swift; sourceTree = "<group>"; };
 		45B212A92922965F00C9A94D /* Realm+SafeWrite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+SafeWrite.swift"; sourceTree = "<group>"; };
 		45B212AA2922965F00C9A94D /* RealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
 		45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
@@ -3193,6 +3195,7 @@
 				45B3F46D2AC3B61A00D61BFD /* AppInterfaceLayoutDirectionDomainModel.swift */,
 				4585E4AF2B056EE900223A9B /* AppLanguageDomainModel.swift */,
 				450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */,
+				45AF07152B06666B000EACF2 /* AppLanguageNameDomainModel.swift */,
 				45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */,
 				453D2F7D2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift */,
 			);
@@ -11434,6 +11437,7 @@
 				45BDA5CE2954F67D007E259B /* RealmResourceView.swift in Sources */,
 				45C1523C2A43D1BD00F2A1E8 /* ToolSettingsViewModel.swift in Sources */,
 				450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */,
+				45AF07162B06666B000EACF2 /* AppLanguageNameDomainModel.swift in Sources */,
 				458CFE8C29D4E0B9007B423C /* LoadingArticleViewModel.swift in Sources */,
 				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
 				459E86B528ED1A9B00E197A5 /* AppsFlyer.swift in Sources */,

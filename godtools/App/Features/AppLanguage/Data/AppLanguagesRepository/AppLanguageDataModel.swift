@@ -10,13 +10,17 @@ import Foundation
 
 struct AppLanguageDataModel {
     
+    let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction
-    let languageId: BCP47LanguageIdentifier
+    let languageScriptCode: String?
     
-    init(languageId: BCP47LanguageIdentifier, languageDirection: AppLanguageDataModel.Direction) {
+    var languageId: BCP47LanguageIdentifier {
         
-        self.languageDirection = languageDirection
-        self.languageId = languageId
+        if let languageScriptCode = languageScriptCode, !languageScriptCode.isEmpty {
+            return languageCode + "-" + languageScriptCode
+        }
+        
+        return languageCode
     }
 }
 
