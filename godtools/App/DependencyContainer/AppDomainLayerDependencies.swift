@@ -160,14 +160,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getSearchToolFilterCategoriesUseCase() -> SearchToolFilterCategoriesUseCase {
-        return SearchToolFilterCategoriesUseCase(stringSearcher: StringSearcher())
-    }
-    
-    func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
-        return SearchToolFilterLanguagesUseCase(stringSearcher: StringSearcher())
-    }
-    
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
@@ -224,37 +216,11 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {
-        return StoreUserFiltersUseCase(
-            storeUserFiltersRepositoryInterface: dataLayer.getStoreUserFiltersRepositoryInterface()
-        )
-    }
-    
     func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
             removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
-        )
-    }
-    
-    func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
-        return GetToolFilterCategoriesUseCase(
-            getAllToolsUseCase: getAllToolsUseCase(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            localizationServices: dataLayer.getLocalizationServices(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
-    func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
-        return GetToolFilterLanguagesUseCase(
-            getAllToolsUseCase: getAllToolsUseCase(),
-            getLanguageUseCase: getLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            localeLanguageName: dataLayer.getLocaleLanguageName(),
-            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
@@ -340,12 +306,6 @@ class AppDomainLayerDependencies {
             getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
             userCounterRepository: dataLayer.getUserCountersRepository(),
             completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getUserFiltersUseCase() -> GetUserFiltersUseCase {
-        return GetUserFiltersUseCase(
-            getUserFiltersRepositoryInterface: dataLayer.getUserFiltersRepositoryInterface()
         )
     }
     

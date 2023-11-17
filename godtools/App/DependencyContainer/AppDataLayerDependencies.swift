@@ -362,14 +362,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getUserFiltersRepository() -> UserFiltersRepository {
-        return UserFiltersRepository(
-            cache: UserFiltersUserDefaultsCache(
-                sharedUserDefaultsCache: getSharedUserDefaultsCache()
-            )
-        )
-    }
-    
     func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
         return ViewedTrainingTipsService(
             cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
@@ -397,16 +389,6 @@ class AppDataLayerDependencies {
     func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
         return GetLaunchCountRepository(
             launchCountRepository: getSharedLaunchCountRepository()
-        )
-    }
-    
-    func getStoreUserFiltersRepositoryInterface() -> StoreUserFiltersRepositoryInterface {
-        return StoreUserFiltersRepository(userFiltersRepository: getUserFiltersRepository())
-    }
-    
-    func getUserFiltersRepositoryInterface() -> GetUserFiltersRepositoryInterface {
-        return GetUserFiltersRepository(
-            userFiltersRepository: getUserFiltersRepository()
         )
     }
 }
