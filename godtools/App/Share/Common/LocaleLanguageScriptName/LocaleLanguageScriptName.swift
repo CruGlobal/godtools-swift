@@ -1,20 +1,20 @@
 //
-//  LocaleLanguageName.swift
+//  LocaleLanguageScriptName.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/25/23.
+//  Created by Levi Eggert on 11/16/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class LocaleLanguageName {
+class LocaleLanguageScriptName {
     
     init() {
         
     }
     
-    func getDisplayName(forLanguageId: BCP47LanguageIdentifier, translatedInLanguageId: BCP47LanguageIdentifier?) -> String? {
+    func getScriptName(forScriptCode: String, translatedInLanguageId: BCP47LanguageIdentifier?) -> String? {
         
         let translateInLocale: Locale
         
@@ -22,9 +22,9 @@ class LocaleLanguageName {
             translateInLocale = Locale(identifier: translatedInLanguageId)
         }
         else {
-            translateInLocale = Locale(identifier: "en")
+            translateInLocale = Locale(identifier: forScriptCode)
         }
-        
-        return translateInLocale.localizedString(forIdentifier: forLanguageId)
+    
+        return translateInLocale.localizedString(forScriptCode: forScriptCode)
     }
 }

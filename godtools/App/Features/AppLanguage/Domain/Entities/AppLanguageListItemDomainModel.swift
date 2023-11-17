@@ -11,8 +11,8 @@ import Foundation
 struct AppLanguageListItemDomainModel {
     
     let language: AppLanguageDomainModel
-    let languageNameTranslatedInOwnLanguage: String
-    let languageNameTranslatedInCurrentAppLanguage: String
+    let languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel
+    let languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel
 }
 
 extension AppLanguageListItemDomainModel: Identifiable {
