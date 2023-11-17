@@ -186,6 +186,10 @@ class AppDataLayerDependencies {
         return LocaleLanguageName()
     }
     
+    func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
+        return LocaleLanguageScriptName()
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }

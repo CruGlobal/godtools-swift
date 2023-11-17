@@ -50,7 +50,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             }
              
             let availabilityInAppLanguage: String
-            let appLanguageName: String = localeLanguageName.getDisplayName(forLanguageId: appLanguage, translatedInLanguageId: appLanguage) ?? ""
+            let appLanguageName: String = localeLanguageName.getLanguageName(forLanguageCode: appLanguage, translatedInLanguageId: appLanguage) ?? ""
             
             if lessonIsAvailableInAppLanguage {
                 availabilityInAppLanguage = appLanguageName + " ✓"

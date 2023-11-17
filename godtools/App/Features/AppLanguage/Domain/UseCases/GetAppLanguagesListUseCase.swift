@@ -36,7 +36,7 @@ class GetAppLanguagesListUseCase {
         .flatMap({ (items: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                         
             let sortedItems: [AppLanguageListItemDomainModel] = items.sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage.name < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage.name
             }
             
             return Just(sortedItems)
