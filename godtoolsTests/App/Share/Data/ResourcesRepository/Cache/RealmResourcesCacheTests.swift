@@ -44,7 +44,18 @@ class RealmResourcesCacheTests: XCTestCase {
         ResourceData(category: .gospel, languageCode: .arabic, resourceType: .chooseYourOwnAdventure),
         ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
         ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract)
+        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .article),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .article),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool),
+        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool)
     ]
     
     private let numberOfArticleCategories: Int = 2
@@ -149,10 +160,55 @@ class RealmResourcesCacheTests: XCTestCase {
             )
         )
         
+        let gospelArabicBahrainArticles = realmResourcesCache.getResourcesByFilter(
+            filter: ResourcesFilter(
+                category: RealmResourcesCacheTests.Category.gospel.rawValue,
+                languageCode: LanguageCode.arabicBahrain.rawValue,
+                resourceTypes: [.article]
+            )
+        )
+        
+        let gospelArabicBahrainTracts = realmResourcesCache.getResourcesByFilter(
+            filter: ResourcesFilter(
+                category: RealmResourcesCacheTests.Category.gospel.rawValue,
+                languageCode: LanguageCode.arabicBahrain.rawValue,
+                resourceTypes: [.tract]
+            )
+        )
+        
+        let gospelArabicBahrainCYOAs = realmResourcesCache.getResourcesByFilter(
+            filter: ResourcesFilter(
+                category: RealmResourcesCacheTests.Category.gospel.rawValue,
+                languageCode: LanguageCode.arabicBahrain.rawValue,
+                resourceTypes: [.chooseYourOwnAdventure]
+            )
+        )
+        
+        let gospelArabicBahrainMetaTools = realmResourcesCache.getResourcesByFilter(
+            filter: ResourcesFilter(
+                category: RealmResourcesCacheTests.Category.gospel.rawValue,
+                languageCode: LanguageCode.arabicBahrain.rawValue,
+                resourceTypes: [.metaTool]
+            )
+        )
+        
+        let allGospelArabicBahrainTools = realmResourcesCache.getResourcesByFilter(
+            filter: ResourcesFilter(
+                category: RealmResourcesCacheTests.Category.gospel.rawValue,
+                languageCode: LanguageCode.arabicBahrain.rawValue,
+                resourceTypes: [.article, .chooseYourOwnAdventure, .tract]
+            )
+        )
+        
         XCTAssertEqual(gospelArabicTracts.count, 4)
         XCTAssertEqual(gospelArabicMetaTools.count, 1)
         XCTAssertEqual(gospelArabicCYOAs.count, 1)
         XCTAssertEqual(allGospelArabicTools.count, 5)
+        XCTAssertEqual(gospelArabicBahrainArticles.count, 2)
+        XCTAssertEqual(gospelArabicBahrainTracts.count, 4)
+        XCTAssertEqual(gospelArabicBahrainCYOAs.count, 3)
+        XCTAssertEqual(gospelArabicBahrainMetaTools.count, 2)
+        XCTAssertEqual(allGospelArabicBahrainTools.count, 9)
     }
         
     private func getNewTestDatabase() -> RealmDatabase {
