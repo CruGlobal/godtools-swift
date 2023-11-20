@@ -18,7 +18,7 @@ class GetSocialSignInInterfaceStringsRepository: GetSocialSignInInterfaceStrings
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<SocialSignInInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialSignInInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

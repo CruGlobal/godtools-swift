@@ -23,7 +23,7 @@ class GetToolDetailsInterfaceStringsUseCase {
         toolLanguageCodeChangedPublisher
             .flatMap({ (toolLanguageCode: String) -> AnyPublisher<ToolDetailsInterfaceStringsDomainModel, Never> in
               
-                return self.getToolDetailsInterfaceStringsRepository.getStringsPublisher(translateInToolLanguageCode: toolLanguageCode)
+                return self.getToolDetailsInterfaceStringsRepository.getStringsPublisher(translateInToolLanguage: toolLanguageCode)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

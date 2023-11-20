@@ -176,12 +176,13 @@ class UserAuthentication {
     private func renewAppleTokenPublisher(with provider: AuthenticationProviderInterface) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return provider.getAuthUserPublisher()
-            .flatMap { authUserDomainModel -> AnyPublisher<AuthenticationProviderResponse, Error> in
+            .flatMap { (authUserDomainModel: AuthUserDomainModel?) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
                 let authProviderProfile = AuthenticationProviderProfile(
                     email: authUserDomainModel?.email,
                     familyName: authUserDomainModel?.lastName,
-                    givenName: authUserDomainModel?.firstName
+                    givenName: authUserDomainModel?.firstName,
+                    name: authUserDomainModel?.name
                 )
                 
                 let persistedAppleRefreshToken = self.mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
@@ -227,7 +228,7 @@ class UserAuthentication {
                 
                 let profile = authProviderResponse.profile
                 
-                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName))
+                return .success(.appleAuth(authCode: authCode, givenName: profile.givenName, familyName: profile.familyName, name: profile.name))
                 
             } else if let refreshToken = authProviderResponse.refreshToken, refreshToken.isEmpty == false {
                 

@@ -16,6 +16,13 @@ struct CategoryFilterDomainModel {
     let searchableText: String
 }
 
+extension CategoryFilterDomainModel: StringSearchable {
+    
+    var searchableStrings: [String] {
+        return [searchableText]
+    }
+}
+
 extension CategoryFilterDomainModel {
     
     var id: String? {

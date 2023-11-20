@@ -20,9 +20,9 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
                         
-        let localeId: String = translateInAppLanguageCode
+        let localeId: String = translateInAppLanguage
         let toolIsFavorited: Bool?
         
         let resourceType: ResourceType? = resource?.resourceTypeEnum

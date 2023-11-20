@@ -20,10 +20,10 @@ class ViewToolScreenShareTutorialUseCase {
         self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
     }
     
-    func viewTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
+    func viewTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
         
         return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<(ToolScreenShareInterfaceStringsDomainModel, [ToolScreenShareTutorialPageDomainModel]), Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ToolScreenShareInterfaceStringsDomainModel, [ToolScreenShareTutorialPageDomainModel]), Never> in
                 
                 return Publishers.CombineLatest(
                     self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),

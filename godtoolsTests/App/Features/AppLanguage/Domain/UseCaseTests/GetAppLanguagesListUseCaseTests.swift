@@ -28,24 +28,24 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
                 
                 let appLanguages: [AppLanguageListItemDomainModel] = [
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.spanish.value,
-                        languageNameTranslatedInOwnLanguage: "",
-                        languageNameTranslatedInCurrentAppLanguage: "Spanish"
+                        language: LanguageCodeDomainModel.spanish.value,
+                        languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel(languageName: "", languageScriptName: nil),
+                        languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel(languageName: "Spanish", languageScriptName: nil)
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.french.value,
-                        languageNameTranslatedInOwnLanguage: "",
-                        languageNameTranslatedInCurrentAppLanguage: "French"
+                        language: LanguageCodeDomainModel.french.value,
+                        languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel(languageName: "", languageScriptName: nil),
+                        languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel(languageName: "French", languageScriptName: nil)
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.english.value,
-                        languageNameTranslatedInOwnLanguage: "",
-                        languageNameTranslatedInCurrentAppLanguage: "English"
+                        language: LanguageCodeDomainModel.english.value,
+                        languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel(languageName: "", languageScriptName: nil),
+                        languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel(languageName: "English", languageScriptName: nil)
                     ),
                     AppLanguageListItemDomainModel(
-                        languageCode: LanguageCodeDomainModel.russian.value,
-                        languageNameTranslatedInOwnLanguage: "",
-                        languageNameTranslatedInCurrentAppLanguage: "Russian"
+                        language: LanguageCodeDomainModel.russian.value,
+                        languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel(languageName: "", languageScriptName: nil),
+                        languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel(languageName: "Russian", languageScriptName: nil)
                     )
                 ]
                 
@@ -80,10 +80,10 @@ class GetAppLanguagesListUseCaseTests: QuickSpec {
                                 done()
                             }
                         
-                        expect(appLanguagesListRef[0].languageNameTranslatedInCurrentAppLanguage).to(equal("English"))
-                        expect(appLanguagesListRef[1].languageNameTranslatedInCurrentAppLanguage).to(equal("French"))
-                        expect(appLanguagesListRef[2].languageNameTranslatedInCurrentAppLanguage).to(equal("Russian"))
-                        expect(appLanguagesListRef[3].languageNameTranslatedInCurrentAppLanguage).to(equal("Spanish"))
+                        expect(appLanguagesListRef[0].languageNameTranslatedInCurrentAppLanguage.name).to(equal("English"))
+                        expect(appLanguagesListRef[1].languageNameTranslatedInCurrentAppLanguage.name).to(equal("French"))
+                        expect(appLanguagesListRef[2].languageNameTranslatedInCurrentAppLanguage.name).to(equal("Russian"))
+                        expect(appLanguagesListRef[3].languageNameTranslatedInCurrentAppLanguage.name).to(equal("Spanish"))
                     }
                 }
             }

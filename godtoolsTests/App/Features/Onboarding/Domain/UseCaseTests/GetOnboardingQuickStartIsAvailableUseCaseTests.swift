@@ -28,7 +28,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                         )
                     )
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var isAvailableRef: Bool?
                     var sinkCompleted: Bool = false
@@ -36,7 +36,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -66,7 +66,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                         )
                     )
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.french.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.french.value)
                     
                     var isAvailableRef: Bool?
                     var sinkCompleted: Bool = false
@@ -74,7 +74,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -104,7 +104,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                         )
                     )
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.arabic.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.arabic.value)
                     
                     var isAvailableRef: Bool?
                     var sinkCompleted: Bool = false
@@ -112,7 +112,7 @@ class GetOnboardingQuickStartIsAvailableUseCaseTests: QuickSpec {
                     waitUntil { done in
                           
                         _ = getOnboardingQuickStartIsAvailableUseCase
-                            .getAvailablePublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getAvailablePublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {

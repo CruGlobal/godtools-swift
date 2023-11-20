@@ -171,8 +171,6 @@ enum FlowStep {
     case closeTappedFromToolSettings
     case shareLinkTappedFromToolSettings
     case screenShareTappedFromToolSettings
-    case finishedLoadingToolRemoteSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
-    case cancelledLoadingToolRemoteSession
     case enableTrainingTipsTappedFromToolSettings
     case disableTrainingTipsTappedFromToolSettings
     case primaryLanguageTappedFromToolSettings
@@ -181,11 +179,14 @@ enum FlowStep {
     case shareableTappedFromToolSettings(shareableImageDomainModel: ShareableImageDomainModel)
     case closeTappedFromReviewShareShareable
     case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
-    case toolSettingsFlowCompleted
+    case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
+    case closeTappedFromCreatingToolScreenShareSession
+    case didCreateSessionFromCreatingToolScreenShareSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
+    case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
     
     // download tool
     case closeTappedFromDownloadToolProgress

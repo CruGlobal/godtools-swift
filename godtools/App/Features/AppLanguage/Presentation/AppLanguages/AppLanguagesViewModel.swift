@@ -13,12 +13,12 @@ class AppLanguagesViewModel: ObservableObject {
     
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
-    private let searchTextPublisher: CurrentValueSubject<String, Never> = CurrentValueSubject("")
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published var searchText: String = ""
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
@@ -34,7 +34,7 @@ class AppLanguagesViewModel: ObservableObject {
             .assign(to: &$navTitle)
                 
         searchAppLanguageInAppLanguagesListUseCase
-            .getSearchResultsPublisher(for: searchTextPublisher)
+            .getSearchResultsPublisher(for: $searchText.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguageSearchResults)
     }
@@ -57,7 +57,6 @@ extension AppLanguagesViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            searchTextPublisher: searchTextPublisher,
             getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
         )
     }

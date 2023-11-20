@@ -35,7 +35,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     
@@ -45,7 +45,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
@@ -83,7 +83,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message with favorite this tool for offline use messaging.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     
@@ -93,7 +93,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
@@ -131,7 +131,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The message should be the downloading tool message.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var interfaceStringsRef: DownloadToolProgressInterfaceStringsDomainModel?
                     
@@ -141,7 +141,7 @@ class GetDownloadToolProgressInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getDownloadToolProgressInterfaceStringsUseCase
-                            .getStringsPublisher(resource: nil, appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(resource: nil, appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {

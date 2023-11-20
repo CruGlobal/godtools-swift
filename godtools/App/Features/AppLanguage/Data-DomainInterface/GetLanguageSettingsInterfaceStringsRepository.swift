@@ -20,7 +20,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
         self.localeLanguageName = localeLanguageName
     }
     
-    func getStringsPublisher(translateInAppLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInAppLanguage
         
@@ -28,7 +28,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: AppLanguageStringKeys.LanguageSettings.navTitle.rawValue),
             appInterfaceLanguageTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.title"),
             setAppLanguageMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.message"),
-            chooseAppLanguageButtonTitle: localeLanguageName.getDisplayName(forLanguageCode: translateInAppLanguage, translatedInLanguageCode: translateInAppLanguage) ?? "",
+            chooseAppLanguageButtonTitle: localeLanguageName.getLanguageName(forLanguageCode: translateInAppLanguage, translatedInLanguageId: translateInAppLanguage) ?? "",
             toolLanguagesAvailableOfflineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.title"),
             downloadToolsForOfflineMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.message"),
             editDownloadedLanguagesButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title")

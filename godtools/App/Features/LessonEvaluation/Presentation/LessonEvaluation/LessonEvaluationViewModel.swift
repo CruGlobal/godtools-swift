@@ -21,7 +21,7 @@ class LessonEvaluationViewModel: ObservableObject {
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
-    private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+    private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
     private var cancellables: Set<AnyCancellable> = Set()
         
     private weak var flowDelegate: FlowDelegate?
@@ -52,14 +52,14 @@ class LessonEvaluationViewModel: ObservableObject {
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageCodeDomainModel) in
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
                 self?.currentAppLanguageSubject.send(appLanguage)
             }
             .store(in: &cancellables)
         
         getLessonEvaluationInterfaceStringsUseCase
-            .getStringsPublisher(appLanguageCodeChangedPublisher: currentAppLanguageSubject.eraseToAnyPublisher())
+            .getStringsPublisher(appLanguagePublisher: currentAppLanguageSubject.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
                 

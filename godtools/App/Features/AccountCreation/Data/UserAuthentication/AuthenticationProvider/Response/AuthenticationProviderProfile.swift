@@ -13,4 +13,5 @@ struct AuthenticationProviderProfile {
     let email: String?
     let familyName: String?
     let givenName: String?
+    let name: String?
 }

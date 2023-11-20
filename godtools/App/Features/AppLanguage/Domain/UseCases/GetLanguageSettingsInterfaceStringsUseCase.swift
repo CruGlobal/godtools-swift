@@ -18,12 +18,12 @@ class GetLanguageSettingsInterfaceStringsUseCase {
         self.getLanguageSettingsInterfaceStringsRepositoryInterface = getLanguageSettingsInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguageChangedPublisher: AnyPublisher<AppLanguageCodeDomainModel, Never>) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> {
         
-        appLanguageChangedPublisher
-            .flatMap({ (appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
+        appLanguagePublisher
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
                 
-                return self.getLanguageSettingsInterfaceStringsRepositoryInterface.getStringsPublisher(translateInAppLanguage: appLanguageCode)
+                return self.getLanguageSettingsInterfaceStringsRepositoryInterface.getStringsPublisher(translateInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

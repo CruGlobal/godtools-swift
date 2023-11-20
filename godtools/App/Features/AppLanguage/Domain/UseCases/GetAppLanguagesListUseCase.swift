@@ -28,15 +28,15 @@ class GetAppLanguagesListUseCase {
             getAppLanguagesListRepositoryInterface.observeLanguagesChangedPublisher(),
             getCurrentAppLanguageUseCase.getLanguagePublisher()
         )
-        .flatMap({ (languagesListChanged: Void, currentAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
+        .flatMap({ (languagesListChanged: Void, currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
             
-            return self.getAppLanguagesListRepositoryInterface.getLanguagesPublisher(currentAppLanguageCode: currentAppLanguageCode)
+            return self.getAppLanguagesListRepositoryInterface.getLanguagesPublisher(currentAppLanguage: currentAppLanguage)
                 .eraseToAnyPublisher()
         })
         .flatMap({ (items: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                         
             let sortedItems: [AppLanguageListItemDomainModel] = items.sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage.name < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage.name
             }
             
             return Just(sortedItems)

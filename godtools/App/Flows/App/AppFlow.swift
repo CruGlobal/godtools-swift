@@ -650,11 +650,11 @@ extension AppFlow {
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
             
-        case .onboarding(let appLanguageCode):
+        case .onboarding(let appLanguage):
             
             let userAppLanguageCache: RealmUserAppLanguageCache = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageCache()
             
-            userAppLanguageCache.storeLanguage(languageCode: appLanguageCode)
+            userAppLanguageCache.storeLanguage(languageId: appLanguage)
             
             navigateToOnboarding(animated: true)
         }
@@ -785,6 +785,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
             getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
+            searchToolFilterCategoriesUseCase: appDiContainer.domainLayer.getSearchToolFilterCategoriesUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
@@ -816,6 +817,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
             getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
+            searchToolFilterLanguagesUseCase: appDiContainer.domainLayer.getSearchToolFilterLanguagesUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
             selectedCategory: selectedCategory,
@@ -848,7 +850,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageCodeDomainModel?) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageDomainModel?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,

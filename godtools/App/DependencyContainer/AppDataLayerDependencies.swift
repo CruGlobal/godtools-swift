@@ -186,6 +186,10 @@ class AppDataLayerDependencies {
         return LocaleLanguageName()
     }
     
+    func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
+        return LocaleLanguageScriptName()
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }
@@ -286,34 +290,6 @@ class AppDataLayerDependencies {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
         )
-    }
-    
-    func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
-        
-        let webSocket: WebSocketType = StarscreamWebSocket()
-        
-        return TractRemoteSharePublisher(
-            config: getAppConfig(),
-            webSocket: webSocket,
-            webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: getAppBuild().isDebug),
-            loggingEnabled: getAppBuild().isDebug
-        )
-    }
-    
-    func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
-        
-        let webSocket: WebSocketType = StarscreamWebSocket()
-        
-        return TractRemoteShareSubscriber(
-            config: getAppConfig(),
-            webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: getAppBuild().isDebug),
-            loggingEnabled: getAppBuild().isDebug
-        )
-    }
-    
-    func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
-        return TractRemoteShareURLBuilder()
     }
     
     func getTranslationsRepository() -> TranslationsRepository {        

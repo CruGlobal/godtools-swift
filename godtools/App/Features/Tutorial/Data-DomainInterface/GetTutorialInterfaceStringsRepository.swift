@@ -18,7 +18,7 @@ class GetTutorialInterfaceStringsRepository: GetTutorialInterfaceStringsReposito
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<TutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

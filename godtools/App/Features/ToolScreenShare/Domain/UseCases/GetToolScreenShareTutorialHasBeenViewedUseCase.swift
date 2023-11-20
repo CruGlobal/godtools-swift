@@ -11,17 +11,17 @@ import Combine
 
 class GetToolScreenShareTutorialHasBeenViewedUseCase {
     
-    private let getToolScreenShareViewedRepositoryInterface: GetToolScreenShareViewedRepositoryInterface
+    private let tutorialViewedRepositoryInterface: GetToolScreenShareTutorialViewedRepositoryInterface
     
-    init(getToolScreenShareViewedRepositoryInterface: GetToolScreenShareViewedRepositoryInterface) {
+    init(tutorialViewedRepositoryInterface: GetToolScreenShareTutorialViewedRepositoryInterface) {
         
-        self.getToolScreenShareViewedRepositoryInterface = getToolScreenShareViewedRepositoryInterface
+        self.tutorialViewedRepositoryInterface = tutorialViewedRepositoryInterface
     }
     
     // TODO: Eventually ToolDomainModel should be passed in here instead of ResourceModel. ~Levi
-    func getViewedPublisher(tool: ResourceModel) -> AnyPublisher<ToolScreenShareViewedDomainModel, Never> {
+    func getViewedPublisher(tool: ResourceModel) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
         
-        return getToolScreenShareViewedRepositoryInterface.getViewed(tool: tool)
+        return tutorialViewedRepositoryInterface.getViewed(tool: tool)
             .eraseToAnyPublisher()
     }
 }

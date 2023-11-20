@@ -21,7 +21,7 @@ class OnboardingQuickStartViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var title: String = ""
     @Published var quickStartLinks: [OnboardingQuickStartLinkDomainModel] = Array()
@@ -41,7 +41,7 @@ class OnboardingQuickStartViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         getOnboardingQuickStartInterfaceStringsUseCase
-            .getStringsPublisher(appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: OnboardingQuickStartInterfaceStringsDomainModel) in
                 
@@ -52,7 +52,7 @@ class OnboardingQuickStartViewModel: ObservableObject {
             .store(in: &cancellables)
         
         getOnboardingQuickStartLinksUseCase
-            .getLinksPublisher(appLanguageCodeChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getLinksPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .assign(to: &$quickStartLinks)
     }

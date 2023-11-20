@@ -18,9 +18,9 @@ class GetLessonEvaluationInterfaceStringsRepository: GetLessonEvaluationInterfac
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> {
         
-        let localeId: String = translateInAppLanguageCode
+        let localeId: String = translateInAppLanguage
         
         let interfaceStrings = LessonEvaluationInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.title"),

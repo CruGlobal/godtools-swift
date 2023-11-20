@@ -160,6 +160,14 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getSearchToolFilterCategoriesUseCase() -> SearchToolFilterCategoriesUseCase {
+        return SearchToolFilterCategoriesUseCase(stringSearcher: StringSearcher())
+    }
+    
+    func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
+        return SearchToolFilterLanguagesUseCase(stringSearcher: StringSearcher())
+    }
+    
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
@@ -239,6 +247,7 @@ class AppDomainLayerDependencies {
             getLanguageUseCase: getLanguageUseCase(),
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
             languagesRepository: dataLayer.getLanguagesRepository(),
+            localeLanguageName: dataLayer.getLocaleLanguageName(),
             localizationServices: dataLayer.getLocalizationServices()
         )
     }

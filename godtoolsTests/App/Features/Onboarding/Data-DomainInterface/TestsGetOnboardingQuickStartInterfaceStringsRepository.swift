@@ -16,15 +16,15 @@ class TestsGetOnboardingQuickStartInterfaceStringsRepository: GetOnboardingQuick
         
     }
     
-    func getStringsPublisher(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingQuickStartInterfaceStringsDomainModel, Never> {
         
         let interfaceStrings: OnboardingQuickStartInterfaceStringsDomainModel
         
-        if appLanguageCode == LanguageCodeDomainModel.english.value {
+        if appLanguage == LanguageCodeDomainModel.english.value {
             
             interfaceStrings = getEnglishInterfaceStrings()
         }
-        else if appLanguageCode == LanguageCodeDomainModel.spanish.rawValue {
+        else if appLanguage == LanguageCodeDomainModel.spanish.rawValue {
             
             interfaceStrings = getSpanishInterfaceStrings()
         }

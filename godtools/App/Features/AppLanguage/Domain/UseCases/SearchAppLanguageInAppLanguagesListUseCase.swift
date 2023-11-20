@@ -17,7 +17,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
         self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: CurrentValueSubject<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
             searchTextPublisher,
@@ -35,7 +35,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
                     
                     let filteredItems = languageItems.filter { languageItem in
                         
-                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
+                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.name.lowercased()
                         
                         return lowercasedLanguageName.contains(lowercasedSearchText)
                     }
