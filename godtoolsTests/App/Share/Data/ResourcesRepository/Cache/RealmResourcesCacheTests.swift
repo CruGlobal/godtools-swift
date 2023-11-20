@@ -50,27 +50,27 @@ class RealmResourcesCacheTests: XCTestCase {
     private let numberOfArticleCategories: Int = 2
     private let numberOfGospelCategories: Int = 5
     
-    private var realmResourcesCache: RealmResourcesCache?
-    
+    private lazy var realmResourcesCache: RealmResourcesCache = {
+        
+        let realmDatabase = getNewTestDatabase()
+        
+        let realmResourcesCacheSync = RealmResourcesCacheSync(
+            realmDatabase: realmDatabase,
+            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
+                cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
+            )
+        )
+        
+        let realmResourcesCache = RealmResourcesCache(
+            realmDatabase: realmDatabase,
+            resourcesSync: realmResourcesCacheSync
+        )
+        
+        return realmResourcesCache
+    }()
+        
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        if realmResourcesCache == nil {
-            
-            let realmDatabase = getNewTestDatabase()
-            
-            let realmResourcesCacheSync = RealmResourcesCacheSync(
-                realmDatabase: realmDatabase,
-                trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                    cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
-                )
-            )
-            
-            realmResourcesCache = RealmResourcesCache(
-                realmDatabase: realmDatabase,
-                resourcesSync: realmResourcesCacheSync
-            )
-        }
     }
 
     override func tearDown() {
@@ -79,36 +79,36 @@ class RealmResourcesCacheTests: XCTestCase {
     
     func testFilteringArticleResourcesByCategory() {
         
-        let articles = realmResourcesCache?.getResourcesByFilter(filter: ResourcesFilter(category: RealmResourcesCacheTests.Category.article.rawValue, resourceTypes: [.tract])) ?? Array()
+        let articles = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(category: RealmResourcesCacheTests.Category.article.rawValue, resourceTypes: [.tract]))
         
         XCTAssertEqual(articles.count, 6)
     }
     
     func testFilteringArticleResourcesByCategoryAndLanguage() {
         
-        let arabicArticles = realmResourcesCache?.getResourcesByFilter(
+        let arabicArticles = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.article.rawValue,
                 languageCode: LanguageCode.arabic.rawValue,
                 resourceTypes: [.tract]
             )
-        ) ?? Array()
+        )
         
-        let arabicBahrainArticles = realmResourcesCache?.getResourcesByFilter(
+        let arabicBahrainArticles = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.article.rawValue,
                 languageCode: LanguageCode.arabicBahrain.rawValue,
                 resourceTypes: [.tract]
             )
-        ) ?? Array()
+        )
         
-        let englishArticles = realmResourcesCache?.getResourcesByFilter(
+        let englishArticles = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.article.rawValue,
                 languageCode: LanguageCode.english.rawValue,
                 resourceTypes: [.tract]
             )
-        ) ?? Array()
+        )
         
         XCTAssertEqual(arabicArticles.count, 1)
         XCTAssertEqual(arabicBahrainArticles.count, 2)
@@ -117,37 +117,37 @@ class RealmResourcesCacheTests: XCTestCase {
     
     func testFilteringGospelResourcesByCategoryAndLanguageAndResourceType() {
         
-        let gospelArabicTracts = realmResourcesCache?.getResourcesByFilter(
+        let gospelArabicTracts = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.gospel.rawValue,
                 languageCode: LanguageCode.arabic.rawValue,
                 resourceTypes: [.tract]
             )
-        ) ?? Array()
+        )
         
-        let gospelArabicMetaTools = realmResourcesCache?.getResourcesByFilter(
+        let gospelArabicMetaTools = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.gospel.rawValue,
                 languageCode: LanguageCode.arabic.rawValue,
                 resourceTypes: [.metaTool]
             )
-        ) ?? Array()
+        )
         
-        let gospelArabicCYOAs = realmResourcesCache?.getResourcesByFilter(
+        let gospelArabicCYOAs = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.gospel.rawValue,
                 languageCode: LanguageCode.arabic.rawValue,
                 resourceTypes: [.chooseYourOwnAdventure]
             )
-        ) ?? Array()
+        )
         
-        let allGospelArabicTools = realmResourcesCache?.getResourcesByFilter(
+        let allGospelArabicTools = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(
                 category: RealmResourcesCacheTests.Category.gospel.rawValue,
                 languageCode: LanguageCode.arabic.rawValue,
                 resourceTypes: [.article, .chooseYourOwnAdventure, .tract]
             )
-        ) ?? Array()
+        )
         
         XCTAssertEqual(gospelArabicTracts.count, 4)
         XCTAssertEqual(gospelArabicMetaTools.count, 1)
