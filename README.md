@@ -13,26 +13,26 @@ GodTools
 - Cocoapods
 - Fastlane
 
-#### Architecture
+### Architecture
 
 ![alt text](ReadMeAssets/clean_architecture.png)
 
 The GodTools app architecture follows the Clean Architecture Pattern (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic).
 
-##### Clean Architecture Pattern:
+#### Clean Architecture Pattern:
 - Presentation Layer (View and ViewModel)
 - Domain Layer (Use Cases, Domain Models, and Data Layer Interfaces)
 - Data Layer (Repositories, Networking, Peristence, and other Data Connectivity)
 
-##### Purpose of this Architecture:
+#### Purpose of this Architecture:
 - Creates a clear separation of concerns and responsibilities.
 - Each layer will have its own responsibilities and the components that make up a layer will have their own responsibilities.
 - Enables changes to have isolated impact and allows for the system to be easily extended and maintained.
 - Enables us to build a system in the same way that follows best practices without the need for micromanagement.
 
-#### Architecture Responsibilities
+### Architecture Responsibilities
 
-##### Presentation Layer
+#### Presentation Layer
 
 - Makes up the visual aspect of the app as well as user interaction (button tap, text input, etc.) 
 - Uses the View / ViewModel pattern.
