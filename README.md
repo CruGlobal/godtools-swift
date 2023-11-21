@@ -2,7 +2,9 @@ GodTools
 ========
 
 - [Requirements](#requirements)
-- [Programming Guide](#programming-guide)
+- [Architecture](#architecture)
+- [Architecture Responsibilities](#architecture-responsibilities)
+- [Fastlane](#fastlane)
 
 ### Requirements
 
@@ -11,11 +13,49 @@ GodTools
 - Cocoapods
 - Fastlane
 
-### Programming Guide
+#### Architecture
 
-- [Conventions](#conventions)
-- [Architecture](#architecture)
-- [Fastlane](#fastlane)
+![alt text](ReadMeAssets/clean_architecture.png)
+
+The GodTools app architecture follows the Clean Architecture Pattern (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic).
+
+##### Clean Architecture Pattern:
+- Presentation Layer (View and ViewModel)
+- Domain Layer (Use Cases, Domain Models, and Data Layer Interfaces)
+- Data Layer (Repositories, Networking, Peristence, and other Data Connectivity)
+
+##### Purpose of this Architecture:
+- Creates a clear separation of concerns and responsibilities.
+- Each layer will have its own responsibilities and the components that make up a layer will have their own responsibilities.
+- Enables changes to have isolated impact and allows for the system to be easily extended and maintained.
+- Enables us to build a system in the same way that follows best practices without the need for micromanagement.
+
+#### Architecture Responsibilities
+
+##### Presentation Layer
+
+- Makes up the visual aspect of the app as well as user interaction (button tap, text input, etc.) 
+- Uses the View / ViewModel pattern.
+- Knows nothing of the data layer.  Only knows about the Domain Layer.
+
+##### View
+- Rendering logic (SwiftUI).
+- Animation logic (SwiftUI).
+- References a ViewModel.
+- Observes ViewModel output via @Published properties.
+- Sends inputs to the ViewModel (button tap, text input, page viewed, etc.).
+
+##### ViewModel
+- Considered a View representation. However, knows nothing of the specific UI elements that structure a View. 
+- Accepts inputs from the View (button tap, text input, page viewed, etc.).
+- Communicates to the Domain Layer via UseCases which are injected upon initialization.
+- Provides output to the View via @Published properties that the View can react to.
+
+##### Domain Layer
+
+
+// TODO: Complete here on down.
+
 
 #### Conventions
 
@@ -27,10 +67,6 @@ GodTools
 - Class / Struct attributes should always be declared with the type.
 - Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow constants and are grouped by private first, then internal, then public.   
 
-#### Architecture
-
-![alt text](ReadMeAssets/clean_architecture.png)
-
 - [Summary](#summary)
 - [Presentation Layer](#presentation-layer)
 - [Domain Layer](#domain-layer)
@@ -39,13 +75,7 @@ GodTools
 
 
 #### Summary
-The architectural structure for the GodTools app can be summarized as following a Clean Architecture Pattern (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic), and SOLID principles.
 
-The purpose of this pattern is to create a clear separation of concerns and responsibilities.  Implementing strict coding standards means code can be easily read, modified, and tested.
-
-Clean Architecture at its core is about creating a separation of concerns and building it in such a way that it becomes hard to violate this core principle.  This approach enables us to build a system in the same way that follows best practices without the need for micromanagement. 
-
-Having Clean Architecture enables changes to have isolated impact and allows for the system to be easily extended and maintained.
 
 References:
 - Solid principles: 
