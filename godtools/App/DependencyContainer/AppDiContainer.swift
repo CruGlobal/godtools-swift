@@ -29,6 +29,7 @@ class AppDiContainer {
         
         let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let appShortcutItems = AppShortcutItemsDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
@@ -41,6 +42,7 @@ class AppDiContainer {
         feature = AppFeatureDiContainer(
             accountCreation: accountCreationDiContainer,
             appLanguage: appLanguageDiContainer,
+            appShortcutItems: appShortcutItems,
             downloadToolProgress: downloadToolProgressDiContainer,
             featuredLessons: featuredLessonsDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,

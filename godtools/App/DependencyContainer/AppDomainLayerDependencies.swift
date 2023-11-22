@@ -195,15 +195,6 @@ class AppDomainLayerDependencies {
         return GetShareableImageUseCase()
     }
     
-    func getShortcutItemsUseCase() -> GetShortcutItemsUseCase {
-        return GetShortcutItemsUseCase(
-            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase(),
-            translationsRepository: dataLayer.getTranslationsRepository()
-        )
-    }
-    
     func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
