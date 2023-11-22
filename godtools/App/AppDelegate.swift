@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Combine
 import AppsFlyerLib
 import SocialAuthentication
 import FacebookCore
@@ -15,9 +14,7 @@ import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-           
-    private static var getShortcutItemsCancellable: AnyCancellable?
-    
+               
     private lazy var appBuild: AppBuild = {
         AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
