@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
     }()
     
+    private var toolShortcutLinks: ToolShortcutLinksView?
+    
     var window: UIWindow?
     
     static func getWindow() -> UIWindow? {
@@ -143,7 +145,9 @@ extension AppDelegate {
         let view = ToolShortcutLinksView(
             application: application,
             viewModel: viewModel
-        )     
+        )   
+        
+        toolShortcutLinks = view
     }
 }
 
