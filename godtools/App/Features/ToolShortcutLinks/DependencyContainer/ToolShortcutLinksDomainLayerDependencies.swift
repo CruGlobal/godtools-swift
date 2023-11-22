@@ -17,8 +17,8 @@ class ToolShortcutLinksDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getToolShortcutLinksUseCase() -> GetToolShortcutLinksUseCase {
-        return GetToolShortcutLinksUseCase(
+    func getViewToolShortcutLinksUseCase() -> ViewToolShortcutLinksUseCase {
+        return ViewToolShortcutLinksUseCase(
             getToolShortcutLinksRepositoryInterface: dataLayer.getToolShortcutLinksRepositoryInterface()
         )
     }

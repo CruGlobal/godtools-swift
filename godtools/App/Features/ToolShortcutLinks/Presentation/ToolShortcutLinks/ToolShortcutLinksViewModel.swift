@@ -13,24 +13,30 @@ import Combine
 class ToolShortcutLinksViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase
+    private let viewToolShortcutLinksUseCase: ViewToolShortcutLinksUseCase
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     @Published var shortcutLinks: [ToolShortcutLinkDomainModel] = Array()
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolShortcutLinksUseCase: GetToolShortcutLinksUseCase) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolShortcutLinksUseCase: ViewToolShortcutLinksUseCase) {
         
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getToolShortcutLinksUseCase = getToolShortcutLinksUseCase
+        self.viewToolShortcutLinksUseCase = viewToolShortcutLinksUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> in
                 
-                return self.getToolShortcutLinksUseCase
-                    .getLinksPublisher(appLanguage: appLanguage)
+                return self.viewToolShortcutLinksUseCase
+                    .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .assign(to: &$shortcutLinks)
+            .sink { [weak self] (domainModel: ViewToolShortcutLinksDomainModel) in
+                
+                self?.shortcutLinks = domainModel.shortcutLinks
+            }
+            .store(in: &cancellables)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  GetToolShortcutLinksUseCase.swift
+//  ViewToolShortcutLinksUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/23/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetToolShortcutLinksUseCase {
+class ViewToolShortcutLinksUseCase {
         
     private let getToolShortcutLinksRepositoryInterface: GetToolShortcutLinksRepositoryInterface
     
@@ -18,10 +18,13 @@ class GetToolShortcutLinksUseCase {
         self.getToolShortcutLinksRepositoryInterface = getToolShortcutLinksRepositoryInterface
     }
     
-    func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> {
         
         return getToolShortcutLinksRepositoryInterface
             .getLinksPublisher(appLanguage: appLanguage)
+            .map {
+                ViewToolShortcutLinksDomainModel(shortcutLinks: $0)
+            }
             .eraseToAnyPublisher()
     }
 }

@@ -139,7 +139,7 @@ extension AppDelegate {
         
         let viewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolShortcutLinksUseCase: appDiContainer.feature.toolShortcutLinks.domainLayer.getToolShortcutLinksUseCase()
+            viewToolShortcutLinksUseCase: appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
         )
             
         let view = ToolShortcutLinksView(
