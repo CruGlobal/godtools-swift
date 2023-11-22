@@ -12,7 +12,6 @@ class AppFeatureDiContainer {
     
     let accountCreation: AccountCreationFeatureDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
-    let appShortcutItems: AppShortcutItemsDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
     let lessonEvaluation: LessonEvaluationFeatureDiContainer
@@ -20,13 +19,13 @@ class AppFeatureDiContainer {
     let onboarding: OnboardingDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     let toolScreenShare: ToolScreenShareFeatureDiContainer
+    let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, appShortcutItems: AppShortcutItemsDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.accountCreation = accountCreation
         self.appLanguage = appLanguage
-        self.appShortcutItems = appShortcutItems
         self.downloadToolProgress = downloadToolProgress
         self.featuredLessons = featuredLessons
         self.lessonEvaluation = lessonEvaluation
@@ -34,6 +33,7 @@ class AppFeatureDiContainer {
         self.onboarding = onboarding
         self.toolDetails = toolDetails
         self.toolScreenShare = toolScreenShare
+        self.toolShortcutLinks = toolShortcutLinks
         self.tutorial = tutorial
     }
 }

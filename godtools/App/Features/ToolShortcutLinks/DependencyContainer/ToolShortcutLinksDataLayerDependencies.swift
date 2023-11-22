@@ -1,5 +1,5 @@
 //
-//  AppShortcutItemsDataLayerDependencies.swift
+//  ToolShortcutLinksDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 11/21/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppShortcutItemsDataLayerDependencies {
+class ToolShortcutLinksDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
