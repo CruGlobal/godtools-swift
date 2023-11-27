@@ -14,6 +14,7 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
+    private let maxNumberOfToolShortcutLinks: Int = 4
     
     init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
@@ -27,16 +28,18 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
         return favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: false)
             .flatMap({ (favoritedResources: [FavoritedResourceDataModel]) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
                 
-                let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources.compactMap({ (favoritedResource: FavoritedResourceDataModel) in
+                let toolShortcutLinks: [ToolShortcutLinkDomainModel] = favoritedResources
+                    .prefix(self.maxNumberOfToolShortcutLinks)
+                    .compactMap({ (favoritedResource: FavoritedResourceDataModel) in
                     
-                    guard let resource = self.resourcesRepository.getResource(id: favoritedResource.id) else {
-                        return nil
-                    }
-                                        
-                    return ToolShortcutLinkDomainModel(
-                        appDeepLinkUrl: self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage),
-                        title: self.getToolName(resource: resource, appLanguage: appLanguage)
-                    )
+                        guard let resource = self.resourcesRepository.getResource(id: favoritedResource.id) else {
+                            return nil
+                        }
+                                            
+                        return ToolShortcutLinkDomainModel(
+                            appDeepLinkUrl: self.getToolUrlDeepLink(resource: resource, appLanguage: appLanguage),
+                            title: self.getToolName(resource: resource, appLanguage: appLanguage)
+                        )
                 })
                 
                 return Just(toolShortcutLinks)
