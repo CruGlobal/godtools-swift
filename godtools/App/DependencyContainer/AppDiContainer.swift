@@ -36,6 +36,7 @@ class AppDiContainer {
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
@@ -48,6 +49,7 @@ class AppDiContainer {
             onboarding: onboardingDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
+            toolsFilter: toolsFilterDiContainer,
             tutorial: tutorialDiContainer
         )
                                                                 

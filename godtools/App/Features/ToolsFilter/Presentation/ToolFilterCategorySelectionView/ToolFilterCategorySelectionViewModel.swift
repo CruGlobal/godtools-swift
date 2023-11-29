@@ -13,6 +13,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
+    private let storeUserFiltersUseCase: StoreUserFiltersUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     private let selectedLanguage: LanguageFilterDomainModel
@@ -20,16 +21,18 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
+    let selectedCategory: CategoryFilterDomainModel
+    
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
-    @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase,  categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
+    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
+        self.storeUserFiltersUseCase = storeUserFiltersUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.selectedLanguage = selectedLanguage
@@ -52,13 +55,6 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             )
             .receive(on: DispatchQueue.main)
             .assign(to: &$categorySearchResults)
-        
-        $selectedCategory
-            .sink { [weak self] category in
-                
-                self?.categoryFilterSelectionPublisher.send(category)
-            }
-            .store(in: &cancellables)
     }
 }
 
@@ -74,8 +70,16 @@ extension ToolFilterCategorySelectionViewModel {
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {
+                
+        categoryFilterSelectionPublisher.send(category)
         
-        selectedCategory = category
+        storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
+        
+        flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
     }
     
     @objc func backButtonTapped() {

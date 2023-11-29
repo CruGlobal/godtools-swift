@@ -28,13 +28,17 @@ struct ToolFilterLanguageSelectionView: View {
             List {
                 ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
                     
-                    ToolFilterLanguageSelectionRowView(language: language, isSelected: viewModel.selectedLanguage.id == language.id)
-                        .listRowBackground(Color.clear)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            
-                            viewModel.rowTapped(with: language)
-                        }
+                    Button {
+                        
+                        viewModel.rowTapped(with: language)
+                        
+                    } label: {
+                        
+                        ToolFilterLanguageSelectionRowView(
+                            language: language,
+                            isSelected: viewModel.selectedLanguage.id == language.id
+                        )
+                    }
                 }
             }
             .listStyle(.inset)

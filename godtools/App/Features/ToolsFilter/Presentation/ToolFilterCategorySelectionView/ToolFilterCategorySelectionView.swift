@@ -28,15 +28,16 @@ struct ToolFilterCategorySelectionView: View {
             List {
                 ForEach(viewModel.categorySearchResults, id: \.filterId) { category in
                     
-                    ToolFilterCategorySelectionRowView(
-                        category: category,
-                        isSelected: viewModel.selectedCategory.id == category.id
-                    )
-                    .listRowBackground(Color.clear)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
+                    Button {
                         
                         viewModel.rowTapped(with: category)
+                        
+                    } label: {
+                        
+                        ToolFilterCategorySelectionRowView(
+                            category: category,
+                            isSelected: viewModel.selectedCategory.id == category.id
+                        )
                     }
                 }
             }

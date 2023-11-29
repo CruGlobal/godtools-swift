@@ -43,7 +43,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -60,10 +60,31 @@ class ToolsViewModel: ObservableObject {
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
-        let anyCategorySelection = getToolFilterCategoriesUseCase.getAnyCategoryDomainModel()
         let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
+        let anyCategorySelection = getToolFilterCategoriesUseCase.getAnyCategoryDomainModel()
         toolFilterLanguageSelectionPublisher = CurrentValueSubject(anyLanguageSelection)
         toolFilterCategorySelectionPublisher = CurrentValueSubject(anyCategorySelection)
+        
+        getUserFiltersUseCase.getUserFiltersPublisher()
+            .flatMap { userFilters in
+                
+                return Publishers.CombineLatest(
+                    getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: userFilters.categoryFilterId),
+                    getToolFilterLanguagesUseCase.getLanguageFilterPublisher(from: userFilters.languageFilterId)
+                )
+                .eraseToAnyPublisher()
+            }
+            .sink { categoryFilter, languageFilter in
+                
+                if let categoryFilter = categoryFilter {
+                    self.toolFilterCategorySelectionPublisher.send(categoryFilter)
+                }
+                
+                if let languageFilter = languageFilter {
+                    self.toolFilterLanguageSelectionPublisher.send(languageFilter)
+                }
+            }
+            .store(in: &cancellables)
         
         getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_offline_favorite_message")
             .receive(on: DispatchQueue.main)
