@@ -57,10 +57,7 @@ class RealmResourcesCacheTests: XCTestCase {
         ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool),
         ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool)
     ]
-    
-    private let numberOfArticleCategories: Int = 2
-    private let numberOfGospelCategories: Int = 5
-    
+        
     private lazy var realmResourcesCache: RealmResourcesCache = {
         
         let realmDatabase = getNewTestDatabase()
