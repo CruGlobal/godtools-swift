@@ -1,14 +1,14 @@
 //
-//  LanguageSettingsAppInterfaceLanguageView.swift
+//  ToolLanguagesAvailableOfflineView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/21/23.
+//  Created by Levi Eggert on 11/30/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct LanguageSettingsAppInterfaceLanguageView: View {
+struct ToolLanguagesAvailableOfflineView: View {
     
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
@@ -26,33 +26,28 @@ struct LanguageSettingsAppInterfaceLanguageView: View {
         
         VStack(alignment: .leading, spacing: 0) {
          
-            Text(viewModel.appInterfaceLanguageTitle)
+            Text(viewModel.toolLanguagesAvailableOfflineTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 26))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
             
-            Text(viewModel.numberOfLanguagesAvailable)
-                .font(FontLibrary.sfProTextRegular.font(size: 13))
-                .foregroundColor(ColorPalette.gtGrey.color)
-                .multilineTextAlignment(.leading)
-                .padding([.top], 5)
-            
-            Text(viewModel.setLanguageYouWouldLikeAppDisplayedInLabel)
+            Text(viewModel.downloadToolsForOfflineMessage)
                 .font(FontLibrary.sfProTextRegular.font(size: 15))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.leading)
-                .padding([.top], 6)
+                .padding([.top], 12)
             
-            AppInterfaceLanguageButtonView(
-                title: viewModel.appInterfaceLanguageButtonTitle,
+            GTBlueButton(
+                title: viewModel.editDownloadedLanguagesButtonTitle,
+                font: FontLibrary.sfProTextRegular.font(size: 14),
                 width: geometry.size.width - (contentHorizontalInsets * 2),
                 height: 50,
-                tappedClosure: {
+                action: {
                     
-                    viewModel.chooseAppLanguageTapped()
+                    viewModel.editDownloadedLanguagesTapped()
                 }
             )
-            .padding([.top], 14)
+            .padding([.top], 25)
         }
         .padding([.leading, .trailing], contentHorizontalInsets)
     }

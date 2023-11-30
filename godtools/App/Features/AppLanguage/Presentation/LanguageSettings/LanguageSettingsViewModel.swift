@@ -26,6 +26,9 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var numberOfLanguagesAvailable: String = "Number of languages available need to implement."
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
     @Published var appInterfaceLanguageButtonTitle: String = ""
+    @Published var toolLanguagesAvailableOfflineTitle: String = ""
+    @Published var downloadToolsForOfflineMessage: String = ""
+    @Published var editDownloadedLanguagesButtonTitle: String = ""
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
@@ -48,6 +51,9 @@ class LanguageSettingsViewModel: ObservableObject {
                 self?.appInterfaceLanguageTitle = interfaceStrings.appInterfaceLanguageTitle
                 self?.setLanguageYouWouldLikeAppDisplayedInLabel = interfaceStrings.setAppLanguageMessage
                 self?.appInterfaceLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
+                self?.toolLanguagesAvailableOfflineTitle = interfaceStrings.toolLanguagesAvailableOfflineTitle
+                self?.downloadToolsForOfflineMessage = interfaceStrings.downloadToolsForOfflineMessage
+                self?.editDownloadedLanguagesButtonTitle = interfaceStrings.editDownloadedLanguagesButtonTitle
                 
             }
             .store(in: &cancellables)
@@ -66,6 +72,10 @@ extension LanguageSettingsViewModel {
     func chooseAppLanguageTapped() {
         
         flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings)
+    }
+    
+    func editDownloadedLanguagesTapped() {
+        
     }
     
     func pageViewed() {

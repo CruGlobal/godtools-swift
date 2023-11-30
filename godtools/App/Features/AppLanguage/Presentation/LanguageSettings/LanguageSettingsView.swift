@@ -31,6 +31,13 @@ struct LanguageSettingsView: View {
                     contentHorizontalInsets: contentHorizontalInsets
                 )
                 .padding([.top], 30)
+                
+                ToolLanguagesAvailableOfflineView(
+                    viewModel: viewModel,
+                    geometry: geometry,
+                    contentHorizontalInsets: contentHorizontalInsets
+                )
+                .padding([.top], 30)
             }
         }
         .navigationBarBackButtonHidden(true)
