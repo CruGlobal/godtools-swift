@@ -37,6 +37,33 @@ struct ToolLanguagesAvailableOfflineView: View {
                 .multilineTextAlignment(.leading)
                 .padding([.top], 12)
             
+            SeparatorView()
+                .padding([.top], 11)
+            
+            ScrollView(.vertical, showsIndicators: true) {
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                    
+                    ToolLanguageAvailableOfflineLanguageView()
+                }
+            }
+            
             GTBlueButton(
                 title: viewModel.editDownloadedLanguagesButtonTitle,
                 font: FontLibrary.sfProTextRegular.font(size: 14),

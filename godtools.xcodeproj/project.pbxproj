@@ -14,6 +14,7 @@
 		450069892B193867008A7499 /* ViewLanguageSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450069882B193867008A7499 /* ViewLanguageSettingsUseCase.swift */; };
 		4500698B2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4500698A2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift */; };
 		450069902B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4500698F2B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift */; };
+		450069932B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450069922B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift */; };
 		4502BD3E279F3B4D000C544A /* MobileContentFlowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */; };
 		4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */; };
 		4504BA1C2AF3ED4C001151E5 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504BA152AF3ED4C001151E5 /* TutorialViewModel.swift */; };
@@ -1393,6 +1394,7 @@
 		450069882B193867008A7499 /* ViewLanguageSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLanguageSettingsUseCase.swift; sourceTree = "<group>"; };
 		4500698A2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLanguageSettingsDomainModel.swift; sourceTree = "<group>"; };
 		4500698F2B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolLanguagesAvailableOfflineView.swift; sourceTree = "<group>"; };
+		450069922B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageAvailableOfflineLanguageView.swift; sourceTree = "<group>"; };
 		4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemView.swift; sourceTree = "<group>"; };
 		4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModel.swift; sourceTree = "<group>"; };
 		4504BA152AF3ED4C001151E5 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -2950,8 +2952,17 @@
 			isa = PBXGroup;
 			children = (
 				4500698F2B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift */,
+				450069912B194716008A7499 /* Subviews */,
 			);
 			path = ToolLanguagesAvailableOffline;
+			sourceTree = "<group>";
+		};
+		450069912B194716008A7499 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				450069922B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		4502BD3C279F3B3C000C544A /* ContentFlowItem */ = {
@@ -11653,6 +11664,7 @@
 				454BFDA22AFD8CD200104BC8 /* TractRemoteShareChannel.swift in Sources */,
 				459BD08F289AD4310075901B /* ToolTranslationsDomainModel.swift in Sources */,
 				458CFE9629D4E0B9007B423C /* ArticleCategoriesViewModel.swift in Sources */,
+				450069932B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift in Sources */,
 				4554512A28948D9A0072EC6E /* LanguageSettingsCache.swift in Sources */,
 				453AC11528F4A10400291791 /* FollowUpsApi.swift in Sources */,
 				45E066D42AE16BDD004393CD /* StoreOnboardingTutorialViewedRepository.swift in Sources */,
