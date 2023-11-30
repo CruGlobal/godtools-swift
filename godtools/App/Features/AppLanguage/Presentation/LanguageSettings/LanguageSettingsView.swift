@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LanguageSettingsView: View {
     
+    private let contentHorizontalInsets: CGFloat = 30
+    
     @ObservedObject private var viewModel: LanguageSettingsViewModel
                 
     init(viewModel: LanguageSettingsViewModel) {
@@ -25,8 +27,10 @@ struct LanguageSettingsView: View {
                 
                 LanguageSettingsAppInterfaceLanguageView(
                     viewModel: viewModel,
-                    geometry: geometry
+                    geometry: geometry,
+                    contentHorizontalInsets: contentHorizontalInsets
                 )
+                .padding([.top], 30)
             }
         }
         .navigationBarBackButtonHidden(true)
