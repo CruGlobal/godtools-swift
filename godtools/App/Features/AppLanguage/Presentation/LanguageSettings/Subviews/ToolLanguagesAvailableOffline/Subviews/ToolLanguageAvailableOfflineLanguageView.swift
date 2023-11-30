@@ -25,7 +25,7 @@ struct ToolLanguageAvailableOfflineLanguageView: View {
                     
                     Text("English")
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
-                        .foregroundColor(ColorPalette.gtGrey.color)
+                        .foregroundColor(Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1))
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -33,7 +33,7 @@ struct ToolLanguageAvailableOfflineLanguageView: View {
                 
                 Text("108.3 MB")
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
-                    .foregroundColor(ColorPalette.gtGrey.color)
+                    .foregroundColor(Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1))
                     .multilineTextAlignment(.leading)
             }
             .padding([.top, .bottom], 15)
