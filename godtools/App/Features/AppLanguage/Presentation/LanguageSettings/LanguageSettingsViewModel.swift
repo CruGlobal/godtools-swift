@@ -12,7 +12,7 @@ import Combine
 class LanguageSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase
+    private let viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
@@ -27,20 +27,22 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
     @Published var appInterfaceLanguageButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getLanguageSettingsInterfaceStringsUseCase = getLanguageSettingsInterfaceStringsUseCase
+        self.viewLanguageSettingsUseCase = viewLanguageSettingsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getLanguageSettingsInterfaceStringsUseCase.getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        viewLanguageSettingsUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+            .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
+                
+                let interfaceStrings: LanguageSettingsInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
                 self?.navTitle = interfaceStrings.navTitle
                 self?.appInterfaceLanguageTitle = interfaceStrings.appInterfaceLanguageTitle
