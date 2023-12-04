@@ -16,22 +16,25 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     private let translationsRepository: TranslationsRepository
     private let localizationServices: LocalizationServices
     private let localeLanguageName: LocaleLanguageName
+    private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName, favoritedResourcesRepository: FavoritedResourcesRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
         self.localizationServices = localizationServices
         self.localeLanguageName = localeLanguageName
+        self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
     func getDetailsPublisher(tool: ToolDomainModel, translateInToolLanguage: String) -> AnyPublisher<ToolDetailsDomainModel, Never> {
         
-        let defaultTool = ToolDetailsDomainModel(
+        let noToolDomainModel = ToolDetailsDomainModel(
             aboutDescription: "",
             bibleReferences: "",
             conversationStarters: "",
+            isFavorited: false,
             languagesAvailable: "",
             name: "",
             numberOfViews: "",
@@ -42,13 +45,13 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         guard let toolDataModel = resourcesRepository.getResource(id: tool.dataModelId),
               let toolLanguageDataModel = languagesRepository.getLanguage(code: translateInToolLanguage) else {
             
-            return Just(defaultTool)
+            return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
         
         guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: translateInToolLanguage) else {
             
-            return Just(defaultTool)
+            return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
         
@@ -110,6 +113,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             aboutDescription: translation.translatedDescription,
             bibleReferences: translation.toolDetailsBibleReferences,
             conversationStarters: translation.toolDetailsConversationStarters,
+            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.dataModelId),
             languagesAvailable: languagesAvailable,
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
