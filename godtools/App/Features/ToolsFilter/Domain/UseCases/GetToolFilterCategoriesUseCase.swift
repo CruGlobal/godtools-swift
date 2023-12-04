@@ -49,6 +49,23 @@ class GetToolFilterCategoriesUseCase {
         return createAnyCategoryDomainModel(translationLocaleId: translationLocaleId, filteredByLanguageId: nil)
     }
     
+    func getCategoryFilterPublisher(with categoryId: String?) -> AnyPublisher<CategoryFilterDomainModel?, Never> {
+        
+        guard let categoryId = categoryId else {
+            return Just<CategoryFilterDomainModel?>(nil)
+                .eraseToAnyPublisher()
+        }
+        
+        return getSettingsPrimaryLanguageUseCase.getPrimaryLanguagePublisher()
+            .flatMap { primaryLanguage in
+                
+                let categoryFilter = self.createCategoryDomainModel(with: categoryId, translationLocaleId: primaryLanguage?.localeIdentifier, filteredByLanguageId: nil)
+                
+                return Just<CategoryFilterDomainModel?>(categoryFilter)
+            }
+            .eraseToAnyPublisher()
+    }
+    
     private func createCategoryDomainModels(from ids: [String], withTranslation language: LanguageDomainModel?, filteredByLanguageId: String?) -> [CategoryFilterDomainModel] {
 
         let translationLocaleId: String? = language?.localeIdentifier
@@ -63,19 +80,26 @@ class GetToolFilterCategoriesUseCase {
                 return nil
             }
             
-            let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translationLocaleId, key: "tool_category_\(categoryId)")
-            
-            let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
-            
-            return CategoryFilterDomainModel(
-                type: .category(id: categoryId),
-                translatedName: translatedName,
-                toolsAvailableText: toolsAvailableText,
-                searchableText: translatedName
-            )
+            return self.createCategoryDomainModel(with: categoryId, translationLocaleId: translationLocaleId, filteredByLanguageId: filteredByLanguageId)
         }
         
         return [anyCategory] + categories
+    }
+    
+    private func createCategoryDomainModel(with categoryId: String, translationLocaleId: String?, filteredByLanguageId: String?) -> CategoryFilterDomainModel {
+        
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguageId: filteredByLanguageId)
+        
+        let translatedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translationLocaleId, key: "tool_category_\(categoryId)")
+        
+        let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
+        
+        return CategoryFilterDomainModel(
+            type: .category(id: categoryId),
+            translatedName: translatedName,
+            toolsAvailableText: toolsAvailableText,
+            searchableText: translatedName
+        )
     }
     
     private func createAnyCategoryDomainModel(translationLocaleId: String?, filteredByLanguageId: String?) -> CategoryFilterDomainModel {

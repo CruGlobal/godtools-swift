@@ -140,7 +140,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolLanguageFilterTappedFromTools(let languageFilterSelectionPublisher, let selectedCategory):
             navigationController.pushViewController(getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: languageFilterSelectionPublisher, selectedCategory: selectedCategory), animated: true)
+        
+        case .categoryTappedFromToolCategoryFilter:
+            navigationController.popViewController(animated: true)
             
+        case .languageTappedFromToolLanguageFilter:
+            navigationController.popViewController(animated: true)
+
         case .backTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
             
@@ -784,8 +790,9 @@ extension AppFlow {
     private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
-            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
-            searchToolFilterCategoriesUseCase: appDiContainer.domainLayer.getSearchToolFilterCategoriesUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
+            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
+            storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
@@ -816,8 +823,9 @@ extension AppFlow {
     private func getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
-            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-            searchToolFilterLanguagesUseCase: appDiContainer.domainLayer.getSearchToolFilterLanguagesUseCase(),
+            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
+            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
+            storeUserFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
             selectedCategory: selectedCategory,
