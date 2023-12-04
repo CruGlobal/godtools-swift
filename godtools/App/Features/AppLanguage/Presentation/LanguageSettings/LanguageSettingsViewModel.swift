@@ -82,6 +82,7 @@ extension LanguageSettingsViewModel {
     
     func editDownloadedLanguagesTapped() {
         
+        flowDelegate?.navigate(step: .editDownloadedLanguagesTappedFromLanguageSettings)
     }
     
     func pageViewed() {
