@@ -1,4 +1,7 @@
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
+"languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "لا تهتم";
 "languageSettings.appInterface.title" = "لغة واجهة التطبيق";
 "languageSettings.appInterface.message" = "عيّن اللغة التي تريد أن يظهر بها التطبيق بالكامل.";
 "languageSettings.appInterface.languagesAvailable" = "اللغات المتاحة";
@@ -12,6 +15,7 @@
 "createAccount.title" = "إنشاء حساب";
 "createAccount.subtitle" = "قم بإنشاء حساب للحصول على قصص حقيقية وتشجيع ونصائح عملية في متناول يدك.";
 "signIn.title" = "تسجيل دخول";
+"signIn.facebook" = "تسجيل الدخول بفيسبوك.";
 "menu_getStarted" = "ابدأ";
 "menu_support" = "دعم";
 "menu_about" = "حول";
@@ -38,6 +42,10 @@
 "account.activity.languagesUsed" = "اللغات المستخدمة";
 
 "account.activity.sessions" = "الجلسات";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "صور مشاركة  %d";
+
 "account.globalActivity.title" = "النشاط العالمي";
 "toolDetails.conversationStarters.title" = "بدايات المحادثة";
 

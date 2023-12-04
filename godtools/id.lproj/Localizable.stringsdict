@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Alat dibuka</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Pelajaran diselesaikan</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Layar dibagikan</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Bahasa-bahasa yang digunakan</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -83,7 +83,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sesi-Sesi</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -97,7 +97,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d Alat tersedia</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>

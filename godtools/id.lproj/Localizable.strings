@@ -1,3 +1,18 @@
+"onboardingTutorial.chooseLanguageButton.title" = "Pilih bahasa";
+"languageSettings.confirmAppLanguage.message" = "Saudara telah memilih %@ sebagai bahasa aplikasi Saudara. Ini akan mengubah bahasa seluruh aplikasi GodTools. Apa Saudara yakin?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mengubah bahasa";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Tidak apa";
+"languageSettings.appInterface.title" = "Bahasa antar-muka aplikasi";
+"languageSettings.appInterface.message" = "Tetapkan bahasa yang Saudara inginkan untuk menampilkan seluruh aplikasi.";
+"languageSettings.appInterface.languagesAvailable" = "Bahasa yang tersedia";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Bahasa alat tersedia secara offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Unduh semua alat dalam satu bahasa agar dapat dibuka meskipun Saudara tidak terhubung WiFi atau layanan seluler. Atur bahasa alat melalui tombol opsi di dalam alat.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit bahasa yang telah diunduh";
+"allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Kategori apa pun";
+"allTools.filter.anyLanguage" = "Bahasa apapun";
+"languageSettings.appLanguage.title" = "Bahasa App";
+"authError.userAccountNotFound.message" = "Pengguna tidak ditemukan";
 "createAccount.title" = "Membuat akun";
 "createAccount.subtitle" = "Buat akun untuk mendapatkan kisah-kisah nyata, dorongan, dan tip praktis dengan ujung jari Saudara.";
 "deleteAccountProgress.title" = "Menghapus akun";
@@ -84,6 +99,7 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Tidak tersedia dalam %@";
 
+"menu.deleteAccount" = "Hapus akun";
 "tool_menu_item.tools" = "Sarana";
 "lessons.pageTitle" = "Pelajaran-pelajaran untuk Anda";
 "lessons.pageSubtitle" = "Ide-ide praktis membangun hubungan dan memulai percakapan yang bermakna.";
@@ -118,12 +134,49 @@
 "allTools.categories.title" = "Kategori";
 "training_tip_ask" = "Tanya";
 "training_tip_consider" = "Pertimbangkan";
+"training_tip_prepare" = "Persiapan";
+"training_tip_quote" = "Kutip";
+"training_tip_tip" = "Saran";
+"start_training" = "Mulai Latihan";
+"close" = "Selesai";
 "tool_menu_item.lessons" = "Pelajaran";
 "parallelLanguage.yesButton.title" = "Ya";
 "parallelLanguage.noButton.title" = "Tidak, terima kasih.";
+"parallelLanguage.selectButton.title" = "Pilih";
 "parallelLanguage.getStartedButton.title" = "Mari Mulai";
 "parallelLanguage.selectLanguageButton.title" = "Pilih bahasa";
 "parellelLanguage.prompt" = "Apakah Anda ingin menyetel bahasa sekunder?";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Tutup tutorial";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Semua Sarana";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Setiap sarana dibuat untuk tahap percakapan yang berbeda– sebelum, selama, atau sesudahnya.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Sarana Tips";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "Panduan Tips GodTools ketika Anda membantu seseorang memahami Injil dan berjumpa Yesus.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Berbagi layar";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Sekarang Anda dapat membagikan layar Anda dari jarak jauh sehingga orang lain dapat mengikuti saat Anda menggunakan sarana untuk membahas Injil.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Pelajaran";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "Dalam setiap pelajaran GodTools Anda mempelajari sesuatu untuk membantu Anda melakukan percakapan nyata tentang Tuhan.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Temukan tutorial ini di menu saat Anda membutuhkannya.";
+
 "onboardingTutorial.beginButton.title" = "Mulai";
 "onboardingQuickStart.2.title" = "Saya ingin membagikan Injil dengan seseorang";
 "onboardingQuickStart.2.button.title" = "Pilih salah satu alat kami";
@@ -157,6 +210,7 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "load_tool_remote_session.message" = "Memulai Berbagi Layar...";
 "learn_to_share_tool.learn_to_share.title" = "Belajar bagaimana membagikan sarana ini dengan orang lain.";
 "learn_to_share_tool.learn_to_share.message" = "Berlatihlah menggunakan tips sebanyak yang Anda butuhkan untuk merasa percaya diri membagikan alat ini kepada orang lain.";
+"learn_to_share_tool.tips_light_the_way.title" = "Saran untuk membuka jalan";
 "learn_to_share_tool.tips_light_the_way.message" = "Pada layar tertentu, Anda akan melihat berbagai ikon. Tekan ikon untuk menampilkan tip yang akan membantu Anda berbicara tentang konten layar.";
 "learn_to_share_tool.light_up_the_tips.title" = "Buka tips";
 "lesson_evaluation.title" = "Melihat kembali";
@@ -348,14 +402,23 @@ Kolose 4:6";
 "account.navTitle" = "Profilku";
 "card_status2" = "Berikutnya";
 
+"account.activity.title" = "Aktifitas";
+
 // Language Name Strings
 "language_name_fa" = "Persia (Farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Aktifitas Global";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Selamat Datang";
+"accountActivity.globalAnalytics.users.title" = "Pengguna unik";
 "onboardingWelcome.titleLabel.tagline" = "Membantu Saudara Membagikan Iman Saudara";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Presentasi Injil";
+"accountActivity.globalAnalytics.launches.title" = "Sesi-Sesi";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Bagikan Dengan Orang Lain";
+"accountActivity.globalAnalytics.countries.title" = "Negara-negara";
+
 "onboardingTutorial.aboutAppItem.0.message" = "GodTools dibangun untuk memandu percakapan iman Saudara";
 "onboardingTutorial.aboutAppItem.1.title" = "Pilih Sarana Saudara";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools membantu Saudara sebelum, selama, dan setelah percakapan rohani";

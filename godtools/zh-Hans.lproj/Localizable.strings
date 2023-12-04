@@ -1,6 +1,37 @@
 "onboardingTutorial.chooseLanguageButton.title" = "选择语言";
+"languageSettings.confirmAppLanguage.message" = "您已选择 %@ 作为您的应用语言。此操作将更改整个GodTools应用的语言。您确定吗？";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "更改语言";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "没关系";
+"languageSettings.appInterface.title" = "应用界面语言";
+"languageSettings.appInterface.message" = "设置您希望整个应用显示的语言。";
+"languageSettings.appInterface.languagesAvailable" = "可用语言";
+"languageSettings.toolLanguagesAvailableOffline.title" = "离线可用的工具语言";
+"languageSettings.toolLanguagesAvailableOffline.message" = "将某种语言的所有工具下载下来，这样，即使您没有WiFi或移动网络，也可以使用这些工具。请通过工具中的选项按钮设置工具语言。";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "编辑下载的语言";
+"allTools.filter.title" = "筛选";
 "allTools.filter.anyCategory" = "任何类别";
 "allTools.filter.anyLanguage" = "任何语言";
+"allTools.filter.navBar.language" = "按语言筛选";
+"allTools.filter.navBar.category" = "按类别筛选";
+"languageSettings.appLanguage.title" = "应用语言";
+"authError.userAccountAlreadyExists.message" = "用户账户已存在。";
+"authError.userAccountNotFound.message" = "找不到用户账户。";
+"createAccount.title" = "创建账户";
+"createAccount.subtitle" = "创建账户，让真实故事、励志金句和实用技巧触手可及。";
+"deleteAccountProgress.title" = "删除账户...";
+"confirmDeleteAccount.title" = "您确定吗？";
+"confirmDeleteAccount.confirmButton.title" = "删除账户";
+"accountDeletedAlert.title" = "已删除账户";
+"accountDeletedAlert.message" = "您的账户已被删除。";
+"deleteAccount.title" = "别这么快离开";
+"deleteAccount.subtitle" = "如果你删除了账户，就无法访问你收藏的工具或账户活动。";
+"deleteAccount.confirmButton.title" = "删除我的账户";
+"deleteAccount.cancelButton.title" = "保留我的账户";
+"signIn.title" = "注册";
+"signIn.subtitle" = "登录账户，让真实故事、励志金句和实用技巧触手可及。";
+"signIn.google" = "使用Google登录";
+"signIn.facebook" = "使用Facebook登录";
+"signIn.apple" = "继续使用Apple";
 "menu_getStarted" = "开始体验";
 "menu_support" = "支持";
 "menu_about" = "关于";
@@ -8,6 +39,61 @@
 "menu.reportABug" = "报告错误";
 "menu.askAQuestion" = "提问";
 "menu.leaveAReview" = "发表评论";
+"account.badges.sectionTitle" = "您的徽章";
+"account.activity.sectionTitle" = "您的活动";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "打开工具";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "完成课节";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "屏幕共享";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "分享链接";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "使用语言";
+
+"account.activity.sessions" = "会话";
+"badges.tipsCompleted.singular" = "完成了1 个培训提示";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "阅读%d篇文章";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "阅读1篇文章";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "分享了 %d 张图片";
+
+"badges.imagesShared.singular" = "分享了1 张图片";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "完成了 %d 节课";
+
+"badges.lessonsCompleted.singular" = "完成了 1 节课";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "打开了 %d 个工具";
+
+"badges.toolsOpened.singular" = "打开了 1 个工具";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "完成了 %d 个培训提示";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "已加入%@";
+
+"account.globalActivity.title" = "全球活动";
+"toolDetails.conversationStarters.title" = "开场白";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "概述";
+
+"toolDetails.bibleReferences.title" = "圣经参考文献";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "关于";
@@ -18,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "语版本不可用 %@";
 
+"menu.deleteAccount" = "删除账户";
+"alert.mailAppUnavailable.title" = "邮件应用不可用";
+"alert.mailAppUnavailable.message" = "本机邮件应用在此设备上未配置或不可用。";
 "tool_menu_item.tools" = "工具";
 "lessons.pageTitle" = "为你制定的课程";
 "lessons.pageSubtitle" = "建立关系，开启有意义对话的实用点子";
@@ -58,6 +147,7 @@
 "start_training" = "开始培训";
 "close" = "关闭";
 "tool_menu_item.lessons" = "课程 ";
+"parallelLanguage.yesButton.title" = "是";
 "parallelLanguage.noButton.title" = "不了，谢谢";
 "parallelLanguage.selectButton.title" = "选择";
 "parallelLanguage.getStartedButton.title" = "开始体验";
@@ -66,6 +156,18 @@
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "关闭教程";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "工具";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "每个工具都是为对话的不同阶段而制定——对话前，对话中，对话后";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "工具提示";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodTools 提示在你帮助某人理解福音遇见耶稣时指引你";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.screenShare.title" = "分享屏幕";
@@ -87,11 +189,11 @@
 "onboardingQuickStart.2.button.title" = "选择我们的一个工具";
 "onboardingTutorial.nextButton.title" = "下一个";
 "onboardingQuickStart.title" = "快速入门链接";
-"onboardingQuickStart.0.title" = "我想探索基督教";
+"onboardingQuickStart.0.title" = "我想更多了解耶稣是谁。";
 "onboardingQuickStart.0.button.title" = "阅读我们的文章";
 "onboardingQuickStart.1.title" = "我想了解如何进行福音对话";
 "onboardingQuickStart.1.button.title" = "试听我们的课程";
-"tool_offline_favorite_message" = "点击工具的心形图标，将其添加到收藏夹，使该工具可离线使用。";
+"tool_offline_favorite_message" = "要离线使用某个工具，请点击心形图标将其添加到收藏夹。";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "对话开场白";
@@ -111,6 +213,12 @@
 "share_tool_remote_link_message" = "嗨，在GodTools中通过屏幕共享功能与我保持同步。这是链接：%@ 如果你之后才收到这条消息，这个链接可能已失效。我们可以换个时间再试一次。";
 "exit_tract_remote_share_session.message" = "立即退出远程共享会话？";
 "load_tool_remote_session.message" = "正在启动屏幕共享…";
+"learn_to_share_tool.learn_to_share.title" = "学习与任何人分享此工具";
+"learn_to_share_tool.learn_to_share.message" = "练习尽可能多地使用你需要的提示，使你更自信地分享这个工具";
+"learn_to_share_tool.tips_light_the_way.title" = "照亮前方的路之提示";
+"learn_to_share_tool.tips_light_the_way.message" = "在选择屏幕上，您将看到各种图标。按下这个图标就会显示一个提示，帮助你谈论屏幕上的内容。";
+"learn_to_share_tool.light_up_the_tips.title" = "点亮提示";
+"learn_to_share_tool.light_up_the_tips.message" = "如果一个提示亮了，表示你已经完成那块培训。练习尽可能多地使用你需要的提示，使你更自信地讲解这个工具";
 "lesson_evaluation.title" = "回顾";
 "lesson_evaluation.wasThisHelpful" = "这个课程对你有帮助吗？";
 "lesson_evaluation.shareFaith" = "对于开启一场属灵对话你感觉自己准备的程度如何？";
@@ -201,8 +309,8 @@
 "help" = "常见问题";
 "contact_us" = "联系我们";
 "preview_mode_translators_only" = "预览模式（仅限译员）";
-"share_god_tools" = "分享GodTools应用";
-"share_a_story_with_us" = "和我们分享你的使用心得";
+"share_god_tools" = "分享GodTools";
+"share_a_story_with_us" = "与我们分享故事";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私政策";
 "copyright_info" = "版权信息";

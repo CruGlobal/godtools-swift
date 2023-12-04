@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Mở công cụ</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Hoàn thành bài học</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Chia sẻ màn hình</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Ngôn ngữ sử dụng</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -83,7 +83,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Phần</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -97,7 +97,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d công cụ sẵn có</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -111,7 +111,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Đã chia sẻ %d hình ảnh</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -139,7 +139,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Đã hoàn thành %d bài học</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -153,7 +153,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Đã mở %d công cụ</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -167,7 +167,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Đã hoàn thành %d gợi ý hướng dẫn</string>
 </dict>
 </dict>
 </dict>
