@@ -41,7 +41,13 @@ class LanguageSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        viewLanguageSettingsUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> in
+                
+                return self.viewLanguageSettingsUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
                 

@@ -18,19 +18,14 @@ class ViewLanguageSettingsUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> {
         
-        appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> in
+        return self.getInterfaceStringsRepository
+            .getStringsPublisher(translateInAppLanguage: appLanguage)
+            .map {
                 
-                return self.getInterfaceStringsRepository
-                    .getStringsPublisher(translateInAppLanguage: appLanguage)
-                    .map {
-                        
-                        return ViewLanguageSettingsDomainModel(interfaceStrings: $0)
-                    }
-                    .eraseToAnyPublisher()
-            })
+                return ViewLanguageSettingsDomainModel(interfaceStrings: $0)
+            }
             .eraseToAnyPublisher()
     }
 }
