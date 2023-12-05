@@ -18,9 +18,24 @@ struct DownloadableLanguagesView: View {
     }
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .navigationBarBackButtonHidden(true)
-            .navigationTitle(viewModel.navTitle)
-            .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+        
+        VStack(spacing: 0) {
+                                    
+            SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            
+//            List {
+//                ForEach(viewModel.appLanguageSearchResults) { appLanguage in
+//
+//                    AppLanguageItemView(appLanguage: appLanguage) {
+//
+//                        viewModel.appLanguageTapped(appLanguage: appLanguage)
+//                    }
+//                }
+//            }
+//            .listStyle(.inset)
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(viewModel.navTitle)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

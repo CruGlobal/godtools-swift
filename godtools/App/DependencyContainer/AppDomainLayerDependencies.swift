@@ -314,4 +314,10 @@ class AppDomainLayerDependencies {
             userAuthentication: dataLayer.getUserAuthentication()
         )
     }
+    
+    func getViewSearchBarUseCase() -> ViewSearchBarUseCase {
+        return ViewSearchBarUseCase(
+            getInterfaceStringsRepository: dataLayer.getSearchBarInterfaceStringsRepositoryInterface()
+        )
+    }
 }

@@ -15,6 +15,8 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let storeUserFiltersUseCase: StoreUserFiltersUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     private let selectedLanguage: LanguageFilterDomainModel
     
@@ -28,13 +30,15 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, flowDelegate: FlowDelegate?) {
+    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
         
         self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.storeUserFiltersUseCase = storeUserFiltersUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewSearchBarUseCase = viewSearchBarUseCase
         self.selectedLanguage = selectedLanguage
         self.selectedCategory = categoryFilterSelectionPublisher.value
         self.flowDelegate = flowDelegate
@@ -65,7 +69,8 @@ extension ToolFilterCategorySelectionViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
+            viewSearchBarUseCase: viewSearchBarUseCase
         )
     }
     

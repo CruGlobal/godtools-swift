@@ -13,6 +13,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
+    private let viewSearchBarUseCase: ViewSearchBarUseCase
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -20,13 +21,15 @@ class DownloadableLanguagesViewModel: ObservableObject {
 
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
+    @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
+        self.viewSearchBarUseCase = viewSearchBarUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -56,6 +59,11 @@ extension DownloadableLanguagesViewModel {
     @objc func backTapped() {
         
         flowDelegate?.navigate(step: .backTappedFromDownloadedLanguages)
+    }
+    
+    func getSearchBarViewModel() -> SearchBarViewModel {
+        
+        return SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     }
 }
 
