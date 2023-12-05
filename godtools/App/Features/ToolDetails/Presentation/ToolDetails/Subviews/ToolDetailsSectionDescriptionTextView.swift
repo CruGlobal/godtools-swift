@@ -12,6 +12,10 @@ struct ToolDetailsSectionDescriptionTextView: View {
         
     private let geometry: GeometryProxy
     private let text: String
+    private let textColor: ColorPalette = ColorPalette.gtGrey
+    private let textFont: FontLibrary = FontLibrary.sfProTextRegular
+    private let fontSize: CGFloat = 16
+    private let lineSpacing: CGFloat = 3
     
     @ObservedObject private var viewModel: ToolDetailsViewModel
     
@@ -26,16 +30,16 @@ struct ToolDetailsSectionDescriptionTextView: View {
         
         VStack(alignment: .center, spacing: 0) {
            
-            TextWithLinks(
+            BackwardsCompatibleTextWithLinks(
+                geometry: geometry,
                 text: text,
-                textColor: ColorPalette.gtGrey.uiColor,
-                font: FontLibrary.sfProTextRegular.uiFont(size: 16),
-                lineSpacing: 3,
-                width: geometry.size.width - ToolDetailsView.sectionDescriptionTextInsets.leading - ToolDetailsView.sectionDescriptionTextInsets.trailing,
-                adjustsFontForContentSizeCategory: true,
-                didInteractWithUrlClosure: { (url: URL) in
+                textColor: textColor,
+                textFont: textFont,
+                fontSize: fontSize,
+                lineSpacing: lineSpacing,
+                urlTappedClosure: { (url: URL) in
+                    
                     viewModel.urlTapped(url: url)
-                    return true
                 }
             )
         }
