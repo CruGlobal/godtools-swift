@@ -21,6 +21,12 @@ class LessonsFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getLessonsInterfaceStringsRepositoryInterface() -> GetLessonsInterfaceStringsRepositoryInterface {
+        return GetLessonsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getLessonsListRepositoryInterface() -> GetLessonsListRepositoryInterface {
         return GetLessonsListRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
