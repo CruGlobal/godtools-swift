@@ -64,6 +64,11 @@ class ResourcesRepository {
         return cache.getSpotlightTools()
     }
     
+    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
+        
+        return cache.getResourcesByFilter(filter: filter)
+    }
+    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
