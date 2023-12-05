@@ -167,7 +167,7 @@ extension OnboardingFlow {
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,
-            toggleVisibilityPublisher: viewModel.hidesSkipButtonPublisher
+            toggleVisibilityPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         
         let hostingView = AppHostingController<OnboardingTutorialView>(
