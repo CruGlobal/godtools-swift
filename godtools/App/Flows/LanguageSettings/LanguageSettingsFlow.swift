@@ -87,7 +87,11 @@ extension LanguageSettingsFlow {
     
     func getDownloadableLanguagesView() -> UIViewController {
         
-        let viewModel = DownloadableLanguagesViewModel(flowDelegate: self)
+        let viewModel = DownloadableLanguagesViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewDownloadableLanguagesUseCase()
+        )
         
         let view = DownloadableLanguagesView(viewModel: viewModel)
         

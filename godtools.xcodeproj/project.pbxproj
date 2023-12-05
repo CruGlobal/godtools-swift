@@ -1329,6 +1329,11 @@
 		D471CFD328B9532100DCE61C /* LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471CFD228B9532100DCE61C /* LanguageSupportable.swift */; };
 		D47DF01B2B1E60990079219B /* DownloadableLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF01A2B1E60990079219B /* DownloadableLanguagesView.swift */; };
 		D47DF01D2B1E60A60079219B /* DownloadableLanguagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF01C2B1E60A60079219B /* DownloadableLanguagesViewModel.swift */; };
+		D47DF01F2B1E73510079219B /* ViewDownloadableLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF01E2B1E73510079219B /* ViewDownloadableLanguagesUseCase.swift */; };
+		D47DF0212B1E739B0079219B /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0202B1E739B0079219B /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift */; };
+		D47DF0232B1E73EB0079219B /* ViewDownloadableLanguagesDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0222B1E73EB0079219B /* ViewDownloadableLanguagesDomainModel.swift */; };
+		D47DF0252B1E74250079219B /* DownloadableLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0242B1E74250079219B /* DownloadableLanguagesInterfaceStringsDomainModel.swift */; };
+		D47DF0272B1E76F20079219B /* GetDownloadableLanguagesInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0262B1E76F20079219B /* GetDownloadableLanguagesInterfaceStringsRepository.swift */; };
 		D48018C028EF650700389565 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018BF28EF650700389565 /* DashboardView.swift */; };
 		D48018C228EF6A7200389565 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018C128EF6A7100389565 /* DashboardViewModel.swift */; };
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
@@ -2729,6 +2734,11 @@
 		D471CFD228B9532100DCE61C /* LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSupportable.swift; sourceTree = "<group>"; };
 		D47DF01A2B1E60990079219B /* DownloadableLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguagesView.swift; sourceTree = "<group>"; };
 		D47DF01C2B1E60A60079219B /* DownloadableLanguagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguagesViewModel.swift; sourceTree = "<group>"; };
+		D47DF01E2B1E73510079219B /* ViewDownloadableLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDownloadableLanguagesUseCase.swift; sourceTree = "<group>"; };
+		D47DF0202B1E739B0079219B /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		D47DF0222B1E73EB0079219B /* ViewDownloadableLanguagesDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDownloadableLanguagesDomainModel.swift; sourceTree = "<group>"; };
+		D47DF0242B1E74250079219B /* DownloadableLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		D47DF0262B1E76F20079219B /* GetDownloadableLanguagesInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadableLanguagesInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		D48018BF28EF650700389565 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D48018C128EF6A7100389565 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3233,6 +3243,7 @@
 				450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */,
 				45DB188F2AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift */,
 				450DB55B2AC3545300B2FE3A /* GetDeviceAppLanguageRepositoryInterface.swift */,
+				D47DF0202B1E739B0079219B /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift */,
 				453D2F7F2AD88C1D001C44E3 /* GetLanguageSettingsInterfaceStringsRepositoryInterface.swift */,
 				450DB55D2AC3548B00B2FE3A /* GetUserPreferredAppLanguageRepositoryInterface.swift */,
 				4585BF652AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift */,
@@ -3248,7 +3259,9 @@
 				450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */,
 				45AF07152B06666B000EACF2 /* AppLanguageNameDomainModel.swift */,
 				45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */,
+				D47DF0242B1E74250079219B /* DownloadableLanguagesInterfaceStringsDomainModel.swift */,
 				453D2F7D2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift */,
+				D47DF0222B1E73EB0079219B /* ViewDownloadableLanguagesDomainModel.swift */,
 				4500698A2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift */,
 			);
 			path = Entities;
@@ -7473,6 +7486,7 @@
 				45B3F4332AC3A82E00D61BFD /* GetAppLanguagesListRepository.swift */,
 				45DB188D2AD7906900E9578F /* GetAppLanguagesRepository.swift */,
 				45B3F4352AC3A82E00D61BFD /* GetDeviceAppLanguageRepository.swift */,
+				D47DF0262B1E76F20079219B /* GetDownloadableLanguagesInterfaceStringsRepository.swift */,
 				453D2F812AD88C2B001C44E3 /* GetLanguageSettingsInterfaceStringsRepository.swift */,
 				45B3F4372AC3A82E00D61BFD /* GetUserPreferredAppLanguageRepository.swift */,
 				45B3F4382AC3A82E00D61BFD /* SetUserPreferredAppLanguageRepository.swift */,
@@ -9192,6 +9206,7 @@
 				4569C5012AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift */,
 				45ACEE192AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift */,
 				4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */,
+				D47DF01E2B1E73510079219B /* ViewDownloadableLanguagesUseCase.swift */,
 				450069882B193867008A7499 /* ViewLanguageSettingsUseCase.swift */,
 			);
 			path = UseCases;
@@ -10709,6 +10724,7 @@
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
 				45FE82592ACE5D8C00930C39 /* NavBarItemControllerType.swift in Sources */,
 				450DB5662AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift in Sources */,
+				D47DF01F2B1E73510079219B /* ViewDownloadableLanguagesUseCase.swift in Sources */,
 				45052144295F3B9D0018ABD0 /* UserCountersAPI.swift in Sources */,
 				45645C142AFE770600BD233D /* GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface.swift in Sources */,
 				45645C1A2AFE78A200BD233D /* ShareToolScreenShareSessionView.swift in Sources */,
@@ -10732,6 +10748,7 @@
 				456D445A2AF2A617008F61B9 /* AuthenticationProviderInterface.swift in Sources */,
 				45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */,
 				453AC11328F4A10400291791 /* RealmFollowUp.swift in Sources */,
+				D47DF0232B1E73EB0079219B /* ViewDownloadableLanguagesDomainModel.swift in Sources */,
 				45E62FBA2AFA927B00FFEC61 /* ToolScreenShareFlow.swift in Sources */,
 				4504D00428BD00E400D8A5FD /* GodToolsParserLogger.swift in Sources */,
 				4567777E287DB21F0044AEB2 /* ToolTrainingView.swift in Sources */,
@@ -10808,6 +10825,7 @@
 				45A833572ADEC4D3007C8D77 /* InvisibleChooseAppLanguageButtonForNavigationBar.swift in Sources */,
 				45DD84A12A8BB72F0066A020 /* OpenTutorialBannerView.swift in Sources */,
 				454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */,
+				D47DF0252B1E74250079219B /* DownloadableLanguagesInterfaceStringsDomainModel.swift in Sources */,
 				459E86EC28EDA86C00E197A5 /* DeepLinkingParserManifestAppsFlyer.swift in Sources */,
 				45FB160F27DBDDB60009DF8E /* LanguageSettingsFlow.swift in Sources */,
 				45920D502A8D3D1800E336A8 /* ToolsView.swift in Sources */,
@@ -11108,6 +11126,7 @@
 				45E066CC2AE1687C004393CD /* GetOnboardingTutorialViewedRepository.swift in Sources */,
 				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45ACEE182AD04926004B62E4 /* AppLanguageStringKeys.swift in Sources */,
+				D47DF0212B1E739B0079219B /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				45369AD62AFA7FA500BD10F0 /* ToolScreenShareTutorialPageMediaDomainModel.swift in Sources */,
 				45DBE6102ACD9EAB008A93BF /* GetLanguageAvailablityUseCase.swift in Sources */,
@@ -11500,6 +11519,7 @@
 				45FB160B27DBDDB60009DF8E /* OnboardingFlow.swift in Sources */,
 				45E3476E2A49BE230014CCD1 /* Flow+PresentAlert.swift in Sources */,
 				45E585162A8E4497005B20A6 /* AllYourFavoriteToolsView.swift in Sources */,
+				D47DF0272B1E76F20079219B /* GetDownloadableLanguagesInterfaceStringsRepository.swift in Sources */,
 				455583D6269F2DA500C3FF14 /* MobileContentTabsViewModel.swift in Sources */,
 				4561B40F295B32E700F5AF5B /* OnboardingQuickStartViewModel.swift in Sources */,
 				45AE973F27C97A9400C2CB33 /* MultiplatformContent.swift in Sources */,
