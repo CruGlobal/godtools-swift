@@ -17,8 +17,6 @@ class AppViewController: UIViewController {
         self.navigationBar = navigationBar
         
         super.init(nibName: nil, bundle: nil)
-        
-        navigationBar?.configure(viewController: self)
     }
     
     init(nibName: String?, bundle: Bundle?, navigationBar: AppNavigationBar?) {
@@ -36,6 +34,8 @@ class AppViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationBar?.configure(viewController: self)
         
         navigationBar?.willAppear(animated: animated)
     }
