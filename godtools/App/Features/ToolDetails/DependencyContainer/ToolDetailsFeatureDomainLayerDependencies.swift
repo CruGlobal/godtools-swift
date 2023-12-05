@@ -21,12 +21,6 @@ class ToolDetailsFeatureDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getToolDetailsInterfaceStringsUseCase() -> GetToolDetailsInterfaceStringsUseCase {
-        return GetToolDetailsInterfaceStringsUseCase(
-            getToolDetailsInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository()
-        )
-    }
-    
     func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {
         return GetToolDetailsLearnToShareToolIsAvailableUseCase(
             getToolDetailsLearnToShareToolIsAvailableRepository: dataLayer.getToolDetailsLearnToShareToolIsAvailableRepository()
@@ -38,15 +32,10 @@ class ToolDetailsFeatureDomainLayerDependencies {
             getToolDetailsMediaRepository: dataLayer.getToolDetailsMediaRepository()
         )
     }
-    
-    func getToolDetailsToolIsFavoritedUseCase() -> GetToolDetailsToolIsFavoritedUseCase {
-        return GetToolDetailsToolIsFavoritedUseCase(
-            getToolDetailsToolIsFavoritedRepository: dataLayer.getToolDetailsToolIsFavoritedRepository()
-        )
-    }
-    
-    func getToolDetailsUseCase() -> GetToolDetailsUseCase {
-        return GetToolDetailsUseCase(
+
+    func getViewToolDetailsUseCase() -> ViewToolDetailsUseCase {
+        return ViewToolDetailsUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository(),
             getToolDetailsRepository: dataLayer.getToolDetailsRepository()
         )
     }
