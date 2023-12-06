@@ -10,4 +10,6 @@ import Foundation
 
 struct ViewLearnToShareToolDomainModel {
     
+    let interfaceStrings: LearnToShareToolInterfaceStringsDomainModel
+    let tutorialItems: [LearnToShareToolItemDomainModel]
 }

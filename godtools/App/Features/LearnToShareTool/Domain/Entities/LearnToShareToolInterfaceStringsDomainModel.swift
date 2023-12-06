@@ -10,4 +10,6 @@ import Foundation
 
 struct LearnToShareToolInterfaceStringsDomainModel {
     
+    let nextTutorialItemActionTitle: String
+    let startTrainingActionTitle: String
 }

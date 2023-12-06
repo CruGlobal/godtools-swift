@@ -60,8 +60,8 @@ class LearnToShareToolFlow: Flow {
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
             tool: tool,
-            getLearnToShareToolItemsUseCase: appDiContainer.domainLayer.getLearnToShareToolItemsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewLearnToShareToolUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getViewLearnToShareToolUseCase()
         )
         
         let view = LearnToShareToolView(viewModel: viewModel)
