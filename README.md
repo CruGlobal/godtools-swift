@@ -17,12 +17,12 @@ GodTools
 
 ![alt text](ReadMeAssets/clean_architecture.png)
 
-The GodTools app architecture follows the Clean Architecture Pattern (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic).
+The GodTools app architecture consists of 3 layers (Presentation Layer, Domain Layer, and Data Layer), along with a Coordinator Pattern (Navigation decisions and logic).
 
 #### Clean Architecture Pattern:
-- Presentation Layer (View and ViewModel)
+- Presentation Layer: (View and ViewModel)
 - Domain Layer (Use Cases, Domain Models, and Data Layer Interfaces)
-- Data Layer (Repositories, Networking, Peristence, and other Data Connectivity)
+- Data Layer (Implements domain layer interfaces and consists of Repositories, Networking, Peristence, and other Data Connectivity)
 
 #### Purpose of this Architecture:
 - Creates a clear separation of concerns and responsibilities.
@@ -41,7 +41,7 @@ The GodTools app architecture follows the Clean Architecture Pattern (Presentati
 ##### View
 - Rendering logic (SwiftUI).
 - Animation logic (SwiftUI).
-- References a ViewModel.
+- References a ViewModel using property wrapper @ObservedObject.
 - Observes ViewModel output via @Published properties.
 - Sends inputs to the ViewModel (button tap, text input, page viewed, etc.).
 
@@ -50,12 +50,27 @@ The GodTools app architecture follows the Clean Architecture Pattern (Presentati
 - Accepts inputs from the View (button tap, text input, page viewed, etc.).
 - Communicates to the Domain Layer via UseCases which are injected upon initialization.
 - Provides output to the View via @Published properties that the View can react to.
+- Manages the state of the View.  Our ViewModels will implement ObservableObject to take advantage of using @Published properties. 
 
-##### Domain Layer
+#### Domain Layer
+
+- The domain layer makes up the business aspect of the app by utilizing Use Cases to define the business scenario on behalf of a user and domain models to model app specific data. The domain layer in GodTools is broken into 3 primary categories (Use Cases, Interfaces, and Domain Models).
+
+##### Use Cases
+- Defines a business scenario in most cases on behalf of a specific user.  An example in GodTools could be a user viewing a particular screen, or a user searching for an app language in the app languages list, or a user authenticating.
+- Once a use case is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the use case.
+- Use cases will consist of a single method that typically takes 1 or more inputs and produces and Combine Publisher output.  In most situations the Combine Publisher will produce a Domain Model.
+
+##### Interfaces
+- All use cases will be composed of 1 or more interfaces to accomplish dependency inversion.  In most situations these interfaces will be some type of repository interface for fetching data or an interface to perform some sort of service on the data layer.
+- Interfaces should also define any clear inputs to accomplish the intent and produce a Combine Publisher output.  In most situations the Combine Publisher will produce a Domain Model.  
+
+##### Domain Models
+- These will model app specific data.  This is typically data users will visually see and interact with.
+
 
 
 // TODO: Complete here on down.
-
 
 #### Conventions
 
