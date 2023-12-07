@@ -83,9 +83,9 @@ struct LessonsView_Preview: PreviewProvider {
         
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            getLessonsListUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsListUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
