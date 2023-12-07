@@ -70,7 +70,7 @@ class LearnToShareToolFlow: Flow {
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
+            toggleVisibilityPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
         )
         
         let closeButton = AppCloseBarItem(

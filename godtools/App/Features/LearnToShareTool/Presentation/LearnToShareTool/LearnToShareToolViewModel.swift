@@ -14,13 +14,13 @@ class LearnToShareToolViewModel: ObservableObject {
     private let tool: ToolDomainModel
     private let getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase
     private let localizationServices: LocalizationServices
-    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var learnToShareToolItems: [LearnToShareToolItemDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published var hidesBackButton: Bool = true
     @Published var numberOfLearnToShareToolItems: Int = 0
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0 {
@@ -53,7 +53,7 @@ class LearnToShareToolViewModel: ObservableObject {
                 
         self.continueTitle = localizationServices.stringForSystemElseEnglish(key: localizedKey)
         
-        hidesBackButtonSubject.send(page == 0)
+        hidesBackButton = page == 0
     }
     
     private var isOnFirstPage: Bool {
@@ -69,11 +69,6 @@ class LearnToShareToolViewModel: ObservableObject {
         return currentPage >= numberOfLearnToShareToolItems - 1
     }
     
-    var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesBackButtonSubject
-            .eraseToAnyPublisher()
-    }
-
     func getLearnToShareToolItemViewModel(index: Int) -> LearnToShareToolItemViewModel {
         
         return LearnToShareToolItemViewModel(
