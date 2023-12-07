@@ -12,6 +12,7 @@ import SwiftUI
 
 class LessonsViewModel: ObservableObject {
         
+    private let initialDataDownloader: InitialDataDownloader
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -23,16 +24,16 @@ class LessonsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var didPullToRefresh: Void = ()
     
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
+        self.initialDataDownloader = initialDataDownloader
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -43,26 +44,23 @@ class LessonsViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            $didPullToRefresh.eraseToAnyPublisher()
-        )
-        .flatMap({ (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) -> AnyPublisher<ViewLessonsDomainModel, Never> in
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonsDomainModel, Never> in
             
-            return self.viewLessonsUseCase
-                .viewPublisher(appLanguage: appLanguage)
-                .eraseToAnyPublisher()
-        })
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-            
-            self?.sectionTitle = domainModel.interfaceStrings.title
-            self?.subtitle = domainModel.interfaceStrings.subtitle
-            
-            self?.lessons = domainModel.lessons
-            self?.isLoadingLessons = false
-        }
-        .store(in: &cancellables)
+                return self.viewLessonsUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
+                
+                self?.sectionTitle = domainModel.interfaceStrings.title
+                self?.subtitle = domainModel.interfaceStrings.subtitle
+                
+                self?.lessons = domainModel.lessons
+                self?.isLoadingLessons = false
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Analytics
@@ -132,7 +130,7 @@ extension LessonsViewModel {
     }
     
     func refreshData() {
-        didPullToRefresh = ()
+        initialDataDownloader.downloadInitialData()
     }
     
     func pageViewed() {

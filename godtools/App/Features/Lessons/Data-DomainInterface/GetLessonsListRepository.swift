@@ -28,62 +28,59 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher(),
-            resourcesRepository.getResourcesChangedPublisher()
-        )
-        .flatMap({ (syncResult: RealmResourcesCacheSyncResult, resourcesDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
-            
-            let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(sorted: true)
-            
-            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
+        return resourcesRepository
+            .getResourcesChangedPublisher()
+            .flatMap({ (resourcesDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
                 
-                let lessonIsAvailableInAppLanguage: Bool
-                let lessonNameInAppLanguage: String
+                let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(sorted: true)
                 
-                if let translation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
-                    lessonNameInAppLanguage = translation.translatedName
-                }
-                else {
-                    lessonNameInAppLanguage = ""
-                }
-                
-                if let appLanguage = self.languagesRepository.getLanguage(code: appLanguage) {
-                    lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
-                }
-                else {
-                    lessonIsAvailableInAppLanguage = false
-                }
-                 
-                let availabilityInAppLanguage: String
-                let appLanguageName: String = self.localeLanguageName.getLanguageName(forLanguageCode: appLanguage, translatedInLanguageId: appLanguage) ?? ""
-                
-                if lessonIsAvailableInAppLanguage {
-                    availabilityInAppLanguage = appLanguageName + " ✓"
-                }
-                else {
-                    let languageNotAvailable: String = self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
+                let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
                     
-                    availabilityInAppLanguage = String(
-                        format: languageNotAvailable,
-                        locale: Locale(identifier: appLanguage),
-                        appLanguageName
-                    ) + " x"
+                    let lessonIsAvailableInAppLanguage: Bool
+                    let lessonNameInAppLanguage: String
+                    
+                    if let translation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
+                        lessonNameInAppLanguage = translation.translatedName
+                    }
+                    else {
+                        lessonNameInAppLanguage = ""
+                    }
+                    
+                    if let appLanguage = self.languagesRepository.getLanguage(code: appLanguage) {
+                        lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
+                    }
+                    else {
+                        lessonIsAvailableInAppLanguage = false
+                    }
+                    
+                    let availabilityInAppLanguage: String
+                    let appLanguageName: String = self.localeLanguageName.getLanguageName(forLanguageCode: appLanguage, translatedInLanguageId: appLanguage) ?? ""
+                    
+                    if lessonIsAvailableInAppLanguage {
+                        availabilityInAppLanguage = appLanguageName + " ✓"
+                    }
+                    else {
+                        let languageNotAvailable: String = self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
+                        
+                        availabilityInAppLanguage = String(
+                            format: languageNotAvailable,
+                            locale: Locale(identifier: appLanguage),
+                            appLanguageName
+                        ) + " x"
+                    }
+                    
+                    return LessonListItemDomainModel(
+                        analyticsToolName: resource.abbreviation,
+                        availabilityInAppLanguage: availabilityInAppLanguage,
+                        bannerImageId: resource.attrBanner,
+                        dataModelId: resource.id,
+                        name: lessonNameInAppLanguage
+                    )
                 }
-     
-                return LessonListItemDomainModel(
-                    analyticsToolName: resource.abbreviation,
-                    availabilityInAppLanguage: availabilityInAppLanguage,
-                    bannerImageId: resource.attrBanner,
-                    dataModelId: resource.id,
-                    name: lessonNameInAppLanguage
-                )
-            }
-            
-            return Just(lessonListItems)
-                .eraseToAnyPublisher()
-            
-        })
-        .eraseToAnyPublisher()
+                
+                return Just(lessonListItems)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }

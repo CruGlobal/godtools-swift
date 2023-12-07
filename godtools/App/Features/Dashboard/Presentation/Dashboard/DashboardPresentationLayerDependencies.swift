@@ -44,6 +44,7 @@ class DashboardPresentationLayerDependencies {
         
         return LessonsViewModel(
             flowDelegate: unwrappedFlowDelegate,
+            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
