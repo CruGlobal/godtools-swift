@@ -15,8 +15,8 @@ jobs:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: "temurin"
+          java-version-file: ".java-version"
       - name: Bundle Install
         run: bundle install
 
