@@ -26,9 +26,11 @@ struct DownloadableLanguagesView: View {
             List {
                 
                 DownloadableLanguageItemView(languageDownloadStatus: .downloaded, tappedClosure: nil)
+                    .listRowBackground(Color.clear)
                 DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
-                DownloadableLanguageItemView(languageDownloadStatus: .downloading(progress: 0.3), tappedClosure: nil)
+                    .listRowBackground(Color.clear)
                 DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
+                    .listRowBackground(Color.clear)
             }
             .listStyle(.inset)
             .foregroundColor(.clear)
