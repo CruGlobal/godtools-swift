@@ -12,14 +12,12 @@ import Combine
 class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
     private let appLanguagesRepository: AppLanguagesRepository
-    private let localeLanguageName: LocaleLanguageName
-    private let localeLanguageScriptName: LocaleLanguageScriptName
+    private let getAppLanguageName: GetAppLanguageName
     
-    init(appLanguagesRepository: AppLanguagesRepository, localeLanguageName: LocaleLanguageName, localeLanguageScriptName: LocaleLanguageScriptName) {
+    init(appLanguagesRepository: AppLanguagesRepository, getAppLanguageName: GetAppLanguageName) {
         
         self.appLanguagesRepository = appLanguagesRepository
-        self.localeLanguageName = localeLanguageName
-        self.localeLanguageScriptName = localeLanguageScriptName
+        self.getAppLanguageName = getAppLanguageName
     }
     
     func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
@@ -28,34 +26,17 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
+                                        
+                    let languageCode: String = languageDataModel.languageCode
+                    let languageScriptCode: String? = languageDataModel.languageScriptCode
                     
-                    let languageNameTranslatedInOwnLanguage: String = self.localeLanguageName.getLanguageName(forLanguageCode: languageDataModel.languageCode, translatedInLanguageId: languageDataModel.languageId) ?? ""
-                    let languageNameTranslatedInAppLanguage: String = self.localeLanguageName.getLanguageName(forLanguageCode: languageDataModel.languageCode, translatedInLanguageId: currentAppLanguage) ?? ""
-                    
-                    let languageScriptNameTranslatedInOwnLanguage: String?
-                    let languageScriptNameTranslatedInAppLanguage: String?
-                    
-                    if let languageScriptCode = languageDataModel.languageScriptCode, !languageScriptCode.isEmpty {
-                        
-                        languageScriptNameTranslatedInOwnLanguage = self.localeLanguageScriptName.getScriptName(forScriptCode: languageScriptCode, translatedInLanguageId: languageDataModel.languageId) ?? ""
-                        languageScriptNameTranslatedInAppLanguage = self.localeLanguageScriptName.getScriptName(forScriptCode: languageScriptCode, translatedInLanguageId: currentAppLanguage)
-                    }
-                    else {
-                        
-                        languageScriptNameTranslatedInOwnLanguage = nil
-                        languageScriptNameTranslatedInAppLanguage = nil
-                    }
+                    let languageNameTranslatedInOwnLanguage: String = self.getAppLanguageName.getName(languageCode: languageCode, scriptCode: languageScriptCode, translatedInLanguage: languageDataModel.languageId)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.getAppLanguageName.getName(languageCode: languageCode, scriptCode: languageScriptCode, translatedInLanguage: currentAppLanguage)
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
-                        languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel(
-                            languageName: languageNameTranslatedInOwnLanguage,
-                            languageScriptName: languageScriptNameTranslatedInOwnLanguage
-                        ),
-                        languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel(
-                            languageName: languageNameTranslatedInAppLanguage,
-                            languageScriptName: languageScriptNameTranslatedInAppLanguage
-                        )
+                        languageNameTranslatedInOwnLanguage: languageNameTranslatedInOwnLanguage,
+                        languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
                     )
                 }
                 

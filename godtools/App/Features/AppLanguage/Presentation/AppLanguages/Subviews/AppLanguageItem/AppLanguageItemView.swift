@@ -33,11 +33,11 @@ struct AppLanguageItemView: View {
                     
                     HStack(spacing: 10) {
                         
-                        Text(appLanguage.languageNameTranslatedInOwnLanguage.name)
+                        Text(appLanguage.languageNameTranslatedInOwnLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(ColorPalette.gtGrey.color)
                         
-                        Text(appLanguage.languageNameTranslatedInCurrentAppLanguage.name)
+                        Text(appLanguage.languageNameTranslatedInCurrentAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(AppLanguageItemView.lightGrey)
                     }
