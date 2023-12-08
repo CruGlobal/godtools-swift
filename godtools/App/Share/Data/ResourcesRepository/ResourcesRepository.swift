@@ -94,6 +94,25 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher() -> AnyPublisher<RealmResourcesCacheSyncResult, Never> {
+        
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .catch({ _ in
+                
+                let emptyResult = RealmResourcesCacheSyncResult(
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
+                    resourcesRemoved: [],
+                    translationsRemoved: [],
+                    attachmentsRemoved: [],
+                    downloadedTranslationsRemoved: []
+                )
+                
+                return Just(emptyResult)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
         
         guard !ResourcesRepository.didSyncResourcesFromJsonFileCache else {
