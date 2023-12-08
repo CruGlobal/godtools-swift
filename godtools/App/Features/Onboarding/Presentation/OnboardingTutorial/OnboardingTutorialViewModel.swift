@@ -22,7 +22,6 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
-    private let hidesSkipButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
     private var interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel?
@@ -32,6 +31,7 @@ class OnboardingTutorialViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
+    @Published var hidesSkipButton: Bool = true
     @Published var currentPage: Int = 0 {
         
         didSet {
@@ -119,11 +119,11 @@ class OnboardingTutorialViewModel: ObservableObject {
         switch page {
         
         case 0:
-            hidesSkipButtonSubject.send(true)
+            hidesSkipButton = true
             continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
        
         default:
-            hidesSkipButtonSubject.send(false)
+            hidesSkipButton = false
             continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
         }
         
@@ -136,11 +136,6 @@ class OnboardingTutorialViewModel: ObservableObject {
             contentLanguage: pageAnalytics.contentLanguage,
             contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
         )
-    }
-    
-    var hidesSkipButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesSkipButtonSubject
-            .eraseToAnyPublisher()
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {

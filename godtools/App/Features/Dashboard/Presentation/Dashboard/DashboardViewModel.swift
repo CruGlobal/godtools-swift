@@ -13,11 +13,11 @@ class DashboardViewModel: ObservableObject {
     
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let localizationServices: LocalizationServices
-    private let hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never>
     private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
         
     private weak var flowDelegate: FlowDelegate?
         
+    @Published var hidesLanguagesSettingsButton: Bool = true
     @Published var numberOfTabs: Int = 0
     @Published var currentTab: Int {
         didSet {
@@ -25,13 +25,12 @@ class DashboardViewModel: ObservableObject {
         }
     }
     
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, localizationServices: LocalizationServices, hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never>) {
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, localizationServices: LocalizationServices) {
         
         self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.localizationServices = localizationServices
-        self.hidesLanguagesSettingsButton = hidesLanguagesSettingsButton
         
         numberOfTabs = tabs.count
                 
@@ -39,8 +38,8 @@ class DashboardViewModel: ObservableObject {
     }
     
     private func tabChanged() {
-                
-        hidesLanguagesSettingsButton.send(tabs[currentTab] == .lessons)
+                        
+        hidesLanguagesSettingsButton = tabs[currentTab] == .lessons
     }
     
     func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel {

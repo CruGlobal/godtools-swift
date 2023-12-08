@@ -12,5 +12,4 @@ import Combine
 protocol GetLessonsListRepositoryInterface {
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never>
-    func observeLessonsChangedPublisher() -> AnyPublisher<Void, Never>
 }

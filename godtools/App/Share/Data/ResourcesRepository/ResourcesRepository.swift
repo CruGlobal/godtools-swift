@@ -64,6 +64,11 @@ class ResourcesRepository {
         return cache.getSpotlightTools()
     }
     
+    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
+        
+        return cache.getResourcesByFilter(filter: filter)
+    }
+    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
@@ -84,6 +89,25 @@ class ResourcesRepository {
             .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                                 
                 return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher() -> AnyPublisher<RealmResourcesCacheSyncResult, Never> {
+        
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .catch({ _ in
+                
+                let emptyResult = RealmResourcesCacheSyncResult(
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
+                    resourcesRemoved: [],
+                    translationsRemoved: [],
+                    attachmentsRemoved: [],
+                    downloadedTranslationsRemoved: []
+                )
+                
+                return Just(emptyResult)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

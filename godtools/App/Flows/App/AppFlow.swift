@@ -453,9 +453,7 @@ extension AppFlow {
     }
     
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
-        
-        let hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
-        
+                
         let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
@@ -463,8 +461,7 @@ extension AppFlow {
                 appDiContainer: appDiContainer,
                 flowDelegate: self
             ),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            hidesLanguagesSettingsButton: hidesLanguagesSettingsButton
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
                 
         let view = DashboardView(viewModel: viewModel)
@@ -481,7 +478,7 @@ extension AppFlow {
             target: viewModel,
             action: #selector(viewModel.languageSettingsTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: hidesLanguagesSettingsButton.eraseToAnyPublisher()
+            toggleVisibilityPublisher: viewModel.$hidesLanguagesSettingsButton.eraseToAnyPublisher()
         )
         
         let hostingController = AppHostingController<DashboardView>(
@@ -870,10 +867,8 @@ extension AppFlow {
             toolLanguage: toolLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
-            getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
+            viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
-            getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
-            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),

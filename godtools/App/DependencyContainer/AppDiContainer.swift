@@ -37,6 +37,7 @@ class AppDiContainer {
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
+        let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
@@ -50,6 +51,7 @@ class AppDiContainer {
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
             toolsFilter: toolsFilterDiContainer,
+            toolShortcutLinks: toolShortcutLinks,
             tutorial: tutorialDiContainer
         )
                                                                 

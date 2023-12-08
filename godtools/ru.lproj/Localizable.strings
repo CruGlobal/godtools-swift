@@ -1,6 +1,37 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Выбрать язык";
+"languageSettings.confirmAppLanguage.message" = "Вы выбрали %@ в качестве языка приложения. Изменится язык всего приложения GodTools. Вы уверены?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Изменить язык";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Не важно";
+"languageSettings.appInterface.title" = "Язык интерфейса приложения";
+"languageSettings.appInterface.message" = "Установите основной язык для всего приложения.";
+"languageSettings.appInterface.languagesAvailable" = "Доступные языки";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Языки инструментов доступны офлайн";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Загрузите все инструменты на выбранном языке, чтобы они были доступны, даже когда нет сигнала или WiFi. Установите язык инструмента, нажав на кнопку \"настройки\" внутри инструмента.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Править загруженные языки";
+"allTools.filter.title" = "Фильтр";
 "allTools.filter.anyCategory" = "Любая категория";
 "allTools.filter.anyLanguage" = "Любой язык";
+"allTools.filter.navBar.language" = "Фильтр по языку";
+"allTools.filter.navBar.category" = "Фильтр по категории";
+"languageSettings.appLanguage.title" = "Язык приложения";
+"authError.userAccountAlreadyExists.message" = "Учетная запись пользователя уже существует.";
+"authError.userAccountNotFound.message" = "Учетная запись пользователя не найдена.";
+"createAccount.title" = "Создать учетную запись";
+"createAccount.subtitle" = "Создайте аккаунт, чтобы вам были доступны реальные истории, слова поддержки и практические советы.";
+"deleteAccountProgress.title" = "Удаление учетной записи...";
+"confirmDeleteAccount.title" = "Вы уверены?";
+"confirmDeleteAccount.confirmButton.title" = "Удалить учетную запись";
+"accountDeletedAlert.title" = "Учетная запись удалена";
+"accountDeletedAlert.message" = "Ваша учетная запись удалена";
+"deleteAccount.title" = "Не уходите так быстро";
+"deleteAccount.subtitle" = "Если вы удалите учетную запись, вы больше не сможете пользоваться любимыми инструментами и функциями.";
+"deleteAccount.confirmButton.title" = "Удалить мою учетную запись";
+"deleteAccount.cancelButton.title" = "Не удалять учетную запись";
+"signIn.title" = "Войти";
+"signIn.subtitle" = "Войдите в учетную запись, чтобы видеть реальные истории, слова поддержки и практические советы.";
+"signIn.google" = "Войти через Google";
+"signIn.facebook" = "Войти через Facebook";
+"signIn.apple" = "Войти через Apple";
 "menu_getStarted" = "Начать работу";
 "menu_support" = "Поддержка";
 "menu_about" = "О приложении";
@@ -8,8 +39,61 @@
 "menu.reportABug" = "Сообщить об ошибке";
 "menu.askAQuestion" = "Задать вопрос";
 "menu.leaveAReview" = "Оставить отзыв";
+"account.badges.sectionTitle" = "Ваши значки";
+"account.activity.sectionTitle" = "Ваша активность";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Открыто инструментов";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Пройдено уроков";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Экраны";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Отправленные ссылки";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Языки";
+
 "account.activity.sessions" = "Сессии";
+"badges.tipsCompleted.singular" = "Пройдено 1 подсказок по обучению";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Прочитайте статьи (%d)";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Прочитайте 1 статью";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Отправлено %d изображений";
+
+"badges.imagesShared.singular" = "Отправлено 1 изображений";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Завершены %d уроки";
+
+"badges.lessonsCompleted.singular" = "Завершены 1 уроки";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Открыты %d инструменты";
+
+"badges.toolsOpened.singular" = "Открыты 1 инструменты";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Пройдено %d подсказок по обучению";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Присоединилось %@";
+
 "account.globalActivity.title" = "Глобальная активность";
+"toolDetails.conversationStarters.title" = "Как начать разговор";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "План";
+
+"toolDetails.bibleReferences.title" = "Ссылки на место в Библии";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "О приложении";
@@ -20,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Не доступно на %@";
 
+"menu.deleteAccount" = "Удалить учетную запись";
+"alert.mailAppUnavailable.title" = "Приложение «Почта» недоступно";
+"alert.mailAppUnavailable.message" = "Приложение «Почта» не настроено, либо недоступно на этом устройстве. ";
 "tool_menu_item.tools" = "инструменты";
 "lessons.pageTitle" = "Уроки, созданные для вас";
 "lessons.pageSubtitle" = "Практические идеи для построения отношений и начала содержательных бесед.";
@@ -55,7 +142,10 @@
 "training_tip_ask" = "Задать вопрос";
 "training_tip_consider" = "Подумайте";
 "training_tip_prepare" = "Подготовьтесь";
+"training_tip_quote" = "Цитата";
 "training_tip_tip" = "Подсказка";
+"start_training" = "Начать обучение";
+"close" = "Закрыть";
 "tool_menu_item.lessons" = "Уроки";
 "parallelLanguage.yesButton.title" = "Да";
 "parallelLanguage.noButton.title" = "Нет, спасибо";
@@ -65,7 +155,31 @@
 "parellelLanguage.prompt" = "Хотите установить второй язык?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Закрыть руководство";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Инструменты";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Каждый инструмент создан для разных этапов разговора - до, в течение, после";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Подсказки по инструменту";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "Подсказки GodTools позволят вам помочь собеседнику понять Евангелие и познакомиться с Иисусом.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Поделиться экраном";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Теперь вы можете поделиться экраном, чтобы ваш собеседник мог удаленно участвовать в обсуждении Евангелия вместе с вами.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Уроки";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "В каждом из уроков GodTools вы найдете все необходимое для проведения беседы о Боге.";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Это руководство будет доступно для повторного просмотра в меню";
@@ -75,7 +189,7 @@
 "onboardingQuickStart.2.button.title" = "Выберите один из наших инструментов";
 "onboardingTutorial.nextButton.title" = "Дальше";
 "onboardingQuickStart.title" = "Ссылки для быстрого начала";
-"onboardingQuickStart.0.title" = "Я хочу изучить христианство";
+"onboardingQuickStart.0.title" = "Я хочу больше узнать об Иисусе.";
 "onboardingQuickStart.0.button.title" = "Прочитайте наши статьи";
 "onboardingQuickStart.1.title" = "Я хочу научиться вести разговоры о Евангелии";
 "onboardingQuickStart.1.button.title" = "Попробуйте наши уроки";
@@ -101,6 +215,15 @@
 Если это сообщение придет слишком поздно, ссылка может уже не работать. Мы можем попробовать еще раз в другое время.";
 "exit_tract_remote_share_session.message" = "Выйти из сеанса удаленной трансляции?";
 "load_tool_remote_session.message" = "Запуск трансляции экрана…";
+"learn_to_share_tool.learn_to_share.title" = "Узнайте, как поделиться инструментом с другими";
+"learn_to_share_tool.learn_to_share.message" = "Пробуйте пользоваться как можно большим количеством советов, чтобы увереннее делиться данным инструментом с другими.";
+"learn_to_share_tool.tips_light_the_way.title" = "Подсказки";
+"learn_to_share_tool.tips_light_the_way.message" = "В выбранных разделах обучения вы найдете разные иконки. Нажмите на иконку, чтобы показать подсказку, которая поможет провести беседу из соответствующего раздела. Если в разделе нет иконки, просто прочитайте его и обсудите по необходимости.";
+"learn_to_share_tool.light_up_the_tips.title" = "Цвет подсказки";
+"learn_to_share_tool.light_up_the_tips.message" = "Вы закончили эту часть обучения, когда изменился цвет подсказки. Научитесь использовать столько подсказок, сколько вам нужно, чтобы уверенно объяснять инструмент.";
+"lesson_evaluation.title" = "Отзыв";
+"lesson_evaluation.wasThisHelpful" = "Был ли этот урок полезным?";
+"lesson_evaluation.shareFaith" = "Насколько вы чувствуете себя готовыми начать разговор о вере?";
 "lesson_evaluation.sendButtonTitle" = "Отправить отзыв";
 "onboardingTutorial.0.title" = "Готовность к любому разговору";
 "onboardingTutorial.0.videoLink.title" = "Посмотрите видео";
@@ -189,11 +312,11 @@
 "help" = "Частые вопросы";
 "contact_us" = "Связаться с нами";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
-"share_god_tools" = "Поделиться приложением GodTools";
+"share_god_tools" = "Поделиться GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";
 "terms_of_use" = "Условия использования";
 "privacy_policy" = "Политика конфиденциальности";
-"copyright_info" = "Информация об авторском праве";
+"copyright_info" = "Авторское право";
 "share_god_tools_share_sheet_text" = "Загрузите приложение GodTools: https://godtoolsapp.com
 
 Онлайн-версию можно открыть по ссылке https://knowgod.com/";
