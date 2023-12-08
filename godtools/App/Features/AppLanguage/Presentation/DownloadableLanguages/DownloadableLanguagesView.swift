@@ -23,16 +23,15 @@ struct DownloadableLanguagesView: View {
                                     
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
-//            List {
-//                ForEach(viewModel.appLanguageSearchResults) { appLanguage in
-//
-//                    AppLanguageItemView(appLanguage: appLanguage) {
-//
-//                        viewModel.appLanguageTapped(appLanguage: appLanguage)
-//                    }
-//                }
-//            }
-//            .listStyle(.inset)
+            List {
+                
+                DownloadableLanguageItemView(languageDownloadStatus: .downloaded, tappedClosure: nil)
+                DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
+                DownloadableLanguageItemView(languageDownloadStatus: .downloading(progress: 0.3), tappedClosure: nil)
+                DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
+            }
+            .listStyle(.inset)
+            .foregroundColor(.clear)
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
