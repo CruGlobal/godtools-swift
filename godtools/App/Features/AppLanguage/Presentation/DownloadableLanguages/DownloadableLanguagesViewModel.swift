@@ -22,6 +22,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var searchText: String = ""
+    @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
@@ -49,6 +50,14 @@ class DownloadableLanguagesViewModel: ObservableObject {
                 self?.navTitle = interfaceStrings.navTitle
             }
             .store(in: &cancellables)
+        
+        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: .notDownloaded)]
+    }
+    
+    // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
+    private func updateDummyLanguage(with status: LanguageDownloadStatusDomainModel) {
+        
+        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: status)]
     }
 }
 
@@ -64,6 +73,35 @@ extension DownloadableLanguagesViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
+    }
+    
+    func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
+        
+        // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
+                
+        switch downloadableLanguage.downloadStatus {
+        case .notDownloaded:
+            
+            updateDummyLanguage(with: .downloading(progress: 0))
+            
+            var progress: Double = 0
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+                progress += 0.05
+                
+                self.updateDummyLanguage(with: .downloading(progress: progress))
+                
+                if progress >= 1 {
+                    timer.invalidate()
+                    self.updateDummyLanguage(with: .downloaded)
+                }
+            }
+            
+        case .downloading:
+            return
+            
+        case .downloaded:
+            updateDummyLanguage(with: .notDownloaded)
+        }
     }
 }
 

@@ -10,9 +10,13 @@ import SwiftUI
 
 struct LanguageDownloadIcon: View {
     
-    @Binding var languageDownloadStatus: LanguageDownloadStatus
-    
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
+    
+    private let languageDownloadStatus: LanguageDownloadStatusDomainModel
+    
+    init(languageDownloadStatus: LanguageDownloadStatusDomainModel) {
+        self.languageDownloadStatus = languageDownloadStatus
+    }
 
     var body: some View {
         

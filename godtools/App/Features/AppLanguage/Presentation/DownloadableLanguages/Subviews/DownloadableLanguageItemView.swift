@@ -8,47 +8,17 @@
 
 import SwiftUI
 
-enum LanguageDownloadStatus: Equatable {
-    case notDownloaded
-    case downloading(progress: Double)
-    case downloaded
-}
-
 struct DownloadableLanguageItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    @State private var languageDownloadStatus: LanguageDownloadStatus
+    private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
     
-    init(languageDownloadStatus: LanguageDownloadStatus, tappedClosure: (() -> Void)?) {
-        self.languageDownloadStatus = languageDownloadStatus
+    init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
+        
+        self.downloadableLanguage = downloadableLanguage
         self.tappedClosure = tappedClosure
-    }
-    
-    func toggle() {
-        switch languageDownloadStatus {
-        case .notDownloaded:
-            languageDownloadStatus = .downloading(progress: 0)
-            
-            var progress: Double = 0
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                progress += 0.05
-
-                languageDownloadStatus = .downloading(progress: progress)
-                
-                if progress >= 1 {
-                    timer.invalidate()
-                    languageDownloadStatus = .downloaded
-                }
-            }
-            
-        case .downloading:
-            languageDownloadStatus = .downloaded
-            
-        case .downloaded:
-            languageDownloadStatus = .notDownloaded
-        }
     }
     
     var body: some View {
@@ -84,15 +54,14 @@ struct DownloadableLanguageItemView: View {
                 Button {
                     
                     tappedClosure?()
-                    toggle()
                     
                 } label: {
                     
-                    LanguageDownloadIcon(languageDownloadStatus: $languageDownloadStatus)
+                    LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus)
                 }
 
             }
         }
-        .animation(.default, value: languageDownloadStatus)
+        .animation(.default, value: downloadableLanguage.downloadStatus)
     }
 }

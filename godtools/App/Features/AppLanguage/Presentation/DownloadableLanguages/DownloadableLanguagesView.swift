@@ -24,16 +24,17 @@ struct DownloadableLanguagesView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
-                
-                DownloadableLanguageItemView(languageDownloadStatus: .downloaded, tappedClosure: nil)
+                ForEach(viewModel.downloadableLanguagesSearchResults) { downloadableLanguage in
+                    
+                    DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage) {
+                        
+                        viewModel.downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
+                    }
                     .listRowBackground(Color.clear)
-                DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
-                    .listRowBackground(Color.clear)
-                DownloadableLanguageItemView(languageDownloadStatus: .notDownloaded, tappedClosure: nil)
-                    .listRowBackground(Color.clear)
+                }
             }
             .listStyle(.inset)
-            .foregroundColor(.clear)
+            
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
