@@ -19,8 +19,7 @@ class ToolSettingsDomainLayerDependencies {
     
     func getViewToolSettingsUseCase() -> ViewToolSettingsUseCase {
         return ViewToolSettingsUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface(),
-            getToolOptionsRepository: dataLayer.getToolSettingsOptionsRepositoryInterface()
+            getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface()
         )
     }
 }
