@@ -53,7 +53,7 @@ struct ToolSettingsOptionsView: View {
                             viewBackground: .image(image: ImageCatalog.toolSettingsOptionTrainingTipsBackground.image),
                             title: viewModel.trainingTipsTitle,
                             titleColorStyle: .lightBackground,
-                            iconImage: ImageCatalog.toolSettingsOptionTrainingTipsBackground.image,
+                            iconImage: viewModel.trainingTipsIcon,
                             tappedClosure: {
                                 viewModel.trainingTipsTapped()
                             }

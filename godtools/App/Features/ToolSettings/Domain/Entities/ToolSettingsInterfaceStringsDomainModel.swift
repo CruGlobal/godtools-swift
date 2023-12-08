@@ -15,6 +15,7 @@ struct ToolSettingsInterfaceStringsDomainModel {
     let toolOptionShareLink: String
     let toolOptionScreenShare: String
     let toolOptionEnableTrainingTips: String
+    let toolOptionDisableTrainingTips: String
     let languageSelectionTitle: String
     let languageSelectionMessage: String
     let relatedGraphicsTitle: String

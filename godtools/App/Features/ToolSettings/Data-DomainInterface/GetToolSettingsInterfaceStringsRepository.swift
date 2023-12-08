@@ -28,6 +28,7 @@ class GetToolSettingsInterfaceStringsRepository: GetToolSettingsInterfaceStrings
             toolOptionShareLink: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.option.shareLink.title"),
             toolOptionScreenShare: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.option.screenShare.title"),
             toolOptionEnableTrainingTips: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.option.trainingTips.show.title"),
+            toolOptionDisableTrainingTips: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.option.trainingTips.hide.title"),
             languageSelectionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.chooseLanguage.title"),
             languageSelectionMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.chooseLanguage.toggleMessage"),
             relatedGraphicsTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolSettings.shareables.title")
