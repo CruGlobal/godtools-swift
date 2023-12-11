@@ -272,8 +272,7 @@ class AppDataLayerDependencies {
     
     func getSearchBarInterfaceStringsRepositoryInterface() -> GetSearchBarInterfaceStringsRepositoryInterface {
         return GetSearchBarInterfaceStringsRepository(
-            localizationServices: getLocalizationServices(),
-            localeLanguageName: getLocaleLanguageName()
+            localizationServices: getLocalizationServices()
         )
     }
     

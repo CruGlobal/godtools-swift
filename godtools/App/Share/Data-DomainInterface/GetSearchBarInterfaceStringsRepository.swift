@@ -12,12 +12,10 @@ import Combine
 class GetSearchBarInterfaceStringsRepository: GetSearchBarInterfaceStringsRepositoryInterface {
     
     private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(localizationServices: LocalizationServices) {
         
         self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
     }
     
     func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<SearchBarInterfaceStringsDomainModel, Never> {
