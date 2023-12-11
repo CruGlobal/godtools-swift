@@ -48,29 +48,10 @@ class ToolSettingsFlow: Flow {
     }
     
     func getInitialView() -> UIViewController {
-            
-        let viewModel = ToolSettingsViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
-            currentPageRenderer: toolData.currentPageRenderer,
-            primaryLanguageSubject: settingsPrimaryLanguage,
-            parallelLanguageSubject: settingsParallelLanguage,
-            trainingTipsEnabled: toolData.trainingTipsEnabled
-        )
-        
-        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
-        
-        let hostingView = ToolSettingsHostingView(
-            view: toolSettingsView,
-            navigationBar: nil
-        )
-        
+                    
         let transparentModal = TransparentModalView(
             flowDelegate: self,
-            modalView: hostingView,
+            modalView: getToolSettingsView(),
             closeModalFlowStep: .closeTappedFromToolSettings
         )
         
@@ -85,27 +66,7 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         case .shareLinkTappedFromToolSettings:
-                    
-            let resource: ResourceModel = toolData.renderer.value.resource
-            let language: LanguageDomainModel = toolData.currentPageRenderer.value.language
-            
-            let viewModel = ShareToolViewModel(
-                resource: resource,
-                language: language,
-                pageNumber: toolData.pageNumber,
-                incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-            )
-            
-            let view = ShareToolView(viewModel: viewModel)
-            
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
+            navigationController.present(getShareToolView(), animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
@@ -122,12 +83,13 @@ class ToolSettingsFlow: Flow {
             tool.setTrainingTipsEnabled(enabled: false)
                         
         case .primaryLanguageTappedFromToolSettings:
-                
-            presentLanguagesList(languageListType: .primary)
+            presentToolLanguagesList(animated: true)
             
         case .parallelLanguageTappedFromToolSettings:
+            presentToolLanguagesList(animated: true)
             
-            presentLanguagesList(languageListType: .parallel)
+        case .closeTappedFromToolSettingsToolLanguagesList:
+            dismissToolLanguagesList(animated: true)
             
         case .swapLanguagesTappedFromToolSettings:
             
@@ -181,7 +143,9 @@ class ToolSettingsFlow: Flow {
         }
     }
     
-    private func presentLanguagesList(languageListType: ToolSettingsLanguageListType) {
+    private func presentLanguagesList(languageListType: ToolSettingsToolLanguagesListType) {
+        
+        /*
         
         let getToolLanguagesUseCase: GetToolLanguagesUseCase = appDiContainer.domainLayer.getToolLanguagesUseCase()
   
@@ -241,7 +205,7 @@ class ToolSettingsFlow: Flow {
         
         navigationController.present(hostingView, animated: true)
         
-        languagesListModal = hostingView
+        languagesListModal = hostingView*/
     }
     
     private func setToolPrimaryLanguage(languageId: String) {
@@ -333,20 +297,7 @@ class ToolSettingsFlow: Flow {
     
     private func dismissLanguagesList(animated: Bool = true, completion: (() -> Void)? = nil) {
         
-        guard let languagesListModal = languagesListModal else {
-            completion?()
-            return
-        }
         
-        if animated {
-            languagesListModal.dismiss(animated: true, completion: completion)
-        }
-        else {
-            languagesListModal.dismiss(animated: false)
-            completion?()
-        }
-                
-        self.languagesListModal = nil
     }
     
     private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
@@ -365,6 +316,106 @@ class ToolSettingsFlow: Flow {
         }
         
         self.reviewShareShareableModal = nil
+    }
+}
+
+// MARK: -
+
+extension ToolSettingsFlow {
+    
+    private func getToolSettingsView() -> TransparentModalCustomView {
+        
+        let viewModel = ToolSettingsViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
+            currentPageRenderer: toolData.currentPageRenderer,
+            primaryLanguageSubject: settingsPrimaryLanguage,
+            parallelLanguageSubject: settingsParallelLanguage,
+            trainingTipsEnabled: toolData.trainingTipsEnabled
+        )
+        
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
+        
+        let hostingView = ToolSettingsHostingView(
+            view: toolSettingsView,
+            navigationBar: nil
+        )
+        
+        return hostingView
+    }
+    
+    private func getShareToolView() -> UIViewController {
+        
+        let resource: ResourceModel = toolData.renderer.value.resource
+        let language: LanguageDomainModel = toolData.currentPageRenderer.value.language
+        
+        let viewModel = ShareToolViewModel(
+            resource: resource,
+            language: language,
+            pageNumber: toolData.pageNumber,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+        )
+        
+        let view = ShareToolView(viewModel: viewModel)
+        
+        return view.controller
+    }
+}
+
+// MARK: - Tool Settings Tool Languages List
+
+extension ToolSettingsFlow {
+    
+    private func presentToolLanguagesList(animated: Bool) {
+        
+        navigationController.present(getToolSettingsToolLanguagesListView(), animated: true)
+    }
+    
+    private func dismissToolLanguagesList(animated: Bool) {
+        
+        guard let languagesListModal = languagesListModal else {
+            return
+        }
+        
+        languagesListModal.dismiss(animated: animated)
+                
+        self.languagesListModal = nil
+    }
+    
+    private func getToolSettingsToolLanguagesListView() -> UIViewController {
+        
+        let viewModel = ToolSettingsToolLanguagesListViewModel(
+            flowDelegate: self,
+            tool: toolData.renderer.value.resource,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolSettingsToolLanguageListUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsToolLanguagesListUseCase()
+        )
+        
+        let view = ToolSettingsToolLanguagesListView(viewModel: viewModel)
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [],
+            trailingItems: []
+        )
+        
+        let hostingView = AppHostingController<ToolSettingsToolLanguagesListView>(
+            rootView: view,
+            navigationBar: navigationBar
+        )
+
+        hostingView.view.backgroundColor = .white
+                
+        languagesListModal = hostingView
+        
+        return hostingView
     }
 }
 
