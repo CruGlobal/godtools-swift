@@ -26,4 +26,16 @@ class ToolSettingsDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface() -> GetToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface {
+        return GetToolSettingsToolLanguagesListInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolSettingsToolLanguagesRepositoryInterface() -> GetToolSettingsToolLanguagesRepositoryInterface {
+        return GetToolSettingsToolLanguagesRepository(
+            languagesRepository: coreDataLayer.getLanguagesRepository()
+        )
+    }
 }
