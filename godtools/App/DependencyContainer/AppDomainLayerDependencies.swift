@@ -221,13 +221,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
-        return GetToolLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
     func getToolUseCase() -> GetToolUseCase {
         return GetToolUseCase(
             getLanguageUseCase: getLanguageUseCase(),
