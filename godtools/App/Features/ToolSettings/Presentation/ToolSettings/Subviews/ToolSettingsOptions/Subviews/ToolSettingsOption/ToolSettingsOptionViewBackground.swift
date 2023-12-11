@@ -1,5 +1,5 @@
 //
-//  ToolSettingsOptionItemBackgroundType.swift
+//  ToolSettingsOptionViewBackground.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/13/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum ToolSettingsOptionItemBackgroundType {
+enum ToolSettingsOptionViewBackground {
     
     case color(color: Color)
     case image(image: Image)

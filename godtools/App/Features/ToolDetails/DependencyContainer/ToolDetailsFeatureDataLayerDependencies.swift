@@ -17,6 +17,10 @@ class ToolDetailsFeatureDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    // MARK: - Data Layer Classes
+    
+    // MARK: - Domain Interface
+    
     func getToolDetailsInterfaceStringsRepository() -> GetToolDetailsInterfaceStringsRepositoryInterface {
         return GetToolDetailsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()

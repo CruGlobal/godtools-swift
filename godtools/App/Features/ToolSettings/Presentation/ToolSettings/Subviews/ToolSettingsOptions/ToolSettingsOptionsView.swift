@@ -27,37 +27,37 @@ struct ToolSettingsOptionsView: View {
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
                     
-                    ToolSettingsOptionsItemView(
-                        backgroundType: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
-                        iconImage: Image(ImageCatalog.toolSettingsOptionShareLink.name),
+                    ToolSettingsOptionView(
+                        viewBackground: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
                         title: viewModel.shareLinkTitle,
-                        titleColorStyle: .darkBackground
+                        titleColorStyle: .darkBackground,
+                        iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
+                        tappedClosure: {
+                            viewModel.shareLinkTapped()
+                        }
                     )
-                    .onTapGesture {
-                        viewModel.shareLinkTapped()
-                    }
                     
-                    ToolSettingsOptionsItemView(
-                        backgroundType: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                        iconImage: Image(ImageCatalog.toolSettingsOptionScreenShare.name),
+                    ToolSettingsOptionView(
+                        viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
                         title: viewModel.screenShareTitle,
-                        titleColorStyle: .lightBackground
+                        titleColorStyle: .lightBackground,
+                        iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
+                        tappedClosure: {
+                            viewModel.screenShareTapped()
+                        }
                     )
-                    .onTapGesture {
-                        viewModel.screenShareTapped()
-                    }
                     
                     if !viewModel.hidesToggleTrainingTipsButton {
                         
-                        ToolSettingsOptionsItemView(
-                            backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
-                            iconImage: viewModel.trainingTipsIcon,
+                        ToolSettingsOptionView(
+                            viewBackground: .image(image: ImageCatalog.toolSettingsOptionTrainingTipsBackground.image),
                             title: viewModel.trainingTipsTitle,
-                            titleColorStyle: .lightBackground
+                            titleColorStyle: .lightBackground,
+                            iconImage: viewModel.trainingTipsIcon,
+                            tappedClosure: {
+                                viewModel.trainingTipsTapped()
+                            }
                         )
-                        .onTapGesture {
-                            viewModel.trainingTipsTapped()
-                        }
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))

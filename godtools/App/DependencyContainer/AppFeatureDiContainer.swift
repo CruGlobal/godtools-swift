@@ -19,11 +19,12 @@ class AppFeatureDiContainer {
     let onboarding: OnboardingDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     let toolScreenShare: ToolScreenShareFeatureDiContainer
+    let toolSettings: ToolSettingsDiContainer
     let toolsFilter: ToolsFilterFeatureDiContainer
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.accountCreation = accountCreation
         self.appLanguage = appLanguage
@@ -34,6 +35,7 @@ class AppFeatureDiContainer {
         self.onboarding = onboarding
         self.toolDetails = toolDetails
         self.toolScreenShare = toolScreenShare
+        self.toolSettings = toolSettings
         self.toolsFilter = toolsFilter
         self.toolShortcutLinks = toolShortcutLinks
         self.tutorial = tutorial
