@@ -24,12 +24,12 @@ class GetToolSettingsToolLanguagesRepository: GetToolSettingsToolLanguagesReposi
         
         let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
             .getLanguages(ids: languageIds)
-            .map {
+            .map { (language: LanguageModel) in
                 
-                let languageName: String = $0.code
+                let languageName: String = language.code
                 
                 return ToolSettingsToolLanguageDomainModel(
-                    dataModelId: $0.id,
+                    dataModelId: language.id,
                     languageName: languageName
                 )
             }
