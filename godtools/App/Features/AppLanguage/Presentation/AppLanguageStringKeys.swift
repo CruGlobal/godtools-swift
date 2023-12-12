@@ -17,4 +17,8 @@ class AppLanguageStringKeys {
     enum AppLanguages: String {
         case navTitle = "languageSettings.appLanguage.title"
     }
+    
+    enum DownloadableLanguages: String {
+        case navTitle = "languageSettings.downloadableLanguages.title"
+    }
 }

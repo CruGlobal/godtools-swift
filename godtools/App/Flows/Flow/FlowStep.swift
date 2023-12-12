@@ -141,6 +141,7 @@ enum FlowStep {
     case backTappedFromLanguageSettings
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
     case chooseAppLanguageTappedFromLanguageSettings
+    case editDownloadedLanguagesTappedFromLanguageSettings
     
     // choose app language
     case backTappedFromAppLanguages
@@ -149,6 +150,9 @@ enum FlowStep {
     case nevermindTappedFromConfirmAppLanguageChange
     case backTappedFromConfirmAppLanguageChange
     case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
+    
+    // downloaded languages
+    case backTappedFromDownloadedLanguages
     
     // article
     case backTappedFromArticleCategories
