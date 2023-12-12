@@ -19,11 +19,31 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    private func getToolSettingsRepository() -> ToolSettingsRepository {
+        return ToolSettingsRepository(
+            cache: RealmToolSettingsCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase()
+            )
+        )
+    }
+    
     // MARK: - Domain Interface
     
     func getToolSettingsInterfaceStringsRepositoryInterface() -> GetToolSettingsInterfaceStringsRepositoryInterface {
         return GetToolSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getStoreToolSettingsParallelLanguageRepositoryInterface() -> StoreToolSettingsParallelLanguageRepositoryInterface {
+        return StoreToolSettingsParallelLanguageRepository(
+            toolSettingsRepository: getToolSettingsRepository()
+        )
+    }
+    
+    func getStoreToolSettingsPrimaryLanguageRepositoryInterface() -> StoreToolSettingsPrimaryLanguageRepositoryInterface {
+        return StoreToolSettingsPrimaryLanguageRepository(
+            toolSettingsRepository: getToolSettingsRepository()
         )
     }
 }

@@ -22,4 +22,16 @@ class ToolSettingsDomainLayerDependencies {
             getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface()
         )
     }
+    
+    func getStoreToolSettingsParallelLanguageUseCase() -> StoreToolSettingsParallelLanguageUseCase {
+        return StoreToolSettingsParallelLanguageUseCase(
+            storeParallelLanguageRepository: dataLayer.getStoreToolSettingsParallelLanguageRepositoryInterface()
+        )
+    }
+    
+    func getStoreToolSettingsPrimaryLanguageUseCase() -> StoreToolSettingsPrimaryLanguageUseCase {
+        return StoreToolSettingsPrimaryLanguageUseCase(
+            storePrimaryLanguageRepository: dataLayer.getStoreToolSettingsPrimaryLanguageRepositoryInterface()
+        )
+    }
 }
