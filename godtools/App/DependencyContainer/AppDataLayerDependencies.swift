@@ -270,6 +270,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getSearchBarInterfaceStringsRepositoryInterface() -> GetSearchBarInterfaceStringsRepositoryInterface {
+        return GetSearchBarInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }

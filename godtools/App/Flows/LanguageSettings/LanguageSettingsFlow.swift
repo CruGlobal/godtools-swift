@@ -40,6 +40,12 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
             
         case .chooseAppLanguageFlowCompleted(let state):
             navigateBackFromChooseAppLanguageFlow()
+        
+        case .editDownloadedLanguagesTappedFromLanguageSettings:
+            navigationController.pushViewController(getDownloadableLanguagesView(), animated: true)
+            
+        case .backTappedFromDownloadedLanguages:
+            navigationController.popViewController(animated: true)
             
         default:
             break
@@ -76,6 +82,36 @@ extension LanguageSettingsFlow {
             )
         )
 
+        return hostingView
+    }
+    
+    func getDownloadableLanguagesView() -> UIViewController {
+        
+        let viewModel = DownloadableLanguagesViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewDownloadableLanguagesUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
+        )
+        
+        let view = DownloadableLanguagesView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<DownloadableLanguagesView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
         return hostingView
     }
 }

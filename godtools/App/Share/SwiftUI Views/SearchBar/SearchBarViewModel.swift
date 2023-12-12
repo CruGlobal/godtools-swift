@@ -11,13 +11,37 @@ import Combine
 
 class SearchBarViewModel: ObservableObject {
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewSearchBarUseCase: ViewSearchBarUseCase
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    @Published private var appLanguage: AppLanguageDomainModel = ""
+    
     @Published var cancelText: String = ""
-
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
-                
-        getInterfaceStringInAppLanguageUseCase
-            .getStringPublisher(id: "cancel")
+    
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+        
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewSearchBarUseCase = viewSearchBarUseCase
+        
+        getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$cancelText)
+            .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap { appLanguage in
+                
+                return self.viewSearchBarUseCase.viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] domainModel in
+                
+                let interfaceStrings = domainModel.interfaceStrings
+                
+                self?.cancelText = interfaceStrings.cancel
+            }
+            .store(in: &cancellables)
     }
 }
