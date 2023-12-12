@@ -12,10 +12,12 @@ import Combine
 class GetToolSettingsToolLanguagesRepository: GetToolSettingsToolLanguagesRepositoryInterface {
     
     private let languagesRepository: LanguagesRepository
+    private let getAppLanguageName: GetAppLanguageName
     
-    init(languagesRepository: LanguagesRepository) {
+    init(languagesRepository: LanguagesRepository, localeLanguageName: LocaleLanguageName, localeLanguageScriptName: LocaleLanguageScriptName) {
         
         self.languagesRepository = languagesRepository
+        self.getAppLanguageName = GetAppLanguageName(localeLanguageName: localeLanguageName, localeLanguageScriptName: localeLanguageScriptName)
     }
     
     func getToolLanguagesPublisher(tool: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
@@ -26,7 +28,13 @@ class GetToolSettingsToolLanguagesRepository: GetToolSettingsToolLanguagesReposi
             .getLanguages(ids: languageIds)
             .map { (language: LanguageModel) in
                 
-                let languageName: String = language.code
+                print("language code: \(language.code)")
+                
+                let languageName: String = getAppLanguageName.getName(
+                    languageCode: language.languageCode,
+                    scriptCode: language.scriptCode,
+                    translatedInLanguage: translateInLanguage
+                )
                 
                 return ToolSettingsToolLanguageDomainModel(
                     dataModelId: language.id,
@@ -36,12 +44,6 @@ class GetToolSettingsToolLanguagesRepository: GetToolSettingsToolLanguagesReposi
             .sorted {
                 $0.languageName < $1.languageName
             }
-        
-        /*
-        return languagesRepository.getLanguages(ids: resource.languageIds)
-            .map({ getLanguageUseCase.getLanguage(language: $0) })*/
-        
-        //let toolLanguages: [ToolSettingsToolLanguageDomainModel] = Array()
         
         return Just(toolLanguages)
             .eraseToAnyPublisher()

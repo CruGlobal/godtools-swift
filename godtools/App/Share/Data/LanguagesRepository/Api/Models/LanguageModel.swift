@@ -65,3 +65,40 @@ extension LanguageModel: Equatable {
         return lhs.id == rhs.id
     }
 }
+
+extension LanguageModel {
+    
+    var localeId: BCP47LanguageIdentifier {
+        return code
+    }
+    
+    var languageCode: String {
+        
+        let locale = Locale(identifier: localeId)
+        let languageCode: String?
+        
+        if #available(iOS 16, *) {
+            languageCode = locale.language.languageCode?.identifier
+        }
+        else {
+            languageCode = locale.languageCode
+        }
+        
+        return languageCode ?? localeId
+    }
+    
+    var scriptCode: String? {
+        
+        let locale = Locale(identifier: localeId)
+        let scriptCode: String?
+        
+        if #available(iOS 16, *) {
+            scriptCode = locale.language.script?.identifier
+        }
+        else {
+            scriptCode = locale.scriptCode
+        }
+            
+        return scriptCode
+    }
+}
