@@ -19,11 +19,10 @@ class LessonsFeatureDomainLayerDependencies {
         self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
-    func getLessonsListUseCase() -> GetLessonsListUseCase {
-        
-        return GetLessonsListUseCase(
-            getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getLessonsListRepositoryInterface: dataLayer.getLessonsListRepositoryInterface()
+    func getViewLessonsUseCase() -> ViewLessonsUseCase {
+        return ViewLessonsUseCase(
+            getInterfaceStringsRepository: dataLayer.getLessonsInterfaceStringsRepositoryInterface(),
+            getLessonsListRepository: dataLayer.getLessonsListRepositoryInterface()
         )
     }
 }

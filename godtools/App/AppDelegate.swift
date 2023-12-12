@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
     }()
     
+    private var toolShortcutLinks: ToolShortcutLinksView?
+    
     var window: UIWindow?
     
     static func getWindow() -> UIWindow? {
@@ -135,7 +137,17 @@ extension AppDelegate {
     
     private func reloadShortcutItems(application: UIApplication) {
         
-        application.shortcutItems = appDiContainer.domainLayer.getShortcutItemsUseCase().getShortcutItems()
+        let viewModel = ToolShortcutLinksViewModel(
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolShortcutLinksUseCase: appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+        )
+            
+        let view = ToolShortcutLinksView(
+            application: application,
+            viewModel: viewModel
+        )   
+        
+        toolShortcutLinks = view
     }
 }
 
@@ -166,17 +178,11 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-                
-        guard let shortcutItemType = ShortcutItemType.shortcutItemType(shortcutItem: shortcutItem) else {
-            completionHandler(false)
-            return
-        }
-        
+               
         let successfullyHandledQuickAction: Bool
         
-        switch shortcutItemType {
-            
-        case .tool:
+        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(shortcutItem: shortcutItem),
+           let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
             let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             
@@ -192,15 +198,14 @@ extension AppDelegate {
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]
             )
-                        
-            if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
-            }
-            else {
-                successfullyHandledQuickAction = false
-            }
+            
+            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
         }
-        
+        else {
+            
+            successfullyHandledQuickAction = false
+        }
+
         completionHandler(successfullyHandledQuickAction)
     }
 }

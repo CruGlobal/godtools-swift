@@ -18,7 +18,7 @@ class GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepository: GetCr
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

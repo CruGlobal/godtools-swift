@@ -186,6 +186,10 @@ class AppDataLayerDependencies {
         return LocaleLanguageName()
     }
     
+    func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
+        return LocaleLanguageScriptName()
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }
@@ -263,6 +267,12 @@ class AppDataLayerDependencies {
         return ResourceViewsService(
             resourceViewsApi: MobileContentResourceViewsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
+    func getSearchBarInterfaceStringsRepositoryInterface() -> GetSearchBarInterfaceStringsRepositoryInterface {
+        return GetSearchBarInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
         )
     }
     

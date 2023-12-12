@@ -13,6 +13,8 @@ class AppLanguagesViewModel: ObservableObject {
     
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewSearchBarUseCase: ViewSearchBarUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,11 +24,13 @@ class AppLanguagesViewModel: ObservableObject {
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase) {
+    init(flowDelegate: FlowDelegate, getAppLanguagesListUseCase: GetAppLanguagesListUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, searchAppLanguageInAppLanguagesListUseCase: SearchAppLanguageInAppLanguagesListUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.searchAppLanguageInAppLanguagesListUseCase = searchAppLanguageInAppLanguagesListUseCase
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewSearchBarUseCase = viewSearchBarUseCase
                 
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
@@ -57,7 +61,8 @@ extension AppLanguagesViewModel {
     func getSearchBarViewModel() -> SearchBarViewModel {
         
         return SearchBarViewModel(
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
+            viewSearchBarUseCase: viewSearchBarUseCase
         )
     }
 }

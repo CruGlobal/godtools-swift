@@ -20,7 +20,7 @@ class GetMenuInterfaceStringsRepository: GetMenuInterfaceStringsRepositoryInterf
         self.infoPlist = infoPlist
     }
     
-    func getStringsPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never> {
         
         let localeId: String = translateInLanguage
         

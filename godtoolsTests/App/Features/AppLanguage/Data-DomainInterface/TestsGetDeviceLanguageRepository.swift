@@ -19,7 +19,7 @@ class TestsGetDeviceLanguageRepository: GetDeviceAppLanguageRepositoryInterface 
         self.deviceLanguageCode = deviceLanguageCode
     }
     
-    func getLanguagePublisher() -> AnyPublisher<AppLanguageCodeDomainModel, Never> {
+    func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
         
         return Just(deviceLanguageCode.value)
             .eraseToAnyPublisher()

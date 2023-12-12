@@ -51,6 +51,8 @@ class ToolSettingsFlow: Flow {
             
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,

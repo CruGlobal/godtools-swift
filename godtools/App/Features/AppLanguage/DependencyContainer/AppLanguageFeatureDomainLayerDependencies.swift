@@ -46,9 +46,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getInterfaceLayoutDirectionUseCase() -> GetInterfaceLayoutDirectionUseCase {
         return GetInterfaceLayoutDirectionUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguageRepositoryInterface: dataLayer.getAppLanguageRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
+            getLayoutDirectionInterface: dataLayer.getAppInterfaceLayoutDirectionInterface()
         )
     }
     
@@ -56,12 +54,6 @@ class AppLanguageFeatureDomainLayerDependencies {
         return GetInterfaceStringInAppLanguageUseCase(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
             getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface()
-        )
-    }
-    
-    func getLanguageSettingsInterfaceStringsUseCase() -> GetLanguageSettingsInterfaceStringsUseCase {
-        return GetLanguageSettingsInterfaceStringsUseCase(
-            getLanguageSettingsInterfaceStringsRepositoryInterface: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface()
         )
     }
     
@@ -74,6 +66,18 @@ class AppLanguageFeatureDomainLayerDependencies {
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
+        )
+    }
+    
+    func getViewDownloadableLanguagesUseCase() -> ViewDownloadableLanguagesUseCase {
+        return ViewDownloadableLanguagesUseCase(
+            getInterfaceStringsRepository: dataLayer.getDownloadableLanguagesInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewLanguageSettingsUseCase() -> ViewLanguageSettingsUseCase {
+        return ViewLanguageSettingsUseCase(
+            getInterfaceStringsRepository: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface()
         )
     }
 }

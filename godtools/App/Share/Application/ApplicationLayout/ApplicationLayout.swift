@@ -22,6 +22,8 @@ class ApplicationLayout: ObservableObject {
     
     private(set) var currentDirection: ApplicationLayoutDirection = .leftToRight
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
+    
     @Published var layoutDirection: LayoutDirection
     
     var semanticContentAttributePublisher: AnyPublisher<UISemanticContentAttribute, Never> {
@@ -43,7 +45,17 @@ class ApplicationLayout: ObservableObject {
         
         isConfigured = true
         
-        appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase().getLayoutDirectionPublisher()
+        let getCurrentAppLanguageUseCase = appLanguageFeatureDiContainer.domainLayer.getCurrentAppLanguageUseCase()
+        
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        
+        let getInterfaceLayoutDirectionUseCase = appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
+
+        getInterfaceLayoutDirectionUseCase
+            .getLayoutDirectionPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 

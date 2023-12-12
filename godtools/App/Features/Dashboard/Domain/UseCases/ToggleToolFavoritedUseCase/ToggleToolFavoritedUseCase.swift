@@ -22,19 +22,25 @@ class ToggleToolFavoritedUseCase {
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
     }
     
-    func toggleToolFavoritedPublisher(id: String) -> AnyPublisher<Void, Never> {
+    func toggleToolFavoritedPublisher(id: String) -> AnyPublisher<Bool, Never> {
                         
         return favoritedResourcesRepository.getResourceIsFavoritedPublisher(id: id)
-            .flatMap({ (isFavorited: Bool) -> AnyPublisher<Void, Never> in
+            .flatMap({ (isFavorited: Bool) -> AnyPublisher<Bool, Never> in
                 
                 if isFavorited {
                     
                     return self.removeToolFromFavoritesUseCase.removeToolFromFavoritesPublisher(id: id)
+                        .map {
+                            return false
+                        }
                         .eraseToAnyPublisher()
                 }
                 else {
                     
                     return self.addToolToFavoritesUseCase.addToolToFavoritesPublisher(id: id)
+                        .map {
+                            return true
+                        }
                         .eraseToAnyPublisher()
                 }
             })

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LanguageSettingsView: View {
     
+    private let contentHorizontalInsets: CGFloat = 30
+    
     @ObservedObject private var viewModel: LanguageSettingsViewModel
                 
     init(viewModel: LanguageSettingsViewModel) {
@@ -25,8 +27,17 @@ struct LanguageSettingsView: View {
                 
                 LanguageSettingsAppInterfaceLanguageView(
                     viewModel: viewModel,
-                    geometry: geometry
+                    geometry: geometry,
+                    contentHorizontalInsets: contentHorizontalInsets
                 )
+                .padding([.top], 30)
+                
+                ToolLanguagesAvailableOfflineView(
+                    viewModel: viewModel,
+                    geometry: geometry,
+                    contentHorizontalInsets: contentHorizontalInsets
+                )
+                .padding([.top], 30)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -47,7 +58,7 @@ struct LanguageSettingsView_Preview: PreviewProvider {
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: MockFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLanguageSettingsInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getLanguageSettingsInterfaceStringsUseCase(),
+            viewLanguageSettingsUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewLanguageSettingsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         

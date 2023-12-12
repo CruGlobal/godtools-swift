@@ -18,7 +18,7 @@ class GetTutorialRepository: GetTutorialRepositoryInterface {
         self.localizationServices = localizationServices
     }
     
-    func getTutorialPublisher(translateInLanguage: AppLanguageCodeDomainModel) -> AnyPublisher<[TutorialPageDomainModel], Never> {
+    func getTutorialPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[TutorialPageDomainModel], Never> {
         
         let isEnglish: Bool = translateInLanguage == LanguageCodeDomainModel.english.value
         
@@ -28,7 +28,7 @@ class GetTutorialRepository: GetTutorialRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    private func getEnglishTutorial(translateInLanguage: AppLanguageCodeDomainModel) -> [TutorialPageDomainModel] {
+    private func getEnglishTutorial(translateInLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
         
         let localeId: String = translateInLanguage
         
@@ -74,7 +74,7 @@ class GetTutorialRepository: GetTutorialRepositoryInterface {
         return tutorialPages
     }
     
-    private func getNonEnglishTutorial(translateInLanguage: AppLanguageCodeDomainModel) -> [TutorialPageDomainModel] {
+    private func getNonEnglishTutorial(translateInLanguage: AppLanguageDomainModel) -> [TutorialPageDomainModel] {
         
         let localeId: String = translateInLanguage
         

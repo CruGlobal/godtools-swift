@@ -16,16 +16,16 @@ class TutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
-    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageCodeDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     
+    @Published var hidesBackButton: Bool = true
     @Published var tutorialPages: [TutorialPageDomainModel] = Array()
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
@@ -44,7 +44,7 @@ class TutorialViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         getTutorialUseCase
-            .getTutorialPublisher(appLanguageChangedPublisher: $appLanguage.eraseToAnyPublisher())
+            .getTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
@@ -101,7 +101,7 @@ class TutorialViewModel: ObservableObject {
     
     private func pageDidChange(page: Int) {
                 
-        hidesBackButtonSubject.send(isOnFirstPage)
+        hidesBackButton = isOnFirstPage
                                 
         let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
         let analyticsSiteSection = analyticsSiteSection
@@ -125,11 +125,6 @@ class TutorialViewModel: ObservableObject {
             url: nil,
             data: nil
         )
-    }
-    
-    var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesBackButtonSubject
-            .eraseToAnyPublisher()
     }
     
     private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) {

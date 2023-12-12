@@ -12,19 +12,24 @@ import Combine
 
 class ToolSettingsViewModel: ObservableObject {
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewToolSettingsUseCase: ViewToolSettingsUseCase
     private let localizationServices: LocalizationServices
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     private let primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>
     private let parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>
-    private let trainingTipsEnabledSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
     
-    private var trainingTipsCancellable: AnyCancellable?
     private var currentPageRendererCancellable: AnyCancellable?
     private var primaryLanguageCancellable: AnyCancellable?
     private var parallelLanguageCancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var interfaceStrings: ToolSettingsInterfaceStringsDomainModel?
+    @Published private var trainingTipsEnabled: Bool = false
     
     @Published var title: String = ""
     @Published var shareLinkTitle: String = ""
@@ -40,28 +45,58 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.localizationServices = localizationServices
         self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.primaryLanguageSubject = primaryLanguageSubject
         self.parallelLanguageSubject = parallelLanguageSubject
+        self.trainingTipsEnabled = trainingTipsEnabled
         
-        title = localizationServices.stringForSystemElseEnglish(key: "toolSettings.title")
-        shareLinkTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.shareLink.title")
-        screenShareTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.screenShare.title")
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
         
-        trainingTipsEnabledSubject.send(trainingTipsEnabled)
-        
-        trainingTipsCancellable = trainingTipsEnabledSubject.sink { [weak self] (trainingTipsEnabled: Bool) in
-            self?.trainingTipsTitle = trainingTipsEnabled ? localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.trainingTips.hide.title") : localizationServices.stringForSystemElseEnglish(key: "toolSettings.option.trainingTips.show.title")
-            self?.trainingTipsIcon = trainingTipsEnabled ? Image(ImageCatalog.toolSettingsOptionHideTips.name) : Image(ImageCatalog.toolSettingsOptionTrainingTips.name)
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
+                
+                return self.viewToolSettingsUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
+                
+                self?.title = domainModel.interfaceStrings.title
+                self?.shareLinkTitle = domainModel.interfaceStrings.toolOptionShareLink
+                self?.screenShareTitle = domainModel.interfaceStrings.toolOptionScreenShare
+                self?.chooseLanguageTitle = domainModel.interfaceStrings.languageSelectionTitle
+                self?.chooseLanguageToggleMessage = domainModel.interfaceStrings.languageSelectionMessage
+                self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
+                
+                self?.interfaceStrings = domainModel.interfaceStrings
+            }
+            .store(in: &cancellables)
+
+        Publishers.CombineLatest(
+            $trainingTipsEnabled.eraseToAnyPublisher(),
+            $interfaceStrings.eraseToAnyPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (trainingTipsEnabled: Bool, interfaceStrings: ToolSettingsInterfaceStringsDomainModel?) in
+            
+            guard let interfaceStrings = interfaceStrings else {
+                return
+            }
+            
+            self?.trainingTipsTitle = trainingTipsEnabled ? interfaceStrings.toolOptionDisableTrainingTips : interfaceStrings.toolOptionEnableTrainingTips
+            self?.trainingTipsIcon = trainingTipsEnabled ? ImageCatalog.toolSettingsOptionHideTips.image : ImageCatalog.toolSettingsOptionTrainingTips.image
         }
-        chooseLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.title")
-        chooseLanguageToggleMessage = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.toggleMessage")
-        shareablesTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.shareables.title")
+        .store(in: &cancellables)
         
         currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
 
@@ -122,9 +157,9 @@ extension ToolSettingsViewModel {
     
     func trainingTipsTapped() {
 
-        trainingTipsEnabledSubject.send(!trainingTipsEnabledSubject.value)
-                
-        let step: FlowStep = trainingTipsEnabledSubject.value ? .enableTrainingTipsTappedFromToolSettings : .disableTrainingTipsTappedFromToolSettings
+        self.trainingTipsEnabled = !trainingTipsEnabled
+                        
+        let step: FlowStep = trainingTipsEnabled ? .enableTrainingTipsTappedFromToolSettings : .disableTrainingTipsTappedFromToolSettings
         
         flowDelegate?.navigate(step: step)
     }

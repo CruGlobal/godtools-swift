@@ -10,13 +10,13 @@ import Foundation
 
 struct AppLanguageListItemDomainModel {
     
-    let languageCode: AppLanguageCodeDomainModel
-    let languageNameTranslatedInOwnLanguage: String
-    let languageNameTranslatedInCurrentAppLanguage: String
+    let language: AppLanguageDomainModel
+    let languageNameTranslatedInOwnLanguage: AppLanguageNameDomainModel
+    let languageNameTranslatedInCurrentAppLanguage: AppLanguageNameDomainModel
 }
 
 extension AppLanguageListItemDomainModel: Identifiable {
     var id: String {
-        return languageCode
+        return language
     }
 }

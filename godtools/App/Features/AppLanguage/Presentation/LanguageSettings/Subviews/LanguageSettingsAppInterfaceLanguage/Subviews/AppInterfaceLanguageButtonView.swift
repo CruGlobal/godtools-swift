@@ -40,11 +40,25 @@ struct AppInterfaceLanguageButtonView: View {
                         .frame(width: width, height: height)
                         .cornerRadius(cornerRadius)
                     
-                    Text(title)
-                        .font(FontLibrary.sfProTextRegular.font(size: 14))
-                        .foregroundColor(ColorPalette.gtGrey.color)
-                        .multilineTextAlignment(.center)
-                    
+                    HStack(alignment: .center, spacing: 0) {
+                        
+                        ImageCatalog.languageSettingsLogo.image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 15, height: 15)
+                        
+                        Text(title)
+                            .font(FontLibrary.sfProTextRegular.font(size: 14))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                            .multilineTextAlignment(.center)
+                            .padding([.leading], 6)
+                        
+                        ImageCatalog.buttonDownArrow.image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 10, height: 5)
+                            .padding([.leading], 8)
+                    }
                 }
             }
             .frame(width: width, height: height, alignment: .center)

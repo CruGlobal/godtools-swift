@@ -12,6 +12,16 @@ struct AppLanguageDataModel {
     
     let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction
+    let languageScriptCode: String?
+    
+    var languageId: BCP47LanguageIdentifier {
+        
+        if let languageScriptCode = languageScriptCode, !languageScriptCode.isEmpty {
+            return languageCode + "-" + languageScriptCode
+        }
+        
+        return languageCode
+    }
 }
 
 extension AppLanguageDataModel {

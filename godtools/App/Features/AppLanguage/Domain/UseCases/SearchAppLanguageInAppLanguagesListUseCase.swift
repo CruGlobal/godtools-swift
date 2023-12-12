@@ -35,7 +35,7 @@ class SearchAppLanguageInAppLanguagesListUseCase {
                     
                     let filteredItems = languageItems.filter { languageItem in
                         
-                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
+                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.name.lowercased()
                         
                         return lowercasedLanguageName.contains(lowercasedSearchText)
                     }

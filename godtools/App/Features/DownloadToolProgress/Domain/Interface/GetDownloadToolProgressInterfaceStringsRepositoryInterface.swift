@@ -13,5 +13,5 @@ protocol GetDownloadToolProgressInterfaceStringsRepositoryInterface {
     
     // TODO: Eventually ToolDomainModel should be passed in here and used to look up the ResourceModel. ~Levi
     
-    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never>
 }

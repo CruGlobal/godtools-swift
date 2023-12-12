@@ -26,7 +26,7 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
                 
                 it("The interface strings should be translated into Spanish.") {
                     
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageCodeDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
                     var englishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
                     var spanishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
@@ -37,7 +37,7 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getOnboardingTutorialInterfaceStringsUseCase
-                            .getStringsPublisher(appLanguageCodeChangedPublisher: appLanguagePublisher.eraseToAnyPublisher())
+                            .getStringsPublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
                             .sink { (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {

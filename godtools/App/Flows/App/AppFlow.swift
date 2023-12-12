@@ -140,7 +140,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolLanguageFilterTappedFromTools(let languageFilterSelectionPublisher, let selectedCategory):
             navigationController.pushViewController(getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: languageFilterSelectionPublisher, selectedCategory: selectedCategory), animated: true)
+        
+        case .categoryTappedFromToolCategoryFilter:
+            navigationController.popViewController(animated: true)
             
+        case .languageTappedFromToolLanguageFilter:
+            navigationController.popViewController(animated: true)
+
         case .backTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
             
@@ -447,9 +453,7 @@ extension AppFlow {
     }
     
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
-        
-        let hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
-        
+                
         let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
@@ -457,8 +461,7 @@ extension AppFlow {
                 appDiContainer: appDiContainer,
                 flowDelegate: self
             ),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            hidesLanguagesSettingsButton: hidesLanguagesSettingsButton
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
                 
         let view = DashboardView(viewModel: viewModel)
@@ -475,7 +478,7 @@ extension AppFlow {
             target: viewModel,
             action: #selector(viewModel.languageSettingsTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: hidesLanguagesSettingsButton.eraseToAnyPublisher()
+            toggleVisibilityPublisher: viewModel.$hidesLanguagesSettingsButton.eraseToAnyPublisher()
         )
         
         let hostingController = AppHostingController<DashboardView>(
@@ -650,11 +653,11 @@ extension AppFlow {
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
             
-        case .onboarding(let appLanguageCode):
+        case .onboarding(let appLanguage):
             
             let userAppLanguageCache: RealmUserAppLanguageCache = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageCache()
             
-            userAppLanguageCache.storeLanguage(languageCode: appLanguageCode)
+            userAppLanguageCache.storeLanguage(languageId: appLanguage)
             
             navigateToOnboarding(animated: true)
         }
@@ -784,11 +787,14 @@ extension AppFlow {
     private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
-            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
-            searchToolFilterCategoriesUseCase: appDiContainer.domainLayer.getSearchToolFilterCategoriesUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
+            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
+            storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
          )
         
@@ -816,9 +822,12 @@ extension AppFlow {
     private func getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
-            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-            searchToolFilterLanguagesUseCase: appDiContainer.domainLayer.getSearchToolFilterLanguagesUseCase(),
+            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
+            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
+            storeUserFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
             selectedCategory: selectedCategory,
             flowDelegate: self
@@ -850,7 +859,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageCodeDomainModel?) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageDomainModel?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
@@ -858,10 +867,8 @@ extension AppFlow {
             toolLanguage: toolLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
-            getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
+            viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
-            getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
-            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
             toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),

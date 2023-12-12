@@ -1,6 +1,20 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
+"languageSettings.confirmAppLanguage.message" = "Bạn đã lựa chọn %@ làm ngôn ngữ ứng dụng. Toàn bộ ứng dụng GodTools sẽ được thay đổi sang ngôn ngữ này. Bạn có chắc chắn?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Thay đổi ngôn ngữ";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Bỏ qua";
+"languageSettings.appInterface.title" = "Giao diện ngôn ngữ của ứng dụng";
+"languageSettings.appInterface.message" = "Cài đặt ngôn ngữ mà bạn muốn cho toàn bộ ứng dụng.";
+"languageSettings.appInterface.languagesAvailable" = "Những ngôn ngữ sẵn có";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Công cụ ngôn ngữ sẵn có khi offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Tải tất cả công cụ có trong một ngôn ngữ để sẵn dùng ngay cả khi không có kết nối internet.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Tùy chỉnh các ngôn ngữ được tải về";
+"allTools.filter.title" = "Bộ lọc";
 "allTools.filter.anyCategory" = "Bất kỳ loại nào";
 "allTools.filter.anyLanguage" = "Bất kỳ ngôn ngữ nào";
+"languageSettings.appLanguage.title" = "Ngôn ngữ ứng dụng";
+"createAccount.title" = "Tạo tài khoản";
+"createAccount.subtitle" = "Tạo một tài khoản để có những câu chuyện, sự khích lệ và gợi ý thực hành trong tầm tay bạn.";
+"signIn.title" = "Đăng nhập";
 "menu_getStarted" = "Bắt đầu";
 "menu_support" = "Hỗ trợ";
 "menu_about" = "Giới thiệu";
@@ -8,6 +22,55 @@
 "menu.reportABug" = "Báo cáo lỗi";
 "menu.askAQuestion" = "Đặt câu hỏi";
 "menu.leaveAReview" = "Để lại đánh giá";
+"account.badges.sectionTitle" = "Huy hiệu";
+"account.activity.sectionTitle" = "Hoạt động của bạn";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Mở công cụ";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Hoàn thành bài học";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Chia sẻ màn hình";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Chia sẻ liên kết";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Ngôn ngữ sử dụng";
+
+"account.activity.sessions" = "Phần";
+"badges.tipsCompleted.singular" = "Đã hoàn thành %1$,d gợi ý hướng dẫn";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Đã chia sẻ %d hình ảnh";
+
+"badges.imagesShared.singular" = "Đã chia sẻ 1 hình ảnh";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Đã hoàn thành %d bài học";
+
+"badges.lessonsCompleted.singular" = "Đã hoàn thành 1 bài học";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Đã mở %d công cụ";
+
+"badges.toolsOpened.singular" = "Đã mở 1 công cụ";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Đã hoàn thành %d gợi ý hướng dẫn";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Tham gia %@";
+
+"account.globalActivity.title" = "Hoạt động toàn cầu";
+"toolDetails.conversationStarters.title" = "Bắt đầu cuộc đối thoại";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Điểm chính";
+
+"toolDetails.bibleReferences.title" = "Tham khảo Kinh Thánh";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Giới thiệu";

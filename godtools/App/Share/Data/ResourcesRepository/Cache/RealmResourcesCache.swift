@@ -123,6 +123,52 @@ class RealmResourcesCache {
     }
 }
 
+// MARK: - Resources By Filter
+
+extension RealmResourcesCache {
+    
+    func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
+        
+        var filterByAttributes: [NSPredicate] = Array()
+        
+        if let category = filter.category, !category.isEmpty {
+            
+            let categoryFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrCategory)) == [c] %@", category.lowercased())
+            
+            filterByAttributes.append(categoryFilter)
+        }
+        
+        if let languageCode = filter.languageCode?.lowercased(), !languageCode.isEmpty {
+            
+            let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageCode)\").@count > 0"
+            
+            let languageFilter = NSPredicate(format: subQuery)
+            
+            filterByAttributes.append(languageFilter)
+        }
+        
+        if let resourceTypes = filter.resourceTypes, !resourceTypes.isEmpty {
+            
+            let resourceTypesValues: [String] = resourceTypes.map({$0.rawValue.lowercased()})
+            
+            let resourceTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", resourceTypesValues)
+            
+            filterByAttributes.append(resourceTypeFilter)
+        }
+              
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
+        
+        return filteredResources
+            .map {
+                ResourceModel(model: $0)
+            }
+    }
+}
+
 // MARK: - Lessons
 
 extension RealmResourcesCache {

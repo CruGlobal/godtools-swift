@@ -11,17 +11,17 @@ import Foundation
 struct UserAppLanguageDataModel {
     
     let id: String
-    let languageCode: String
+    let languageId: String
     
-    init(id: String, languageCode: String) {
+    init(id: String, languageId: String) {
         
         self.id = id
-        self.languageCode = languageCode
+        self.languageId = languageId
     }
     
     init(realmUserAppLanguage: RealmUserAppLanguage) {
         
         id = realmUserAppLanguage.id
-        languageCode = realmUserAppLanguage.languageCode
+        languageId = realmUserAppLanguage.languageId
     }
 }

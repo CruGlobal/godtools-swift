@@ -1,6 +1,37 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Elegir idioma";
+"languageSettings.confirmAppLanguage.message" = "Has seleccionado %@ como idioma de tu aplicación. Esto cambiará el idioma de toda la aplicación GodTools. ¿Estás seguro?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Cambiar idioma";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Olvídalo";
+"languageSettings.appInterface.title" = "Idioma de la interfaz de la aplicación";
+"languageSettings.appInterface.message" = "Establece el idioma en el que deseas que se muestre toda la aplicación.";
+"languageSettings.appInterface.languagesAvailable" = "Idiomas disponibles";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Idiomas de herramientas disponibles sin conexión";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Editar idiomas descargados";
+"allTools.filter.title" = "Filtro";
 "allTools.filter.anyCategory" = "Cualquier categoría";
 "allTools.filter.anyLanguage" = "Cualquier Idioma";
+"allTools.filter.navBar.language" = "Filtrar por idioma";
+"allTools.filter.navBar.category" = "Filtrar por categoría";
+"languageSettings.appLanguage.title" = "Idioma de la aplicación";
+"authError.userAccountAlreadyExists.message" = "La cuenta del usuario ya existe.";
+"authError.userAccountNotFound.message" = "No se encontró la cuenta del usuario.";
+"createAccount.title" = "Crear cuenta";
+"createAccount.subtitle" = "Crea una cuenta para tener a tu alcance historias reales, ánimos y consejos prácticos.";
+"deleteAccountProgress.title" = "Eliminando cuenta...";
+"confirmDeleteAccount.title" = "¿Seguro?";
+"confirmDeleteAccount.confirmButton.title" = "Eliminar Cuenta";
+"accountDeletedAlert.title" = "Cuenta eliminada";
+"accountDeletedAlert.message" = "Se ha eliminado tu cuenta";
+"deleteAccount.title" = "No te vayas tan pronto";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
+"deleteAccount.confirmButton.title" = "Eliminar mi cuenta";
+"deleteAccount.cancelButton.title" = "Conservar mi cuenta";
+"signIn.title" = "Iniciar sesión";
+"signIn.subtitle" = "Inicia sesión en tu cuenta para tener historias reales, aliento y consejos prácticos al alcance de la mano.";
+"signIn.google" = "Iniciar sesión con Google";
+"signIn.facebook" = "Acceder con Facebook";
+"signIn.apple" = "Continuar con Apple";
 "menu_getStarted" = "Comenzar";
 "menu_support" = "Soporte";
 "menu_about" = "Acerca de";
@@ -8,6 +39,61 @@
 "menu.reportABug" = "Informar de un error";
 "menu.askAQuestion" = "Haz una pregunta";
 "menu.leaveAReview" = "Deja una opinión";
+"account.badges.sectionTitle" = "Tus insignias";
+"account.activity.sectionTitle" = "Tu actividad";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "Herramientas abiertas";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "Lecciones completada";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "Pantalla Compartidas";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "Enlace compartido";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "Idioma utilizados";
+
+"account.activity.sessions" = "Sesiones";
+"badges.tipsCompleted.singular" = "Tip de entrenamiento 1 completado";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Leer %d artículos";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Leer 1 artículo";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "Imagen %d compartida";
+
+"badges.imagesShared.singular" = "Imagen 1 compartida";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "Lección %d completada";
+
+"badges.lessonsCompleted.singular" = "Lección 1 completada";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "Herramienta %d abierta";
+
+"badges.toolsOpened.singular" = "Herramienta 1 abierta";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "Tips de entrenamiento %d completado";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Unirse %@";
+
+"account.globalActivity.title" = "Actividad global";
+"toolDetails.conversationStarters.title" = "Iniciador de Conversaciones";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Esquema";
+
+"toolDetails.bibleReferences.title" = "Referencias Bíblicas";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Acerca de";
@@ -18,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "No disponible en %@";
 
+"menu.deleteAccount" = "Eliminar Cuenta";
+"alert.mailAppUnavailable.title" = "Aplicación de correo no disponible";
+"alert.mailAppUnavailable.message" = "La aplicación de correo nativa no está configurada o no está disponible en este dispositivo. ";
 "tool_menu_item.tools" = "Herramientas";
 "lessons.pageTitle" = "Lecciones hechas para ti";
 "lessons.pageSubtitle" = "Ideas prácticas para establecer relaciones e iniciar conversaciones significativas.";
@@ -69,7 +158,7 @@
 "tutorial.continueButton.title.closeTutorial" = "Cerrar tutorial";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.tool.title" = "HERRAMIENTAS";
+"tutorial.tool.title" = "Herramientas";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Cada herramienta está hecha para una etapa diferente de la conversación: antes, durante o después.";
@@ -100,11 +189,11 @@
 "onboardingQuickStart.2.button.title" = "Elige una de nuestras herramientas";
 "onboardingTutorial.nextButton.title" = "Siguiente";
 "onboardingQuickStart.title" = "Enlaces rápidos de inicio";
-"onboardingQuickStart.0.title" = "Deseo explorar el cristianismo";
+"onboardingQuickStart.0.title" = "Deseo aprender más sobre Jesús";
 "onboardingQuickStart.0.button.title" = "Lee nuestros artículos";
 "onboardingQuickStart.1.title" = "Quiero aprender a tener conversaciones sobre el evangelio";
 "onboardingQuickStart.1.button.title" = "Intenta nuestras Lecciones";
-"tool_offline_favorite_message" = "Toca el icono de corazón para añadir una herramienta a favoritos y tenerla disponible sin conexión.";
+"tool_offline_favorite_message" = "Haz que una herramienta esté disponible sin conexión tocando el icono de corazón, que la agrega a tus favoritos.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Iniciar conversación";

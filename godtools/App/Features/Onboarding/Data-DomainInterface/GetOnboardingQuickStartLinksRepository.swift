@@ -18,24 +18,26 @@ class GetOnboardingQuickStartLinksRepository: GetOnboardingQuickStartLinksReposi
         self.localizationServices = localizationServices
     }
     
-    func getLinks(appLanguageCode: AppLanguageCodeDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
+    func getLinks(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[OnboardingQuickStartLinkDomainModel], Never> {
+        
+        let localeId: String = appLanguage
         
         let quickStartLinks: [OnboardingQuickStartLinkDomainModel] = [
             OnboardingQuickStartLinkDomainModel(
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.0.title"),
-                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.0.button.title"),
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.0.title"),
+                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.0.button.title"),
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartArticles,
                 linkType: .readOurArticles
             ),
             OnboardingQuickStartLinkDomainModel(
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.1.title"),
-                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.1.button.title"),
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.1.title"),
+                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.1.button.title"),
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartLessons,
                 linkType: .tryOurLessons
             ),
             OnboardingQuickStartLinkDomainModel(
-                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.2.title"),
-                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageCode, key: "onboardingQuickStart.2.button.title"),
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.2.title"),
+                actionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingQuickStart.2.button.title"),
                 analyticsEventActionName: AnalyticsConstants.ActionNames.onboardingQuickStartTools,
                 linkType: .chooseOneOfOurTools
             )

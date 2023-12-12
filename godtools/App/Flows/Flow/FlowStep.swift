@@ -67,6 +67,8 @@ enum FlowStep {
     // tools
     case toolCategoryFilterTappedFromTools(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel)
     case toolLanguageFilterTappedFromTools(languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel)
+    case categoryTappedFromToolCategoryFilter
+    case languageTappedFromToolLanguageFilter
     case backTappedFromToolCategoryFilter
     case backTappedFromToolLanguageFilter
     case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
@@ -139,6 +141,7 @@ enum FlowStep {
     case backTappedFromLanguageSettings
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
     case chooseAppLanguageTappedFromLanguageSettings
+    case editDownloadedLanguagesTappedFromLanguageSettings
     
     // choose app language
     case backTappedFromAppLanguages
@@ -147,6 +150,9 @@ enum FlowStep {
     case nevermindTappedFromConfirmAppLanguageChange
     case backTappedFromConfirmAppLanguageChange
     case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
+    
+    // downloaded languages
+    case backTappedFromDownloadedLanguages
     
     // article
     case backTappedFromArticleCategories
