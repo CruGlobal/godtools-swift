@@ -1,5 +1,5 @@
 //
-//  ToolSettingsOptionsItemView.swift
+//  ToolSettingsOptionView.swift
 //  ToolSettings
 //
 //  Created by Levi Eggert on 5/10/22.
@@ -7,26 +7,39 @@
 
 import SwiftUI
 
-struct ToolSettingsOptionsItemView: View {
+struct ToolSettingsOptionView: View {
         
-    let backgroundType: ToolSettingsOptionItemBackgroundType
-    let iconImage: Image
-    let title: String
-    let titleColorStyle: ToolSettingsOptionItemTitleColorStyle
+    private let viewBackground: ToolSettingsOptionViewBackground
+    private let title: String
+    private let titleColorStyle: ToolSettingsOptionViewTitleColorStyle
+    private let iconImage: Image
+    private let tappedClosure: (() -> Void)?
+        
+    init(viewBackground: ToolSettingsOptionViewBackground, title: String, titleColorStyle: ToolSettingsOptionViewTitleColorStyle, iconImage: Image, tappedClosure: (() -> Void)?) {
+        
+        self.viewBackground = viewBackground
+        self.title = title
+        self.titleColorStyle = titleColorStyle
+        self.iconImage = iconImage
+        self.tappedClosure = tappedClosure
+    }
     
     var body: some View {
         
-        GeometryReader { geometry in
-            
-            if let image = backgroundType.getImage() {
+        ZStack(alignment: .center) { 
+        
+            if let image = viewBackground.getImage() {
+                
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
             
             VStack(alignment: .center, spacing: 10) {
+                
                 iconImage
                     .frame(width: 23, height: 23)
+                
                 Text(title)
                     .foregroundColor(titleColorStyle.getColor())
                     .font(FontLibrary.sfProTextRegular.font(size: 14))
@@ -45,7 +58,10 @@ struct ToolSettingsOptionsItemView: View {
             )
         }
         .frame(width: 96, height: 96)
-        .background(backgroundType.getColor())
+        .background(viewBackground.getColor())
         .cornerRadius(12)
+        .onTapGesture {
+            tappedClosure?()
+        }
     }
 }

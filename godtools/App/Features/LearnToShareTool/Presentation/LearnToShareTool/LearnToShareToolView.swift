@@ -26,10 +26,10 @@ struct LearnToShareToolView: View {
             
             VStack(spacing: 0) {
                 
-                PagedView(numberOfPages: viewModel.numberOfLearnToShareToolItems, currentPage: $viewModel.currentPage) { page in
+                PagedView(numberOfPages: viewModel.learnToShareToolItems.count, currentPage: $viewModel.currentPage) { (index: Int) in
                     
                     LearnToShareToolItemView(
-                        viewModel: viewModel.getLearnToShareToolItemViewModel(index: page),
+                        viewModel: viewModel.getLearnToShareToolItemViewModel(index: index),
                         geometry: geometry
                     )
                 }
@@ -40,7 +40,7 @@ struct LearnToShareToolView: View {
                 }
                             
                 PageControl(
-                    numberOfPages: viewModel.numberOfLearnToShareToolItems,
+                    numberOfPages: viewModel.learnToShareToolItems.count,
                     attributes: pageControlAttributes,
                     currentPage: $viewModel.currentPage
                 )

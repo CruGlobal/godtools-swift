@@ -120,12 +120,6 @@ class AppDomainLayerDependencies {
             getLaunchCountRepositoryInterface: dataLayer.getLaunchCountRepositoryInterface()
         )
     }
-    
-    func getLearnToShareToolItemsUseCase() -> GetLearnToShareToolItemsUseCase {
-        return GetLearnToShareToolItemsUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
         
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(

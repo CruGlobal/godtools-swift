@@ -1,5 +1,5 @@
 //
-//  ToolSettingsOptionItemTitleColorStyle.swift
+//  ToolSettingsOptionViewTitleColorStyle.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/13/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum ToolSettingsOptionItemTitleColorStyle {
+enum ToolSettingsOptionViewTitleColorStyle {
     
     case lightBackground
     case darkBackground
