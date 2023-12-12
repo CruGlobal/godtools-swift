@@ -7635,9 +7635,9 @@
 		45B255A72B2755BE00D40343 /* ToolSettingsToolLanguagesList */ = {
 			isa = PBXGroup;
 			children = (
-				4509BF952B278C4F006025F8 /* ToolSettingsToolLanguagesListType.swift */,
 				45B255A82B2755D000D40343 /* ToolSettingsToolLanguagesListView.swift */,
 				45B255AA2B2755D600D40343 /* ToolSettingsToolLanguagesListViewModel.swift */,
+				4509BF952B278C4F006025F8 /* ToolSettingsToolLanguagesListType.swift */,
 				4509BF892B27884E006025F8 /* Subviews */,
 			);
 			path = ToolSettingsToolLanguagesList;
