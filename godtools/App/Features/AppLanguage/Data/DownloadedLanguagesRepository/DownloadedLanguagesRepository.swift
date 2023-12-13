@@ -7,8 +7,24 @@
 //
 
 import Foundation
+import Combine
 
 class DownloadedLanguagesRepository {
     
+    private let cache: RealmDownloadedLanguagesCache
     
+    init(cache: RealmDownloadedLanguagesCache) {
+        
+        self.cache = cache
+    }
+    
+    func storeDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+        
+        return cache.storeDownloadedLanguage(languageId: languageId)
+    }
+    
+    func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
+        
+        return cache.deleteDownloadedLanguage(languageId: languageId)
+    }
 }
