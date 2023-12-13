@@ -27,9 +27,7 @@ class GetToolSettingsToolLanguagesRepository: GetToolSettingsToolLanguagesReposi
         let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
             .getLanguages(ids: languageIds)
             .map { (language: LanguageModel) in
-                
-                print("language code: \(language.code)")
-                
+                                
                 let languageName: String = getAppLanguageName.getName(
                     languageCode: language.languageCode,
                     scriptCode: language.scriptCode,

@@ -83,10 +83,10 @@ class ToolSettingsFlow: Flow {
             tool.setTrainingTipsEnabled(enabled: false)
                         
         case .primaryLanguageTappedFromToolSettings:
-            presentToolLanguagesList(animated: true)
+            presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
             
         case .parallelLanguageTappedFromToolSettings:
-            presentToolLanguagesList(animated: true)
+            presentToolLanguagesList(listType: .chooseParallelLanguage, animated: true)
             
         case .closeTappedFromToolSettingsToolLanguagesList:
             dismissToolLanguagesList(animated: true)
@@ -372,9 +372,9 @@ extension ToolSettingsFlow {
 
 extension ToolSettingsFlow {
     
-    private func presentToolLanguagesList(animated: Bool) {
+    private func presentToolLanguagesList(listType: ToolSettingsToolLanguagesListType, animated: Bool) {
         
-        navigationController.present(getToolSettingsToolLanguagesListView(), animated: true)
+        navigationController.present(getToolSettingsToolLanguagesListView(listType: listType), animated: true)
     }
     
     private func dismissToolLanguagesList(animated: Bool) {
@@ -388,13 +388,16 @@ extension ToolSettingsFlow {
         self.languagesListModal = nil
     }
     
-    private func getToolSettingsToolLanguagesListView() -> UIViewController {
+    private func getToolSettingsToolLanguagesListView(listType: ToolSettingsToolLanguagesListType) -> UIViewController {
         
         let viewModel = ToolSettingsToolLanguagesListViewModel(
             flowDelegate: self,
+            listType: listType,
             tool: toolData.renderer.value.resource,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolSettingsToolLanguageListUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsToolLanguagesListUseCase()
+            viewToolSettingsToolLanguageListUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsToolLanguagesListUseCase(),
+            storeToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getStoreToolSettingsPrimaryLanguageUseCase(),
+            storeToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getStoreToolSettingsParallelLanguageUseCase()
         )
         
         let view = ToolSettingsToolLanguagesListView(viewModel: viewModel)

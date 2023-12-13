@@ -25,7 +25,9 @@ class ViewToolSettingsUseCase {
             .flatMap({ (interfaceStrings: ToolSettingsInterfaceStringsDomainModel) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
                 
                 let domainModel = ViewToolSettingsDomainModel(
-                    interfaceStrings: interfaceStrings
+                    interfaceStrings: interfaceStrings,
+                    primaryLanguage: ToolSettingsToolLanguageDomainModel(dataModelId: "", languageName: ""),
+                    parallelLanguage: nil
                 )
                 
                 return Just(domainModel)

@@ -11,9 +11,15 @@ import Combine
 
 class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     
+    static private var storePrimaryLanguageCancellable: AnyCancellable?
+    static private var storeParallelLanguageCancellable: AnyCancellable?
+    
+    private let listType: ToolSettingsToolLanguagesListType
     private let tool: ResourceModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase
+    private let storeToolSettingsPrimaryLanguageUseCase: StoreToolSettingsPrimaryLanguageUseCase
+    private let storeToolSettingsParallelLanguageUseCase: StoreToolSettingsParallelLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -23,12 +29,15 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     
     @Published var languages: [ToolSettingsToolLanguageDomainModel] = Array()
     
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase) {
+    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListType, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase, storeToolSettingsPrimaryLanguageUseCase: StoreToolSettingsPrimaryLanguageUseCase, storeToolSettingsParallelLanguageUseCase: StoreToolSettingsParallelLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.listType = listType
         self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsToolLanguageListUseCase = viewToolSettingsToolLanguageListUseCase
+        self.storeToolSettingsPrimaryLanguageUseCase = storeToolSettingsPrimaryLanguageUseCase
+        self.storeToolSettingsParallelLanguageUseCase = storeToolSettingsParallelLanguageUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -66,6 +75,24 @@ extension ToolSettingsToolLanguagesListViewModel {
     }
     
     func languageTapped(language: ToolSettingsToolLanguageDomainModel) {
-        print("\n language tapped... \(language.languageName)")
+        
+        switch listType {
+            
+        case .choosePrimaryLanguage:
+            
+            ToolSettingsToolLanguagesListViewModel.storePrimaryLanguageCancellable = storeToolSettingsPrimaryLanguageUseCase
+                .storeLanguagePublisher(language: language)
+                .sink(receiveValue: { _ in
+                    
+                })
+            
+        case .chooseParallelLanguage:
+            
+            ToolSettingsToolLanguagesListViewModel.storeParallelLanguageCancellable = storeToolSettingsParallelLanguageUseCase
+                .storeLanguagePublisher(language: language)
+                .sink(receiveValue: { _ in
+                    
+                })
+        }
     }
 }

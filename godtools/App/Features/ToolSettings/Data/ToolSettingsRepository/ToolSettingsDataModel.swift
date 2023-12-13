@@ -10,6 +10,14 @@ import Foundation
 
 struct ToolSettingsDataModel {
     
-    let primaryLanguageId: String?
+    let id: String
     let parallelLanguageId: String?
+    let primaryLanguageId: String?
+    
+    init(realmToolSettings: RealmToolSettings) {
+        
+        self.id = realmToolSettings.id
+        self.parallelLanguageId = realmToolSettings.parallelLanguageId
+        self.primaryLanguageId = realmToolSettings.primaryLanguageId
+    }
 }

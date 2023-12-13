@@ -89,6 +89,12 @@ extension LanguageModel {
     
     var scriptCode: String? {
         
+        let languageComponents: [String] = localeId.components(separatedBy: "-")
+        
+        guard languageComponents.count > 1 else {
+            return nil
+        }
+        
         let locale = Locale(identifier: localeId)
         let scriptCode: String?
         
@@ -98,7 +104,19 @@ extension LanguageModel {
         else {
             scriptCode = locale.scriptCode
         }
-            
+        
+        guard let scriptCode = scriptCode else {
+            return nil
+        }
+        
+        let scriptCodeExistsInLanguageId: Bool = languageComponents.first(where: {
+            $0.lowercased() == scriptCode.lowercased()
+        }) != nil
+        
+        guard scriptCodeExistsInLanguageId else {
+            return nil
+        }
+        
         return scriptCode
     }
 }
