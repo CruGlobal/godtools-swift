@@ -60,12 +60,11 @@ class GetTranslatedLanguageName {
             languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId) ?? language.fallbackName
         }
         
-        if let regionCode = language.regionCode, let localeRegionName = localeRegionName.getRegionName(forRegionCode: regionCode, translatedInLanguageId: translatedInLanguage) {
-            languageSuffixes.append(localeRegionName)
-        }
-        
         if let scriptCode = language.scriptCode, let localeScriptName = localeScriptName.getScriptName(forScriptCode: scriptCode, translatedInLanguageId: translatedInLanguage) {
             languageSuffixes.append(localeScriptName)
+        }
+        else if let regionCode = language.regionCode, let localeRegionName = localeRegionName.getRegionName(forRegionCode: regionCode, translatedInLanguageId: translatedInLanguage) {
+            languageSuffixes.append(localeRegionName)
         }
         
         for suffix in languageSuffixes {
