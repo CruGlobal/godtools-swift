@@ -34,12 +34,23 @@ struct ToolSettingsToolLanguagesListView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         
-                        ForEach(viewModel.languages) { (language: ToolSettingsToolLanguageDomainModel) in
-                                                        
+                        if viewModel.showsDeleteLanguageButton {
+                            
                             ToolSettingsToolLanguagesListItemView(
-                                viewModel: viewModel.getListItemViewModel(domainModel: language),
+                                title: viewModel.deleteLanguageActionTitle,
+                                isSelected: false,
                                 tappedClosure: {
-                                    
+                                    viewModel.deleteLanguageTapped()
+                                }
+                            )
+                        }
+                        
+                        ForEach(viewModel.languages) { (language: ToolSettingsToolLanguageDomainModel) in
+                                                       
+                            ToolSettingsToolLanguagesListItemView(
+                                title: language.languageName,
+                                isSelected: language == viewModel.selectedLanguage,
+                                tappedClosure: {
                                     viewModel.languageTapped(language: language)
                                 }
                             )

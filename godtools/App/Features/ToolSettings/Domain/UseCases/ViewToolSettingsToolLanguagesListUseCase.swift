@@ -12,20 +12,20 @@ import Combine
 class ViewToolSettingsToolLanguagesListUseCase {
     
     private let getInterfaceStringsRepository: GetToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface
-    private let getToolLanguagesRepository: GetToolSettingsToolLanguagesRepositoryInterface
+    private let getToolLanguagesRepository: GetToolSettingsToolLanguagesListRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface, getToolLanguagesRepository: GetToolSettingsToolLanguagesRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface, getToolLanguagesRepository: GetToolSettingsToolLanguagesListRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
         self.getToolLanguagesRepository = getToolLanguagesRepository
     }
     
     // TODO: Eventually ResourceModel needs to be replaced with a ToolDomainModel. ~Levi
-    func viewPublisher(tool: ResourceModel, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> {
+    func viewPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?, tool: ResourceModel, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getToolLanguagesRepository.getToolLanguagesPublisher(tool: tool, translateInLanguage: appLanguage)
+            getToolLanguagesRepository.getToolLanguagesPublisher(listType: listType, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, tool: tool, translateInLanguage: appLanguage)
         )
         .map {
             return ViewToolSettingsToolLanguagesListDomainModel(

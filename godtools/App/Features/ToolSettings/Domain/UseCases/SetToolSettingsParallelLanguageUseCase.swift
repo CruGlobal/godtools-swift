@@ -1,5 +1,5 @@
 //
-//  StoreToolSettingsParallelLanguageUseCase.swift
+//  SetToolSettingsParallelLanguageUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/12/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class StoreToolSettingsParallelLanguageUseCase {
+class SetToolSettingsParallelLanguageUseCase {
     
     private let storeParallelLanguageRepository: StoreToolSettingsParallelLanguageRepositoryInterface
     
@@ -18,10 +18,10 @@ class StoreToolSettingsParallelLanguageUseCase {
         self.storeParallelLanguageRepository = storeParallelLanguageRepository
     }
     
-    func storeLanguagePublisher(language: ToolSettingsToolLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
         return storeParallelLanguageRepository
-            .storeLanguagePublisher(language: language)
+            .storeLanguagePublisher(languageId: languageId)
             .eraseToAnyPublisher()
     }
 }

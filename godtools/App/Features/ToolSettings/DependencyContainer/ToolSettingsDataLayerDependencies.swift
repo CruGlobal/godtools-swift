@@ -29,9 +29,31 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getDeleteToolSettingsParallelLanguageRepositoryInterface() -> DeleteToolSettingsParallelLanguageRepositoryInterface {
+        return DeleteToolSettingsParallelLanguageRepository(
+            toolSettingsRepository: getToolSettingsRepository()
+        )
+    }
+    
     func getToolSettingsInterfaceStringsRepositoryInterface() -> GetToolSettingsInterfaceStringsRepositoryInterface {
         return GetToolSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolSettingsPrimaryLanguageRepositoryInterface() -> GetToolSettingsPrimaryLanguageRepositoryInterface {
+        return GetToolSettingsPrimaryLanguageRepository(
+            toolSettingsRepository: getToolSettingsRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getAppLanguageName: coreDataLayer.getAppLanguageName()
+        )
+    }
+    
+    func getToolSettingsParallelLanguageRepositoryInterface() -> GetToolSettingsParallelLanguageRepositoryInterface {
+        return GetToolSettingsParallelLanguageRepository(
+            toolSettingsRepository: getToolSettingsRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getAppLanguageName: coreDataLayer.getAppLanguageName()
         )
     }
     
@@ -41,11 +63,10 @@ class ToolSettingsDataLayerDependencies {
         )
     }
     
-    func getToolSettingsToolLanguagesRepositoryInterface() -> GetToolSettingsToolLanguagesRepositoryInterface {
-        return GetToolSettingsToolLanguagesRepository(
+    func getToolSettingsToolLanguagesListRepositoryInterface() -> GetToolSettingsToolLanguagesListRepositoryInterface {
+        return GetToolSettingsToolLanguagesListRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
-            localeLanguageScriptName: coreDataLayer.getLocaleLanguageScriptName()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     

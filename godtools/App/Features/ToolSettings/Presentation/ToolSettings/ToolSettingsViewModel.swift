@@ -79,6 +79,9 @@ class ToolSettingsViewModel: ObservableObject {
                 self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
                 
                 self?.interfaceStrings = domainModel.interfaceStrings
+                
+                self?.primaryLanguageTitle = domainModel.primaryLanguage?.languageName ?? ""
+                self?.parallelLanguageTitle = domainModel.parallelLanguage?.languageName ?? domainModel.interfaceStrings.chooseParallelLanguageActionTitle
             }
             .store(in: &cancellables)
 
@@ -103,6 +106,7 @@ class ToolSettingsViewModel: ObservableObject {
             self?.pageRendererChanged(pageRenderer: pageRenderer)
         })
         
+        /*
         primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageDomainModel) in
            
             self?.primaryLanguageTitle = language.translatedName
@@ -116,7 +120,7 @@ class ToolSettingsViewModel: ObservableObject {
             else {
                 self?.parallelLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
             }
-        })
+        })*/
         
         pageRendererChanged(pageRenderer: currentPageRenderer.value)
     }

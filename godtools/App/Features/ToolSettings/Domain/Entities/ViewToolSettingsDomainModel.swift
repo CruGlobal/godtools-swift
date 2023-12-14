@@ -11,6 +11,6 @@ import Foundation
 struct ViewToolSettingsDomainModel {
     
     let interfaceStrings: ToolSettingsInterfaceStringsDomainModel
-    let primaryLanguage: ToolSettingsToolLanguageDomainModel
+    let primaryLanguage: ToolSettingsToolLanguageDomainModel?
     let parallelLanguage: ToolSettingsToolLanguageDomainModel?
 }

@@ -1,15 +1,15 @@
 //
-//  StoreToolSettingsPrimaryLanguageRepository.swift
+//  DeleteToolSettingsParallelLanguageRepository.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/12/23.
+//  Created by Levi Eggert on 12/14/23.
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class StoreToolSettingsPrimaryLanguageRepository: StoreToolSettingsPrimaryLanguageRepositoryInterface {
+class DeleteToolSettingsParallelLanguageRepository: DeleteToolSettingsParallelLanguageRepositoryInterface {
     
     private let toolSettingsRepository: ToolSettingsRepository
     
@@ -18,10 +18,10 @@ class StoreToolSettingsPrimaryLanguageRepository: StoreToolSettingsPrimaryLangua
         self.toolSettingsRepository = toolSettingsRepository
     }
     
-    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
+    func deletePublisher() -> AnyPublisher<Void, Never> {
         
         return toolSettingsRepository
-            .storePrimaryLanguagePublisher(languageId: languageId)
+            .deleteParallelLanguagePublisher()
             .eraseToAnyPublisher()
     }
 }

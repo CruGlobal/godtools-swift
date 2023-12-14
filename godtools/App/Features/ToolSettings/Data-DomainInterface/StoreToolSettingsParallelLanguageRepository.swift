@@ -18,10 +18,24 @@ class StoreToolSettingsParallelLanguageRepository: StoreToolSettingsParallelLang
         self.toolSettingsRepository = toolSettingsRepository
     }
     
-    func storeLanguagePublisher(language: ToolSettingsToolLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
+        
+        let parallelMatchesPrimary: Bool
+        
+        if let toolSettings = toolSettingsRepository.getSharedToolSettings() {
+            parallelMatchesPrimary = toolSettings.primaryLanguageId != nil && toolSettings.primaryLanguageId == languageId
+        }
+        else {
+            parallelMatchesPrimary = false
+        }
+        
+        guard !parallelMatchesPrimary else {
+            return Just(())
+                .eraseToAnyPublisher()
+        }
         
         return toolSettingsRepository
-            .storeParallelLanguagePublisher(languageId: language.dataModelId)
+            .storeParallelLanguagePublisher(languageId: languageId)
             .eraseToAnyPublisher()
 
     }

@@ -11,22 +11,41 @@ import Combine
 
 class GetToolSettingsPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRepositoryInterface {
     
+    private let toolSettingsRepository: ToolSettingsRepository
     private let languagesRepository: LanguagesRepository
-    private let localeLanguageName: LocaleLanguageName
-    private let localeLanguageScriptName: LocaleLanguageScriptName
+    private let getAppLanguageName: GetAppLanguageName
     
-    init(languagesRepository: LanguagesRepository, localeLanguageName: LocaleLanguageName, localeLanguageScriptName: LocaleLanguageScriptName) {
+    init(toolSettingsRepository: ToolSettingsRepository, languagesRepository: LanguagesRepository, getAppLanguageName: GetAppLanguageName) {
         
+        self.toolSettingsRepository = toolSettingsRepository
         self.languagesRepository = languagesRepository
-        self.localeLanguageName = localeLanguageName
-        self.localeLanguageScriptName = localeLanguageScriptName
+        self.getAppLanguageName = getAppLanguageName
     }
     
-    func getLanguagePublisher() -> AnyPublisher<ToolSettingsToolLanguageDomainModel, Never> {
+    func getLanguagePublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
         
-        let language = ToolSettingsToolLanguageDomainModel(dataModelId: "", languageName: "")
-        
-        return Just(language)
+        return toolSettingsRepository
+            .getToolSettingsChangedPublisher()
+            .map { _ in
+                
+                guard let toolSettings = self.toolSettingsRepository.getSharedToolSettings(),
+                      let primaryLanguageId = toolSettings.primaryLanguageId,
+                      let language = self.languagesRepository.getLanguage(id: primaryLanguageId) else {
+                    
+                    return nil
+                }
+                
+                let languageName: String = self.getAppLanguageName.getName(
+                    languageCode: language.languageCode,
+                    scriptCode: language.scriptCode,
+                    translatedInLanguage: translateInLanguage
+                )
+                
+                return ToolSettingsToolLanguageDomainModel(
+                    dataModelId: language.id,
+                    languageName: languageName
+                )
+            }
             .eraseToAnyPublisher()
     }
 }

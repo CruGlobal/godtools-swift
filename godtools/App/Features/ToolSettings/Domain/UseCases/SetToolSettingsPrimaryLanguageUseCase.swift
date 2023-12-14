@@ -1,5 +1,5 @@
 //
-//  StoreToolSettingsPrimaryLanguageUseCase.swift
+//  SetToolSettingsPrimaryLanguageUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/12/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class StoreToolSettingsPrimaryLanguageUseCase {
+class SetToolSettingsPrimaryLanguageUseCase {
     
     private let storePrimaryLanguageRepository: StoreToolSettingsPrimaryLanguageRepositoryInterface
     
@@ -18,10 +18,10 @@ class StoreToolSettingsPrimaryLanguageUseCase {
         self.storePrimaryLanguageRepository = storePrimaryLanguageRepository
     }
     
-    func storeLanguagePublisher(language: ToolSettingsToolLanguageDomainModel) -> AnyPublisher<Void, Never> {
+    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
         return storePrimaryLanguageRepository
-            .storeLanguagePublisher(language: language)
+            .storeLanguagePublisher(languageId: languageId)
             .eraseToAnyPublisher()
     }
 }

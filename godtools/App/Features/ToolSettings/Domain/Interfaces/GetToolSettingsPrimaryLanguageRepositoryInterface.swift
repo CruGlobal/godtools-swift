@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolSettingsPrimaryLanguageRepositoryInterface {
  
-    func getLanguagePublisher() -> AnyPublisher<ToolSettingsToolLanguageDomainModel, Never>
+    func getLanguagePublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never>
 }

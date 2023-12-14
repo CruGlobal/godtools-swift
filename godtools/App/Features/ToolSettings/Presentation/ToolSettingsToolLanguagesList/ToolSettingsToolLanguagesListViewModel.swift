@@ -11,58 +11,101 @@ import Combine
 
 class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     
-    static private var storePrimaryLanguageCancellable: AnyCancellable?
-    static private var storeParallelLanguageCancellable: AnyCancellable?
+    private static var setPrimaryLanguageCancellable: AnyCancellable?
+    private static var setParallelLanguageCancellable: AnyCancellable?
+    private static var deleteParallelLanguageCancellable: AnyCancellable?
     
-    private let listType: ToolSettingsToolLanguagesListType
+    private let listType: ToolSettingsToolLanguagesListTypeDomainModel
     private let tool: ResourceModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase
+    private let getToolSettingsParallelLanguageUseCase: GetToolSettingsParallelLanguageUseCase
     private let viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase
-    private let storeToolSettingsPrimaryLanguageUseCase: StoreToolSettingsPrimaryLanguageUseCase
-    private let storeToolSettingsParallelLanguageUseCase: StoreToolSettingsParallelLanguageUseCase
+    private let setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase
+    private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
+    private let deleteToolSettingsParallelLanguageUseCase: DeleteToolSettingsParallelLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var primaryLanguage: ToolSettingsToolLanguageDomainModel?
+    @Published private var parallelLanguage: ToolSettingsToolLanguageDomainModel?
     
     @Published var languages: [ToolSettingsToolLanguageDomainModel] = Array()
+    @Published var selectedLanguage: ToolSettingsToolLanguageDomainModel?
+    @Published var showsDeleteLanguageButton: Bool = false
+    @Published var deleteLanguageActionTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListType, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase, storeToolSettingsPrimaryLanguageUseCase: StoreToolSettingsPrimaryLanguageUseCase, storeToolSettingsParallelLanguageUseCase: StoreToolSettingsParallelLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, getToolSettingsParallelLanguageUseCase: GetToolSettingsParallelLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, deleteToolSettingsParallelLanguageUseCase: DeleteToolSettingsParallelLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.listType = listType
         self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getToolSettingsPrimaryLanguageUseCase = getToolSettingsPrimaryLanguageUseCase
+        self.getToolSettingsParallelLanguageUseCase = getToolSettingsParallelLanguageUseCase
         self.viewToolSettingsToolLanguageListUseCase = viewToolSettingsToolLanguageListUseCase
-        self.storeToolSettingsPrimaryLanguageUseCase = storeToolSettingsPrimaryLanguageUseCase
-        self.storeToolSettingsParallelLanguageUseCase = storeToolSettingsParallelLanguageUseCase
+        self.setToolSettingsPrimaryLanguageUseCase = setToolSettingsPrimaryLanguageUseCase
+        self.setToolSettingsParallelLanguageUseCase = setToolSettingsParallelLanguageUseCase
+        self.deleteToolSettingsParallelLanguageUseCase = deleteToolSettingsParallelLanguageUseCase
+        
+        showsDeleteLanguageButton = listType == .chooseParallelLanguage
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
-        
+
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> in
                 
-                return self.viewToolSettingsToolLanguageListUseCase
-                    .viewPublisher(tool: tool, appLanguage: appLanguage)
+                return self.getToolSettingsPrimaryLanguageUseCase
+                    .getLanguagePublisher(translateInLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
-                
-                self?.languages = domainModel.languages
-            })
-            .store(in: &cancellables)
-    }
-    
-    func getListItemViewModel(domainModel: ToolSettingsToolLanguageDomainModel) -> ToolSettingsToolLanguagesListItemViewModel {
+            .assign(to: &$primaryLanguage)
         
-        return ToolSettingsToolLanguagesListItemViewModel(
-            domainModel: domainModel
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> in
+                
+                return self.getToolSettingsParallelLanguageUseCase
+                    .getLanguagePublisher(translateInLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .assign(to: &$parallelLanguage)
+        
+        Publishers.CombineLatest3(
+            $appLanguage.eraseToAnyPublisher(),
+            $primaryLanguage.eraseToAnyPublisher(),
+            $parallelLanguage.eraseToAnyPublisher()
         )
+        .flatMap({ (appLanguage: AppLanguageDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> in
+            
+            return self.viewToolSettingsToolLanguageListUseCase
+                .viewPublisher(
+                    listType: listType,
+                    primaryLanguage: self.primaryLanguage,
+                    parallelLanguage: self.parallelLanguage,
+                    tool: tool,
+                    appLanguage: appLanguage
+                )
+                .eraseToAnyPublisher()
+        })
+        .receive(on: DispatchQueue.main)
+        .sink(receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
+            
+            self?.languages = domainModel.languages
+            self?.deleteLanguageActionTitle = domainModel.interfaceStrings.deleteParallelLanguageActionTitle
+            
+            switch listType {
+            case .choosePrimaryLanguage:
+                self?.selectedLanguage = self?.primaryLanguage
+            case .chooseParallelLanguage:
+                self?.selectedLanguage = self?.parallelLanguage
+            }
+        })
+        .store(in: &cancellables)
     }
 }
 
@@ -74,25 +117,50 @@ extension ToolSettingsToolLanguagesListViewModel {
         flowDelegate?.navigate(step: .closeTappedFromToolSettingsToolLanguagesList)
     }
     
+    func deleteLanguageTapped() {
+        
+        switch listType {
+            
+        case .choosePrimaryLanguage:
+            break
+            
+        case .chooseParallelLanguage:
+            
+            ToolSettingsToolLanguagesListViewModel.deleteParallelLanguageCancellable = deleteToolSettingsParallelLanguageUseCase
+                .deletePublisher()
+                .sink(receiveValue: { _ in
+                    
+                })
+            
+            flowDelegate?.navigate(step: .deleteParallelLanguageTappedFromToolSettingsToolLanguagesList)
+        }
+    }
+    
     func languageTapped(language: ToolSettingsToolLanguageDomainModel) {
+        
+        selectedLanguage = language
         
         switch listType {
             
         case .choosePrimaryLanguage:
             
-            ToolSettingsToolLanguagesListViewModel.storePrimaryLanguageCancellable = storeToolSettingsPrimaryLanguageUseCase
-                .storeLanguagePublisher(language: language)
+            ToolSettingsToolLanguagesListViewModel.setPrimaryLanguageCancellable = setToolSettingsPrimaryLanguageUseCase
+                .storeLanguagePublisher(languageId: language.dataModelId)
                 .sink(receiveValue: { _ in
                     
                 })
+            
+            flowDelegate?.navigate(step: .primaryLanguageTappedFromToolSettingsToolLanguagesList(language: language))
             
         case .chooseParallelLanguage:
             
-            ToolSettingsToolLanguagesListViewModel.storeParallelLanguageCancellable = storeToolSettingsParallelLanguageUseCase
-                .storeLanguagePublisher(language: language)
+            ToolSettingsToolLanguagesListViewModel.setParallelLanguageCancellable = setToolSettingsParallelLanguageUseCase
+                .storeLanguagePublisher(languageId: language.dataModelId)
                 .sink(receiveValue: { _ in
                     
                 })
+            
+            flowDelegate?.navigate(step: .parallelLanguageTappedFromToolSettingsToolLanguagesList(language: language))
         }
     }
 }

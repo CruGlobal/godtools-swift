@@ -38,6 +38,15 @@ class ToolSettingsRepository {
             .eraseToAnyPublisher()
     }
     
+    func getSharedToolSettings() -> ToolSettingsDataModel? {
+        
+        guard let realmToolSettings = cache.getToolSettings(id: ToolSettingsRepository.sharedToolSettingsId) else {
+            return nil
+        }
+        
+        return ToolSettingsDataModel(realmToolSettings: realmToolSettings)
+    }
+    
     func storePrimaryLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
         switch cache.storePrimaryLanguage(id: ToolSettingsRepository.sharedToolSettingsId, languageId: languageId) {
@@ -59,6 +68,22 @@ class ToolSettingsRepository {
         case .failure( _):
             break
         }
+        
+        return Just(())
+            .eraseToAnyPublisher()
+    }
+    
+    func deletePrimaryLanguagePublisher() -> AnyPublisher<Void, Never> {
+        
+        _ = cache.deletePrimaryLanguage(id: ToolSettingsRepository.sharedToolSettingsId)
+        
+        return Just(())
+            .eraseToAnyPublisher()
+    }
+    
+    func deleteParallelLanguagePublisher() -> AnyPublisher<Void, Never> {
+        
+        _ = cache.deleteParallelLanguage(id: ToolSettingsRepository.sharedToolSettingsId)
         
         return Just(())
             .eraseToAnyPublisher()

@@ -11,5 +11,5 @@ import Combine
 
 protocol StoreToolSettingsPrimaryLanguageRepositoryInterface {
     
-    func storeLanguagePublisher(language: ToolSettingsToolLanguageDomainModel) -> AnyPublisher<Void, Never>
+    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never>
 }
