@@ -529,6 +529,7 @@
 		4570CA5E2B2B9BD20029D740 /* LocaleLanguageRegionName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570CA5D2B2B9BD20029D740 /* LocaleLanguageRegionName.swift */; };
 		4570CA612B2B9F1A0029D740 /* GetTranslatedLanguageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570CA602B2B9F1A0029D740 /* GetTranslatedLanguageName.swift */; };
 		4570CA632B2B9F250029D740 /* TranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570CA622B2B9F250029D740 /* TranslatableLanguage.swift */; };
+		4570CA652B2BA1040029D740 /* LanguageModel+TranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570CA642B2BA1040029D740 /* LanguageModel+TranslatableLanguage.swift */; };
 		457102002AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457101FE2AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift */; };
 		457102012AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457101FF2AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift */; };
 		4571020B2AB9E55F00D1BFFC /* MobileContentApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571020A2AB9E55F00D1BFFC /* MobileContentApiError.swift */; };
@@ -1967,6 +1968,7 @@
 		4570CA5D2B2B9BD20029D740 /* LocaleLanguageRegionName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLanguageRegionName.swift; sourceTree = "<group>"; };
 		4570CA602B2B9F1A0029D740 /* GetTranslatedLanguageName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTranslatedLanguageName.swift; sourceTree = "<group>"; };
 		4570CA622B2B9F250029D740 /* TranslatableLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatableLanguage.swift; sourceTree = "<group>"; };
+		4570CA642B2BA1040029D740 /* LanguageModel+TranslatableLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageModel+TranslatableLanguage.swift"; sourceTree = "<group>"; };
 		457101FE2AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiErrorCodable.swift; sourceTree = "<group>"; };
 		457101FF2AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiErrorsCodable.swift; sourceTree = "<group>"; };
 		4571020A2AB9E55F00D1BFFC /* MobileContentApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiError.swift; sourceTree = "<group>"; };
@@ -8542,6 +8544,7 @@
 			children = (
 				45D63E6A288F698C009B4610 /* LanguageModel.swift */,
 				45D63E6B288F698C009B4610 /* LanguageModelType.swift */,
+				4570CA642B2BA1040029D740 /* LanguageModel+TranslatableLanguage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -11958,6 +11961,7 @@
 				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
 				459E86B528ED1A9B00E197A5 /* AppsFlyer.swift in Sources */,
 				45070A832ACF42AD00229EDD /* AppInterfaceStringBarItem.swift in Sources */,
+				4570CA652B2BA1040029D740 /* LanguageModel+TranslatableLanguage.swift in Sources */,
 				45BDA6472954FF08007E259B /* WebArchiveError.swift in Sources */,
 				452486B82B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift in Sources */,
 				45BDA64C2954FF08007E259B /* WebArchiveOperationError.swift in Sources */,
