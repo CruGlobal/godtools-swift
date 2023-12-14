@@ -45,7 +45,7 @@ class ToolSettingsDataLayerDependencies {
         return GetToolSettingsPrimaryLanguageRepository(
             toolSettingsRepository: getToolSettingsRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getAppLanguageName: coreDataLayer.getAppLanguageName()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -53,7 +53,7 @@ class ToolSettingsDataLayerDependencies {
         return GetToolSettingsParallelLanguageRepository(
             toolSettingsRepository: getToolSettingsRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getAppLanguageName: coreDataLayer.getAppLanguageName()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     

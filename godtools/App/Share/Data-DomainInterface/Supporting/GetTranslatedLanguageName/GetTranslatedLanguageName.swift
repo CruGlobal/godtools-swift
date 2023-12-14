@@ -23,21 +23,23 @@ class GetTranslatedLanguageName {
         self.localeScriptName = localeScriptName
     }
     
-    func getLanguageName(language: LanguageModel, translatedInLanguage: BCP47LanguageIdentifier) -> String {
+    func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
         
         if let localizedName = getLanguageNameFromLocalization(language: language, translatedInLanguage: translatedInLanguage) {
             
             return localizedName
         }
-    
-        let localeLanguageName: String = getLanguageNameFromLocale(language: language, translatedInLanguage: translatedInLanguage)
+        else if let localeLanguageName = getLanguageNameFromLocale(language: language, translatedInLanguage: translatedInLanguage) {
+            
+            return localeLanguageName
+        }
         
-        return localeLanguageName
+        return language.fallbackName
     }
     
-    private func getLanguageNameFromLocalization(language: LanguageModel, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
+    private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
         
-        let localizedKey: String = "language_name_" + language.code
+        let localizedKey: String = "language_name_" + language.localeId
         let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
         
         guard !localizedName.isEmpty && localizedName != localizedKey else {
@@ -47,9 +49,9 @@ class GetTranslatedLanguageName {
         return localizedName
     }
     
-    private func getLanguageNameFromLocale(language: LanguageModel, translatedInLanguage: BCP47LanguageIdentifier) -> String {
+    private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
             
-        var languageName: String = ""
+        let languageName: String?
         
         var languageSuffixes: [String] = Array()
         
@@ -57,21 +59,30 @@ class GetTranslatedLanguageName {
             languageName = localeLanguageName
         }
         else {
-            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.code) ?? language.name
+            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId)
         }
         
-        if let regionCode = language.regionCode, let localeRegionName = localeRegionName.getRegionName(forRegionCode: regionCode, translatedInLanguageId: translatedInLanguage) {
-            languageSuffixes.append(localeRegionName)
+        guard let languageName = languageName else {
+            return nil
         }
         
         if let scriptCode = language.scriptCode, let localeScriptName = localeScriptName.getScriptName(forScriptCode: scriptCode, translatedInLanguageId: translatedInLanguage) {
             languageSuffixes.append(localeScriptName)
         }
-        
-        for suffix in languageSuffixes {
-            languageName += " (\(suffix))"
+        else if let regionCode = language.regionCode, let localeRegionName = localeRegionName.getRegionName(forRegionCode: regionCode, translatedInLanguageId: translatedInLanguage) {
+            languageSuffixes.append(localeRegionName)
         }
         
-        return languageName
+        guard languageSuffixes.count > 0 else {
+            return languageName
+        }
+        
+        var languageNameWithSuffix: String = languageName
+        
+        for suffix in languageSuffixes {
+            languageNameWithSuffix += " (\(suffix))"
+        }
+        
+        return languageNameWithSuffix
     }
 }

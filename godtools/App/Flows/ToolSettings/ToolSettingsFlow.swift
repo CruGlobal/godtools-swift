@@ -49,7 +49,7 @@ class ToolSettingsFlow: Flow {
         let toolPrimaryLanguage: LanguageDomainModel = toolData.renderer.value.primaryLanguage
         let toolParallelLanguage: LanguageDomainModel? = toolData.renderer.value.pageRenderers[safe: 1]?.language
         
-        appDiContainer.feature.toolSettings.domainLayer.getStoreToolSettingsPrimaryLanguageUseCase()
+        appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsPrimaryLanguageUseCase()
             .storeLanguagePublisher(languageId: toolPrimaryLanguage.dataModelId)
             .sink { _ in
                 
@@ -58,7 +58,7 @@ class ToolSettingsFlow: Flow {
         
         if let toolParallelLanguage = toolParallelLanguage {
             
-            appDiContainer.feature.toolSettings.domainLayer.getStoreToolSettingsParallelLanguageUseCase()
+            appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase()
                 .storeLanguagePublisher(languageId: toolParallelLanguage.dataModelId)
                 .sink { _ in
                     

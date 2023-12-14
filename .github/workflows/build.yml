@@ -122,14 +122,14 @@ jobs:
 
       - name: Archive XCode Logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
       - name: Archive Fastlane Gym Logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"
