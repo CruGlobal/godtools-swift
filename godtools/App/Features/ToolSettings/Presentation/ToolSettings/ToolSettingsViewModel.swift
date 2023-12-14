@@ -14,7 +14,6 @@ class ToolSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
-    private let localizationServices: LocalizationServices
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     private let primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>
@@ -45,12 +44,11 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var numberOfShareableItems: Int = 0
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, localizationServices: LocalizationServices, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, primaryLanguageSubject: CurrentValueSubject<LanguageDomainModel, Never>, parallelLanguageSubject: CurrentValueSubject<LanguageDomainModel?, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
-        self.localizationServices = localizationServices
         self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.primaryLanguageSubject = primaryLanguageSubject
@@ -105,22 +103,6 @@ class ToolSettingsViewModel: ObservableObject {
 
             self?.pageRendererChanged(pageRenderer: pageRenderer)
         })
-        
-        /*
-        primaryLanguageCancellable = primaryLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageDomainModel) in
-           
-            self?.primaryLanguageTitle = language.translatedName
-        })
-        
-        parallelLanguageCancellable = parallelLanguageSubject.sink(receiveValue: { [weak self] (language: LanguageDomainModel?) in
-            
-            if let language = language {
-                self?.parallelLanguageTitle = language.translatedName
-            }
-            else {
-                self?.parallelLanguageTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.chooseLanguage.noParallelLanguageTitle")
-            }
-        })*/
         
         pageRendererChanged(pageRenderer: currentPageRenderer.value)
     }
