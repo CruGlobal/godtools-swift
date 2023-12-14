@@ -29,10 +29,12 @@ class GetTranslatedLanguageName {
             
             return localizedName
         }
-    
-        let localeLanguageName: String = getLanguageNameFromLocale(language: language, translatedInLanguage: translatedInLanguage)
+        else if let localeLanguageName = getLanguageNameFromLocale(language: language, translatedInLanguage: translatedInLanguage) {
+            
+            return localeLanguageName
+        }
         
-        return localeLanguageName
+        return language.fallbackName
     }
     
     private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
@@ -47,9 +49,9 @@ class GetTranslatedLanguageName {
         return localizedName
     }
     
-    private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
+    private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
             
-        var languageName: String = ""
+        let languageName: String?
         
         var languageSuffixes: [String] = Array()
         
@@ -57,7 +59,11 @@ class GetTranslatedLanguageName {
             languageName = localeLanguageName
         }
         else {
-            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId) ?? language.fallbackName
+            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId)
+        }
+        
+        guard let languageName = languageName else {
+            return nil
         }
         
         if let scriptCode = language.scriptCode, let localeScriptName = localeScriptName.getScriptName(forScriptCode: scriptCode, translatedInLanguageId: translatedInLanguage) {
@@ -67,10 +73,16 @@ class GetTranslatedLanguageName {
             languageSuffixes.append(localeRegionName)
         }
         
-        for suffix in languageSuffixes {
-            languageName += " (\(suffix))"
+        guard languageSuffixes.count > 0 else {
+            return languageName
         }
         
-        return languageName
+        var languageNameWithSuffix: String = languageName
+        
+        for suffix in languageSuffixes {
+            languageNameWithSuffix += " (\(suffix))"
+        }
+        
+        return languageNameWithSuffix
     }
 }
