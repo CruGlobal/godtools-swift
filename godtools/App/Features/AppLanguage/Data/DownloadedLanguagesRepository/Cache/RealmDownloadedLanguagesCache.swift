@@ -19,7 +19,25 @@ class RealmDownloadedLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func storeDownloadedLanguage(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
+        
+        return realmDatabase.readObjectPublisher(primaryKey: languageId)
+            .flatMap { (object: RealmDownloadedLanguage?) in
+                
+                guard let object = object else {
+                    return Just<DownloadedLanguageDataModel?>(nil)
+                        .eraseToAnyPublisher()
+                }
+                
+                let dataModel = DownloadedLanguageDataModel(realmDownloadedLanguage: object)
+                
+                return Just(dataModel)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func storeDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
         let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId)
         
@@ -38,7 +56,7 @@ class RealmDownloadedLanguagesCache {
         
     }
     
-    func deleteDownloadedLanguage(languageId: String) -> AnyPublisher<Void, Error> {
+    func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
         
         return realmDatabase.readObjectPublisher(primaryKey: languageId)
             .flatMap { (object: RealmDownloadedLanguage?) -> AnyPublisher<Void, Error> in

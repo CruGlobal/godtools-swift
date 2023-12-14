@@ -18,13 +18,18 @@ class DownloadedLanguagesRepository {
         self.cache = cache
     }
     
+    func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
+        
+        return cache.getDownloadedLanguagePublisher(languageId: languageId)
+    }
+    
     func storeDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
-        return cache.storeDownloadedLanguage(languageId: languageId)
+        return cache.storeDownloadedLanguagePublisher(languageId: languageId)
     }
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
         
-        return cache.deleteDownloadedLanguage(languageId: languageId)
+        return cache.deleteDownloadedLanguagePublisher(languageId: languageId)
     }
 }
