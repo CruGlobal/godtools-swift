@@ -125,26 +125,7 @@ class ToolSettingsFlow: Flow {
             swapToolPrimaryAndParallelLanguage()
             
         case .shareableTappedFromToolSettings(let shareableImageDomainModel):
-                   
-            let viewModel = ReviewShareShareableViewModel(
-                flowDelegate: self,
-                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-                shareableImageDomainModel: shareableImageDomainModel,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices()
-            )
-            
-            let view = ReviewShareShareableView(viewModel: viewModel)
-            
-            let hostingView = AppHostingController<ReviewShareShareableView>(
-                rootView: view,
-                navigationBar: nil
-            )
-            
-            hostingView.view.backgroundColor = .white
-            
-            reviewShareShareableModal = hostingView
-            
-            navigationController.present(hostingView, animated: true, completion: nil)
+            presentReviewShareShareable(shareableImageDomainModel: shareableImageDomainModel, animated: true)
             
         case .closeTappedFromReviewShareShareable:
             dismissReviewShareShareable()
@@ -335,24 +316,6 @@ class ToolSettingsFlow: Flow {
         
         self.downloadToolTranslationsFlow = downloadToolTranslationsFlow
     }
-    
-    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
-        
-        guard let reviewShareShareableModal = reviewShareShareableModal else {
-            completion?()
-            return
-        }
-        
-        if animated {
-            reviewShareShareableModal.dismiss(animated: true, completion: completion)
-        }
-        else {
-            reviewShareShareableModal.dismiss(animated: false)
-            completion?()
-        }
-        
-        self.reviewShareShareableModal = nil
-    }
 }
 
 // MARK: -
@@ -403,7 +366,7 @@ extension ToolSettingsFlow {
     }
 }
 
-// MARK: - Tool Settings Tool Languages List
+// MARK: - Tool Languages List
 
 extension ToolSettingsFlow {
     
@@ -487,5 +450,58 @@ extension ToolSettingsFlow {
         navigationController.dismissPresented(animated: true, completion: nil)
         
         toolScreenShareFlow = nil
+    }
+}
+
+// MARK: - Review Share Shareable
+
+extension ToolSettingsFlow {
+    
+    private func presentReviewShareShareable(shareableImageDomainModel: ShareableImageDomainModel, animated: Bool) {
+        
+        let reviewShareShareableView = getReviewShareShareableView(shareableImageDomainModel: shareableImageDomainModel)
+        
+        reviewShareShareableModal = reviewShareShareableView
+        
+        navigationController.present(reviewShareShareableView, animated: animated, completion: nil)
+    }
+    
+    private func getReviewShareShareableView(shareableImageDomainModel: ShareableImageDomainModel) -> UIViewController {
+        
+        let viewModel = ReviewShareShareableViewModel(
+            flowDelegate: self,
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            shareableImageDomainModel: shareableImageDomainModel,
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let view = ReviewShareShareableView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<ReviewShareShareableView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        hostingView.view.backgroundColor = .white
+        
+        return hostingView
+    }
+    
+    private func dismissReviewShareShareable(animated: Bool = true, completion: (() -> Void)? = nil) {
+        
+        guard let reviewShareShareableModal = reviewShareShareableModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            reviewShareShareableModal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            reviewShareShareableModal.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.reviewShareShareableModal = nil
     }
 }
