@@ -59,11 +59,11 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 ##### Use Cases
 - Defines a business scenario in most cases on behalf of a specific user.  An example in GodTools could be a user viewing a particular screen, or a user searching for an app language in the app languages list, or a user authenticating.
 - Once a use case is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the use case.
-- Use cases will consist of a single method that typically takes 1 or more inputs and produces and Combine Publisher output.  In most situations the Combine Publisher will produce a Domain Model.
+- Use cases will consist of a single method that typically takes 1 or more inputs and produces a Combine Publisher output.  In most situations and preferably the Combine Publisher will produce a Domain Model.
 
 ##### Interfaces
 - All use cases will be composed of 1 or more interfaces to accomplish dependency inversion.  In most situations these interfaces will be some type of repository interface for fetching data or an interface to perform some sort of service on the data layer.
-- Interfaces should also define any clear inputs to accomplish the intent and produce a Combine Publisher output.  In most situations the Combine Publisher will produce a Domain Model.  
+- Interfaces should also define any clear inputs to accomplish the intent and produce a Combine Publisher output.  In most situations the Combine Publisher should produce a Domain Model.  
 
 ##### Domain Models
 - These will model app specific data.  This is typically data users will visually see and interact with.
