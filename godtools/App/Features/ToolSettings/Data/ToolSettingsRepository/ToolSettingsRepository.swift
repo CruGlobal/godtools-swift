@@ -32,9 +32,14 @@ class ToolSettingsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getToolSettingsChangedPublisher() -> AnyPublisher<Void, Never> {
+    func getToolSettingsChangedPublisher() -> AnyPublisher<ToolSettingsDataModel?, Never> {
         
         return cache.getToolSettingsChangedPublisher()
+            .flatMap({ (changed: Void) -> AnyPublisher<ToolSettingsDataModel?, Never> in
+                
+                return self.getToolSettingsPublisher()
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     

@@ -19,7 +19,7 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getToolSettingsRepository() -> ToolSettingsRepository {
+    func getToolSettingsRepository() -> ToolSettingsRepository {
         return ToolSettingsRepository(
             cache: RealmToolSettingsCache(
                 realmDatabase: coreDataLayer.getSharedRealmDatabase()

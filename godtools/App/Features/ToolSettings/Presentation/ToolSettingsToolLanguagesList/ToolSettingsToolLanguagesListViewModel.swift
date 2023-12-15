@@ -145,7 +145,7 @@ extension ToolSettingsToolLanguagesListViewModel {
         case .choosePrimaryLanguage:
             
             ToolSettingsToolLanguagesListViewModel.setPrimaryLanguageCancellable = setToolSettingsPrimaryLanguageUseCase
-                .storeLanguagePublisher(languageId: language.dataModelId)
+                .setLanguagePublisher(languageId: language.dataModelId)
                 .sink(receiveValue: { _ in
                     
                 })
@@ -155,7 +155,7 @@ extension ToolSettingsToolLanguagesListViewModel {
         case .chooseParallelLanguage:
             
             ToolSettingsToolLanguagesListViewModel.setParallelLanguageCancellable = setToolSettingsParallelLanguageUseCase
-                .storeLanguagePublisher(languageId: language.dataModelId)
+                .setLanguagePublisher(languageId: language.dataModelId)
                 .sink(receiveValue: { _ in
                     
                 })

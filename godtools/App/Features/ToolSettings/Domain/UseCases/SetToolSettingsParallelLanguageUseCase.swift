@@ -18,7 +18,7 @@ class SetToolSettingsParallelLanguageUseCase {
         self.storeParallelLanguageRepository = storeParallelLanguageRepository
     }
     
-    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
+    func setLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
         return storeParallelLanguageRepository
             .storeLanguagePublisher(languageId: languageId)

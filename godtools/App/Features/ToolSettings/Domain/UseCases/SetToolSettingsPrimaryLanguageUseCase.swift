@@ -18,7 +18,7 @@ class SetToolSettingsPrimaryLanguageUseCase {
         self.storePrimaryLanguageRepository = storePrimaryLanguageRepository
     }
     
-    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
+    func setLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
         return storePrimaryLanguageRepository
             .storeLanguagePublisher(languageId: languageId)

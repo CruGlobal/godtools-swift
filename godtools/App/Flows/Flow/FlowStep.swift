@@ -181,7 +181,6 @@ enum FlowStep {
     case disableTrainingTipsTappedFromToolSettings
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
-    case swapLanguagesTappedFromToolSettings
     case shareableTappedFromToolSettings(shareableImageDomainModel: ShareableImageDomainModel)
     case closeTappedFromReviewShareShareable
     case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
