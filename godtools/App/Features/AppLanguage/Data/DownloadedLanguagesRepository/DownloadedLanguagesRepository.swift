@@ -18,6 +18,16 @@ class DownloadedLanguagesRepository {
         self.cache = cache
     }
     
+    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return cache.getDownloadedLanguagesChangedPublisher()
+    }
+    
+    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+        
+        return cache.getDownloadedLanguagesPublisher()
+    }
+    
     func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
         
         return cache.getDownloadedLanguagePublisher(languageId: languageId)

@@ -16,6 +16,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     
     private var cancellables = Set<AnyCancellable>()
+    private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
     private weak var flowDelegate: FlowDelegate?
 
@@ -46,18 +47,12 @@ class DownloadableLanguagesViewModel: ObservableObject {
             .sink { [weak self] domainModel in
                 
                 let interfaceStrings = domainModel.interfaceStrings
+                let downloadableLanguages = domainModel.downloadableLanguages
                 
                 self?.navTitle = interfaceStrings.navTitle
+                self?.downloadableLanguagesSearchResults = downloadableLanguages
             }
             .store(in: &cancellables)
-        
-        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: .notDownloaded)]
-    }
-    
-    // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
-    private func updateDummyLanguage(with status: LanguageDownloadStatusDomainModel) {
-        
-        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: status)]
     }
 }
 
@@ -79,29 +74,29 @@ extension DownloadableLanguagesViewModel {
         
         // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
                 
-        switch downloadableLanguage.downloadStatus {
-        case .notDownloaded:
-            
-            updateDummyLanguage(with: .downloading(progress: 0))
-            
-            var progress: Double = 0
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                progress += 0.05
-                
-                self.updateDummyLanguage(with: .downloading(progress: progress))
-                
-                if progress >= 1 {
-                    timer.invalidate()
-                    self.updateDummyLanguage(with: .downloaded)
-                }
-            }
-            
-        case .downloading:
-            return
-            
-        case .downloaded:
-            updateDummyLanguage(with: .notDownloaded)
-        }
+//        switch downloadableLanguage.downloadStatus {
+//        case .notDownloaded:
+//            
+//            updateDummyLanguage(with: .downloading(progress: 0))
+//            
+//            var progress: Double = 0
+//            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+//                progress += 0.05
+//                
+//                self.updateDummyLanguage(with: .downloading(progress: progress))
+//                
+//                if progress >= 1 {
+//                    timer.invalidate()
+//                    self.updateDummyLanguage(with: .downloaded)
+//                }
+//            }
+//            
+//        case .downloading:
+//            return
+//            
+//        case .downloaded:
+//            updateDummyLanguage(with: .notDownloaded)
+//        }
     }
 }
 

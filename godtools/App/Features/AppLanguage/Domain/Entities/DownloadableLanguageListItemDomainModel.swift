@@ -11,6 +11,9 @@ import Foundation
 struct DownloadableLanguageListItemDomainModel {
     
     let languageId: String
+    let languageNameInOwnLanguage: String
+    let languageNameInAppLanguage: String
+    let toolsAvailableText: String
     let downloadStatus: LanguageDownloadStatusDomainModel
 }
 

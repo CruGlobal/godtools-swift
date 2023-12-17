@@ -27,18 +27,18 @@ struct DownloadableLanguageItemView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 
-                HStack(spacing: 3) {
+                HStack(spacing: 10) {
                     
-                    Text("Own Language")
+                    Text(downloadableLanguage.languageNameInOwnLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                     
-                    Text("App Language")
+                    Text(downloadableLanguage.languageNameInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(DownloadableLanguageItemView.lightGrey)
                 }
                 
-                Text("Tools available text")
+                Text(downloadableLanguage.toolsAvailableText)
                     .font(FontLibrary.sfProTextRegular.font(size: 12))
                     .foregroundColor(DownloadableLanguageItemView.lightGrey)
             }
@@ -47,9 +47,9 @@ struct DownloadableLanguageItemView: View {
             
             HStack(alignment: .center, spacing: 8) {
                 
-                Text("106.3 MB")
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-                    .foregroundColor(DownloadableLanguageItemView.lightGrey)
+//                Text("106.3 MB")
+//                    .font(FontLibrary.sfProTextRegular.font(size: 12))
+//                    .foregroundColor(DownloadableLanguageItemView.lightGrey)
                 
                 Button {
                     

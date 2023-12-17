@@ -11,18 +11,27 @@ import Combine
 
 class ViewDownloadableLanguagesUseCase {
     
+    private let getDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface
     private let getInterfaceStringsRepository: GetDownloadableLanguagesInterfaceStringsRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetDownloadableLanguagesInterfaceStringsRepositoryInterface) {
+    init(getDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface, getInterfaceStringsRepository: GetDownloadableLanguagesInterfaceStringsRepositoryInterface) {
         
+        self.getDownloadableLanguagesListRepository = getDownloadableLanguagesListRepository
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDownloadableLanguagesDomainModel, Never> {
         
-        return self.getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage).map {
+        return Publishers.CombineLatest(
+            getDownloadableLanguagesListRepository.getLanguagesPublisher(currentAppLanguage: appLanguage),
+            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
+        )
+        .map { (downloadableLanguages, interfaceStrings) in
             
-            return ViewDownloadableLanguagesDomainModel(interfaceStrings: $0)
+            return ViewDownloadableLanguagesDomainModel(
+                downloadableLanguages: downloadableLanguages,
+                interfaceStrings: interfaceStrings
+            )
         }
         .eraseToAnyPublisher()
     }
