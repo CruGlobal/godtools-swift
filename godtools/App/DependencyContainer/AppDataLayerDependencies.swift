@@ -186,6 +186,10 @@ class AppDataLayerDependencies {
         return LocaleLanguageName()
     }
     
+    func getLocaleLanguageRegionName() -> LocaleLanguageRegionName {
+        return LocaleLanguageRegionName()
+    }
+    
     func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
         return LocaleLanguageScriptName()
     }
@@ -395,6 +399,15 @@ class AppDataLayerDependencies {
     func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
         return GetLaunchCountRepository(
             launchCountRepository: getSharedLaunchCountRepository()
+        )
+    }
+    
+    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+        return GetTranslatedLanguageName(
+            localizationServices: getLocalizationServices(),
+            localeLanguageName: getLocaleLanguageName(),
+            localeRegionName: getLocaleLanguageRegionName(),
+            localeScriptName: getLocaleLanguageScriptName()
         )
     }
 }

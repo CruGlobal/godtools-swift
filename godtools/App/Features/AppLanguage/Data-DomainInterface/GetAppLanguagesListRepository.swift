@@ -12,12 +12,12 @@ import Combine
 class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
     private let appLanguagesRepository: AppLanguagesRepository
-    private let getAppLanguageName: GetAppLanguageName
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(appLanguagesRepository: AppLanguagesRepository, getAppLanguageName: GetAppLanguageName) {
+    init(appLanguagesRepository: AppLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.appLanguagesRepository = appLanguagesRepository
-        self.getAppLanguageName = getAppLanguageName
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
@@ -26,12 +26,9 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
-                                        
-                    let languageCode: String = languageDataModel.languageCode
-                    let languageScriptCode: String? = languageDataModel.languageScriptCode
-                    
-                    let languageNameTranslatedInOwnLanguage: String = self.getAppLanguageName.getName(languageCode: languageCode, scriptCode: languageScriptCode, translatedInLanguage: languageDataModel.languageId)
-                    let languageNameTranslatedInCurrentAppLanguage: String = self.getAppLanguageName.getName(languageCode: languageCode, scriptCode: languageScriptCode, translatedInLanguage: currentAppLanguage)
+                                                            
+                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: currentAppLanguage)
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
