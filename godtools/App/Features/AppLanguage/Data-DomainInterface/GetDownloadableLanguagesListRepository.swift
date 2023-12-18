@@ -26,21 +26,17 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         self.localizationServices = localizationServices
     }
     
-    func getDownloadableLanguagesPublisher() -> AnyPublisher<[DownloadableLanguageDomainModel], Never> {
+    func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
-        return appLanguagesRepository.getLanguagesPublisher().map { appLanguages in
+        return Publishers.CombineLatest(
+            appLanguagesRepository.getLanguagesChangedPublisher(),
+            downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
+        )
+        .flatMap { _ in
             
-            return appLanguages.map { appLanguage in
-                
-                return DownloadableLanguageDomainModel(language: appLanguage, isDownloaded: false)
-            }
+            return self.appLanguagesRepository.getLanguagesPublisher()
         }
-        .eraseToAnyPublisher()
-    }
-    
-    func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
-        
-        return appLanguagesRepository.getLanguagesPublisher().map { appLanguages in
+        .map { appLanguages in
             
             return appLanguages.map { appLanguage in
                 
@@ -60,12 +56,14 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                 
                 let toolsAvailableText = self.getToolsAvailableText(for: appLanguage.languageCode, translatedIn: currentAppLanguage)
                 
+                let downloadStatus = self.getDownloadStatus(for: appLanguage.languageId)
+                
                 return DownloadableLanguageListItemDomainModel(
                     languageId: appLanguage.languageId,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
                     toolsAvailableText: toolsAvailableText,
-                    downloadStatus: .notDownloaded
+                    downloadStatus: downloadStatus
                 )
             }
         }
@@ -100,5 +98,12 @@ extension GetDownloadableLanguagesListRepository {
         )
         
         return String.localizedStringWithFormat(formatString, numberOfTools)
+    }
+    
+    private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {
+        
+        let downloadedLanguage = downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId)
+        
+        return LanguageDownloadStatusDomainModel(downloadedLanguage: downloadedLanguage)
     }
 }

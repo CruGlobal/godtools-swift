@@ -20,15 +20,24 @@ class DownloadToolLanguageUseCase {
     
     func downloadToolLanguage(_ appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
-        return downloadedLanguagesRepository.storeDownloadedLanguagePublisher(languageId: appLanguage)
-            .map { _ in
+        // TODO: - actually perform download
+        return Future() { promise in
+            
+            var progress: Double = 0
+            self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: appLanguage, downloadProgress: progress)
+            
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+                progress += 0.1
                 
-                return true
+                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: appLanguage, downloadProgress: progress)
+                
+                if progress > 1 {
+                    timer.invalidate()
+                    
+                    promise(.success(true))
+                }
             }
-            .catch { _ in
-
-                return Just(false)
-            }
-            .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

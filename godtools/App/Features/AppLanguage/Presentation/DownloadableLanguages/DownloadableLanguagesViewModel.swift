@@ -76,31 +76,28 @@ extension DownloadableLanguagesViewModel {
     
     func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
-        // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
-                
-//        switch downloadableLanguage.downloadStatus {
-//        case .notDownloaded:
-//            
-//            updateDummyLanguage(with: .downloading(progress: 0))
-//            
-//            var progress: Double = 0
-//            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-//                progress += 0.05
-//                
-//                self.updateDummyLanguage(with: .downloading(progress: progress))
-//                
-//                if progress >= 1 {
-//                    timer.invalidate()
-//                    self.updateDummyLanguage(with: .downloaded)
-//                }
-//            }
-//            
-//        case .downloading:
-//            return
-//            
-//        case .downloaded:
-//            updateDummyLanguage(with: .notDownloaded)
-//        }
+        switch downloadableLanguage.downloadStatus {
+            
+        case .notDownloaded:
+            
+            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageId)
+                .sink { _ in
+                    
+                }
+                .store(in: &cancellables)
+            
+        case .downloaded:
+            
+            removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
+                .sink { _ in
+                    
+                }
+                .store(in: &cancellables)
+            
+        case .downloading:
+            
+            break
+        }
     }
 }
 

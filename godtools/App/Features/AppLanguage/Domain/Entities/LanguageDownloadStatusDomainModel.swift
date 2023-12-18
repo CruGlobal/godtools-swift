@@ -13,4 +13,22 @@ enum LanguageDownloadStatusDomainModel: Equatable {
     case notDownloaded
     case downloading(progress: Double)
     case downloaded
+    
+    init(downloadedLanguage: DownloadedLanguageDataModel?) {
+        
+        guard let downloadedLanguage = downloadedLanguage else {
+            
+            self = .notDownloaded
+            return
+        }
+        
+        if downloadedLanguage.isDownloaded {
+            
+            self = .downloaded
+            
+        } else {
+            
+            self = .downloading(progress: downloadedLanguage.downloadProgress)
+        }
+    }
 }

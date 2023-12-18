@@ -12,16 +12,23 @@ struct DownloadedLanguageDataModel {
     
     let createdAt: Date
     let languageId: String
+    let downloadProgress: Double
     
-    init(languageId: String) {
+    var isDownloaded: Bool {
+        return downloadProgress >= 1
+    }
+    
+    init(languageId: String, downloadProgress: Double) {
         
         self.createdAt = Date()
         self.languageId = languageId
+        self.downloadProgress = downloadProgress
     }
     
     init(realmDownloadedLanguage: RealmDownloadedLanguage) {
         
         createdAt = realmDownloadedLanguage.createdAt
         languageId = realmDownloadedLanguage.languageId
+        downloadProgress = realmDownloadedLanguage.downloadProgress
     }
 }
