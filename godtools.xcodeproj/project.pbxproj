@@ -456,6 +456,7 @@
 		455EE8442AEC59EB00C3205C /* DownloadToolProgressFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455EE8432AEC59EB00C3205C /* DownloadToolProgressFeatureDataLayerDependencies.swift */; };
 		455EE8462AEC59F500C3205C /* DownloadToolProgressFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455EE8452AEC59F500C3205C /* DownloadToolProgressFeatureDomainLayerDependencies.swift */; };
 		455EE8492AEC5F6000C3205C /* ProgressTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455EE8482AEC5F6000C3205C /* ProgressTimer.swift */; };
+		4560C9B92B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4560C9B82B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift */; };
 		4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */; };
 		4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */; };
 		4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */; };
@@ -1903,6 +1904,7 @@
 		455EE8432AEC59EB00C3205C /* DownloadToolProgressFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolProgressFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
 		455EE8452AEC59F500C3205C /* DownloadToolProgressFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolProgressFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		455EE8482AEC5F6000C3205C /* ProgressTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTimer.swift; sourceTree = "<group>"; };
+		4560C9B82B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsDownloadProgressDataModel.swift; sourceTree = "<group>"; };
 		4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageView.swift; sourceTree = "<group>"; };
 		4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageViewModel.swift; sourceTree = "<group>"; };
 		4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageView.swift; sourceTree = "<group>"; };
@@ -7746,6 +7748,7 @@
 				45B36524288504D40012BE53 /* TranslationsRepository.swift */,
 				459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */,
 				459C526E289418EB00DA9E95 /* TranslationManifestFileDataModel.swift */,
+				4560C9B82B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift */,
 				45B36525288504D40012BE53 /* Api */,
 				45B365292885054F0012BE53 /* Cache */,
 				45B3652E288595F50012BE53 /* ManifestParser */,
@@ -12176,6 +12179,7 @@
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,
 				45F3790B2B23642C00EEF039 /* LearnToShareToolInterfaceStringsDomainModel.swift in Sources */,
 				451C848F2AF1C2A40003BF1A /* SocialSignInView.swift in Sources */,
+				4560C9B92B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift in Sources */,
 				45B3F4392AC3A82E00D61BFD /* GetAppLanguagesListRepository.swift in Sources */,
 				45369ACB2AFA7FA500BD10F0 /* GetToolScreenShareTutorialRepositoryInterface.swift in Sources */,
 				45AD204D25938AC300A096A0 /* GoogleAdwordsAnalytics.swift in Sources */,
