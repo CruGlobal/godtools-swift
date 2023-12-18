@@ -1383,6 +1383,8 @@
 		D47DF0482B2CE1B80079219B /* GetDownloadableLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0472B2CE1B80079219B /* GetDownloadableLanguagesListRepositoryInterface.swift */; };
 		D47DF04A2B2CE21A0079219B /* GetDownloadableLanguagesListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF0492B2CE21A0079219B /* GetDownloadableLanguagesListRepository.swift */; };
 		D47DF04C2B2CE3860079219B /* DownloadableLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF04B2B2CE3860079219B /* DownloadableLanguageDomainModel.swift */; };
+		D47DF04E2B306F370079219B /* DownloadToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF04D2B306F370079219B /* DownloadToolLanguageUseCase.swift */; };
+		D47DF0502B3070E70079219B /* RemoveDownloadedToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47DF04F2B3070E70079219B /* RemoveDownloadedToolLanguageUseCase.swift */; };
 		D48018C028EF650700389565 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018BF28EF650700389565 /* DashboardView.swift */; };
 		D48018C228EF6A7200389565 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48018C128EF6A7100389565 /* DashboardViewModel.swift */; };
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
@@ -2837,6 +2839,8 @@
 		D47DF0472B2CE1B80079219B /* GetDownloadableLanguagesListRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadableLanguagesListRepositoryInterface.swift; sourceTree = "<group>"; };
 		D47DF0492B2CE21A0079219B /* GetDownloadableLanguagesListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadableLanguagesListRepository.swift; sourceTree = "<group>"; };
 		D47DF04B2B2CE3860079219B /* DownloadableLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguageDomainModel.swift; sourceTree = "<group>"; };
+		D47DF04D2B306F370079219B /* DownloadToolLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadToolLanguageUseCase.swift; sourceTree = "<group>"; };
+		D47DF04F2B3070E70079219B /* RemoveDownloadedToolLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveDownloadedToolLanguageUseCase.swift; sourceTree = "<group>"; };
 		D48018BF28EF650700389565 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D48018C128EF6A7100389565 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9491,11 +9495,13 @@
 		45EE103F2AB887AF00D0AC33 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D47DF04D2B306F370079219B /* DownloadToolLanguageUseCase.swift */,
 				450DB5612AC3552700B2FE3A /* GetAppLanguagesListUseCase.swift */,
 				45BE4A852AF287F0004021DA /* GetConfirmAppLanguageInterfaceStringsUseCase.swift */,
 				450DB55F2AC354C000B2FE3A /* GetCurrentAppLanguageUseCase.swift */,
 				45B3F46B2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift */,
 				4569C5012AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift */,
+				D47DF04F2B3070E70079219B /* RemoveDownloadedToolLanguageUseCase.swift */,
 				45ACEE192AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift */,
 				4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */,
 				45AC9DE32B28A9B100DEEBFE /* ViewDownloadableLanguagesUseCase.swift */,
@@ -11751,6 +11757,7 @@
 				45D318FA2AE700A200D74A87 /* AppLanguagesCache.swift in Sources */,
 				4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */,
 				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
+				D47DF04E2B306F370079219B /* DownloadToolLanguageUseCase.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
 				45F7163F290A12D70019B715 /* DeleteAccountViewModel.swift in Sources */,
 				45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */,
@@ -11818,6 +11825,7 @@
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
 				45AC9DF82B28AA4D00DEEBFE /* ViewSearchBarUseCase.swift in Sources */,
 				45369ACE2AFA7FA500BD10F0 /* GetToolScreenShareTutorialViewedRepositoryInterface.swift in Sources */,
+				D47DF0502B3070E70079219B /* RemoveDownloadedToolLanguageUseCase.swift in Sources */,
 				45BDA6482954FF08007E259B /* HTMLDocumentData.swift in Sources */,
 				453F84DA2A02A0390005101E /* ArticleManifestAemRepository.swift in Sources */,
 				45C1522E2A43D1BD00F2A1E8 /* ShareShareableViewModel.swift in Sources */,

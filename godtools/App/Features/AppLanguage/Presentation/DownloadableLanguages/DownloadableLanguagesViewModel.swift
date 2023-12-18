@@ -14,6 +14,8 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
+    private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
     private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -26,12 +28,14 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
+        self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)

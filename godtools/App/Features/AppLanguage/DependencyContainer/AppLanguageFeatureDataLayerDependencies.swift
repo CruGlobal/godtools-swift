@@ -34,7 +34,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return AppLanguagesRepository(cache: getAppLanguagesCache())
     }
     
-    private func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
+    func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
         return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
     }
     
