@@ -46,7 +46,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getDownloadToolLanguageUseCase() -> DownloadToolLanguageUseCase {
         return DownloadToolLanguageUseCase(
-            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository()
+            downloadToolLanguageRepository: dataLayer.getDownloadToolLanguageRepositoryInterface()
         )
     }
     
@@ -65,7 +65,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getRemoveDownloadedToolLanguageUseCase() -> RemoveDownloadedToolLanguageUseCase {
         return RemoveDownloadedToolLanguageUseCase(
-            downloadedLanguagesRepository: dataLayer.getDownloadedLanguagesRepository()
+            removeDownloadedToolLanguageRepository: dataLayer.getRemoveDownloadedToolLanguageRepositoryInterface()
         )
     }
     

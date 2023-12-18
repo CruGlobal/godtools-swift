@@ -11,24 +11,15 @@ import Combine
 
 class RemoveDownloadedToolLanguageUseCase {
     
-    let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    let removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface
     
-    init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface) {
         
-        self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.removeDownloadedToolLanguageRepository = removeDownloadedToolLanguageRepository
     }
     
     func removeDownloadedToolLanguage(_ appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
-        return downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: appLanguage)
-            .map { _ in
-                
-                return true
-            }
-            .catch { _ in
-                
-                return Just(false)
-            }
-            .eraseToAnyPublisher()
+        return removeDownloadedToolLanguageRepository.removeDownloadedToolLanguage(languageId: appLanguage)
     }
 }

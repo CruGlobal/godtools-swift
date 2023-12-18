@@ -11,33 +11,15 @@ import Combine
 
 class DownloadToolLanguageUseCase {
     
-    let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    let downloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface
     
-    init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(downloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface) {
         
-        self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.downloadToolLanguageRepository = downloadToolLanguageRepository
     }
     
     func downloadToolLanguage(_ appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
-        // TODO: - actually perform download
-        return Future() { promise in
-            
-            var progress: Double = 0
-            self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: appLanguage, downloadProgress: progress)
-            
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                progress += 0.1
-                
-                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: appLanguage, downloadProgress: progress)
-                
-                if progress > 1 {
-                    timer.invalidate()
-                    
-                    promise(.success(true))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return downloadToolLanguageRepository.downloadToolLanguage(languageId: appLanguage)
     }
 }
