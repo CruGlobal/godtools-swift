@@ -14,12 +14,16 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     private let appLanguagesRepository: AppLanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let getAppLanguageName: GetAppLanguageName
+    private let resourcesRepository: ResourcesRepository
+    private let localizationServices: LocalizationServices
     
-    init(appLanguagesRepository: AppLanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getAppLanguageName: GetAppLanguageName) {
+    init(appLanguagesRepository: AppLanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getAppLanguageName: GetAppLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
         self.appLanguagesRepository = appLanguagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
         self.getAppLanguageName = getAppLanguageName
+        self.resourcesRepository = resourcesRepository
+        self.localizationServices = localizationServices
     }
     
     func getDownloadableLanguagesPublisher() -> AnyPublisher<[DownloadableLanguageDomainModel], Never> {
@@ -54,11 +58,13 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     translatedInLanguage: currentAppLanguage
                 )
                 
+                let toolsAvailableText = self.getToolsAvailableText(for: appLanguage.languageCode, translatedIn: currentAppLanguage)
+                
                 return DownloadableLanguageListItemDomainModel(
                     languageId: appLanguage.languageId,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
-                    toolsAvailableText: "[tools available text]",
+                    toolsAvailableText: toolsAvailableText,
                     downloadStatus: .notDownloaded
                 )
             }
@@ -69,5 +75,30 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
         return downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
+    }
+}
+
+// MARK: - Private
+
+extension GetDownloadableLanguagesListRepository {
+    
+    private func getToolsAvailableText(for languageCode: String, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+        
+        let filter = ResourcesFilter(
+            category: nil,
+            languageCode: languageCode,
+            resourceTypes: ResourceType.toolTypes
+        )
+        
+        let numberOfTools = resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        let localeId = translationLanguage
+        
+        let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
+            localeIdentifier: localeId,
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
+            fileType: .stringsdict
+        )
+        
+        return String.localizedStringWithFormat(formatString, numberOfTools)
     }
 }
