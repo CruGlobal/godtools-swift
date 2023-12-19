@@ -11,7 +11,7 @@ import Combine
 
 class RemoveDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface {
     
-    let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     
     init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
         

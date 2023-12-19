@@ -84,7 +84,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetDownloadableLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository(),
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            getAppLanguageName: getAppLanguageName(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )

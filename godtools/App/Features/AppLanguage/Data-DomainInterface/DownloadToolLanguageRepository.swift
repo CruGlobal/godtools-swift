@@ -11,7 +11,7 @@ import Combine
 
 class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
     
-    let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     
     init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
         

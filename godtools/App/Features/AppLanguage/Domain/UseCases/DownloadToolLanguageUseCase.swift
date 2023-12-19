@@ -11,7 +11,7 @@ import Combine
 
 class DownloadToolLanguageUseCase {
     
-    let downloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface
+    private let downloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface
     
     init(downloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface) {
         

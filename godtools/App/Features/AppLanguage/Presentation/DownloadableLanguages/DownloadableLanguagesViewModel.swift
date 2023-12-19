@@ -18,7 +18,6 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
-    private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     
     private weak var flowDelegate: FlowDelegate?
 

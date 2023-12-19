@@ -11,7 +11,7 @@ import Combine
 
 class RemoveDownloadedToolLanguageUseCase {
     
-    let removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface
+    private let removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface
     
     init(removeDownloadedToolLanguageRepository: RemoveDownloadedToolLanguageRepositoryInterface) {
         

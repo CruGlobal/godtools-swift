@@ -13,15 +13,15 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     
     private let appLanguagesRepository: AppLanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
-    private let getAppLanguageName: GetAppLanguageName
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     
-    init(appLanguagesRepository: AppLanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getAppLanguageName: GetAppLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(appLanguagesRepository: AppLanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
         self.appLanguagesRepository = appLanguagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
-        self.getAppLanguageName = getAppLanguageName
+        self.getTranslatedLanguageName = getTranslatedLanguageName
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
     }
@@ -40,17 +40,14 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
             
             return appLanguages.map { appLanguage in
                 
-                let languageCode = appLanguage.languageCode
-                let scriptCode = appLanguage.languageScriptCode
+                let languageId = appLanguage.languageId
                 
-                let languageNameInOwnLanguage = self.getAppLanguageName.getName(
-                    languageCode: languageCode,
-                    scriptCode: scriptCode,
-                    translatedInLanguage: languageCode
+                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
+                    language: appLanguage,
+                    translatedInLanguage: appLanguage.languageId
                 )
-                let languageNameInAppLanguage = self.getAppLanguageName.getName(
-                    languageCode: languageCode,
-                    scriptCode: scriptCode,
+                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
+                    language: appLanguage,
                     translatedInLanguage: currentAppLanguage
                 )
                 
