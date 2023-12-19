@@ -35,6 +35,12 @@ class ToolSettingsDataLayerDependencies {
         )
     }
     
+    func getShareToolInterfaceStringsRepositoryInterface() -> GetShareToolInterfaceStringsRepositoryInterface {
+        return GetShareToolInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getToolSettingsInterfaceStringsRepositoryInterface() -> GetToolSettingsInterfaceStringsRepositoryInterface {
         return GetToolSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
