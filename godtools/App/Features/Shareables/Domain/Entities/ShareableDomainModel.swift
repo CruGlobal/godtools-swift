@@ -1,5 +1,5 @@
 //
-//  SharableDomainModel.swift
+//  ShareableDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/19/23.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct SharableDomainModel {
+struct ShareableDomainModel {
     
     let dataModelId: String
     let title: String
 }
 
-extension SharableDomainModel: Identifiable {
+extension ShareableDomainModel: Identifiable {
     var id: String {
         return dataModelId
     }

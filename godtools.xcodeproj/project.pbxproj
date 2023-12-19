@@ -44,13 +44,6 @@
 		45070A822ACF42AD00229EDD /* AppSkipBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A7C2ACF42AD00229EDD /* AppSkipBarItem.swift */; };
 		45070A832ACF42AD00229EDD /* AppInterfaceStringBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A7D2ACF42AD00229EDD /* AppInterfaceStringBarItem.swift */; };
 		45070A852ACF43E900229EDD /* AppLanguageSettingsBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A842ACF43E900229EDD /* AppLanguageSettingsBarItem.swift */; };
-		4507BABD2B320E1700E56CEF /* SharablesDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BABC2B320E1700E56CEF /* SharablesDiContainer.swift */; };
-		4507BABF2B320E2300E56CEF /* SharablesDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BABE2B320E2300E56CEF /* SharablesDataLayerDependencies.swift */; };
-		4507BAC12B320E3100E56CEF /* SharablesDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BAC02B320E3100E56CEF /* SharablesDomainLayerDependencies.swift */; };
-		4507BAC62B320F0A00E56CEF /* GetSharablesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BAC52B320F0A00E56CEF /* GetSharablesUseCase.swift */; };
-		4507BAC82B320F1C00E56CEF /* GetSharablesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BAC72B320F1C00E56CEF /* GetSharablesRepositoryInterface.swift */; };
-		4507BACA2B320F2300E56CEF /* SharableDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BAC92B320F2300E56CEF /* SharableDomainModel.swift */; };
-		4507BACC2B320FF000E56CEF /* GetSharablesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4507BACB2B320FF000E56CEF /* GetSharablesRepository.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450AF5B62AD8211300524A15 /* GetAppLanguagesListUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C0C2AC46D7F006B3B8A /* GetAppLanguagesListUseCaseTests.swift */; };
 		450AF5B72AD8216D00524A15 /* TestsGetAppLanguagesListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45328C072AC46D14006B3B8A /* TestsGetAppLanguagesListRepository.swift */; };
@@ -102,6 +95,13 @@
 		4512C80A2B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */; };
 		4512C80B2B322D5900D162F3 /* ToolSettingsShareableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */; };
 		4512C80F2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */; };
+		4512C81F2B3236C000D162F3 /* GetShareablesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8122B3236C000D162F3 /* GetShareablesRepository.swift */; };
+		4512C8202B3236C000D162F3 /* GetShareablesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8162B3236C000D162F3 /* GetShareablesRepositoryInterface.swift */; };
+		4512C8212B3236C000D162F3 /* GetShareablesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8182B3236C000D162F3 /* GetShareablesUseCase.swift */; };
+		4512C8222B3236C000D162F3 /* ShareableDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C81A2B3236C000D162F3 /* ShareableDomainModel.swift */; };
+		4512C8232B3236C000D162F3 /* ShareablesDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C81C2B3236C000D162F3 /* ShareablesDiContainer.swift */; };
+		4512C8242B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C81D2B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift */; };
+		4512C8252B3236C000D162F3 /* ShareablesDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C81E2B3236C000D162F3 /* ShareablesDataLayerDependencies.swift */; };
 		4512D4B12B28EEAA00DFAFB3 /* RealmToolSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512D4AE2B28EEAA00DFAFB3 /* RealmToolSettingsCache.swift */; };
 		4512D4B22B28EEAA00DFAFB3 /* ToolSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512D4AF2B28EEAA00DFAFB3 /* ToolSettingsRepository.swift */; };
 		4512D4B32B28EEAA00DFAFB3 /* ToolSettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512D4B02B28EEAA00DFAFB3 /* ToolSettingsDataModel.swift */; };
@@ -1516,13 +1516,6 @@
 		45070A7C2ACF42AD00229EDD /* AppSkipBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSkipBarItem.swift; sourceTree = "<group>"; };
 		45070A7D2ACF42AD00229EDD /* AppInterfaceStringBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceStringBarItem.swift; sourceTree = "<group>"; };
 		45070A842ACF43E900229EDD /* AppLanguageSettingsBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageSettingsBarItem.swift; sourceTree = "<group>"; };
-		4507BABC2B320E1700E56CEF /* SharablesDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharablesDiContainer.swift; sourceTree = "<group>"; };
-		4507BABE2B320E2300E56CEF /* SharablesDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharablesDataLayerDependencies.swift; sourceTree = "<group>"; };
-		4507BAC02B320E3100E56CEF /* SharablesDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharablesDomainLayerDependencies.swift; sourceTree = "<group>"; };
-		4507BAC52B320F0A00E56CEF /* GetSharablesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSharablesUseCase.swift; sourceTree = "<group>"; };
-		4507BAC72B320F1C00E56CEF /* GetSharablesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSharablesRepositoryInterface.swift; sourceTree = "<group>"; };
-		4507BAC92B320F2300E56CEF /* SharableDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharableDomainModel.swift; sourceTree = "<group>"; };
-		4507BACB2B320FF000E56CEF /* GetSharablesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSharablesRepository.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450B7FB72B2B49E3000B9035 /* DeleteToolSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteToolSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		450B7FB92B2B4A29000B9035 /* DeleteToolSettingsParallelLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteToolSettingsParallelLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -1572,6 +1565,13 @@
 		4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
 		4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemView.swift; sourceTree = "<group>"; };
 		4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageDropDownView.swift; sourceTree = "<group>"; };
+		4512C8122B3236C000D162F3 /* GetShareablesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetShareablesRepository.swift; sourceTree = "<group>"; };
+		4512C8162B3236C000D162F3 /* GetShareablesRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetShareablesRepositoryInterface.swift; sourceTree = "<group>"; };
+		4512C8182B3236C000D162F3 /* GetShareablesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetShareablesUseCase.swift; sourceTree = "<group>"; };
+		4512C81A2B3236C000D162F3 /* ShareableDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareableDomainModel.swift; sourceTree = "<group>"; };
+		4512C81C2B3236C000D162F3 /* ShareablesDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareablesDiContainer.swift; sourceTree = "<group>"; };
+		4512C81D2B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareablesDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		4512C81E2B3236C000D162F3 /* ShareablesDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareablesDataLayerDependencies.swift; sourceTree = "<group>"; };
 		4512D4AE2B28EEAA00DFAFB3 /* RealmToolSettingsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmToolSettingsCache.swift; sourceTree = "<group>"; };
 		4512D4AF2B28EEAA00DFAFB3 /* ToolSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsRepository.swift; sourceTree = "<group>"; };
 		4512D4B02B28EEAA00DFAFB3 /* ToolSettingsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsDataModel.swift; sourceTree = "<group>"; };
@@ -3361,76 +3361,6 @@
 			path = ButtonsWithTitle;
 			sourceTree = "<group>";
 		};
-		4507BAB72B320DDC00E56CEF /* Sharables */ = {
-			isa = PBXGroup;
-			children = (
-				4507BAB92B320DDC00E56CEF /* Data */,
-				4507BAB82B320DDC00E56CEF /* Data-DomainInterface */,
-				4507BABB2B320DDC00E56CEF /* DependencyContainer */,
-				4507BABA2B320DDC00E56CEF /* Domain */,
-			);
-			path = Sharables;
-			sourceTree = "<group>";
-		};
-		4507BAB82B320DDC00E56CEF /* Data-DomainInterface */ = {
-			isa = PBXGroup;
-			children = (
-				4507BACB2B320FF000E56CEF /* GetSharablesRepository.swift */,
-			);
-			path = "Data-DomainInterface";
-			sourceTree = "<group>";
-		};
-		4507BAB92B320DDC00E56CEF /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		4507BABA2B320DDC00E56CEF /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				4507BAC42B320ED500E56CEF /* Entities */,
-				4507BAC32B320ED500E56CEF /* Interface */,
-				4507BAC22B320ED500E56CEF /* UseCases */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		4507BABB2B320DDC00E56CEF /* DependencyContainer */ = {
-			isa = PBXGroup;
-			children = (
-				4507BABC2B320E1700E56CEF /* SharablesDiContainer.swift */,
-				4507BABE2B320E2300E56CEF /* SharablesDataLayerDependencies.swift */,
-				4507BAC02B320E3100E56CEF /* SharablesDomainLayerDependencies.swift */,
-			);
-			path = DependencyContainer;
-			sourceTree = "<group>";
-		};
-		4507BAC22B320ED500E56CEF /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-				4507BAC52B320F0A00E56CEF /* GetSharablesUseCase.swift */,
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
-		4507BAC32B320ED500E56CEF /* Interface */ = {
-			isa = PBXGroup;
-			children = (
-				4507BAC72B320F1C00E56CEF /* GetSharablesRepositoryInterface.swift */,
-			);
-			path = Interface;
-			sourceTree = "<group>";
-		};
-		4507BAC42B320ED500E56CEF /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				4507BAC92B320F2300E56CEF /* SharableDomainModel.swift */,
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
 		450D7AF928E32965006C3FDF /* TrackDownloadedTranslationsRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -3649,6 +3579,76 @@
 				4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */,
 			);
 			path = ToolSettingsLanguageDropDown;
+			sourceTree = "<group>";
+		};
+		4512C8102B3236C000D162F3 /* Shareables */ = {
+			isa = PBXGroup;
+			children = (
+				4512C8132B3236C000D162F3 /* Data */,
+				4512C8112B3236C000D162F3 /* Data-DomainInterface */,
+				4512C81B2B3236C000D162F3 /* DependencyContainer */,
+				4512C8142B3236C000D162F3 /* Domain */,
+			);
+			path = Shareables;
+			sourceTree = "<group>";
+		};
+		4512C8112B3236C000D162F3 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				4512C8122B3236C000D162F3 /* GetShareablesRepository.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		4512C8132B3236C000D162F3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4512C8142B3236C000D162F3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				4512C8192B3236C000D162F3 /* Entities */,
+				4512C8152B3236C000D162F3 /* Interface */,
+				4512C8172B3236C000D162F3 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		4512C8152B3236C000D162F3 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4512C8162B3236C000D162F3 /* GetShareablesRepositoryInterface.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		4512C8172B3236C000D162F3 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				4512C8182B3236C000D162F3 /* GetShareablesUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		4512C8192B3236C000D162F3 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4512C81A2B3236C000D162F3 /* ShareableDomainModel.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		4512C81B2B3236C000D162F3 /* DependencyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				4512C81E2B3236C000D162F3 /* ShareablesDataLayerDependencies.swift */,
+				4512C81C2B3236C000D162F3 /* ShareablesDiContainer.swift */,
+				4512C81D2B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift */,
+			);
+			path = DependencyContainer;
 			sourceTree = "<group>";
 		};
 		4512D4AC2B28EEAA00DFAFB3 /* ToolSettingsRepository */ = {
@@ -7327,7 +7327,7 @@
 				45A8BDD32ACC9EE9007A1EBB /* Lessons */,
 				45AD180425938A4D00A096A0 /* Menu */,
 				45AD184625938A4E00A096A0 /* Onboarding */,
-				4507BAB72B320DDC00E56CEF /* Sharables */,
+				4512C8102B3236C000D162F3 /* Shareables */,
 				45AD183E25938A4E00A096A0 /* ToolDetails */,
 				45369A9B2AFA7FA500BD10F0 /* ToolScreenShare */,
 				451CEDCF282C31C6006E5105 /* ToolSettings */,
@@ -11279,6 +11279,7 @@
 				45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */,
 				45AD1F7525938A9800A096A0 /* ViewedTrainingTipsUserDefaultsCache.swift in Sources */,
 				45DBE60A2ACD9EAB008A93BF /* GetToolIsFavoritedUseCase.swift in Sources */,
+				4512C8222B3236C000D162F3 /* ShareableDomainModel.swift in Sources */,
 				4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */,
 				D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */,
 				456BB02B27C588E80087CCA4 /* MobileContentHeadingViewModel.swift in Sources */,
@@ -11317,7 +11318,6 @@
 				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45C649C22B31E212000249E0 /* GetShareToolInterfaceStringsRepositoryInterface.swift in Sources */,
-				4507BACA2B320F2300E56CEF /* SharableDomainModel.swift in Sources */,
 				45A8BDE32ACC9F47007A1EBB /* LessonsViewModel.swift in Sources */,
 				45EA5AAE2B22481700D9E330 /* ToolSettingsDiContainer.swift in Sources */,
 				45E39EC927457A14006A59E4 /* AnimatedView.swift in Sources */,
@@ -11447,7 +11447,6 @@
 				4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */,
 				4556CEA929F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift in Sources */,
 				4587301129671FF200C9972E /* InitialDataDownloader.swift in Sources */,
-				4507BABF2B320E2300E56CEF /* SharablesDataLayerDependencies.swift in Sources */,
 				454B47DA2AE01FFB00C7B5E7 /* GetOnboardingTutorialInterfaceStringsUseCase.swift in Sources */,
 				459BD08D289AD4310075901B /* DetermineToolTranslationsToDownload.swift in Sources */,
 				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,
@@ -11462,6 +11461,7 @@
 				453D2F7E2AD88A89001C44E3 /* LanguageSettingsInterfaceStringsDomainModel.swift in Sources */,
 				450D63B12AC8A87200B90319 /* TrackActionAnalyticsInterface.swift in Sources */,
 				45AC9DD82B28A97300DEEBFE /* GetDownloadableLanguagesInterfaceStringsRepository.swift in Sources */,
+				4512C8212B3236C000D162F3 /* GetShareablesUseCase.swift in Sources */,
 				D1DD79FF26690CBA000F1351 /* TrackActionModel.swift in Sources */,
 				45828BD3279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift in Sources */,
 				45325F29285CF8B40078D932 /* TextViewLinksCoordinator.swift in Sources */,
@@ -11514,9 +11514,9 @@
 				45AC9DDE2B28A98800DEEBFE /* LanguageDownloadStatusDomainModel.swift in Sources */,
 				45BDA6452954FF08007E259B /* HTMLDocument+ResourceUrls.swift in Sources */,
 				451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */,
+				4512C8232B3236C000D162F3 /* ShareablesDiContainer.swift in Sources */,
 				4534F9422AE9B6C200A7A071 /* CancelLessonEvaluationRepositoryInterface.swift in Sources */,
 				454ADAE62ABDDD3800037C27 /* ChooseAppLanguageFlowCompleted.swift in Sources */,
-				4507BAC12B320E3100E56CEF /* SharablesDomainLayerDependencies.swift in Sources */,
 				45F378F32B23641F00EEF039 /* ViewLearnToShareToolUseCase.swift in Sources */,
 				45369AD92AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift in Sources */,
 				45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */,
@@ -11769,7 +11769,6 @@
 				45369AD32AFA7FA500BD10F0 /* ToolScreenShareInterfaceStringsDomainModel.swift in Sources */,
 				459E86E228EDA86C00E197A5 /* AppsFlyerDeepLinkValueParser.swift in Sources */,
 				45CCF6922B2269010017EDFE /* ToolSettingsOptionView.swift in Sources */,
-				4507BAC82B320F1C00E56CEF /* GetSharablesRepositoryInterface.swift in Sources */,
 				45FE82382ACE5BFE00930C39 /* AppViewController.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
 				45FE82442ACE5BFE00930C39 /* ModalNavigationController.swift in Sources */,
@@ -11778,6 +11777,7 @@
 				452486BF2B07C894007AD932 /* ToolsFilterFeatureDiContainer.swift in Sources */,
 				45774C012AF2FD5A00AC40B7 /* AuthenticateUser.swift in Sources */,
 				D48018C228EF6A7200389565 /* DashboardViewModel.swift in Sources */,
+				4512C81F2B3236C000D162F3 /* GetShareablesRepository.swift in Sources */,
 				D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */,
 				459BF77F2AFEE0320053BA09 /* RealmToolScreenShareTutorialViewsCache.swift in Sources */,
 				45EA98FC2AFD683100E7EA9A /* CreatingToolScreenShareSessionTimedOutDomainModel.swift in Sources */,
@@ -12122,6 +12122,7 @@
 				450D7B0A28E34ACA006C3FDF /* RealmLanguagesCacheSyncResult.swift in Sources */,
 				453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */,
 				459BD08E289AD4310075901B /* DetermineToolTranslationsToDownloadResult.swift in Sources */,
+				4512C8252B3236C000D162F3 /* ShareablesDataLayerDependencies.swift in Sources */,
 				450D7B0828E34AA9006C3FDF /* RealmLanguagesCacheSync.swift in Sources */,
 				450D846A2AE07B5C008EA64A /* GetOnboardingQuickStartInterfaceStringsRepositoryInterface.swift in Sources */,
 				45558415269F2F6100C3FF14 /* MobileContentRendererAnalyticsEvent.swift in Sources */,
@@ -12284,7 +12285,6 @@
 				45558352269F2D1000C3FF14 /* LessonPageView.swift in Sources */,
 				45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */,
 				4555832A269F2C7B00C3FF14 /* ToolPageCardAnalyticsScreenName.swift in Sources */,
-				4507BABD2B320E1700E56CEF /* SharablesDiContainer.swift in Sources */,
 				45DBE5FB2ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */,
 				45B338372AF4381600D18C63 /* TutorialPageMediaDomainModel.swift in Sources */,
 				450D63AB2AC8A84600B90319 /* TrackExitLinkAnalyticsPropertiesDomainModel.swift in Sources */,
@@ -12410,7 +12410,6 @@
 				4555840E269F2DA500C3FF14 /* MobileContentTextView.swift in Sources */,
 				452486CB2B07C987007AD932 /* SearchToolFilterCategoriesUseCase.swift in Sources */,
 				457766F92AD72DF70093B19A /* GetToolDetailsLearnToShareToolIsAvailableUseCase.swift in Sources */,
-				4507BAC62B320F0A00E56CEF /* GetSharablesUseCase.swift in Sources */,
 				45A8E4372AFC0AEF008EF03D /* GetCreatingToolScreenShareSessionInterfaceStringsRepositoryInterface.swift in Sources */,
 				45860A72292414570089C836 /* AccountGlobalActivity.swift in Sources */,
 				45E347952A49C04B0014CCD1 /* SeparatorView.swift in Sources */,
@@ -12453,6 +12452,7 @@
 				459602E328400DBB00C66387 /* DownloadToolTranslationsFlow.swift in Sources */,
 				45AD1FBF25938A9800A096A0 /* FirebaseDebugArguments.swift in Sources */,
 				45F7163E290A12D70019B715 /* DeleteAccountView.swift in Sources */,
+				4512C8202B3236C000D162F3 /* GetShareablesRepositoryInterface.swift in Sources */,
 				45F3D39229A4FC9A00446F69 /* OnboardingTutorialReadyForEveryConversationViewModel.swift in Sources */,
 				450D63AC2AC8A84600B90319 /* TrackActionAnalyticsPropertiesDomainModel.swift in Sources */,
 				456D44602AF2A617008F61B9 /* AuthenticationProviderType.swift in Sources */,
@@ -12483,6 +12483,7 @@
 				45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45645C122AFE76DF00BD233D /* ShareToolScreenShareSessionInterfaceStringsDomainModel.swift in Sources */,
 				D4F1DE9029676B8A00A2F674 /* UserCounterDomainModel.swift in Sources */,
+				4512C8242B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift in Sources */,
 				45B3F45F2AC3ADF500D61BFD /* DeviceLanguageDomainModel.swift in Sources */,
 				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				45AE975E27C97A9500C2CB33 /* Card+MobileContentRenderableModel.swift in Sources */,
@@ -12500,7 +12501,6 @@
 				456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */,
 				458D01812B1E4D0B0029523C /* ViewLessonsDomainModel.swift in Sources */,
 				45DBE61F2ACDA34D008A93BF /* FeaturedLessonsDiContainer.swift in Sources */,
-				4507BACC2B320FF000E56CEF /* GetSharablesRepository.swift in Sources */,
 				455582E9269F2C1000C3FF14 /* TrainingPageView.swift in Sources */,
 				458D01832B1E4ED30029523C /* LessonsInterfaceStringsDomainModel.swift in Sources */,
 				453D1F022861CFEE00CEA3AC /* CircleSelectorView.swift in Sources */,

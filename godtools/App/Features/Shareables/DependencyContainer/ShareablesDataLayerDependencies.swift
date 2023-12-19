@@ -1,5 +1,5 @@
 //
-//  SharablesDataLayerDependencies.swift
+//  ShareablesDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/19/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SharablesDataLayerDependencies {
+class ShareablesDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
@@ -21,8 +21,8 @@ class SharablesDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getSharablesRepositoryInterface() -> GetSharablesRepositoryInterface {
-        return GetSharablesRepository(
+    func getShareablesRepositoryInterface() -> GetShareablesRepositoryInterface {
+        return GetShareablesRepository(
             translationsRepository: coreDataLayer.getTranslationsRepository()
         )
     }

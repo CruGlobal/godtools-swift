@@ -18,7 +18,7 @@ class AppFeatureDiContainer {
     let lessonEvaluation: LessonEvaluationFeatureDiContainer
     let lessons: LessonsFeatureDiContainer
     let onboarding: OnboardingDiContainer
-    let sharables: SharablesDiContainer
+    let shareables: ShareablesDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     let toolScreenShare: ToolScreenShareFeatureDiContainer
     let toolSettings: ToolSettingsDiContainer
@@ -26,7 +26,7 @@ class AppFeatureDiContainer {
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, sharables: SharablesDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.accountCreation = accountCreation
         self.appLanguage = appLanguage
@@ -36,7 +36,7 @@ class AppFeatureDiContainer {
         self.lessonEvaluation = lessonEvaluation
         self.lessons = lessons
         self.onboarding = onboarding
-        self.sharables = sharables
+        self.shareables = shareables
         self.toolDetails = toolDetails
         self.toolScreenShare = toolScreenShare
         self.toolSettings = toolSettings

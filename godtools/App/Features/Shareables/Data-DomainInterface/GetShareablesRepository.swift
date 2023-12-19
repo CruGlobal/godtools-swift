@@ -1,5 +1,5 @@
 //
-//  GetSharablesRepository.swift
+//  GetShareablesRepository.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/19/23.
@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import GodToolsToolParser
 
-class GetSharablesRepository: GetSharablesRepositoryInterface {
+class GetShareablesRepository: GetShareablesRepositoryInterface {
     
     private let translationsRepository: TranslationsRepository
     
@@ -19,7 +19,7 @@ class GetSharablesRepository: GetSharablesRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func getSharablesPublisher(resource: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[SharableDomainModel], Never> {
+    func getShareablesPublisher(resource: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ShareableDomainModel], Never> {
         
         guard let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: translateInLanguage) else {
             
@@ -37,19 +37,19 @@ class GetSharablesRepository: GetSharablesRepositoryInterface {
             let manifestShareables: [Shareable] = dataModel.manifest.shareables
                 .sorted(by: { $0.order < $1.order })
             
-            let sharables: [SharableDomainModel] = manifestShareables.compactMap {
+            let shareables: [ShareableDomainModel] = manifestShareables.compactMap {
                 
                 guard let shareableImage = $0 as? ShareableImage, let dataModelId = shareableImage.id else {
                     return nil
                 }
                 
-                return SharableDomainModel(
+                return ShareableDomainModel(
                     dataModelId: dataModelId,
                     title: shareableImage.description_?.text ?? ""
                 )
             }
             
-            return sharables
+            return shareables
         }
         .catch { _ in
             return Just([])
