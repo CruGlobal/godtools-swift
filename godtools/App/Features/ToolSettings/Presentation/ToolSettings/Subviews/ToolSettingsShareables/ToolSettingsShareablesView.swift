@@ -1,8 +1,9 @@
 //
 //  ToolSettingsShareablesView.swift
-//  ToolSettings
+//  godtools
 //
 //  Created by Levi Eggert on 5/10/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI

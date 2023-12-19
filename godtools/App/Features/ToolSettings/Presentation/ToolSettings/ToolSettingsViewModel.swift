@@ -1,8 +1,9 @@
 //
 //  ToolSettingsViewModel.swift
-//  ToolSettings
+//  godtools
 //
 //  Created by Levi Eggert on 5/11/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import Foundation
@@ -19,6 +20,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
     private let setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase
     private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
+    private let getSharablesUseCase: GetSharablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     
@@ -44,15 +46,16 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var parallelLanguageTitle: String = ""
     @Published var hidesShareables: Bool = false
     @Published var shareablesTitle: String = ""
-    @Published var numberOfShareableItems: Int = 0
+    @Published var sharables: [SharableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getSharablesUseCase: GetSharablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.setToolSettingsPrimaryLanguageUseCase = setToolSettingsPrimaryLanguageUseCase
         self.setToolSettingsParallelLanguageUseCase = setToolSettingsParallelLanguageUseCase
+        self.getSharablesUseCase = getSharablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -103,6 +106,10 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
+        getSharablesUseCase
+            .getSharablesPublisher(resource: currentPageRenderer.value.resource, appLanguage: appLanguage)
+            .assign(to: &$sharables)
+        
         currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
 
             self?.pageRendererChanged(pageRenderer: pageRenderer)
@@ -113,9 +120,11 @@ class ToolSettingsViewModel: ObservableObject {
     
     private func pageRendererChanged(pageRenderer: MobileContentPageRenderer) {
         
-        hidesToggleTrainingTipsButton = !pageRenderer.manifest.hasTips
-        hidesShareables = pageRenderer.manifest.shareables.isEmpty
-        numberOfShareableItems = pageRenderer.manifest.shareables.count
+        // TODO: Will need to implement so training tips toggles. ~Levi
+        
+        //hidesToggleTrainingTipsButton = !pageRenderer.manifest.hasTips
+        //hidesShareables = pageRenderer.manifest.shareables.isEmpty
+        //numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
     
     func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
