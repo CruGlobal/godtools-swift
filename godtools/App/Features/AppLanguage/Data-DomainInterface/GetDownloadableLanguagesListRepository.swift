@@ -11,15 +11,15 @@ import Combine
 
 class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface {
     
-    private let appLanguagesRepository: AppLanguagesRepository
+    private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     
-    init(appLanguagesRepository: AppLanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
-        self.appLanguagesRepository = appLanguagesRepository
+        self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.resourcesRepository = resourcesRepository
@@ -29,34 +29,28 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            appLanguagesRepository.getLanguagesChangedPublisher(),
+            languagesRepository.getLanguagesChanged(),
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
-        .flatMap { _ in
+        .map { _ in
             
-            return self.appLanguagesRepository.getLanguagesPublisher()
-        }
-        .map { appLanguages in
-            
-            return appLanguages.map { appLanguage in
-                
-                let languageId = appLanguage.languageId
-                
+            return self.languagesRepository.getLanguages().map { language in
+                                
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: appLanguage,
-                    translatedInLanguage: appLanguage.languageId
+                    language: language,
+                    translatedInLanguage: language.id
                 )
                 let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: appLanguage,
+                    language: language,
                     translatedInLanguage: currentAppLanguage
                 )
                 
-                let toolsAvailableText = self.getToolsAvailableText(for: appLanguage.languageCode, translatedIn: currentAppLanguage)
+                let toolsAvailableText = self.getToolsAvailableText(for: language.languageCode, translatedIn: currentAppLanguage)
                 
-                let downloadStatus = self.getDownloadStatus(for: appLanguage.languageId)
+                let downloadStatus = self.getDownloadStatus(for: language.id)
                 
                 return DownloadableLanguageListItemDomainModel(
-                    languageId: appLanguage.languageId,
+                    languageId: language.id,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
                     toolsAvailableText: toolsAvailableText,
