@@ -97,6 +97,38 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
+    func getTranslationManifestsFromRemoteWithProgress(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<TranslationsDownloadProgressDataModel, Error> {
+        
+        let requests = translations.map {
+            
+            self.getTranslationManifestFromRemote(
+                translation: $0,
+                manifestParserType: manifestParserType,
+                includeRelatedFiles: includeRelatedFiles,
+                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+            )
+        }
+        
+        var downloadCount: Double = 0
+        var numberOfTranslationsToDownload: Int = translations.count
+        let numberOfTranslationsToDownloadDouble: Double = Double(numberOfTranslationsToDownload)
+        
+        return Publishers.MergeMany(requests)
+            .map { (dataModel: TranslationManifestFileDataModel) in
+                
+                downloadCount += 1
+                
+                let progress: Double = downloadCount / numberOfTranslationsToDownloadDouble
+                
+                return TranslationsDownloadProgressDataModel(
+                    progress: progress,
+                    numberOfTranslationsToDownload: numberOfTranslationsToDownload,
+                    currentNumberOfTranslationsDownloaded: Int(downloadCount)
+                )
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func getTranslationManifestsFromRemote(translations: [TranslationModel], manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<[TranslationManifestFileDataModel], Error> {
        
         let requests = translations.map {
