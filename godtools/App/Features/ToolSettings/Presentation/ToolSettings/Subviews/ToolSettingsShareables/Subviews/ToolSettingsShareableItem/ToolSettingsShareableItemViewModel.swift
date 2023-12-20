@@ -6,30 +6,38 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
-import GodToolsToolParser
+import Combine
 
 class ToolSettingsShareableItemViewModel: ObservableObject {
     
-    private let shareable: Shareable
-    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let shareable: ShareableDomainModel
+    private let getShareableImageUseCase: GetShareableImageUseCase
     
-    @Published var image: SwiftUI.Image = Image("")
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    @Published var imageData: OptionalImageData?
     @Published var title: String = ""
     
-    init(shareable: Shareable, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(shareable: ShareableDomainModel, getShareableImageUseCase: GetShareableImageUseCase) {
         
         self.shareable = shareable
-        self.manifestResourcesCache = manifestResourcesCache
-                        
-        if let shareableImage = shareable as? ShareableImage {
-            
-            self.title = shareableImage.description_?.text ?? ""
-            
-            if let resource = shareableImage.resource, let cachedImage = manifestResourcesCache.getUIImage(resource: resource) {
+        self.getShareableImageUseCase = getShareableImageUseCase
+        self.title = shareable.title
+        
+        getShareableImageUseCase
+            .getShareableImagePublisher(shareable: shareable)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (imageDomainModel: ShareableImageDomainModel?) in
                 
-                self.image = Image(uiImage: cachedImage)
+                let optionalImageData = OptionalImageData(
+                    image: imageDomainModel?.image,
+                    imageIdForAnimationChange: imageDomainModel?.dataModelId
+                )
+                
+                self?.imageData = optionalImageData
             }
-        }
+            .store(in: &cancellables)
     }
 }

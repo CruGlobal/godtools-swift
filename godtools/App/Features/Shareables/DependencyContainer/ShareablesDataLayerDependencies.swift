@@ -21,6 +21,12 @@ class ShareablesDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getShareableImageRepositoryInterface() -> GetShareableImageRepositoryInterface {
+        return GetShareableImageRepository(
+            resourcesFileCache: coreDataLayer.getResourcesFileCache()
+        )
+    }
+    
     func getShareablesRepositoryInterface() -> GetShareablesRepositoryInterface {
         return GetShareablesRepository(
             translationsRepository: coreDataLayer.getTranslationsRepository()

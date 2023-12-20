@@ -45,6 +45,7 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
                 
                 return ShareableDomainModel(
                     dataModelId: dataModelId,
+                    imageName: shareableImage.resource?.localName ?? "",
                     title: shareableImage.description_?.text ?? ""
                 )
             }

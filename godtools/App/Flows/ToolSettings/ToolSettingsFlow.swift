@@ -289,7 +289,8 @@ extension ToolSettingsFlow {
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             setToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsPrimaryLanguageUseCase(),
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
-            getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
+            getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             currentPageRenderer: toolData.currentPageRenderer,
             trainingTipsEnabled: toolData.trainingTipsEnabled
         )

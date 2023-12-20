@@ -6,12 +6,10 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 struct ShareableImageDomainModel {
     
-    let image: UIImage
-    let imageId: String?
-    let toolAbbreviation: String?
-    
+    let dataModelId: String
+    let image: Image?
 }

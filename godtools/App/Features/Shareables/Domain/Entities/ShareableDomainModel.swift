@@ -11,6 +11,7 @@ import Foundation
 struct ShareableDomainModel {
     
     let dataModelId: String
+    let imageName: String
     let title: String
 }
 
