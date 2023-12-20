@@ -199,8 +199,8 @@ class ToolSettingsFlow: Flow {
         case .closeTappedFromToolSettingsToolLanguagesList:
             dismissToolLanguagesList(animated: true)
             
-        case .shareableTappedFromToolSettings(let shareableImageDomainModel):
-            presentReviewShareShareable(shareableImageDomainModel: shareableImageDomainModel, animated: true)
+        case .shareableTappedFromToolSettings(let shareable):
+            presentReviewShareShareable(shareable: shareable, animated: true)
             
         case .closeTappedFromReviewShareShareable:
             dismissReviewShareShareable()
@@ -415,21 +415,22 @@ extension ToolSettingsFlow {
 
 extension ToolSettingsFlow {
     
-    private func presentReviewShareShareable(shareableImageDomainModel: ShareableImageDomainModel, animated: Bool) {
+    private func presentReviewShareShareable(shareable: ShareableDomainModel, animated: Bool) {
         
-        let reviewShareShareableView = getReviewShareShareableView(shareableImageDomainModel: shareableImageDomainModel)
+        let reviewShareShareableView = getReviewShareShareableView(shareable: shareable)
         
         reviewShareShareableModal = reviewShareShareableView
         
         navigationController.present(reviewShareShareableView, animated: animated, completion: nil)
     }
     
-    private func getReviewShareShareableView(shareableImageDomainModel: ShareableImageDomainModel) -> UIViewController {
+    private func getReviewShareShareableView(shareable: ShareableDomainModel) -> UIViewController {
         
         let viewModel = ReviewShareShareableViewModel(
             flowDelegate: self,
+            resource: toolData.renderer.value.resource,
+            shareable: shareable,
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            shareableImageDomainModel: shareableImageDomainModel,
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
