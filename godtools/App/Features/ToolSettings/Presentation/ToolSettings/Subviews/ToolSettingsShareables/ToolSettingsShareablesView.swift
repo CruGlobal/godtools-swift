@@ -33,19 +33,21 @@ struct ToolSettingsShareablesView: View {
                 .font(FontLibrary.sfProTextRegular.font(size: 19))
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             
-            LazyHList<ToolSettingsShareableItemView>(itemSize: relatedContentSize, itemSpacing: 10, contentInsets: EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset), showsScrollIndicator: false, numberOfItems: $viewModel.numberOfShareableItems, viewForItem: { index in
+            ScrollView(.horizontal, showsIndicators: false) {
                 
-                let itemViewModel = viewModel.getShareableItemViewModel(index: index)
-                let itemView = ToolSettingsShareableItemView(viewModel: itemViewModel)
-                
-                return itemView
-                
-            }, itemTapped: { index in
-                
-                viewModel.shareableTapped(index: index)
-            })
-                .frame(minWidth: nil, idealWidth: nil, maxWidth: .infinity, minHeight: relatedContentSize.height, idealHeight: nil, maxHeight: relatedContentSize.height, alignment: .leading)
-
+                LazyHStack(alignment: .center, spacing: 10) {
+                    
+                    ForEach(viewModel.shareables) { (shareable: ShareableDomainModel) in
+                        
+                        ToolSettingsShareableItemView(
+                            viewModel: viewModel.getShareableItemViewModel(shareable: shareable),
+                            tappedClosure: {
+                                viewModel.shareableTapped(shareable: shareable)
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }
