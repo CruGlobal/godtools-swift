@@ -47,6 +47,12 @@ class ToolSettingsDomainLayerDependencies {
         )
     }
     
+    func getViewShareToolUseCase() -> ViewShareToolUseCase {
+        return ViewShareToolUseCase(
+            getInterfaceStringsRepository: dataLayer.getShareToolInterfaceStringsRepositoryInterface()
+        )
+    }
+    
     func getViewToolSettingsToolLanguagesListUseCase() -> ViewToolSettingsToolLanguagesListUseCase {
         return ViewToolSettingsToolLanguagesListUseCase(
             getInterfaceStringsRepository: dataLayer.getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface(),
