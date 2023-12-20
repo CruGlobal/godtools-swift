@@ -13,7 +13,6 @@ class ShareToolViewModel {
         
     private let resource: ResourceModel
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
-    private let localizationServices: LocalizationServices
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let pageNumber: Int
@@ -22,26 +21,15 @@ class ShareToolViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(viewShareToolDomainModel: ViewShareToolDomainModel, resource: ResourceModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
                 
         self.resource = resource
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
-        self.localizationServices = localizationServices
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.pageNumber = pageNumber
-        
-        var shareUrlString: String = "https://knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
-
-        if pageNumber > 0 {
-            shareUrlString = shareUrlString.appending("/").appending("\(pageNumber)")
-        }
-        
-        shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-        
-        let localizedTractShareMessage: String = localizationServices.stringForSystemElseEnglish(key: "tract_share_message")
-        
-        shareMessage = String.localizedStringWithFormat(localizedTractShareMessage, shareUrlString)
+                
+        shareMessage = viewShareToolDomainModel.interfaceStrings.shareMessage
     }
     
     private var analyticsScreenName: String {

@@ -21,6 +21,8 @@ class ToolSettingsFlow: Flow {
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var viewShareToolDomainModel: ViewShareToolDomainModel?
     @Published private var toolScreenShareTutorialHasBeenViewedDomainModel: ToolScreenShareTutorialViewedDomainModel = ToolScreenShareTutorialViewedDomainModel(numberOfViews: 0)
     @Published private var primaryLanguage: LanguageDomainModel
     @Published private var parallelLanguage: LanguageDomainModel?
@@ -39,6 +41,26 @@ class ToolSettingsFlow: Flow {
         self.tool = tool
         
         primaryLanguage = toolData.renderer.value.primaryLanguage
+        
+        appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Never> in
+                return self.appDiContainer.feature.toolSettings.domainLayer.getViewShareToolUseCase()
+                    .viewPublisher(
+                        resource: toolData.renderer.value.resource,
+                        language: toolData.currentPageRenderer.value.language,
+                        pageNumber: toolData.pageNumber,
+                        appLanguage: appLanguage
+                    )
+                    .eraseToAnyPublisher()
+            })
+            .sink { [weak self] (domainModel: ViewShareToolDomainModel) in
+                self?.viewShareToolDomainModel = domainModel
+            }
+            .store(in: &cancellables)
         
         initializeToolSettingsLanguages(
             primaryLanguage: toolData.renderer.value.primaryLanguage,
@@ -147,7 +169,12 @@ class ToolSettingsFlow: Flow {
             flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .userClosedToolSettings))
             
         case .shareLinkTappedFromToolSettings:
-            navigationController.present(getShareToolView(), animated: true, completion: nil)
+            
+            guard let domainModel = viewShareToolDomainModel else {
+                return
+            }
+            
+            navigationController.present(getShareToolView(viewShareToolDomainModel: domainModel), animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
@@ -277,17 +304,15 @@ extension ToolSettingsFlow {
         return hostingView
     }
     
-    private func getShareToolView() -> UIViewController {
+    private func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel) -> UIViewController {
         
         let resource: ResourceModel = toolData.renderer.value.resource
-        let language: LanguageDomainModel = toolData.currentPageRenderer.value.language
         
         let viewModel = ShareToolViewModel(
+            viewShareToolDomainModel: viewShareToolDomainModel,
             resource: resource,
-            language: language,
             pageNumber: toolData.pageNumber,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
