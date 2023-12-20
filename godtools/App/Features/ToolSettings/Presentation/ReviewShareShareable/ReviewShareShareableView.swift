@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import GodToolsToolParser
 
 struct ReviewShareShareableView: View {
     
@@ -76,11 +75,14 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
     static func getReviewShareShareableViewModel() -> ReviewShareShareableViewModel {
                 
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let resource: ResourceModel = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
                 
         return ReviewShareShareableViewModel(
             flowDelegate: MockFlowDelegate(),
+            resource: resource,
+            shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            shareableImageDomainModel: ShareableImageDomainModel(image: UIImage(), imageId: nil, toolAbbreviation: nil),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
     }
