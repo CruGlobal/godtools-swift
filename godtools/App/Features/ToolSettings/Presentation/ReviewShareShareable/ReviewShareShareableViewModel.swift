@@ -11,27 +11,31 @@ import SwiftUI
 
 class ReviewShareShareableViewModel: ObservableObject {
     
+    private let resource: ResourceModel
+    private let shareable: ShareableDomainModel
     private let imageToShare: UIImage
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let shareableImageDomainModel: ShareableImageDomainModel
     
     private weak var flowDelegate: FlowDelegate?
     
     let imagePreview: Image
     let shareImageButtonTitle: String
     
-    init(flowDelegate: FlowDelegate, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, shareableImageDomainModel: ShareableImageDomainModel, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, shareable: ShareableDomainModel, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.resource = resource
+        self.shareable = shareable
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.shareableImageDomainModel = shareableImageDomainModel
-        self.imageToShare = shareableImageDomainModel.image
+        self.imageToShare = UIImage()//shareableImageDomainModel.image // TODO: Use shareable image. ~Levi
         self.imagePreview = Image(uiImage: imageToShare)
         self.shareImageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.shareImagePreview.shareImageButton.title")
     }
     
     private func trackShareImageTappedAnalytics() {
         
+        // TODO: Update for tool abbreviation.
+        /*
         trackActionAnalyticsUseCase.trackAction(
             screenName: "",
             actionName: AnalyticsConstants.ActionNames.shareShareable,
@@ -41,7 +45,7 @@ class ReviewShareShareableViewModel: ObservableObject {
             contentLanguageSecondary: nil,
             url: nil,
             data: [AnalyticsConstants.Keys.shareableId: shareableImageDomainModel.imageId ?? ""]
-        )
+        )*/
     }
 }
 

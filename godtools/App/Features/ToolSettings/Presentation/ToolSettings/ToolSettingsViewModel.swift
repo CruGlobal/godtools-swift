@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftUI
-import GodToolsToolParser
 import Combine
 
 class ToolSettingsViewModel: ObservableObject {
@@ -20,7 +19,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
     private let setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase
     private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
-    private let getSharablesUseCase: GetSharablesUseCase
+    private let getShareablesUseCase: GetShareablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     
@@ -46,16 +45,16 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var parallelLanguageTitle: String = ""
     @Published var hidesShareables: Bool = false
     @Published var shareablesTitle: String = ""
-    @Published var sharables: [SharableDomainModel] = Array()
+    @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getSharablesUseCase: GetSharablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.setToolSettingsPrimaryLanguageUseCase = setToolSettingsPrimaryLanguageUseCase
         self.setToolSettingsParallelLanguageUseCase = setToolSettingsParallelLanguageUseCase
-        self.getSharablesUseCase = getSharablesUseCase
+        self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.currentPageRenderer = currentPageRenderer
         self.trainingTipsEnabled = trainingTipsEnabled
@@ -106,9 +105,9 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        getSharablesUseCase
-            .getSharablesPublisher(resource: currentPageRenderer.value.resource, appLanguage: appLanguage)
-            .assign(to: &$sharables)
+        getShareablesUseCase
+            .getShareablesPublisher(resource: currentPageRenderer.value.resource, appLanguage: appLanguage)
+            .assign(to: &$shareables)
         
         currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
 
@@ -126,19 +125,19 @@ class ToolSettingsViewModel: ObservableObject {
         //hidesShareables = pageRenderer.manifest.shareables.isEmpty
         //numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
-    
-    func getShareableItemViewModel(index: Int) -> ToolSettingsShareableItemViewModel {
-        
-        return ToolSettingsShareableItemViewModel(
-            shareable: currentPageRenderer.value.manifest.shareables[index],
-            manifestResourcesCache: currentPageRenderer.value.manifestResourcesCache
-        )
-    }
 }
 
 // MARK: - Inputs
 
 extension ToolSettingsViewModel {
+    
+    func getShareableItemViewModel(shareable: ShareableDomainModel) -> ToolSettingsShareableItemViewModel {
+        
+        return ToolSettingsShareableItemViewModel(
+            shareable: shareable,
+            getShareableImageUseCase: getShareableImageUseCase
+        )
+    }
     
     func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromToolSettings)
@@ -195,15 +194,8 @@ extension ToolSettingsViewModel {
             }
     }
     
-    func shareableTapped(index: Int) {
+    func shareableTapped(shareable: ShareableDomainModel) {
         
-        let manifestResourcesCache: MobileContentRendererManifestResourcesCache = currentPageRenderer.value.manifestResourcesCache
-        let shareable: Shareable = currentPageRenderer.value.manifest.shareables[index]
-        
-        guard let shareableImageDomainModel = getShareableImageUseCase.getShareableImage(from: shareable, manifestResourcesCache: manifestResourcesCache) else {
-            return
-        }
-        
-        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareableImageDomainModel: shareableImageDomainModel))
+        flowDelegate?.navigate(step: .shareableTappedFromToolSettings(shareable: shareable))
     }
 }
