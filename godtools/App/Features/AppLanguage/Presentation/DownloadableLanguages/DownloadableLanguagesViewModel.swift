@@ -18,6 +18,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
+    private static var backgrounDownloadCancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
 
@@ -83,7 +84,7 @@ extension DownloadableLanguagesViewModel {
                 .sink { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
             
         case .downloaded:
             
@@ -91,7 +92,7 @@ extension DownloadableLanguagesViewModel {
                 .sink { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
             
         case .downloading:
             
