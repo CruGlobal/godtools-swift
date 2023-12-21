@@ -70,7 +70,7 @@ struct ToolSettingsView: View {
                         }
                         
                         Rectangle()
-                            .frame(maxWidth: .infinity, minHeight: bottomSpace, maxHeight: bottomSpace)
+                            .frame(width: geometry.size.width, height: bottomSpace)
                             .foregroundColor(.clear)
                     }
                 }
