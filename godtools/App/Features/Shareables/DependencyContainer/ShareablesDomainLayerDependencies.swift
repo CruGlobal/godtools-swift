@@ -28,4 +28,10 @@ class ShareablesDomainLayerDependencies {
             getShareablesRepository: dataLayer.getShareablesRepositoryInterface()
         )
     }
+    
+    func getViewReviewShareShareableUseCase() -> ViewReviewShareShareableUseCase {
+        return ViewReviewShareShareableUseCase(
+            getInterfaceStringsRepository: dataLayer.getReviewShareShareableInterfaceStringsRepositoryInterface()
+        )
+    }
 }

@@ -430,9 +430,10 @@ extension ToolSettingsFlow {
             flowDelegate: self,
             resource: toolData.renderer.value.resource,
             shareable: shareable,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ReviewShareShareableView(viewModel: viewModel)

@@ -15,6 +15,8 @@ class ReviewShareShareableViewModel: ObservableObject {
     
     private let resource: ResourceModel
     private let shareable: ShareableDomainModel
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
    
@@ -23,18 +25,31 @@ class ReviewShareShareableViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     @Published var imagePreviewData: OptionalImageData?
+    @Published var shareImageButtonTitle: String = ""
     
-    let shareImageButtonTitle: String
-    
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, shareable: ShareableDomainModel, getShareableImageUseCase: GetShareableImageUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.shareable = shareable
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewReviewShareShareableUseCase = viewReviewShareShareableUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.shareImageButtonTitle = localizationServices.stringForSystemElseEnglish(key: "toolSettings.shareImagePreview.shareImageButton.title")
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewReviewShareShareableDomainModel, Never> in
+                return self.viewReviewShareShareableUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .sink { [weak self] (domainModel: ViewReviewShareShareableDomainModel) in
+                self?.shareImageButtonTitle = domainModel.interfaceStrings.shareActionTitle
+            }
+            .store(in: &cancellables)
         
         getShareableImageUseCase
             .getShareableImagePublisher(shareable: shareable)

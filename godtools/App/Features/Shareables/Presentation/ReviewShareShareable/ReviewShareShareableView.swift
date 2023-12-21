@@ -84,9 +84,10 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             resource: resource,
             shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
     }
 }
