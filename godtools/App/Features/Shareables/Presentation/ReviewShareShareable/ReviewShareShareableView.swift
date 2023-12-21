@@ -64,6 +64,7 @@ struct ReviewShareShareableView: View {
             .padding(EdgeInsets(top: 0, leading: 0, bottom: bottomSpacing, trailing: 0))
         }
         .background(Color.white)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
 
