@@ -20,3 +20,9 @@ extension ShareableDomainModel: Identifiable {
         return dataModelId
     }
 }
+
+extension ShareableDomainModel: Equatable {
+    static func ==(lhs: ShareableDomainModel, rhs: ShareableDomainModel) -> Bool {
+        return lhs.dataModelId == rhs.dataModelId
+    }
+}
