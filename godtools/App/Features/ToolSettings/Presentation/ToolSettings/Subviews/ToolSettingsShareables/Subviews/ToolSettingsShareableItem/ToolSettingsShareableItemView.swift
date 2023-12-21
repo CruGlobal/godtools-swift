@@ -43,7 +43,6 @@ struct ToolSettingsShareableItemView: View {
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
         }
         .frame(width: itemSize.width, height: itemSize.height)
-        .background(ColorPalette.gtLightestGrey.color)
         .onTapGesture {
             tappedClosure?()
         }
