@@ -54,7 +54,7 @@ struct ToolSettingsView: View {
                             trailingInset: contentInsets.trailing
                         )
                         
-                        if !viewModel.hidesShareables {
+                        if viewModel.shareables.count > 0 {
                             
                             ToolSettingsSeparatorView(
                                 separatorSpacing: separatorLineSpacing,

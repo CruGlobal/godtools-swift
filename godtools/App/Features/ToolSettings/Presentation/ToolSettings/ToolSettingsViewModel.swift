@@ -43,7 +43,6 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
     @Published var parallelLanguageTitle: String = ""
-    @Published var hidesShareables: Bool = false
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
@@ -122,7 +121,6 @@ class ToolSettingsViewModel: ObservableObject {
         // TODO: Will need to implement so training tips toggles. ~Levi
         
         //hidesToggleTrainingTipsButton = !pageRenderer.manifest.hasTips
-        //hidesShareables = pageRenderer.manifest.shareables.isEmpty
         //numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
 }
