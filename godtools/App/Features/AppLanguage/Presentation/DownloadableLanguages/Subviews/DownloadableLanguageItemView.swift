@@ -45,21 +45,13 @@ struct DownloadableLanguageItemView: View {
             
             Spacer()
             
-            HStack(alignment: .center, spacing: 8) {
+            Button {
                 
-//                Text("106.3 MB")
-//                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-//                    .foregroundColor(DownloadableLanguageItemView.lightGrey)
+                tappedClosure?()
                 
-                Button {
-                    
-                    tappedClosure?()
-                    
-                } label: {
-                    
-                    LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus)
-                }
-
+            } label: {
+                
+                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus)
             }
         }
         .animation(.default, value: downloadableLanguage.downloadStatus)
