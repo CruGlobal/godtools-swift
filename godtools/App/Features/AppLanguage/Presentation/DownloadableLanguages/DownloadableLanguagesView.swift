@@ -34,6 +34,7 @@ struct DownloadableLanguagesView: View {
                 }
             }
             .listStyle(.inset)
+            .animation(.default, value: viewModel.downloadableLanguagesSearchResults)
             
         }
         .navigationBarBackButtonHidden(true)

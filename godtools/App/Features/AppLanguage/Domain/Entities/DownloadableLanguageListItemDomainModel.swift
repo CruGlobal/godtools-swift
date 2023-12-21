@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadableLanguageListItemDomainModel {
+struct DownloadableLanguageListItemDomainModel: Equatable {
     
     let languageId: String
     let languageNameInOwnLanguage: String
@@ -20,5 +20,15 @@ struct DownloadableLanguageListItemDomainModel {
 extension DownloadableLanguageListItemDomainModel: Identifiable {
     var id: String {
         return languageId
+    }
+    
+    var isDownloaded: Bool {
+        
+        switch downloadStatus {
+        case .downloaded:
+            return true
+        default:
+            return false
+        }
     }
 }

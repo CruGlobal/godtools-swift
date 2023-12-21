@@ -57,6 +57,10 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     downloadStatus: downloadStatus
                 )
             }
+            .sorted { language1, language2 in
+                
+                return self.getSortOrder(language1: language1, language2: language2)
+            }
         }
         .eraseToAnyPublisher()
     }
@@ -100,6 +104,20 @@ extension GetDownloadableLanguagesListRepository {
         } else {
             
             return .downloading(progress: downloadedLanguage.downloadProgress)
+        }
+    }
+    
+    private func getSortOrder(language1: DownloadableLanguageListItemDomainModel, language2: DownloadableLanguageListItemDomainModel) -> Bool {
+        
+        if language1.isDownloaded && !language2.isDownloaded {
+            return true
+            
+        } else if language2.isDownloaded && !language1.isDownloaded {
+            return false
+            
+        } else {
+            
+            return language1.languageNameInAppLanguage.lowercased() < language2.languageNameInAppLanguage.lowercased()
         }
     }
 }
