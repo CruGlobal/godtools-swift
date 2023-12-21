@@ -60,11 +60,6 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         }
         .eraseToAnyPublisher()
     }
-    
-    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
-    }
 }
 
 // MARK: - Private
