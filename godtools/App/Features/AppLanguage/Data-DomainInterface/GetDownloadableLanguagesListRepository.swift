@@ -88,8 +88,18 @@ extension GetDownloadableLanguagesListRepository {
     
     private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {
         
-        let downloadedLanguage = downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId)
+        guard let downloadedLanguage = downloadedLanguagesRepository.getDownloadedLanguage(languageId: languageId) else {
+            
+            return .notDownloaded
+        }
         
-        return LanguageDownloadStatusDomainModel(downloadedLanguage: downloadedLanguage)
+        if downloadedLanguage.isDownloaded {
+            
+            return .downloaded
+            
+        } else {
+            
+            return .downloading(progress: downloadedLanguage.downloadProgress)
+        }
     }
 }
