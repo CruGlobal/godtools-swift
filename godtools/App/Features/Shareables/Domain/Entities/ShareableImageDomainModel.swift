@@ -11,5 +11,5 @@ import SwiftUI
 struct ShareableImageDomainModel {
     
     let dataModelId: String
-    let image: Image?
+    let imageData: Data?
 }

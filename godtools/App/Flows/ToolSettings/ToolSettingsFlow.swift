@@ -430,6 +430,7 @@ extension ToolSettingsFlow {
             flowDelegate: self,
             resource: toolData.renderer.value.resource,
             shareable: shareable,
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )

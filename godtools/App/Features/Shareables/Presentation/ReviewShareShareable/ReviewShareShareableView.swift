@@ -36,11 +36,13 @@ struct ReviewShareShareableView: View {
                 
                 Spacer()
                 
-                viewModel.imagePreview
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: maxPreviewImageSize, maxHeight: maxPreviewImageSize, alignment: .center)
-                    .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
+                OptionalImage(
+                    imageData: viewModel.imagePreviewData,
+                    imageSize: .fixed(width: maxPreviewImageSize, height: maxPreviewImageSize),
+                    contentMode: .fit,
+                    placeholderColor: ColorPalette.gtLightestGrey.color
+                )
+                .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
                 
                 Spacer()
                 
@@ -82,6 +84,7 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             resource: resource,
             shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import SwiftUI
 import Combine
 
@@ -31,12 +32,13 @@ class ToolSettingsShareableItemViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (imageDomainModel: ShareableImageDomainModel?) in
                 
-                let optionalImageData = OptionalImageData(
-                    image: imageDomainModel?.image,
-                    imageIdForAnimationChange: imageDomainModel?.dataModelId
-                )
-                
-                self?.imageData = optionalImageData
+                if let imageData = imageDomainModel?.imageData, let uiImage = UIImage(data: imageData) {
+                     
+                    self?.imageData = OptionalImageData(
+                        image: Image(uiImage: uiImage),
+                        imageIdForAnimationChange: imageDomainModel?.dataModelId
+                    )
+                }
             }
             .store(in: &cancellables)
     }

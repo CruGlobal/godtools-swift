@@ -28,25 +28,25 @@ class GetShareableImageRepository: GetShareableImageRepositoryInterface {
         }
         
         let fileCacheLocation = FileCacheLocation(relativeUrlString: shareable.imageName)
-        let image: SwiftUI.Image?
+        let imageData: Data?
         
-        switch resourcesFileCache.getImage(location: fileCacheLocation) {
+        switch resourcesFileCache.getData(location: fileCacheLocation) {
         
-        case .success(let cachedImage):
-            image = cachedImage
+        case .success(let cachedImageData):
+            imageData = cachedImageData
         
         case .failure( _):
-            image = nil
+            imageData = nil
         }
         
-        guard let image = image else {
+        guard let imageData = imageData else {
             return Just(nil)
                 .eraseToAnyPublisher()
         }
         
         let domainModel = ShareableImageDomainModel(
             dataModelId: shareable.imageName,
-            image: image
+            imageData: imageData
         )
         
         return Just(domainModel)
