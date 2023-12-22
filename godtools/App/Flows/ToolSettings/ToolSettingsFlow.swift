@@ -288,6 +288,7 @@ extension ToolSettingsFlow {
             tool: toolData.renderer.value.resource,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
+            getToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsPrimaryLanguageUseCase(),
             setToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsPrimaryLanguageUseCase(),
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),

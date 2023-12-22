@@ -18,6 +18,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let tool: ResourceModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
+    private let getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase
     private let setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase
     private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
     private let getShareablesUseCase: GetShareablesUseCase
@@ -33,6 +34,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published private var viewToolSettings: ViewToolSettingsDomainModel?
     @Published private var interfaceStrings: ToolSettingsInterfaceStringsDomainModel?
     @Published private var trainingTipsEnabled: Bool = false
+    @Published private var primaryLanguage: ToolSettingsToolLanguageDomainModel?
     
     @Published var title: String = ""
     @Published var shareLinkTitle: String = ""
@@ -47,12 +49,13 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
+        self.getToolSettingsPrimaryLanguageUseCase = getToolSettingsPrimaryLanguageUseCase
         self.setToolSettingsPrimaryLanguageUseCase = setToolSettingsPrimaryLanguageUseCase
         self.setToolSettingsParallelLanguageUseCase = setToolSettingsParallelLanguageUseCase
         self.getShareablesUseCase = getShareablesUseCase
@@ -64,31 +67,40 @@ class ToolSettingsViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
-                
-                return self.viewToolSettingsUseCase
-                    .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
-                
-                self?.viewToolSettings = domainModel
-                
-                self?.title = domainModel.interfaceStrings.title
-                self?.shareLinkTitle = domainModel.interfaceStrings.toolOptionShareLink
-                self?.screenShareTitle = domainModel.interfaceStrings.toolOptionScreenShare
-                self?.chooseLanguageTitle = domainModel.interfaceStrings.languageSelectionTitle
-                self?.chooseLanguageToggleMessage = domainModel.interfaceStrings.languageSelectionMessage
-                self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
-                
-                self?.interfaceStrings = domainModel.interfaceStrings
-                                
-                self?.primaryLanguageTitle = domainModel.primaryLanguage?.languageName ?? ""
-                self?.parallelLanguageTitle = domainModel.parallelLanguage?.languageName ?? domainModel.interfaceStrings.chooseParallelLanguageActionTitle
-            }
-            .store(in: &cancellables)
+        getToolSettingsPrimaryLanguageUseCase
+            .getLanguagePublisher(translateInLanguage: appLanguage)
+            .assign(to: &$primaryLanguage)
+        
+        Publishers.CombineLatest(
+            $appLanguage.eraseToAnyPublisher(),
+            $primaryLanguage.eraseToAnyPublisher()
+        )
+        .flatMap ({ (appLanguage: AppLanguageDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
+            
+            return self.viewToolSettingsUseCase
+                .viewPublisher(appLanguage: appLanguage, tool: tool, toolLanguage: primaryLanguage)
+                .eraseToAnyPublisher()
+        })
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
+            
+            self?.viewToolSettings = domainModel
+            
+            self?.title = domainModel.interfaceStrings.title
+            self?.shareLinkTitle = domainModel.interfaceStrings.toolOptionShareLink
+            self?.screenShareTitle = domainModel.interfaceStrings.toolOptionScreenShare
+            self?.chooseLanguageTitle = domainModel.interfaceStrings.languageSelectionTitle
+            self?.chooseLanguageToggleMessage = domainModel.interfaceStrings.languageSelectionMessage
+            self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
+            
+            self?.hidesToggleTrainingTipsButton = !domainModel.hasTips
+            
+            self?.interfaceStrings = domainModel.interfaceStrings
+                            
+            self?.primaryLanguageTitle = domainModel.primaryLanguage?.languageName ?? ""
+            self?.parallelLanguageTitle = domainModel.parallelLanguage?.languageName ?? domainModel.interfaceStrings.chooseParallelLanguageActionTitle
+        }
+        .store(in: &cancellables)
 
         Publishers.CombineLatest(
             $trainingTipsEnabled.eraseToAnyPublisher(),
@@ -173,22 +185,22 @@ extension ToolSettingsViewModel {
     }
     
     func swapLanguageTapped() {
-        
-        let primaryLanguage: ToolSettingsToolLanguageDomainModel? = viewToolSettings?.primaryLanguage
-        let parallelLanguage: ToolSettingsToolLanguageDomainModel? = viewToolSettings?.parallelLanguage
-        
-        guard let primaryLanguage = primaryLanguage, let parallelLanguage = parallelLanguage else {
+
+        let primaryLanguageId: String? = viewToolSettings?.primaryLanguage?.dataModelId
+        let parallelLanguageId: String? = viewToolSettings?.parallelLanguage?.dataModelId
+                
+        guard let primaryLanguageId = primaryLanguageId, let parallelLanguageId = parallelLanguageId else {
             return
         }
         
         ToolSettingsViewModel.setToolSettingsPrimaryLanguageCancellable = setToolSettingsPrimaryLanguageUseCase
-            .setLanguagePublisher(languageId: parallelLanguage.dataModelId)
+            .setLanguagePublisher(languageId: parallelLanguageId)
             .sink { _ in
                 
             }
         
         ToolSettingsViewModel.setToolSettingsParallelLanguageCancellable = setToolSettingsParallelLanguageUseCase
-            .setLanguagePublisher(languageId: primaryLanguage.dataModelId)
+            .setLanguagePublisher(languageId: primaryLanguageId)
             .sink { _ in
                 
             }
