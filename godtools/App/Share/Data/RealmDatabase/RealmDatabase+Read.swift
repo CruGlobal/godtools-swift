@@ -12,6 +12,21 @@ import Combine
 
 extension RealmDatabase {
     
+    func readObjectElseCreateNew<T: IdentifiableRealmObject>(realm: Realm, primaryKey: String) -> T {
+        
+        let object: T
+        
+        if let existingObject = realm.object(ofType: T.self, forPrimaryKey: primaryKey) {
+            object = existingObject
+        }
+        else {
+            object = T()
+            object.id = primaryKey
+        }
+        
+        return object
+    }
+    
     func readObject<T: Object>(realm: Realm, primaryKey: String) -> T? {
         
         let realmObject: T? = realm.object(ofType: T.self, forPrimaryKey: primaryKey)
