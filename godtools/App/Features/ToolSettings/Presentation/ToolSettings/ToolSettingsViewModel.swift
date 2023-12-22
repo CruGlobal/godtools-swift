@@ -23,9 +23,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
     private let getShareablesUseCase: GetShareablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
-    private let currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>
     
-    private var currentPageRendererCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -49,7 +47,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
@@ -60,7 +58,6 @@ class ToolSettingsViewModel: ObservableObject {
         self.setToolSettingsParallelLanguageUseCase = setToolSettingsParallelLanguageUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
-        self.currentPageRenderer = currentPageRenderer
         self.trainingTipsEnabled = trainingTipsEnabled
         
         getCurrentAppLanguageUseCase
@@ -118,23 +115,24 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        getShareablesUseCase
-            .getShareablesPublisher(resource: tool, appLanguage: appLanguage)
-            .assign(to: &$shareables)
-        
-        currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
-
-            self?.pageRendererChanged(pageRenderer: pageRenderer)
-        })
-        
-        pageRendererChanged(pageRenderer: currentPageRenderer.value)
-    }
-    
-    private func pageRendererChanged(pageRenderer: MobileContentPageRenderer) {
-        
-        // TODO: Will need to implement so training tips toggles. ~Levi
-        
-        //numberOfShareableItems = pageRenderer.manifest.shareables.count
+        $primaryLanguage
+            .flatMap({ (primaryLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<[ShareableDomainModel], Never> in
+                
+                guard let primaryLanguage = primaryLanguage else {
+                    return Just([])
+                        .eraseToAnyPublisher()
+                }
+                
+                return self.getShareablesUseCase
+                    .getShareablesPublisher(toolId: tool.id, toolLanguageId: primaryLanguage.dataModelId)
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (sharables: [ShareableDomainModel]) in
+                
+                self?.shareables = sharables
+            }
+            .store(in: &cancellables)
     }
 }
 

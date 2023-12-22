@@ -11,5 +11,5 @@ import Combine
 
 protocol GetShareablesRepositoryInterface {
     
-    func getShareablesPublisher(resource: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ShareableDomainModel], Never>
+    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never>
 }
