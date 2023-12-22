@@ -21,41 +21,46 @@ class RealmResourcesCacheTests: XCTestCase {
     private enum LanguageCode: String {
         case arabic = "ar"
         case arabicBahrain = "ar-BH"
+        case bengali = "bn"
         case english = "en"
         case spanish = "es"
     }
     
     private struct ResourceData {
         let category: Category?
+        let isHidden: Bool?
         let languageCode: LanguageCode?
         let resourceType: ResourceType
     }
 
     private let resourcesData: [ResourceData] = [
-        ResourceData(category: .article, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: .article, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .article, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .article, languageCode: .english, resourceType: .tract),
-        ResourceData(category: .article, languageCode: .english, resourceType: .tract),
-        ResourceData(category: .article, languageCode: .english, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: nil, languageCode: .arabic, resourceType: .lesson),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .metaTool),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .chooseYourOwnAdventure),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabic, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .article),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .article),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .tract),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool),
-        ResourceData(category: .gospel, languageCode: .arabicBahrain, resourceType: .metaTool)
+        ResourceData(category: .article, isHidden: nil, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: .article, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .article, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .article, isHidden: nil, languageCode: .english, resourceType: .tract),
+        ResourceData(category: .article, isHidden: nil, languageCode: .english, resourceType: .tract),
+        ResourceData(category: .article, isHidden: nil, languageCode: .english, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: nil, isHidden: nil, languageCode: .arabic, resourceType: .lesson),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .metaTool),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabic, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .article),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .article),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .tract),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .chooseYourOwnAdventure),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .metaTool),
+        ResourceData(category: .gospel, isHidden: nil, languageCode: .arabicBahrain, resourceType: .metaTool),
+        ResourceData(category: .gospel, isHidden: true, languageCode: .bengali, resourceType: .tract),
+        ResourceData(category: nil, isHidden: true, languageCode: .bengali, resourceType: .lesson),
+        ResourceData(category: nil, isHidden: true, languageCode: .bengali, resourceType: .article)
     ]
         
     private lazy var realmResourcesCache: RealmResourcesCache = {
@@ -207,6 +212,18 @@ class RealmResourcesCacheTests: XCTestCase {
         XCTAssertEqual(gospelArabicBahrainMetaTools.count, 2)
         XCTAssertEqual(allGospelArabicBahrainTools.count, 9)
     }
+    
+    func testFilteringResourcesByHidden() {
+        
+        let allTools = realmResourcesCache.getResources()
+        let hiddenTools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: true))
+        let visibleTools = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: false))
+        let toolsIgnoringIsHidden = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(resourceTypes: [.article, .chooseYourOwnAdventure, .lesson, .metaTool, .tract], isHidden: nil))
+                
+        XCTAssertEqual(hiddenTools.count, 3)
+        XCTAssertEqual(visibleTools.count, allTools.count - hiddenTools.count) // Test non hidden tools count is correct by subtracting hidden from all tools.
+        XCTAssertEqual(allTools.count, toolsIgnoringIsHidden.count) // Ignoring hidden should give us all tools.
+    }
         
     private func getNewTestDatabase() -> RealmDatabase {
                 
@@ -240,6 +257,7 @@ class RealmResourcesCacheTests: XCTestCase {
         
         resource.attrCategory = resourceData.category?.rawValue ?? ""
         resource.id = UUID().uuidString
+        resource.isHidden = resourceData.isHidden ?? false
         resource.resourceType = resourceData.resourceType.rawValue
         
         let language = RealmLanguage()
