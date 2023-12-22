@@ -10,5 +10,6 @@ import Foundation
 
 struct ViewDownloadableLanguagesDomainModel {
     
+    let downloadableLanguages: [DownloadableLanguageListItemDomainModel]
     let interfaceStrings: DownloadableLanguagesInterfaceStringsDomainModel
 }

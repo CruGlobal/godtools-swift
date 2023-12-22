@@ -14,8 +14,11 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
+    private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
+    private static var backgrounDownloadCancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
 
@@ -25,12 +28,14 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
+        self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
             .receive(on: DispatchQueue.main)
@@ -46,18 +51,12 @@ class DownloadableLanguagesViewModel: ObservableObject {
             .sink { [weak self] domainModel in
                 
                 let interfaceStrings = domainModel.interfaceStrings
+                let downloadableLanguages = domainModel.downloadableLanguages
                 
                 self?.navTitle = interfaceStrings.navTitle
+                self?.downloadableLanguagesSearchResults = downloadableLanguages
             }
             .store(in: &cancellables)
-        
-        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: .notDownloaded)]
-    }
-    
-    // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
-    private func updateDummyLanguage(with status: LanguageDownloadStatusDomainModel) {
-        
-        downloadableLanguagesSearchResults = [DownloadableLanguageListItemDomainModel(languageId: "test", downloadStatus: status)]
     }
 }
 
@@ -77,30 +76,27 @@ extension DownloadableLanguagesViewModel {
     
     func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
-        // TODO: - This is for UI demo purposes only.  Remove once language download functionality is implemented.
-                
         switch downloadableLanguage.downloadStatus {
+            
         case .notDownloaded:
             
-            updateDummyLanguage(with: .downloading(progress: 0))
-            
-            var progress: Double = 0
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                progress += 0.05
-                
-                self.updateDummyLanguage(with: .downloading(progress: progress))
-                
-                if progress >= 1 {
-                    timer.invalidate()
-                    self.updateDummyLanguage(with: .downloaded)
+            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageId)
+                .sink { _ in
+                    
                 }
-            }
-            
-        case .downloading:
-            return
+                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
             
         case .downloaded:
-            updateDummyLanguage(with: .notDownloaded)
+            
+            removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
+                .sink { _ in
+                    
+                }
+                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
+            
+        case .downloading:
+            
+            break
         }
     }
 }

@@ -19,6 +19,30 @@ class RealmDownloadedLanguagesCache {
         self.realmDatabase = realmDatabase
     }
     
+    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return realmDatabase.openRealm().objects(RealmDownloadedLanguage.self)
+            .objectWillChange
+            .eraseToAnyPublisher()
+    }
+    
+    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+        
+        let downloadedLanguages = realmDatabase.openRealm()
+            .objects(RealmDownloadedLanguage.self)
+            .map { DownloadedLanguageDataModel(realmDownloadedLanguage: $0) }
+        
+        return Just(Array(downloadedLanguages))
+            .eraseToAnyPublisher()
+    }
+    
+    func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
+        
+        guard let downloadedLanguage = realmDatabase.openRealm().object(ofType: RealmDownloadedLanguage.self, forPrimaryKey: languageId) else { return nil }
+        
+        return DownloadedLanguageDataModel(realmDownloadedLanguage: downloadedLanguage)
+    }
+    
     func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
         
         return realmDatabase.readObjectPublisher(primaryKey: languageId)
@@ -37,9 +61,28 @@ class RealmDownloadedLanguagesCache {
             .eraseToAnyPublisher()
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func storeDownloadedLanguage(languageId: String, downloadProgress: Double) {
         
-        let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId)
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let realmDownloadedLanguage = RealmDownloadedLanguage()
+        realmDownloadedLanguage.languageId = languageId
+        realmDownloadedLanguage.downloadProgress = downloadProgress
+        
+        do {
+            
+            try realm.write {
+                realm.add(realmDownloadedLanguage, update: .modified)
+            }
+        }
+        catch let error {
+            print(error)
+        }
+    }
+    
+    func storeDownloadedLanguagePublisher(languageId: String, downloadProgress: Double) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+        
+        let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadProgress: downloadProgress)
         
         return realmDatabase.writeObjectsPublisher { realm in
             
