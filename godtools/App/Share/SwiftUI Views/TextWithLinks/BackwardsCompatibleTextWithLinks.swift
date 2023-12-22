@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS, obsoleted: 15.0, message: "When supporting iOS 15 and up use TextWithLinksView.swift")
 struct BackwardsCompatibleTextWithLinks: View {
     
     private let geometry: GeometryProxy
