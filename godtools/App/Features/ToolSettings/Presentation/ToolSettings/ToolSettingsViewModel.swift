@@ -134,7 +134,6 @@ class ToolSettingsViewModel: ObservableObject {
         
         // TODO: Will need to implement so training tips toggles. ~Levi
         
-        //hidesToggleTrainingTipsButton = !pageRenderer.manifest.hasTips
         //numberOfShareableItems = pageRenderer.manifest.shareables.count
     }
 }
