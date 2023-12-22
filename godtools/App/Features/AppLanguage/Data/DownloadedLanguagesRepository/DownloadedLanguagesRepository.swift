@@ -18,14 +18,34 @@ class DownloadedLanguagesRepository {
         self.cache = cache
     }
     
+    func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return cache.getDownloadedLanguagesChangedPublisher()
+    }
+    
+    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+        
+        return cache.getDownloadedLanguagesPublisher()
+    }
+    
+    func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
+        
+        return cache.getDownloadedLanguage(languageId: languageId)
+    }
+    
     func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
         
         return cache.getDownloadedLanguagePublisher(languageId: languageId)
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func storeDownloadedLanguage(languageId: String, downloadProgress: Double) {
         
-        return cache.storeDownloadedLanguagePublisher(languageId: languageId)
+        cache.storeDownloadedLanguage(languageId: languageId, downloadProgress: downloadProgress)
+    }
+    
+    func storeDownloadedLanguagePublisher(languageId: String, downloadProgress: Double) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+        
+        return cache.storeDownloadedLanguagePublisher(languageId: languageId, downloadProgress: downloadProgress)
     }
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {

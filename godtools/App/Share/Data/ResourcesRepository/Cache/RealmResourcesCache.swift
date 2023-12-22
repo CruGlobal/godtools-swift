@@ -155,7 +155,14 @@ extension RealmResourcesCache {
             
             filterByAttributes.append(resourceTypeFilter)
         }
-              
+        
+        if let isHidden = filter.isHidden {
+            
+            let isHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))
+            
+            filterByAttributes.append(isHiddenFilter)
+        }
+        
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
         
         let realm: Realm = realmDatabase.openRealm()

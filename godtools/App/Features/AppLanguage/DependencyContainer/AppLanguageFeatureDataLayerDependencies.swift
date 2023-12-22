@@ -80,10 +80,32 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getDownloadableLanguagesListRepositoryInterface() -> GetDownloadableLanguagesListRepositoryInterface {
+        return GetDownloadableLanguagesListRepository(
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
+        return DownloadToolLanguageRepository(
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+        )
+    }
+    
     func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
         return GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
             localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
+    func getRemoveDownloadedToolLanguageRepositoryInterface() -> RemoveDownloadedToolLanguageRepositoryInterface {
+        return RemoveDownloadedToolLanguageRepository(
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
         )
     }
     

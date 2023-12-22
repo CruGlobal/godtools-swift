@@ -13,11 +13,13 @@ struct ResourcesFilter {
     let category: String?
     let languageCode: String?
     let resourceTypes: [ResourceType]?
+    let isHidden: Bool?
     
-    init(category: String? = nil, languageCode: String? = nil, resourceTypes: [ResourceType]? = nil) {
+    init(category: String? = nil, languageCode: String? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false) {
         
         self.category = category
         self.languageCode = languageCode
         self.resourceTypes = resourceTypes
+        self.isHidden = isHidden
     }
 }

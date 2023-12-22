@@ -44,6 +44,12 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
+    func getDownloadToolLanguageUseCase() -> DownloadToolLanguageUseCase {
+        return DownloadToolLanguageUseCase(
+            downloadToolLanguageRepository: dataLayer.getDownloadToolLanguageRepositoryInterface()
+        )
+    }
+    
     func getInterfaceLayoutDirectionUseCase() -> GetInterfaceLayoutDirectionUseCase {
         return GetInterfaceLayoutDirectionUseCase(
             getLayoutDirectionInterface: dataLayer.getAppInterfaceLayoutDirectionInterface()
@@ -54,6 +60,12 @@ class AppLanguageFeatureDomainLayerDependencies {
         return GetInterfaceStringInAppLanguageUseCase(
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
             getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface()
+        )
+    }
+    
+    func getRemoveDownloadedToolLanguageUseCase() -> RemoveDownloadedToolLanguageUseCase {
+        return RemoveDownloadedToolLanguageUseCase(
+            removeDownloadedToolLanguageRepository: dataLayer.getRemoveDownloadedToolLanguageRepositoryInterface()
         )
     }
     
@@ -71,6 +83,7 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getViewDownloadableLanguagesUseCase() -> ViewDownloadableLanguagesUseCase {
         return ViewDownloadableLanguagesUseCase(
+            getDownloadableLanguagesListRepository: dataLayer.getDownloadableLanguagesListRepositoryInterface(),
             getInterfaceStringsRepository: dataLayer.getDownloadableLanguagesInterfaceStringsRepositoryInterface()
         )
     }
