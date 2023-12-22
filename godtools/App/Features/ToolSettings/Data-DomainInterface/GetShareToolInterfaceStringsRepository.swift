@@ -19,9 +19,9 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
     }
     
     // TODO: Eventually shouldn't depend on ResourceModel here.  Should be a domain model. ~Levi
-    func getStringsPublisher(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(tool: ResourceModel, toolLanguage: LanguageDomainModel, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
         
-        var toolUrl: String = "https://knowgod.com/\(language.localeIdentifier)/\(resource.abbreviation)"
+        var toolUrl: String = "https://knowgod.com/\(toolLanguage.localeIdentifier)/\(tool.abbreviation)"
 
         if pageNumber > 0 {
             toolUrl = toolUrl.appending("/").appending("\(pageNumber)")

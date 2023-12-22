@@ -50,8 +50,8 @@ class ToolSettingsFlow: Flow {
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Never> in
                 return self.appDiContainer.feature.toolSettings.domainLayer.getViewShareToolUseCase()
                     .viewPublisher(
-                        resource: toolData.renderer.value.resource,
-                        language: toolData.currentPageRenderer.value.language,
+                        tool: toolData.renderer.value.resource,
+                        toolLanguage: toolData.currentPageRenderer.value.language,
                         pageNumber: toolData.pageNumber,
                         appLanguage: appLanguage
                     )
