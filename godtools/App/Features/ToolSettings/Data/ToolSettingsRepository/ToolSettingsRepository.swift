@@ -20,7 +20,16 @@ class ToolSettingsRepository {
         self.cache = cache
     }
     
-    func getToolSettingsPublisher() -> AnyPublisher<ToolSettingsDataModel?, Never> {
+    func getSharedToolSettings() -> ToolSettingsDataModel? {
+        
+        guard let realmToolSettings = cache.getToolSettings(id: ToolSettingsRepository.sharedToolSettingsId) else {
+            return nil
+        }
+        
+        return ToolSettingsDataModel(realmToolSettings: realmToolSettings)
+    }
+    
+    func getSharedToolSettingsPublisher() -> AnyPublisher<ToolSettingsDataModel?, Never> {
         
         if let cachedToolSettings = cache.getToolSettings(id: ToolSettingsRepository.sharedToolSettingsId) {
             
@@ -37,60 +46,49 @@ class ToolSettingsRepository {
         return cache.getToolSettingsChangedPublisher()
             .flatMap({ (changed: Void) -> AnyPublisher<ToolSettingsDataModel?, Never> in
                 
-                return self.getToolSettingsPublisher()
+                return self.getSharedToolSettingsPublisher()
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    func getSharedToolSettings() -> ToolSettingsDataModel? {
-        
-        guard let realmToolSettings = cache.getToolSettings(id: ToolSettingsRepository.sharedToolSettingsId) else {
-            return nil
-        }
-        
-        return ToolSettingsDataModel(realmToolSettings: realmToolSettings)
-    }
-    
     func storePrimaryLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
-        switch cache.storePrimaryLanguage(id: ToolSettingsRepository.sharedToolSettingsId, languageId: languageId) {
-        case .success( _):
-            break
-        case .failure( _):
-            break
-        }
-        
-        return Just(())
+        return cache.storePrimaryLanguagePublisher(id: ToolSettingsRepository.sharedToolSettingsId, languageId: languageId)
+            .catch { _ in
+                return Just(())
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
     func storeParallelLanguagePublisher(languageId: String) -> AnyPublisher<Void, Never> {
         
-        switch cache.storeParallelLanguage(id: ToolSettingsRepository.sharedToolSettingsId, languageId: languageId) {
-        case .success( _):
-            break
-        case .failure( _):
-            break
-        }
-        
-        return Just(())
+        return cache.storeParallelLanguagePublisher(id: ToolSettingsRepository.sharedToolSettingsId, languageId: languageId)
+            .catch { _ in
+                return Just(())
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
     func deletePrimaryLanguagePublisher() -> AnyPublisher<Void, Never> {
         
-        _ = cache.deletePrimaryLanguage(id: ToolSettingsRepository.sharedToolSettingsId)
-        
-        return Just(())
+        return cache.deletePrimaryLanguagePublisher(id: ToolSettingsRepository.sharedToolSettingsId)
+            .catch { _ in
+                return Just(())
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
     
     func deleteParallelLanguagePublisher() -> AnyPublisher<Void, Never> {
         
-        _ = cache.deleteParallelLanguage(id: ToolSettingsRepository.sharedToolSettingsId)
-        
-        return Just(())
+        return cache.deleteParallelLanguagePublisher(id: ToolSettingsRepository.sharedToolSettingsId)
+            .catch { _ in
+                return Just(())
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }

@@ -37,110 +37,47 @@ class RealmToolSettingsCache {
             .eraseToAnyPublisher()
     }
     
-    private func getToolSettingsElseNew(realm: Realm, id: String) -> RealmToolSettings {
+    func storePrimaryLanguagePublisher(id: String, languageId: String?) -> AnyPublisher<Void, Error> {
         
-        let toolSettings: RealmToolSettings
-        
-        if let existingToolSettings = realm.object(ofType: RealmToolSettings.self, forPrimaryKey: id) {
-            toolSettings = existingToolSettings
-        }
-        else {
-            toolSettings = RealmToolSettings()
-            toolSettings.id = id
-        }
-        
-        return toolSettings
-    }
-    
-    func storePrimaryLanguage(id: String, languageId: String) -> Result<RealmToolSettings, Error> {
-     
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let toolSettings: RealmToolSettings = getToolSettingsElseNew(realm: realm, id: id)
-
-        do {
-            
-            try realm.write {
-                      
+        return realmDatabase
+            .writeObjectsPublisher { realm in
+                
+                let toolSettings: RealmToolSettings = self.realmDatabase.readObjectElseCreateNew(realm: realm, primaryKey: id)
                 toolSettings.primaryLanguageId = languageId
                 
-                realm.add(toolSettings, update: .all)
+                return [toolSettings]
             }
-            
-            return .success(toolSettings)
-        }
-        catch let error {
-            return .failure(error)
-        }
+            .map { _ in
+                Void()
+            }
+            .eraseToAnyPublisher()
     }
     
-    func storeParallelLanguage(id: String, languageId: String) -> Result<RealmToolSettings, Error> {
+    func storeParallelLanguagePublisher(id: String, languageId: String?) -> AnyPublisher<Void, Error> {
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let toolSettings: RealmToolSettings = getToolSettingsElseNew(realm: realm, id: id)
+        return realmDatabase
+            .writeObjectsPublisher { realm in
                 
-        do {
-            
-            try realm.write {
-                
+                let toolSettings: RealmToolSettings = self.realmDatabase.readObjectElseCreateNew(realm: realm, primaryKey: id)
                 toolSettings.parallelLanguageId = languageId
                 
-                realm.add(toolSettings, update: .all)
+                return [toolSettings]
             }
-            
-            return .success(toolSettings)
-        }
-        catch let error {
-            return .failure(error)
-        }
+            .map { _ in
+                Void()
+            }
+            .eraseToAnyPublisher()
     }
     
-    func deletePrimaryLanguage(id: String) -> Result<Void, Error> {
+    func deletePrimaryLanguagePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        guard let toolSettings = getToolSettings(id: id) else {
-            return .success(())
-        }
-
-        do {
-            
-            try realm.write {
-                      
-                toolSettings.primaryLanguageId = nil
-                
-                realm.add(toolSettings, update: .all)
-            }
-            
-            return .success(())
-        }
-        catch let error {
-            return .failure(error)
-        }
+        return storePrimaryLanguagePublisher(id: id, languageId: nil)
+            .eraseToAnyPublisher()
     }
     
-    func deleteParallelLanguage(id: String) -> Result<Void, Error> {
+    func deleteParallelLanguagePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        guard let toolSettings = getToolSettings(id: id) else {
-            return .success(())
-        }
-
-        do {
-            
-            try realm.write {
-                      
-                toolSettings.parallelLanguageId = nil
-                
-                realm.add(toolSettings, update: .all)
-            }
-            
-            return .success(())
-        }
-        catch let error {
-            return .failure(error)
-        }
+        return storeParallelLanguagePublisher(id: id, languageId: nil)
+            .eraseToAnyPublisher()
     }
 }
