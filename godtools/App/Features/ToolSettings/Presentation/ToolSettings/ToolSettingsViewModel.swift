@@ -15,6 +15,7 @@ class ToolSettingsViewModel: ObservableObject {
     private static var setToolSettingsPrimaryLanguageCancellable: AnyCancellable?
     private static var setToolSettingsParallelLanguageCancellable: AnyCancellable?
     
+    private let tool: ResourceModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
     private let setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase
@@ -46,9 +47,10 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, currentPageRenderer: CurrentValueSubject<MobileContentPageRenderer, Never>, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
+        self.tool = tool
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.setToolSettingsPrimaryLanguageUseCase = setToolSettingsPrimaryLanguageUseCase
@@ -105,7 +107,7 @@ class ToolSettingsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         getShareablesUseCase
-            .getShareablesPublisher(resource: currentPageRenderer.value.resource, appLanguage: appLanguage)
+            .getShareablesPublisher(resource: tool, appLanguage: appLanguage)
             .assign(to: &$shareables)
         
         currentPageRendererCancellable = currentPageRenderer.sink(receiveValue: { [weak self] (pageRenderer: MobileContentPageRenderer) in
