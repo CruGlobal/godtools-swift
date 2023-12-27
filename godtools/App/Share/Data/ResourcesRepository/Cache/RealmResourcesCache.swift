@@ -156,6 +156,29 @@ extension RealmResourcesCache {
             filterByAttributes.append(resourceTypeFilter)
         }
         
+        if let variants = filter.variants {
+            
+            switch variants {
+            case .isNotVariant:
+                let isNotVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: false))
+                filterByAttributes.append(isNotVariantFilter)
+                
+            case .isVariant:
+                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
+                filterByAttributes.append(isVariantFilter)
+                
+            case .isDefaultVariant:
+                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
+                
+                let isDefaultVariantPredicateFormat: String = "$metatool.defaultVariantId != nil AND $metatool.defaultVariantId == id)"
+                let subQueryForIsDefaultVariant: String = "SUBQUERY(metatool, $metatool, \(isDefaultVariantPredicateFormat).@count > 0"
+                let isDefaultVariantFilter = NSPredicate(format: subQueryForIsDefaultVariant)
+                                
+                filterByAttributes.append(isVariantFilter)
+                filterByAttributes.append(isDefaultVariantFilter)
+            }
+        }
+        
         if let isHidden = filter.isHidden {
             
             let isHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))

@@ -9,7 +9,7 @@
 import Foundation
 
 enum ResourcesFilterVariant {
-    case excludesAllVariants
-    case includesAllVariants
-    case includesDefaultVariantOnly
+    case isNotVariant
+    case isVariant
+    case isDefaultVariant
 }
