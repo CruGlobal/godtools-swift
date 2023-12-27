@@ -33,4 +33,5 @@ protocol ResourceModelType {
     func getLatestTranslationIds() -> [String]
     func getAttachmentIds() -> [String]
     func getLanguageIds() -> [String]
+    func getVariantIds() -> [String]
 }

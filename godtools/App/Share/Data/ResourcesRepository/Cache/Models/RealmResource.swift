@@ -22,6 +22,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var defaultVariantId: String?
     @objc dynamic var id: String = ""
     @objc dynamic var isHidden: Bool = false
+    @objc dynamic var isVariant: Bool = false
     @objc dynamic var manifest: String = ""
     @objc dynamic var metatoolId: String?
     @objc dynamic var name: String = ""
@@ -31,6 +32,12 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var totalViews: Int = -1
     @objc dynamic var type: String = ""
 
+    // relationships
+    @objc dynamic var defaultVariant: RealmResource?
+    let metatool = LinkingObjects(fromType: RealmResource.self, property: "variants")
+    let variants = List<RealmResource>()
+    let variantIds = List<String>()
+    
     let latestTranslationIds = List<String>()
     let attachmentIds = List<String>()
     
@@ -42,7 +49,7 @@ class RealmResource: Object, ResourceModelType {
     }
     
     func mapFrom(model: ResourceModel) {
-        
+                
         abbreviation = model.abbreviation
         attrAboutBannerAnimation = model.attrAboutBannerAnimation
         attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
@@ -54,6 +61,7 @@ class RealmResource: Object, ResourceModelType {
         defaultVariantId = model.defaultVariantId
         id = model.id
         isHidden = model.isHidden
+        isVariant = !(model.metatoolId ?? "").isEmpty
         manifest = model.manifest
         metatoolId = model.metatoolId
         name = model.name
@@ -68,6 +76,9 @@ class RealmResource: Object, ResourceModelType {
         
         attachmentIds.removeAll()
         attachmentIds.append(objectsIn: model.getAttachmentIds())
+        
+        variantIds.removeAll()
+        variantIds.append(objectsIn: model.getVariantIds())
     }
     
     func getLatestTranslationIds() -> [String] {
@@ -80,5 +91,9 @@ class RealmResource: Object, ResourceModelType {
     
     func getLanguageIds() -> [String] {
         return languages.map({$0.id})
+    }
+    
+    func getVariantIds() -> [String] {
+        return Array(variantIds)
     }
 }
