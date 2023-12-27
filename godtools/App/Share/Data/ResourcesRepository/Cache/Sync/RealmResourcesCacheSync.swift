@@ -123,9 +123,27 @@ class RealmResourcesCacheSync {
                     existingAttachmentsMinusNewlyAddedAttachments = []
                 }
                 
+                // attach variants and default variant, added variants will backlink to metatool
                 // attach latest translations and attach languages to newly added resources
                 
                 for ( _, realmResource) in realmResourcesDictionary {
+                    
+                    for variantId in realmResource.getVariantIds() {
+                        
+                        guard let variant = realmResourcesDictionary[variantId] else {
+                            continue
+                        }
+                        
+                        if !realmResource.variants.contains(variant) {
+                            realmResource.variants.append(variant)
+                        }
+                    }
+                    
+                    if let defaultVarientId = realmResource.defaultVariantId, let defaultVariant = realmResourcesDictionary[defaultVarientId] {
+                        
+                        realmResource.defaultVariant = defaultVariant
+                    }
+                    
                     for translationId in realmResource.latestTranslationIds {
                         
                         guard let realmTranslation = realmTranslationsDictionary[translationId] else {
