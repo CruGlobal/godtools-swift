@@ -28,6 +28,15 @@ struct LanguageModel: LanguageModelType, Codable {
         case direction = "direction"
     }
     
+    init(code: BCP47LanguageIdentifier, direction: String, id: String, name: String, type: String) {
+        
+        self.code = code
+        self.direction = direction
+        self.id = id
+        self.name = name
+        self.type = type
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
