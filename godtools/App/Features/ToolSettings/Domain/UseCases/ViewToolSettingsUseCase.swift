@@ -12,20 +12,23 @@ import Combine
 class ViewToolSettingsUseCase {
     
     private let getInterfaceStringsRepository: GetToolSettingsInterfaceStringsRepositoryInterface
+    private let getToolHasTipsRepository: GetToolSettingsToolHasTipsRepositoryInterface
     private let getPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRepositoryInterface
     private let getParallelLanguageRepository: GetToolSettingsParallelLanguageRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetToolSettingsInterfaceStringsRepositoryInterface, getPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRepositoryInterface, getParallelLanguageRepository: GetToolSettingsParallelLanguageRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetToolSettingsInterfaceStringsRepositoryInterface, getToolHasTipsRepository: GetToolSettingsToolHasTipsRepositoryInterface, getPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRepositoryInterface, getParallelLanguageRepository: GetToolSettingsParallelLanguageRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
+        self.getToolHasTipsRepository = getToolHasTipsRepository
         self.getPrimaryLanguageRepository = getPrimaryLanguageRepository
         self.getParallelLanguageRepository = getParallelLanguageRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel, tool: ResourceModel, toolLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsDomainModel, Never> {
         
-        return Publishers.CombineLatest3(
+        return Publishers.CombineLatest4(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
+            getToolHasTipsRepository.getHasTipsPublisher(tool: tool, toolLanguage: toolLanguage),
             getPrimaryLanguageRepository.getLanguagePublisher(translateInLanguage: appLanguage),
             getParallelLanguageRepository.getLanguagePublisher(translateInLanguage: appLanguage)
         )
@@ -33,8 +36,9 @@ class ViewToolSettingsUseCase {
             
             let domainModel = ViewToolSettingsDomainModel(
                 interfaceStrings: $0,
-                primaryLanguage: $1,
-                parallelLanguage: $2
+                hasTips: $1,
+                primaryLanguage: $2,
+                parallelLanguage: $3
             )
             
             return domainModel

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmToolSettings: Object {
+class RealmToolSettings: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var parallelLanguageId: String?

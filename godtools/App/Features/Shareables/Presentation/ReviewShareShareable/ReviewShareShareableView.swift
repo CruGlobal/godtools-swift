@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import GodToolsToolParser
 
 struct ReviewShareShareableView: View {
     
@@ -37,11 +36,13 @@ struct ReviewShareShareableView: View {
                 
                 Spacer()
                 
-                viewModel.imagePreview
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: maxPreviewImageSize, maxHeight: maxPreviewImageSize, alignment: .center)
-                    .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
+                OptionalImage(
+                    imageData: viewModel.imagePreviewData,
+                    imageSize: .fixed(width: maxPreviewImageSize, height: maxPreviewImageSize),
+                    contentMode: .fit,
+                    placeholderColor: ColorPalette.gtLightestGrey.color
+                )
+                .padding(EdgeInsets(top: 0, leading: 50, bottom: 0, trailing: 50))
                 
                 Spacer()
                 
@@ -63,6 +64,7 @@ struct ReviewShareShareableView: View {
             .padding(EdgeInsets(top: 0, leading: 0, bottom: bottomSpacing, trailing: 0))
         }
         .background(Color.white)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
 
@@ -76,12 +78,17 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
     static func getReviewShareShareableViewModel() -> ReviewShareShareableViewModel {
                 
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        
+        let resource: ResourceModel = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
                 
         return ReviewShareShareableViewModel(
             flowDelegate: MockFlowDelegate(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            shareableImageDomainModel: ShareableImageDomainModel(image: UIImage(), imageId: nil, toolAbbreviation: nil),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            resource: resource,
+            shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
     }
 }

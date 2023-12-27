@@ -50,8 +50,8 @@ class ToolSettingsFlow: Flow {
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Never> in
                 return self.appDiContainer.feature.toolSettings.domainLayer.getViewShareToolUseCase()
                     .viewPublisher(
-                        resource: toolData.renderer.value.resource,
-                        language: toolData.currentPageRenderer.value.language,
+                        tool: toolData.renderer.value.resource,
+                        toolLanguage: toolData.currentPageRenderer.value.language,
                         pageNumber: toolData.pageNumber,
                         appLanguage: appLanguage
                     )
@@ -199,8 +199,8 @@ class ToolSettingsFlow: Flow {
         case .closeTappedFromToolSettingsToolLanguagesList:
             dismissToolLanguagesList(animated: true)
             
-        case .shareableTappedFromToolSettings(let shareableImageDomainModel):
-            presentReviewShareShareable(shareableImageDomainModel: shareableImageDomainModel, animated: true)
+        case .shareableTappedFromToolSettings(let shareable):
+            presentReviewShareShareable(shareable: shareable, animated: true)
             
         case .closeTappedFromReviewShareShareable:
             dismissReviewShareShareable()
@@ -285,12 +285,14 @@ extension ToolSettingsFlow {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
+            tool: toolData.renderer.value.resource,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
+            getToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsPrimaryLanguageUseCase(),
             setToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsPrimaryLanguageUseCase(),
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
-            getShareableImageUseCase: appDiContainer.domainLayer.getShareableImageUseCase(),
-            currentPageRenderer: toolData.currentPageRenderer,
+            getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
             trainingTipsEnabled: toolData.trainingTipsEnabled
         )
         
@@ -414,22 +416,25 @@ extension ToolSettingsFlow {
 
 extension ToolSettingsFlow {
     
-    private func presentReviewShareShareable(shareableImageDomainModel: ShareableImageDomainModel, animated: Bool) {
+    private func presentReviewShareShareable(shareable: ShareableDomainModel, animated: Bool) {
         
-        let reviewShareShareableView = getReviewShareShareableView(shareableImageDomainModel: shareableImageDomainModel)
+        let reviewShareShareableView = getReviewShareShareableView(shareable: shareable)
         
         reviewShareShareableModal = reviewShareShareableView
         
         navigationController.present(reviewShareShareableView, animated: animated, completion: nil)
     }
     
-    private func getReviewShareShareableView(shareableImageDomainModel: ShareableImageDomainModel) -> UIViewController {
+    private func getReviewShareShareableView(shareable: ShareableDomainModel) -> UIViewController {
         
         let viewModel = ReviewShareShareableViewModel(
             flowDelegate: self,
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            shareableImageDomainModel: shareableImageDomainModel,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            resource: toolData.renderer.value.resource,
+            shareable: shareable,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ReviewShareShareableView(viewModel: viewModel)

@@ -11,5 +11,5 @@ import Combine
 
 protocol GetShareToolInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(resource: ResourceModel, language: LanguageDomainModel, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(tool: ResourceModel, toolLanguage: LanguageDomainModel, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never>
 }

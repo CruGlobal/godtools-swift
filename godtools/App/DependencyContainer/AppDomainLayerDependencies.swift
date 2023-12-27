@@ -177,10 +177,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getShareableImageUseCase() -> GetShareableImageUseCase {
-        return GetShareableImageUseCase()
-    }
-    
     func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
