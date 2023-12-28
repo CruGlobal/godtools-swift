@@ -121,13 +121,12 @@ class RealmResourcesCacheTests: XCTestCase {
         XCTAssertEqual(variants.count, 15)
     }
     
-    /*
     func testFilteringByDefaultVariant() {
         
         let defaultVariants = realmResourcesCache.getResourcesByFilter(filter: ResourcesFilter(variants: .isDefaultVariant))
         
         XCTAssertEqual(defaultVariants.count, 3)
-    }*/
+    }
     
     func testFilteringOutVariants() {
         
@@ -228,6 +227,7 @@ class RealmResourcesCacheTests: XCTestCase {
             for variant in variants {
                 if !realmResource.variants.contains(variant) {
                     realmResource.variants.append(variant)
+                    variant.metatool = realmResource
                 }
             }
         }

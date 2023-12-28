@@ -34,7 +34,7 @@ class RealmResource: Object, ResourceModelType {
 
     // relationships
     @objc dynamic var defaultVariant: RealmResource?
-    let metatool = LinkingObjects(fromType: RealmResource.self, property: "variants")
+    @objc dynamic var metatool: RealmResource?
     let variants = List<RealmResource>()
     let variantIds = List<String>()
     

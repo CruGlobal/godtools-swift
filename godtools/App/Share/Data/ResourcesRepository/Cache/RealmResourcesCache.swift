@@ -169,11 +169,8 @@ extension RealmResourcesCache {
                 
             case .isDefaultVariant:
                 let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
-                
-                let isDefaultVariantPredicateFormat: String = "$metatool.defaultVariantId != nil AND $metatool.defaultVariantId == id)"
-                let subQueryForIsDefaultVariant: String = "SUBQUERY(metatool, $metatool, \(isDefaultVariantPredicateFormat).@count > 0"
-                let isDefaultVariantFilter = NSPredicate(format: subQueryForIsDefaultVariant)
-                                
+                let isDefaultVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.id)) == metatool.defaultVariantId")
+                                                
                 filterByAttributes.append(isVariantFilter)
                 filterByAttributes.append(isDefaultVariantFilter)
             }

@@ -136,6 +136,7 @@ class RealmResourcesCacheSync {
                         
                         if !realmResource.variants.contains(variant) {
                             realmResource.variants.append(variant)
+                            variant.metatool = realmResource
                         }
                     }
                     
