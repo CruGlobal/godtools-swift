@@ -173,17 +173,10 @@ class RealmResourcesCacheTests: XCTestCase {
     
     private func getNewLanguage(id: String, code: BCP47LanguageIdentifier) -> RealmLanguage {
         
-        let languageModel = LanguageModel(
-            code: code,
-            direction: "ltr",
-            id: id,
-            name: "",
-            type: ""
-        )
-        
         let realmLanguage = RealmLanguage()
-        realmLanguage.mapFrom(model: languageModel)
-        
+        realmLanguage.code = code
+        realmLanguage.id = id
+                
         return realmLanguage
     }
     
@@ -220,20 +213,17 @@ class RealmResourcesCacheTests: XCTestCase {
         
         for language in languages {
             
-            realmResource.languages.append(language)
+            realmResource.addLanguage(language: language)
         }
         
         if let variants = variants {
             for variant in variants {
-                if !realmResource.variants.contains(variant) {
-                    realmResource.variants.append(variant)
-                    variant.metatool = realmResource
-                }
+                realmResource.addVariant(variant: variant)
             }
         }
         
-        realmResource.defaultVariant = defaultVariant
-        
+        realmResource.setDefaultVariant(variant: defaultVariant)
+                
         return realmResource
     }
     
