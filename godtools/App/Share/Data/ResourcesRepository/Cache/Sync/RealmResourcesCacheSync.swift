@@ -134,29 +134,24 @@ class RealmResourcesCacheSync {
                             continue
                         }
                         
-                        if !realmResource.variants.contains(variant) {
-                            realmResource.variants.append(variant)
-                            variant.metatool = realmResource
-                        }
+                        realmResource.addVariant(variant: variant)
                     }
                     
                     if let defaultVarientId = realmResource.defaultVariantId, let defaultVariant = realmResourcesDictionary[defaultVarientId] {
                         
-                        realmResource.defaultVariant = defaultVariant
+                        realmResource.setDefaultVariant(variant: defaultVariant)
                     }
                     
-                    for translationId in realmResource.latestTranslationIds {
+                    for translationId in realmResource.getLatestTranslationIds() {
                         
                         guard let realmTranslation = realmTranslationsDictionary[translationId] else {
                             continue
                         }
                         
-                        if !realmResource.latestTranslations.contains(realmTranslation) {
-                            realmResource.latestTranslations.append(realmTranslation)
-                        }
+                        realmResource.addLatestTranslation(translation: realmTranslation)
                         
-                        if let realmLanguage = realmTranslation.language, !realmResource.languages.contains(realmLanguage) {
-                            realmResource.languages.append(realmLanguage)
+                        if let realmLanguage = realmTranslation.language {
+                            realmResource.addLanguage(language: realmLanguage)
                         }
                     }
                 }

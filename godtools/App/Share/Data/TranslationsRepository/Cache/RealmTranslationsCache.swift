@@ -43,7 +43,7 @@ class RealmTranslationsCache {
             return Array()
         }
         
-        return realmResource.latestTranslations
+        return realmResource.getLatestTranslations()
             .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
             .map({ TranslationModel(model: $0 )})
@@ -57,7 +57,7 @@ class RealmTranslationsCache {
             return Array()
         }
         
-        return realmResource.latestTranslations
+        return realmResource.getLatestTranslations()
             .filter(NSPredicate(format: "\(#keyPath(RealmTranslation.language.code)) = [c] %@", languageCode.lowercased()))
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
             .map({ TranslationModel(model: $0 )})

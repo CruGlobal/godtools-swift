@@ -33,16 +33,16 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var type: String = ""
 
     // relationships
-    @objc dynamic var defaultVariant: RealmResource?
-    @objc dynamic var metatool: RealmResource?
-    let variants = List<RealmResource>()
-    let variantIds = List<String>()
     
-    let latestTranslationIds = List<String>()
-    let attachmentIds = List<String>()
+    @objc dynamic private var defaultVariant: RealmResource?
+    @objc dynamic private var metatool: RealmResource?
     
-    let latestTranslations = List<RealmTranslation>()
-    let languages = List<RealmLanguage>()
+    private let attachmentIds = List<String>()
+    private let languages = List<RealmLanguage>()
+    private let latestTranslationIds = List<String>()
+    private let latestTranslations = List<RealmTranslation>()
+    private let variantIds = List<String>()
+    private let variants = List<RealmResource>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -80,20 +80,87 @@ class RealmResource: Object, ResourceModelType {
         variantIds.removeAll()
         variantIds.append(objectsIn: model.getVariantIds())
     }
-    
-    func getLatestTranslationIds() -> [String] {
-        return Array(latestTranslationIds)
-    }
+}
+
+// MARK: - Attachments
+
+extension RealmResource {
     
     func getAttachmentIds() -> [String] {
         return Array(attachmentIds)
+    }
+}
+
+// MARK: - Languages
+
+extension RealmResource {
+    
+    func addLanguage(language: RealmLanguage) {
+        
+        if !languages.contains(language) {
+            languages.append(language)
+        }
     }
     
     func getLanguageIds() -> [String] {
         return languages.map({$0.id})
     }
     
+    func getLanguages() -> List<RealmLanguage> {
+        return languages
+    }
+}
+
+// MARK: - Latest Translations
+
+extension RealmResource {
+    
+    func addLatestTranslation(translation: RealmTranslation) {
+        
+        if !latestTranslations.contains(translation) {
+            latestTranslations.append(translation)
+        }
+    }
+    
+    func getLatestTranslationIds() -> [String] {
+        return Array(latestTranslationIds)
+    }
+    
+    func getLatestTranslations() -> List<RealmTranslation> {
+        return latestTranslations
+    }
+}
+
+// MARK: - Variants
+
+extension RealmResource {
+    
+    func getDefaultVariant() -> RealmResource? {
+        return defaultVariant
+    }
+    
+    func setDefaultVariant(variant: RealmResource) {
+        
+        variant.isVariant = true
+        
+        defaultVariant = variant
+    }
+    
+    func addVariant(variant: RealmResource) {
+        
+        variant.metatool = self
+        variant.isVariant = true
+        
+        if !variants.contains(variant) {
+            variants.append(variant)
+        }
+    }
+    
     func getVariantIds() -> [String] {
         return Array(variantIds)
+    }
+    
+    func getVariants() -> List<RealmResource> {
+        return variants
     }
 }
