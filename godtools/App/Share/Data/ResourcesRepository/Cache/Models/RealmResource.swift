@@ -139,9 +139,9 @@ extension RealmResource {
         return defaultVariant
     }
     
-    func setDefaultVariant(variant: RealmResource) {
+    func setDefaultVariant(variant: RealmResource?) {
         
-        variant.isVariant = true
+        variant?.isVariant = true
         
         defaultVariant = variant
     }
