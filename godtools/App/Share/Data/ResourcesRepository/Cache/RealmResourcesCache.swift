@@ -129,6 +129,25 @@ extension RealmResourcesCache {
     
     func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
         
+        return getResourcesByFilter(realm: realmDatabase.openRealm(), filter: filter)
+    }
+    
+    func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
+        
+        return Future() { promise in
+            
+            self.realmDatabase.background { realm in
+                
+                let resources = self.getResourcesByFilter(realm: realm, filter: filter)
+                
+                return promise(.success(resources))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func getResourcesByFilter(realm: Realm, filter: ResourcesFilter) -> [ResourceModel] {
+        
         var filterByAttributes: [NSPredicate] = Array()
         
         if let category = filter.category, !category.isEmpty {
@@ -184,9 +203,7 @@ extension RealmResourcesCache {
         }
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
+                
         let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
         
         return filteredResources
