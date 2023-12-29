@@ -33,6 +33,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let latestTranslationIds: [String]
     let attachmentIds: [String]
     let languageIds: [String]
+    let variantIds: [String]
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -64,6 +65,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case defaultVariant = "default-variant"
         case latestTranslations = "latest-translations"
         case metatool = "metatool"
+        case variants = "variants"
     }
     
     enum DataCodingKeys: String, CodingKey {
@@ -95,6 +97,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         latestTranslationIds = model.getLatestTranslationIds()
         attachmentIds = model.getAttachmentIds()
         languageIds = model.getLanguageIds()
+        variantIds = model.getVariantIds()
     }
     
     init(from decoder: Decoder) throws {
@@ -144,41 +147,36 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         resourceType = try attributesContainer?.decodeIfPresent(String.self, forKey: .resourceType) ?? ""
         totalViews = try attributesContainer?.decodeIfPresent(Int.self, forKey: .totalViews) ?? -1
                 
-        // relationships - latest-translations
+        // relationships
         let latestTranslations: [TranslationModel] = try latestTranslationsContainer?.decodeIfPresent([TranslationModel].self, forKey: .data) ?? []
         latestTranslationIds = latestTranslations.map({$0.id})
         
-        // relationships - attachments
         let attachments: [AttachmentModel] = try attachmentsContainer?.decodeIfPresent([AttachmentModel].self, forKey: .data) ?? []
         attachmentIds = attachments.map({$0.id})
         
-        // relationships - metatool
-        
-        let metatoolData: ResourceModelMetatoolData?
-
         do {
-            let metatoolContainer: KeyedDecodingContainer<DataCodingKeys>? = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .metatool)
-            metatoolData = try metatoolContainer?.decodeIfPresent(ResourceModelMetatoolData.self, forKey: .data)
+            let metatool = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .metatool)
+            metatoolId = metatool?.data.id
         }
         catch {
-            metatoolData = nil
+            metatoolId = nil
         }
-        
-        metatoolId = metatoolData?.id
-        
-        // relationships - default variant
-        
-        let defaultVariantData: ResourceModelDefaultVariantData?
         
         do {
-            let defaultVariantContainer = try relationshipsContainer?.nestedContainer(keyedBy: DataCodingKeys.self, forKey: .defaultVariant)
-            defaultVariantData = try defaultVariantContainer?.decodeIfPresent(ResourceModelDefaultVariantData.self, forKey: .data)
+            let defaultVariant = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .defaultVariant)
+            defaultVariantId = defaultVariant?.data.id
         }
         catch {
-            defaultVariantData = nil
+            defaultVariantId = nil
         }
         
-        defaultVariantId = defaultVariantData?.id
+        do {
+            let variants = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataArray<JsonApiResponseBaseData>.self, forKey: .variants)?.dataArray ?? []
+            variantIds = variants.map({$0.id})
+        }
+        catch {
+            variantIds = []
+        }
         
         // set when initialized from a model.
         languageIds = Array()
@@ -215,5 +213,9 @@ extension ResourceModel {
     
     func getLanguageIds() -> [String] {
         return languageIds
+    }
+    
+    func getVariantIds() -> [String] {
+        return variantIds
     }
 }

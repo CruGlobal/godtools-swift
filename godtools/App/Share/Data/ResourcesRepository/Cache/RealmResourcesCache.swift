@@ -129,6 +129,25 @@ extension RealmResourcesCache {
     
     func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
         
+        return getResourcesByFilter(realm: realmDatabase.openRealm(), filter: filter)
+    }
+    
+    func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
+        
+        return Future() { promise in
+            
+            self.realmDatabase.background { realm in
+                
+                let resources = self.getResourcesByFilter(realm: realm, filter: filter)
+                
+                return promise(.success(resources))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func getResourcesByFilter(realm: Realm, filter: ResourcesFilter) -> [ResourceModel] {
+        
         var filterByAttributes: [NSPredicate] = Array()
         
         if let category = filter.category, !category.isEmpty {
@@ -156,6 +175,26 @@ extension RealmResourcesCache {
             filterByAttributes.append(resourceTypeFilter)
         }
         
+        if let variants = filter.variants {
+            
+            switch variants {
+            case .isNotVariant:
+                let isNotVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: false))
+                filterByAttributes.append(isNotVariantFilter)
+                
+            case .isVariant:
+                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
+                filterByAttributes.append(isVariantFilter)
+                
+            case .isDefaultVariant:
+                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
+                let isDefaultVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.id)) == metatool.defaultVariantId")
+                                                
+                filterByAttributes.append(isVariantFilter)
+                filterByAttributes.append(isDefaultVariantFilter)
+            }
+        }
+        
         if let isHidden = filter.isHidden {
             
             let isHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))
@@ -164,9 +203,7 @@ extension RealmResourcesCache {
         }
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
+                
         let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
         
         return filteredResources
