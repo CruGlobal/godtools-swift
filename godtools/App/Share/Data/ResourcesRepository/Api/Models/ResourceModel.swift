@@ -72,33 +72,6 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case data = "data"
     }
     
-    init(abbreviation: String, attrAboutBannerAnimation: String, attrAboutOverviewVideoYoutube: String, attrBanner: String, attrBannerAbout: String, attrCategory: String, attrDefaultOrder: Int, attrSpotlight: Bool, defaultVariantId: String?, id: String, isHidden: Bool, manifest: String, metatoolId: String?, name: String, oneskyProjectId: Int, resourceDescription: String, resourceType: String, totalViews: Int, type: String, latestTranslationIds: [String], attachmentIds: [String], languageIds: [String], variantIds: [String]) {
-        
-        self.abbreviation = abbreviation
-        self.attrAboutBannerAnimation = attrAboutBannerAnimation
-        self.attrAboutOverviewVideoYoutube = attrAboutOverviewVideoYoutube
-        self.attrBanner = attrBanner
-        self.attrBannerAbout = attrBannerAbout
-        self.attrCategory = attrCategory
-        self.attrDefaultOrder = attrDefaultOrder
-        self.attrSpotlight = attrSpotlight
-        self.defaultVariantId = defaultVariantId
-        self.id = id
-        self.isHidden = isHidden
-        self.manifest = manifest
-        self.metatoolId = metatoolId
-        self.name = name
-        self.oneskyProjectId = oneskyProjectId
-        self.resourceDescription = resourceDescription
-        self.resourceType = resourceType
-        self.totalViews = totalViews
-        self.type = type
-        self.latestTranslationIds = latestTranslationIds
-        self.attachmentIds = attachmentIds
-        self.languageIds = languageIds
-        self.variantIds = variantIds
-    }
-    
     init(model: ResourceModelType) {
         
         abbreviation = model.abbreviation

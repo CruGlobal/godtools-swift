@@ -61,7 +61,6 @@ class RealmResource: Object, ResourceModelType {
         defaultVariantId = model.defaultVariantId
         id = model.id
         isHidden = model.isHidden
-        isVariant = !(model.metatoolId ?? "").isEmpty
         manifest = model.manifest
         metatoolId = model.metatoolId
         name = model.name

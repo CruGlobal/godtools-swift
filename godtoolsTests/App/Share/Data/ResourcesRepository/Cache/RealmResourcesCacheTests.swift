@@ -174,6 +174,7 @@ class RealmResourcesCacheTests: XCTestCase {
     private func getNewLanguage(id: String, code: BCP47LanguageIdentifier) -> RealmLanguage {
         
         let realmLanguage = RealmLanguage()
+        
         realmLanguage.code = code
         realmLanguage.id = id
                 
@@ -182,37 +183,16 @@ class RealmResourcesCacheTests: XCTestCase {
     
     private func getNewRealmResource(id: String = UUID().uuidString, category: String?, isHidden: Bool = false, resourceType: ResourceType, metatoolId: String? = nil, defaultVariant: RealmResource? = nil, variants: [RealmResource]? = nil, languages: [RealmLanguage]) -> RealmResource {
         
-        let resourceModel = ResourceModel(
-            abbreviation: "",
-            attrAboutBannerAnimation: "",
-            attrAboutOverviewVideoYoutube: "",
-            attrBanner: "",
-            attrBannerAbout: "",
-            attrCategory: category ?? "",
-            attrDefaultOrder: 0,
-            attrSpotlight: false,
-            defaultVariantId: defaultVariant?.id,
-            id: UUID().uuidString,
-            isHidden: isHidden,
-            manifest: "",
-            metatoolId: metatoolId,
-            name: "",
-            oneskyProjectId: 0,
-            resourceDescription: "",
-            resourceType: resourceType.rawValue,
-            totalViews: 0,
-            type: "",
-            latestTranslationIds: [],
-            attachmentIds: [],
-            languageIds: [],
-            variantIds: []
-        )
-        
         let realmResource = RealmResource()
-        realmResource.mapFrom(model: resourceModel)
+
+        realmResource.attrCategory = category ?? ""
+        realmResource.defaultVariantId = defaultVariant?.id
+        realmResource.id = id
+        realmResource.isHidden = isHidden
+        realmResource.resourceType = resourceType.rawValue
+        realmResource.metatoolId = metatoolId
         
         for language in languages {
-            
             realmResource.addLanguage(language: language)
         }
         
