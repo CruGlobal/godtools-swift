@@ -35,6 +35,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var isObservingDeepLinking: Bool = false
     private var cancellables: Set<AnyCancellable> = Set()
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+        
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: AppNavigationController
@@ -69,6 +71,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addDeepLinkingObservers()
         
         inAppMessaging.setDelegate(delegate: self)
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
     }
     
     deinit {
@@ -160,13 +167,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: toolFilterLanguage?.language?.localeIdentifier), animated: true)
                                     
         case .openToolTappedFromToolDetails(let tool):
-            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .lessonTappedFromLessonsList(let lessonListItem):
-            navigateToTool(resourceId: lessonListItem.dataModelId, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
             
         case .featuredLessonTappedFromFavorites(let featuredLesson):
-            navigateToTool(resourceId: featuredLesson.dataModelId, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: featuredLesson.dataModelId, trainingTipsEnabled: false)
             
         case .viewAllFavoriteToolsTappedFromFavorites:
             navigationController.pushViewController(getAllFavoriteTools(), animated: true)
@@ -175,10 +182,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromFavorites(let tool):
-            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: tool.resource.id, trainingTipsEnabled: false)
             
         case .toolTappedFromFavorites(let tool):
-            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: tool.resource.id, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
             navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: nil), animated: true)
@@ -193,10 +200,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(getToolDetails(tool: tool, toolLanguage: nil), animated: true)
         
         case .openToolTappedFromAllYourFavoriteTools(let tool):
-            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: tool.resource.id, trainingTipsEnabled: false)
             
         case .toolTappedFromAllYourFavoritedTools(let tool):
-            navigateToTool(resourceId: tool.resource.id, trainingTipsEnabled: false)
+            navigateToTool(toolDataModelId: tool.resource.id, trainingTipsEnabled: false)
         
         case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
             navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject), animated: true)
@@ -357,12 +364,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .continueTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
+                self.navigateToTool(toolDataModelId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLearnToShareTool(let tool):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
+                self.navigateToTool(toolDataModelId: tool.dataModelId, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLessonEvaluation:
@@ -664,6 +671,40 @@ extension AppFlow {
     }
 }
 
+// MARK: - Tool
+
+extension AppFlow {
+    
+    private func navigateToTool(toolDataModelId: String, trainingTipsEnabled: Bool) {
+        
+        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        
+        var languages: [LanguageModel] = Array()
+        
+        if let userToolFilterLanguageId = appDiContainer.feature.toolsFilter.dataLayer.getUserFiltersRepository().getUserLanguageFilter(),
+           let userToolFilterLanguage = languagesRepository.getLanguage(id: userToolFilterLanguageId) {
+            
+            languages.append(userToolFilterLanguage)
+        }
+        
+        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+            languages.append(appLanguageModel)
+        }
+        
+        if languages.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+            languages.append(englishLanguage)
+        }
+        
+        navigateToTool(
+            resourceId: toolDataModelId,
+            languageIds: languages.map({$0.id}),
+            liveShareStream: nil,
+            trainingTipsEnabled: trainingTipsEnabled,
+            initialPage: nil
+        )
+    }
+}
+
 // MARK: - Language Settings
 
 extension AppFlow {
@@ -924,7 +965,7 @@ extension AppFlow {
         }
         else {
             
-            navigateToTool(resourceId: tool.dataModelId, trainingTipsEnabled: true)
+            navigateToTool(toolDataModelId: tool.dataModelId, trainingTipsEnabled: true)
         }
     }
     
