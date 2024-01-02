@@ -19,7 +19,7 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getUserFiltersRepository() -> UserFiltersRepository {
+    func getUserFiltersRepository() -> UserFiltersRepository {
         return UserFiltersRepository(
             cache: UserFiltersUserDefaultsCache(
                 sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache()

@@ -25,7 +25,7 @@ struct DashboardTabBarView: View {
                 
                 if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                     
-                    ForEach((0 ..< viewModel.numberOfTabs).reversed(), id: \.self) { (index: Int) in
+                    ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { (index: Int) in
                                             
                         DashboardTabBarItemView(
                             viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
@@ -36,7 +36,7 @@ struct DashboardTabBarView: View {
                 }
                 else {
                     
-                    ForEach(0 ..< viewModel.numberOfTabs, id: \.self) { (index: Int) in
+                    ForEach(0 ..< viewModel.tabs.count, id: \.self) { (index: Int) in
                         
                         DashboardTabBarItemView(
                             viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
