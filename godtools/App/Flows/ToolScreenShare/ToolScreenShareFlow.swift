@@ -108,9 +108,8 @@ class ToolScreenShareFlow: Flow {
             
             dismissCreatingToolScreenShareSession()
             
-            // TODO: Implement back in. ~Levi
-            //flowDelegate?.navigate(step: .toolSettingsFlowCompleted)
-            
+            flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .didLoadToolScreenShareRemoteSession))
+                        
             switch result {
                 
             case .success(let channel):
