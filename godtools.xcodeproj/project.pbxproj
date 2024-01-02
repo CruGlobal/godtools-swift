@@ -993,6 +993,7 @@
 		45B3F4682AC3B1F500D61BFD /* GetAppInterfaceLayoutDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F4672AC3B1F500D61BFD /* GetAppInterfaceLayoutDirection.swift */; };
 		45B3F46C2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F46B2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift */; };
 		45B3F46E2AC3B61A00D61BFD /* AppInterfaceLayoutDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3F46D2AC3B61A00D61BFD /* AppInterfaceLayoutDirectionDomainModel.swift */; };
+		45B4DBE52B449F7800C485C7 /* DashboardTabTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B4DBE42B449F7800C485C7 /* DashboardTabTypeDomainModel.swift */; };
 		45B5389B2A8AB6D90033B34E /* OptionalImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5389A2A8AB6D90033B34E /* OptionalImageSize.swift */; };
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
 		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
@@ -1160,7 +1161,6 @@
 		45DB18902AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB188F2AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift */; };
 		45DB18922AD7924700E9578F /* TestsGetAppLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB18912AD7924700E9578F /* TestsGetAppLanguagesRepository.swift */; };
 		45DBE5FB2ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5D52ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */; };
-		45DBE5FC2ACD9EAA008A93BF /* DashboardTabTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5D62ACD9EAA008A93BF /* DashboardTabTypeDomainModel.swift */; };
 		45DBE5FD2ACD9EAA008A93BF /* DisableOptInOnboardingBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5D82ACD9EAA008A93BF /* DisableOptInOnboardingBannerUseCase.swift */; };
 		45DBE5FE2ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5DA2ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase.swift */; };
 		45DBE6022ACD9EAB008A93BF /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5E02ACD9EAA008A93BF /* ToggleToolFavoritedUseCase.swift */; };
@@ -2469,6 +2469,7 @@
 		45B3F4672AC3B1F500D61BFD /* GetAppInterfaceLayoutDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppInterfaceLayoutDirection.swift; sourceTree = "<group>"; };
 		45B3F46B2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInterfaceLayoutDirectionUseCase.swift; sourceTree = "<group>"; };
 		45B3F46D2AC3B61A00D61BFD /* AppInterfaceLayoutDirectionDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceLayoutDirectionDomainModel.swift; sourceTree = "<group>"; };
+		45B4DBE42B449F7800C485C7 /* DashboardTabTypeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabTypeDomainModel.swift; sourceTree = "<group>"; };
 		45B5389A2A8AB6D90033B34E /* OptionalImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImageSize.swift; sourceTree = "<group>"; };
 		45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
 		45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Write.swift"; sourceTree = "<group>"; };
@@ -2618,7 +2619,6 @@
 		45DB188F2AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
 		45DB18912AD7924700E9578F /* TestsGetAppLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsGetAppLanguagesRepository.swift; sourceTree = "<group>"; };
 		45DBE5D52ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetShouldShowLanguageSettingsBarButtonUseCase.swift; sourceTree = "<group>"; };
-		45DBE5D62ACD9EAA008A93BF /* DashboardTabTypeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabTypeDomainModel.swift; sourceTree = "<group>"; };
 		45DBE5D82ACD9EAA008A93BF /* DisableOptInOnboardingBannerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisableOptInOnboardingBannerUseCase.swift; sourceTree = "<group>"; };
 		45DBE5DA2ACD9EAA008A93BF /* StoreInitialFavoritedToolsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreInitialFavoritedToolsUseCase.swift; sourceTree = "<group>"; };
 		45DBE5E02ACD9EAA008A93BF /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
@@ -8977,7 +8977,6 @@
 			isa = PBXGroup;
 			children = (
 				45DBE5D52ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase.swift */,
-				45DBE5D62ACD9EAA008A93BF /* DashboardTabTypeDomainModel.swift */,
 			);
 			path = GetShouldShowLanguageSettingsBarButtonUseCase;
 			sourceTree = "<group>";
@@ -9272,6 +9271,7 @@
 			isa = PBXGroup;
 			children = (
 				45965D4A2B4486E1001C9AA5 /* DashboardInterfaceStringsDomainModel.swift */,
+				45B4DBE42B449F7800C485C7 /* DashboardTabTypeDomainModel.swift */,
 				45965D482B4486CE001C9AA5 /* ViewDashboardDomainModel.swift */,
 			);
 			path = Entities;
@@ -11408,7 +11408,6 @@
 				45D63EA5288F77D4009B4610 /* ResourceModel.swift in Sources */,
 				45D63E9E288F77D4009B4610 /* RealmResource.swift in Sources */,
 				45EC5CF228CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift in Sources */,
-				45DBE5FC2ACD9EAA008A93BF /* DashboardTabTypeDomainModel.swift in Sources */,
 				4563D99F2A94FC4700E0701C /* InfoPlist.swift in Sources */,
 				455EE8462AEC59F500C3205C /* DownloadToolProgressFeatureDomainLayerDependencies.swift in Sources */,
 				454ADAE42ABDDC5200037C27 /* ChooseAppLanguageFlow.swift in Sources */,
@@ -11811,6 +11810,7 @@
 				454B47E72AE024E000C7B5E7 /* OnboardingDiContainer.swift in Sources */,
 				45B5389B2A8AB6D90033B34E /* OptionalImageSize.swift in Sources */,
 				45DBE6302ACDAEC4008A93BF /* LessonListItemDomainModelInterface.swift in Sources */,
+				45B4DBE52B449F7800C485C7 /* DashboardTabTypeDomainModel.swift in Sources */,
 				45E347882A49C0120014CCD1 /* LanguageSupportedText.swift in Sources */,
 				4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */,
 				4555840D269F2DA500C3FF14 /* MobileContentTextViewModel.swift in Sources */,
