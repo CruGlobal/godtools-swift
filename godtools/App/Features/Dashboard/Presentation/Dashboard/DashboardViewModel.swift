@@ -14,7 +14,6 @@ class DashboardViewModel: ObservableObject {
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDashboardUseCase: ViewDashboardUseCase
-    private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
         
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -23,27 +22,23 @@ class DashboardViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published var hidesLanguagesSettingsButton: Bool = true
+    @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
     @Published var lessonsButtonTitle: String = ""
     @Published var favoritesButtonTitle: String = ""
     @Published var toolsButtonTitle: String = ""
-    @Published var numberOfTabs: Int = 0
-    @Published var currentTab: Int {
-        didSet {
-            tabChanged()
-        }
-    }
+    @Published var currentTab: Int = 0
     
     init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase) {
         
-        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDashboardUseCase = viewDashboardUseCase
+        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         
-        numberOfTabs = tabs.count
-                
-        tabChanged()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDashboardDomainModel, Never> in
@@ -57,16 +52,28 @@ class DashboardViewModel: ObservableObject {
                 self?.lessonsButtonTitle = domainModel.interfaceStrings.lessonsActionTitle
                 self?.favoritesButtonTitle = domainModel.interfaceStrings.favoritesActionTitle
                 self?.toolsButtonTitle = domainModel.interfaceStrings.toolsActionTitle
+                
+                self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+            }
+            .store(in: &cancellables)
+        
+        $currentTab.eraseToAnyPublisher()
+            .sink { [weak self] (currentTab: Int) in
+                self?.hidesLanguagesSettingsButton = self?.tabs[currentTab] == .lessons
             }
             .store(in: &cancellables)
     }
     
-    private func tabChanged() {
-                        
-        hidesLanguagesSettingsButton = tabs[currentTab] == .lessons
+    private func reloadTabs() {
+        
+        let currentTabs: [DashboardTabTypeDomainModel] = tabs
+        tabs = currentTabs
     }
     
-    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel {
+    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel? {
+        guard tabIndex >= 0 && tabIndex < tabs.count else {
+            return nil
+        }
         return tabs[tabIndex]
     }
 }
