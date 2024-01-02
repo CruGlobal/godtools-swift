@@ -77,7 +77,8 @@ struct DashboardView_Previews: PreviewProvider {
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase()
         )
         
         return viewModel

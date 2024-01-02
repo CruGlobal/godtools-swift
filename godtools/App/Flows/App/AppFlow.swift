@@ -468,7 +468,8 @@ extension AppFlow {
                 appDiContainer: appDiContainer,
                 flowDelegate: self
             ),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase()
         )
                 
         let view = DashboardView(viewModel: viewModel)
