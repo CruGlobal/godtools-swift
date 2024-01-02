@@ -29,6 +29,7 @@ class AppDiContainer {
         
         let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
         let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
@@ -46,6 +47,7 @@ class AppDiContainer {
         feature = AppFeatureDiContainer(
             accountCreation: accountCreationDiContainer,
             appLanguage: appLanguageDiContainer,
+            dashboard: dashboardDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
             featuredLessons: featuredLessonsDiContainer,
             learnToShareTool: learnToShareToolDiContainer,
