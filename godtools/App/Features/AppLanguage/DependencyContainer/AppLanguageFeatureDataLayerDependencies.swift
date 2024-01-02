@@ -27,10 +27,18 @@ class AppLanguageFeatureDataLayerDependencies {
         return AppLanguagesRepository(cache: getAppLanguagesCache())
     }
     
+    private func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
+        return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
+    }
+    
     func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
         return RealmUserAppLanguageCache(
             realmDatabase: coreDataLayer.getSharedRealmDatabase()
         )
+    }
+    
+    private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
+        return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
     }
     
     private func getUserAppLanguageRepository() -> UserAppLanguageRepository {
@@ -50,8 +58,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
-            localeLanguageScriptName: coreDataLayer.getLocaleLanguageScriptName()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -73,10 +80,32 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getDownloadableLanguagesListRepositoryInterface() -> GetDownloadableLanguagesListRepositoryInterface {
+        return GetDownloadableLanguagesListRepository(
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
+        return DownloadToolLanguageRepository(
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+        )
+    }
+    
     func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
         return GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
             localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
+    func getRemoveDownloadedToolLanguageRepositoryInterface() -> RemoveDownloadedToolLanguageRepositoryInterface {
+        return RemoveDownloadedToolLanguageRepository(
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
         )
     }
     

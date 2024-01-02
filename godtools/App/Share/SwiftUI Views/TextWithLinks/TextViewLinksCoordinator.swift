@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOS, obsoleted: 15.0, message: "When supporting iOS 15 and up use TextWithLinksView.swift")
 class TextViewLinksCoordinator: NSObject, UITextViewDelegate {
     
     private let textWithLinks: TextWithLinks

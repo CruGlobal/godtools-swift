@@ -177,10 +177,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getShareableImageUseCase() -> GetShareableImageUseCase {
-        return GetShareableImageUseCase()
-    }
-    
     func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
@@ -212,13 +208,6 @@ class AppDomainLayerDependencies {
     func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
         return GetToolIsFavoritedUseCase(
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
-    func getToolLanguagesUseCase() -> GetToolLanguagesUseCase {
-        return GetToolLanguagesUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
         )
     }
     

@@ -123,21 +123,35 @@ class RealmResourcesCacheSync {
                     existingAttachmentsMinusNewlyAddedAttachments = []
                 }
                 
+                // attach variants and default variant, added variants will backlink to metatool
                 // attach latest translations and attach languages to newly added resources
                 
                 for ( _, realmResource) in realmResourcesDictionary {
-                    for translationId in realmResource.latestTranslationIds {
+                    
+                    for variantId in realmResource.getVariantIds() {
+                        
+                        guard let variant = realmResourcesDictionary[variantId] else {
+                            continue
+                        }
+                        
+                        realmResource.addVariant(variant: variant)
+                    }
+                    
+                    if let defaultVarientId = realmResource.defaultVariantId, let defaultVariant = realmResourcesDictionary[defaultVarientId] {
+                        
+                        realmResource.setDefaultVariant(variant: defaultVariant)
+                    }
+                    
+                    for translationId in realmResource.getLatestTranslationIds() {
                         
                         guard let realmTranslation = realmTranslationsDictionary[translationId] else {
                             continue
                         }
                         
-                        if !realmResource.latestTranslations.contains(realmTranslation) {
-                            realmResource.latestTranslations.append(realmTranslation)
-                        }
+                        realmResource.addLatestTranslation(translation: realmTranslation)
                         
-                        if let realmLanguage = realmTranslation.language, !realmResource.languages.contains(realmLanguage) {
-                            realmResource.languages.append(realmLanguage)
+                        if let realmLanguage = realmTranslation.language {
+                            realmResource.addLanguage(language: realmLanguage)
                         }
                     }
                 }

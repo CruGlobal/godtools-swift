@@ -12,8 +12,8 @@ struct JsonServices: JsonServicesType {
     
     private let bundle: Bundle
     
-    init() {
-        self.bundle = Bundle.main
+    init(bundle: Bundle = Bundle.main) {
+        self.bundle = bundle
     }
     
     func getJsonData(fileName: String?) -> Data? {

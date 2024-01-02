@@ -10,7 +10,7 @@ import Foundation
 
 struct LanguageModel: LanguageModelType, Codable {
     
-    let code: String
+    let code: BCP47LanguageIdentifier
     let direction: String
     let id: String
     let name: String
@@ -45,7 +45,7 @@ struct LanguageModel: LanguageModelType, Codable {
         }
         
         // attributes
-        code = try attributesContainer?.decodeIfPresent(String.self, forKey: .code) ?? ""
+        code = try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? ""
         direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
     }

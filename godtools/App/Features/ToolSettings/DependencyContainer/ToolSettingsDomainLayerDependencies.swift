@@ -17,9 +17,55 @@ class ToolSettingsDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getDeleteToolSettingsParallelLanguageUseCase() -> DeleteToolSettingsParallelLanguageUseCase {
+        return DeleteToolSettingsParallelLanguageUseCase(
+            deleteParallelLanguageRepository: dataLayer.getDeleteToolSettingsParallelLanguageRepositoryInterface()
+        )
+    }
+    
+    func getToolSettingsPrimaryLanguageUseCase() -> GetToolSettingsPrimaryLanguageUseCase {
+        return GetToolSettingsPrimaryLanguageUseCase(
+            getPrimaryLanguageRepository: dataLayer.getToolSettingsPrimaryLanguageRepositoryInterface()
+        )
+    }
+    
+    func getToolSettingsParallelLanguageUseCase() -> GetToolSettingsParallelLanguageUseCase {
+        return GetToolSettingsParallelLanguageUseCase(
+            getParallelLanguageRepository: dataLayer.getToolSettingsParallelLanguageRepositoryInterface()
+        )
+    }
+    
+    func getSetToolSettingsParallelLanguageUseCase() -> SetToolSettingsParallelLanguageUseCase {
+        return SetToolSettingsParallelLanguageUseCase(
+            storeParallelLanguageRepository: dataLayer.getStoreToolSettingsParallelLanguageRepositoryInterface()
+        )
+    }
+    
+    func getSetToolSettingsPrimaryLanguageUseCase() -> SetToolSettingsPrimaryLanguageUseCase {
+        return SetToolSettingsPrimaryLanguageUseCase(
+            storePrimaryLanguageRepository: dataLayer.getStoreToolSettingsPrimaryLanguageRepositoryInterface()
+        )
+    }
+    
+    func getViewShareToolUseCase() -> ViewShareToolUseCase {
+        return ViewShareToolUseCase(
+            getInterfaceStringsRepository: dataLayer.getShareToolInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewToolSettingsToolLanguagesListUseCase() -> ViewToolSettingsToolLanguagesListUseCase {
+        return ViewToolSettingsToolLanguagesListUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface(),
+            getToolLanguagesRepository: dataLayer.getToolSettingsToolLanguagesListRepositoryInterface()
+        )
+    }
+    
     func getViewToolSettingsUseCase() -> ViewToolSettingsUseCase {
         return ViewToolSettingsUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface(),
+            getToolHasTipsRepository: dataLayer.getToolSettingsToolHasTipsRepositoryInterface(),
+            getPrimaryLanguageRepository: dataLayer.getToolSettingsPrimaryLanguageRepositoryInterface(),
+            getParallelLanguageRepository: dataLayer.getToolSettingsParallelLanguageRepositoryInterface()
         )
     }
 }

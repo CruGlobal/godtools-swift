@@ -1,8 +1,9 @@
 //
 //  ToolSettingsTopBarView.swift
-//  ToolSettings
+//  godtools
 //
 //  Created by Levi Eggert on 5/11/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI

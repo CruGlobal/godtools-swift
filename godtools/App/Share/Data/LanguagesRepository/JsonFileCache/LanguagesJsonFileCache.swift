@@ -11,14 +11,21 @@ import Combine
 
 class LanguagesJsonFileCache {
     
-    init() {
+    private let jsonServices: JsonServices
+    
+    init(jsonServices: JsonServices) {
         
+        self.jsonServices = jsonServices
     }
     
     func getLanguages() -> Result<[LanguageModel], Error> {
         
-        let jsonServices: JsonServices = JsonServices()
-        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: "languages")
+        return parseLanguagesJsonFromBundle(fileName: "languages")
+    }
+    
+    func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageModel], Error> {
+        
+        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
         
         switch result {
             

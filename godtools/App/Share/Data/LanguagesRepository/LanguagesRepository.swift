@@ -61,7 +61,7 @@ class LanguagesRepository {
     
     func syncLanguagesFromJsonFileCache() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
-        return LanguagesJsonFileCache().getLanguages().publisher
+        return LanguagesJsonFileCache(jsonServices: JsonServices()).getLanguages().publisher
             .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)
