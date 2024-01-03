@@ -858,7 +858,6 @@
 		45ACEE1A2AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEE192AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift */; };
 		45ACEE1C2AD0493F004B62E4 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACEE1B2AD0493F004B62E4 /* SearchBarView.swift */; };
 		45AD1BC525938A4F00A096A0 /* UIViewController+LottieNavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18B225938A4E00A096A0 /* UIViewController+LottieNavItem.swift */; };
-		45AD1BC825938A4F00A096A0 /* UIViewController+AppNavBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18B525938A4E00A096A0 /* UIViewController+AppNavBackButton.swift */; };
 		45AD1BD025938A4F00A096A0 /* LoadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18BF25938A4E00A096A0 /* LoadingViewModelType.swift */; };
 		45AD1BD125938A4F00A096A0 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD18C025938A4E00A096A0 /* LoadingView.xib */; };
 		45AD1BD225938A4F00A096A0 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18C125938A4E00A096A0 /* LoadingViewModel.swift */; };
@@ -2337,7 +2336,6 @@
 		45ACEE192AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAppLanguageInAppLanguagesListUseCase.swift; sourceTree = "<group>"; };
 		45ACEE1B2AD0493F004B62E4 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		45AD18B225938A4E00A096A0 /* UIViewController+LottieNavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LottieNavItem.swift"; sourceTree = "<group>"; };
-		45AD18B525938A4E00A096A0 /* UIViewController+AppNavBackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppNavBackButton.swift"; sourceTree = "<group>"; };
 		45AD18BF25938A4E00A096A0 /* LoadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModelType.swift; sourceTree = "<group>"; };
 		45AD18C025938A4E00A096A0 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		45AD18C125938A4E00A096A0 /* LoadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
@@ -7546,7 +7544,6 @@
 			children = (
 				45FB1CC0295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift */,
 				45FB1CBF295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift */,
-				45AD18B525938A4E00A096A0 /* UIViewController+AppNavBackButton.swift */,
 				45AD18B225938A4E00A096A0 /* UIViewController+LottieNavItem.swift */,
 				4597101529CDE02400C47040 /* View+CornerRadius.swift */,
 				450D84752AE097EF008EA64A /* View+FlipVertically.swift */,
@@ -12425,7 +12422,6 @@
 				45EB9B7F29F16CF200CA74A8 /* Collection+SafeLookup.swift in Sources */,
 				45C649BE2B31E178000249E0 /* ViewShareToolDomainModel.swift in Sources */,
 				4571020D2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift in Sources */,
-				45AD1BC825938A4F00A096A0 /* UIViewController+AppNavBackButton.swift in Sources */,
 				455EE8302AEC576F00C3205C /* DownloadToolProgressView.swift in Sources */,
 				457739ED27A0985A00999270 /* MobileContentFlowRowItem.swift in Sources */,
 				45BF6EBF27050D35003596A4 /* FadeAnimationTransition.swift in Sources */,
