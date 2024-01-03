@@ -27,7 +27,37 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                 
+        
+        sharedNavigationController.pushViewController(
+            getChooseYourOwnAdventureView(toolTranslations: toolTranslations, initialPage: initialPage),
+            animated: true
+        )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func navigate(step: FlowStep) {
+        
+        switch step {
+        case .backTappedFromChooseYourOwnAdventure:
+            closeTool()
+            
+        default:
+            break
+        }
+    }
+    
+    private func closeTool() {
+        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow {
+    
+    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?) -> UIViewController {
+        
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
             navigationDelegate: self
@@ -51,28 +81,31 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = ChooseYourOwnAdventureView(viewModel: viewModel)
+        let homeButton = AppHomeBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.homeTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesHomeButton
+        )
         
-        sharedNavigationController.pushViewController(view, animated: true)
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            toggleVisibilityPublisher: viewModel.hidesBackButton
+        )
         
-        switch step {
-        case .backTappedFromChooseYourOwnAdventure:
-            closeTool()
-            
-        default:
-            break
-        }
-    }
-    
-    private func closeTool() {
-        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [homeButton, backButton],
+            trailingItems: []
+        )
+        
+        let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+        
+        return view
     }
 }
 
