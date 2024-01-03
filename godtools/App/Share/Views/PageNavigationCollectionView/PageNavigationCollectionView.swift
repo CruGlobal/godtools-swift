@@ -28,7 +28,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     private let layoutType: PageNavigationCollectionViewLayoutType
-    private let loggingEnabled: Bool = false
+    private let loggingEnabled: Bool = true
     
     private var layout: UICollectionViewLayout = UICollectionViewLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
@@ -194,6 +194,13 @@ class PageNavigationCollectionView: UIView, NibBased {
         }
         
         collectionView.semanticContentAttribute = semanticContentAttribute
+        
+        if semanticContentAttribute == .forceLeftToRight {
+            logMessage(message: "set semanticContentAttribute to left to right")
+        }
+        else {
+            logMessage(message: "set semanticContentAttribute to right to left")
+        }
     }
     
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
