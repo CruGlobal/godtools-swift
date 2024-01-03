@@ -15,9 +15,9 @@ class LessonView: MobileContentPagesView {
     private let previousPageButton: UIButton = UIButton(type: .custom)
     private let nextPageButton: UIButton = UIButton(type: .custom)
     
-    required init(viewModel: LessonViewModel) {
+    init(viewModel: LessonViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(viewModel: viewModel)
+        super.init(viewModel: viewModel, navigationBar: navigationBar)
         
         progressView.setDelegate(delegate: self)
     }

@@ -63,7 +63,8 @@ class TractFlow: ToolNavigationFlow, Flow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = ToolView(viewModel: viewModel)
+        // TODO: Will need to make sure to configure the navigation bar here instead of in the ViewController. ~Levi See GT-2239.
+        let view = ToolView(viewModel: viewModel, navigationBar: nil)
                         
         if let sharedNavController = sharedNavigationController {
             sharedNavController.pushViewController(view, animated: true)
