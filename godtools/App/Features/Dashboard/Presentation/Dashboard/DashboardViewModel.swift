@@ -12,37 +12,68 @@ import Combine
 class DashboardViewModel: ObservableObject {
     
     private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
-    private let localizationServices: LocalizationServices
-    private let tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewDashboardUseCase: ViewDashboardUseCase
         
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
         
-    @Published var hidesLanguagesSettingsButton: Bool = true
-    @Published var numberOfTabs: Int = 0
-    @Published var currentTab: Int {
-        didSet {
-            tabChanged()
-        }
-    }
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, localizationServices: LocalizationServices) {
+    @Published var hidesLanguagesSettingsButton: Bool = true
+    @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
+    @Published var lessonsButtonTitle: String = ""
+    @Published var favoritesButtonTitle: String = ""
+    @Published var toolsButtonTitle: String = ""
+    @Published var currentTab: Int = 0
+    
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase) {
         
-        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
-        self.localizationServices = localizationServices
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewDashboardUseCase = viewDashboardUseCase
+        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         
-        numberOfTabs = tabs.count
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDashboardDomainModel, Never> in
+                return self.viewDashboardUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewDashboardDomainModel) in
                 
-        tabChanged()
+                self?.lessonsButtonTitle = domainModel.interfaceStrings.lessonsActionTitle
+                self?.favoritesButtonTitle = domainModel.interfaceStrings.favoritesActionTitle
+                self?.toolsButtonTitle = domainModel.interfaceStrings.toolsActionTitle
+                
+                self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+            }
+            .store(in: &cancellables)
+        
+        $currentTab.eraseToAnyPublisher()
+            .sink { [weak self] (currentTab: Int) in
+                self?.hidesLanguagesSettingsButton = self?.tabs[currentTab] == .lessons
+            }
+            .store(in: &cancellables)
     }
     
-    private func tabChanged() {
-                        
-        hidesLanguagesSettingsButton = tabs[currentTab] == .lessons
+    private func reloadTabs() {
+        
+        let currentTabs: [DashboardTabTypeDomainModel] = tabs
+        tabs = currentTabs
     }
     
-    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel {
+    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel? {
+        guard tabIndex >= 0 && tabIndex < tabs.count else {
+            return nil
+        }
         return tabs[tabIndex]
     }
 }
@@ -88,26 +119,26 @@ extension DashboardViewModel {
     func getTabBarItemViewModel(tabIndex: Int) -> DashboardTabBarItemViewModel {
         
         let imageName: String
-        let titleLocalizedKey: String
+        let title: String
         
         switch tabs[tabIndex] {
             
         case .lessons:
             imageName = ImageCatalog.toolsMenuLessons.name
-            titleLocalizedKey = "tool_menu_item.lessons"
+            title = lessonsButtonTitle
             
         case .favorites:
             imageName = ImageCatalog.toolsMenuFavorites.name
-            titleLocalizedKey = "my_tools"
+            title = favoritesButtonTitle
             
         case .tools:
             imageName = ImageCatalog.toolsMenuAllTools.name
-            titleLocalizedKey = "tool_menu_item.tools"
+            title = toolsButtonTitle
         }
         
         return DashboardTabBarItemViewModel(
             tabIndex: tabIndex,
-            title: localizationServices.stringForSystemElseEnglish(key: titleLocalizedKey),
+            title: title,
             imageName: imageName
         )
     }

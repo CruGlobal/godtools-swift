@@ -12,6 +12,7 @@ class AppFeatureDiContainer {
     
     let accountCreation: AccountCreationFeatureDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
+    let dashboard: DashboardDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
     let learnToShareTool: LearnToShareToolDiContainer
@@ -26,10 +27,11 @@ class AppFeatureDiContainer {
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, featuredLessons: FeaturedLessonsDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.accountCreation = accountCreation
         self.appLanguage = appLanguage
+        self.dashboard = dashboard
         self.downloadToolProgress = downloadToolProgress
         self.featuredLessons = featuredLessons
         self.learnToShareTool = learnToShareTool

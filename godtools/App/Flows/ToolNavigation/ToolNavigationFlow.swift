@@ -38,27 +38,6 @@ extension ToolNavigationFlow {
         )
     }
     
-    func navigateToTool(resourceId: String, trainingTipsEnabled: Bool) {
-                
-        var languageIds: [String] = Array()
-        
-        if let primaryLanguageId = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()?.dataModelId {
-            languageIds.append(primaryLanguageId)
-        }
-        
-        if let parallelLanguageId = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase().getParallelLanguage()?.dataModelId {
-            languageIds.append(parallelLanguageId)
-        }
-                        
-        navigateToTool(
-            resourceId: resourceId,
-            languageIds: languageIds,
-            liveShareStream: nil,
-            trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: nil
-        )
-    }
-    
     func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(

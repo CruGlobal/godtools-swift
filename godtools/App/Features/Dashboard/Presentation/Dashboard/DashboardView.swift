@@ -27,9 +27,9 @@ struct DashboardView: View {
             
             VStack(alignment: .center, spacing: 0) {
                 
-                PagedView(numberOfPages: viewModel.numberOfTabs, currentPage: $viewModel.currentTab) { (index: Int) in
+                PagedView(numberOfPages: viewModel.tabs.count, currentPage: $viewModel.currentTab) { (index: Int) in
                     
-                    switch viewModel.getTab(tabIndex: index) {
+                    switch viewModel.tabs[index] {
                         
                     case .lessons:
                         LessonsView(viewModel: viewModel.getLessonsViewModel())
@@ -54,7 +54,7 @@ struct DashboardView: View {
 extension DashboardView {
     
     func getCurrentTab() -> DashboardTabTypeDomainModel {
-        return viewModel.getTab(tabIndex: viewModel.currentTab)
+        return viewModel.getTab(tabIndex: viewModel.currentTab) ?? .favorites
     }
     
     func navigateToTab(tab: DashboardTabTypeDomainModel) {
@@ -77,7 +77,8 @@ struct DashboardView_Previews: PreviewProvider {
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase()
         )
         
         return viewModel
