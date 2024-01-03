@@ -11283,8 +11283,6 @@
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelType.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelDefaultVariantData.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelMetatoolData.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceType.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModelType.swift",
@@ -11296,6 +11294,10 @@
 				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/JsonApi/JsonApiResponseBaseData.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/JsonApi/JsonApiResponseData.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/JsonApi/JsonApiResponseDataArray.swift",
+				"$(SRCROOT)/godtools/App/Share/Common/BCP47LanguageIdentifier/BCP47LanguageIdentifier.swift",
 			);
 			name = "Download Initial Resources";
 			outputFileListPaths = (
@@ -11304,7 +11306,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
