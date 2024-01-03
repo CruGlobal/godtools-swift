@@ -1090,6 +1090,7 @@
 		45C883522A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C883512A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift */; };
 		45C8835D2A93EDDF00F33E6D /* DashboardTabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */; };
 		45C8835F2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */; };
+		45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C925012B45E7AA005947DB /* AppHomeBarItem.swift */; };
 		45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */; };
 		45CCF6922B2269010017EDFE /* ToolSettingsOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CCF68F2B2269010017EDFE /* ToolSettingsOptionView.swift */; };
 		45CCF6932B2269010017EDFE /* ToolSettingsOptionViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CCF6902B2269010017EDFE /* ToolSettingsOptionViewBackground.swift */; };
@@ -2557,6 +2558,7 @@
 		45C883512A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPresentationLayerDependencies.swift; sourceTree = "<group>"; };
 		45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemView.swift; sourceTree = "<group>"; };
 		45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemViewModel.swift; sourceTree = "<group>"; };
+		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
 		45CCF68F2B2269010017EDFE /* ToolSettingsOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionView.swift; sourceTree = "<group>"; };
 		45CCF6902B2269010017EDFE /* ToolSettingsOptionViewBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionViewBackground.swift; sourceTree = "<group>"; };
@@ -3404,6 +3406,7 @@
 			children = (
 				45070A7A2ACF42AD00229EDD /* AppBackBarItem.swift */,
 				45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */,
+				45C925012B45E7AA005947DB /* AppHomeBarItem.swift */,
 				45070A842ACF43E900229EDD /* AppLanguageSettingsBarItem.swift */,
 				45070A782ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift */,
 				45070A792ACF42AD00229EDD /* AppMenuBarItem.swift */,
@@ -11909,6 +11912,7 @@
 				45369AC32AFA7FA500BD10F0 /* GetToolScreenShareTutorialRepository.swift in Sources */,
 				45DF34522A28D41600BB717E /* AppBuild.swift in Sources */,
 				451C848E2AF1C2A40003BF1A /* SocialSignInAuthenticationType.swift in Sources */,
+				45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */,
 				45AE975227C97A9500C2CB33 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
 				45FE82472ACE5D5800930C39 /* AppNavigationBar.swift in Sources */,
