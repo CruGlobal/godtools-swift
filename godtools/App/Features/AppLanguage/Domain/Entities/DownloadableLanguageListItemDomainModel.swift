@@ -17,6 +17,20 @@ struct DownloadableLanguageListItemDomainModel: Equatable {
     let downloadStatus: LanguageDownloadStatusDomainModel
 }
 
+extension DownloadableLanguageListItemDomainModel {
+    
+    func mapUpdatedDownloadStatus(downloadStatus: LanguageDownloadStatusDomainModel) -> DownloadableLanguageListItemDomainModel {
+        
+        return DownloadableLanguageListItemDomainModel(
+            languageId: languageId,
+            languageNameInOwnLanguage: languageNameInOwnLanguage,
+            languageNameInAppLanguage: languageNameInAppLanguage,
+            toolsAvailableText: toolsAvailableText,
+            downloadStatus: downloadStatus
+        )
+    }
+}
+
 extension DownloadableLanguageListItemDomainModel: Identifiable {
     var id: String {
         return languageId

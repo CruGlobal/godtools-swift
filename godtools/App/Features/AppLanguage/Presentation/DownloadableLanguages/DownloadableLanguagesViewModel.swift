@@ -25,7 +25,9 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var searchText: String = ""
+    @Published var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
+    @Published var activeDownloads: [BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel] = [:]
     @Published var navTitle: String = ""
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
@@ -54,9 +56,37 @@ class DownloadableLanguagesViewModel: ObservableObject {
                 let downloadableLanguages = domainModel.downloadableLanguages
                 
                 self?.navTitle = interfaceStrings.navTitle
-                self?.downloadableLanguagesSearchResults = downloadableLanguages
+                self?.downloadableLanguages = downloadableLanguages
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $downloadableLanguages.eraseToAnyPublisher(),
+            $activeDownloads.eraseToAnyPublisher()
+        )
+        .sink(receiveValue: { [weak self] downloadableLanguages, activeDownloads in
+            
+            self?.createResults(from: downloadableLanguages, activeDownloads: activeDownloads)
+        })
+        .store(in: &cancellables)
+    }
+    
+    private func createResults(from downloadableLanguages: [DownloadableLanguageListItemDomainModel], activeDownloads: [BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel]) {
+        
+        var results: [DownloadableLanguageListItemDomainModel] = Array()
+        
+        for downloadableLanguage in downloadableLanguages {
+            
+            if let activeDownloadStatus = activeDownloads[downloadableLanguage.languageId] {
+                
+                let downloadableLanguageWithProgressUpdate = downloadableLanguage.mapUpdatedDownloadStatus(downloadStatus: activeDownloadStatus)
+                results.append(downloadableLanguageWithProgressUpdate)
+            }
+            
+            results.append(downloadableLanguage)
+        }
+        
+        downloadableLanguagesSearchResults = results
     }
 }
 
@@ -76,14 +106,30 @@ extension DownloadableLanguagesViewModel {
     
     func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
+        let languageId = downloadableLanguage.languageId
+        
         switch downloadableLanguage.downloadStatus {
             
         case .notDownloaded:
             
+            activeDownloads[languageId] = .downloading(progress: 0)
+            
             downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageId)
-                .sink { _ in
+                .sink(receiveCompletion: { [weak self] completed in
+                    switch completed {
+                    case .finished:
+                        
+                        self?.activeDownloads.removeValue(forKey: languageId)
+                        
+                    case .failure(let error):
+                        
+                        // TODO: - what happens during a failure?
+                        self?.activeDownloads[languageId] = .notDownloaded
+                    }
+                }, receiveValue: { [weak self] progress in
                     
-                }
+                    self?.activeDownloads[languageId] = .downloading(progress: progress)
+                })
                 .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
             
         case .downloaded:
