@@ -35,7 +35,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         .map { _ in
             
             return self.languagesRepository.getLanguages().map { language in
-                                
+                
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: language.code
@@ -51,6 +51,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                 
                 return DownloadableLanguageListItemDomainModel(
                     languageId: language.id,
+                    languageCode: language.languageCode,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
                     toolsAvailableText: toolsAvailableText,

@@ -24,7 +24,8 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
     
     func downloadToolTranslations(for languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
             
-            downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageCode, downloadProgress: 0)
+        // TODO: - stop storing download progress here
+//            downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageCode, downloadProgress: 0)
         
             let includeToolTypes: [ResourceType] = [.article, .tract, .lesson, .chooseYourOwnAdventure]
             

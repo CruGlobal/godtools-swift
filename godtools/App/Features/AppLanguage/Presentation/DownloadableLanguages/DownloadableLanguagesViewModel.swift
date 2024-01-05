@@ -64,6 +64,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
             $downloadableLanguages.eraseToAnyPublisher(),
             $activeDownloads.eraseToAnyPublisher()
         )
+        .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] downloadableLanguages, activeDownloads in
             
             self?.createResults(from: downloadableLanguages, activeDownloads: activeDownloads)
@@ -81,9 +82,12 @@ class DownloadableLanguagesViewModel: ObservableObject {
                 
                 let downloadableLanguageWithProgressUpdate = downloadableLanguage.mapUpdatedDownloadStatus(downloadStatus: activeDownloadStatus)
                 results.append(downloadableLanguageWithProgressUpdate)
+            } else {
+                
+                
+                results.append(downloadableLanguage)
             }
             
-            results.append(downloadableLanguage)
         }
         
         downloadableLanguagesSearchResults = results
@@ -114,7 +118,8 @@ extension DownloadableLanguagesViewModel {
             
             activeDownloads[languageId] = .downloading(progress: 0)
             
-            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageId)
+            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageCode)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { [weak self] completed in
                     switch completed {
                     case .finished:
