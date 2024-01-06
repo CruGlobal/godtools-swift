@@ -129,7 +129,9 @@ extension DownloadableLanguagesViewModel {
                     case .failure(let error):
                         
                         // TODO: - what happens during a failure?
+                        
                         self?.activeDownloads[languageId] = .notDownloaded
+                        self?.flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
                     }
                 }, receiveValue: { [weak self] progress in
                     

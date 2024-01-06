@@ -13,9 +13,11 @@ struct LanguageDownloadIcon: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     private let languageDownloadStatus: LanguageDownloadStatusDomainModel
+    private let downloadProgress: Double?
     
-    init(languageDownloadStatus: LanguageDownloadStatusDomainModel) {
+    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, downloadProgress: Double?) {
         self.languageDownloadStatus = languageDownloadStatus
+        self.downloadProgress = downloadProgress
     }
 
     var body: some View {
@@ -40,8 +42,8 @@ struct LanguageDownloadIcon: View {
                 .imageScale(.small)
             
         case .downloading(let progress):
-            
-            drawProgressInCircle(progress: progress)
+            let downloadProgress = self.downloadProgress ?? progress
+            drawProgressInCircle(progress: downloadProgress)
             
         case .downloaded:
             
