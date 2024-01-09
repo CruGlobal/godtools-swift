@@ -98,13 +98,13 @@ extension GetDownloadableLanguagesListRepository {
             return .notDownloaded
         }
         
-        if downloadedLanguage.isDownloaded {
+        if downloadedLanguage.downloadComplete {
             
             return .downloaded
             
         } else {
             
-            return .downloading(progress: downloadedLanguage.downloadProgress)
+            return .downloading(progress: 0)
         }
     }
     

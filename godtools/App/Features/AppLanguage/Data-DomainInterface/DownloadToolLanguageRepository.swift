@@ -22,33 +22,38 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func downloadToolTranslations(for languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
+    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
             
-        // TODO: - stop storing download progress here
-//            downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageCode, downloadProgress: 0)
+        downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
-            let includeToolTypes: [ResourceType] = [.article, .tract, .lesson, .chooseYourOwnAdventure]
-            
-            let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageCode, resourceTypes: includeToolTypes))
-           
-            let translations: [TranslationModel] = tools.compactMap {
-                translationsRepository.getLatestTranslation(resourceId: $0.id, languageCode: languageCode)
-            }
-            
-            guard !translations.isEmpty else {
-                return Just(1).setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            
-            return translationsRepository.getTranslationManifestsFromRemoteWithProgress(
-                translations: translations,
-                manifestParserType: .renderer,
-                includeRelatedFiles: true,
-                shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
-            )
-            .map {
-                return $0.progress
-            }
-            .eraseToAnyPublisher()
+        let includeToolTypes: [ResourceType] = [.article, .tract, .lesson, .chooseYourOwnAdventure]
+        
+        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageCode, resourceTypes: includeToolTypes))
+       
+        let translations: [TranslationModel] = tools.compactMap {
+            translationsRepository.getLatestTranslation(resourceId: $0.id, languageCode: languageCode)
         }
+        
+        guard !translations.isEmpty else {
+            return Just(1).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        return translationsRepository.getTranslationManifestsFromRemoteWithProgress(
+            translations: translations,
+            manifestParserType: .renderer,
+            includeRelatedFiles: true,
+            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
+        )
+        .map {
+            let progress = $0.progress
+            
+            if progress >= 1 {
+                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
+            }
+            
+            return $0.progress
+        }
+        .eraseToAnyPublisher()
+    }
 }

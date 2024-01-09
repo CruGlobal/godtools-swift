@@ -15,7 +15,7 @@ struct DownloadableLanguageItemView: View {
     private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
     
-    @State private var downloadProgress: Double
+    @State private var downloadProgress: Double?
     @State private var timer: Timer?
     
     private var downloadProgressTarget: Double? {
@@ -35,11 +35,11 @@ struct DownloadableLanguageItemView: View {
         self.tappedClosure = tappedClosure
         
         switch downloadableLanguage.downloadStatus {
-        case .downloading(let progress):
-            self.downloadProgress = progress
+        case .downloading:
+            self.downloadProgress = 0.1
             
         default:
-            self.downloadProgress = 0
+            self.downloadProgress = nil
         }
     }
     
@@ -80,11 +80,16 @@ struct DownloadableLanguageItemView: View {
             
             guard let updatedProgress = downloadProgressTarget else { return }
             guard timer == nil else { return }
+            guard let downloadProgress = downloadProgress else { return }
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                downloadProgress += 0.1
                 
-                if downloadProgress >= updatedProgress {
+                if downloadProgress < updatedProgress {
+                    
+                    self.downloadProgress? += 0.1
+                    
+                } else if updatedProgress >= 1 {
+                    
                     timer.invalidate()
                     self.timer = nil
                 }

@@ -46,9 +46,15 @@ struct LanguageDownloadIcon: View {
             drawProgressInCircle(progress: downloadProgress)
             
         case .downloaded:
-            
-            Image(systemName: "checkmark")
-                .imageScale(.small)
+            if let downloadProgress = downloadProgress, downloadProgress <= 1 {
+                // allow progress animation to complete even though download has completed
+                drawProgressInCircle(progress: downloadProgress)
+                
+            } else {
+                
+                Image(systemName: "checkmark")
+                    .imageScale(.small)
+            }
         }
     }
     

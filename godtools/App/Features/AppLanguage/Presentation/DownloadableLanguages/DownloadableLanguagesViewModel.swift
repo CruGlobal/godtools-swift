@@ -118,7 +118,7 @@ extension DownloadableLanguagesViewModel {
             
             activeDownloads[languageId] = .downloading(progress: 0)
             
-            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageCode)
+            downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId, languageCode: downloadableLanguage.languageCode)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { [weak self] completed in
                     switch completed {

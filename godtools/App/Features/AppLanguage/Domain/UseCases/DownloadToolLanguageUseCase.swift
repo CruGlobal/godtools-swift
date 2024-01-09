@@ -18,8 +18,8 @@ class DownloadToolLanguageUseCase {
         self.downloadToolLanguageRepository = downloadToolLanguageRepository
     }
     
-    func downloadToolLanguage(_ languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
+    func downloadToolLanguage(languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
         
-        return downloadToolLanguageRepository.downloadToolTranslations(for: languageCode)
+        return downloadToolLanguageRepository.downloadToolTranslations(for: languageId, languageCode: languageCode)
     }
 }
