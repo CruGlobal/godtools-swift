@@ -23,6 +23,7 @@ class MobileContentRenderedPageContext {
     let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
     let primaryRendererLanguage: LanguageDomainModel
+    let primaryLanguageLayoutDirection: ApplicationLayoutDirection
     let rendererState: State
     let trainingTipsEnabled: Bool
     let pageViewDataCache: MobileContentPageViewDataCache
@@ -44,6 +45,7 @@ class MobileContentRenderedPageContext {
         self.viewRenderer = viewRenderer
         self.navigation = navigation
         self.primaryRendererLanguage = primaryRendererLanguage
+        self.primaryLanguageLayoutDirection = primaryRendererLanguage.direction == .rightToLeft ? .rightToLeft : .leftToRight
         self.rendererState = rendererState
         self.trainingTipsEnabled = trainingTipsEnabled
         self.pageViewDataCache = pageViewDataCache
