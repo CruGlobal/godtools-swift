@@ -20,10 +20,14 @@ class MobileContentPagesView: AppViewController {
     private var didLayoutSubviews: Bool = false
           
     @IBOutlet weak private(set) var safeAreaView: UIView!
-    @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
+    
+    let pageNavigationView: PageNavigationCollectionView
         
     init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
+        
         self.viewModel = viewModel
+        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
@@ -85,6 +89,12 @@ class MobileContentPagesView: AppViewController {
     func setupLayout() {
                        
         // pageNavigationView
+        view.addSubview(pageNavigationView)
+        pageNavigationView.translatesAutoresizingMaskIntoConstraints = false
+        pageNavigationView.constrainEdgesToView(view: view)
+        
+        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
         pageNavigationView.pageBackgroundColor = .clear
         pageNavigationView.registerPageCell(
             nib: UINib(nibName: MobileContentPageCell.nibName, bundle: nil),
@@ -239,7 +249,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         pageView.setDelegate(delegate: self)
         
         didConfigurePageView(pageView: pageView)
-                
+                        
         return cell
     }
     
