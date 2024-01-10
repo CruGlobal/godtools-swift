@@ -23,4 +23,8 @@ class MobileContentFlowViewModel: MobileContentViewModel {
     var rowGravity: Gravity.Horizontal {
         return contentFlow.rowGravity
     }
+    
+    var layoutDirection: ApplicationLayoutDirection {
+        return renderedPageContext.primaryLanguageLayoutDirection
+    }
 }
