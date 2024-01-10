@@ -112,7 +112,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
             tool: tool,
-            toolLanguage: nil,
+            primaryLanguage: nil,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),

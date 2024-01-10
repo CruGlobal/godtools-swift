@@ -269,7 +269,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool, isSpotlight: true)
         
-        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool))
+        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelectionPublisher.value))
     }
     
     func toolFavoriteTapped(tool: ToolDomainModel) {
