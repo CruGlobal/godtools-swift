@@ -209,6 +209,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject), animated: true)
             
         case .backTappedFromToolDetails:
+            configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
             
         case .articleFlowCompleted( _):
