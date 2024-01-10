@@ -81,7 +81,7 @@ extension TutorialFlow {
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
         )
         
         let closeButton = AppCloseBarItem(

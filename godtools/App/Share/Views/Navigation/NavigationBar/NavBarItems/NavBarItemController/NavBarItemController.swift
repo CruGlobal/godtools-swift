@@ -11,7 +11,7 @@ import Combine
 
 class NavBarItemController {
         
-    private var toggleVisibilityPublisher: AnyPublisher<Bool, Never>?
+    private var hidesBarItemPublisher: AnyPublisher<Bool, Never>?
     private var barButtonItem: UIBarButtonItem?
     private var currentIsHidden: Bool = true
     private var cancellables: Set<AnyCancellable> = Set()
@@ -31,12 +31,12 @@ class NavBarItemController {
         
         let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem()
         
-        self.toggleVisibilityPublisher = navBarItem.toggleVisibilityPublisher
+        self.hidesBarItemPublisher = navBarItem.hidesBarItemPublisher
         self.barButtonItem = newBarButtonItem
                 
-        if let toggleVisibilityPublisher = navBarItem.toggleVisibilityPublisher {
+        if let hidesBarItemPublisher = navBarItem.hidesBarItemPublisher {
             
-            toggleVisibilityPublisher
+            hidesBarItemPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (hidden: Bool) in
                     
@@ -83,7 +83,7 @@ class NavBarItemController {
                 navBarItemController = nil
             }
             
-        case .appLayoutDirection:
+        case .appLayoutDirection(let layoutDirectionPublisher):
             
             if let layoutDirectionBasedNavBarItem = navBarItem as? AppLayoutDirectionBasedBarItem {
                 
@@ -91,7 +91,8 @@ class NavBarItemController {
                     viewController: viewController,
                     navBarItem: layoutDirectionBasedNavBarItem,
                     itemBarPosition: itemBarPosition,
-                    itemIndex: itemIndex
+                    itemIndex: itemIndex,
+                    layoutDirectionPublisher: layoutDirectionPublisher
                 )
             }
             else {
