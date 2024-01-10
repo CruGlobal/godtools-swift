@@ -13,9 +13,9 @@ class ToolView: MobileContentPagesView {
     private let viewModel: ToolViewModel
     private let navBarView: ToolNavBarView = ToolNavBarView()
                     
-    required init(viewModel: ToolViewModel) {
+    init(viewModel: ToolViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(viewModel: viewModel)
+        super.init(viewModel: viewModel, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {

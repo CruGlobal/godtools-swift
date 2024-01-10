@@ -52,7 +52,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = LessonView(viewModel: viewModel)
+        let view = LessonView(viewModel: viewModel, navigationBar: nil)
                 
         navigationController.pushViewController(view, animated: true)
         

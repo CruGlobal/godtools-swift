@@ -8,16 +8,16 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
-    
-    private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
-    
+        
+    private let hidesHomeButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false) // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
+    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true) // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
     private let fontService: FontService
     
     private weak var flowDelegate: FlowDelegate?
     
-    let backButtonImage: ObservableValue<UIImage?>
     let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
     let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
     
@@ -25,9 +25,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
-        
-        backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
-        
+                
         let navBarColor: UIColor
         let navBarControlColor: UIColor
 
@@ -57,20 +55,29 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
     }
     
+    // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
+    var hidesHomeButton: AnyPublisher<Bool, Never> {
+        return hidesHomeButtonSubject.eraseToAnyPublisher()
+    }
+    
+    // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
+    var hidesBackButton: AnyPublisher<Bool, Never> {
+        return hidesBackButtonSubject.eraseToAnyPublisher()
+    }
+    
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
         
         let isFirstPage: Bool = page == 0
-        let navBackImage: UIImage?
         
         if isFirstPage {
-            navBackImage = ChooseYourOwnAdventureViewModel.navHomeImage
+            hidesHomeButtonSubject.send(false)
+            hidesBackButtonSubject.send(true)
         }
         else {
-            navBackImage = ImageCatalog.navBack.uiImage
+            hidesHomeButtonSubject.send(true)
+            hidesBackButtonSubject.send(false)
         }
-        
-        backButtonImage.accept(value: navBackImage)
     }
     
     func getNavBarLanguageTitles() -> [String] {
@@ -83,17 +90,32 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     }
 }
 
-// MARK: - Inpits
+// MARK: - Inputs
 
 extension ChooseYourOwnAdventureViewModel {
     
-    func navBackTapped() {
+    @objc func homeTapped() {
+        flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
+    }
+    
+    @objc func backTapped() {
         
-        let isFirstPage: Bool = currentRenderedPageNumber == 0
-        
-        if isFirstPage {
-            flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
+        guard currentRenderedPageNumber > 0 else {
+            return
         }
+        
+        let event = MobileContentPagesNavigationEvent(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: currentRenderedPageNumber - 1,
+                animated: true,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil
+            ),
+            pagePositions: nil
+        )
+        
+        pageNavigationEventSignal.accept(value: event)
     }
     
     func navLanguageTapped(index: Int) {

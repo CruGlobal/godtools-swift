@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentPagesView: UIViewController {
+class MobileContentPagesView: AppViewController {
     
     typealias PageNumber = Int
     
@@ -22,9 +22,9 @@ class MobileContentPagesView: UIViewController {
     @IBOutlet weak private(set) var safeAreaView: UIView!
     @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
         
-    init(viewModel: MobileContentPagesViewModel) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil)
+        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {

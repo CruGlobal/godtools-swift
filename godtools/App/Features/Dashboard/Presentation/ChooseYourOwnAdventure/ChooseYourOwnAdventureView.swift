@@ -12,13 +12,12 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     private let viewModel: ChooseYourOwnAdventureViewModel
     
-    private var backButtonItem: UIBarButtonItem?
     private var languageSelector: NavBarSelectorView?
     
-    init(viewModel: ChooseYourOwnAdventureViewModel) {
+    init(viewModel: ChooseYourOwnAdventureViewModel, navigationBar: AppNavigationBar?) {
         
         self.viewModel = viewModel
-        super.init(viewModel: viewModel)
+        super.init(viewModel: viewModel, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,10 +35,7 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     override func setupLayout() {
         super.setupLayout()
-        
-        // navigation bar
-        backButtonItem = addDefaultNavBackItem(target: self, action: #selector(backTapped))
-        
+                
         // languageSelector
         languageSelector = NavBarSelectorView(
             selectorButtonTitles: viewModel.getNavBarLanguageTitles(),
@@ -54,10 +50,6 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     
     override func setupBinding() {
         super.setupBinding()
-        
-        viewModel.backButtonImage.addObserver(self) { [weak self] (image: UIImage?) in
-            self?.backButtonItem?.image = image
-        }
         
         viewModel.navBarColors.addObserver(self) { [weak self] (navBarModel: ChooseYourOwnAdventureNavBarModel) in
             
@@ -86,13 +78,6 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
             navigationItem.titleView = nil
             self.title = title
         }
-    }
-    
-    @objc private func backTapped() {
-        
-        pageNavigationView.scrollToPreviousPage(animated: true)
-        
-        viewModel.navBackTapped()
     }
 }
 
