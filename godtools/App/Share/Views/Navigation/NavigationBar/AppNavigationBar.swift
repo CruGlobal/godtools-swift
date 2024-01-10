@@ -12,6 +12,7 @@ class AppNavigationBar {
     
     private let appearance: AppNavigationBarAppearance?
     private let titleView: UIView?
+    private let title: String?
 
     private(set) var navBarItems: NavBarItems?
     
@@ -21,13 +22,14 @@ class AppNavigationBar {
     let leadingItems: [NavBarItem]
     let trailingItems: [NavBarItem]
     
-    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil) {
+    init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil, title: String? = nil) {
         
         self.appearance = appearance
         self.backButton = backButton
         self.leadingItems = leadingItems
         self.trailingItems = trailingItems
         self.titleView = titleView
+        self.title = title
     }
     
     private func setAppearance() {
@@ -68,6 +70,9 @@ class AppNavigationBar {
         
         if let titleView = self.titleView {
             viewController.navigationItem.titleView = titleView
+        }
+        else if let title = title {
+            viewController.title = title
         }
     }
     
