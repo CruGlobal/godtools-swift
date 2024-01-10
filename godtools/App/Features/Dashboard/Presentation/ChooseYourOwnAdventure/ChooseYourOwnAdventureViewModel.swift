@@ -12,8 +12,6 @@ import Combine
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
-    private let hidesHomeButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false) // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
-    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true) // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
     private let fontService: FontService
     
     private weak var flowDelegate: FlowDelegate?
@@ -22,6 +20,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     let languageFont: UIFont?
     let languageNames: [String]
     
+    @Published var hidesHomeButton: Bool = false
+    @Published var hidesBackButton: Bool = true
     @Published var selectedLanguageIndex: Int = 0
         
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -47,28 +47,18 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
     }
     
-    // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
-    var hidesHomeButton: AnyPublisher<Bool, Never> {
-        return hidesHomeButtonSubject.eraseToAnyPublisher()
-    }
-    
-    // TODO: Can be removed and instead use @Published property once using SwiftUI. ~Levi
-    var hidesBackButton: AnyPublisher<Bool, Never> {
-        return hidesBackButtonSubject.eraseToAnyPublisher()
-    }
-    
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
         
         let isFirstPage: Bool = page == 0
         
         if isFirstPage {
-            hidesHomeButtonSubject.send(false)
-            hidesBackButtonSubject.send(true)
+            hidesHomeButton = false
+            hidesBackButton = true
         }
         else {
-            hidesHomeButtonSubject.send(true)
-            hidesBackButtonSubject.send(false)
+            hidesHomeButton = true
+            hidesBackButton = false
         }
     }
 }

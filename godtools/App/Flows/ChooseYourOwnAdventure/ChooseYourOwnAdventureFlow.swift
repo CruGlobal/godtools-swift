@@ -93,14 +93,14 @@ extension ChooseYourOwnAdventureFlow {
             target: viewModel,
             action: #selector(viewModel.homeTapped),
             accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.hidesHomeButton
+            hidesBarItemPublisher: viewModel.$hidesHomeButton.eraseToAnyPublisher()
         )
         
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.hidesBackButton,
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
             layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
         )
         
