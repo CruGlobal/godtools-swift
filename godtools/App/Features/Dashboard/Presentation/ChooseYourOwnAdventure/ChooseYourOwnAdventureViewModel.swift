@@ -18,39 +18,31 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
-    let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
+    let navBarAppearance: AppNavigationBarAppearance
+    let languageFont: UIFont?
+    let languageNames: [String]
     
+    @Published var selectedLanguageIndex: Int = 0
+        
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
                 
-        let navBarColor: UIColor
-        let navBarControlColor: UIColor
-
+        let languages: [LanguageDomainModel] = renderer.pageRenderers.map({$0.language})
+        languageNames = languages.map({$0.translatedName})
+        
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
-        
-        navBarColor = primaryManifest.navBarColor
-        navBarControlColor = primaryManifest.navBarControlColor
-        
-        let navBarModel = ChooseYourOwnAdventureNavBarModel(
-            barColor: navBarColor,
-            controlColor: navBarControlColor,
+                     
+        navBarAppearance = AppNavigationBarAppearance(
+            backgroundColor: primaryManifest.navBarColor,
+            controlColor: primaryManifest.navBarControlColor,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
-            languageToggleBorderColor: navBarControlColor,
-            languageToggleSelectedColor: navBarControlColor,
-            languageToggleDeselectedColor: navBarColor
+            titleColor: primaryManifest.navBarControlColor,
+            isTranslucent: false
         )
         
-        navBarColors = ObservableValue(value: navBarModel)
-        
-        if renderer.pageRenderers.count > 1 {
-            navBarTitleType = .languageToggle
-        }
-        else {
-            navBarTitleType = .title(title: "GodTools")
-        }
+        languageFont = fontService.getFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
     }
@@ -78,15 +70,6 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             hidesHomeButtonSubject.send(true)
             hidesBackButtonSubject.send(false)
         }
-    }
-    
-    func getNavBarLanguageTitles() -> [String] {
-        
-        let languageTitles: [String] = renderer.value.pageRenderers.map({$0.language.translatedName})
-        guard languageTitles.count > 1 else {
-            return Array()
-        }
-        return languageTitles
     }
 }
 
@@ -118,9 +101,11 @@ extension ChooseYourOwnAdventureViewModel {
         pageNavigationEventSignal.accept(value: event)
     }
     
-    func navLanguageTapped(index: Int) {
+    func languageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
+        
+        selectedLanguageIndex = index
     }
 }
