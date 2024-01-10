@@ -13,11 +13,11 @@ class NavBarItemData {
     let contentType: NavBarItemContentType
     let style: UIBarButtonItem.Style
     let color: UIColor?
-    let target: AnyObject
-    let action: Selector
+    let target: AnyObject?
+    let action: Selector?
     let accessibilityIdentifier: String?
     
-    init(contentType: NavBarItemContentType, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?) {
+    init(contentType: NavBarItemContentType, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject?, action: Selector?, accessibilityIdentifier: String?) {
         
         self.contentType = contentType
         self.style = style ?? .plain
@@ -38,6 +38,9 @@ class NavBarItemData {
         
         switch contentType {
         
+        case .custom(let view):
+            buttonItem = UIBarButtonItem(customView: view)
+            
         case .image(let value):
             buttonItem = UIBarButtonItem(image: value, style: style, target: target, action: action)
         
