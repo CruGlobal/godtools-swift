@@ -486,7 +486,7 @@ extension AppFlow {
             target: viewModel,
             action: #selector(viewModel.languageSettingsTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.$hidesLanguagesSettingsButton.eraseToAnyPublisher()
+            hidesBarItemPublisher: viewModel.$hidesLanguagesSettingsButton.eraseToAnyPublisher()
         )
         
         let hostingController = AppHostingController<DashboardView>(
@@ -515,6 +515,10 @@ extension AppFlow {
             titleColor: .white,
             isTranslucent: false
         )
+        
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: ApplicationLayout.shared.currentDirection.semanticContentAttribute)
+        
+        navigationController.setLayoutDirectionPublisherToApplicationLayout()
     }
     
     private func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = AppFlow.defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
