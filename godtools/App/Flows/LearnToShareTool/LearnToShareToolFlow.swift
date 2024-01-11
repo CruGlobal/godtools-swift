@@ -16,14 +16,19 @@ class LearnToShareToolFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
+    private let toolPrimaryLanguage: AppLanguageDomainModel
+    private let toolParallelLanguage: AppLanguageDomainModel?
+    
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(navigationBarAppearance: nil)
+        self.toolPrimaryLanguage = toolPrimaryLanguage
+        self.toolParallelLanguage = toolParallelLanguage
         
         navigationController.modalPresentationStyle = .fullScreen
         
@@ -44,11 +49,11 @@ class LearnToShareToolFlow: Flow {
         
         switch step {
             
-        case .continueTappedFromLearnToShareTool(let tool):
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool))
+        case .continueTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage):
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
             
-        case .closeTappedFromLearnToShareTool(let tool):
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool))
+        case .closeTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage):
+            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
             
         default:
             break
@@ -60,6 +65,8 @@ class LearnToShareToolFlow: Flow {
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
             tool: tool,
+            toolPrimaryLanguage: toolPrimaryLanguage,
+            toolParallelLanguage: toolParallelLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewLearnToShareToolUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getViewLearnToShareToolUseCase()
         )
@@ -70,7 +77,7 @@ class LearnToShareToolFlow: Flow {
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
         )
         
         let closeButton = AppCloseBarItem(

@@ -71,21 +71,22 @@ enum FlowStep {
     case languageTappedFromToolLanguageFilter
     case backTappedFromToolCategoryFilter
     case backTappedFromToolLanguageFilter
-    case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
+    case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
     case toolTappedFromTools(tool: ToolDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
     
     // toolDetails
     case backTappedFromToolDetails
-    case openToolTappedFromToolDetails(tool: ToolDomainModel)
-    case learnToShareToolTappedFromToolDetails(tool: ToolDomainModel)
+    case openToolTappedFromToolDetails(tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?)
+    case learnToShareToolTappedFromToolDetails(tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?)
     case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
-    case closeTappedFromLearnToShareTool(tool: ToolDomainModel)
-    case continueTappedFromLearnToShareTool(tool: ToolDomainModel)
+    case closeTappedFromLearnToShareTool(tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?)
+    case continueTappedFromLearnToShareTool(tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
+    case backTappedFromTool
     case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
     case tractFlowCompleted(state: TractFlowCompletedState)
         

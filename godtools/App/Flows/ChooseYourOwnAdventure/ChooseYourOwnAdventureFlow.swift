@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
@@ -81,29 +82,74 @@ extension ChooseYourOwnAdventureFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
+        navigationController.setLayoutDirectionPublisher(
+            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+        )
+        
         let homeButton = AppHomeBarItem(
             color: nil,
             target: viewModel,
             action: #selector(viewModel.homeTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.hidesHomeButton
+            hidesBarItemPublisher: viewModel.$hidesHomeButton.eraseToAnyPublisher()
         )
         
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.hidesBackButton
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
+            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
         )
         
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        let languageSelector: NavBarSelectorView?
+        let title: String?
+        
+        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
+        
+        if viewModel.languageNames.count > 1 {
+            
+            languageSelector = NavBarSelectorView(
+                selectorButtonTitles: viewModel.languageNames,
+                layoutDirection: viewModel.layoutDirection,
+                borderColor: controlColor,
+                selectedColor: controlColor,
+                deselectedColor: UIColor.clear,
+                selectedTitleColor: barColor.withAlphaComponent(1),
+                deselectedTitleColor: controlColor,
+                titleFont: viewModel.languageFont,
+                selectorTappedClosure: { (index: Int) in
+                    chooseYourOwnAdventureView?.languageTapped(index: index)
+                },
+                highlightSelectorPublisher: viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+            )
+            
+            title = nil
+        }
+        else {
+            
+            languageSelector = nil
+            
+            title = "GodTools"
+        }
+        
         let navigationBar = AppNavigationBar(
-            appearance: nil,
+            appearance: viewModel.navBarAppearance,
             backButton: nil,
             leadingItems: [homeButton, backButton],
-            trailingItems: []
+            trailingItems: [],
+            titleView: languageSelector,
+            title: title
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+        
+        chooseYourOwnAdventureView = view
         
         return view
     }

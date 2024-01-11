@@ -13,12 +13,12 @@ class NavBarItem {
     
     let controllerType: NavBarItemControllerType
     let itemData: NavBarItemData
-    let toggleVisibilityPublisher: AnyPublisher<Bool, Never>?
+    let hidesBarItemPublisher: AnyPublisher<Bool, Never>?
         
-    init(controllerType: NavBarItemControllerType, itemData: NavBarItemData, toggleVisibilityPublisher: AnyPublisher<Bool, Never>?) {
+    init(controllerType: NavBarItemControllerType, itemData: NavBarItemData, hidesBarItemPublisher: AnyPublisher<Bool, Never>?) {
         
         self.controllerType = controllerType
         self.itemData = itemData
-        self.toggleVisibilityPublisher = toggleVisibilityPublisher
+        self.hidesBarItemPublisher = hidesBarItemPublisher
     }
 }

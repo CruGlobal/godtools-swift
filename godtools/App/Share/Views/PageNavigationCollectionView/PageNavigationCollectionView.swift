@@ -28,19 +28,20 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     private let layoutType: PageNavigationCollectionViewLayoutType
-    private let loggingEnabled: Bool = false
+    private let loggingEnabled: Bool = true
     
-    private var layout: UICollectionViewLayout = UICollectionViewLayout()
+    private var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
+    private var layoutDirectionTransform: CGAffineTransform = CGAffineTransform(scaleX: 1, y: 1)
             
     @IBOutlet weak private var collectionView: UICollectionView!
     
     weak var delegate: PageNavigationCollectionViewDelegate?
     
-    init(layout: UICollectionViewLayout = UICollectionViewFlowLayout(), layoutType: PageNavigationCollectionViewLayoutType = .fullScreen) {
+    init(layoutType: PageNavigationCollectionViewLayoutType = .fullScreen) {
         
         self.layoutType = layoutType
         
@@ -51,7 +52,7 @@ class PageNavigationCollectionView: UIView, NibBased {
             self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
             
         case .fullScreen:
-            self.layout = layout
+            self.layout = UICollectionViewFlowLayout()
         }
         
         initialize()
@@ -78,10 +79,9 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private func setupLayout() {
         
-        //collectionView
-        if let flowLayout = layout as? UICollectionViewFlowLayout {
-            flowLayout.scrollDirection = .horizontal
-        }
+        //collectionView        
+        layout.scrollDirection = .horizontal
+
         collectionView.collectionViewLayout = layout
         collectionView.isScrollEnabled = true
         collectionView.showsVerticalScrollIndicator = false
@@ -183,17 +183,13 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.setContentOffset(contentOffset, animated: animated)
     }
     
-    func getSemanticContentAttribute() -> UISemanticContentAttribute {
-        return collectionView.semanticContentAttribute
-    }
-    
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
             
-        guard semanticContentAttribute != collectionView.semanticContentAttribute else {
-            return
-        }
+        let scaleX: CGFloat = semanticContentAttribute == .forceRightToLeft ? -1.0 : 1.0
         
-        collectionView.semanticContentAttribute = semanticContentAttribute
+        layoutDirectionTransform = CGAffineTransform(scaleX: scaleX, y: 1.0)
+        
+        collectionView.transform = layoutDirectionTransform
     }
     
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
@@ -495,7 +491,7 @@ extension PageNavigationCollectionView {
         if let navigationDirection = pageNavigation.navigationDirection, navigationDirection != collectionView.semanticContentAttribute {
             
             pageNavigationDirectionChanged = true
-            collectionView.semanticContentAttribute = navigationDirection
+            setSemanticContentAttribute(semanticContentAttribute: navigationDirection)
         }
         else {
     
@@ -613,6 +609,8 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
         
         cell?.backgroundColor = pageBackgroundColor
         cell?.contentView.backgroundColor = pageBackgroundColor
+        
+        cell?.transform = layoutDirectionTransform
         
         return cell ?? UICollectionViewCell()
     }

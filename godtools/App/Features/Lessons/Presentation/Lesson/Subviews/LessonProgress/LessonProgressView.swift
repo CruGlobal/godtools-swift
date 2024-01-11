@@ -22,7 +22,7 @@ class LessonProgressView: UIView, NibBased {
     @IBOutlet weak private var progressView: DownloadProgressView!
     @IBOutlet weak private var closeButton: UIButton!
     
-    required init() {
+    init(layoutDirection: UISemanticContentAttribute) {
         
         let height: CGFloat = 64
         
@@ -34,6 +34,10 @@ class LessonProgressView: UIView, NibBased {
         setupLayout()
         
         closeButton.addTarget(self, action: #selector(handleCloseTapped), for: .touchUpInside)
+        
+        let scaleX: CGFloat = layoutDirection == .forceRightToLeft ? -1.0 : 1.0
+        
+        transform = CGAffineTransform(scaleX: scaleX, y: 1.0)
     }
     
     required init?(coder: NSCoder) {

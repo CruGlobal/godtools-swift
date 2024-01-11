@@ -11,7 +11,7 @@ import Combine
 
 class AppCloseBarItem: NavBarItem {
     
-    init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         super.init(
             controllerType: .base,
@@ -23,7 +23,7 @@ class AppCloseBarItem: NavBarItem {
                 action: action,
                 accessibilityIdentifier: accessibilityIdentifier
             ),
-            toggleVisibilityPublisher: toggleVisibilityPublisher
+            hidesBarItemPublisher: hidesBarItemPublisher
         )
     }
 }

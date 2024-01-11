@@ -10,6 +10,7 @@ import UIKit
 
 enum NavBarItemContentType {
     
+    case custom(value: UIView)
     case image(value: UIImage?)
     case title(value: String)
 }

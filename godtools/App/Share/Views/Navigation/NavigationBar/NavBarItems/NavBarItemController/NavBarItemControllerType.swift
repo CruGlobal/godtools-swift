@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import UIKit
+import Combine
 
 enum NavBarItemControllerType {
      
     case appInterfaceString(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase)
-    case appLayoutDirection
+    case appLayoutDirection(layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>?)
     case base
 }

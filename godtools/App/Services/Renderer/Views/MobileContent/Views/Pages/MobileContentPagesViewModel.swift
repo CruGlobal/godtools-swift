@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class MobileContentPagesViewModel: NSObject {
+class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -116,7 +116,7 @@ class MobileContentPagesViewModel: NSObject {
         return renderer.value.pageRenderers[0]
     }
     
-    private func getRendererLanguageDirection() -> UISemanticContentAttribute {
+    var layoutDirection: UISemanticContentAttribute {
         return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
     }
     
@@ -174,7 +174,7 @@ class MobileContentPagesViewModel: NSObject {
             
             navigationEventToSend = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: getRendererLanguageDirection(),
+                    navigationDirection: layoutDirection,
                     page: currentRenderedPageNumber,
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
@@ -186,7 +186,7 @@ class MobileContentPagesViewModel: NSObject {
                 
         let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
-                navigationDirection: getRendererLanguageDirection(),
+                navigationDirection: layoutDirection,
                 page: navigationEventToSend.pageNavigation.page,
                 animated: navigationEventToSend.pageNavigation.animated,
                 reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,

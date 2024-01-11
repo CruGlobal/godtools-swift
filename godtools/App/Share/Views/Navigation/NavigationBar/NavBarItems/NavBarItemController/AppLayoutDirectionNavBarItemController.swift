@@ -13,12 +13,14 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
     
     private let layoutDirectionBasedBarItem: AppLayoutDirectionBasedBarItem
     
+    private var layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>
     private var currentSemanticContentAttribute: UISemanticContentAttribute?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(viewController: UIViewController, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
+    init(viewController: UIViewController, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
         self.layoutDirectionBasedBarItem = navBarItem
+        self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher
         
         super.init(
             viewController: viewController,
@@ -27,13 +29,13 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
             itemIndex: itemIndex
         )
         
-        ApplicationLayout.shared.semanticContentAttributePublisher
+        self.layoutDirectionPublisher
         .receive(on: DispatchQueue.main)
         .sink{ [weak self] (semanticContentAttribute: UISemanticContentAttribute) in
             
             let shouldRedraw: Bool = self?.currentSemanticContentAttribute != semanticContentAttribute
             
-            if shouldRedraw, let newBarButtonItem = self?.getNewBarItemBasedOnLayoutDirection() {
+            if shouldRedraw, let newBarButtonItem = self?.getNewBarItemBasedOnLayoutDirection(semanticContentAttribute: semanticContentAttribute) {
                 
                 self?.reDrawBarButtonItem(barButtonItem: newBarButtonItem)
             }
@@ -43,15 +45,15 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
         .store(in: &cancellables)
     }
     
-    private func getNewBarItemBasedOnLayoutDirection() -> UIBarButtonItem {
+    private func getNewBarItemBasedOnLayoutDirection(semanticContentAttribute: UISemanticContentAttribute) -> UIBarButtonItem {
         
         let image: UIImage?
         
-        switch ApplicationLayout.shared.currentDirection {
-        case .leftToRight:
-            image = layoutDirectionBasedBarItem.leftToRightImage
-        case .rightToLeft:
+        if semanticContentAttribute == .forceRightToLeft {
             image = layoutDirectionBasedBarItem.rightToLeftImage
+        }
+        else {
+            image = layoutDirectionBasedBarItem.leftToRightImage
         }
         
         let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem(contentType: .image(value: image))

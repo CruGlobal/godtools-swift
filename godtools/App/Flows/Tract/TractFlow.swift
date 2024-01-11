@@ -8,10 +8,13 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class TractFlow: ToolNavigationFlow, Flow {
         
     private var toolSettingsFlow: ToolSettingsFlow?
+    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -29,48 +32,23 @@ class TractFlow: ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
-          
-        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self
-        )
         
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            type: .tract,
-            navigation: navigation,
-            toolTranslations: toolTranslations
-        )
-                
-        let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
+        appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
         
-        let viewModel = ToolViewModel(
-            flowDelegate: self,
-            backButtonImageType: (parentFlowIsHomeFlow) ? .home : .backArrow,
-            renderer: renderer,
-            tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
-            tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            fontService: appDiContainer.getFontService(),
-            resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
-            toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
+        let toolView = getToolView(
+            toolTranslations: toolTranslations,
             liveShareStream: liveShareStream,
-            initialPage: initialPage,
             trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+            initialPage: initialPage
         )
-        
-        // TODO: Will need to make sure to configure the navigation bar here instead of in the ViewController. ~Levi See GT-2239.
-        let view = ToolView(viewModel: viewModel, navigationBar: nil)
                         
         if let sharedNavController = sharedNavigationController {
-            sharedNavController.pushViewController(view, animated: true)
+            sharedNavController.pushViewController(toolView, animated: true)
         }
         else {
-            navigationController.setViewControllers([view], animated: false)
+            navigationController.setViewControllers([toolView], animated: false)
         }
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
@@ -112,9 +90,9 @@ class TractFlow: ToolNavigationFlow, Flow {
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,
-                    message: localizationServices.stringForSystemElseEnglish(key: "exit_tract_remote_share_session.message"),
-                    cancelTitle: localizationServices.stringForSystemElseEnglish(key: "no").uppercased(),
-                    acceptTitle: localizationServices.stringForSystemElseEnglish(key: "yes").uppercased(),
+                    message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
+                    cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
                     acceptHandler: acceptHandler
                 )
                 
@@ -125,6 +103,9 @@ class TractFlow: ToolNavigationFlow, Flow {
             else {
                 closeTool()
             }
+            
+        case .backTappedFromTool:
+            closeTool()
             
         case .toolSettingsTappedFromTool(let toolData):
                     
@@ -185,6 +166,124 @@ class TractFlow: ToolNavigationFlow, Flow {
     private func closeTool() {
         
         flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTract))
+    }
+}
+
+extension TractFlow {
+    
+    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) -> UIViewController {
+        
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
+            parentFlow: self,
+            navigationDelegate: self
+        )
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
+            type: .tract,
+            navigation: navigation,
+            toolTranslations: toolTranslations
+        )
+        
+        let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
+        
+        let viewModel = ToolViewModel(
+            flowDelegate: self,
+            renderer: renderer,
+            tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
+            tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
+            fontService: appDiContainer.getFontService(),
+            resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
+            toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
+            liveShareStream: liveShareStream,
+            initialPage: initialPage,
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        )
+        
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
+        navigationController.setLayoutDirectionPublisher(
+            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+        )
+        
+        let backBarItem: NavBarItem
+        
+        if parentFlowIsHomeFlow {
+            backBarItem = AppHomeBarItem(color: nil, target: viewModel, action: #selector(viewModel.homeTapped), accessibilityIdentifier: nil)
+        }
+        else {
+            backBarItem = AppBackBarItem(target: viewModel, action: #selector(viewModel.backTapped), accessibilityIdentifier: nil)
+        }
+        
+        let remoteShareActiveBarItem = AppLottieBarItem(
+            animationName: "remote_share_active",
+            color: nil,
+            target: nil,
+            action: nil,
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesRemoteShareIsActive.eraseToAnyPublisher()
+        )
+        
+        let toolSettingsBarItem = NavBarItem(
+            controllerType: .base,
+            itemData: NavBarItemData(
+                contentType: .image(value: ImageCatalog.navToolSettings.uiImage),
+                style: .plain,
+                color: nil,
+                target: viewModel,
+                action: #selector(viewModel.toolSettingsTapped),
+                accessibilityIdentifier: nil
+            ),
+            hidesBarItemPublisher: nil
+        )
+        
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        var toolView: ToolView?
+        
+        let languageSelector: NavBarSelectorView?
+        
+        if viewModel.languageNames.count > 1 {
+         
+            languageSelector = NavBarSelectorView(
+                selectorButtonTitles: viewModel.languageNames,
+                layoutDirection: viewModel.layoutDirection,
+                borderColor: controlColor,
+                selectedColor: controlColor,
+                deselectedColor: UIColor.clear,
+                selectedTitleColor: barColor.withAlphaComponent(1),
+                deselectedTitleColor: controlColor,
+                titleFont: viewModel.languageFont,
+                selectorTappedClosure: { (index: Int) in
+                    toolView?.languageTapped(index: index)
+                },
+                highlightSelectorPublisher: viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+            )
+        }
+        else {
+            
+            languageSelector = nil
+        }
+                
+        let navigationBar = AppNavigationBar(
+            appearance: viewModel.navBarAppearance,
+            backButton: nil,
+            leadingItems: [backBarItem],
+            trailingItems: [remoteShareActiveBarItem, toolSettingsBarItem],
+            titleView: languageSelector,
+            title: nil
+        )
+        
+        let view = ToolView(viewModel: viewModel, navigationBar: navigationBar)
+        
+        toolView = view
+        
+        return view
     }
 }
 
