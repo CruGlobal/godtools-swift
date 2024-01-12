@@ -1,4 +1,5 @@
 "onboardingTutorial.chooseLanguageButton.title" = "選擇語言";
+"languageSettings.confirmAppLanguage.message" = "您已將「%@」選為應用程式的語言。這項動作將會變更整個 GodTools 應用程式的語言設定。確定要變更嗎？";
 "allTools.filter.anyCategory" = "不限類別";
 "allTools.filter.anyLanguage" = "不限語言";
 "menu_getStarted" = "開始使用";

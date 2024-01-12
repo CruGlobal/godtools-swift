@@ -13,6 +13,7 @@ import Combine
 class FavoritesViewModel: ObservableObject {
             
     private let dataDownloader: InitialDataDownloader
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
@@ -28,6 +29,8 @@ class FavoritesViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    
+    @Published private var appLanguage: AppLanguageDomainModel = ""
         
     @Published var openTutorialBannerMessage: String = ""
     @Published var openTutorialBannerButtonTitle: String = ""
@@ -43,10 +46,11 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
@@ -58,6 +62,10 @@ class FavoritesViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                  
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
         getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.showTutorialLabel.text")
             .receive(on: DispatchQueue.main)
             .assign(to: &$openTutorialBannerMessage)
@@ -94,7 +102,12 @@ class FavoritesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$noFavoriteToolsButtonText)
         
-        getOptInOnboardingBannerEnabledUseCase.getBannerIsEnabled()
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> in
+                return getOptInOnboardingBannerEnabledUseCase
+                    .getBannerIsEnabled(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
                 self?.showsOpenTutorialBanner = isEnabled

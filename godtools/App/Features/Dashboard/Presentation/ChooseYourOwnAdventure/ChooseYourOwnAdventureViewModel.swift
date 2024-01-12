@@ -8,97 +8,109 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
-    
-    private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
-    
+        
     private let fontService: FontService
+    
+    @Published private var languages: [LanguageDomainModel] = Array()
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let backButtonImage: ObservableValue<UIImage?>
-    let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
-    let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
+    let navBarAppearance: AppNavigationBarAppearance
+    let languageFont: UIFont?
     
+    @Published var hidesHomeButton: Bool = false
+    @Published var hidesBackButton: Bool = true
+    @Published var languageNames: [String] = Array()
+    @Published var selectedLanguageIndex: Int = 0
+        
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
-        
-        backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
-        
-        let navBarColor: UIColor
-        let navBarControlColor: UIColor
-
+                        
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
-        
-        navBarColor = primaryManifest.navBarColor
-        navBarControlColor = primaryManifest.navBarControlColor
-        
-        let navBarModel = ChooseYourOwnAdventureNavBarModel(
-            barColor: navBarColor,
-            controlColor: navBarControlColor,
+                     
+        navBarAppearance = AppNavigationBarAppearance(
+            backgroundColor: primaryManifest.navBarColor,
+            controlColor: primaryManifest.navBarControlColor,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
-            languageToggleBorderColor: navBarControlColor,
-            languageToggleSelectedColor: navBarControlColor,
-            languageToggleDeselectedColor: navBarColor
+            titleColor: primaryManifest.navBarControlColor,
+            isTranslucent: false
         )
         
-        navBarColors = ObservableValue(value: navBarModel)
-        
-        if renderer.pageRenderers.count > 1 {
-            navBarTitleType = .languageToggle
-        }
-        else {
-            navBarTitleType = .title(title: "GodTools")
-        }
+        languageFont = fontService.getFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
+        
+        $languages.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: [LanguageDomainModel]) in
+                self?.languageNames = languages.map({$0.translatedName})
+            }
+            .store(in: &cancellables)
     }
     
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
         
         let isFirstPage: Bool = page == 0
-        let navBackImage: UIImage?
         
         if isFirstPage {
-            navBackImage = ChooseYourOwnAdventureViewModel.navHomeImage
+            hidesHomeButton = false
+            hidesBackButton = true
         }
         else {
-            navBackImage = ImageCatalog.navBack.uiImage
+            hidesHomeButton = true
+            hidesBackButton = false
         }
-        
-        backButtonImage.accept(value: navBackImage)
     }
     
-    func getNavBarLanguageTitles() -> [String] {
+    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
+                
+        languages = renderer.pageRenderers.map({$0.language})
         
-        let languageTitles: [String] = renderer.value.pageRenderers.map({$0.language.translatedName})
-        guard languageTitles.count > 1 else {
-            return Array()
-        }
-        return languageTitles
+        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
     }
 }
 
-// MARK: - Inpits
+// MARK: - Inputs
 
 extension ChooseYourOwnAdventureViewModel {
     
-    func navBackTapped() {
-        
-        let isFirstPage: Bool = currentRenderedPageNumber == 0
-        
-        if isFirstPage {
-            flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
-        }
+    @objc func homeTapped() {
+        flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
     }
     
-    func navLanguageTapped(index: Int) {
+    @objc func backTapped() {
+        
+        guard currentRenderedPageNumber > 0 else {
+            return
+        }
+        
+        let event = MobileContentPagesNavigationEvent(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: currentRenderedPageNumber - 1,
+                animated: true,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil
+            ),
+            pagePositions: nil
+        )
+        
+        pageNavigationEventSignal.accept(value: event)
+    }
+    
+    func languageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
+        
+        selectedLanguageIndex = index
     }
 }

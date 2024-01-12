@@ -25,6 +25,10 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
+    var layoutDirection: ApplicationLayoutDirection {
+        return renderedPageContext.primaryLanguageLayoutDirection
+    }
+    
     private func getPageAnalyticsScreenName() -> String {
         
         let resource: ResourceModel = renderedPageContext.resource

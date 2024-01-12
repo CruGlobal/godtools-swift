@@ -8,9 +8,12 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -27,7 +30,37 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                 
+        
+        sharedNavigationController.pushViewController(
+            getChooseYourOwnAdventureView(toolTranslations: toolTranslations, initialPage: initialPage),
+            animated: true
+        )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func navigate(step: FlowStep) {
+        
+        switch step {
+        case .backTappedFromChooseYourOwnAdventure:
+            closeTool()
+            
+        default:
+            break
+        }
+    }
+    
+    private func closeTool() {
+        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow {
+    
+    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?) -> UIViewController {
+        
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
             navigationDelegate: self
@@ -51,28 +84,122 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = ChooseYourOwnAdventureView(viewModel: viewModel)
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
         
-        sharedNavigationController.pushViewController(view, animated: true)
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func navigate(step: FlowStep) {
+        navigationController.setLayoutDirectionPublisher(
+            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+        )
         
-        switch step {
-        case .backTappedFromChooseYourOwnAdventure:
-            closeTool()
+        let homeButton = AppHomeBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.homeTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesHomeButton.eraseToAnyPublisher()
+        )
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
+            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+        )
+        
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        let languageSelector: NavBarSelectorView?
+        let title: String?
+        
+        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
+        
+        if viewModel.languageNames.count > 1 {
             
-        default:
-            break
+            languageSelector = NavBarSelectorView(
+                selectorButtonTitles: viewModel.languageNames,
+                layoutDirection: viewModel.layoutDirection,
+                borderColor: controlColor,
+                selectedColor: controlColor,
+                deselectedColor: UIColor.clear,
+                selectedTitleColor: barColor.withAlphaComponent(1),
+                deselectedTitleColor: controlColor,
+                titleFont: viewModel.languageFont,
+                selectorTappedClosure: { (index: Int) in
+                    chooseYourOwnAdventureView?.languageTapped(index: index)
+                }
+            )
+            
+            title = nil
         }
+        else {
+            
+            languageSelector = nil
+            
+            title = "GodTools"
+        }
+        
+        let navigationBar = AppNavigationBar(
+            appearance: viewModel.navBarAppearance,
+            backButton: nil,
+            leadingItems: [homeButton, backButton],
+            trailingItems: [],
+            titleView: languageSelector,
+            title: title
+        )
+        
+        let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+        
+        chooseYourOwnAdventureView = view
+        
+        viewModel.$languageNames.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languageNames: [String]) in
+                                
+                if languageNames.count > 1 {
+                    navigationBar.setTitleView(
+                        titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel)
+                    )
+                }
+                else {
+                    navigationBar.setTitle(title: "GodTools")
+                }
+
+                self?.navigationController.setLayoutDirectionPublisher(
+                    layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+                )
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (index: Int) in
+                
+                (navigationBar.getTitleView() as? NavBarSelectorView)?.setSelectedIndex(index: index)
+            }
+            .store(in: &cancellables)
+        
+        return view
     }
     
-    private func closeTool() {
-        flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    private func getNewLanguageSelectorView(view: ChooseYourOwnAdventureView?, viewModel: ChooseYourOwnAdventureViewModel) -> NavBarSelectorView {
+        
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        return NavBarSelectorView(
+            selectorButtonTitles: viewModel.languageNames,
+            layoutDirection: viewModel.layoutDirection,
+            borderColor: controlColor,
+            selectedColor: controlColor,
+            deselectedColor: UIColor.clear,
+            selectedTitleColor: barColor.withAlphaComponent(1),
+            deselectedTitleColor: controlColor,
+            titleFont: viewModel.languageFont,
+            selectorTappedClosure: { (index: Int) in
+                view?.languageTapped(index: index)
+            }
+        )
     }
 }
 

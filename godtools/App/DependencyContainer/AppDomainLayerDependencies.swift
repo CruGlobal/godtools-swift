@@ -143,9 +143,7 @@ class AppDomainLayerDependencies {
     }
     
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
-        return GetOptInOnboardingTutorialAvailableUseCase(
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase()
-        )
+        return GetOptInOnboardingTutorialAvailableUseCase()
     }
     
     func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {

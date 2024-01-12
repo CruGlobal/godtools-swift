@@ -12,6 +12,8 @@ import Combine
 class LearnToShareToolViewModel: ObservableObject {
     
     private let tool: ToolDomainModel
+    private let toolPrimaryLanguage: AppLanguageDomainModel
+    private let toolParallelLanguage: AppLanguageDomainModel?
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase
     
@@ -27,10 +29,12 @@ class LearnToShareToolViewModel: ObservableObject {
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
+        self.toolPrimaryLanguage = toolPrimaryLanguage
+        self.toolParallelLanguage = toolParallelLanguage
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewLearnToShareToolUseCase = viewLearnToShareToolUseCase
               
@@ -115,13 +119,13 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool))
+        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage))
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool))
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage))
         }
         else {
             currentPage = currentPage + 1

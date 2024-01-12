@@ -1,4 +1,3 @@
-"languageSettings.downloadableLanguages.title" = "Downloadable languages";
 "onboardingTutorial.chooseLanguageButton.title" = "Choose language";
 "languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";

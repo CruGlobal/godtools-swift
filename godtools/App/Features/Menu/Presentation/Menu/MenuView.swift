@@ -33,10 +33,13 @@ struct MenuView: View {
                         sectionTitle: viewModel.getStartedSectionTitle,
                         menuItemsViewBuilder: {
                             
-                            MenuItemView(imageAssetName: ImageCatalog.school.name, title: viewModel.tutorialOptionTitle, tappedClosure: {
+                            if viewModel.showsTutorialOption {
                                 
-                                viewModel.tutorialTapped()
-                            })
+                                MenuItemView(imageAssetName: ImageCatalog.school.name, title: viewModel.tutorialOptionTitle, tappedClosure: {
+                                    
+                                    viewModel.tutorialTapped()
+                                })
+                            }
                             
                             MenuItemView(imageAssetName: ImageCatalog.translate.name, title: viewModel.languageSettingsOptionTitle, tappedClosure: {
                                 
