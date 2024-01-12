@@ -28,7 +28,7 @@ class AppLanguagesCache {
             AppLanguageDataModel(languageCode: "vi", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageDataModel(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageDataModel(languageCode: "bn", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageDataModel(languageCode: "ur", languageDirection: .leftToRight, languageScriptCode: nil)
+            AppLanguageDataModel(languageCode: "ur", languageDirection: .rightToLeft, languageScriptCode: nil)
         ]
     }
     
