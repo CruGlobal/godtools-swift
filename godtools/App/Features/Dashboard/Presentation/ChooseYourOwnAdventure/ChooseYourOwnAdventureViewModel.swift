@@ -14,24 +14,25 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
     private let fontService: FontService
     
+    @Published private var languages: [LanguageDomainModel] = Array()
+    
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let navBarAppearance: AppNavigationBarAppearance
     let languageFont: UIFont?
-    let languageNames: [String]
     
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
+    @Published var languageNames: [String] = Array()
     @Published var selectedLanguageIndex: Int = 0
         
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
-                
-        let languages: [LanguageDomainModel] = renderer.pageRenderers.map({$0.language})
-        languageNames = languages.map({$0.translatedName})
-        
+                        
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
                      
         navBarAppearance = AppNavigationBarAppearance(
@@ -45,6 +46,13 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         languageFont = fontService.getFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
+        
+        $languages.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: [LanguageDomainModel]) in
+                self?.languageNames = languages.map({$0.translatedName})
+            }
+            .store(in: &cancellables)
     }
     
     override func pageDidAppear(page: Int) {
@@ -60,6 +68,13 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             hidesHomeButton = true
             hidesBackButton = false
         }
+    }
+    
+    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
+                
+        languages = renderer.pageRenderers.map({$0.language})
+        
+        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
     }
 }
 

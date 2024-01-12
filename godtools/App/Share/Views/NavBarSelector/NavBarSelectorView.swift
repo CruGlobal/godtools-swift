@@ -7,27 +7,24 @@
 //
 
 import UIKit
-import Combine
 
 class NavBarSelectorView: UIView {
     
     private let stackView: UIStackView = UIStackView()
-    private let selectorButtonTitles: [String]
     private let layoutDirection: UISemanticContentAttribute
     private let borderColor: UIColor
     private let titleFont: UIFont?
-    private let highlightSelectorPublisher: AnyPublisher<Int, Never>
     
+    private var selectorButtonTitles: [String]
     private var selectedColor: UIColor
     private var deselectedColor: UIColor
     private var selectedTitleColor: UIColor?
     private var deselectedTitleColor: UIColor?
     private var selectorButtons: [UIButton] = Array()
-    private var highlightedIndex: Int = 0
+    private var selectedIndex: Int = 0
     private var selectorTappedClosure: ((_ index: Int) -> Void)
-    private var cancellables: Set<AnyCancellable> = Set()
             
-    init(selectorButtonTitles: [String], layoutDirection: UISemanticContentAttribute, borderColor: UIColor = .white, selectedColor: UIColor = .darkGray, deselectedColor: UIColor = .lightGray, selectedTitleColor: UIColor? = nil, deselectedTitleColor: UIColor? = nil, titleFont: UIFont? = nil, selectorTappedClosure: @escaping ((_ index: Int) -> Void), highlightSelectorPublisher: AnyPublisher<Int, Never>) {
+    init(selectorButtonTitles: [String], layoutDirection: UISemanticContentAttribute, selectedIndex: Int = 0, borderColor: UIColor = .white, selectedColor: UIColor = .darkGray, deselectedColor: UIColor = .lightGray, selectedTitleColor: UIColor? = nil, deselectedTitleColor: UIColor? = nil, titleFont: UIFont? = nil, selectorTappedClosure: @escaping ((_ index: Int) -> Void)) {
                 
         self.selectorButtonTitles = selectorButtonTitles
         self.layoutDirection = layoutDirection
@@ -37,8 +34,8 @@ class NavBarSelectorView: UIView {
         self.selectedTitleColor = selectedTitleColor
         self.deselectedTitleColor = deselectedTitleColor
         self.titleFont = titleFont
+        self.selectedIndex = selectedIndex
         self.selectorTappedClosure = selectorTappedClosure
-        self.highlightSelectorPublisher = highlightSelectorPublisher
         
         let buttonWidth: CGFloat = 88
         let width: CGFloat = CGFloat(selectorButtonTitles.count) * buttonWidth
@@ -50,20 +47,6 @@ class NavBarSelectorView: UIView {
         reloadSelectorButtons(selectorButtonTitles: selectorButtonTitles)
         
         relayoutForBoundsChange()
-        
-        highlightSelector(highlightIndex: convertIndexForLayoutDirection(index: 0))
-        
-        highlightSelectorPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (index: Int) in
-                
-                guard let index = self?.convertIndexForLayoutDirection(index: index) else {
-                    return
-                }
-                
-                self?.highlightSelector(highlightIndex: index)
-            }
-            .store(in: &cancellables)
     }
     
     required init?(coder: NSCoder) {
@@ -92,7 +75,7 @@ class NavBarSelectorView: UIView {
         relayoutForBoundsChange()
     }
     
-    private func convertIndexForLayoutDirection(index: Int) -> Int {
+    private func getIndexForLayoutDirection(index: Int, layoutDirection: UISemanticContentAttribute) -> Int {
         
         let length: Int = selectorButtonTitles.count
         
@@ -110,8 +93,20 @@ class NavBarSelectorView: UIView {
         }
     }
     
-    var selectedIndex: Int {
-        return convertIndexForLayoutDirection(index: highlightedIndex)
+    func getSelectedIndex() -> Int {
+        return getIndexForLayoutDirection(index: selectedIndex, layoutDirection: layoutDirection)
+    }
+    
+    func setSelectedIndex(index: Int) {
+        self.selectedIndex = index
+        highlightSelectorAtIndex(index: getIndexForLayoutDirection(index: index, layoutDirection: layoutDirection))
+    }
+    
+    func setSelectorButtonTitles(selectorButtonTitles: [String]) {
+        
+        self.selectorButtonTitles = selectorButtonTitles
+        
+        reloadSelectorButtons(selectorButtonTitles: selectorButtonTitles)
     }
     
     func setSelectedColor(selectedColor: UIColor, deselectedColor: UIColor) {
@@ -178,15 +173,17 @@ class NavBarSelectorView: UIView {
             )
         }
         
-        highlightSelector(highlightIndex: highlightedIndex)
+        highlightSelectorAtIndex(
+            index: getIndexForLayoutDirection(index: selectedIndex, layoutDirection: layoutDirection)
+        )
     }
     
-    private func highlightSelector(highlightIndex: Int) {
+    private func highlightSelectorAtIndex(index: Int) {
         
-        for index in 0 ..< selectorButtons.count {
+        for selectorIndex in 0 ..< selectorButtons.count {
             
-            let button: UIButton = selectorButtons[index]
-            let isSelected: Bool = highlightIndex == index
+            let button: UIButton = selectorButtons[selectorIndex]
+            let isSelected: Bool = index == selectorIndex
             
             let buttonColor: UIColor = isSelected ? selectedColor : deselectedColor
             let titleColor: UIColor
@@ -211,11 +208,11 @@ class NavBarSelectorView: UIView {
             return
         }
         
-        self.highlightedIndex = tappedButtonIndex
+        self.selectedIndex = tappedButtonIndex
         
-        highlightSelector(highlightIndex: tappedButtonIndex)
+        highlightSelectorAtIndex(index: tappedButtonIndex)
         
-        let indexForLayoutDirection = convertIndexForLayoutDirection(index: tappedButtonIndex)
+        let indexForLayoutDirection = getIndexForLayoutDirection(index: tappedButtonIndex, layoutDirection: layoutDirection)
                 
         selectorTappedClosure(indexForLayoutDirection)
     }

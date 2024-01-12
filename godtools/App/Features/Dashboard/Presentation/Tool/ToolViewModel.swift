@@ -19,18 +19,20 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
-    private let languages: [LanguageDomainModel]
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
+    
+    @Published private var languages: [LanguageDomainModel] = Array()
     
     private weak var flowDelegate: FlowDelegate?
     
     let navBarAppearance: AppNavigationBarAppearance
     let languageFont: UIFont?
-    let languageNames: [String]
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
     
     @Published var hidesRemoteShareIsActive: Bool = true
+    @Published var languageNames: [String] = Array()
     @Published var selectedLanguageIndex: Int = 0
         
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
@@ -45,8 +47,6 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.liveShareStream = liveShareStream
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
-        languages = renderer.pageRenderers.map({$0.language})
-        languageNames = languages.map({$0.translatedName})
         
         navBarAppearance = AppNavigationBarAppearance(
             backgroundColor: primaryManifest.navBarColor,
@@ -61,6 +61,13 @@ class ToolViewModel: MobileContentPagesViewModel {
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
         
         setupBinding()
+        
+        $languages.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: [LanguageDomainModel]) in
+                self?.languageNames = languages.map({$0.translatedName})
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -146,6 +153,8 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
                 
+        languages = renderer.pageRenderers.map({$0.language})
+        
         super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
     }
 }
