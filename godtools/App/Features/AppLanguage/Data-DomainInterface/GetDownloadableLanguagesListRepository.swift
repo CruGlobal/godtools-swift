@@ -114,7 +114,7 @@ extension GetDownloadableLanguagesListRepository {
             
         } else {
             
-            return .downloading(progress: 0)
+            return .downloading(progress: nil)
         }
     }
     

@@ -15,7 +15,7 @@ struct DownloadableLanguageItemView: View {
     private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
     
-    @State private var downloadProgress: Double?
+    @State private var animationDownloadProgress: Double?
     @State private var downloadProgressTarget: Double?
     @State private var timer: Timer?
     
@@ -55,7 +55,7 @@ struct DownloadableLanguageItemView: View {
                 
             } label: {
                 
-                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: downloadProgress)
+                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress)
             }
         }
         .onChange(of: downloadableLanguage.downloadStatus, perform: { newValue in
@@ -63,13 +63,13 @@ struct DownloadableLanguageItemView: View {
             switch newValue {
             case .notDownloaded:
                 self.downloadProgressTarget = nil
-                self.downloadProgress = nil
+                self.animationDownloadProgress = nil
                 
             case .downloading(let progress):
                 self.downloadProgressTarget = progress
                 
-                if downloadProgress == nil {
-                    downloadProgress = 0.1
+                if animationDownloadProgress == nil {
+                    animationDownloadProgress = 0.1
                 }
             case .downloaded:
                 self.downloadProgressTarget = 1
@@ -80,19 +80,19 @@ struct DownloadableLanguageItemView: View {
             }
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
-        .animation(.default, value: downloadProgress)
+        .animation(.default, value: animationDownloadProgress)
     }
     
     private func startAnimationTimer() {
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { timer in
-            guard let downloadProgress = self.downloadProgress,
+            guard let downloadProgress = self.animationDownloadProgress,
                   let progressTarget = self.downloadProgressTarget
             else { return }
             
             if downloadProgress < progressTarget {
                 
-                self.downloadProgress? += 0.1
+                self.animationDownloadProgress? += 0.1
                 
             } else if progressTarget >= 1 && downloadProgress >= 1 {
                 

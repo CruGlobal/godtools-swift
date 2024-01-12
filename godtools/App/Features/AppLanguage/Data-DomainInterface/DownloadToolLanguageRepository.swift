@@ -26,7 +26,7 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
             
         downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
-        let includeToolTypes: [ResourceType] = [.article, .tract, .lesson, .chooseYourOwnAdventure]
+        let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
         let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageCode, resourceTypes: includeToolTypes))
        
@@ -35,6 +35,7 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         }
         
         guard !translations.isEmpty else {
+            
             return Just(1).setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }

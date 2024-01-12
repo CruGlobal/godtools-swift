@@ -38,14 +38,19 @@ struct LanguageDownloadIcon: View {
         switch languageDownloadStatus {
         case .notDownloaded:
             
-            Image(systemName: "arrow.down.to.line")
-                .imageScale(.small)
+            notDownloadedIcon()
             
         case .downloading(let progress):
             
-            let downloadProgress = self.animationDownloadProgress ?? progress
-            drawProgressInCircle(progress: downloadProgress)
+            if let downloadProgress = self.animationDownloadProgress ?? progress {
             
+                drawProgressInCircle(progress: downloadProgress)
+                
+            } else {
+                
+                notDownloadedIcon()
+            }
+                        
         case .downloaded:
             
             if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
@@ -57,6 +62,11 @@ struct LanguageDownloadIcon: View {
                     .imageScale(.small)
             }
         }
+    }
+    
+    @ViewBuilder private func notDownloadedIcon() -> some View {
+        Image(systemName: "arrow.down.to.line")
+            .imageScale(.small)
     }
     
     @ViewBuilder private func drawProgressInCircle(progress: Double) -> some View {
