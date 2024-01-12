@@ -10,10 +10,10 @@ import UIKit
 
 class AppNavigationBar {
     
-    private let appearance: AppNavigationBarAppearance?
-    private let titleView: UIView?
-    private let title: String?
-
+    private var appearance: AppNavigationBarAppearance?
+    private var titleView: UIView?
+    private var title: String?
+    
     private(set) var navBarItems: NavBarItems?
     
     private weak var viewController: UIViewController?
@@ -32,13 +32,15 @@ class AppNavigationBar {
         self.title = title
     }
     
-    private func setAppearance() {
+    func setAppearance(appearance: AppNavigationBarAppearance) {
         
-        guard let navigationController = viewController?.navigationController, let appearance = self.appearance else {
+        self.appearance = appearance
+        
+        guard let navigationBar = viewController?.navigationController?.navigationBar else {
             return
         }
         
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        navigationBar.setupNavigationBarAppearance(
             backgroundColor: appearance.backgroundColor,
             controlColor: appearance.controlColor,
             titleFont: appearance.titleFont,
@@ -69,15 +71,41 @@ class AppNavigationBar {
         )
         
         if let titleView = self.titleView {
-            viewController.navigationItem.titleView = titleView
+            setTitleView(titleView: titleView)
         }
         else if let title = title {
-            viewController.title = title
+            setTitle(title: title)
         }
     }
     
     func willAppear(animated: Bool) {
                 
-        setAppearance()
+        if let appearance = self.appearance {
+            setAppearance(appearance: appearance)
+        }
+    }
+    
+    func getTitleView() -> UIView? {
+        return titleView
+    }
+    
+    func setTitleView(titleView: UIView?) {
+        
+        self.titleView = titleView
+        
+        viewController?.title = nil
+        viewController?.navigationItem.titleView = titleView
+    }
+    
+    func getTitle() -> String? {
+        return title
+    }
+    
+    func setTitle(title: String?) {
+        
+        self.title = title
+        
+        viewController?.navigationItem.titleView = nil
+        viewController?.title = title
     }
 }

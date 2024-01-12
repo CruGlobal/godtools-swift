@@ -13,6 +13,7 @@ import Combine
 class TractFlow: ToolNavigationFlow, Flow {
         
     private var toolSettingsFlow: ToolSettingsFlow?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
@@ -204,12 +205,6 @@ extension TractFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        navigationController.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
-        
-        navigationController.setLayoutDirectionPublisher(
-            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
-        )
-        
         let backBarItem: NavBarItem
         
         if parentFlowIsHomeFlow {
@@ -241,41 +236,14 @@ extension TractFlow {
             hidesBarItemPublisher: nil
         )
         
-        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
-        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
-        
         var toolView: ToolView?
-        
-        let languageSelector: NavBarSelectorView?
-        
-        if viewModel.languageNames.count > 1 {
-         
-            languageSelector = NavBarSelectorView(
-                selectorButtonTitles: viewModel.languageNames,
-                layoutDirection: viewModel.layoutDirection,
-                borderColor: controlColor,
-                selectedColor: controlColor,
-                deselectedColor: UIColor.clear,
-                selectedTitleColor: barColor.withAlphaComponent(1),
-                deselectedTitleColor: controlColor,
-                titleFont: viewModel.languageFont,
-                selectorTappedClosure: { (index: Int) in
-                    toolView?.languageTapped(index: index)
-                },
-                highlightSelectorPublisher: viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
-            )
-        }
-        else {
-            
-            languageSelector = nil
-        }
-                
+              
         let navigationBar = AppNavigationBar(
             appearance: viewModel.navBarAppearance,
             backButton: nil,
             leadingItems: [backBarItem],
             trailingItems: [remoteShareActiveBarItem, toolSettingsBarItem],
-            titleView: languageSelector,
+            titleView: nil,
             title: nil
         )
         
@@ -283,7 +251,58 @@ extension TractFlow {
         
         toolView = view
         
+        viewModel.$languageNames.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languageNames: [String]) in
+                
+                let languageSelectorView: NavBarSelectorView?
+                
+                if languageNames.count > 1 {
+                    languageSelectorView = self?.getNewLanguageSelectorView(view: toolView, viewModel: viewModel)
+                }
+                else {
+                    languageSelectorView = nil
+                }
+                
+                navigationBar.setTitleView(
+                    titleView: languageSelectorView
+                )
+                
+                self?.navigationController.setLayoutDirectionPublisher(
+                    layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+                )
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (index: Int) in
+                
+                (navigationBar.getTitleView() as? NavBarSelectorView)?.setSelectedIndex(index: index)
+            }
+            .store(in: &cancellables)
+        
         return view
+    }
+    
+    private func getNewLanguageSelectorView(view: ToolView?, viewModel: ToolViewModel) -> NavBarSelectorView {
+        
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        return NavBarSelectorView(
+            selectorButtonTitles: viewModel.languageNames,
+            layoutDirection: viewModel.layoutDirection,
+            borderColor: controlColor,
+            selectedColor: controlColor,
+            deselectedColor: UIColor.clear,
+            selectedTitleColor: barColor.withAlphaComponent(1),
+            deselectedTitleColor: controlColor,
+            titleFont: viewModel.languageFont,
+            selectorTappedClosure: { (index: Int) in
+                view?.languageTapped(index: index)
+            }
+        )
     }
 }
 
