@@ -35,7 +35,12 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         )
         .map { _ in
             
-            return self.languagesRepository.getLanguages().map { language in
+            return self.languagesRepository.getLanguages().compactMap { language in
+                
+                let numberToolsAvailable = self.getNumberToolsAvailable(for: language.languageCode)
+                if numberToolsAvailable == 0 {
+                    return nil
+                }
                 
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
@@ -46,7 +51,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     translatedInLanguage: currentAppLanguage
                 )
                 
-                let toolsAvailableText = self.getToolsAvailableText(for: language.languageCode, translatedIn: currentAppLanguage)
+                let toolsAvailableText = self.getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: currentAppLanguage)
                 
                 let downloadStatus = self.getDownloadStatus(for: language.id)
                 
@@ -72,7 +77,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
 
 extension GetDownloadableLanguagesListRepository {
     
-    private func getToolsAvailableText(for languageCode: String, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+    private func getNumberToolsAvailable(for languageCode: String) -> Int {
         
         let filter = ResourcesFilter(
             category: nil,
@@ -80,7 +85,11 @@ extension GetDownloadableLanguagesListRepository {
             resourceTypes: ResourceType.toolTypes
         )
         
-        let numberOfTools = resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+    }
+    
+    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+        
         let localeId = translationLanguage
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
