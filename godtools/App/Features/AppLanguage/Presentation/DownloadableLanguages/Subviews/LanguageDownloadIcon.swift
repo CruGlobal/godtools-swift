@@ -13,11 +13,11 @@ struct LanguageDownloadIcon: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     private let languageDownloadStatus: LanguageDownloadStatusDomainModel
-    private let downloadProgress: Double?
+    private let animationDownloadProgress: Double?
     
-    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, downloadProgress: Double?) {
+    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, animationDownloadProgress: Double?) {
         self.languageDownloadStatus = languageDownloadStatus
-        self.downloadProgress = downloadProgress
+        self.animationDownloadProgress = animationDownloadProgress
     }
 
     var body: some View {
@@ -42,16 +42,17 @@ struct LanguageDownloadIcon: View {
                 .imageScale(.small)
             
         case .downloading(let progress):
-            let downloadProgress = self.downloadProgress ?? progress
+            
+            let downloadProgress = self.animationDownloadProgress ?? progress
             drawProgressInCircle(progress: downloadProgress)
             
         case .downloaded:
-            if let downloadProgress = downloadProgress, downloadProgress <= 1 {
-                // allow progress animation to complete even though download has completed
-                drawProgressInCircle(progress: downloadProgress)
+            
+            if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
+
+                drawProgressInCircle(progress: animationDownloadProgress)
                 
             } else {
-                
                 Image(systemName: "checkmark")
                     .imageScale(.small)
             }
@@ -95,5 +96,11 @@ struct LanguageDownloadIcon: View {
         case .downloaded:
             return ColorPalette.gtBlue.color
         }
+    }
+    
+    private func shouldFinishAnimatingDownloadProgress() -> Bool {
+        
+        guard let animationDownloadProgress = animationDownloadProgress else { return false }
+        return animationDownloadProgress <= 1
     }
 }

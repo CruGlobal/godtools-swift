@@ -16,6 +16,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
+    private let sortDate: Date = Date()
     
     init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
@@ -100,7 +101,7 @@ extension GetDownloadableLanguagesListRepository {
         
         if downloadedLanguage.downloadComplete {
             
-            return .downloaded
+            return .downloaded(date: downloadedLanguage.createdAt)
             
         } else {
             
@@ -110,10 +111,12 @@ extension GetDownloadableLanguagesListRepository {
     
     private func getSortOrder(language1: DownloadableLanguageListItemDomainModel, language2: DownloadableLanguageListItemDomainModel) -> Bool {
         
-        if language1.isDownloaded && !language2.isDownloaded {
+        if language1.wasDownloadedBefore(date: sortDate) && !language2.wasDownloadedBefore(date: sortDate) {
+            
             return true
             
-        } else if language2.isDownloaded && !language1.isDownloaded {
+        } else if language2.wasDownloadedBefore(date: sortDate) && !language1.wasDownloadedBefore(date: sortDate) {
+            
             return false
             
         } else {

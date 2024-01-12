@@ -55,7 +55,7 @@ struct DownloadableLanguageItemView: View {
                 
             } label: {
                 
-                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, downloadProgress: downloadProgress)
+                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: downloadProgress)
             }
         }
         .onChange(of: downloadableLanguage.downloadStatus, perform: { newValue in

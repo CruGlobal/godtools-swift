@@ -12,5 +12,19 @@ enum LanguageDownloadStatusDomainModel: Equatable {
     
     case notDownloaded
     case downloading(progress: Double)
-    case downloaded
+    case downloaded(date: Date)
+}
+
+extension LanguageDownloadStatusDomainModel {
+    
+    var downloadedAt: Date? {
+        
+        switch self {
+        case .downloaded(let date):
+            return date
+            
+        default:
+            return nil
+        }
+    }
 }
