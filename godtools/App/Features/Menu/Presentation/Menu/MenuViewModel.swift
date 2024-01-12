@@ -52,6 +52,7 @@ class MenuViewModel: ObservableObject {
     @Published var copyrightInfoOptionTitle: String = ""
     @Published var appVersion: String = ""
     @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
+    @Published var showsTutorialOption: Bool = false
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
@@ -117,6 +118,15 @@ class MenuViewModel: ObservableObject {
             self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
         }
         .store(in: &cancellables)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ appLanguage -> AnyPublisher<Bool, Never> in
+                return self.getOptInOnboardingTutorialAvailableUseCase
+                    .getIsAvailablePublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$showsTutorialOption)
     }
     
     private func getMenuAnalyticsScreenName() -> String {

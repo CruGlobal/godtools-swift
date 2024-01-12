@@ -20,10 +20,10 @@ class GetOptInOnboardingBannerEnabledUseCase {
         self.optInOnboardingBannerEnabledRepository = optInOnboardingBannerEnabledRepository
     }
         
-    func getBannerIsEnabled() -> AnyPublisher<Bool, Never> {
+    func getBannerIsEnabled(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
                 
         return Publishers
-            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getOptInOnboardingTutorialIsAvailable(), optInOnboardingBannerEnabledRepository.getEnabled())
+            .CombineLatest(getOptInOnboardingTutorialAvailableUseCase.getIsAvailablePublisher(appLanguage: appLanguage), optInOnboardingBannerEnabledRepository.getEnabled())
             .map { (tutorialAvailable: Bool, bannerEnabled: Bool) in
                                 
                 return tutorialAvailable && bannerEnabled

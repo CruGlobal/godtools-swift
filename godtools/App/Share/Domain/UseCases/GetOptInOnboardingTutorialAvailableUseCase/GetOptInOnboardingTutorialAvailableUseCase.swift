@@ -10,22 +10,16 @@ import Foundation
 import Combine
 
 class GetOptInOnboardingTutorialAvailableUseCase {
-    
-    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
-    
-    required init(getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
         
-        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
+    init() {
+        
     }
         
-    func getOptInOnboardingTutorialIsAvailable() -> Bool {
+    func getIsAvailablePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> {
         
-        return getDeviceLanguageUseCase.getDeviceLanguage().languageCode == LanguageCodeDomainModel.english.value
-    }
-    
-    func getOptInOnboardingTutorialIsAvailable() -> AnyPublisher<Bool, Never> {
+        let isAvailable: Bool = appLanguage == LanguageCodeDomainModel.english.value
         
-        return Just(getOptInOnboardingTutorialIsAvailable())
+        return Just(isAvailable)
             .eraseToAnyPublisher()
     }
 }
