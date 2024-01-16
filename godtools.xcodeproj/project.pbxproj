@@ -15,6 +15,7 @@
 		4500698B2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4500698A2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift */; };
 		450069902B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4500698F2B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift */; };
 		450069932B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450069922B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift */; };
+		45020C562B571BC90029B9CF /* TranslatedLanguageNameRepositorySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45020C552B571BC90029B9CF /* TranslatedLanguageNameRepositorySync.swift */; };
 		4502BD3E279F3B4D000C544A /* MobileContentFlowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */; };
 		4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */; };
 		450397332B360F1B00938EE9 /* IdentifiableRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450397322B360F1B00938EE9 /* IdentifiableRealmObject.swift */; };
@@ -1509,6 +1510,7 @@
 		4500698A2B193880008A7499 /* ViewLanguageSettingsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLanguageSettingsDomainModel.swift; sourceTree = "<group>"; };
 		4500698F2B194371008A7499 /* ToolLanguagesAvailableOfflineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolLanguagesAvailableOfflineView.swift; sourceTree = "<group>"; };
 		450069922B194744008A7499 /* ToolLanguageAvailableOfflineLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageAvailableOfflineLanguageView.swift; sourceTree = "<group>"; };
+		45020C552B571BC90029B9CF /* TranslatedLanguageNameRepositorySync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslatedLanguageNameRepositorySync.swift; sourceTree = "<group>"; };
 		4502BD3D279F3B4D000C544A /* MobileContentFlowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemView.swift; sourceTree = "<group>"; };
 		4502BD41279F3B72000C544A /* MobileContentFlowItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentFlowItemViewModel.swift; sourceTree = "<group>"; };
 		450397322B360F1B00938EE9 /* IdentifiableRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableRealmObject.swift; sourceTree = "<group>"; };
@@ -3195,6 +3197,14 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		45020C542B571BC90029B9CF /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				45020C552B571BC90029B9CF /* TranslatedLanguageNameRepositorySync.swift */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
 		4502BD3C279F3B3C000C544A /* ContentFlowItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -3507,6 +3517,7 @@
 				450E64D02B570C2700A74F6D /* TranslatedLanguageNameRepository.swift */,
 				450E64CF2B570C2700A74F6D /* TranslatedLanguageNameDataModel.swift */,
 				450E64CC2B570C2700A74F6D /* Cache */,
+				45020C542B571BC90029B9CF /* Sync */,
 			);
 			path = TranslatedLanguageNameRepository;
 			sourceTree = "<group>";
@@ -12435,6 +12446,7 @@
 				45AF070F2B066266000EACF2 /* LocaleLanguageName.swift in Sources */,
 				45131A0F2AB498AD0085AF0D /* FontLibrary.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
+				45020C562B571BC90029B9CF /* TranslatedLanguageNameRepositorySync.swift in Sources */,
 				4504BA1E2AF3ED4C001151E5 /* TutorialItemView.swift in Sources */,
 				45B3382B2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift in Sources */,
 				455EE83C2AEC586200C3205C /* GetDownloadToolProgressInterfaceStringsUseCase.swift in Sources */,

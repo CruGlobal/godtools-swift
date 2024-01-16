@@ -20,16 +20,11 @@ class TranslatedLanguageNameRepository {
         self.cache = cache
     }
     
-    func getLanguageName(language: BCP47LanguageIdentifier, translatedInLanguage: BCP47LanguageIdentifier) -> String {
+    func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
         
         if let cachedObject = cache.getTranslatedLanguageName(language: language, languageTranslation: translatedInLanguage) {
             
-            let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(cachedObject.updatedAt)
-            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-            
-            if elapsedTimeInMinutes < (60 * 24) {
-                return cachedObject.translatedName
-            }
+            return cachedObject.translatedName
         }
         
         let translatedName: String = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translatedInLanguage)
