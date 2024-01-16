@@ -13,13 +13,13 @@ class GetToolSettingsParallelLanguageRepository: GetToolSettingsParallelLanguage
     
     private let toolSettingsRepository: ToolSettingsRepository
     private let languagesRepository: LanguagesRepository
-    private let getTranslatedLanguageName: GetTranslatedLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     
-    init(toolSettingsRepository: ToolSettingsRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(toolSettingsRepository: ToolSettingsRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
         
         self.toolSettingsRepository = toolSettingsRepository
         self.languagesRepository = languagesRepository
-        self.getTranslatedLanguageName = getTranslatedLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
     func getLanguagePublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
@@ -35,8 +35,8 @@ class GetToolSettingsParallelLanguageRepository: GetToolSettingsParallelLanguage
                     return nil
                 }
                 
-                let languageName: String = self.getTranslatedLanguageName.getLanguageName(
-                    language: language,
+                let languageName: String = self.translatedLanguageNameRepository.getLanguageName(
+                    language: language.code,
                     translatedInLanguage: translateInLanguage
                 )
                 

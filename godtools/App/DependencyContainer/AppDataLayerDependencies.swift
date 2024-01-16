@@ -302,6 +302,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
+        
+        return TranslatedLanguageNameRepository(
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
@@ -402,7 +410,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         return GetTranslatedLanguageName(
             localizationServices: getLocalizationServices(),
             localeLanguageName: getLocaleLanguageName(),

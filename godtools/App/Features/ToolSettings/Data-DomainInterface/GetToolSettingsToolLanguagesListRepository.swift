@@ -12,12 +12,12 @@ import Combine
 class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesListRepositoryInterface {
     
     private let languagesRepository: LanguagesRepository
-    private let getTranslatedLanguageName: GetTranslatedLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     
-    init(languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
         
         self.languagesRepository = languagesRepository
-        self.getTranslatedLanguageName = getTranslatedLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
     func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?, tool: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
@@ -44,8 +44,8 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
             .getLanguages(ids: languageIds)
             .map { (language: LanguageModel) in
                                 
-                let languageName: String = getTranslatedLanguageName.getLanguageName(
-                    language: language,
+                let languageName: String = translatedLanguageNameRepository.getLanguageName(
+                    language: language.code,
                     translatedInLanguage: translateInLanguage
                 )
                                 
