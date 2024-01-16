@@ -37,11 +37,11 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
             return self.languagesRepository.getLanguages().map { language in
                                 
                 let languageNameInOwnLanguage = self.translatedLanguageNameRepository.getLanguageName(
-                    language: language.code,
+                    language: language,
                     translatedInLanguage: language.code
                 )
                 let languageNameInAppLanguage = self.translatedLanguageNameRepository.getLanguageName(
-                    language: language.code,
+                    language: language,
                     translatedInLanguage: currentAppLanguage
                 )
                 

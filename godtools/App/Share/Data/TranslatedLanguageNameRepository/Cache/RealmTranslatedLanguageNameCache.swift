@@ -18,9 +18,9 @@ class RealmTranslatedLanguageNameCache {
         self.realmDatabase = realmDatabase
     }
     
-    private func getTranslatedLanguageName(realm: Realm, language: BCP47LanguageIdentifier, languageTranslation: BCP47LanguageIdentifier) -> RealmTranslatedLanguageName?  {
+    private func getTranslatedLanguageName(realm: Realm, language: TranslatableLanguage, languageTranslation: BCP47LanguageIdentifier) -> RealmTranslatedLanguageName?  {
         
-        let languageFilter = NSPredicate(format: "\(#keyPath(RealmTranslatedLanguageName.language)) == [c] %@", language.lowercased())
+        let languageFilter = NSPredicate(format: "\(#keyPath(RealmTranslatedLanguageName.language)) == [c] %@", language.localeId.lowercased())
         let languageTranslationFilter = NSPredicate(format: "\(#keyPath(RealmTranslatedLanguageName.languageTranslation)) == [c] %@", languageTranslation.lowercased())
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [languageFilter, languageTranslationFilter])
@@ -34,16 +34,16 @@ class RealmTranslatedLanguageNameCache {
         return filteredTranslatedLanguageNames.first
     }
     
-    func getTranslatedLanguageName(language: BCP47LanguageIdentifier, languageTranslation: BCP47LanguageIdentifier) -> TranslatedLanguageNameDataModel? {
+    func getTranslatedLanguageName(language: TranslatableLanguage, languageTranslation: BCP47LanguageIdentifier) -> TranslatedLanguageNameDataModel? {
         
-        guard let realmObject = getTranslatedLanguageName(realm: realmDatabase.openRealm(), language: language, languageTranslation: languageTranslation) else {
+        guard let realmObject = getTranslatedLanguageName(realm: realmDatabase.openRealm(), language: language.localeId, languageTranslation: languageTranslation) else {
             return nil
         }
         
         return TranslatedLanguageNameDataModel(realmObject: realmObject)
     }
     
-    func storeTranslatedLanguage(language: BCP47LanguageIdentifier, languageTranslation: BCP47LanguageIdentifier, translatedName: String) {
+    func storeTranslatedLanguage(language: TranslatableLanguage, languageTranslation: BCP47LanguageIdentifier, translatedName: String) {
         
         realmDatabase.writeObjectsInBackground { (realm: Realm) in
                         
@@ -61,7 +61,7 @@ class RealmTranslatedLanguageNameCache {
                 
                 newObject.createdAt = Date()
                 newObject.id = UUID().uuidString
-                newObject.language = language
+                newObject.language = language.localeId
                 newObject.languageTranslation = languageTranslation
                 newObject.translatedName = translatedName
                 newObject.updatedAt = Date()

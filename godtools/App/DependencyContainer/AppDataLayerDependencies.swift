@@ -310,6 +310,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedLanguageNameRepositorySync() -> TranslatedLanguageNameRepositorySync {
+        return TranslatedLanguageNameRepositorySync(
+            languagesRepository: getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),

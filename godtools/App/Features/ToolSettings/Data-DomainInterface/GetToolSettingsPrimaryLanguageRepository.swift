@@ -36,7 +36,7 @@ class GetToolSettingsPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRe
                 }
                 
                 let languageName: String = self.translatedLanguageNameRepository.getLanguageName(
-                    language: language.code,
+                    language: language,
                     translatedInLanguage: translateInLanguage
                 )
                 

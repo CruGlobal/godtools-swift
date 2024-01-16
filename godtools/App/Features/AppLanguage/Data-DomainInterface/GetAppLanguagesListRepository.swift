@@ -27,8 +27,8 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
                                                             
-                    let languageNameTranslatedInOwnLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel.languageId, translatedInLanguage: languageDataModel.languageId)
-                    let languageNameTranslatedInCurrentAppLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel.languageId, translatedInLanguage: currentAppLanguage)
+                    let languageNameTranslatedInOwnLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: currentAppLanguage)
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
