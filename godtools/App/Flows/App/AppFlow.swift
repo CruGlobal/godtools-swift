@@ -430,10 +430,12 @@ extension AppFlow {
             }
             .store(in: &cancellables)
         
+        let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
+        
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
                 
-                return self.appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
+                return translatedLanguageNameRepositorySync
                     .syncTranslatedLanguageNamesPublisher(language: appLanguage)
                     .eraseToAnyPublisher()
             })
