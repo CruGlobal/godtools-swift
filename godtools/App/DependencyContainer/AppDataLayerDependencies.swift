@@ -300,14 +300,14 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslatedLanguageNameRepository() -> RealmTranslatedLanguageNameCache {
+    private func getTranslatedLanguageNameCache() -> RealmTranslatedLanguageNameCache {
         return RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
     }
     
     func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
         return TranslatedLanguageNameRepository(
             getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: getTranslatedLanguageNameRepository()
+            cache: getTranslatedLanguageNameCache()
         )
     }
     
@@ -316,7 +316,7 @@ class AppDataLayerDependencies {
             realmDatabase: sharedRealmDatabase,
             languagesRepository: getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: getTranslatedLanguageNameRepository()
+            cache: getTranslatedLanguageNameCache()
         )
     }
     
