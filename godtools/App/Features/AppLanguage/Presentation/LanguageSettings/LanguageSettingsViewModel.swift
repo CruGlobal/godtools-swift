@@ -44,7 +44,7 @@ class LanguageSettingsViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> in
                 
-                return self.viewLanguageSettingsUseCase
+                return viewLanguageSettingsUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
