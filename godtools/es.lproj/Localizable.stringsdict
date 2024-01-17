@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Enlace compartido</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Enlaces compartidos</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Herramienta 1 abierta</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Herramientas %d abierta</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -189,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Tips de entrenamiento 1 completado</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Tips de entrenamiento %d completado</string>
 </dict>
 </dict>
 </dict>
