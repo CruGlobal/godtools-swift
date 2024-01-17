@@ -29,26 +29,26 @@ class TranslatedLanguageNameRepositorySync {
 
                 let languages: [LanguageModel] = self.languagesRepository.getLanguages()
                 
+                let translateInLanguage: BCP47LanguageIdentifier = language
+                
                 for languageModel in languages {
                     
-                    let languageNameTranslatedInLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: language)
-                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: languageModel.code)
+                    let languageModelLanguageTranslation: BCP47LanguageIdentifier = languageModel.code
+                    
+                    let languageNameTranslatedInLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: translateInLanguage)
+                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: languageModelLanguageTranslation)
                                         
                     self.cache.storeTranslatedLanguage(
                         language: languageModel,
-                        languageTranslation: language,
+                        languageTranslation: translateInLanguage,
                         translatedName: languageNameTranslatedInLanguage
                     )
                     
                     self.cache.storeTranslatedLanguage(
                         language: languageModel,
-                        languageTranslation: languageModel.code,
+                        languageTranslation: languageModelLanguageTranslation,
                         translatedName: languageNameTranslatedInOwnLanguage
                     )
-                    
-                    print("\n cache language translation for language: \(languageModel.code)")
-                    print("  languageNameTranslatedInLanguage: \(languageNameTranslatedInLanguage)")
-                    print("  languageNameTranslatedInOwnLanguage: \(languageNameTranslatedInOwnLanguage)")
                 }
                 
                 return Just(())
