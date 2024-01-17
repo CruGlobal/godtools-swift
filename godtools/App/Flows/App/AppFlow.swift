@@ -436,7 +436,7 @@ extension AppFlow {
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
                 
                 return translatedLanguageNameRepositorySync
-                    .syncTranslatedLanguageNamesPublisher(language: appLanguage)
+                    .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .sink { _ in

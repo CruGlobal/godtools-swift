@@ -22,8 +22,12 @@ class TranslatedLanguageNameRepository {
     
     func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
         
+        guard !translatedInLanguage.isEmpty else {
+            return language.fallbackName
+        }
+        
         if let cachedObject = cache.getTranslatedLanguageName(language: language, languageTranslation: translatedInLanguage) {
-            
+                        
             return cachedObject.translatedName
         }
         
@@ -34,7 +38,7 @@ class TranslatedLanguageNameRepository {
             languageTranslation: translatedInLanguage,
             translatedName: translatedName
         )
-                
+                        
         return translatedName
     }
 }

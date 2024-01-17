@@ -164,8 +164,6 @@ class AppDataLayerDependencies {
     
     func getLanguagesRepository() -> LanguagesRepository {
         
-        let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
-        
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
             ignoreCacheSession: sharedIgnoreCacheSession
@@ -173,7 +171,7 @@ class AppDataLayerDependencies {
         
         let cache = RealmLanguagesCache(
             realmDatabase: sharedRealmDatabase,
-            languagesSync: sync
+            languagesSync: RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
         )
         
         return LanguagesRepository(
@@ -302,19 +300,23 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedLanguageNameRepository() -> RealmTranslatedLanguageNameCache {
+        return RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+    }
+    
     func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
-        
         return TranslatedLanguageNameRepository(
             getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+            cache: getTranslatedLanguageNameRepository()
         )
     }
     
     func getTranslatedLanguageNameRepositorySync() -> TranslatedLanguageNameRepositorySync {
         return TranslatedLanguageNameRepositorySync(
+            realmDatabase: sharedRealmDatabase,
             languagesRepository: getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+            cache: getTranslatedLanguageNameRepository()
         )
     }
     
