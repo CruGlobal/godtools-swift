@@ -22,7 +22,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published var searchText: String = ""
     @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
