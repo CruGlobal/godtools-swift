@@ -32,6 +32,10 @@ class AppLanguagesCache {
         ]
     }
     
+    func getNumberOfLanguages() -> Int {
+        return appLanguages.count
+    }
+    
     func getAppLanguages() -> [AppLanguageDataModel] {
         
         return appLanguages
