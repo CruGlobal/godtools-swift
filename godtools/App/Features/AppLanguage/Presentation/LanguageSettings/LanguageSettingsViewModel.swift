@@ -22,9 +22,9 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var navTitle: String = ""
-    @Published var appInterfaceLanguageTitle: String = "App "
-    @Published var numberOfLanguagesAvailable: String = "Number of languages available need to implement."
-    @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
+    @Published var appInterfaceLanguageTitle: String = " "
+    @Published var numberOfLanguagesAvailable: String = ""
+    @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = ""
     @Published var appInterfaceLanguageButtonTitle: String = ""
     @Published var toolLanguagesAvailableOfflineTitle: String = ""
     @Published var downloadToolsForOfflineMessage: String = ""
@@ -55,6 +55,7 @@ class LanguageSettingsViewModel: ObservableObject {
                 
                 self?.navTitle = interfaceStrings.navTitle
                 self?.appInterfaceLanguageTitle = interfaceStrings.appInterfaceLanguageTitle
+                self?.numberOfLanguagesAvailable = interfaceStrings.numberOfAppLanguagesAvailable
                 self?.setLanguageYouWouldLikeAppDisplayedInLabel = interfaceStrings.setAppLanguageMessage
                 self?.appInterfaceLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
                 self?.toolLanguagesAvailableOfflineTitle = interfaceStrings.toolLanguagesAvailableOfflineTitle
