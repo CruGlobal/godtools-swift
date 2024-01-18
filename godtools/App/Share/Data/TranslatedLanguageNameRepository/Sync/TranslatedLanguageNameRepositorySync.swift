@@ -34,7 +34,7 @@ class TranslatedLanguageNameRepositorySync {
             })
             .flatMap({ (realm: Realm) -> AnyPublisher<Void, Never> in
                 
-                let languages: [LanguageModel] = self.languagesRepository.getLanguages()
+                let languages: [LanguageModel] = self.languagesRepository.getLanguages(realm: realm)
                 
                 do {
                     
