@@ -30,11 +30,6 @@ enum FlowStep {
     case videoEndedOnOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
-    case skipTappedFromOnboardingQuickStart
-    case endTutorialFromOnboardingQuickStart
-    case readArticlesTappedFromOnboardingQuickStart
-    case tryLessonsTappedFromOnboardingQuickStart
-    case chooseToolTappedFromOnboardingQuickStart
     
     // lessons list
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel)
