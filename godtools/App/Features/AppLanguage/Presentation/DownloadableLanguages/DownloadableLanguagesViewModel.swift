@@ -22,7 +22,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     @Published private var activeDownloads: [BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel] = [:]
     
@@ -46,7 +46,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
                 
-                return self.viewDownloadableLanguagesUseCase.viewPublisher(appLanguage: appLanguage)
+                return viewDownloadableLanguagesUseCase.viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
@@ -70,6 +70,10 @@ class DownloadableLanguagesViewModel: ObservableObject {
             self?.updateDisplayedLanguages(from: downloadableLanguages, activeDownloads: activeDownloads)
         })
         .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }
 

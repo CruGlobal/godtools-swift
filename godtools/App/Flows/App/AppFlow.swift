@@ -429,6 +429,20 @@ extension AppFlow {
 
             }
             .store(in: &cancellables)
+        
+        let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
+                
+                return translatedLanguageNameRepositorySync
+                    .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     private func countAppSessionLaunch() {

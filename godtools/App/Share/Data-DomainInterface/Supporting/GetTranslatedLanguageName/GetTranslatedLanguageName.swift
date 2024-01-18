@@ -25,6 +25,10 @@ class GetTranslatedLanguageName {
     
     func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
         
+        guard !translatedInLanguage.isEmpty else {
+            return language.fallbackName
+        }
+        
         if let localizedName = getLanguageNameFromLocalization(language: language, translatedInLanguage: translatedInLanguage) {
             
             return localizedName

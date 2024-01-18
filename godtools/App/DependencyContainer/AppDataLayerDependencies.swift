@@ -164,8 +164,6 @@ class AppDataLayerDependencies {
     
     func getLanguagesRepository() -> LanguagesRepository {
         
-        let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
-        
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
             ignoreCacheSession: sharedIgnoreCacheSession
@@ -173,7 +171,7 @@ class AppDataLayerDependencies {
         
         let cache = RealmLanguagesCache(
             realmDatabase: sharedRealmDatabase,
-            languagesSync: sync
+            languagesSync: RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
         )
         
         return LanguagesRepository(
@@ -302,6 +300,26 @@ class AppDataLayerDependencies {
         )
     }
     
+    private func getTranslatedLanguageNameCache() -> RealmTranslatedLanguageNameCache {
+        return RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+    }
+    
+    func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
+        return TranslatedLanguageNameRepository(
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
+    func getTranslatedLanguageNameRepositorySync() -> TranslatedLanguageNameRepositorySync {
+        return TranslatedLanguageNameRepositorySync(
+            realmDatabase: sharedRealmDatabase,
+            languagesRepository: getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
@@ -402,7 +420,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         return GetTranslatedLanguageName(
             localizationServices: getLocalizationServices(),
             localeLanguageName: getLocaleLanguageName(),

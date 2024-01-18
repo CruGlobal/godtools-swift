@@ -13,16 +13,16 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     
     private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
-    private let getTranslatedLanguageName: GetTranslatedLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     private let sortDate: Date = Date()
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
-        self.getTranslatedLanguageName = getTranslatedLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
     }
@@ -42,11 +42,11 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     return nil
                 }
                 
-                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
+                let languageNameInOwnLanguage = self.translatedLanguageNameRepository.getLanguageName(
                     language: language,
                     translatedInLanguage: language.code
                 )
-                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
+                let languageNameInAppLanguage = self.translatedLanguageNameRepository.getLanguageName(
                     language: language,
                     translatedInLanguage: currentAppLanguage
                 )
