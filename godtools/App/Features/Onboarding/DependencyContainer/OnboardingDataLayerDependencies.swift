@@ -19,16 +19,6 @@ class OnboardingDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getOnboardingQuickStartSupportedLanguagesCache() -> OnboardingQuickStartSupportedLanguagesCache {
-        return OnboardingQuickStartSupportedLanguagesCache()
-    }
-    
-    private func getOnboardingQuickStartSupportedLanguagesRepository() -> OnboardingQuickStartSupportedLanguagesRepository {
-        return OnboardingQuickStartSupportedLanguagesRepository(
-            cache: getOnboardingQuickStartSupportedLanguagesCache()
-        )
-    }
-    
     private func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
         return OnboardingTutorialViewedRepository(
             cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
@@ -36,24 +26,6 @@ class OnboardingDataLayerDependencies {
     }
     
     // MARK: - Domain Interface
-    
-    func getOnboardingQuickStartInterfaceStringsRepositoryInterface() -> GetOnboardingQuickStartInterfaceStringsRepositoryInterface {
-        return GetOnboardingQuickStartInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getOnboardingQuickStartLinksRepositoryInterface() -> GetOnboardingQuickStartLinksRepositoryInterface {
-        return GetOnboardingQuickStartLinksRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getOnboardingQuickStartSupportedLanguagesRepositoryInterface() -> GetOnboardingQuickStartSupportedLanguagesRepositoryInterface {
-        return GetOnboardingQuickStartSupportedLanguagesRepository(
-            onboardingQuickStartSupportedLanguagesRepository: getOnboardingQuickStartSupportedLanguagesRepository()
-        )
-    }
     
     func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
         return GetOnboardingTutorialInterfaceStringsRepository(
