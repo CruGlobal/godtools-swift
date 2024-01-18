@@ -42,6 +42,10 @@ class AppLanguagesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguageSearchResults)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs
