@@ -24,7 +24,7 @@ struct DownloadableLanguagesView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
-                ForEach(viewModel.downloadableLanguagesSearchResults) { downloadableLanguage in
+                ForEach(viewModel.displayedDownloadableLanguages) { downloadableLanguage in
                     
                     DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage) {
                         
@@ -34,7 +34,7 @@ struct DownloadableLanguagesView: View {
                 }
             }
             .listStyle(.inset)
-            .animation(.default, value: viewModel.downloadableLanguagesSearchResults)
+            .animation(.default, value: viewModel.displayedDownloadableLanguages)
             
         }
         .navigationBarBackButtonHidden(true)

@@ -21,11 +21,13 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private static var backgrounDownloadCancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
-
+    
     @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
+    @Published private var activeDownloads: [BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel] = [:]
     
     @Published var searchText: String = ""
-    @Published var downloadableLanguagesSearchResults: [DownloadableLanguageListItemDomainModel] = Array()
+    @Published var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
@@ -54,9 +56,45 @@ class DownloadableLanguagesViewModel: ObservableObject {
                 let downloadableLanguages = domainModel.downloadableLanguages
                 
                 self?.navTitle = interfaceStrings.navTitle
-                self?.downloadableLanguagesSearchResults = downloadableLanguages
+                self?.downloadableLanguages = downloadableLanguages
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $downloadableLanguages.eraseToAnyPublisher(),
+            $activeDownloads.eraseToAnyPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink(receiveValue: { [weak self] downloadableLanguages, activeDownloads in
+            
+            self?.updateDisplayedLanguages(from: downloadableLanguages, activeDownloads: activeDownloads)
+        })
+        .store(in: &cancellables)
+    }
+}
+
+// MARK: - Private
+
+extension DownloadableLanguagesViewModel {
+    
+    private func updateDisplayedLanguages(from downloadableLanguages: [DownloadableLanguageListItemDomainModel], activeDownloads: [BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel]) {
+        
+        var updatedLanguages: [DownloadableLanguageListItemDomainModel] = Array()
+        
+        for downloadableLanguage in downloadableLanguages {
+            
+            if let activeDownloadStatus = activeDownloads[downloadableLanguage.languageId] {
+                
+                let downloadableLanguageWithProgressUpdate = downloadableLanguage.mapUpdatedDownloadStatus(downloadStatus: activeDownloadStatus)
+                updatedLanguages.append(downloadableLanguageWithProgressUpdate)
+                
+            } else {
+                
+                updatedLanguages.append(downloadableLanguage)
+            }
+        }
+        
+        displayedDownloadableLanguages = updatedLanguages
     }
 }
 
@@ -76,14 +114,34 @@ extension DownloadableLanguagesViewModel {
     
     func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
+        let languageId = downloadableLanguage.languageId
+        
         switch downloadableLanguage.downloadStatus {
             
         case .notDownloaded:
             
-            downloadToolLanguageUseCase.downloadToolLanguage(downloadableLanguage.languageId)
-                .sink { _ in
+            activeDownloads[languageId] = .downloading(progress: 0)
+            
+            downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId, languageCode: downloadableLanguage.languageCode)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { [weak self] completed in
                     
-                }
+                    switch completed {
+                    case .finished:
+                        
+                        self?.activeDownloads.removeValue(forKey: languageId)
+                        
+                    case .failure(let error):
+                        
+                        // TODO: - what happens during a failure?
+                        
+                        self?.activeDownloads[languageId] = .notDownloaded
+                        self?.flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
+                    }
+                }, receiveValue: { [weak self] progress in
+                    
+                    self?.activeDownloads[languageId] = .downloading(progress: progress)
+                })
                 .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
             
         case .downloaded:

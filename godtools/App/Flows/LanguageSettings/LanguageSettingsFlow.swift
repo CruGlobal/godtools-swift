@@ -47,6 +47,10 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .backTappedFromDownloadedLanguages:
             navigationController.popViewController(animated: true)
             
+        case .showLanguageDownloadErrorAlert(let error):
+            let alertView = getLanguageDownloadErrorAlertView(error: error)
+            navigationController.present(alertView, animated: true)
+            
         default:
             break
         }
@@ -115,5 +119,13 @@ extension LanguageSettingsFlow {
         )
         
         return hostingView
+    }
+    
+    func getLanguageDownloadErrorAlertView(error: Error) -> UIViewController {
+        
+        let viewModel = LanguageDownloadErrorAlertViewModel(error: error)
+        let view = LanguageDownloadErrorAlertView(viewModel: viewModel)
+        
+        return view.controller
     }
 }

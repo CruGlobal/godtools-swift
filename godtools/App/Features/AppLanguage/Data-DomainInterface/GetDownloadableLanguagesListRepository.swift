@@ -16,6 +16,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
+    private let sortDate: Date = Date()
     
     init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
@@ -34,8 +35,13 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         )
         .map { _ in
             
-            return self.languagesRepository.getLanguages().map { language in
-                                
+            return self.languagesRepository.getLanguages().compactMap { language in
+                
+                let numberToolsAvailable = self.getNumberToolsAvailable(for: language.languageCode)
+                if numberToolsAvailable == 0 {
+                    return nil
+                }
+                
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: language.code
@@ -45,12 +51,13 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     translatedInLanguage: currentAppLanguage
                 )
                 
-                let toolsAvailableText = self.getToolsAvailableText(for: language.languageCode, translatedIn: currentAppLanguage)
+                let toolsAvailableText = self.getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: currentAppLanguage)
                 
                 let downloadStatus = self.getDownloadStatus(for: language.id)
                 
                 return DownloadableLanguageListItemDomainModel(
                     languageId: language.id,
+                    languageCode: language.languageCode,
                     languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage,
                     toolsAvailableText: toolsAvailableText,
@@ -70,7 +77,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
 
 extension GetDownloadableLanguagesListRepository {
     
-    private func getToolsAvailableText(for languageCode: String, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+    private func getNumberToolsAvailable(for languageCode: String) -> Int {
         
         let filter = ResourcesFilter(
             category: nil,
@@ -78,7 +85,11 @@ extension GetDownloadableLanguagesListRepository {
             resourceTypes: ResourceType.toolTypes
         )
         
-        let numberOfTools = resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+    }
+    
+    private func getToolsAvailableText(numberOfTools: Int, translatedIn translationLanguage: AppLanguageDomainModel) -> String {
+        
         let localeId = translationLanguage
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
@@ -97,22 +108,24 @@ extension GetDownloadableLanguagesListRepository {
             return .notDownloaded
         }
         
-        if downloadedLanguage.isDownloaded {
+        if downloadedLanguage.downloadComplete {
             
-            return .downloaded
+            return .downloaded(date: downloadedLanguage.createdAt)
             
         } else {
             
-            return .downloading(progress: downloadedLanguage.downloadProgress)
+            return .downloading(progress: nil)
         }
     }
     
     private func getSortOrder(language1: DownloadableLanguageListItemDomainModel, language2: DownloadableLanguageListItemDomainModel) -> Bool {
         
-        if language1.isDownloaded && !language2.isDownloaded {
+        if language1.wasDownloadedBefore(date: sortDate) && !language2.wasDownloadedBefore(date: sortDate) {
+            
             return true
             
-        } else if language2.isDownloaded && !language1.isDownloaded {
+        } else if language2.wasDownloadedBefore(date: sortDate) && !language1.wasDownloadedBefore(date: sortDate) {
+            
             return false
             
         } else {
