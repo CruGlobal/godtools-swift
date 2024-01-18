@@ -71,7 +71,7 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     private func getImageMediaElseEmpty(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBanner)
+        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBannerAbout)
             .flatMap({ image -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let image = image else {
