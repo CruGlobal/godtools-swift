@@ -28,6 +28,10 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         sharedNavigationController.pushViewController(getLanguageSettingsView(), animated: true)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
