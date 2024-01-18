@@ -13,9 +13,11 @@ struct LanguageDownloadIcon: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     private let languageDownloadStatus: LanguageDownloadStatusDomainModel
+    private let animationDownloadProgress: Double?
     
-    init(languageDownloadStatus: LanguageDownloadStatusDomainModel) {
+    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, animationDownloadProgress: Double?) {
         self.languageDownloadStatus = languageDownloadStatus
+        self.animationDownloadProgress = animationDownloadProgress
     }
 
     var body: some View {
@@ -36,18 +38,35 @@ struct LanguageDownloadIcon: View {
         switch languageDownloadStatus {
         case .notDownloaded:
             
-            Image(systemName: "arrow.down.to.line")
-                .imageScale(.small)
+            notDownloadedIcon()
             
         case .downloading(let progress):
             
-            drawProgressInCircle(progress: progress)
+            if let downloadProgress = self.animationDownloadProgress ?? progress {
             
+                drawProgressInCircle(progress: downloadProgress)
+                
+            } else {
+                
+                notDownloadedIcon()
+            }
+                        
         case .downloaded:
             
-            Image(systemName: "checkmark")
-                .imageScale(.small)
+            if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
+
+                drawProgressInCircle(progress: animationDownloadProgress)
+                
+            } else {
+                Image(systemName: "checkmark")
+                    .imageScale(.small)
+            }
         }
+    }
+    
+    @ViewBuilder private func notDownloadedIcon() -> some View {
+        Image(systemName: "arrow.down.to.line")
+            .imageScale(.small)
     }
     
     @ViewBuilder private func drawProgressInCircle(progress: Double) -> some View {
@@ -87,5 +106,11 @@ struct LanguageDownloadIcon: View {
         case .downloaded:
             return ColorPalette.gtBlue.color
         }
+    }
+    
+    private func shouldFinishAnimatingDownloadProgress() -> Bool {
+        
+        guard let animationDownloadProgress = animationDownloadProgress else { return false }
+        return animationDownloadProgress <= 1
     }
 }

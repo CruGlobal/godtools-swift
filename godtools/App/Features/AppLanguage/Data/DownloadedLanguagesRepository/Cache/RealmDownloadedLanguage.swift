@@ -13,7 +13,7 @@ class RealmDownloadedLanguage: Object {
     
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var languageId: String = ""
-    @objc dynamic var downloadProgress: Double = 0
+    @objc dynamic var downloadComplete: Bool = false
     
     override static func primaryKey() -> String? {
         return "languageId"
@@ -23,6 +23,6 @@ class RealmDownloadedLanguage: Object {
         
         createdAt = dataModel.createdAt
         languageId = dataModel.languageId
-        downloadProgress = dataModel.downloadProgress
+        downloadComplete = dataModel.downloadComplete
     }
 }
