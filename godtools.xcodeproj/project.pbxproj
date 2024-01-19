@@ -1050,7 +1050,6 @@
 		45C152A62A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1529A2A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift */; };
 		45C152A92A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1529E2A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift */; };
 		45C1A43528256B3300B8469A /* ProcessedEventResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1A43428256B3300B8469A /* ProcessedEventResult.swift */; };
-		45C2595B28CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */; };
 		45C2595C28CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2595628CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift */; };
 		45C2AF3A2A813371004958AB /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF352A813371004958AB /* PageControl.swift */; };
 		45C2AF3B2A813371004958AB /* PageControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF362A813371004958AB /* PageControlButton.swift */; };
@@ -2494,7 +2493,6 @@
 		45C1529A2A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureView.swift; sourceTree = "<group>"; };
 		45C1529E2A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureViewModel.swift; sourceTree = "<group>"; };
 		45C1A43428256B3300B8469A /* ProcessedEventResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessedEventResult.swift; sourceTree = "<group>"; };
-		45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSettingsParallelLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2595628CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSettingsPrimaryLanguageUseCase.swift; sourceTree = "<group>"; };
 		45C2AF352A813371004958AB /* PageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		45C2AF362A813371004958AB /* PageControlButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControlButton.swift; sourceTree = "<group>"; };
@@ -8463,18 +8461,9 @@
 		45C2594A28CAC46E005D2387 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				45C2595328CAC46E005D2387 /* GetSettingsParallelLanguageUseCase */,
 				45C2595528CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase */,
 			);
 			path = UseCases;
-			sourceTree = "<group>";
-		};
-		45C2595328CAC46E005D2387 /* GetSettingsParallelLanguageUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				45C2595428CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift */,
-			);
-			path = GetSettingsParallelLanguageUseCase;
 			sourceTree = "<group>";
 		};
 		45C2595528CAC46E005D2387 /* GetSettingsPrimaryLanguageUseCase */ = {
@@ -12070,7 +12059,6 @@
 				45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */,
 				452486D32B07C98B007AD932 /* StoreUserFiltersRepositoryInterface.swift in Sources */,
 				45A464CD2A7BE18800E8BAF0 /* FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift in Sources */,
-				45C2595B28CAC46E005D2387 /* GetSettingsParallelLanguageUseCase.swift in Sources */,
 				4573133928C1821100481640 /* ToolDetailsVersionsView.swift in Sources */,
 				45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */,
 				45369AC62AFA7FA500BD10F0 /* GetToolScreenShareTutorialViewedRepository.swift in Sources */,
