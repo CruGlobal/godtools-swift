@@ -55,6 +55,10 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
         

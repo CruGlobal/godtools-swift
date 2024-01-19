@@ -60,6 +60,10 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$languageSearchResults)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

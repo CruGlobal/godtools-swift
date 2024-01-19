@@ -108,6 +108,10 @@ class AccountViewModel: ObservableObject {
         refreshUserActivity()
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func refreshUserActivity() {
         
         getActivityCancellable = getUserActivityUseCase.getUserActivityPublisher()

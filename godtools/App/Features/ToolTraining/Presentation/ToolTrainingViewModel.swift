@@ -57,6 +57,10 @@ class ToolTrainingViewModel: NSObject {
         numberOfTipPages.accept(value: tipModel.pages.count)
         setPage(page: 0, animated: false)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 
     private var resource: ResourceModel {
         return pageRenderer.resource

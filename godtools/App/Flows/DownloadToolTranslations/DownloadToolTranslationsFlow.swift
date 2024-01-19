@@ -66,6 +66,10 @@ class DownloadToolTranslationsFlow: Flow {
         .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {

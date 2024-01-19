@@ -83,7 +83,7 @@ struct TutorialItemView: View {
                     let playsInFullScreen: Int = 0
                     let playerParameters: [String: Any] = [YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen]
                     
-                    VideoView(
+                    VideoViewRepresentable(
                         playerState: $videoPlayerState,
                         frameSize: CGSize(width: videoViewWidth, height: videoViewHeight),
                         videoId: videoId,

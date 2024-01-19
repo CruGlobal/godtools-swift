@@ -27,6 +27,10 @@ class FullScreenVideoViewModel: ObservableObject {
         self.videoPlayerParameters = FullScreenVideoViewModel.buildVideoPlayerParameters(fromParameters: videoPlayerParameters)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private static func buildVideoPlayerParameters(fromParameters: [String: Any]?) -> [String: Any] {
         
         var videoPlayerParameters: [String: Any] = fromParameters ?? Dictionary()

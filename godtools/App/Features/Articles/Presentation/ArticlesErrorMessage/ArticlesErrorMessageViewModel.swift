@@ -14,10 +14,14 @@ class ArticlesErrorMessageViewModel {
     let message: String
     let downloadArticlesButtonTitle: String
     
-    required init(localizationServices: LocalizationServices, message: String) {
+    init(localizationServices: LocalizationServices, message: String) {
         
         title = localizationServices.stringForSystemElseEnglish(key: "download_error")
         self.message = message
         downloadArticlesButtonTitle = localizationServices.stringForSystemElseEnglish(key: "articles.downloadArticlesButton.title.retryDownload")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }

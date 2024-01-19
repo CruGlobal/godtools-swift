@@ -60,6 +60,10 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$categorySearchResults)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

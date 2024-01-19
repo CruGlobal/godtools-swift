@@ -26,6 +26,10 @@ class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType
         message = interfaceStrings.message
         acceptTitle = interfaceStrings.acceptActionTitle
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

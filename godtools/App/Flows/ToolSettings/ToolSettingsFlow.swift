@@ -97,6 +97,10 @@ class ToolSettingsFlow: Flow {
         .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func initializeToolSettingsLanguages(primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?) {
         
         appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsPrimaryLanguageUseCase()

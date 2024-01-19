@@ -30,6 +30,10 @@ class WebContentViewModel {
         url.accept(value: webContent.url)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         return webContent.analyticsScreenName
     }

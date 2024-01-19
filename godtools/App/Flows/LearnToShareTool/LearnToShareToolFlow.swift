@@ -45,6 +45,10 @@ class LearnToShareToolFlow: Flow {
         navigationController.setViewControllers([getLearnToShareToolView(tool: tool)], animated: false)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {

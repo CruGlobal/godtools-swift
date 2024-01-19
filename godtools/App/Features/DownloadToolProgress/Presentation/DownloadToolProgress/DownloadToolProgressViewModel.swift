@@ -54,6 +54,7 @@ class DownloadToolProgressViewModel: ObservableObject {
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         progressTimer.stop()
     }
     

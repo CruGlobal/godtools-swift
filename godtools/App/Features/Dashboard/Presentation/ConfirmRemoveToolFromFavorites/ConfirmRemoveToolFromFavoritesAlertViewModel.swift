@@ -36,6 +36,10 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         cancelTitle = localizationServices.stringForSystemElseEnglish(key: "no")
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func acceptTapped() {
         
         didConfirmToolRemovalSubject?.send(Void())

@@ -1,5 +1,5 @@
 //
-//  VideoView.swift
+//  VideoViewRepresentable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/10/22.
@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import YouTubeiOSPlayerHelper
 
-struct VideoView: UIViewRepresentable {
+struct VideoViewRepresentable: UIViewRepresentable {
     
     private let videoId: String
     private let videoPlayerParameters: [String: Any]?
@@ -63,6 +63,7 @@ struct VideoView: UIViewRepresentable {
     
     private func setLoadingViewHidden(hidden: Bool, animated: Bool) {
         
+        let videoViewRep: VideoViewRepresentable = self
         let loadingViewAlpha: CGFloat = hidden ? 0 : 1
         
         hidden ? loadingActivityIndicator.stopAnimating() : loadingActivityIndicator.startAnimating()
@@ -71,10 +72,10 @@ struct VideoView: UIViewRepresentable {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
                 //animations
-                self.loadingView.alpha = loadingViewAlpha
+                videoViewRep.loadingView.alpha = loadingViewAlpha
             } completion: { (finished: Bool) in
                 if finished && hidden {
-                    self.loadingActivityIndicator.stopAnimating()
+                    videoViewRep.loadingActivityIndicator.stopAnimating()
                 }
             }
 
@@ -100,7 +101,29 @@ struct VideoView: UIViewRepresentable {
     }
     
     func makeCoordinator() -> VideoViewCoordinator {
-        return VideoViewCoordinator(videoView: self)
+        
+        let videoViewRep: VideoViewRepresentable = self
+        
+        let coordinator = VideoViewCoordinator(videoPlayerDidBecomeReady: { (playerView: YTPlayerView) in
+            
+            videoViewRep.setLoadingViewHidden(hidden: true, animated: true)
+            
+            videoViewRep.updatePlayerState()
+            
+        }, videoStateChanged: { (playerView: YTPlayerView, playerState: YTPlayerState) in
+            
+            if playerState == .playing {
+                
+                videoViewRep.videoPlayingClosure?()
+            }
+            
+            if playerState == .ended {
+                
+                videoViewRep.videoEndedClosure?()
+            }
+        })
+        
+        return coordinator
     }
     
     func makeUIView(context: Context) -> some UIView {
@@ -115,35 +138,5 @@ struct VideoView: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         
         updatePlayerState()
-    }
-    
-    func play() {
-        youtubePlayerView.playVideo()
-    }
-    
-    func pause() {
-        youtubePlayerView.pauseVideo()
-    }
-    
-    func stop() {
-        youtubePlayerView.stopVideo()
-    }
-}
-
-extension VideoView {
-    
-    func videoPlayerViewDidBecomeReady() {
-        
-        setLoadingViewHidden(hidden: true, animated: true)
-        
-        updatePlayerState()
-    }
-    
-    func videoPlaying() {
-        videoPlayingClosure?()
-    }
-    
-    func videoEnded() {
-        videoEndedClosure?()
     }
 }

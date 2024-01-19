@@ -78,6 +78,10 @@ class SocialSignInViewModel: ObservableObject {
         }
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func authenticateUser(authPlatform: AuthenticateUserAuthPlatformDomainModel) {
                 
         authenticateUserUseCase.authenticatePublisher(
