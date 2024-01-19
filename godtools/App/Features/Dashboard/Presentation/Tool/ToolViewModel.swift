@@ -72,6 +72,8 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     deinit {
                 
+        print("x deinit: \(type(of: self))")
+        
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         

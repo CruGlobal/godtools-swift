@@ -47,7 +47,7 @@ class LessonsViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonsDomainModel, Never> in
             
-                return self.viewLessonsUseCase
+                return viewLessonsUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -61,6 +61,10 @@ class LessonsViewModel: ObservableObject {
                 self?.isLoadingLessons = false
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     // MARK: - Analytics

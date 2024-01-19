@@ -38,14 +38,14 @@ class DownloadedLanguagesRepository {
         return cache.getDownloadedLanguagePublisher(languageId: languageId)
     }
     
-    func storeDownloadedLanguage(languageId: String, downloadProgress: Double) {
+    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
         
-        cache.storeDownloadedLanguage(languageId: languageId, downloadProgress: downloadProgress)
+        cache.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String, downloadProgress: Double) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
-        return cache.storeDownloadedLanguagePublisher(languageId: languageId, downloadProgress: downloadProgress)
+        return cache.storeDownloadedLanguagePublisher(languageId: languageId, downloadComplete: downloadComplete)
     }
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {

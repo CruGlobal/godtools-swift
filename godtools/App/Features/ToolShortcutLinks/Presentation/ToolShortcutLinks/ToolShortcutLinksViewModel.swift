@@ -28,7 +28,7 @@ class ToolShortcutLinksViewModel: ObservableObject {
             .getLanguagePublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> in
                 
-                return self.viewToolShortcutLinksUseCase
+                return viewToolShortcutLinksUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })

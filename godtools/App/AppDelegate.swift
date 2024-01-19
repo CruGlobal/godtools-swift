@@ -77,7 +77,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
         
-        appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
+        if appBuild.configuration == .release {
+            appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
+        }
         
         ConfigureFacebookOnAppLaunch.configure(
             application: application,

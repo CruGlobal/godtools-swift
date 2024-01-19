@@ -58,7 +58,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
         )
     }
     
@@ -84,7 +84,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetDownloadableLanguagesListRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )
@@ -92,14 +92,17 @@ class AppLanguageFeatureDataLayerDependencies {
     
     func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
         return DownloadToolLanguageRepository(
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            translationsRepository: coreDataLayer.getTranslationsRepository()
         )
     }
     
     func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
         return GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            appLanguagesRepository: getAppLanguagesRepository()
         )
     }
     

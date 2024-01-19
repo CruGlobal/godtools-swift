@@ -47,7 +47,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, toolPrimaryLanguage: LanguageDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
@@ -74,7 +74,7 @@ class ToolSettingsViewModel: ObservableObject {
         )
         .flatMap ({ (appLanguage: AppLanguageDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
             
-            return self.viewToolSettingsUseCase
+            return viewToolSettingsUseCase
                 .viewPublisher(appLanguage: appLanguage, tool: tool, toolLanguage: primaryLanguage)
                 .eraseToAnyPublisher()
         })
@@ -115,24 +115,14 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        $primaryLanguage
-            .flatMap({ (primaryLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<[ShareableDomainModel], Never> in
-                
-                guard let primaryLanguage = primaryLanguage else {
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
-                
-                return self.getShareablesUseCase
-                    .getShareablesPublisher(toolId: tool.id, toolLanguageId: primaryLanguage.dataModelId)
-                    .eraseToAnyPublisher()
-            })
+        getShareablesUseCase
+            .getShareablesPublisher(toolId: tool.id, toolLanguageId: toolPrimaryLanguage.dataModelId)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (sharables: [ShareableDomainModel]) in
-                
-                self?.shareables = sharables
-            }
-            .store(in: &cancellables)
+            .assign(to: &$shareables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }
 

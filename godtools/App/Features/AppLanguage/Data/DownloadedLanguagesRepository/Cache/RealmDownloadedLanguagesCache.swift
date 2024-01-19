@@ -61,13 +61,13 @@ class RealmDownloadedLanguagesCache {
             .eraseToAnyPublisher()
     }
     
-    func storeDownloadedLanguage(languageId: String, downloadProgress: Double) {
+    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
         
         let realm: Realm = realmDatabase.openRealm()
         
         let realmDownloadedLanguage = RealmDownloadedLanguage()
         realmDownloadedLanguage.languageId = languageId
-        realmDownloadedLanguage.downloadProgress = downloadProgress
+        realmDownloadedLanguage.downloadComplete = downloadComplete
         
         do {
             
@@ -80,9 +80,9 @@ class RealmDownloadedLanguagesCache {
         }
     }
     
-    func storeDownloadedLanguagePublisher(languageId: String, downloadProgress: Double) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
+    func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
         
-        let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadProgress: downloadProgress)
+        let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadComplete: downloadComplete)
         
         return realmDatabase.writeObjectsPublisher { realm in
             

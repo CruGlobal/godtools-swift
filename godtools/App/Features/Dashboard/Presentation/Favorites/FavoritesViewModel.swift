@@ -144,6 +144,10 @@ class FavoritesViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         return "Favorites"
     }

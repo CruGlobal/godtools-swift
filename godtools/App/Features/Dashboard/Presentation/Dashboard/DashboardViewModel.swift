@@ -42,7 +42,7 @@ class DashboardViewModel: ObservableObject {
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewDashboardDomainModel, Never> in
-                return self.viewDashboardUseCase
+                return viewDashboardUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -62,6 +62,10 @@ class DashboardViewModel: ObservableObject {
                 self?.hidesLanguagesSettingsButton = self?.tabs[currentTab] == .lessons
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func reloadTabs() {

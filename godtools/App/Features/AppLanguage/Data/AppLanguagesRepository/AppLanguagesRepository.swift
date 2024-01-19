@@ -18,6 +18,10 @@ class AppLanguagesRepository {
         self.cache = cache
     }
     
+    func getNumberOfCachedLanguages() -> Int {
+        return cache.getNumberOfLanguages()
+    }
+    
     func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
         let appLanguages: [AppLanguageDataModel] = cache.getAppLanguages()

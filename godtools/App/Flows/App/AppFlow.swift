@@ -302,28 +302,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             switch onboardingFlowCompletedState {
             
-            case .readArticles:
-                   
+            case .completed:
                 navigateToDashboard()
-                
-                let deviceLanguageCode = appDiContainer.domainLayer.getDeviceLanguageUseCase().getDeviceLanguage().languageCode
-                
-                let toolDeepLink = ToolDeepLink(
-                    resourceAbbreviation: "es",
-                    primaryLanguageCodes: [deviceLanguageCode],
-                    parallelLanguageCodes: [],
-                    liveShareStream: nil,
-                    page: nil,
-                    pageId: nil
-                )
-                
-                navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
-                
-            case .tryLessons:
-                navigateToDashboard(startingTab: .lessons)
-                
-            case .chooseTool:
-                navigateToDashboard(startingTab: .tools)
                 
             default:
                 navigateToDashboard()
@@ -427,6 +407,20 @@ extension AppFlow {
 
             } receiveValue: { authUser in
 
+            }
+            .store(in: &cancellables)
+        
+        let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
+                
+                return translatedLanguageNameRepositorySync
+                    .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .sink { _ in
+                
             }
             .store(in: &cancellables)
     }

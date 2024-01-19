@@ -12,31 +12,48 @@ import Combine
 class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
     
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let resourcesRepository: ResourcesRepository
+    private let translationsRepository: TranslationsRepository
     
-    init(downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(downloadedLanguagesRepository: DownloadedLanguagesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.resourcesRepository = resourcesRepository
+        self.translationsRepository = translationsRepository
     }
     
-    func downloadToolLanguage(languageId: String) -> AnyPublisher<Bool, Never> {
+    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
+            
+        downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
-        // TODO: - actually perform download
-        return Future() { promise in
+        let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
+        
+        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageCode, resourceTypes: includeToolTypes))
+       
+        let translations: [TranslationModel] = tools.compactMap {
+            translationsRepository.getLatestTranslation(resourceId: $0.id, languageCode: languageCode)
+        }
+        
+        guard !translations.isEmpty else {
             
-            var progress: Double = 0
-            self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadProgress: progress)
+            return Just(1).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        return translationsRepository.getTranslationManifestsFromRemoteWithProgress(
+            translations: translations,
+            manifestParserType: .renderer,
+            includeRelatedFiles: true,
+            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
+        )
+        .map {
+            let progress = $0.progress
             
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-                progress += 0.1
-                
-                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadProgress: progress)
-                
-                if progress > 1 {
-                    timer.invalidate()
-                    
-                    promise(.success(true))
-                }
+            if progress >= 1 {
+                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
             }
+            
+            return $0.progress
         }
         .eraseToAnyPublisher()
     }

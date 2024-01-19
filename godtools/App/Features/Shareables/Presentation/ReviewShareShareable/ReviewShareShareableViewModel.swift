@@ -42,7 +42,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewReviewShareShareableDomainModel, Never> in
-                return self.viewReviewShareShareableUseCase
+                return viewReviewShareShareableUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -67,6 +67,10 @@ class ReviewShareShareableViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func trackShareImageTappedAnalytics() {
