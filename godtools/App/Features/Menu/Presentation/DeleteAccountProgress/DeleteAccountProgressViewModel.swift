@@ -32,6 +32,10 @@ class DeleteAccountProgressViewModel: ObservableObject {
         deleteAccount()
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func deleteAccount() {
         
         let startDeleteAccountTime = Date()

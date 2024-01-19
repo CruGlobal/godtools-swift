@@ -69,6 +69,10 @@ class ToolScreenShareFlow: Flow {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func navigateToInitialView(toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) {
         
          let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed

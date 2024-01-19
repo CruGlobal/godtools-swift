@@ -72,6 +72,10 @@ class LessonEvaluationViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

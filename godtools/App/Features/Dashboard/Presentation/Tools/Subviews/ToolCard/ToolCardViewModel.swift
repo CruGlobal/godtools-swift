@@ -60,6 +60,10 @@ class ToolCardViewModel: ObservableObject {
         setLanguageAvailabilityText(language: alternateLanguage)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func downloadBannerImage() {
         
         getBannerImageCancellable = nil

@@ -20,6 +20,10 @@ class LanguageDownloadErrorAlertViewModel: AlertMessageViewModelType {
         message = "Try again later. Error: " + error.localizedDescription
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func acceptTapped() {
         
     }

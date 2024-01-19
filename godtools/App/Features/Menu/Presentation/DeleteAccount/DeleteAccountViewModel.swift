@@ -26,6 +26,10 @@ class DeleteAccountViewModel: ObservableObject {
         confirmButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue)
         cancelButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

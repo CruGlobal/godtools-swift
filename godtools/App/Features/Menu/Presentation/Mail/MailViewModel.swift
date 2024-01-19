@@ -18,12 +18,16 @@ class MailViewModel: MailViewModelType {
     let message: String
     let isHtml: Bool
     
-    required init(toRecipients: [String], subject: String, message: String, isHtml: Bool, finishedSendingMailHandler: CallbackHandler) {
+    init(toRecipients: [String], subject: String, message: String, isHtml: Bool, finishedSendingMailHandler: CallbackHandler) {
         self.toRecipients = toRecipients
         self.subject = subject
         self.message = message
         self.isHtml = isHtml
         self.finishedSendingMailHandler = finishedSendingMailHandler
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func finishedSendingMail(result: MFMailComposeResult, error: Error?) {

@@ -73,6 +73,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         return "shareToolScreen"
     }

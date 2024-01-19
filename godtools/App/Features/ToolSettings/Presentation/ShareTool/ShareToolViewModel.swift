@@ -32,6 +32,10 @@ class ShareToolViewModel {
         shareMessage = viewShareToolDomainModel.interfaceStrings.shareMessage
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         return resource.abbreviation + "-" + String(pageNumber)
     }
