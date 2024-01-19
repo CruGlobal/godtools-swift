@@ -11,9 +11,9 @@ import YouTubeiOSPlayerHelper
 
 class VideoViewCoordinator: NSObject, YTPlayerViewDelegate {
     
-    private let videoView: VideoView
+    private let videoView: VideoViewRepresentable
     
-    init(videoView: VideoView) {
+    init(videoView: VideoViewRepresentable) {
         
         self.videoView = videoView
         

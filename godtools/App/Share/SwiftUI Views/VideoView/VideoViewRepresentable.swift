@@ -1,5 +1,5 @@
 //
-//  VideoView.swift
+//  VideoViewRepresentable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/10/22.
@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import YouTubeiOSPlayerHelper
 
-struct VideoView: UIViewRepresentable {
+struct VideoViewRepresentable: UIViewRepresentable {
     
     private let videoId: String
     private let videoPlayerParameters: [String: Any]?
@@ -130,7 +130,7 @@ struct VideoView: UIViewRepresentable {
     }
 }
 
-extension VideoView {
+extension VideoViewRepresentable {
     
     func videoPlayerViewDidBecomeReady() {
         
