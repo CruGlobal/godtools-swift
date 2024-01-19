@@ -121,12 +121,16 @@ class MenuViewModel: ObservableObject {
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ appLanguage -> AnyPublisher<Bool, Never> in
-                return self.getOptInOnboardingTutorialAvailableUseCase
+                return getOptInOnboardingTutorialAvailableUseCase
                     .getIsAvailablePublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsTutorialOption)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func getMenuAnalyticsScreenName() -> String {

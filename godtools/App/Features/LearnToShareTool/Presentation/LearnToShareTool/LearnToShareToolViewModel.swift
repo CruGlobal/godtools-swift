@@ -46,7 +46,7 @@ class LearnToShareToolViewModel: ObservableObject {
             .eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLearnToShareToolDomainModel, Never> in
                 
-                return self.viewLearnToShareToolUseCase
+                return viewLearnToShareToolUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -78,10 +78,14 @@ class LearnToShareToolViewModel: ObservableObject {
         $currentPage
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { (currentPage: Int) in
-                self.hidesBackButton = currentPage == 0
+            .sink { [weak self] (currentPage: Int) in
+                self?.hidesBackButton = currentPage == 0
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 
     private var isOnFirstPage: Bool {

@@ -43,8 +43,13 @@ class TutorialViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        getTutorialUseCase
-            .getTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> in
+                
+                return getTutorialUseCase
+                    .getTutorialPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
@@ -72,6 +77,10 @@ class TutorialViewModel: ObservableObject {
                 self?.pageDidChange(page: page)
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {

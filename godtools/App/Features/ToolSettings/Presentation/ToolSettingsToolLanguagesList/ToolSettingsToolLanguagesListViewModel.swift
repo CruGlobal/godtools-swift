@@ -60,7 +60,7 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> in
                 
-                return self.getToolSettingsPrimaryLanguageUseCase
+                return getToolSettingsPrimaryLanguageUseCase
                     .getLanguagePublisher(translateInLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -69,7 +69,7 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> in
                 
-                return self.getToolSettingsParallelLanguageUseCase
+                return getToolSettingsParallelLanguageUseCase
                     .getLanguagePublisher(translateInLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
@@ -82,11 +82,11 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         )
         .flatMap({ (appLanguage: AppLanguageDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> in
             
-            return self.viewToolSettingsToolLanguageListUseCase
+            return viewToolSettingsToolLanguageListUseCase
                 .viewPublisher(
                     listType: listType,
-                    primaryLanguage: self.primaryLanguage,
-                    parallelLanguage: self.parallelLanguage,
+                    primaryLanguage: primaryLanguage,
+                    parallelLanguage: parallelLanguage,
                     tool: tool,
                     appLanguage: appLanguage
                 )
@@ -106,6 +106,10 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
             }
         })
         .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }
 

@@ -100,7 +100,7 @@ class ToolDetailsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .flatMap ({ (tool: ToolDomainModel, toolLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
                 
-                return self.viewToolDetailsUseCase
+                return viewToolDetailsUseCase
                     .viewPublisher(tool: tool, translateInToolLanguage: toolLanguage)
                     .eraseToAnyPublisher()
             })

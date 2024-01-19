@@ -139,6 +139,10 @@ class ToolsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func updateCategoryButtonText() {
         
         categoryFilterButtonTitle = toolFilterCategorySelectionPublisher.value.translatedName

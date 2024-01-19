@@ -20,6 +20,10 @@ class LessonViewModel: MobileContentPagesViewModel {
         
         super.init(renderer: renderer,initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 
     override func handleDismissToolEvent() {
         super.handleDismissToolEvent()

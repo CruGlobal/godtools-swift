@@ -19,10 +19,6 @@ class TutorialFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
         print("init: \(type(of: self))")
         
@@ -44,6 +40,10 @@ class TutorialFlow: Flow {
             [getTutorialView()],
             animated: sharedNavigationController != nil
         )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func navigate(step: FlowStep) {
