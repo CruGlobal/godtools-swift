@@ -293,6 +293,7 @@ extension TractFlow {
         return NavBarSelectorView(
             selectorButtonTitles: viewModel.languageNames,
             layoutDirection: viewModel.layoutDirection,
+            selectedIndex: viewModel.selectedLanguageIndex,
             borderColor: controlColor,
             selectedColor: controlColor,
             deselectedColor: UIColor.clear,
