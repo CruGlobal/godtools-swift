@@ -22,6 +22,10 @@ import UIKit
 
 class PageNavigationCollectionView: UIView, NibBased {
     
+    private static var defaultFlowLayout: UICollectionViewFlowLayout = {
+        return PageNavigationCollectionViewFlowLayout()
+    }()
+    
     struct CurrentNavigation {
         let pageNavigation: PageNavigationCollectionViewNavigationModel
         let isNavigationFromDataReload: Bool
@@ -30,16 +34,16 @@ class PageNavigationCollectionView: UIView, NibBased {
     private let layoutType: PageNavigationCollectionViewLayoutType
     private let loggingEnabled: Bool = true
     
-    private var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.defaultFlowLayout
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
     private var layoutDirectionTransform: CGAffineTransform = CGAffineTransform(scaleX: 1, y: 1)
-            
+    
     @IBOutlet weak private var collectionView: UICollectionView!
     
-    weak var delegate: PageNavigationCollectionViewDelegate?
+    private weak var delegate: PageNavigationCollectionViewDelegate?
     
     init(layoutType: PageNavigationCollectionViewLayoutType = .fullScreen) {
         
@@ -52,7 +56,7 @@ class PageNavigationCollectionView: UIView, NibBased {
             self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
             
         case .fullScreen:
-            self.layout = UICollectionViewFlowLayout()
+            self.layout = PageNavigationCollectionView.defaultFlowLayout
         }
         
         initialize()
@@ -60,7 +64,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     required init?(coder: NSCoder) {
         
-        self.layout = UICollectionViewFlowLayout()
+        self.layout = PageNavigationCollectionView.defaultFlowLayout
         self.layoutType =  .fullScreen
         
         super.init(coder: coder)
@@ -78,8 +82,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     private func setupLayout() {
-        
-        //collectionView        
+                
         layout.scrollDirection = .horizontal
 
         collectionView.collectionViewLayout = layout
@@ -101,6 +104,10 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     // MARK: -
+    
+    func setDelegate(delegate: PageNavigationCollectionViewDelegate?) {
+        self.delegate = delegate
+    }
     
     func registerPageCell(nib: UINib?, cellReuseIdentifier: String) {
         collectionView.register(nib, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -184,8 +191,11 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
-            
-        let scaleX: CGFloat = semanticContentAttribute == .forceRightToLeft ? -1.0 : 1.0
+              
+        let systemIsRightToLeft: Bool = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+
+        let scaleXForSemantic: CGFloat = semanticContentAttribute == .forceRightToLeft ? -1.0 : 1.0
+        let scaleX: CGFloat = systemIsRightToLeft ? scaleXForSemantic * -1.0 : scaleXForSemantic
         
         layoutDirectionTransform = CGAffineTransform(scaleX: scaleX, y: 1.0)
         
@@ -678,6 +688,9 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
      
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
                         
+        //logMessage(message: "did scroll")
+        //logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        
         let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 
         delegate?.pageNavigationDidScroll?(pageNavigation: self, page: currentPage)
@@ -694,6 +707,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
         logMessage(message: "did end dragging: decelerate: \(decelerate)")
+        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
         
         if !decelerate {
             didEndPageScrolling()
@@ -703,6 +717,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         logMessage(message: "did end decelerating")
+        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
         
         didEndPageScrolling()
     }
@@ -719,6 +734,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
         let currentPage: Int = getCurrentPage()
         
         logMessage(message: "did end page scrolling for page: \(currentPage)")
+        logMessage(message: "  contentOffset.x: \(collectionView.contentOffset.x)")
                 
         if internalCurrentStoppedOnPage != currentPage {
             
