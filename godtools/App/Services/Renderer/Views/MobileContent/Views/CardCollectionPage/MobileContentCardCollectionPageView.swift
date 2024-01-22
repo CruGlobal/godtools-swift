@@ -36,7 +36,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.addTarget(self, action: #selector(previousCardButtonTapped), for: .touchUpInside)
         nextCardButton.addTarget(self, action: #selector(nextCardButtonTapped), for: .touchUpInside)
         
-        cardPageNavigationView.delegate = self
+        cardPageNavigationView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
