@@ -166,7 +166,7 @@ extension LessonView {
         guard previousPageButton.superview == nil && nextPageButton.superview == nil else {
             return
         }
-        
+                
         let parentView: UIView = view
         let layoutDirection: UISemanticContentAttribute = viewModel.layoutDirection
         
@@ -182,30 +182,30 @@ extension LessonView {
         addNavigationButtonBottomConstraints(button: previousPageButton, parentView: parentView)
         addNavigationButtonBottomConstraints(button: nextPageButton, parentView: parentView)
         
-        let leading: NSLayoutConstraint
-        let trailing: NSLayoutConstraint
+        let left: NSLayoutConstraint
+        let right: NSLayoutConstraint
         
         if layoutDirection == .forceRightToLeft {
             
             previousPageButton.setImage(ImageCatalog.lessonPageRightArrow.uiImage, for: .normal)
             nextPageButton.setImage(ImageCatalog.lessonPageLeftArrow.uiImage, for: .normal)
             
-            leading = NSLayoutConstraint(
+            left = NSLayoutConstraint(
                 item: nextPageButton,
-                attribute: .leading,
+                attribute: .left,
                 relatedBy: .equal,
                 toItem: parentView,
-                attribute: .leading,
+                attribute: .left,
                 multiplier: 1,
                 constant: 0
             )
             
-            trailing = NSLayoutConstraint(
+            right = NSLayoutConstraint(
                 item: previousPageButton,
-                attribute: .trailing,
+                attribute: .right,
                 relatedBy: .equal,
                 toItem: parentView,
-                attribute: .trailing,
+                attribute: .right,
                 multiplier: 1,
                 constant: 0
             )
@@ -215,29 +215,29 @@ extension LessonView {
             previousPageButton.setImage(ImageCatalog.lessonPageLeftArrow.uiImage, for: .normal)
             nextPageButton.setImage(ImageCatalog.lessonPageRightArrow.uiImage, for: .normal)
             
-            leading = NSLayoutConstraint(
+            left = NSLayoutConstraint(
                 item: previousPageButton,
-                attribute: .leading,
+                attribute: .left,
                 relatedBy: .equal,
                 toItem: parentView,
-                attribute: .leading,
+                attribute: .left,
                 multiplier: 1,
                 constant: 0
             )
             
-            trailing = NSLayoutConstraint(
+            right = NSLayoutConstraint(
                 item: nextPageButton,
-                attribute: .trailing,
+                attribute: .right,
                 relatedBy: .equal,
                 toItem: parentView,
-                attribute: .trailing,
+                attribute: .right,
                 multiplier: 1,
                 constant: 0
             )
         }
         
-        parentView.addConstraint(leading)
-        parentView.addConstraint(trailing)
+        parentView.addConstraint(left)
+        parentView.addConstraint(right)
     }
     
     private func addNavigationButtonSizeConstraints(button: UIButton) {

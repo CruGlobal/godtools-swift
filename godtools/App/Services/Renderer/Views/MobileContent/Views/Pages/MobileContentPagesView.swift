@@ -78,7 +78,7 @@ class MobileContentPagesView: AppViewController {
             right: 0
         )
         
-        pageNavigationView.delegate = self
+        pageNavigationView.setDelegate(delegate: self)
         
         viewModel.viewDidFinishLayout(
             window: navigationController ?? self,

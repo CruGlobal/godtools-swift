@@ -36,7 +36,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.addTarget(self, action: #selector(previousCardButtonTapped), for: .touchUpInside)
         nextCardButton.addTarget(self, action: #selector(nextCardButtonTapped), for: .touchUpInside)
         
-        cardPageNavigationView.delegate = self
+        cardPageNavigationView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -77,16 +77,16 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
             previousCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
             nextCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
             
-            previousCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets)
-            nextCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
+            previousCardButton.constrainRightToView(view: self, constant: previousAndNextButtonInsets)
+            nextCardButton.constrainLeftToView(view: self, constant: previousAndNextButtonInsets)
         }
         else {
             
             previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
             nextCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
             
-            previousCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
-            nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets)
+            previousCardButton.constrainLeftToView(view: self, constant: previousAndNextButtonInsets)
+            nextCardButton.constrainRightToView(view: self, constant: previousAndNextButtonInsets)
         }
         
         updatePreviousAndNextButtonVisibility(page: 0)
