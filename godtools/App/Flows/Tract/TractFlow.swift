@@ -185,6 +185,8 @@ extension TractFlow {
             toolTranslations: toolTranslations
         )
         
+        let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
+        
         let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
         
         let viewModel = ToolViewModel(
@@ -204,6 +206,8 @@ extension TractFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
+        
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
         
         let backBarItem: NavBarItem
         
@@ -258,7 +262,7 @@ extension TractFlow {
                 let languageSelectorView: NavBarSelectorView?
                 
                 if languageNames.count > 1 {
-                    languageSelectorView = self?.getNewLanguageSelectorView(view: toolView, viewModel: viewModel)
+                    languageSelectorView = self?.getNewLanguageSelectorView(view: toolView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
                 }
                 else {
                     languageSelectorView = nil
@@ -266,10 +270,6 @@ extension TractFlow {
                 
                 navigationBar.setTitleView(
                     titleView: languageSelectorView
-                )
-                
-                self?.navigationController.setLayoutDirectionPublisher(
-                    layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
                 )
             }
             .store(in: &cancellables)
@@ -285,14 +285,15 @@ extension TractFlow {
         return view
     }
     
-    private func getNewLanguageSelectorView(view: ToolView?, viewModel: ToolViewModel) -> NavBarSelectorView {
+    private func getNewLanguageSelectorView(view: ToolView?, viewModel: ToolViewModel, navBarLayoutDirection: UISemanticContentAttribute) -> NavBarSelectorView {
         
         let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
         let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
         
         return NavBarSelectorView(
             selectorButtonTitles: viewModel.languageNames,
-            layoutDirection: viewModel.layoutDirection,
+            layoutDirection: navBarLayoutDirection,
+            selectedIndex: viewModel.selectedLanguageIndex,
             borderColor: controlColor,
             selectedColor: controlColor,
             deselectedColor: UIColor.clear,

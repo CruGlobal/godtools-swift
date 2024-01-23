@@ -167,14 +167,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getSettingsParallelLanguageUseCase() -> GetSettingsParallelLanguageUseCase {
-        return GetSettingsParallelLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
-            getLanguageUseCase: getLanguageUseCase()
-        )
-    }
-    
     func getShouldShowLanguageSettingsBarButtonUseCase() -> GetShouldShowLanguageSettingsBarButtonUseCase {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }

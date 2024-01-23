@@ -94,6 +94,10 @@ class OnboardingTutorialViewModel: ObservableObject {
         }
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
         
         let pageOffset: Int = 2

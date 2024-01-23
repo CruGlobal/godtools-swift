@@ -22,6 +22,10 @@ class ShareShareableViewModel {
         self.imageToShare = imageToShare
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

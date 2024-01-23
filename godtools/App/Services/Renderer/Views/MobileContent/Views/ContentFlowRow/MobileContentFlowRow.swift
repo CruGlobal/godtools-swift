@@ -174,31 +174,31 @@ class MobileContentFlowRow: MobileContentView {
                        
                 if layoutDirection == .forceRightToLeft {
                     
-                    let trailing: NSLayoutConstraint = NSLayoutConstraint(
+                    let right: NSLayoutConstraint = NSLayoutConstraint(
                         item: nextItem,
-                        attribute: .trailing,
+                        attribute: .right,
                         relatedBy: .equal,
                         toItem: currentItem,
-                        attribute: .leading,
+                        attribute: .left,
                         multiplier: 1,
                         constant: spacingBetweenItems
                     )
                     
-                    addConstraint(trailing)
+                    addConstraint(right)
                 }
                 else {
                  
-                    let leading: NSLayoutConstraint = NSLayoutConstraint(
+                    let left: NSLayoutConstraint = NSLayoutConstraint(
                         item: nextItem,
-                        attribute: .leading,
+                        attribute: .left,
                         relatedBy: .equal,
                         toItem: currentItem,
-                        attribute: .trailing,
+                        attribute: .right,
                         multiplier: 1,
                         constant: spacingBetweenItems
                     )
                     
-                    addConstraint(leading)
+                    addConstraint(left)
                 }
             }
         }
@@ -206,19 +206,19 @@ class MobileContentFlowRow: MobileContentView {
         if layoutDirection == .forceRightToLeft {
             
             if let firstItem = flowItems.first {
-                firstItem.constrainTrailingToView(view: self, constant: itemsLeadingToRow)
+                firstItem.constrainRightToView(view: self, constant: itemsLeadingToRow)
             }
             if let lastItem = flowItems.last {
-                lastItem.constrainLeadingToView(view: self, constant: itemsTrailingToRow)
+                lastItem.constrainLeftToView(view: self, constant: itemsTrailingToRow)
             }
         }
         else {
             
             if let firstItem = flowItems.first {
-                firstItem.constrainLeadingToView(view: self, constant: itemsLeadingToRow)
+                firstItem.constrainLeftToView(view: self, constant: itemsLeadingToRow)
             }
             if let lastItem = flowItems.last {
-                lastItem.constrainTrailingToView(view: self, constant: itemsTrailingToRow)
+                lastItem.constrainRightToView(view: self, constant: itemsTrailingToRow)
             }
         }
     }

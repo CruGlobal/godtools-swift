@@ -59,6 +59,10 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             }
         }
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }
 
 // MARK: - Inputs

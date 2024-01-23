@@ -36,6 +36,10 @@ class ShareArticleViewModel {
         shareMessage = shareUrlString
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         return "Article : \(articleAemData.articleJcrContent?.title ?? "GodTools")"
     }

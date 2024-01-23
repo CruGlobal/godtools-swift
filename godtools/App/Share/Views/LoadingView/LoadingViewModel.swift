@@ -13,9 +13,13 @@ class LoadingViewModel: LoadingViewModelType {
     let message: ObservableValue<String> = ObservableValue(value: "")
     let hidesCloseButton: Bool = true
     
-    required init(message: String) {
+    init(message: String) {
             
         self.message.accept(value: message)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func closeTapped() {

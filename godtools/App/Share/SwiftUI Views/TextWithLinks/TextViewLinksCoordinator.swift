@@ -11,12 +11,10 @@ import UIKit
 @available(iOS, obsoleted: 15.0, message: "When supporting iOS 15 and up use TextWithLinksView.swift")
 class TextViewLinksCoordinator: NSObject, UITextViewDelegate {
     
-    private let textWithLinks: TextWithLinks
     private let didInteractWithUrlClosure: ((_ url: URL) -> Bool)
     
-    init(textWithLinks: TextWithLinks, didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
+    init(didInteractWithUrlClosure: @escaping ((_ url: URL) -> Bool)) {
         
-        self.textWithLinks = textWithLinks
         self.didInteractWithUrlClosure = didInteractWithUrlClosure
         
         super.init()

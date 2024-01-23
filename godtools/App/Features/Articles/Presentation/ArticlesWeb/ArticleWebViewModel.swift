@@ -54,6 +54,7 @@ class ArticleWebViewModel: NSObject {
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         stopDisplayArticleTimer()
         stopLoadWebPage(webView: loadingCurrentWebView)
     }

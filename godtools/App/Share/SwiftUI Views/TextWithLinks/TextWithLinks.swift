@@ -34,7 +34,7 @@ struct TextWithLinks: UIViewRepresentable {
     }
     
     func makeCoordinator() -> TextViewLinksCoordinator {
-        return TextViewLinksCoordinator(textWithLinks: self, didInteractWithUrlClosure: didInteractWithUrlClosure)
+        return TextViewLinksCoordinator(didInteractWithUrlClosure: didInteractWithUrlClosure)
     }
     
     func makeUIView(context: Context) -> UITextView {

@@ -33,6 +33,7 @@ class LoadingArticleViewModel: LoadingViewModelType {
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         downloadArticleOperation?.cancelAllOperations()
     }
     

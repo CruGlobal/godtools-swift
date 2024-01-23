@@ -50,7 +50,7 @@ struct ToolDetailsMediaView: View {
            
             case .youtube(let videoId, let playerParameters):
                 
-                VideoView(
+                VideoViewRepresentable(
                     playerState: $videoPlayerState,
                     frameSize: mediaViewSize,
                     videoId: videoId,

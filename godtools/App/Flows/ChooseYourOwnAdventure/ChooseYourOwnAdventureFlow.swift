@@ -72,6 +72,8 @@ extension ChooseYourOwnAdventureFlow {
             toolTranslations: toolTranslations
         )
         
+        let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
+        
         let viewModel = ChooseYourOwnAdventureViewModel(
             flowDelegate: self,
             renderer: renderer,
@@ -84,12 +86,8 @@ extension ChooseYourOwnAdventureFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        navigationController.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
-        
-        navigationController.setLayoutDirectionPublisher(
-            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
-        )
-        
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
+                
         let homeButton = AppHomeBarItem(
             color: nil,
             target: viewModel,
@@ -103,49 +101,18 @@ extension ChooseYourOwnAdventureFlow {
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
             hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
-            layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
+            layoutDirectionPublisher: Just(navBarLayoutDirection).eraseToAnyPublisher()
         )
-        
-        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
-        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
-        
-        let languageSelector: NavBarSelectorView?
-        let title: String?
-        
+                
         var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
-        
-        if viewModel.languageNames.count > 1 {
-            
-            languageSelector = NavBarSelectorView(
-                selectorButtonTitles: viewModel.languageNames,
-                layoutDirection: viewModel.layoutDirection,
-                borderColor: controlColor,
-                selectedColor: controlColor,
-                deselectedColor: UIColor.clear,
-                selectedTitleColor: barColor.withAlphaComponent(1),
-                deselectedTitleColor: controlColor,
-                titleFont: viewModel.languageFont,
-                selectorTappedClosure: { (index: Int) in
-                    chooseYourOwnAdventureView?.languageTapped(index: index)
-                }
-            )
-            
-            title = nil
-        }
-        else {
-            
-            languageSelector = nil
-            
-            title = "GodTools"
-        }
         
         let navigationBar = AppNavigationBar(
             appearance: viewModel.navBarAppearance,
             backButton: nil,
             leadingItems: [homeButton, backButton],
             trailingItems: [],
-            titleView: languageSelector,
-            title: title
+            titleView: nil,
+            title: nil
         )
         
         let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
@@ -158,16 +125,12 @@ extension ChooseYourOwnAdventureFlow {
                                 
                 if languageNames.count > 1 {
                     navigationBar.setTitleView(
-                        titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel)
+                        titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
                     )
                 }
                 else {
                     navigationBar.setTitle(title: "GodTools")
                 }
-
-                self?.navigationController.setLayoutDirectionPublisher(
-                    layoutDirectionPublisher: Just(viewModel.layoutDirection).eraseToAnyPublisher()
-                )
             }
             .store(in: &cancellables)
         
@@ -182,14 +145,14 @@ extension ChooseYourOwnAdventureFlow {
         return view
     }
     
-    private func getNewLanguageSelectorView(view: ChooseYourOwnAdventureView?, viewModel: ChooseYourOwnAdventureViewModel) -> NavBarSelectorView {
+    private func getNewLanguageSelectorView(view: ChooseYourOwnAdventureView?, viewModel: ChooseYourOwnAdventureViewModel, navBarLayoutDirection: UISemanticContentAttribute) -> NavBarSelectorView {
         
         let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
         let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
         
         return NavBarSelectorView(
             selectorButtonTitles: viewModel.languageNames,
-            layoutDirection: viewModel.layoutDirection,
+            layoutDirection: navBarLayoutDirection,
             borderColor: controlColor,
             selectedColor: controlColor,
             deselectedColor: UIColor.clear,
