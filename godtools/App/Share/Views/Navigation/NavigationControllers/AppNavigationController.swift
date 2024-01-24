@@ -77,7 +77,6 @@ class AppNavigationController: UINavigationController {
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         
         view.semanticContentAttribute = semanticContentAttribute
-        navigationBar.semanticContentAttribute = semanticContentAttribute
         
         let viewControllers: [UIViewController] = viewControllers
         

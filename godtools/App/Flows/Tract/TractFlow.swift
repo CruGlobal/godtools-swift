@@ -246,7 +246,7 @@ extension TractFlow {
             appearance: viewModel.navBarAppearance,
             backButton: nil,
             leadingItems: [backBarItem],
-            trailingItems: [remoteShareActiveBarItem, toolSettingsBarItem],
+            trailingItems: [toolSettingsBarItem, remoteShareActiveBarItem],
             titleView: nil,
             title: nil
         )
