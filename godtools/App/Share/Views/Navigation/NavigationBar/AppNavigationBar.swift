@@ -10,17 +10,20 @@ import UIKit
 
 class AppNavigationBar {
     
-    private var appearance: AppNavigationBarAppearance?
+    private let appearance: AppNavigationBarAppearance?
+    private let backButton: AppBackBarItem?
+    private let leadingItems: [NavBarItem]
+    private let trailingItems: [NavBarItem]
+    private let initialTitleView: UIView?
+    private let initialTitle: String?
+    
+    private var leadingItemControllers: [NavBarItemController] = Array()
+    private var trailingItemControllers: [NavBarItemController] = Array()
     private var titleView: UIView?
     private var title: String?
-    
-    private(set) var navBarItems: NavBarItems?
-    
+    private var didConfigure: Bool = false
+        
     private weak var viewController: UIViewController?
-    
-    let backButton: AppBackBarItem?
-    let leadingItems: [NavBarItem]
-    let trailingItems: [NavBarItem]
     
     init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil, title: String? = nil) {
         
@@ -28,48 +31,57 @@ class AppNavigationBar {
         self.backButton = backButton
         self.leadingItems = leadingItems
         self.trailingItems = trailingItems
+        self.initialTitleView = titleView
+        self.initialTitle = title
         self.titleView = titleView
         self.title = title
     }
     
-    func setAppearance(appearance: AppNavigationBarAppearance) {
+    private static func getItemControllers(viewController: UIViewController, items: [NavBarItem], barPosition: BarButtonItemBarPosition) -> [NavBarItemController] {
         
-        self.appearance = appearance
+        var itemControllers: [NavBarItemController] = Array()
         
-        guard let navigationBar = viewController?.navigationController?.navigationBar else {
-            return
+        for index in 0 ..< items.count {
+            
+            let navBarItem: NavBarItem = items[index]
+            
+            let controller = NavBarItemController.newNavBarItemController(
+                controllerType: navBarItem.controllerType,
+                viewController: viewController,
+                navBarItem: navBarItem,
+                itemBarPosition: barPosition,
+                itemIndex: index
+            )
+            
+            itemControllers.append(controller)
         }
         
-        navigationBar.setupNavigationBarAppearance(
-            backgroundColor: appearance.backgroundColor,
-            controlColor: appearance.controlColor,
-            titleFont: appearance.titleFont,
-            titleColor: appearance.titleColor,
-            isTranslucent: appearance.isTranslucent
-        )
+        return itemControllers
     }
     
-    func configure(viewController: UIViewController) {
+    func resetToInitialState() {
         
-        guard navBarItems == nil else {
+        guard let viewController = self.viewController else {
             return
         }
         
-        self.viewController = viewController
+        didConfigure = false
         
-        var leadingItemsWithBackButton: [NavBarItem] = leadingItems
+        configureIfNeeded(viewController: viewController)
+    }
+    
+    private func configureIfNeeded(viewController: UIViewController) {
         
-        if let backButton = self.backButton {
-            viewController.navigationItem.setHidesBackButton(true, animated: false)
-            leadingItemsWithBackButton.insert(backButton, at: 0)
+        guard !didConfigure else {
+            return
         }
         
-        navBarItems = NavBarItems(
-            viewController: viewController,
-            leadingItems: leadingItemsWithBackButton,
-            trailingItems: trailingItems
-        )
+        didConfigure = true
         
+        reconfigureAppearnce(viewController: viewController)
+        
+        reconfigureButtonItems(viewController: viewController)
+                
         if let titleView = self.titleView {
             setTitleView(titleView: titleView)
         }
@@ -78,11 +90,51 @@ class AppNavigationBar {
         }
     }
     
-    func willAppear(animated: Bool) {
-                
-        if let appearance = self.appearance {
-            setAppearance(appearance: appearance)
+    private func reconfigureAppearnce(viewController: UIViewController) {
+        
+        if let appearance = appearance, let navigationBar = viewController.navigationController?.navigationBar {
+
+            navigationBar.setupNavigationBarAppearance(
+                backgroundColor: appearance.backgroundColor,
+                controlColor: appearance.controlColor,
+                titleFont: appearance.titleFont,
+                titleColor: appearance.titleColor,
+                isTranslucent: appearance.isTranslucent
+            )
         }
+    }
+    
+    private func reconfigureButtonItems(viewController: UIViewController) {
+        
+        viewController.removeAllBarButtonItems()
+        leadingItemControllers.removeAll()
+        trailingItemControllers.removeAll()
+        
+        var leadingItemsWithBackButton: [NavBarItem] = leadingItems
+        
+        if let backButton = self.backButton {
+            viewController.navigationItem.setHidesBackButton(true, animated: false)
+            leadingItemsWithBackButton.insert(backButton, at: 0)
+        }
+        
+        leadingItemControllers = AppNavigationBar.getItemControllers(
+            viewController: viewController,
+            items: leadingItems,
+            barPosition: .leading
+        )
+        
+        trailingItemControllers = AppNavigationBar.getItemControllers(
+            viewController: viewController,
+            items: trailingItems,
+            barPosition: .trailing
+        )
+    }
+    
+    func willAppear(viewController: UIViewController, animated: Bool) {
+         
+        self.viewController = viewController
+        
+        configureIfNeeded(viewController: viewController)
     }
     
     func getTitleView() -> UIView? {
