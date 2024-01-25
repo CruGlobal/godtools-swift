@@ -1263,7 +1263,6 @@
 		45EB9B7729F16CF200CA74A8 /* UIView+DrawBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5529F16CF200CA74A8 /* UIView+DrawBorder.swift */; };
 		45EB9B7829F16CF200CA74A8 /* UITextView+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5729F16CF200CA74A8 /* UITextView+AttributedString.swift */; };
 		45EB9B7929F16CF200CA74A8 /* UIImageView+ImageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5929F16CF200CA74A8 /* UIImageView+ImageColor.swift */; };
-		45EB9B7A29F16CF200CA74A8 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5B29F16CF200CA74A8 /* UINavigationBar+Appearance.swift */; };
 		45EB9B7B29F16CF200CA74A8 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5D29F16CF200CA74A8 /* UIViewController+DismissPresented.swift */; };
 		45EB9B7C29F16CF200CA74A8 /* UIViewController+Containment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5E29F16CF200CA74A8 /* UIViewController+Containment.swift */; };
 		45EB9B7F29F16CF200CA74A8 /* Collection+SafeLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6429F16CF200CA74A8 /* Collection+SafeLookup.swift */; };
@@ -2700,7 +2699,6 @@
 		45EB9B5529F16CF200CA74A8 /* UIView+DrawBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+DrawBorder.swift"; sourceTree = "<group>"; };
 		45EB9B5729F16CF200CA74A8 /* UITextView+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+AttributedString.swift"; sourceTree = "<group>"; };
 		45EB9B5929F16CF200CA74A8 /* UIImageView+ImageColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageColor.swift"; sourceTree = "<group>"; };
-		45EB9B5B29F16CF200CA74A8 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		45EB9B5D29F16CF200CA74A8 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45EB9B5E29F16CF200CA74A8 /* UIViewController+Containment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Containment.swift"; sourceTree = "<group>"; };
 		45EB9B6429F16CF200CA74A8 /* Collection+SafeLookup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeLookup.swift"; sourceTree = "<group>"; };
@@ -9518,7 +9516,6 @@
 				45EB9B4929F16CF200CA74A8 /* UIImage */,
 				45EB9B5829F16CF200CA74A8 /* UIImageView */,
 				45EB9B4C29F16CF200CA74A8 /* UILabel */,
-				45EB9B5A29F16CF200CA74A8 /* UINavigationBar */,
 				45EB9B5629F16CF200CA74A8 /* UITextView */,
 				45EB9B5229F16CF200CA74A8 /* UIView */,
 				45EB9B5C29F16CF200CA74A8 /* UIViewController */,
@@ -9584,14 +9581,6 @@
 				45EB9B5929F16CF200CA74A8 /* UIImageView+ImageColor.swift */,
 			);
 			path = UIImageView;
-			sourceTree = "<group>";
-		};
-		45EB9B5A29F16CF200CA74A8 /* UINavigationBar */ = {
-			isa = PBXGroup;
-			children = (
-				45EB9B5B29F16CF200CA74A8 /* UINavigationBar+Appearance.swift */,
-			);
-			path = UINavigationBar;
 			sourceTree = "<group>";
 		};
 		45EB9B5C29F16CF200CA74A8 /* UIViewController */ = {
@@ -11548,7 +11537,6 @@
 				45AC9DDF2B28A98800DEEBFE /* ViewDownloadableLanguagesDomainModel.swift in Sources */,
 				45AD206425938B1300A096A0 /* AlertMessageType.swift in Sources */,
 				459E86F128EDA86C00E197A5 /* IncomingDeepLinkUrl.swift in Sources */,
-				45EB9B7A29F16CF200CA74A8 /* UINavigationBar+Appearance.swift in Sources */,
 				4581D98D297AE13E00D056D6 /* RealmGlobalAnalyticsCache.swift in Sources */,
 				45C152A92A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift in Sources */,
 				453F84C62A029FC00005101E /* ArticleAemRepository.swift in Sources */,

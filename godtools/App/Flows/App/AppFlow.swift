@@ -49,8 +49,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
+        let navigationBarAppearance = AppNavigationBarAppearance(
+            backgroundColor: ColorPalette.gtBlue.uiColor,
+            controlColor: .white,
+            titleFont: appDiContainer.getFontService().getFont(size: 17, weight: .semibold),
+            titleColor: .white,
+            isTranslucent: false
+        )
+        
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
@@ -500,16 +508,8 @@ extension AppFlow {
     private func configureNavBarForDashboard() {
         
         AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
-        
-        navigationController.setNavigationBarHidden(false, animated: true)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.uiColor,
-            controlColor: .white,
-            titleFont: appDiContainer.getFontService().getFont(size: 17, weight: .semibold),
-            titleColor: .white,
-            isTranslucent: false
-        )
+                
+        navigationController.resetNavigationBarAppearance()
         
         navigationController.setSemanticContentAttribute(semanticContentAttribute: ApplicationLayout.shared.currentDirection.semanticContentAttribute)
         
