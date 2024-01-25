@@ -58,9 +58,9 @@ struct DownloadableLanguageItemView: View {
                 LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress)
             }
         }
-        .onChange(of: downloadableLanguage.downloadStatus, perform: { newValue in
+        .onChange(of: downloadableLanguage.downloadStatus, perform: { newDownloadStatus in
             
-            switch newValue {
+            switch newDownloadStatus {
             case .notDownloaded:
                 self.downloadProgressTarget = nil
                 self.animationDownloadProgress = nil
@@ -81,6 +81,18 @@ struct DownloadableLanguageItemView: View {
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
         .animation(.default, value: animationDownloadProgress)
+        .onAppBackgrounded {
+        
+            if timer != nil {
+                stopAnimationTimer()
+            }
+        }
+        .onAppForegrounded {
+            
+            if shouldContinueDownloadProgressAnimation() {
+                startAnimationTimer()
+            }
+        }
     }
     
     private func startAnimationTimer() {
@@ -96,9 +108,22 @@ struct DownloadableLanguageItemView: View {
                 
             } else if progressTarget >= 1 && downloadProgress >= 1 {
                 
-                timer.invalidate()
-                self.timer = nil
+                self.stopAnimationTimer()
             }
         })
+    }
+    
+    private func stopAnimationTimer() {
+        
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    private func shouldContinueDownloadProgressAnimation() -> Bool {
+        guard let animationDownloadProgress = animationDownloadProgress else {
+            return false
+        }
+        
+        return animationDownloadProgress < 1
     }
 }

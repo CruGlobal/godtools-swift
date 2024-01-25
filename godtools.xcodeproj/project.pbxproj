@@ -1400,6 +1400,7 @@
 		D41B38BD288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */; };
 		D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */; };
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
+		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */; };
 		D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EF297739F6009D5F93 /* AccountActivityView.swift */; };
 		D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */; };
@@ -2893,6 +2894,7 @@
 		D41B38BC288F2C7200BD5899 /* GetDeviceLanguageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeviceLanguageUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingTutorialAvailableUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
+		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityUseCase.swift; sourceTree = "<group>"; };
 		D455F3EF297739F6009D5F93 /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
 		D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainModel.swift; sourceTree = "<group>"; };
@@ -7487,6 +7489,7 @@
 			children = (
 				45FB1CC0295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift */,
 				45FB1CBF295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift */,
+				D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */,
 				4597101529CDE02400C47040 /* View+CornerRadius.swift */,
 				450D84752AE097EF008EA64A /* View+FlipVertically.swift */,
 			);
@@ -11584,6 +11587,7 @@
 				456431DD284ACC5300846720 /* MobileContentRendererNavigation.swift in Sources */,
 				455EE8422AEC59D300C3205C /* DownloadToolProgressFeatureDiContainer.swift in Sources */,
 				459E27FA2AD8280D008275B3 /* DeleteUserCountersUseCase.swift in Sources */,
+				D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */,
 				45ACBE062B1F64230017D17E /* LessonViewModel.swift in Sources */,
 				45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */,
 				45C2AF4A2A81764D004958AB /* GTPageControlAttributes.swift in Sources */,
