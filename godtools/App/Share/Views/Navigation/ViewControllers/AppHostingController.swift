@@ -26,9 +26,7 @@ class AppHostingController<Content: View>: UIHostingController<Content> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationBar?.configure(viewController: self)
-        
-        navigationBar?.willAppear(animated: animated)
+                
+        navigationBar?.willAppear(viewController: self, animated: animated)
     }
 }

@@ -17,13 +17,13 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
     private var currentSemanticContentAttribute: UISemanticContentAttribute?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(viewController: UIViewController, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(delegate: NavBarItemControllerDelegate, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
         self.layoutDirectionBasedBarItem = navBarItem
         self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher
         
         super.init(
-            viewController: viewController,
+            delegate: delegate,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex
