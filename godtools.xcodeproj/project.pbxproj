@@ -654,6 +654,7 @@
 		45860A95292437420089C836 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45860A93292437420089C836 /* DownloadProgressView.xib */; };
 		45860A96292437420089C836 /* DownloadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A94292437420089C836 /* DownloadProgressView.swift */; };
 		4587301129671FF200C9972E /* InitialDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4587301029671FF200C9972E /* InitialDataDownloader.swift */; };
+		458C67592B62BA670033489C /* BarButtonItemBarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458C67582B62BA670033489C /* BarButtonItemBarPosition.swift */; };
 		458CFE8129D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFE5D29D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift */; };
 		458CFE8329D4E0B9007B423C /* ShareArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFE6029D4E0B9007B423C /* ShareArticleViewModel.swift */; };
 		458CFE8429D4E0B9007B423C /* ShareArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458CFE6129D4E0B9007B423C /* ShareArticleView.swift */; };
@@ -1265,8 +1266,6 @@
 		45EB9B7A29F16CF200CA74A8 /* UINavigationBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5B29F16CF200CA74A8 /* UINavigationBar+Appearance.swift */; };
 		45EB9B7B29F16CF200CA74A8 /* UIViewController+DismissPresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5D29F16CF200CA74A8 /* UIViewController+DismissPresented.swift */; };
 		45EB9B7C29F16CF200CA74A8 /* UIViewController+Containment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B5E29F16CF200CA74A8 /* UIViewController+Containment.swift */; };
-		45EB9B7D29F16CF200CA74A8 /* BarButtonItemBarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6029F16CF200CA74A8 /* BarButtonItemBarPosition.swift */; };
-		45EB9B7E29F16CF200CA74A8 /* UIViewController+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6129F16CF200CA74A8 /* UIViewController+UIBarButtonItem.swift */; };
 		45EB9B7F29F16CF200CA74A8 /* Collection+SafeLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6429F16CF200CA74A8 /* Collection+SafeLookup.swift */; };
 		45EB9B8029F16CF200CA74A8 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6629F16CF200CA74A8 /* Locale+Extensions.swift */; };
 		45EB9B8129F16CF200CA74A8 /* NSError+WithDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6829F16CF200CA74A8 /* NSError+WithDescription.swift */; };
@@ -2130,6 +2129,7 @@
 		45860A93292437420089C836 /* DownloadProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadProgressView.xib; sourceTree = "<group>"; };
 		45860A94292437420089C836 /* DownloadProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressView.swift; sourceTree = "<group>"; };
 		4587301029671FF200C9972E /* InitialDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataDownloader.swift; sourceTree = "<group>"; };
+		458C67582B62BA670033489C /* BarButtonItemBarPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItemBarPosition.swift; sourceTree = "<group>"; };
 		458CFE5D29D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
 		458CFE6029D4E0B9007B423C /* ShareArticleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareArticleViewModel.swift; sourceTree = "<group>"; };
 		458CFE6129D4E0B9007B423C /* ShareArticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareArticleView.swift; sourceTree = "<group>"; };
@@ -2703,8 +2703,6 @@
 		45EB9B5B29F16CF200CA74A8 /* UINavigationBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Appearance.swift"; sourceTree = "<group>"; };
 		45EB9B5D29F16CF200CA74A8 /* UIViewController+DismissPresented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DismissPresented.swift"; sourceTree = "<group>"; };
 		45EB9B5E29F16CF200CA74A8 /* UIViewController+Containment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Containment.swift"; sourceTree = "<group>"; };
-		45EB9B6029F16CF200CA74A8 /* BarButtonItemBarPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItemBarPosition.swift; sourceTree = "<group>"; };
-		45EB9B6129F16CF200CA74A8 /* UIViewController+UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		45EB9B6429F16CF200CA74A8 /* Collection+SafeLookup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+SafeLookup.swift"; sourceTree = "<group>"; };
 		45EB9B6629F16CF200CA74A8 /* Locale+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
 		45EB9B6829F16CF200CA74A8 /* NSError+WithDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+WithDescription.swift"; sourceTree = "<group>"; };
@@ -9601,18 +9599,8 @@
 			children = (
 				45EB9B5E29F16CF200CA74A8 /* UIViewController+Containment.swift */,
 				45EB9B5D29F16CF200CA74A8 /* UIViewController+DismissPresented.swift */,
-				45EB9B5F29F16CF200CA74A8 /* UIBarButtonItem */,
 			);
 			path = UIViewController;
-			sourceTree = "<group>";
-		};
-		45EB9B5F29F16CF200CA74A8 /* UIBarButtonItem */ = {
-			isa = PBXGroup;
-			children = (
-				45EB9B6029F16CF200CA74A8 /* BarButtonItemBarPosition.swift */,
-				45EB9B6129F16CF200CA74A8 /* UIViewController+UIBarButtonItem.swift */,
-			);
-			path = UIBarButtonItem;
 			sourceTree = "<group>";
 		};
 		45EB9B6229F16CF200CA74A8 /* Foundation */ = {
@@ -10137,6 +10125,7 @@
 			children = (
 				45FE82462ACE5D5800930C39 /* AppNavigationBar.swift */,
 				4570C3022ADDC86600F0B83B /* AppNavigationBarAppearance.swift */,
+				458C67582B62BA670033489C /* BarButtonItemBarPosition.swift */,
 				45FE82482ACE5D8C00930C39 /* NavBarItems */,
 			);
 			path = NavigationBar;
@@ -11407,7 +11396,6 @@
 				D47DF03F2B28E8AD0079219B /* DownloadedLanguagesRepository.swift in Sources */,
 				4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */,
 				4573133E28C1821100481640 /* ToolDetailsVersionsCardViewModel.swift in Sources */,
-				45EB9B7D29F16CF200CA74A8 /* BarButtonItemBarPosition.swift in Sources */,
 				45369AC52AFA7FA500BD10F0 /* GetToolScreenShareTutorialInterfaceStringsRepository.swift in Sources */,
 				45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */,
 				4512C8292B32388B00D162F3 /* ShareableImageDomainModel.swift in Sources */,
@@ -12064,6 +12052,7 @@
 				452486D32B07C98B007AD932 /* StoreUserFiltersRepositoryInterface.swift in Sources */,
 				45A464CD2A7BE18800E8BAF0 /* FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift in Sources */,
 				4573133928C1821100481640 /* ToolDetailsVersionsView.swift in Sources */,
+				458C67592B62BA670033489C /* BarButtonItemBarPosition.swift in Sources */,
 				45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */,
 				45369AC62AFA7FA500BD10F0 /* GetToolScreenShareTutorialViewedRepository.swift in Sources */,
 				458CFE9229D4E0B9007B423C /* ArticlesErrorMessageView.swift in Sources */,
@@ -12517,7 +12506,6 @@
 				45325F2E285CF8DA0078D932 /* ViewSizePreferenceKey.swift in Sources */,
 				457766EF2AD71BF10093B19A /* GetToolDetailsMediaRepositoryInterface.swift in Sources */,
 				4573134128C1821200481640 /* ToolDetailsSegmentType.swift in Sources */,
-				45EB9B7E29F16CF200CA74A8 /* UIViewController+UIBarButtonItem.swift in Sources */,
 				45EB9B7029F16CF200CA74A8 /* UIImage+CreateImageWithColor.swift in Sources */,
 				4556CEB329F2E4A800643BBC /* ArticleDomainModel.swift in Sources */,
 				D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */,

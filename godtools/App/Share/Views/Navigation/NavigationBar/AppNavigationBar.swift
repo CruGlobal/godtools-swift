@@ -122,7 +122,8 @@ class AppNavigationBar {
     
     private func reconfigureButtonItems(viewController: UIViewController) {
         
-        viewController.removeAllBarButtonItems()
+        removeAllBarButtonItems()
+        
         leadingItemControllers.removeAll()
         trailingItemControllers.removeAll()
         
@@ -153,7 +154,7 @@ class AppNavigationBar {
             return
         }
         
-        viewController.removeAllBarButtonItems()
+        removeAllBarButtonItems()
         
         let leadingItemControllers: [NavBarItemController]
         let trailingItemControllers: [NavBarItemController]
@@ -175,14 +176,14 @@ class AppNavigationBar {
         for leadingItemController in leadingItemControllers {
             
             if !leadingItemController.barButtonItemIsHidden, let barButtonItem = leadingItemController.getBarButtonItem() {
-                viewController.addLeadingBarButtonItem(item: barButtonItem, index: nil)
+                addLeadingBarButtonItem(item: barButtonItem, index: nil)
             }
         }
         
         for trailingItemController in trailingItemControllers {
             
             if !trailingItemController.barButtonItemIsHidden, let barButtonItem = trailingItemController.getBarButtonItem() {
-                viewController.addTrailingBarButtonItem(item: barButtonItem, index: nil)
+                addTrailingBarButtonItem(item: barButtonItem, index: nil)
             }
         }
     }
@@ -223,5 +224,81 @@ extension AppNavigationBar: NavBarItemControllerDelegate {
     
     func didChangeBarButtonItemState(controller: NavBarItemController) {
         redrawBarButtonItems()
+    }
+}
+
+extension AppNavigationBar {
+    
+    private var navigationItem: UINavigationItem? {
+        return viewController?.navigationItem
+    }
+    
+    private func addLeadingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        guard let navigationItem = self.navigationItem else {
+            return
+        }
+        
+        if var leadingItems = navigationItem.leftBarButtonItems, !leadingItems.isEmpty {
+            
+            if !leadingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < leadingItems.count {
+                    
+                    leadingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    leadingItems.append(item)
+                }
+                
+                navigationItem.leftBarButtonItems = leadingItems
+            }
+        }
+        else {
+            
+            navigationItem.leftBarButtonItem = item
+        }
+    }
+
+    private func addTrailingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        guard let navigationItem = self.navigationItem else {
+            return
+        }
+        
+        if var trailingItems = navigationItem.rightBarButtonItems, !trailingItems.isEmpty {
+            
+            if !trailingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < trailingItems.count {
+                    
+                    trailingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    trailingItems.append(item)
+                }
+                
+                navigationItem.rightBarButtonItems = trailingItems
+            }
+        }
+        else {
+            
+            navigationItem.rightBarButtonItem = item
+        }
+    }
+    
+    private func removeAllBarButtonItems() {
+        
+        guard let navigationItem = self.navigationItem else {
+            return
+        }
+        
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItems = Array()
+        
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItems = Array()
     }
 }
