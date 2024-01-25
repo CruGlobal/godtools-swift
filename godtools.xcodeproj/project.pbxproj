@@ -689,6 +689,8 @@
 		458D01872B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D01862B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift */; };
 		458D5BA12A3A07570078B015 /* MobileContentPagesNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */; };
 		458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */; };
+		458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93402B62A06F0087D45D /* AppShareBarItem.swift */; };
+		458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93422B62A0B50087D45D /* AppDebugBarItem.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		45920D2F2A8CFE2500E336A8 /* NoFavoriteToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45920D292A8CFE2500E336A8 /* NoFavoriteToolsView.swift */; };
 		45920D302A8CFE2500E336A8 /* YourFavoriteToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45920D2B2A8CFE2500E336A8 /* YourFavoriteToolsHeaderView.swift */; };
@@ -2165,6 +2167,8 @@
 		458D01862B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigationEvent.swift; sourceTree = "<group>"; };
 		458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuildConfiguration.swift; sourceTree = "<group>"; };
+		458E93402B62A06F0087D45D /* AppShareBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShareBarItem.swift; sourceTree = "<group>"; };
+		458E93422B62A0B50087D45D /* AppDebugBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDebugBarItem.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		45920D292A8CFE2500E336A8 /* NoFavoriteToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFavoriteToolsView.swift; sourceTree = "<group>"; };
 		45920D2B2A8CFE2500E336A8 /* YourFavoriteToolsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourFavoriteToolsHeaderView.swift; sourceTree = "<group>"; };
@@ -3367,11 +3371,13 @@
 			children = (
 				45070A7A2ACF42AD00229EDD /* AppBackBarItem.swift */,
 				45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */,
+				458E93422B62A0B50087D45D /* AppDebugBarItem.swift */,
 				45C925012B45E7AA005947DB /* AppHomeBarItem.swift */,
 				45070A842ACF43E900229EDD /* AppLanguageSettingsBarItem.swift */,
 				45070A782ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift */,
 				45FA155D2B48BAC4005F986D /* AppLottieBarItem.swift */,
 				45070A792ACF42AD00229EDD /* AppMenuBarItem.swift */,
+				458E93402B62A06F0087D45D /* AppShareBarItem.swift */,
 			);
 			path = ButtonsWithImage;
 			sourceTree = "<group>";
@@ -11638,6 +11644,7 @@
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45920D312A8CFE2500E336A8 /* YourFavoriteToolsView.swift in Sources */,
+				458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */,
 				45F378FB2B23642600EEF039 /* GetLearnToShareToolInterfaceStringsRepository.swift in Sources */,
@@ -11725,6 +11732,7 @@
 				458CFE8129D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
 				45227BAE2A1D02CC0021C131 /* DeleteAccountProgressView.swift in Sources */,
+				458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */,
 				45E066CC2AE1687C004393CD /* GetOnboardingTutorialViewedRepository.swift in Sources */,
 				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45ACEE182AD04926004B62E4 /* AppLanguageStringKeys.swift in Sources */,
