@@ -52,7 +52,7 @@ struct ConfirmAppLanguageView: View {
                 Group {
                     attributedMessageView(attributedString: viewModel.messageInCurrentLanguage, fontSize: 18)
                     
-                    attributedMessageView(attributedString: viewModel.messageInNewlySelectedLanguage, fontSize: 14)
+                    attributedMessageView(attributedString: viewModel.messageInNewlySelectedLanguage, fontSize: 18)
                 }
                 .padding(.horizontal, 10)
                 

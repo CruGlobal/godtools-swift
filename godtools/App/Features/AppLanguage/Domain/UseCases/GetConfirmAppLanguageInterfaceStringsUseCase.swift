@@ -29,8 +29,8 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
         return Publishers.CombineLatest4(
             getMessageInNewlySelectedLanguagePublisher(selectedLanguage: selectedLanguage),
             getMessageInCurrentLanguagePublisher(selectedLanguage: selectedLanguage),
-            getChangeLanguageButtonTextPublisher(selectedLanguage: selectedLanguage),
-            getNevermindButtonTextPublisher(selectedLanguage: selectedLanguage)
+            getChangeLanguageButtonTextPublisher(),
+            getNevermindButtonTextPublisher()
         )
         .flatMap { messageInNewlySelectedLanguage, messageInCurrenttLanguage, changeLanguageButtonText, nevermindButtonText in
             
@@ -79,13 +79,29 @@ class GetConfirmAppLanguageInterfaceStringsUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func getChangeLanguageButtonTextPublisher(selectedLanguage: AppLanguageDomainModel) -> AnyPublisher<String, Never> {
+    private func getChangeLanguageButtonTextPublisher() -> AnyPublisher<String, Never> {
         
-        return getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: selectedLanguage, stringId: "languageSettings.confirmAppLanguage.changeLanguageButton.title")
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap { currentAppLanguage in
+                
+                return self.getInterfaceStringRepositoryInterface.getStringPublisher(
+                    languageCode: currentAppLanguage,
+                    stringId: "languageSettings.confirmAppLanguage.changeLanguageButton.title"
+                )
+            }
+            .eraseToAnyPublisher()
     }
     
-    private func getNevermindButtonTextPublisher(selectedLanguage: AppLanguageDomainModel) -> AnyPublisher<String, Never> {
+    private func getNevermindButtonTextPublisher() -> AnyPublisher<String, Never> {
         
-        return getInterfaceStringRepositoryInterface.getStringPublisher(languageCode: selectedLanguage, stringId: "languageSettings.confirmAppLanguage.nevermindButton.title")
+        return getCurrentAppLanguageUseCase.getLanguagePublisher()
+            .flatMap { currentAppLanguage in
+                
+                return self.getInterfaceStringRepositoryInterface.getStringPublisher(
+                    languageCode: currentAppLanguage,
+                    stringId: "languageSettings.confirmAppLanguage.nevermindButton.title"
+                )
+            }
+            .eraseToAnyPublisher()
     }
 }
