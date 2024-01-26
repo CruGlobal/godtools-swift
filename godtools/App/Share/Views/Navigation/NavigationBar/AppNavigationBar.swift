@@ -75,6 +75,14 @@ class AppNavigationBar {
         configureIfNeeded(viewController: viewController)
     }
     
+    private var uiNavigationBar: UINavigationBar? {
+        return viewController?.navigationController?.navigationBar
+    }
+    
+    private var uiNavigationItem: UINavigationItem? {
+        return viewController?.navigationItem
+    }
+    
     private func configureIfNeeded(viewController: UIViewController) {
         
         guard !didConfigure else {
@@ -83,9 +91,9 @@ class AppNavigationBar {
         
         didConfigure = true
         
-        reconfigureAppearance(viewController: viewController)
+        reconfigureAppearance()
         
-        reconfigureButtonItems(viewController: viewController)
+        reconfigureButtonItems()
                 
         if let titleView = self.titleView {
             setTitleView(titleView: titleView)
@@ -93,8 +101,6 @@ class AppNavigationBar {
         else if let title = title {
             setTitle(title: title)
         }
-        
-        redrawBarButtonItems()
         
         layoutDirectionPublisher
             .receive(on: DispatchQueue.main)
@@ -106,93 +112,107 @@ class AppNavigationBar {
             .store(in: &cancellables)
     }
     
-    private func reconfigureAppearance(viewController: UIViewController) {
-        
-        if let appearance = appearance, let navigationBar = viewController.navigationController?.navigationBar {
-
-            navigationBar.setupNavigationBarAppearance(
-                backgroundColor: appearance.backgroundColor,
-                controlColor: appearance.controlColor,
-                titleFont: appearance.titleFont,
-                titleColor: appearance.titleColor,
-                isTranslucent: appearance.isTranslucent
-            )
-        }
-    }
-    
-    private func reconfigureButtonItems(viewController: UIViewController) {
-        
-        viewController.removeAllBarButtonItems()
-        leadingItemControllers.removeAll()
-        trailingItemControllers.removeAll()
-        
-        var leadingItemsWithBackButton: [NavBarItem] = leadingItems
-        
-        viewController.navigationItem.setHidesBackButton(true, animated: false)
-        
-        if let backButton = self.backButton {
-            leadingItemsWithBackButton.insert(backButton, at: 0)
-        }
-        
-        leadingItemControllers = AppNavigationBar.getItemControllers(
-            delegate: self,
-            items: leadingItemsWithBackButton,
-            barPosition: .leading
-        )
-        
-        trailingItemControllers = AppNavigationBar.getItemControllers(
-            delegate: self,
-            items: trailingItems,
-            barPosition: .trailing
-        )
-    }
-    
-    private func redrawBarButtonItems() {
-        
-        guard let viewController = self.viewController else {
-            return
-        }
-        
-        viewController.removeAllBarButtonItems()
-        
-        let leadingItemControllers: [NavBarItemController]
-        let trailingItemControllers: [NavBarItemController]
-        
-        let systemIsRightToLeft: Bool = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
-        let layoutDirectionIsRightToLeft: Bool = layoutDirection == .forceRightToLeft
-        
-        if layoutDirectionIsRightToLeft && !systemIsRightToLeft || systemIsRightToLeft && !layoutDirectionIsRightToLeft {
-            
-            leadingItemControllers = self.leadingItemControllers.reversed()
-            trailingItemControllers = self.trailingItemControllers.reversed()
-        }
-        else {
-            
-            leadingItemControllers = self.leadingItemControllers
-            trailingItemControllers = self.trailingItemControllers
-        }
-                
-        for leadingItemController in leadingItemControllers {
-            
-            if !leadingItemController.barButtonItemIsHidden, let barButtonItem = leadingItemController.getBarButtonItem() {
-                viewController.addLeadingBarButtonItem(item: barButtonItem, index: nil)
-            }
-        }
-        
-        for trailingItemController in trailingItemControllers {
-            
-            if !trailingItemController.barButtonItemIsHidden, let barButtonItem = trailingItemController.getBarButtonItem() {
-                viewController.addTrailingBarButtonItem(item: barButtonItem, index: nil)
-            }
-        }
-    }
-    
     func willAppear(viewController: UIViewController, animated: Bool) {
          
         self.viewController = viewController
         
         configureIfNeeded(viewController: viewController)
     }
+}
+
+// MARK: - NavBarItemControllerDelegate
+
+extension AppNavigationBar: NavBarItemControllerDelegate {
+    
+    func didChangeBarButtonItemState(controller: NavBarItemController) {
+        redrawBarButtonItems()
+    }
+}
+
+// MARK: - Appearance
+
+extension AppNavigationBar {
+    
+    func reconfigureAppearance() {
+        
+        guard let appearance = self.appearance else {
+            return
+        }
+        
+        setApperance(navigationBarAppearance: appearance)
+    }
+    
+    private func setApperance(navigationBarAppearance: AppNavigationBarAppearance) {
+    
+        guard let navigationBar = uiNavigationBar else {
+            return
+        }
+        
+        AppNavigationBar.setAppearance(navigationBar: navigationBar, navigationBarAppearance: navigationBarAppearance)
+    }
+    
+    static func setAppearance(navigationBar: UINavigationBar, navigationBarAppearance: AppNavigationBarAppearance) {
+        
+        navigationBar.isTranslucent = navigationBarAppearance.isTranslucent
+        
+        if let controlColor = navigationBarAppearance.controlColor {
+            navigationBar.tintColor = controlColor
+        }
+                
+        if !navigationBarAppearance.titleTextAttributes.isEmpty {
+            navigationBar.titleTextAttributes = navigationBarAppearance.titleTextAttributes
+        }
+        
+        if #available(iOS 13, *) {
+            
+            let appearance = UINavigationBarAppearance()
+                        
+            if navigationBarAppearance.isTranslucent {
+                
+                appearance.configureWithTransparentBackground()
+                appearance.backgroundImage = UIImage.createImageWithColor(color: navigationBarAppearance.backgroundColor)
+                appearance.backgroundColor = .clear
+            }
+            else {
+                
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundImage = nil
+                appearance.backgroundColor = navigationBarAppearance.backgroundColor
+            }
+            
+            appearance.shadowColor = .clear
+            
+            if !navigationBarAppearance.titleTextAttributes.isEmpty {
+                appearance.titleTextAttributes = navigationBarAppearance.titleTextAttributes
+            }
+            
+            navigationBar.standardAppearance = appearance
+            navigationBar.scrollEdgeAppearance = appearance
+        }
+        else {
+            
+            if navigationBarAppearance.isTranslucent {
+                
+                navigationBar.barTintColor = .clear
+                
+                let backgroundImage: UIImage? = navigationBarAppearance.backgroundColor == .clear ? UIImage() : UIImage.createImageWithColor(color: navigationBarAppearance.backgroundColor)
+                
+                navigationBar.setBackgroundImage(backgroundImage, for: .default)
+            }
+            else {
+               
+                navigationBar.barTintColor = navigationBarAppearance.backgroundColor
+                navigationBar.setBackgroundImage(nil, for: .default)
+            }
+            
+            navigationBar.shadowImage = UIImage()
+        }
+    }
+}
+
+// MARK: - Title
+
+extension AppNavigationBar {
     
     func getTitleView() -> UIView? {
         return titleView
@@ -219,9 +239,146 @@ class AppNavigationBar {
     }
 }
 
-extension AppNavigationBar: NavBarItemControllerDelegate {
+// MARK - Button Items
+
+extension AppNavigationBar {
     
-    func didChangeBarButtonItemState(controller: NavBarItemController) {
+    private func reconfigureButtonItems() {
+        
+        guard let viewController = self.viewController else {
+            return
+        }
+        
+        removeAllBarButtonItems()
+        
+        leadingItemControllers.removeAll()
+        trailingItemControllers.removeAll()
+        
+        var leadingItemsWithBackButton: [NavBarItem] = leadingItems
+        
+        viewController.navigationItem.setHidesBackButton(true, animated: false)
+        
+        if let backButton = self.backButton {
+            leadingItemsWithBackButton.insert(backButton, at: 0)
+        }
+        
+        leadingItemControllers = AppNavigationBar.getItemControllers(
+            delegate: self,
+            items: leadingItemsWithBackButton,
+            barPosition: .leading
+        )
+        
+        trailingItemControllers = AppNavigationBar.getItemControllers(
+            delegate: self,
+            items: trailingItems,
+            barPosition: .trailing
+        )
+        
         redrawBarButtonItems()
+    }
+    
+    private func redrawBarButtonItems() {
+        
+        removeAllBarButtonItems()
+        
+        let leadingItemControllers: [NavBarItemController]
+        let trailingItemControllers: [NavBarItemController]
+        
+        let systemIsRightToLeft: Bool = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        let layoutDirectionIsRightToLeft: Bool = layoutDirection == .forceRightToLeft
+        
+        if layoutDirectionIsRightToLeft && !systemIsRightToLeft || systemIsRightToLeft && !layoutDirectionIsRightToLeft {
+            
+            leadingItemControllers = self.leadingItemControllers.reversed()
+            trailingItemControllers = self.trailingItemControllers.reversed()
+        }
+        else {
+            
+            leadingItemControllers = self.leadingItemControllers
+            trailingItemControllers = self.trailingItemControllers
+        }
+                
+        for leadingItemController in leadingItemControllers {
+            
+            if !leadingItemController.barButtonItemIsHidden, let barButtonItem = leadingItemController.getBarButtonItem() {
+                addLeadingBarButtonItem(item: barButtonItem, index: nil)
+            }
+        }
+        
+        for trailingItemController in trailingItemControllers {
+            
+            if !trailingItemController.barButtonItemIsHidden, let barButtonItem = trailingItemController.getBarButtonItem() {
+                addTrailingBarButtonItem(item: barButtonItem, index: nil)
+            }
+        }
+    }
+    
+    private func addLeadingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        guard let navigationItem = uiNavigationItem else {
+            return
+        }
+        
+        if var leadingItems = navigationItem.leftBarButtonItems, !leadingItems.isEmpty {
+            
+            if !leadingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < leadingItems.count {
+                    
+                    leadingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    leadingItems.append(item)
+                }
+                
+                navigationItem.leftBarButtonItems = leadingItems
+            }
+        }
+        else {
+            
+            navigationItem.leftBarButtonItem = item
+        }
+    }
+
+    private func addTrailingBarButtonItem(item: UIBarButtonItem, index: Int?) {
+        
+        guard let navigationItem = uiNavigationItem else {
+            return
+        }
+        
+        if var trailingItems = navigationItem.rightBarButtonItems, !trailingItems.isEmpty {
+            
+            if !trailingItems.contains(item) {
+                
+                if let index = index, index >= 0 && index < trailingItems.count {
+                    
+                    trailingItems.insert(item, at: index)
+                }
+                else {
+                    
+                    trailingItems.append(item)
+                }
+                
+                navigationItem.rightBarButtonItems = trailingItems
+            }
+        }
+        else {
+            
+            navigationItem.rightBarButtonItem = item
+        }
+    }
+    
+    private func removeAllBarButtonItems() {
+        
+        guard let navigationItem = uiNavigationItem else {
+            return
+        }
+        
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.leftBarButtonItems = Array()
+        
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItems = Array()
     }
 }

@@ -24,23 +24,17 @@ class LearnToShareToolFlow: Flow {
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?) {
         
+        let navigationBarAppearance = AppNavigationBarAppearance(backgroundColor: .clear, controlColor: ColorPalette.gtBlue.uiColor, titleFont: nil, titleColor: nil, isTranslucent: true)
+        
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         self.toolPrimaryLanguage = toolPrimaryLanguage
         self.toolParallelLanguage = toolParallelLanguage
         
         navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: .clear,
-            controlColor: ColorPalette.gtBlue.uiColor,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: true
-        )
         
         navigationController.setViewControllers([getLearnToShareToolView(tool: tool)], animated: false)
     }

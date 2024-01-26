@@ -28,16 +28,16 @@ class MenuFlow: Flow {
         
         let fontService: FontService = appDiContainer.getFontService()
         
-        navigationController = AppNavigationController(navigationBarAppearance: nil)
-        navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
             titleFont: fontService.getFont(size: 17, weight: .semibold),
             titleColor: .white,
             isTranslucent: false
         )
+        
+        navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        navigationController.setNavigationBarHidden(false, animated: false)
         
         let view: UIViewController = getMenuView()
         

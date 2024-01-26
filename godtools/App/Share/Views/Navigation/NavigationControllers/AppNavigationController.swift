@@ -12,30 +12,21 @@ import Combine
 
 class AppNavigationController: UINavigationController {
     
+    private let navigationBarAppearance: AppNavigationBarAppearance?
+    private let hidesNavigationBar: Bool
+    
     private var layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    let navigationBarAppearance: AppNavigationBarAppearance?
     
     init(hidesNavigationBar: Bool = false, navigationBarAppearance: AppNavigationBarAppearance?, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
         self.navigationBarAppearance = navigationBarAppearance
+        self.hidesNavigationBar = hidesNavigationBar
         self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher
         
         super.init(nibName: nil, bundle: nil)
         
-        setNavigationBarHidden(hidesNavigationBar, animated: false)
-        
-        if let appearance = self.navigationBarAppearance {
-            
-            navigationBar.setupNavigationBarAppearance(
-                backgroundColor: appearance.backgroundColor,
-                controlColor: appearance.controlColor,
-                titleFont: appearance.titleFont,
-                titleColor: appearance.titleColor,
-                isTranslucent: appearance.isTranslucent
-            )
-        }
+        resetNavigationBarAppearance()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +43,17 @@ class AppNavigationController: UINavigationController {
         setLayoutDirectionPublisher(
             layoutDirectionPublisher: layoutDirectionPublisher
         )
+    }
+    
+    func resetNavigationBarAppearance() {
+        
+        setNavigationBarHidden(hidesNavigationBar, animated: false)
+        
+        guard let appearance = navigationBarAppearance else {
+            return
+        }
+
+        AppNavigationBar.setAppearance(navigationBar: navigationBar, navigationBarAppearance: appearance)
     }
     
     func setLayoutDirectionPublisherToApplicationLayout() {

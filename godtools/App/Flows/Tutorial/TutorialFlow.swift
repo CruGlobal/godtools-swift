@@ -22,19 +22,20 @@ class TutorialFlow: Flow {
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
         print("init: \(type(of: self))")
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
-             
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: .white,
             controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: false
         )
+        
+        self.flowDelegate = flowDelegate
+        self.appDiContainer = appDiContainer
+        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+             
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.setNavigationBarHidden(false, animated: false)
                
         navigationController.setViewControllers(
             [getTutorialView()],
