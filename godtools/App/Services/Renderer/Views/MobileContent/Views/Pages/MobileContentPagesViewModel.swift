@@ -128,8 +128,9 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
             
         let pageRenderer: MobileContentPageRenderer?
+        let pageRendererIndex: Int = pageRendererIndex ?? selectedLanguageIndex
         
-        if let pageRendererIndex = pageRendererIndex, pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
+        if pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
             pageRenderer = renderer.pageRenderers[pageRendererIndex]
         }
         else if let firstPageRenderer = renderer.pageRenderers.first {
