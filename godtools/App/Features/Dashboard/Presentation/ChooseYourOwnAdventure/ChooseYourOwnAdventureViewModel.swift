@@ -13,12 +13,10 @@ import Combine
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
     private let fontService: FontService
-    private let initialSelectedLanguageIndex: Int?
     
     @Published private var languages: [LanguageDomainModel] = Array()
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var didSetInitialSelectedLanguageIndex: Bool = false
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -28,13 +26,11 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
     @Published var languageNames: [String] = Array()
-    @Published var selectedLanguageIndex: Int = 0
         
     init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
-        self.initialSelectedLanguageIndex = selectedLanguageIndex
                         
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
                      
@@ -48,34 +44,18 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         languageFont = fontService.getFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         $languages.eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: [LanguageDomainModel]) in
                 self?.languageNames = languages.map({$0.translatedName})
-                self?.setInitialSelectedLanguageIndexIfNeeded(languages: languages)
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    private func setInitialSelectedLanguageIndexIfNeeded(languages: [LanguageDomainModel]) {
-        
-        guard !didSetInitialSelectedLanguageIndex && !languages.isEmpty else {
-            return
-        }
-        
-        didSetInitialSelectedLanguageIndex = true
-        
-        guard let initialSelectedLanguageIndex = self.initialSelectedLanguageIndex, initialSelectedLanguageIndex >= 0 && initialSelectedLanguageIndex < languages.count else {
-            return
-        }
-        
-        languageTapped(index: initialSelectedLanguageIndex)
     }
     
     override func pageDidAppear(page: Int) {
@@ -97,7 +77,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
                 
         languages = renderer.pageRenderers.map({$0.language})
         
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
+        super.setRenderer(renderer: renderer, pageRendererIndex: pageRendererIndex, navigationEvent: navigationEvent)
     }
 }
 
@@ -133,7 +113,5 @@ extension ChooseYourOwnAdventureViewModel {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
-        
-        selectedLanguageIndex = index
     }
 }

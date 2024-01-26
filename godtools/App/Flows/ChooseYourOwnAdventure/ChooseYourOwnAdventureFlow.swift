@@ -154,6 +154,7 @@ extension ChooseYourOwnAdventureFlow {
         return NavBarSelectorView(
             selectorButtonTitles: viewModel.languageNames,
             layoutDirection: navBarLayoutDirection,
+            selectedIndex: viewModel.selectedLanguageIndex,
             borderColor: controlColor,
             selectedColor: controlColor,
             deselectedColor: UIColor.clear,

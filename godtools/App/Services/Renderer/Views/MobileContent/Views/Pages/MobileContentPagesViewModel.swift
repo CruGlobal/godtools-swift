@@ -17,6 +17,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
+    private let initialSelectedLanguageIndex: Int
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
@@ -31,12 +32,14 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     private(set) weak var window: UIViewController?
     
+    @Published private(set) var selectedLanguageIndex: Int
+    
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -47,6 +50,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
+        self.initialSelectedLanguageIndex = selectedLanguageIndex ?? 0
+        self.selectedLanguageIndex = initialSelectedLanguageIndex
                 
         super.init()
               
@@ -71,7 +76,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         incrementToolOpenUserCounter()
         
-        setRenderer(renderer: renderer.value, pageRendererIndex: nil, navigationEvent: nil)
+        setRenderer(renderer: renderer.value, pageRendererIndex: selectedLanguageIndex, navigationEvent: nil)
     }
     
     func handleDismissToolEvent() {
@@ -196,6 +201,11 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         )
         
         sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
+        
+        let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
+        let pageRendererIndex: Int = pageRenderers.firstIndex(where: { $0.language.id == pageRenderer.language.id }) ?? 0
+        
+        selectedLanguageIndex = pageRendererIndex
     }
     
     func getNumberOfRenderedPages() -> Int {
