@@ -19,9 +19,11 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
+    private let initialSelectedLanguageIndex: Int?
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
+    private var didSetInitialSelectedLanguageIndex: Bool = false
     
     @Published private var languages: [LanguageDomainModel] = Array()
     
@@ -35,7 +37,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     @Published var languageNames: [String] = Array()
     @Published var selectedLanguageIndex: Int = 0
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -45,6 +47,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
+        self.initialSelectedLanguageIndex = selectedLanguageIndex
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
@@ -65,7 +68,9 @@ class ToolViewModel: MobileContentPagesViewModel {
         $languages.eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: [LanguageDomainModel]) in
+                
                 self?.languageNames = languages.map({$0.translatedName})
+                self?.setInitialSelectedLanguageIndexIfNeeded(languages: languages)
             }
             .store(in: &cancellables)
     }
@@ -115,6 +120,21 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.remoteShareIsActive = remoteShareIsActive
         
         hidesRemoteShareIsActive = !remoteShareIsActive
+    }
+    
+    private func setInitialSelectedLanguageIndexIfNeeded(languages: [LanguageDomainModel]) {
+        
+        guard !didSetInitialSelectedLanguageIndex && !languages.isEmpty else {
+            return
+        }
+        
+        didSetInitialSelectedLanguageIndex = true
+        
+        guard let initialSelectedLanguageIndex = self.initialSelectedLanguageIndex, initialSelectedLanguageIndex >= 0 && initialSelectedLanguageIndex < languages.count else {
+            return
+        }
+        
+        languageTapped(index: initialSelectedLanguageIndex, page: currentRenderedPageNumber, pagePositions: ToolPagePositions(cardPosition: nil))
     }
     
     private var analyticsScreenName: String {

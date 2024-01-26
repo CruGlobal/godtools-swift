@@ -13,10 +13,12 @@ import Combine
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
     private let fontService: FontService
+    private let initialSelectedLanguageIndex: Int?
     
     @Published private var languages: [LanguageDomainModel] = Array()
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var didSetInitialSelectedLanguageIndex: Bool = false
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -28,10 +30,11 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     @Published var languageNames: [String] = Array()
     @Published var selectedLanguageIndex: Int = 0
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
+        self.initialSelectedLanguageIndex = selectedLanguageIndex
                         
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
                      
@@ -51,12 +54,28 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: [LanguageDomainModel]) in
                 self?.languageNames = languages.map({$0.translatedName})
+                self?.setInitialSelectedLanguageIndexIfNeeded(languages: languages)
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func setInitialSelectedLanguageIndexIfNeeded(languages: [LanguageDomainModel]) {
+        
+        guard !didSetInitialSelectedLanguageIndex && !languages.isEmpty else {
+            return
+        }
+        
+        didSetInitialSelectedLanguageIndex = true
+        
+        guard let initialSelectedLanguageIndex = self.initialSelectedLanguageIndex, initialSelectedLanguageIndex >= 0 && initialSelectedLanguageIndex < languages.count else {
+            return
+        }
+        
+        languageTapped(index: initialSelectedLanguageIndex)
     }
     
     override func pageDidAppear(page: Int) {

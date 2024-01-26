@@ -20,7 +20,7 @@ protocol ToolNavigationFlow: Flow {
 
 extension ToolNavigationFlow {
         
-    func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
+    func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, selectedLanguageIndex: Int?, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
@@ -33,12 +33,13 @@ extension ToolNavigationFlow {
         navigateToToolAndDetermineToolTranslationsToDownload(
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
+            selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage
         )
     }
     
-    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -50,12 +51,13 @@ extension ToolNavigationFlow {
         navigateToToolAndDetermineToolTranslationsToDownload(
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
+            selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -66,6 +68,7 @@ extension ToolNavigationFlow {
                 self?.navigateToTool(
                     toolTranslations: toolTranslations,
                     liveShareStream: liveShareStream,
+                    selectedLanguageIndex: selectedLanguageIndex,
                     trainingTipsEnabled: trainingTipsEnabled,
                     initialPage: initialPage
                 )
@@ -87,7 +90,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -121,6 +124,7 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 toolTranslations: toolTranslations,
                 liveShareStream: liveShareStream,
+                selectedLanguageIndex: selectedLanguageIndex,
                 trainingTipsEnabled: trainingTipsEnabled,
                 initialPage: initialPage
             )
@@ -132,7 +136,8 @@ extension ToolNavigationFlow {
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
                 toolTranslations: toolTranslations,
-                initialPage: initialPage
+                initialPage: initialPage,
+                selectedLanguageIndex: selectedLanguageIndex
             )
             
         case .metaTool:
