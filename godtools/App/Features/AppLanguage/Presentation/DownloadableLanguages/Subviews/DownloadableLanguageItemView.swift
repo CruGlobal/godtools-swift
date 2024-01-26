@@ -18,6 +18,7 @@ struct DownloadableLanguageItemView: View {
     @State private var animationDownloadProgress: Double?
     @State private var downloadProgressTarget: Double?
     @State private var timer: Timer?
+    @State private var isVisible: Bool = false
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
@@ -81,17 +82,23 @@ struct DownloadableLanguageItemView: View {
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
         .animation(.default, value: animationDownloadProgress)
+        .onDisappear {
+            
+            isVisible = false
+            stopAnimationTimer()
+        }
+        .onAppear {
+            
+            isVisible = true
+            continueDownloadProgressAnimationIfNeeded()
+        }
         .onAppBackgrounded {
         
-            if timer != nil {
-                stopAnimationTimer()
-            }
+            stopAnimationTimer()
         }
         .onAppForegrounded {
             
-            if shouldContinueDownloadProgressAnimation() {
-                startAnimationTimer()
-            }
+            continueDownloadProgressAnimationIfNeeded()
         }
     }
     
@@ -114,13 +121,22 @@ struct DownloadableLanguageItemView: View {
     }
     
     private func stopAnimationTimer() {
+        guard timer != nil else { return }
         
         timer?.invalidate()
         timer = nil
     }
     
+    private func continueDownloadProgressAnimationIfNeeded() {
+        if shouldContinueDownloadProgressAnimation() {
+            startAnimationTimer()
+        }
+    }
+    
     private func shouldContinueDownloadProgressAnimation() -> Bool {
-        guard let animationDownloadProgress = animationDownloadProgress else {
+        guard isVisible,
+              let animationDownloadProgress = animationDownloadProgress
+        else {
             return false
         }
         
