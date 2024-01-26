@@ -64,14 +64,14 @@ struct ConfirmAppLanguageView: View {
                     
                     let buttonWidth = (geometry.size.width - buttonSpacing - 2*horizontalPadding) / 2
                     
-                    GTBlueButton(title: viewModel.changeLanguageButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
-                        
-                        viewModel.confirmLanguageButtonTapped()
-                    }
-                    
                     GTWhiteButton(title: viewModel.nevermindButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
                         
                         viewModel.nevermindButtonTapped()
+                    }
+                    
+                    GTBlueButton(title: viewModel.changeLanguageButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
+                        
+                        viewModel.confirmLanguageButtonTapped()
                     }
                 }
                 
