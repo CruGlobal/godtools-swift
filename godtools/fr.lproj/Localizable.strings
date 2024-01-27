@@ -1,5 +1,6 @@
 "onboardingTutorial.chooseLanguageButton.title" = "Choisir la langue";
 "languageSettings.confirmAppLanguage.message" = "Vous avez choisi %@ comme langue de l'application. Ceci changera la langue de toute l'application GodTools. Êtes-vous sûr?";
+"languageSettings.appInterface.title" = "Langue de l'interface de l'application";
 "allTools.filter.anyCategory" = "Toute catégorie";
 "allTools.filter.anyLanguage" = "Toute langue";
 "menu_getStarted" = "Commencez";
