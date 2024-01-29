@@ -48,6 +48,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            translatedLanguageNameRepository: appDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
