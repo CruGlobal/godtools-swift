@@ -94,7 +94,7 @@ class ToolDetailsViewModel: ObservableObject {
         .flatMap ({ (tool: ToolDomainModel, appLanguage: AppLanguageDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
             
             return viewToolDetailsUseCase
-                .viewPublisher(tool: tool, translateInToolLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
+                .viewPublisher(tool: tool, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
                 .eraseToAnyPublisher()
         })
         .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
