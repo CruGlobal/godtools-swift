@@ -28,7 +28,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getDetailsPublisher(tool: ToolDomainModel, translateInToolLanguage: String) -> AnyPublisher<ToolDetailsDomainModel, Never> {
+    func getDetailsPublisher(tool: ToolDomainModel, translateInToolLanguage: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?) -> AnyPublisher<ToolDetailsDomainModel, Never> {
         
         let noToolDomainModel = ToolDetailsDomainModel(
             aboutDescription: "",
@@ -42,15 +42,12 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             versionsDescription: ""
         )
         
-        guard let toolDataModel = resourcesRepository.getResource(id: tool.dataModelId),
-              let toolLanguageDataModel = languagesRepository.getLanguage(code: translateInToolLanguage) else {
-            
+        guard let toolDataModel = resourcesRepository.getResource(id: tool.dataModelId) else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
         
         guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: translateInToolLanguage) else {
-            
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
@@ -74,6 +71,24 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         
         let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
+        let toolDetails = ToolDetailsDomainModel(
+            aboutDescription: translation.translatedDescription,
+            bibleReferences: translation.toolDetailsBibleReferences,
+            conversationStarters: translation.toolDetailsConversationStarters,
+            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.dataModelId),
+            languagesAvailable: languagesAvailable,
+            name: translation.translatedName,
+            numberOfViews: numberOfViewsString,
+            versions: getToolVersions(toolDataModel: toolDataModel, translateInToolLanguage: translateInToolLanguage, toolPrimaryLanguage: toolPrimaryLanguage, toolParallelLanguage: toolParallelLanguage),
+            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguage, key: "toolDetails.versions.message")
+        )
+        
+        return Just(toolDetails)
+            .eraseToAnyPublisher()
+    }
+    
+    private func getToolVersions(toolDataModel: ResourceModel, translateInToolLanguage: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?) -> [ToolVersionDomainModel] {
+        
         let resourceVariants: [ResourceModel]
         
         if let metatoolId = toolDataModel.metatoolId, !metatoolId.isEmpty {
@@ -83,8 +98,18 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             resourceVariants = []
         }
         
+        let toolPrimaryLanguageName: String? = localeLanguageName.getLanguageName(forLanguageCode: toolPrimaryLanguage, translatedInLanguageId: translateInToolLanguage)
+        
+        let toolParallelLanguageName: String?
+        
+        if let toolParallelLanguage = toolParallelLanguage {
+            toolParallelLanguageName = localeLanguageName.getLanguageName(forLanguageCode: toolParallelLanguage, translatedInLanguageId: translateInToolLanguage)
+        }
+        else {
+            toolParallelLanguageName = nil
+        }
+        
         let localizedTotalLanguages: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguage, key: "total_languages")
-        let toolLanguageName: String? = localeLanguageName.getLanguageName(forLanguageCode: translateInToolLanguage, translatedInLanguageId: translateInToolLanguage)
         
         let versions: [ToolVersionDomainModel] = resourceVariants.compactMap { (variantDataModel: ResourceModel) in
             
@@ -104,24 +129,26 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 description: translation.translatedTagline,
                 name: translation.translatedName,
                 numberOfLanguages: numberOfLanguagesString,
-                toolLanguageName: toolLanguageName ?? "",
-                toolLanguageNameIsSupported: variantDataModel.languageIds.contains(toolLanguageDataModel.id)
+                toolLanguageName: toolPrimaryLanguageName ?? "",
+                toolLanguageNameIsSupported: getToolSupportsLanguage(resource: variantDataModel, language: toolPrimaryLanguage),
+                toolParallelLanguageName: toolParallelLanguageName,
+                toolParallelLanguageNameIsSupported: getToolSupportsLanguage(resource: variantDataModel, language: toolParallelLanguage)
             )
         }
         
-        let toolDetails = ToolDetailsDomainModel(
-            aboutDescription: translation.translatedDescription,
-            bibleReferences: translation.toolDetailsBibleReferences,
-            conversationStarters: translation.toolDetailsConversationStarters,
-            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.dataModelId),
-            languagesAvailable: languagesAvailable,
-            name: translation.translatedName,
-            numberOfViews: numberOfViewsString,
-            versions: versions,
-            versionsDescription: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInToolLanguage, key: "toolDetails.versions.message")
-        )
+        return versions
+    }
+    
+    private func getToolSupportsLanguage(resource: ResourceModel, language: AppLanguageDomainModel?) -> Bool {
         
-        return Just(toolDetails)
-            .eraseToAnyPublisher()
+        guard let language = language else {
+            return false
+        }
+        
+        guard let languageModel = languagesRepository.getLanguage(code: language) else {
+            return false
+        }
+        
+        return resource.languageIds.contains(languageModel.id)
     }
 }
