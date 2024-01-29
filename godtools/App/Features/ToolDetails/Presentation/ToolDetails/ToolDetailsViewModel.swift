@@ -23,6 +23,7 @@ class ToolDetailsViewModel: ObservableObject {
     private let attachmentsRepository: AttachmentsRepository
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let selectedLanguageIndex: Int?
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
@@ -61,10 +62,13 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolUseCase: GetToolUseCase, viewToolDetailsUseCase: ViewToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolUseCase: GetToolUseCase, viewToolDetailsUseCase: ViewToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
+        self.primaryLanguage = primaryLanguage
+        self.parallelLanguage = parallelLanguage
+        self.selectedLanguageIndex = selectedLanguageIndex
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolUseCase = getToolUseCase
         self.viewToolDetailsUseCase = viewToolDetailsUseCase
@@ -74,27 +78,6 @@ class ToolDetailsViewModel: ObservableObject {
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        
-        getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] appLanguage in
-                
-                if let primaryLanguage = primaryLanguage {
-                    
-                    self?.primaryLanguage = primaryLanguage
-                    
-                    if primaryLanguage != appLanguage {
-                        self?.parallelLanguage = appLanguage
-                    }
-                }
-                else {
-                    
-                    self?.primaryLanguage = appLanguage
-                    self?.parallelLanguage = nil
-                }
-            }
-            .store(in: &cancellables)
         
         Publishers.CombineLatest($tool.eraseToAnyPublisher(), $primaryLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
@@ -232,12 +215,12 @@ extension ToolDetailsViewModel {
             ]
         )
         
-        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func learnToShareToolTapped() {
         
-        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func toggleFavorited() {
