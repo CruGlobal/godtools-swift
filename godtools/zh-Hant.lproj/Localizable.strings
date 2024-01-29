@@ -1,7 +1,37 @@
 "onboardingTutorial.chooseLanguageButton.title" = "選擇語言";
 "languageSettings.confirmAppLanguage.message" = "您已將「%@」選為應用程式的語言。這項動作將會變更整個 GodTools 應用程式的語言設定。確定要變更嗎？";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "變更語言";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "現在不用";
+"languageSettings.appInterface.title" = "應用程式介面語言";
+"languageSettings.appInterface.message" = "設定整個應用程式的顯示語言。";
+"languageSettings.appInterface.languagesAvailable" = "可用語言";
+"languageSettings.toolLanguagesAvailableOffline.title" = "離線可用的工具語言";
+"languageSettings.toolLanguagesAvailableOffline.message" = "下載某個語言的所有工具，讓您即使沒有 WiFi 或行動數據服務也可以使用工具。您可透過工具中的選項按鈕，來設定工具語言。";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "編輯已下載的語言";
+"allTools.filter.title" = "篩選";
 "allTools.filter.anyCategory" = "不限類別";
 "allTools.filter.anyLanguage" = "不限語言";
+"allTools.filter.navBar.language" = "依語言篩選";
+"allTools.filter.navBar.category" = "依類別篩選";
+"languageSettings.appLanguage.title" = "應用程式語言";
+"authError.userAccountAlreadyExists.message" = "此使用者帳號已存在。";
+"authError.userAccountNotFound.message" = "找不到此使用者帳號。";
+"createAccount.title" = "建立帳號";
+"createAccount.subtitle" = "立刻建立帳號，讓您輕鬆閱讀真實故事、獲得勵志力量，並學習到實用的知識技巧。";
+"deleteAccountProgress.title" = "正在刪除帳號...";
+"confirmDeleteAccount.title" = "您確定嗎？";
+"confirmDeleteAccount.confirmButton.title" = "刪除帳號";
+"accountDeletedAlert.title" = "帳號已刪除";
+"accountDeletedAlert.message" = "您的帳號已刪除。";
+"deleteAccount.title" = "我們捨不得您離開！";
+"deleteAccount.subtitle" = "若選擇刪除帳號，以後就無法享用您喜愛的工具或查看任何帳號活動。";
+"deleteAccount.confirmButton.title" = "刪除我的帳號";
+"deleteAccount.cancelButton.title" = "保留我的帳號";
+"signIn.title" = "登入";
+"signIn.subtitle" = "立刻登入帳號，讓您輕鬆閱讀真實故事、獲得勵志力量，並學習到實用的知識技巧。";
+"signIn.google" = "使用 Google 登入";
+"signIn.facebook" = "使用 Facebook 登入";
+"signIn.apple" = "使用 Apple 登入";
 "menu_getStarted" = "開始使用";
 "menu_support" = "支援";
 "menu_about" = "關於";
@@ -9,6 +39,61 @@
 "menu.reportABug" = "回報問題";
 "menu.askAQuestion" = "問個問題";
 "menu.leaveAReview" = "留言";
+"account.badges.sectionTitle" = "您的徽章";
+"account.activity.sectionTitle" = "您的活動";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "開啟過的工具";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "完成的課程";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "分享螢幕次數";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "分享連結次數";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "使用過的語言";
+
+"account.activity.sessions" = "會議";
+"badges.tipsCompleted.singular" = "完成 1 個訓練技巧";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "閱讀 %d 篇文章";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "閱讀 1 篇文章";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "分享 %d 張圖片";
+
+"badges.imagesShared.singular" = "分享 1 張圖片";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "完成 %d 個課程";
+
+"badges.lessonsCompleted.singular" = "完成 1 個課程";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "開啟 %d 個工具";
+
+"badges.toolsOpened.singular" = "開啟 1 個工具";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "完成 %d 個訓練技巧";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "加入日期：%@";
+
+"account.globalActivity.title" = "全球活動";
+"toolDetails.conversationStarters.title" = "開場白";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "概述";
+
+"toolDetails.bibleReferences.title" = "聖經參考文獻";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "關於";
@@ -19,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "無法使用 %@";
 
+"menu.deleteAccount" = "刪除帳號";
+"alert.mailAppUnavailable.title" = "郵件應用程式無法使用";
+"alert.mailAppUnavailable.message" = "本機的郵件應用程式還沒有完成設定，或無法在此裝置上使用。 ";
 "tool_menu_item.tools" = "工具";
 "lessons.pageTitle" = "為您打造的課程";
 "lessons.pageSubtitle" = "建立關係和開始有意義對話的實用想法。";
@@ -51,6 +139,13 @@
 "allTools.spotlight.title" = "工具精選";
 "allTools.spotlight.description" = "以下是我們認為您可能會喜歡的一些工具";
 "allTools.categories.title" = "類別";
+"training_tip_ask" = "詢問";
+"training_tip_consider" = "考慮";
+"training_tip_prepare" = "準備";
+"training_tip_quote" = "引用";
+"training_tip_tip" = "提示";
+"start_training" = "開始訓練";
+"close" = "關閉";
 "tool_menu_item.lessons" = "課程";
 "parallelLanguage.yesButton.title" = "是";
 "parallelLanguage.noButton.title" = "不用了，謝謝";
@@ -58,12 +153,43 @@
 "parallelLanguage.getStartedButton.title" = "開始使用";
 "parallelLanguage.selectLanguageButton.title" = "選擇語言";
 "parellelLanguage.prompt" = "您想要設定次要語言嗎？";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "關閉教學";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "工具";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "每套工具專為不同的對話階段而設計，包括對話前、中、後的階段。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "工具提示";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodTools 會亮起提示，可以引導您幫助別人理解福音並遇見耶穌。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "螢幕分享";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "現在您可以遠端分享自己的螢幕，讓其他人同步觀看您使用福音工具。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "課程";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "GodTools 的每一堂課都能幫助你以上帝為主題，展開有意義的坦誠對話。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "隨時在選單中查看教學內容。";
+
 "onboardingTutorial.beginButton.title" = "開始";
 "onboardingQuickStart.2.title" = "我想要與某人分享福音";
 "onboardingQuickStart.2.button.title" = "選擇一個我們的工具";
 "onboardingTutorial.nextButton.title" = "下一頁";
 "onboardingQuickStart.title" = "快速入門連結";
-"onboardingQuickStart.0.title" = "我想要了解基督教";
+"onboardingQuickStart.0.title" = "我想要更深入認識耶穌。";
 "onboardingQuickStart.0.button.title" = "閱讀我們的文章";
 "onboardingQuickStart.1.title" = "我想要瞭解福音對話";
 "onboardingQuickStart.1.button.title" = "試試我們的課程";
@@ -87,6 +213,15 @@
 "share_tool_remote_link_message" = "你好，歡迎與我一同在 GodTools 中參加螢幕分享會。連結為：%@ 如果你稍後才收到此訊息，該連結可能已經失效。我們可以改天再試一次。";
 "exit_tract_remote_share_session.message" = "確定要現在離開遠端分享會？";
 "load_tool_remote_session.message" = "正在開始進行螢幕分享……";
+"learn_to_share_tool.learn_to_share.title" = "如何分享此工具的學習指南";
+"learn_to_share_tool.learn_to_share.message" = "盡量練習使用最多的技巧，讓您自信地向其他人分享此工具。";
+"learn_to_share_tool.tips_light_the_way.title" = "輔助解說的螢幕提示";
+"learn_to_share_tool.tips_light_the_way.message" = "在本次訓練的螢幕畫面上，您會看到不同的圖示。逐一點按每個圖示，即可顯示提示，幫助您與別人討論畫面的內容。如果螢幕沒有圖示亮起，則只需閱讀內容並根據需要進行討論。";
+"learn_to_share_tool.light_up_the_tips.title" = "提示亮起";
+"learn_to_share_tool.light_up_the_tips.message" = "提示亮起就表示您完成了該部分的訓練。盡量練習使用最多的技巧，讓您自信地向其他人解說此工具。";
+"lesson_evaluation.title" = "評價";
+"lesson_evaluation.wasThisHelpful" = "本課程是否對您有幫助？";
+"lesson_evaluation.shareFaith" = "與別人展開靈性對話，您認為自己的準備程度有多少？";
 "lesson_evaluation.sendButtonTitle" = "傳送回饋";
 "onboardingTutorial.0.title" = "準備好進行每次對話";
 "onboardingTutorial.0.videoLink.title" = "觀看影片";
@@ -175,7 +310,7 @@
 "help" = "常見問題";
 "contact_us" = "聯絡我們";
 "preview_mode_translators_only" = "預覽模式（只適用於譯者）";
-"share_god_tools" = "分享 GodTools 應用程式";
+"share_god_tools" = "分享 GodTools";
 "share_a_story_with_us" = "與我們分享故事";
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";

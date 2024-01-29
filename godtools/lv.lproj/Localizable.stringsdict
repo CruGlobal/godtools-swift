@@ -128,6 +128,24 @@
 <string>Pieejamo rīku skaits: %d</string>
 </dict>
 </dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>Pieejamo valodu skaits: %d</string>
+<key>one</key>
+<string>Pieejamo valodu skaits: %d</string>
+<key>other</key>
+<string>Pieejamo valodu skaits: %d</string>
+</dict>
+</dict>
 <key>badges.imagesShared</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
