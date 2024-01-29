@@ -46,7 +46,7 @@ class ToolDetailsFeatureDataLayerDependencies {
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             translationsRepository: coreDataLayer.getTranslationsRepository(),
             localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
