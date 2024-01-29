@@ -13,9 +13,7 @@ import Combine
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
     private let fontService: FontService
-    
-    @Published private var languages: [LanguageDomainModel] = Array()
-    
+        
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -25,10 +23,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
-    @Published var languageNames: [String] = Array()
-    @Published var selectedLanguageIndex: Int = 0
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.fontService = fontService
@@ -45,14 +41,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         languageFont = fontService.getFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
-        
-        $languages.eraseToAnyPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: [LanguageDomainModel]) in
-                self?.languageNames = languages.map({$0.translatedName})
-            }
-            .store(in: &cancellables)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
     }
     
     deinit {
@@ -72,13 +61,6 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             hidesHomeButton = true
             hidesBackButton = false
         }
-    }
-    
-    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
-                
-        languages = renderer.pageRenderers.map({$0.language})
-        
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
     }
 }
 
@@ -114,7 +96,5 @@ extension ChooseYourOwnAdventureViewModel {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
-        
-        selectedLanguageIndex = index
     }
 }

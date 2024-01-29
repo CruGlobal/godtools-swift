@@ -163,13 +163,29 @@ extension ArticleFlow {
             accessibilityIdentifier: nil
         )
         
+        let shareButton = AppShareBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.sharedTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
+        )
+        
+        let debugButton = AppDebugBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.debugTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
+        )
+        
         let view = ArticleWebView(
             viewModel: viewModel,
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: backButton,
                 leadingItems: [],
-                trailingItems: []
+                trailingItems: [debugButton, shareButton]
             )
         )
         

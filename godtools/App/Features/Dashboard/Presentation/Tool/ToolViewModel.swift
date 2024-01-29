@@ -23,8 +23,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
     
-    @Published private var languages: [LanguageDomainModel] = Array()
-    
     private weak var flowDelegate: FlowDelegate?
     
     let navBarAppearance: AppNavigationBarAppearance
@@ -32,10 +30,8 @@ class ToolViewModel: MobileContentPagesViewModel {
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
     
     @Published var hidesRemoteShareIsActive: Bool = true
-    @Published var languageNames: [String] = Array()
-    @Published var selectedLanguageIndex: Int = 0
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -58,16 +54,9 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         languageFont = fontService.getFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         setupBinding()
-        
-        $languages.eraseToAnyPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: [LanguageDomainModel]) in
-                self?.languageNames = languages.map({$0.translatedName})
-            }
-            .store(in: &cancellables)
     }
     
     deinit {
@@ -152,13 +141,6 @@ class ToolViewModel: MobileContentPagesViewModel {
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
-    
-    override func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
-                
-        languages = renderer.pageRenderers.map({$0.language})
-        
-        super.setRenderer(renderer: renderer, pageRendererIndex: selectedLanguageIndex, navigationEvent: navigationEvent)
-    }
 }
 
 // MARK: - Inputs
@@ -191,9 +173,7 @@ extension ToolViewModel {
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
-        
-        selectedLanguageIndex = index
-        
+                
         let language: LanguageDomainModel = languages[index]
         
         if let pageRenderer = getPageRenderer(language: language) {
@@ -322,7 +302,6 @@ extension ToolViewModel {
                         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
             
-            selectedLanguageIndex = remoteShareLanguageIndex
             super.setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigationEvent: nil, pagePositions: pagePositions)
         }
         else {
