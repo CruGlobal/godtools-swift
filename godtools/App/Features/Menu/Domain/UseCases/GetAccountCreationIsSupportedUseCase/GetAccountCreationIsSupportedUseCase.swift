@@ -11,25 +11,22 @@ import Combine
 
 class GetAccountCreationIsSupportedUseCase {
     
-    private let appBuild: AppBuild
-    private let getDeviceLanguageUseCase: GetDeviceLanguageUseCase
-    
-    init(appBuild: AppBuild, getDeviceLanguageUseCase: GetDeviceLanguageUseCase) {
+    private let supportedLanguageCodes: [String]
         
-        self.appBuild = appBuild
-        self.getDeviceLanguageUseCase = getDeviceLanguageUseCase
+    init() {
+                
+        supportedLanguageCodes = [
+            LanguageCodeDomainModel.english.rawValue,
+            LanguageCodeDomainModel.spanish.rawValue
+        ]
     }
     
-    func getIsSupportedPublisher() -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
-        
-        let deviceLanguage: DeviceLanguageDomainModel = getDeviceLanguageUseCase.getDeviceLanguage()
-        
-        let supportedLanguageCodes: [String] = [LanguageCodeDomainModel.english.value]
-        
-        let deviceSystemLanguageIsInSupportedLanguageCodes: Bool = supportedLanguageCodes.contains(deviceLanguage.languageCode)
-                
+    func getIsSupportedPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountCreationIsSupportedDomainModel, Never> {
+
+        let isSupported: Bool = supportedLanguageCodes.contains(appLanguage.languageCode)
+                        
         let domainModel = AccountCreationIsSupportedDomainModel(
-            isSupported: deviceSystemLanguageIsInSupportedLanguageCodes
+            isSupported: isSupported
         )
         
         return Just(domainModel)
