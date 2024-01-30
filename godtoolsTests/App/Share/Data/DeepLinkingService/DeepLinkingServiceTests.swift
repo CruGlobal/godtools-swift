@@ -294,6 +294,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareEnglishPage4FromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -302,7 +304,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: 4,
                 pageId: nil,
-                selectedLanguageIndex: nil
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
@@ -313,6 +315,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareEnglishWithLiveStreamFromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -321,7 +325,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: "acd9bee66b6057476cee-1612666248",
                 page: nil,
                 pageId: nil,
-                selectedLanguageIndex: nil
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
@@ -332,6 +336,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareSpanishAndRussianFromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -340,7 +346,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
-                selectedLanguageIndex: nil
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
