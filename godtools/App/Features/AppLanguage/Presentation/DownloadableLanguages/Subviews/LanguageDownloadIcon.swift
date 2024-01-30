@@ -99,10 +99,19 @@ struct LanguageDownloadIcon: View {
     
     private func iconColor() -> Color {
         switch languageDownloadStatus {
+            
         case .notDownloaded:
             return LanguageDownloadIcon.lightGrey
-        case .downloading:
-            return ColorPalette.gtBlue.color
+            
+        case .downloading(let progress):
+            
+            let downloadProgress = self.animationDownloadProgress ?? progress
+            if downloadProgress != nil {
+                return ColorPalette.gtBlue.color
+            } else {
+                return LanguageDownloadIcon.lightGrey
+            }
+            
         case .downloaded:
             return ColorPalette.gtBlue.color
         }
