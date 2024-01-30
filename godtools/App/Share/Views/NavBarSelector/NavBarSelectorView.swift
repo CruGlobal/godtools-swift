@@ -62,6 +62,7 @@ class NavBarSelectorView: UIView {
         layer.borderWidth = 1
                 
         // stackView
+        stackView.semanticContentAttribute = .forceLeftToRight
         addSubview(stackView)
         stackView.axis = .horizontal
         stackView.alignment = .fill

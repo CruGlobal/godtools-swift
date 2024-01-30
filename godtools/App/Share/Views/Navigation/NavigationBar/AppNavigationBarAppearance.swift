@@ -16,6 +16,7 @@ class AppNavigationBarAppearance {
     let titleFont: UIFont?
     let titleColor: UIColor?
     let isTranslucent: Bool
+    let titleTextAttributes: [NSAttributedString.Key: Any]
     
     init(backgroundColor: UIColor, controlColor: UIColor?, titleFont: UIFont?, titleColor: UIColor?, isTranslucent: Bool) {
         
@@ -24,5 +25,17 @@ class AppNavigationBarAppearance {
         self.titleFont = titleFont
         self.titleColor = titleColor
         self.isTranslucent = isTranslucent
+        
+        var titleTextAttributes: [NSAttributedString.Key: Any] = Dictionary()
+        
+        if let titleFont = titleFont {
+            titleTextAttributes[NSAttributedString.Key.font] = titleFont
+        }
+        
+        if let titleColor = titleColor {
+            titleTextAttributes[NSAttributedString.Key.foregroundColor] = titleColor
+        }
+        
+        self.titleTextAttributes = titleTextAttributes
     }
 }

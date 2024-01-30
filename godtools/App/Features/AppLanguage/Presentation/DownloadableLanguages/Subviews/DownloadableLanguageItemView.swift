@@ -18,6 +18,7 @@ struct DownloadableLanguageItemView: View {
     @State private var animationDownloadProgress: Double?
     @State private var downloadProgressTarget: Double?
     @State private var timer: Timer?
+    @State private var isVisible: Bool = false
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
@@ -58,9 +59,9 @@ struct DownloadableLanguageItemView: View {
                 LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress)
             }
         }
-        .onChange(of: downloadableLanguage.downloadStatus, perform: { newValue in
+        .onChange(of: downloadableLanguage.downloadStatus, perform: { newDownloadStatus in
             
-            switch newValue {
+            switch newDownloadStatus {
             case .notDownloaded:
                 self.downloadProgressTarget = nil
                 self.animationDownloadProgress = nil
@@ -81,6 +82,24 @@ struct DownloadableLanguageItemView: View {
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
         .animation(.default, value: animationDownloadProgress)
+        .onDisappear {
+            
+            isVisible = false
+            stopAnimationTimer()
+        }
+        .onAppear {
+            
+            isVisible = true
+            continueDownloadProgressAnimationIfNeeded()
+        }
+        .onAppBackgrounded {
+        
+            stopAnimationTimer()
+        }
+        .onAppForegrounded {
+            
+            continueDownloadProgressAnimationIfNeeded()
+        }
     }
     
     private func startAnimationTimer() {
@@ -96,9 +115,31 @@ struct DownloadableLanguageItemView: View {
                 
             } else if progressTarget >= 1 && downloadProgress >= 1 {
                 
-                timer.invalidate()
-                self.timer = nil
+                self.stopAnimationTimer()
             }
         })
+    }
+    
+    private func stopAnimationTimer() {
+        guard timer != nil else { return }
+        
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    private func continueDownloadProgressAnimationIfNeeded() {
+        if shouldContinueDownloadProgressAnimation() {
+            startAnimationTimer()
+        }
+    }
+    
+    private func shouldContinueDownloadProgressAnimation() -> Bool {
+        guard isVisible,
+              let animationDownloadProgress = animationDownloadProgress
+        else {
+            return false
+        }
+        
+        return animationDownloadProgress < 1
     }
 }

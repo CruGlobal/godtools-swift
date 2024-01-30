@@ -115,8 +115,13 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        getShareablesUseCase
-            .getShareablesPublisher(toolId: tool.id, toolLanguageId: toolPrimaryLanguage.dataModelId)
+        $appLanguage
+            .eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ShareableDomainModel], Never> in
+                return getShareablesUseCase
+                    .getShareablesPublisher(toolId: tool.id, toolLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .assign(to: &$shareables)
     }

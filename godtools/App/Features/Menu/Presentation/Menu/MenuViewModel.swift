@@ -103,21 +103,29 @@ class MenuViewModel: ObservableObject {
             }
             .store(in: &cancellables)
                         
-        Publishers.CombineLatest(
-            getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(),
-            getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
-                        
-            guard accountCreationIsSupportedDomainModel.isSupported else {
-                self?.accountSectionVisibility = .hidden
-                return
+        $appLanguage
+            .eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(AccountCreationIsSupportedDomainModel, UserIsAuthenticatedDomainModel), Never> in
+                
+                return Publishers.CombineLatest(
+                    getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(appLanguage: appLanguage),
+                    getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
+                )
+                .eraseToAnyPublisher()
+            })
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
+                            
+                if accountCreationIsSupportedDomainModel.isSupported {
+                    
+                    self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
+                }
+                else {
+                    
+                    self?.accountSectionVisibility = .hidden
+                }
             }
-            
-            self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ appLanguage -> AnyPublisher<Bool, Never> in

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LoadingArticleViewModel: LoadingViewModelType {
+class LoadingArticleViewModel: ObservableObject {
     
     private let articleAemRepository: ArticleAemRepository
     
@@ -16,14 +16,13 @@ class LoadingArticleViewModel: LoadingViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let message: ObservableValue<String>
-    let hidesCloseButton: Bool = true
+    let message: String
     
-    required init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository
-        self.message = ObservableValue(value: localizationServices.stringForSystemElseEnglish(key: "Download in progress"))
+        self.message = localizationServices.stringForSystemElseEnglish(key: "Download in progress")
         
         downloadArticle(
             aemUri: aemUri,
@@ -65,13 +64,5 @@ class LoadingArticleViewModel: LoadingViewModelType {
                 }
             }
         }
-    }
-    
-    func closeTapped() {
-        // No implementation needed here. ~Levi
-    }
-    
-    func pageViewed() {
-        // No implementation needed here.
     }
 }

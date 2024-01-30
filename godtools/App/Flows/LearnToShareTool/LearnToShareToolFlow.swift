@@ -18,29 +18,25 @@ class LearnToShareToolFlow: Flow {
     
     private let toolPrimaryLanguage: AppLanguageDomainModel
     private let toolParallelLanguage: AppLanguageDomainModel?
+    private let toolSelectedLanguageIndex: Int?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?) {
+        
+        let navigationBarAppearance = AppNavigationBarAppearance(backgroundColor: .clear, controlColor: ColorPalette.gtBlue.uiColor, titleFont: nil, titleColor: nil, isTranslucent: true)
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: nil)
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         self.toolPrimaryLanguage = toolPrimaryLanguage
         self.toolParallelLanguage = toolParallelLanguage
+        self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
         
         navigationController.modalPresentationStyle = .fullScreen
         
         navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
-            backgroundColor: .clear,
-            controlColor: ColorPalette.gtBlue.uiColor,
-            titleFont: nil,
-            titleColor: nil,
-            isTranslucent: true
-        )
         
         navigationController.setViewControllers([getLearnToShareToolView(tool: tool)], animated: false)
     }
@@ -53,11 +49,11 @@ class LearnToShareToolFlow: Flow {
         
         switch step {
             
-        case .continueTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage):
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
+        case .continueTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
-        case .closeTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage):
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage))
+        case .closeTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
         default:
             break
@@ -71,6 +67,7 @@ class LearnToShareToolFlow: Flow {
             tool: tool,
             toolPrimaryLanguage: toolPrimaryLanguage,
             toolParallelLanguage: toolParallelLanguage,
+            toolSelectedLanguageIndex: toolSelectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewLearnToShareToolUseCase: appDiContainer.feature.learnToShareTool.domainLayer.getViewLearnToShareToolUseCase()
         )

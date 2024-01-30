@@ -23,10 +23,10 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
+    func getShareablesPublisher(toolId: String, toolLanguage: BCP47LanguageIdentifier) -> AnyPublisher<[ShareableDomainModel], Never> {
         
         guard let tool = resourcesRepository.getResource(id: toolId),
-              let language = languagesRepository.getLanguage(id: toolLanguageId) else {
+              let language = languagesRepository.getLanguage(code: toolLanguage) else {
             
             return Just([])
                 .eraseToAnyPublisher()
