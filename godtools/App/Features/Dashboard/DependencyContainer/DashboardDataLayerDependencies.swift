@@ -26,4 +26,12 @@ class DashboardDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getFavoritedToolsLatestToolDownloaderInterface() -> FavoritedToolsLatestToolDownloaderInterface {
+        return FavoritedToolsLatestToolDownloader(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            translationsRepository: coreDataLayer.getTranslationsRepository()
+        )
+    }
 }
