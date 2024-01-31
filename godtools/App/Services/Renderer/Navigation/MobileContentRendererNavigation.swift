@@ -61,7 +61,7 @@ class MobileContentRendererNavigation {
                 
             case .tool(let toolDeepLink):
                 
-                parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, selectedLanguageIndex: nil, didCompleteToolNavigation: nil)
+                parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             }
         }
         else {

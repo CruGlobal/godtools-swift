@@ -656,7 +656,7 @@ extension AppFlow {
                
             navigateToDashboard(startingTab: .favorites, animatePopToToolsMenu: false, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
                         
-            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, selectedLanguageIndex: nil, didCompleteToolNavigation: nil)
+            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
         case .articleAemUri(let aemUri):
             

@@ -140,7 +140,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -158,7 +159,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -176,7 +178,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -194,7 +197,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -212,7 +216,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -230,7 +235,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -248,7 +254,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: 5,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -275,7 +282,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
@@ -286,6 +294,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareEnglishPage4FromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -293,7 +303,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: 4,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
@@ -304,6 +315,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareEnglishWithLiveStreamFromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -311,7 +324,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: "acd9bee66b6057476cee-1612666248",
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
@@ -322,6 +336,8 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testTractTeachMeToShareSpanishAndRussianFromKnowGod() {
         
+        let primaryLanguageIndex: Int = 0
+        
         let tract: ParsedDeepLinkType = .tool(
             toolDeepLink: ToolDeepLink(
                 resourceAbbreviation: "teachmetoshare",
@@ -329,7 +345,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: ["ru"],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: primaryLanguageIndex
             )
         )
         
@@ -347,7 +364,8 @@ class DeepLinkingServiceTests: XCTestCase {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: nil,
-                pageId: nil
+                pageId: nil,
+                selectedLanguageIndex: nil
             )
         )
         
