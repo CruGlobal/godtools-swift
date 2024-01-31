@@ -124,6 +124,11 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 name = appLanguageTranslation.translatedName
                 description = appLanguageTranslation.translatedTagline
             }
+            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: LanguageCodeDomainModel.english.rawValue) {
+                
+                name = englishTranslation.translatedName
+                description = englishTranslation.translatedTagline
+            }
             else {
                 
                 name = resourceVariant.name
