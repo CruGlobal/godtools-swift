@@ -15,3 +15,10 @@ struct DownloadedLanguageListItemDomainModel {
     let languageNameInOwnLanguage: String
     let languageNameInAppLanguage: String
 }
+
+extension DownloadedLanguageListItemDomainModel: Identifiable {
+    
+    var id: String {
+        return languageId
+    }
+}

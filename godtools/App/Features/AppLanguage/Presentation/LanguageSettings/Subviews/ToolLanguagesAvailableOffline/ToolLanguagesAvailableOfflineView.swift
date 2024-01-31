@@ -44,23 +44,10 @@ struct ToolLanguagesAvailableOfflineView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
-                    
-                    ToolLanguageAvailableOfflineLanguageView()
+                    ForEach(viewModel.downloadedLanguages) { downloadedLanguage in
+                        
+                        ToolLanguageAvailableOfflineLanguageView(downloadedLanguage: downloadedLanguage)
+                    }
                 }
             }
             
