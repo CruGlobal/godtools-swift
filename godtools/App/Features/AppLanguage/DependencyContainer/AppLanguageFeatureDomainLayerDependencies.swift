@@ -90,7 +90,8 @@ class AppLanguageFeatureDomainLayerDependencies {
     
     func getViewLanguageSettingsUseCase() -> ViewLanguageSettingsUseCase {
         return ViewLanguageSettingsUseCase(
-            getInterfaceStringsRepository: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepository: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface(), 
+            getDownloadedLanguagesListRepositoryInterface: dataLayer.getDownloadedLanguagesListRepositoryInterface()
         )
     }
 }

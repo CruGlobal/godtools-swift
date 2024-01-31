@@ -26,10 +26,11 @@ class RealmDownloadedLanguagesCache {
             .eraseToAnyPublisher()
     }
     
-    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+    func getDownloadedLanguagesPublisher(completedDownloadsOnly: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
         
         let downloadedLanguages = realmDatabase.openRealm()
             .objects(RealmDownloadedLanguage.self)
+            .filter { completedDownloadsOnly ? $0.downloadComplete : true }
             .map { DownloadedLanguageDataModel(realmDownloadedLanguage: $0) }
         
         return Just(Array(downloadedLanguages))
