@@ -1226,10 +1226,7 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
                         
-            AppBackgroundState.shared.start(
-                getAllFavoritedToolsLatestTranslationFilesUseCase: appDiContainer.domainLayer.getAllFavoritedToolsLatestTranslationFilesUseCase(),
-                storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
-            )
+            AppBackgroundState.shared.start(appDiContainer: appDiContainer)
             
             ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
             
