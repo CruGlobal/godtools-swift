@@ -297,7 +297,8 @@ extension ToolSettingsFlow {
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trainingTipsEnabled: toolData.trainingTipsEnabled
+            trainingTipsEnabled: toolData.trainingTipsEnabled,
+            currentPageRenderer: toolData.currentPageRenderer.eraseToAnyPublisher()
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)

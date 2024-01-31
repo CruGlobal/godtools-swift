@@ -23,6 +23,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase
     private let getShareablesUseCase: GetShareablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
+    private let currentPageRenderer: AnyPublisher<MobileContentPageRenderer, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -47,7 +48,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, trainingTipsEnabled: Bool, currentPageRenderer: AnyPublisher<MobileContentPageRenderer, Never>) {
         
         self.flowDelegate = flowDelegate
         self.tool = tool
@@ -59,6 +60,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.trainingTipsEnabled = trainingTipsEnabled
+        self.currentPageRenderer = currentPageRenderer
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -115,11 +117,14 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        $appLanguage
-            .eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ShareableDomainModel], Never> in
+        currentPageRenderer
+            .flatMap({ (pageRenderer: MobileContentPageRenderer) -> AnyPublisher<LanguageDomainModel, Never> in
+                return Just(pageRenderer.language)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (language: LanguageDomainModel) -> AnyPublisher<[ShareableDomainModel], Never> in
                 return getShareablesUseCase
-                    .getShareablesPublisher(toolId: tool.id, toolLanguage: appLanguage)
+                    .getShareablesPublisher(toolId: tool.id, toolLanguage: language.localeIdentifier)
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
