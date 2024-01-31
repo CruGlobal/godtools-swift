@@ -11,10 +11,27 @@
 "allTools.filter.title" = "Filtro";
 "allTools.filter.anyCategory" = "Qualquer categoria";
 "allTools.filter.anyLanguage" = "Qualquer idioma";
+"allTools.filter.navBar.language" = "Filtrar por idioma";
+"allTools.filter.navBar.category" = "Filtrar por categoria";
 "languageSettings.appLanguage.title" = "Idioma do aplicativo";
+"authError.userAccountAlreadyExists.message" = "A conta de utilizador já existe.";
+"authError.userAccountNotFound.message" = "A conta de utilizador não foi encontrada.";
 "createAccount.title" = "Criar conta";
 "createAccount.subtitle" = "Crie uma conta para ter histórias reais, encorajamento, e dicas práticas ao seu alcance.";
+"deleteAccountProgress.title" = "A eliminar conta…";
+"confirmDeleteAccount.title" = "Tens a certeza?";
+"confirmDeleteAccount.confirmButton.title" = "Eliminar conta";
+"accountDeletedAlert.title" = "Conta eliminada";
+"accountDeletedAlert.message" = "A tua conta foi eliminada.";
+"deleteAccount.title" = "Não vás já embora";
+"deleteAccount.subtitle" = "Se eliminares a tua conta, não poderás aceder às tuas ferramentas preferidas ou à atividade da conta.";
+"deleteAccount.confirmButton.title" = "Eliminar a minha conta";
+"deleteAccount.cancelButton.title" = "Manter a minha conta";
 "signIn.title" = "Entrar";
+"signIn.subtitle" = "Inicia sessão na tua conta para veres histórias reais, encorajamento e dicas práticas ao teu alcance.";
+"signIn.google" = "Iniciar sessão com a Google";
+"signIn.facebook" = "Iniciar sessão com o Facebook";
+"signIn.apple" = "Continuar com a Apple";
 "menu_getStarted" = "Comece";
 "menu_support" = "Suporte";
 "menu_about" = "Sobre";
@@ -42,6 +59,12 @@
 
 "account.activity.sessions" = "Sessões";
 "badges.tipsCompleted.singular" = "Concluiu 1 dica de treinamento";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "%d artigos lidos";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "1 artigo lido";
 
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "Compartilhou %d imagens";
@@ -81,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Não disponível em %@";
 
+"menu.deleteAccount" = "Eliminar conta";
+"alert.mailAppUnavailable.title" = "Aplicação de correio indisponível";
+"alert.mailAppUnavailable.message" = "A aplicação de correio nativa não está configurada ou está indisponível neste dispositivo. ";
 "tool_menu_item.tools" = "Ferramentas";
 "lessons.pageTitle" = "Sessões feitas para si";
 "lessons.pageSubtitle" = "Ideias práticas para construir relações e iniciar conversas profundas.";
@@ -123,6 +149,7 @@
 "tool_menu_item.lessons" = "Sessões";
 "parallelLanguage.yesButton.title" = "Sim";
 "parallelLanguage.noButton.title" = "Não, obrigado";
+"parallelLanguage.selectButton.title" = "Selecionar";
 "parallelLanguage.getStartedButton.title" = "Começar";
 "parallelLanguage.selectLanguageButton.title" = "Selecione um idioma";
 "parellelLanguage.prompt" = "Gostaria de definir um idioma secundário?";
@@ -135,6 +162,9 @@
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.message" = "Cada ferramenta é feita para um estágio diferente da conversa - antes, durante ou depois.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Dicas da ferramenta";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.toolTip.message" = "As dicas do GodTools guiam você ao ajudar alguém a entender o evangelho e a encontrar Jesus.";
@@ -159,11 +189,11 @@
 "onboardingQuickStart.2.button.title" = "Escolha uma das nossas ferramentas";
 "onboardingTutorial.nextButton.title" = "Seguinte";
 "onboardingQuickStart.title" = "Ligações para o início rápido";
-"onboardingQuickStart.0.title" = "Quero explorar o Cristianismo";
+"onboardingQuickStart.0.title" = "Quero saber mais sobre Jesus.";
 "onboardingQuickStart.0.button.title" = "Leia os nossos artigos";
 "onboardingQuickStart.1.title" = "Quero aprender a ter conversas sobre o evangelho";
 "onboardingQuickStart.1.button.title" = "Experimente as nossas sessões";
-"tool_offline_favorite_message" = "Para ficar com uma ferramenta disponível offline, toque no ícone de coração para a adicionar aos seus favoritos.";
+"tool_offline_favorite_message" = "Para uma ferramenta ficar disponível offline, toca no ícone de coração para a adicionar aos teus favoritos.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Início de conversa";
@@ -188,7 +218,9 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "learn_to_share_tool.learn_to_share.title" = "Aprenda a compartilha esta ferramenta com qualquer pessoa";
 "learn_to_share_tool.learn_to_share.message" = "Se habitue a usar quantas dicas precisar para se sentir confiante ao compartilhar esta ferramenta com outros.";
 "learn_to_share_tool.tips_light_the_way.title" = "Dicas para clarear o caminho";
+"learn_to_share_tool.tips_light_the_way.message" = "Vais ver vários ícones em ecrãs selecionados desta formação. Prime cada ícone para revelar uma dica que te vai ajudar a falar sobre o conteúdo no ecrã. Se um ecrã não tiver nenhum ícone, lê e debate o conteúdo conforme necessário.";
 "learn_to_share_tool.light_up_the_tips.title" = "Iluminar as dicas";
+"learn_to_share_tool.light_up_the_tips.message" = "Quando uma dica fica iluminada, significa que concluíste essa parte da formação. Pratica utilizando todas as dicas necessárias para te sentires confiante a explicar a ferramenta";
 "lesson_evaluation.title" = "Revisão";
 "lesson_evaluation.wasThisHelpful" = "Esta lição lhe serviu?";
 "lesson_evaluation.shareFaith" = "Até que ponto você se sente preparado para iniciar uma conversa espiritual?";
@@ -280,7 +312,7 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "help" = "Perguntas frequentes";
 "contact_us" = "Contactar-nos";
 "preview_mode_translators_only" = "Modo de pré-visualização (apenas para tradutores)";
-"share_god_tools" = "Partilhar o aplicativo GodTools";
+"share_god_tools" = "Partilhar o GodTools";
 "share_a_story_with_us" = "Partilhar uma história connosco";
 "terms_of_use" = "Termos de utilização";
 "privacy_policy" = "Política de Privacidade";
