@@ -93,6 +93,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return renderer.value.resource
     }
     
+    func getSelectedLanguage() -> LanguageDomainModel? {
+        
+        guard selectedLanguageIndex >= 0 && selectedLanguageIndex < languages.count else {
+            return nil
+        }
+        
+        return languages[selectedLanguageIndex]
+    }
+    
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         self.window = window
