@@ -290,7 +290,6 @@ extension ToolSettingsFlow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             tool: toolData.renderer.value.resource,
-            toolPrimaryLanguage: primaryLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             getToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsPrimaryLanguageUseCase(),
@@ -298,7 +297,8 @@ extension ToolSettingsFlow {
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trainingTipsEnabled: toolData.trainingTipsEnabled
+            trainingTipsEnabled: toolData.trainingTipsEnabled,
+            currentPageRenderer: toolData.currentPageRenderer.eraseToAnyPublisher()
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
