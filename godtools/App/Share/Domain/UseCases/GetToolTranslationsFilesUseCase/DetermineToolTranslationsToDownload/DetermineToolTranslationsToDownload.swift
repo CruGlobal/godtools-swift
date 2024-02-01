@@ -11,11 +11,11 @@ import Foundation
 class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType {
     
     private let resourceId: String
-    private let languageIds: [String]
+    private let languageIds: Set<String>
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(resourceId: String, languageIds: Set<String>, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds

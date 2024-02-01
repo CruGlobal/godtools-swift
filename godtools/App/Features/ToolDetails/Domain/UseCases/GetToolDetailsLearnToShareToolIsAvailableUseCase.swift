@@ -18,17 +18,9 @@ class GetToolDetailsLearnToShareToolIsAvailableUseCase {
         self.getToolDetailsLearnToShareToolIsAvailableRepository = getToolDetailsLearnToShareToolIsAvailableRepository
     }
     
-    func getIsAvailablePublisher(toolChangedPublisher: AnyPublisher<ToolDomainModel, Never>, toolLanguageCodeChangedPublisher: AnyPublisher<String, Never>) -> AnyPublisher<Bool, Never> {
+    func getIsAvailablePublisher(tool: ToolDomainModel, language: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
         
-        Publishers.CombineLatest(
-            toolChangedPublisher.eraseToAnyPublisher(),
-            toolLanguageCodeChangedPublisher.eraseToAnyPublisher()
-        )
-        .flatMap({ (tool: ToolDomainModel, toolLanguageCode: String) -> AnyPublisher<Bool, Never> in
-            
-            return self.getToolDetailsLearnToShareToolIsAvailableRepository.getIsAvailablePublisher(tool: tool, toolLanguageCode: toolLanguageCode)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+        return self.getToolDetailsLearnToShareToolIsAvailableRepository.getIsAvailablePublisher(tool: tool, language: language)
+            .eraseToAnyPublisher()
     }
 }

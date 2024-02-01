@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface {
     
-    func getIsAvailablePublisher(tool: ToolDomainModel, toolLanguageCode: String) -> AnyPublisher<Bool, Never>
+    func getIsAvailablePublisher(tool: ToolDomainModel, language: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never>
 }
