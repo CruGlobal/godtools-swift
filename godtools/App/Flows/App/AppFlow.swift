@@ -707,10 +707,13 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: [String] = Array()
+        let languageIds: Set<String>
         
         if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
-            languageIds.append(appLanguageModel.id)
+            languageIds = [appLanguageModel.id]
+        }
+        else {
+            languageIds = Set()
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled)
@@ -720,33 +723,32 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: [String] = Array()
+        var languageIds: Set<String> = Set()
         
         if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
-            languageIds.append(languageModel.id)
+            languageIds.insert(languageModel.id)
         }
         
         if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
-            languageIds.append(languageModel.id)
+            languageIds.insert(languageModel.id)
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled)
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
-        
-        var openToolInLanguages: [String] = Array()
-        
-        for languageId in languageIds {
-            if !openToolInLanguages.contains(languageId) {
-                openToolInLanguages.append(languageId)
-            }
-        }
+    private func navigateToTool(toolDataModelId: String, languageIds: Set<String>, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        if openToolInLanguages.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
-            openToolInLanguages.append(englishLanguage.id)
+        let openToolInLanguages: Set<String>
+        
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+            
+            openToolInLanguages = [englishLanguage.id]
+        }
+        else {
+            
+            openToolInLanguages = languageIds
         }
         
         navigateToTool(
