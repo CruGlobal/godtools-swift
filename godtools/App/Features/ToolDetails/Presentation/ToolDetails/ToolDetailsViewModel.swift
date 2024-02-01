@@ -23,6 +23,8 @@ class ToolDetailsViewModel: ObservableObject {
     private let attachmentsRepository: AttachmentsRepository
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let primaryLanguage: AppLanguageDomainModel
+    private let parallelLanguage: AppLanguageDomainModel?
     private let selectedLanguageIndex: Int?
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
@@ -36,8 +38,6 @@ class ToolDetailsViewModel: ObservableObject {
         }
     }
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var primaryLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var parallelLanguage: AppLanguageDomainModel?
     
     @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
@@ -65,6 +65,9 @@ class ToolDetailsViewModel: ObservableObject {
     
     init(flowDelegate: FlowDelegate, tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolUseCase: GetToolUseCase, viewToolDetailsUseCase: ViewToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
+        let primaryLanguage: AppLanguageDomainModel = primaryLanguage
+        let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil
+        
         self.flowDelegate = flowDelegate
         self.tool = tool
         self.primaryLanguage = primaryLanguage
@@ -84,14 +87,12 @@ class ToolDetailsViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        Publishers.CombineLatest4(
+        Publishers.CombineLatest(
             $tool.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher(),
-            $primaryLanguage.eraseToAnyPublisher(),
-            $parallelLanguage.eraseToAnyPublisher()
+            $appLanguage.eraseToAnyPublisher()
         )
         .receive(on: DispatchQueue.main)
-        .flatMap ({ (tool: ToolDomainModel, appLanguage: AppLanguageDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
+        .flatMap ({ (tool: ToolDomainModel, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
             
             return viewToolDetailsUseCase
                 .viewPublisher(tool: tool, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
@@ -146,11 +147,13 @@ class ToolDetailsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
-        getToolDetailsLearnToShareToolIsAvailableUseCase
-            .getIsAvailablePublisher(
-                toolChangedPublisher: $tool.eraseToAnyPublisher(),
-                toolLanguageCodeChangedPublisher: $primaryLanguage.eraseToAnyPublisher()
-            )
+        $tool.eraseToAnyPublisher()
+            .flatMap({ (tool: ToolDomainModel) -> AnyPublisher<Bool, Never> in
+                
+                return getToolDetailsLearnToShareToolIsAvailableUseCase
+                    .getIsAvailablePublisher(tool: tool, language: primaryLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsLearnToShareToolButton)
     }
