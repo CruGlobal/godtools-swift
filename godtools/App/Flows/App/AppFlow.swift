@@ -172,7 +172,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: spotlightTool,
-                toolLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
             
@@ -182,7 +182,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
             
@@ -204,7 +204,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: nil,
+                parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
             
@@ -229,7 +229,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: nil,
+                parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
             
@@ -957,13 +957,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             tool: tool,
             primaryLanguage: appLanguage,
-            parallelLanguage: toolLanguage,
+            parallelLanguage: parallelLanguage,
             selectedLanguageIndex: selectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
