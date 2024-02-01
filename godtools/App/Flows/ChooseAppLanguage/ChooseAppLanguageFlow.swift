@@ -107,7 +107,8 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = ConfirmAppLanguageViewModel(
             selectedLanguage: selectedLanguage,
-            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewConfirmAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewConfirmAppLanguageUseCase(),
             flowDelegate: self
         )
         

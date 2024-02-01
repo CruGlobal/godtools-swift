@@ -68,6 +68,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getConfirmAppLanguageInterfaceStringsRepositoryInterface() -> GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
+        return GetConfirmAppLanguageInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
     func getDeviceAppLanguageRepositoryInterface() -> GetDeviceAppLanguageRepositoryInterface {
         return GetDeviceAppLanguageRepository(
             deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage()
