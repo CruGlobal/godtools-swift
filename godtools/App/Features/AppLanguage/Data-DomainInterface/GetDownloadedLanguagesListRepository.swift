@@ -50,7 +50,7 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
                 return DownloadedLanguageListItemDomainModel(
                     languageId: language.id,
                     languageCode: language.code,
-                    languageNameInOwnLanguage: languageNameInAppLanguage,
+                    languageNameInOwnLanguage: languageNameInOwnLanguage,
                     languageNameInAppLanguage: languageNameInAppLanguage
                 )
             }
