@@ -82,14 +82,14 @@ class ToolSettingsFlow: Flow {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
             
-            var languageIds: [String] = Array()
+            var languageIds: Set<String> = Set()
             
             if let primaryLanguage = primaryLanguage {
-                languageIds.append(primaryLanguage.id)
+                languageIds.insert(primaryLanguage.id)
             }
             
             if let parallelLanguage = parallelLanguage {
-                languageIds.append(parallelLanguage.id)
+                languageIds.insert(parallelLanguage.id)
             }
             
             self?.setToolLanguages(languageIds: languageIds)
@@ -241,7 +241,7 @@ class ToolSettingsFlow: Flow {
         }
     }
     
-    private func setToolLanguages(languageIds: [String]) {
+    private func setToolLanguages(languageIds: Set<String>){
                 
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,
