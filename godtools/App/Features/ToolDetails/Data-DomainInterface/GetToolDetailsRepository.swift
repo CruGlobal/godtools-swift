@@ -106,32 +106,51 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         
         let localizedTotalLanguages: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "total_languages")
         
-        let versions: [ToolVersionDomainModel] = resourceVariants.compactMap { (variantDataModel: ResourceModel) in
-            
-            guard let translation = self.translationsRepository.getLatestTranslation(resourceId: variantDataModel.id, languageCode: translateInLanguage) else {
-                return nil
-            }
+        var toolVersions: [ToolVersionDomainModel] = Array()
+        
+        for resourceVariant in resourceVariants {
             
             let numberOfLanguagesString: String = String(
                 format: localizedTotalLanguages,
                 locale: Locale(identifier: translateInLanguage),
-                variantDataModel.languageIds.count
+                resourceVariant.languageIds.count
             )
             
-            return ToolVersionDomainModel(
-                bannerImageId: variantDataModel.attrBanner,
-                dataModelId: variantDataModel.id,
-                description: translation.translatedTagline,
-                name: translation.translatedName,
+            let name: String
+            let description: String
+            
+            if let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: translateInLanguage) {
+                
+                name = appLanguageTranslation.translatedName
+                description = appLanguageTranslation.translatedTagline
+            }
+            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: LanguageCodeDomainModel.english.rawValue) {
+                
+                name = englishTranslation.translatedName
+                description = englishTranslation.translatedTagline
+            }
+            else {
+                
+                name = resourceVariant.name
+                description = resourceVariant.resourceDescription
+            }
+            
+            let toolVersion = ToolVersionDomainModel(
+                bannerImageId: resourceVariant.attrBanner,
+                dataModelId: resourceVariant.id,
+                description: description,
+                name: name,
                 numberOfLanguages: numberOfLanguagesString,
                 toolLanguageName: toolPrimaryLanguageName ?? "",
-                toolLanguageNameIsSupported: getToolSupportsLanguage(resource: variantDataModel, language: toolPrimaryLanguage),
+                toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                 toolParallelLanguageName: toolParallelLanguageName,
-                toolParallelLanguageNameIsSupported: getToolSupportsLanguage(resource: variantDataModel, language: toolParallelLanguage)
+                toolParallelLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolParallelLanguage)
             )
+            
+            toolVersions.append(toolVersion)
         }
         
-        return versions
+        return toolVersions
     }
     
     private func getToolSupportsLanguage(resource: ResourceModel, language: AppLanguageDomainModel?) -> Bool {

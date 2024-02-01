@@ -20,7 +20,7 @@ protocol ToolNavigationFlow: Flow {
 
 extension ToolNavigationFlow {
         
-    func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, selectedLanguageIndex: Int?, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
+    func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
@@ -33,7 +33,7 @@ extension ToolNavigationFlow {
         navigateToToolAndDetermineToolTranslationsToDownload(
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
-            selectedLanguageIndex: selectedLanguageIndex,
+            selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage
         )
