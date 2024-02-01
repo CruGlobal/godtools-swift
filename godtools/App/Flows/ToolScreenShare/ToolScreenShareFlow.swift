@@ -121,9 +121,11 @@ class ToolScreenShareFlow: Flow {
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
                 
                 let resource: ResourceModel = toolData.renderer.value.resource
+                let selectedLanguage: LanguageDomainModel = toolData.selectedLanguage
+                let page: Int = toolData.pageNumber
                 
                 guard let domainModel = shareToolScreenShareSessionDomainModel,
-                      let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, subscriberChannelId: channel.subscriberChannelId) else {
+                      let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguage: selectedLanguage, page: page, subscriberChannelId: channel.subscriberChannelId) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",

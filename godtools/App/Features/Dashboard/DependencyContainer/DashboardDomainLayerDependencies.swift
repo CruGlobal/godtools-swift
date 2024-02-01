@@ -17,6 +17,12 @@ class DashboardDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getDownloadLatestToolsForFavoritedToolsUseCase() -> DownloadLatestToolsForFavoritedToolsUseCase {
+        return DownloadLatestToolsForFavoritedToolsUseCase(
+            latestToolDownloader: dataLayer.getFavoritedToolsLatestToolDownloaderInterface()
+        )
+    }
+    
     func getViewDashboardUseCase() -> ViewDashboardUseCase {
         return ViewDashboardUseCase(
             getInterfaceStringsRepository: dataLayer.getDashboardInterfaceStringsRepositoryInterface()

@@ -35,15 +35,6 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
-    func getConfirmAppLanguageInterfaceStringsUseCase() -> GetConfirmAppLanguageInterfaceStringsUseCase {
-        return GetConfirmAppLanguageInterfaceStringsUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
-        )
-    }
-    
     func getDownloadToolLanguageUseCase() -> DownloadToolLanguageUseCase {
         return DownloadToolLanguageUseCase(
             downloadToolLanguageRepository: dataLayer.getDownloadToolLanguageRepositoryInterface()
@@ -78,6 +69,12 @@ class AppLanguageFeatureDomainLayerDependencies {
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
+        )
+    }
+    
+    func getViewConfirmAppLanguageUseCase() -> ViewConfirmAppLanguageUseCase {
+        return ViewConfirmAppLanguageUseCase(
+            getConfirmAppLanguageInterfaceStringsRepository: dataLayer.getConfirmAppLanguageInterfaceStringsRepositoryInterface()
         )
     }
     

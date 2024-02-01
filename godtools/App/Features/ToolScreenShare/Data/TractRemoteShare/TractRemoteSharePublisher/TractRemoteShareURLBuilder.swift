@@ -16,13 +16,21 @@ class TractRemoteShareURLBuilder {
         
     }
     
-    func buildRemoteShareURL(resource: ResourceModel, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?, subscriberChannelId: String) -> String? {
+    func buildRemoteShareURL(resource: ResourceModel, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?, selectedLanguage: LanguageDomainModel, page: Int?, subscriberChannelId: String) -> String? {
+                
+        var urlPath: String = ""
+        urlPath += "/" + selectedLanguage.localeIdentifier
+        urlPath += "/" + resource.abbreviation
+        
+        if let page = page {
+            urlPath += "/" + String(page)
+        }
         
         var urlComponents: URLComponents = URLComponents()
         
         urlComponents.scheme = "https"
         urlComponents.host = "knowgod.com"
-        urlComponents.path = "/" + primaryLanguage.localeIdentifier + "/" + resource.abbreviation
+        urlComponents.path = urlPath
         
         var queryItems: [URLQueryItem] = Array()
         if let parallelLanguage = parallelLanguage {
@@ -34,6 +42,8 @@ class TractRemoteShareURLBuilder {
         
         urlComponents.queryItems = queryItems
         
-        return urlComponents.url?.absoluteString
+        let urlString: String? = urlComponents.url?.absoluteString
+        
+        return urlString
     }
 }

@@ -82,14 +82,14 @@ class ToolSettingsFlow: Flow {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (primaryLanguage: LanguageDomainModel?, parallelLanguage: LanguageDomainModel?) in
             
-            var languageIds: [String] = Array()
+            var languageIds: Set<String> = Set()
             
             if let primaryLanguage = primaryLanguage {
-                languageIds.append(primaryLanguage.id)
+                languageIds.insert(primaryLanguage.id)
             }
             
             if let parallelLanguage = parallelLanguage {
-                languageIds.append(parallelLanguage.id)
+                languageIds.insert(parallelLanguage.id)
             }
             
             self?.setToolLanguages(languageIds: languageIds)
@@ -241,7 +241,7 @@ class ToolSettingsFlow: Flow {
         }
     }
     
-    private func setToolLanguages(languageIds: [String]) {
+    private func setToolLanguages(languageIds: Set<String>){
                 
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolData.renderer.value.resource.id,
@@ -290,7 +290,6 @@ extension ToolSettingsFlow {
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
             tool: toolData.renderer.value.resource,
-            toolPrimaryLanguage: primaryLanguage,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             getToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsPrimaryLanguageUseCase(),
@@ -298,7 +297,8 @@ extension ToolSettingsFlow {
             setToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getSetToolSettingsParallelLanguageUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trainingTipsEnabled: toolData.trainingTipsEnabled
+            trainingTipsEnabled: toolData.trainingTipsEnabled,
+            currentPageRenderer: toolData.currentPageRenderer.eraseToAnyPublisher()
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)

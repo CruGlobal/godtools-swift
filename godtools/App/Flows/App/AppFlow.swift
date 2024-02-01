@@ -172,7 +172,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: spotlightTool,
-                toolLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
             
@@ -182,7 +182,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
             
@@ -204,7 +204,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: nil,
+                parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
             
@@ -229,7 +229,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 tool: tool,
-                toolLanguage: nil,
+                parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
             
@@ -656,7 +656,7 @@ extension AppFlow {
                
             navigateToDashboard(startingTab: .favorites, animatePopToToolsMenu: false, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
                         
-            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, selectedLanguageIndex: nil, didCompleteToolNavigation: nil)
+            navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
         case .articleAemUri(let aemUri):
             
@@ -707,10 +707,13 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: [String] = Array()
+        let languageIds: Set<String>
         
         if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
-            languageIds.append(appLanguageModel.id)
+            languageIds = [appLanguageModel.id]
+        }
+        else {
+            languageIds = Set()
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled)
@@ -720,33 +723,32 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: [String] = Array()
+        var languageIds: Set<String> = Set()
         
         if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
-            languageIds.append(languageModel.id)
+            languageIds.insert(languageModel.id)
         }
         
         if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
-            languageIds.append(languageModel.id)
+            languageIds.insert(languageModel.id)
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled)
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
-        
-        var openToolInLanguages: [String] = Array()
-        
-        for languageId in languageIds {
-            if !openToolInLanguages.contains(languageId) {
-                openToolInLanguages.append(languageId)
-            }
-        }
+    private func navigateToTool(toolDataModelId: String, languageIds: Set<String>, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        if openToolInLanguages.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
-            openToolInLanguages.append(englishLanguage.id)
+        let openToolInLanguages: Set<String>
+        
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+            
+            openToolInLanguages = [englishLanguage.id]
+        }
+        else {
+            
+            openToolInLanguages = languageIds
         }
         
         navigateToTool(
@@ -955,13 +957,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel, toolLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
+    private func getToolDetails(tool: ToolDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             tool: tool,
             primaryLanguage: appLanguage,
-            parallelLanguage: toolLanguage,
+            parallelLanguage: parallelLanguage,
             selectedLanguageIndex: selectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
@@ -1226,10 +1228,7 @@ extension AppFlow {
         }
         else if notification.name == UIApplication.didBecomeActiveNotification {
                         
-            AppBackgroundState.shared.start(
-                getAllFavoritedToolsLatestTranslationFilesUseCase: appDiContainer.domainLayer.getAllFavoritedToolsLatestTranslationFilesUseCase(),
-                storeInitialFavoritedToolsUseCase: appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
-            )
+            AppBackgroundState.shared.start(appDiContainer: appDiContainer)
             
             ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
             

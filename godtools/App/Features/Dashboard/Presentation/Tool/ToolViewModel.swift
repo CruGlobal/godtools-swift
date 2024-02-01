@@ -165,6 +165,7 @@ extension ToolViewModel {
             renderer: renderer,
             currentPageRenderer: currentPageRenderer,
             tractRemoteSharePublisher: tractRemoteSharePublisher,
+            selectedLanguage: languages[selectedLanguageIndex],
             pageNumber: currentRenderedPageNumber,
             trainingTipsEnabled: trainingTipsEnabled
         )
