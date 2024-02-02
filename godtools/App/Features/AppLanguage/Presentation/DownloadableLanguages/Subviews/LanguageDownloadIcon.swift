@@ -14,10 +14,12 @@ struct LanguageDownloadIcon: View {
     
     private let languageDownloadStatus: LanguageDownloadStatusDomainModel
     private let animationDownloadProgress: Double?
+    private let shouldConfirmDownloadRemoval: Bool
     
-    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, animationDownloadProgress: Double?) {
+    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, animationDownloadProgress: Double?, shouldConfirmDownloadRemoval: Bool) {
         self.languageDownloadStatus = languageDownloadStatus
         self.animationDownloadProgress = animationDownloadProgress
+        self.shouldConfirmDownloadRemoval = shouldConfirmDownloadRemoval
     }
 
     var body: some View {
@@ -53,7 +55,12 @@ struct LanguageDownloadIcon: View {
                         
         case .downloaded:
             
-            if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
+            if shouldConfirmDownloadRemoval {
+              
+                Image(systemName: "xmark")
+                    .imageScale(.small)
+                
+            } else if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
 
                 drawProgressInCircle(progress: animationDownloadProgress)
                 
@@ -113,7 +120,12 @@ struct LanguageDownloadIcon: View {
             }
             
         case .downloaded:
-            return ColorPalette.gtBlue.color
+            
+            if shouldConfirmDownloadRemoval {
+                return Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
+            } else {
+                return ColorPalette.gtBlue.color
+            }
         }
     }
     

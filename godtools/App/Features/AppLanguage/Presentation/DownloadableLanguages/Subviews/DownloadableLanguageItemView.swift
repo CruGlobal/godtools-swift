@@ -19,6 +19,7 @@ struct DownloadableLanguageItemView: View {
     @State private var downloadProgressTarget: Double?
     @State private var timer: Timer?
     @State private var isVisible: Bool = false
+    @State private var shouldConfirmDownloadRemoval: Bool = false
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
@@ -52,11 +53,11 @@ struct DownloadableLanguageItemView: View {
             
             Button {
                 
-                tappedClosure?()
+                didTapItem()
                 
             } label: {
                 
-                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress)
+                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress, shouldConfirmDownloadRemoval: shouldConfirmDownloadRemoval)
             }
         }
         .onChange(of: downloadableLanguage.downloadStatus, perform: { newDownloadStatus in
@@ -65,6 +66,7 @@ struct DownloadableLanguageItemView: View {
             case .notDownloaded:
                 self.downloadProgressTarget = nil
                 self.animationDownloadProgress = nil
+                self.shouldConfirmDownloadRemoval = false
                 
             case .downloading(let progress):
                 self.downloadProgressTarget = progress
@@ -82,6 +84,7 @@ struct DownloadableLanguageItemView: View {
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
         .animation(.default, value: animationDownloadProgress)
+        .animation(.default, value: shouldConfirmDownloadRemoval)
         .onDisappear {
             
             isVisible = false
@@ -100,6 +103,23 @@ struct DownloadableLanguageItemView: View {
             
             continueDownloadProgressAnimationIfNeeded()
         }
+    }
+    
+    private func didTapItem() {
+        
+        switch downloadableLanguage.downloadStatus {
+        case .downloaded:
+            
+            if shouldConfirmDownloadRemoval == false {
+                shouldConfirmDownloadRemoval = true
+                return
+            }
+            
+        default:
+            break
+        }
+        
+        tappedClosure?()
     }
     
     private func startAnimationTimer() {
