@@ -113,13 +113,15 @@ struct DownloadableLanguageItemView: View {
             if shouldConfirmDownloadRemoval == false {
                 shouldConfirmDownloadRemoval = true
                 return
+                
+            } else {
+                tappedClosure?()
             }
             
         default:
-            break
+            
+            tappedClosure?()
         }
-        
-        tappedClosure?()
     }
     
     private func startAnimationTimer() {
