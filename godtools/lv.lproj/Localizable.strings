@@ -2,6 +2,7 @@
 "languageSettings.confirmAppLanguage.message" = "Tu izvēlējies %@ valodu – līdz ar to mainīsies lietotnes 'GodTools' valoda kopumā. Vai esi drošs, ka to vēlies?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mainīt valodu";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Atcelt";
+"languageSettings.downloadableLanguages.title" = "Lejupielādējamās valodas";
 "languageSettings.appInterface.title" = "Lietotnes valoda";
 "languageSettings.appInterface.message" = "Iestati sev vēlamo valodu.";
 "languageSettings.appInterface.languagesAvailable" = "Pieejamās valodas";
