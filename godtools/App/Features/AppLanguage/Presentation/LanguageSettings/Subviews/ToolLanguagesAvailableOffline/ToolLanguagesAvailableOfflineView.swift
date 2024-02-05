@@ -50,7 +50,7 @@ struct ToolLanguagesAvailableOfflineView: View {
                     
                     ScrollView(.vertical, showsIndicators: true) {
                         
-                        VStack(alignment: .leading, spacing: 0) {
+                        LazyVStack(alignment: .leading, spacing: 0) {
                             
                             ForEach(viewModel.downloadedLanguages) { downloadedLanguage in
                                 
