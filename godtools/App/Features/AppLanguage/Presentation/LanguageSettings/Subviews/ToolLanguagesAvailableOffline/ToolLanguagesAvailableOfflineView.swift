@@ -46,7 +46,7 @@ struct ToolLanguagesAvailableOfflineView: View {
                 let spaceBelowScrollView: CGFloat = 25
                 let scrollViewMaxHeight: CGFloat = scrollViewGeometry.size.height - buttonHeight - spaceBelowScrollView
                 
-                VStack(alignment: .leading, spacing: spaceBelowScrollView) {
+                VStack(alignment: .leading, spacing: 0) {
                     
                     ScrollView(.vertical, showsIndicators: true) {
                         
@@ -60,6 +60,8 @@ struct ToolLanguagesAvailableOfflineView: View {
                     }
                     .frame(maxHeight: scrollViewMaxHeight)
                     .fixedSize(horizontal: false, vertical: true)
+                    
+                    FixedVerticalSpacer(height: spaceBelowScrollView)
                     
                     GTBlueButton(
                         title: viewModel.editDownloadedLanguagesButtonTitle,
