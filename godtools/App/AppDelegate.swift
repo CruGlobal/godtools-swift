@@ -56,9 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                    
-        DisableGoogleTagManagerLogging.disable()
-        
+                            
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
         if appBuild.configuration == .analyticsLogging {
@@ -76,10 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
-        
-        if appBuild.configuration == .release {
-            appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
-        }
         
         ConfigureFacebookOnAppLaunch.configure(
             application: application,

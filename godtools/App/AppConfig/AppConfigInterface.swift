@@ -16,8 +16,6 @@ protocol AppConfigInterface {
     func getAppsFlyerDevKey() -> String
     func getFacebookConfiguration() -> FacebookConfiguration
     func getFirebaseGoogleServiceFileName() -> String
-    func getGoogleAdwordsConversionId() -> String
-    func getGoogleAdwordsLabel() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration
     func getMobileContentApiBaseUrl() -> String
     func getTractRemoteShareConnectionUrl() -> String

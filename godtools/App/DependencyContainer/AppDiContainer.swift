@@ -82,10 +82,6 @@ class AppDiContainer {
         return FontService(getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase())
     }
     
-    func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
-        return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
