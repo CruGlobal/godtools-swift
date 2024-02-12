@@ -332,7 +332,7 @@ extension TranslationsRepository {
                 return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ manifest -> AnyPublisher<TranslationFilesDataModel, Error> in
+            .flatMap({ (manifest: Manifest) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 let requests = manifest.relatedFiles.map {
                     self.getTranslationFileFromCacheElseRemote(translation: translation, fileName: $0)
