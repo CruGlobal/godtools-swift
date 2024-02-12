@@ -62,11 +62,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         .flatMap({ (translations: [TranslationModel]) -> AnyPublisher<Void, Never> in
                         
             return self.translationsRepository
-                .downloadAndCacheTranslationsFiles(translations: translations)
-                .catch { _ in
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
+                .downloadAndCacheFilesForTranslationsIgnoringError(translations: translations)
                 .map { _ in
                     return Void()
                 }

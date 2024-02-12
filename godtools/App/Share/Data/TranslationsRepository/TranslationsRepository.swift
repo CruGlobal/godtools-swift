@@ -295,10 +295,26 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func downloadAndCacheTranslationsFiles(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
+    func downloadAndCacheFilesForTranslations(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
         
         let requests = translations.map {
             self.downloadAndCacheTranslationFiles(translation: $0)
+        }
+        
+        return Publishers.MergeMany(requests)
+            .collect()
+            .eraseToAnyPublisher()
+    }
+    
+    func downloadAndCacheFilesForTranslationsIgnoringError(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Never> {
+        
+        let requests = translations.map { (translation: TranslationModel) in
+            self.downloadAndCacheTranslationFiles(translation: translation)
+                .catch({ (error: Error) in
+                    return Just(TranslationFilesDataModel(files: [], translation: translation))
+                        .eraseToAnyPublisher()
+                })
+                .eraseToAnyPublisher()
         }
         
         return Publishers.MergeMany(requests)
