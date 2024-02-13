@@ -12,20 +12,24 @@ import Combine
 class ViewLanguageSettingsUseCase {
     
     private let getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface
+    private let getDownloadedLanguagesListRepositoryInterface: GetDownloadedLanguagesListRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface,  getDownloadedLanguagesListRepositoryInterface: GetDownloadedLanguagesListRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
+        self.getDownloadedLanguagesListRepositoryInterface = getDownloadedLanguagesListRepositoryInterface
     }
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> {
         
-        return self.getInterfaceStringsRepository
-            .getStringsPublisher(translateInAppLanguage: appLanguage)
-            .map {
-                
-                return ViewLanguageSettingsDomainModel(interfaceStrings: $0)
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage),
+            getDownloadedLanguagesListRepositoryInterface.getDownloadedLanguagesPublisher(currentAppLanguage: appLanguage)
+        )
+        .map { interfaceStrings, downloadedLanguages in
+            
+            return ViewLanguageSettingsDomainModel(interfaceStrings: interfaceStrings, downloadedLanguages: downloadedLanguages)
+        }
+        .eraseToAnyPublisher()
     }
 }

@@ -11,4 +11,5 @@ import Foundation
 struct ViewLanguageSettingsDomainModel {
     
     let interfaceStrings: LanguageSettingsInterfaceStringsDomainModel
+    let downloadedLanguages: [DownloadedLanguageListItemDomainModel]
 }
