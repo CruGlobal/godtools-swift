@@ -22,7 +22,7 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
         self.appLanguagesRepository = appLanguagesRepository
     }
     
-    func storeInitialAppLanguageIfNeededPublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
+    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
         
         return Publishers.CombineLatest(
             userAppLanguageRepository.getLanguagePublisher(),

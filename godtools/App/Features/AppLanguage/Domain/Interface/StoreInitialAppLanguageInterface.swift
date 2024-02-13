@@ -11,5 +11,5 @@ import Combine
 
 protocol StoreInitialAppLanguageInterface {
     
-    func storeInitialAppLanguageIfNeededPublisher() -> AnyPublisher<AppLanguageDomainModel, Never>
+    func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never>
 }
