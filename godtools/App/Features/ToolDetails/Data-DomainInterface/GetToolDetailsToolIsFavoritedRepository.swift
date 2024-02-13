@@ -23,8 +23,4 @@ class GetToolDetailsToolIsFavoritedRepository: GetToolDetailsToolIsFavoritedRepo
         return favoritedResourcesRepository.getResourceIsFavoritedPublisher(id: tool.id)
             .eraseToAnyPublisher()
     }
-    
-    func observeFavoritedToolsChangedPublisher() -> AnyPublisher<Void, Never> {
-        return favoritedResourcesRepository.getFavoritedResourcesChangedPublisher()
-    }
 }
