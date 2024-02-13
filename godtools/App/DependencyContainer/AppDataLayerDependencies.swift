@@ -294,6 +294,15 @@ class AppDataLayerDependencies {
         return sharedUserDefaultsCache
     }
     
+    func getToolDownloader() -> ToolDownloader {
+        return ToolDownloader(
+            resourcesRepository: getResourcesRepository(),
+            languagesRepository: getLanguagesRepository(),
+            translationsRepository: getTranslationsRepository(),
+            attachmentsRepository: getAttachmentsRepository()
+        )
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)

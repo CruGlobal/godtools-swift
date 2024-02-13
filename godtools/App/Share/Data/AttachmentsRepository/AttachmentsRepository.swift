@@ -126,7 +126,7 @@ class AttachmentsRepository {
 
 extension AttachmentsRepository {
     
-    private func getAttachmentModel(id: String) -> AttachmentModel? {
+    func getAttachmentModel(id: String) -> AttachmentModel? {
         return cache.getAttachmentModel(id: id)
     }
     
@@ -196,7 +196,7 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheAttachment(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+    func downloadAndCacheAttachment(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
         
         guard let url = URL(string: attachment.file) else {
             let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute.")
