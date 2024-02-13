@@ -58,7 +58,7 @@ class ToolDownloader {
         
         let attachmentsRequests: [AnyPublisher<Void, Never>] = attachments
             .map { (attachment: AttachmentModel) in
-                self.attachmentsRepository.downloadAndCacheAttachment(attachment: attachment)
+                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment)
                     .map { _ in
                         return Void()
                     }
