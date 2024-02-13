@@ -11,37 +11,17 @@ import Combine
 
 class GetAppLanguagesListUseCase {
     
-    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface
-    private let getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface
+    private let getAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getAppLanguagesListRepositoryInterface: GetAppLanguagesListRepositoryInterface, getUserPreferredAppLanguageRepositoryInterface: GetUserPreferredAppLanguageRepositoryInterface) {
+    init(getAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface) {
         
-        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getAppLanguagesListRepositoryInterface = getAppLanguagesListRepositoryInterface
-        self.getUserPreferredAppLanguageRepositoryInterface = getUserPreferredAppLanguageRepositoryInterface
+        self.getAppLanguagesListRepository = getAppLanguagesListRepository
     }
     
-    func getAppLanguagesListPublisher() -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getAppLanguagesListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        Publishers.CombineLatest(
-            getAppLanguagesListRepositoryInterface.observeLanguagesChangedPublisher(),
-            getCurrentAppLanguageUseCase.getLanguagePublisher()
-        )
-        .flatMap({ (languagesListChanged: Void, currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
-            
-            return self.getAppLanguagesListRepositoryInterface.getLanguagesPublisher(currentAppLanguage: currentAppLanguage)
-                .eraseToAnyPublisher()
-        })
-        .flatMap({ (items: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
-                        
-            let sortedItems: [AppLanguageListItemDomainModel] = items.sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
-                return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
-            }
-            
-            return Just(sortedItems)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+        return getAppLanguagesListRepository
+            .getLanguagesPublisher(appLanguage: appLanguage)
+            .eraseToAnyPublisher()
     }
 }

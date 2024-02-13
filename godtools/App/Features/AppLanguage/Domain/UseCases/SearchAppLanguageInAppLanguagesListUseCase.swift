@@ -10,39 +10,31 @@ import Foundation
 import Combine
 
 class SearchAppLanguageInAppLanguagesListUseCase {
-    
-    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
-    
-    init(getAppLanguagesListUseCase: GetAppLanguagesListUseCase) {
-        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
+        
+    init() {
+
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            searchTextPublisher,
-            getAppLanguagesListUseCase.getAppLanguagesListPublisher()
-        )
-            .flatMap { searchText, languageItems in
+        if searchText.isEmpty {
+            
+            return Just(appLanguagesList)
+                .eraseToAnyPublisher()
+            
+        } else {
+            
+            let lowercasedSearchText = searchText.lowercased()
+            
+            let filteredItems = appLanguagesList.filter { languageItem in
                 
-                if searchText.isEmpty {
-                    
-                    return Just(languageItems)
-                    
-                } else {
-                    
-                    let lowercasedSearchText = searchText.lowercased()
-                    
-                    let filteredItems = languageItems.filter { languageItem in
-                        
-                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
-                        
-                        return lowercasedLanguageName.contains(lowercasedSearchText)
-                    }
-                    
-                    return Just(filteredItems)
-                }
+                let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
+                
+                return lowercasedLanguageName.contains(lowercasedSearchText)
             }
-            .eraseToAnyPublisher()
+            
+            return Just(filteredItems)
+                .eraseToAnyPublisher()
+        }
     }
 }
