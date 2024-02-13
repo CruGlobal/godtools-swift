@@ -45,10 +45,4 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
             })
             .eraseToAnyPublisher()
     }
-    
-    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return appLanguagesRepository.getLanguagesChangedPublisher()
-            .eraseToAnyPublisher()
-    }
 }

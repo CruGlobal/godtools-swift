@@ -32,9 +32,4 @@ class GetAppLanguagesRepository: GetAppLanguagesRepositoryInterface {
             })
             .eraseToAnyPublisher()
     }
-    
-    func observeAppLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return appLanguagesRepository.getLanguagesChangedPublisher()
-    }
 }
