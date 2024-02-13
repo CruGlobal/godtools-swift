@@ -28,7 +28,7 @@ struct DownloadableLanguagesView: View {
                     
                     DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage) {
                         
-                        self.downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
+                        downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
                     }
                     .listRowBackground(Color.clear)
                 }
