@@ -116,50 +116,42 @@ extension DownloadableLanguagesViewModel {
         return SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     }
     
-    func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
+    func downloadLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
         let languageId = downloadableLanguage.languageId
+
+        activeDownloads[languageId] = .downloading(progress: 0)
         
-        switch downloadableLanguage.downloadStatus {
-            
-        case .notDownloaded:
-            
-            activeDownloads[languageId] = .downloading(progress: 0)
-            
-            downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId, languageCode: downloadableLanguage.languageCode)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { [weak self] completed in
+        downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId, languageCode: downloadableLanguage.languageCode)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completed in
+                
+                switch completed {
+                case .finished:
                     
-                    switch completed {
-                    case .finished:
-                        
-                        self?.activeDownloads.removeValue(forKey: languageId)
-                        
-                    case .failure(let error):
-                        
-                        // TODO: - what happens during a failure?
-                        
-                        self?.activeDownloads[languageId] = .notDownloaded
-                        self?.flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
-                    }
-                }, receiveValue: { [weak self] progress in
+                    self?.activeDownloads.removeValue(forKey: languageId)
                     
-                    self?.activeDownloads[languageId] = .downloading(progress: progress)
-                })
-                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
-            
-        case .downloaded:
-            
-            removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
-                .sink { _ in
+                case .failure(let error):
                     
+                    // TODO: - what happens during a failure?
+                    
+                    self?.activeDownloads[languageId] = .notDownloaded
+                    self?.flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
                 }
-                .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
-            
-        case .downloading:
-            
-            break
-        }
+            }, receiveValue: { [weak self] progress in
+                
+                self?.activeDownloads[languageId] = .downloading(progress: progress)
+            })
+            .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
+    }
+    
+    func removeDownloadedLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
+        
+        removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
+            .sink { _ in
+                
+            }
+            .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
     }
 }
 
