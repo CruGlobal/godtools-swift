@@ -20,17 +20,20 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
     
     func getLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
                 
-        return Publishers.CombineLatest(
-            userAppLanguageRepository.getLanguagePublisher(),
-            userAppLanguageRepository.getLanguageChangedPublisher()
-        )
-        .flatMap({ (userLanguage: UserAppLanguageDataModel?, userAppLanguageChanged: Void) -> AnyPublisher<AppLanguageDomainModel, Never> in
-          
-            let appLanguage: AppLanguageDomainModel = userLanguage?.languageId ?? LanguageCodeDomainModel.english.rawValue
-            
-            return Just(appLanguage)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+        return userAppLanguageRepository.getLanguageChangedPublisher()
+            .flatMap({ (userAppLanguageChanged: Void) -> AnyPublisher<UserAppLanguageDataModel?, Never> in
+              
+                return self.userAppLanguageRepository
+                    .getLanguagePublisher()
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (userLanguage: UserAppLanguageDataModel?) -> AnyPublisher<AppLanguageDomainModel, Never> in
+                
+                let appLanguage: AppLanguageDomainModel = userLanguage?.languageId ?? LanguageCodeDomainModel.english.rawValue
+                
+                return Just(appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }
