@@ -97,6 +97,14 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getDownloadedLanguagesListRepositoryInterface() -> GetDownloadedLanguagesListRepositoryInterface {
+        return GetDownloadedLanguagesListRepository(
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+        )
+    }
+    
     func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
         return DownloadToolLanguageRepository(
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
