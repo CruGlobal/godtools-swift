@@ -17,9 +17,18 @@ struct DownloadableLanguageItemView: View {
     
     @State private var animationDownloadProgress: Double?
     @State private var downloadProgressTarget: Double?
-    @State private var timer: Timer?
+    @State private var progressAnimationTimer: Timer?
+    @State private var removeDownloadTimer: Timer?
     @State private var isVisible: Bool = false
     @State private var shouldConfirmDownloadRemoval: Bool = false
+    
+    private var isAnimatingDownload: Bool {
+        guard let animationDownloadProgress = animationDownloadProgress else {
+            return false
+        }
+        
+        return animationDownloadProgress < 1
+    }
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
@@ -78,8 +87,8 @@ struct DownloadableLanguageItemView: View {
                 self.downloadProgressTarget = 1
             }
             
-            if timer == nil {
-                startAnimationTimer()
+            if progressAnimationTimer == nil {
+                startProgressAnimationTimer()
             }
         })
         .animation(.default, value: downloadableLanguage.downloadStatus)
@@ -88,7 +97,8 @@ struct DownloadableLanguageItemView: View {
         .onDisappear {
             
             isVisible = false
-            stopAnimationTimer()
+            stopProgressAnimationTimer()
+            cancelDownloadRemovalConfirmation()
         }
         .onAppear {
             
@@ -97,7 +107,7 @@ struct DownloadableLanguageItemView: View {
         }
         .onAppBackgrounded {
         
-            stopAnimationTimer()
+            stopProgressAnimationTimer()
         }
         .onAppForegrounded {
             
@@ -110,11 +120,18 @@ struct DownloadableLanguageItemView: View {
         switch downloadableLanguage.downloadStatus {
         case .downloaded:
             
-            if shouldConfirmDownloadRemoval == false {
+            if isAnimatingDownload {
+                return
+                
+            } else if shouldConfirmDownloadRemoval == false {
+                
                 shouldConfirmDownloadRemoval = true
+                startRemoveDownloadTimer()
+                
                 return
                 
             } else {
+                stopRemoveDownloadTimer()
                 tappedClosure?()
             }
             
@@ -124,9 +141,29 @@ struct DownloadableLanguageItemView: View {
         }
     }
     
-    private func startAnimationTimer() {
+    private func startRemoveDownloadTimer() {
         
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { timer in
+        removeDownloadTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { timer in
+            
+            self.cancelDownloadRemovalConfirmation()
+        })
+    }
+    
+    private func cancelDownloadRemovalConfirmation() {
+        
+        shouldConfirmDownloadRemoval = false
+        stopRemoveDownloadTimer()
+    }
+    
+    private func stopRemoveDownloadTimer() {
+        
+        removeDownloadTimer?.invalidate()
+        removeDownloadTimer = nil
+    }
+    
+    private func startProgressAnimationTimer() {
+        
+        progressAnimationTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { timer in
             guard let downloadProgress = self.animationDownloadProgress,
                   let progressTarget = self.downloadProgressTarget
             else { return }
@@ -137,21 +174,21 @@ struct DownloadableLanguageItemView: View {
                 
             } else if progressTarget >= 1 && downloadProgress >= 1 {
                 
-                self.stopAnimationTimer()
+                self.stopProgressAnimationTimer()
             }
         })
     }
     
-    private func stopAnimationTimer() {
-        guard timer != nil else { return }
+    private func stopProgressAnimationTimer() {
+        guard progressAnimationTimer != nil else { return }
         
-        timer?.invalidate()
-        timer = nil
+        progressAnimationTimer?.invalidate()
+        progressAnimationTimer = nil
     }
     
     private func continueDownloadProgressAnimationIfNeeded() {
         if shouldContinueDownloadProgressAnimation() {
-            startAnimationTimer()
+            startProgressAnimationTimer()
         }
     }
     
