@@ -114,7 +114,13 @@ class FavoritesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getFeaturedLessonsUseCase.getFeaturedLessonsPublisher()
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
+                
+                return getFeaturedLessonsUseCase
+                    .getFeaturedLessonsPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
                 
