@@ -11,9 +11,9 @@ import Foundation
 struct UserAppLanguageDataModel {
     
     let id: String
-    let languageId: String
+    let languageId: BCP47LanguageIdentifier
     
-    init(id: String, languageId: String) {
+    init(id: String, languageId: BCP47LanguageIdentifier) {
         
         self.id = id
         self.languageId = languageId
