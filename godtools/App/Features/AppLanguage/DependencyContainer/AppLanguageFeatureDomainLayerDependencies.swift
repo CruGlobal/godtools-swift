@@ -21,17 +21,13 @@ class AppLanguageFeatureDomainLayerDependencies {
             
     func getAppLanguagesListUseCase() -> GetAppLanguagesListUseCase {
         return GetAppLanguagesListUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
+            getAppLanguagesListRepository: dataLayer.getAppLanguagesListRepositoryInterface()
         )
     }
     
     func getCurrentAppLanguageUseCase() -> GetCurrentAppLanguageUseCase {
         return GetCurrentAppLanguageUseCase(
-            getAppLanguagesRepositoryInterface: dataLayer.getAppLanguagesRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface(),
-            getDeviceAppLanguageRepositoryInterface: dataLayer.getDeviceAppLanguageRepositoryInterface()
+            getAppLanguageRepository: dataLayer.getAppLanguageRepository()
         )
     }
     
@@ -61,14 +57,24 @@ class AppLanguageFeatureDomainLayerDependencies {
     }
     
     func getSearchAppLanguageInAppLanguagesListUseCase() -> SearchAppLanguageInAppLanguagesListUseCase {
-        return SearchAppLanguageInAppLanguagesListUseCase(
-            getAppLanguagesListUseCase: getAppLanguagesListUseCase()
-        )
+        return SearchAppLanguageInAppLanguagesListUseCase()
     }
     
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
+        )
+    }
+    
+    func getStoreInitialAppLanguageUseCase() -> StoreInitialAppLanguageUseCase {
+        return StoreInitialAppLanguageUseCase(
+            storeInitialAppLanguage: dataLayer.getStoreInitialAppLanguage()
+        )
+    }
+    
+    func getViewAppLanguagesUseCase() -> ViewAppLanguagesUseCase {
+        return ViewAppLanguagesUseCase(
+            getInterfaceStringsRepository: dataLayer.getAppLanguagesInterfaceStringsRepositoryInterface()
         )
     }
     

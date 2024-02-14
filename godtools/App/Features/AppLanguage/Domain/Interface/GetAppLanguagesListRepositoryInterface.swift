@@ -11,6 +11,5 @@ import Combine
 
 protocol GetAppLanguagesListRepositoryInterface {
     
-    func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never>
-    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never>
+    func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never>
 }

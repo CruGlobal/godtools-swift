@@ -30,7 +30,7 @@ class UserAppLanguageRepository {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguagePublisher(languageId: String) -> AnyPublisher<Bool, Never> {
+    func storeLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
         
         cache.storeLanguage(languageId: languageId)
         
