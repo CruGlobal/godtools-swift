@@ -13,16 +13,16 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
     
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let resourcesRepository: ResourcesRepository
-    private let translationsRepository: TranslationsRepository
+    private let toolDownloader: ToolDownloader
     
-    init(downloadedLanguagesRepository: DownloadedLanguagesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(downloadedLanguagesRepository: DownloadedLanguagesRepository, resourcesRepository: ResourcesRepository, toolDownloader: ToolDownloader) {
         
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
         self.resourcesRepository = resourcesRepository
-        self.translationsRepository = translationsRepository
+        self.toolDownloader = toolDownloader
     }
     
-    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
+    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Never> {
             
         downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
@@ -30,31 +30,27 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         
         let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageCode, resourceTypes: includeToolTypes))
        
-        let translations: [TranslationModel] = tools.compactMap {
-            translationsRepository.getLatestTranslation(resourceId: $0.id, languageCode: languageCode)
-        }
+        let downloadTools: [DownloadToolDataModel] = tools.map({
+            DownloadToolDataModel(toolId: $0.id, languages: [languageCode])
+        })
         
-        guard !translations.isEmpty else {
+        guard !downloadTools.isEmpty else {
             
-            return Just(1).setFailureType(to: Error.self)
+            return Just(1)
                 .eraseToAnyPublisher()
         }
         
-        return translationsRepository.getTranslationManifestsFromRemoteWithProgress(
-            translations: translations,
-            manifestParserType: .renderer,
-            includeRelatedFiles: true,
-            shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
-        )
-        .map {
-            let progress = $0.progress
-            
-            if progress >= 1 {
-                self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
+        return toolDownloader.downloadToolsPublisher(tools: downloadTools)
+            .map {
+                
+                let progress = $0.progress
+                
+                if progress >= 1 {
+                    self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
+                }
+                
+                return $0.progress
             }
-            
-            return $0.progress
-        }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 }

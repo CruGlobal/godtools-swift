@@ -115,7 +115,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return DownloadToolLanguageRepository(
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            toolDownloader: coreDataLayer.getToolDownloader()
         )
     }
     
