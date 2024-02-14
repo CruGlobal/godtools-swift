@@ -22,8 +22,7 @@ class FeaturedLessonsDomainLayerDependencies {
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         
         return GetFeaturedLessonsUseCase(
-            getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getFeaturedLessonsRepositoryInterface: dataLayer.getFeaturedLessonsRepositoryInterface()
+            getFeaturedLessonsRepository: dataLayer.getFeaturedLessonsRepositoryInterface()
         )
     }
 }

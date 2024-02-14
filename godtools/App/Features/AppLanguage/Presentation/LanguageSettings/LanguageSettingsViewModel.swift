@@ -39,7 +39,6 @@ class LanguageSettingsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()

@@ -62,6 +62,18 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getAppLanguageRepository() -> GetAppLanguageRepositoryInterface {
+        return GetAppLanguageRepository(
+            userAppLanguageRepository: getUserAppLanguageRepository()
+        )
+    }
+    
+    func getAppLanguagesInterfaceStringsRepositoryInterface() -> GetAppLanguagesInterfaceStringsRepositoryInterface {
+        return GetAppLanguagesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getAppLanguagesRepositoryInterface() -> GetAppLanguagesRepositoryInterface {
         return GetAppLanguagesRepository(
             appLanguagesRepository: getAppLanguagesRepository()
@@ -72,12 +84,6 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetConfirmAppLanguageInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
             localeLanguageName: coreDataLayer.getLocaleLanguageName()
-        )
-    }
-    
-    func getDeviceAppLanguageRepositoryInterface() -> GetDeviceAppLanguageRepositoryInterface {
-        return GetDeviceAppLanguageRepository(
-            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage()
         )
     }
     
@@ -133,9 +139,11 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    func getUserPreferredAppLanguageRepositoryInterface() -> GetUserPreferredAppLanguageRepositoryInterface {
-        return GetUserPreferredAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository()
+    func getStoreInitialAppLanguage() -> StoreInitialAppLanguageInterface {
+        return StoreInitialAppLanguage(
+            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage(),
+            userAppLanguageRepository: getUserAppLanguageRepository(),
+            appLanguagesRepository: getAppLanguagesRepository()
         )
     }
 }

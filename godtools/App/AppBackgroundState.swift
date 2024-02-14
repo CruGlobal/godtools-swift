@@ -38,6 +38,14 @@ class AppBackgroundState {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
+        appDiContainer.feature.appLanguage.domainLayer
+            .getStoreInitialAppLanguageUseCase()
+            .storeInitialAppLanguagePublisher()
+            .sink { (appLanguage: BCP47LanguageIdentifier) in
+
+            }
+            .store(in: &cancellables)
+        
         $appLanguage
             .eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in

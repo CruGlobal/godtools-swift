@@ -12,5 +12,4 @@ import Combine
 protocol GetToolDetailsToolIsFavoritedRepositoryInterface {
     
     func getToolIsFavorited(tool: ToolDomainModel) -> AnyPublisher<Bool, Never>
-    func observeFavoritedToolsChangedPublisher() -> AnyPublisher<Void, Never>
 }
