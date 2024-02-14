@@ -12,7 +12,7 @@ import SwiftUI
 
 class LessonsViewModel: ObservableObject {
         
-    private let initialDataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -30,10 +30,10 @@ class LessonsViewModel: ObservableObject {
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
-        self.initialDataDownloader = initialDataDownloader
+        self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -134,7 +134,14 @@ extension LessonsViewModel {
     }
     
     func refreshData() {
-        initialDataDownloader.downloadInitialData()
+        
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .sink(receiveCompletion: { completed in
+
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+                
+            })
+            .store(in: &cancellables)
     }
     
     func pageViewed() {
